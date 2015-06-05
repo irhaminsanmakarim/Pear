@@ -5,10 +5,6 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Web", "DSLNG.PEAR.Web\DSLNG.PEAR.Web.csproj", "{BC21D999-37FA-402F-865E-19C1945BDF65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.API", "DSLNG.PEAR.API\DSLNG.PEAR.API.csproj", "{F851D692-0477-4436-8140-4A364BF96C34}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.API.Tests", "DSLNG.PEAR.API.Tests\DSLNG.PEAR.API.Tests.csproj", "{6D60F2BD-5F89-4D0E-84EF-DC649A656F14}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +15,6 @@ Global
 		{BC21D999-37FA-402F-865E-19C1945BDF65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC21D999-37FA-402F-865E-19C1945BDF65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC21D999-37FA-402F-865E-19C1945BDF65}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F851D692-0477-4436-8140-4A364BF96C34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F851D692-0477-4436-8140-4A364BF96C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F851D692-0477-4436-8140-4A364BF96C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F851D692-0477-4436-8140-4A364BF96C34}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D60F2BD-5F89-4D0E-84EF-DC649A656F14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D60F2BD-5F89-4D0E-84EF-DC649A656F14}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D60F2BD-5F89-4D0E-84EF-DC649A656F14}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D60F2BD-5F89-4D0E-84EF-DC649A656F14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
