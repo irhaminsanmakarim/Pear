@@ -119,9 +119,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helper\IServerDataRestClient.cs" />
-    <Compile Include="Helper\ServerDataRestClient.cs" />
-    <Compile Include="Models\ServerDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -145,7 +142,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -163,6 +162,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Helper\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -170,6 +171,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DSLNG.PEAR.Api.Client\DSLNG.PEAR.Api.Client.csproj">
+      <Project>{b0594e48-ae4e-4449-a833-020dfab4c6f8}</Project>
+      <Name>DSLNG.PEAR.Api.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DSLNG.PEAR.Model\DSLNG.PEAR.Model.csproj">
+      <Project>{1ea6b0f3-6ba2-4da3-b784-db31a55f0b6a}</Project>
+      <Name>DSLNG.PEAR.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
