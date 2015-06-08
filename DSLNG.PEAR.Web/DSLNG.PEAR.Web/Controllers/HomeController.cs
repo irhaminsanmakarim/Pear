@@ -1,30 +1,26 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DSLNG_PEAR_Web.Models;
 
-namespace DSLNG.PEAR.Web.Controllers
+namespace DSLNG_PEAR_Web.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            return View();
+            // DXCOMMENT: Pass a data model for GridView
+            
+            return View();    
         }
-
-        public ActionResult About()
+        
+        public ActionResult GridViewPartialView() 
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            // DXCOMMENT: Pass a data model for GridView in the PartialView method's second parameter
+            return PartialView("GridViewPartialView");
         }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+    
     }
 }
