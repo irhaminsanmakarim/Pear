@@ -1,32 +1,34 @@
 ﻿<div class="main-logo"></div>
 <div class="leftPane">
     <div class="category">
-        @Html.DevExpress().TabControl(settings =>
-  {
-      settings.Name = "tcOverview";
-      settings.TabPosition = TabPosition.Left;
-      settings.Tabs.Add(item =>
-      {
-          item.Text = "Dashboard";
-
-      });
-      settings.Tabs.Add("Products");
-      settings.Tabs.Add("Support");
-      settings.Tabs.Add("Downloads");
-  }).GetHtml()
-
+        @using (Html.BeginForm()) { 
+        @Html.DevExpress().PageControl(settings =>
+        {
+            settings.Name = "_leftNav";
+            settings.TabPosition = TabPosition.Left;
+            settings.TabPages.Add("Dashboard").SetContent(() => {
+                Html.Partial("_leftMenu");
+            });
+            settings.TabPages.Add("Plan").SetContent(() =>
+            {
+                ViewContext.Writer.Write("test");
+            });
+            settings.TabPages.Add("Execute").SetContent(() =>
+            {
+                ViewContext.Writer.Write("test");
+            });
+            settings.TabPages.Add("Asses").SetContent(() =>
+            {
+                ViewContext.Writer.Write("test");
+            });
+            settings.TabPages.Add("Report").SetContent(() =>
+            {
+                ViewContext.Writer.Write("test");
+            });
+        }).GetHtml()
+        }
     </div>
-    <div class="menu">
-        @Html.DevExpress().NavBar(settings =>
-   {
-       settings.Name = "LeftNavBar";
-       settings.AutoCollapse = true;
-       settings.EnableAnimation = true;
-       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-       settings.ControlStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
-       settings.ControlStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
-   }).BindToXML(HttpContext.Current.Server.MapPath("~/App_Data/SideMenu.xml"), "/menu/*").GetHtml()
-    </div>
+
 </div>
 
 

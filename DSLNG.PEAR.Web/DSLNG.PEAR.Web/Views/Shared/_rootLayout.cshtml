@@ -44,18 +44,7 @@
         settings.Styles.Pane.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
         settings.Styles.Pane.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
 
-        settings.Panes.Add(navPanel =>
-        {
-            navPanel.Name = "LeftNavigationPanel";
-            navPanel.Size = Unit.Pixel(320);
-            navPanel.ShowCollapseBackwardButton = DefaultBoolean.True;
-            navPanel.SetContent(() =>
-            {
-                ViewContext.Writer.Write(
-                    "<div>" + navPanel.Name.ToString() + "</div>"
-                );
-            });
-        });
+        
     
         settings.Panes.Add(pane => {
             pane.Name = "Content";
