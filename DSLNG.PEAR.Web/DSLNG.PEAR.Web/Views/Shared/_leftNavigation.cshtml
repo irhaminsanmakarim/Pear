@@ -1,0 +1,33 @@
+﻿<div class="main-logo"></div>
+<div class="leftPane">
+    <div class="category">
+        @Html.DevExpress().TabControl(settings =>
+  {
+      settings.Name = "tcOverview";
+      settings.TabPosition = TabPosition.Left;
+      settings.Tabs.Add(item =>
+      {
+          item.Text = "Dashboard";
+
+      });
+      settings.Tabs.Add("Products");
+      settings.Tabs.Add("Support");
+      settings.Tabs.Add("Downloads");
+  }).GetHtml()
+
+    </div>
+    <div class="menu">
+        @Html.DevExpress().NavBar(settings =>
+   {
+       settings.Name = "LeftNavBar";
+       settings.AutoCollapse = true;
+       settings.EnableAnimation = true;
+       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+       settings.ControlStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+       settings.ControlStyle.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
+   }).BindToXML(HttpContext.Current.Server.MapPath("~/App_Data/SideMenu.xml"), "/menu/*").GetHtml()
+    </div>
+</div>
+
+
+

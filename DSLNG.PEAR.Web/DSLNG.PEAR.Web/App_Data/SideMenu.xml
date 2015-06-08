@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu>
+  <group Text="Dashboard">
+    <item Text="Economic Summary" />
+    <item Text="PMS Summary" />
+    <group Text="Corporate Performance">
+      <item Text="Safety"></item>
+      <item Text="Financial Strength"></item>
+    </group>
+    <item Text="Directorate Performance">
+    </item>
+    <group Text="Function Performance">
+      <item Text="QHSE"></item>
+    </group>
+  </group>
+  <group Text="SQL Server">
+    <item Text="SQL Server 2005" />
+    <item Text="SQL Server 2008" />
+    <item Text="SQL Server 2008 R2" />
+  </group>
+  <group Text="Browser">
+    <item Text="Chrome" />
+    <item Text="Firefox" />
+    <item Text="Internet Explorer" />
+    <item Text="Safari" />
+    <item Text="Opera" />
+  </group>
+  <group Text="Language">
+    <item Text="C#" />
+    <item Text="Visual Basic" />
+    <item Text="C++" />
+    <item Text="Java" />
+    <item Text="PHP" />
+  </group>
+</menu>
