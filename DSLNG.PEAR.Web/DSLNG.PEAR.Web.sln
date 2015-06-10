@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Model", "DSLNG.PEAR.Model\DSLNG.PEAR.Model.csproj", "{1EA6B0F3-6BA2-4DA3-B784-DB31A55F0B6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Api.Client", "DSLNG.PEAR.Api.Client\DSLNG.PEAR.Api.Client.csproj", "{B0594E48-AE4E-4449-A833-020DFAB4C6F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Web", "DSLNG.PEAR.Web\DSLNG.PEAR.Web.csproj", "{DF4A4743-93DE-4F2A-B0A3-D7271729D1E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Web", "DSLNG.PEAR.Web\DSLNG.PEAR.Web.csproj", "{DDB524A7-34CB-4010-A139-1DA6DD869244}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,10 @@ Global
 		{B0594E48-AE4E-4449-A833-020DFAB4C6F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0594E48-AE4E-4449-A833-020DFAB4C6F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0594E48-AE4E-4449-A833-020DFAB4C6F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF4A4743-93DE-4F2A-B0A3-D7271729D1E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF4A4743-93DE-4F2A-B0A3-D7271729D1E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF4A4743-93DE-4F2A-B0A3-D7271729D1E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF4A4743-93DE-4F2A-B0A3-D7271729D1E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDB524A7-34CB-4010-A139-1DA6DD869244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDB524A7-34CB-4010-A139-1DA6DD869244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDB524A7-34CB-4010-A139-1DA6DD869244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDB524A7-34CB-4010-A139-1DA6DD869244}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
