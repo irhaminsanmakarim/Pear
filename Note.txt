@@ -1,2 +1,3 @@
 it's github repository
 test with git --mirror
+test with another user
