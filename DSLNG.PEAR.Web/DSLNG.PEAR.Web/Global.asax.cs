@@ -1,9 +1,12 @@
+using DSLNG.PEAR.Web.App_Start;
+using DSLNG.PEAR.Web.AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 
 namespace DSLNG_PEAR_Web
@@ -15,11 +18,13 @@ namespace DSLNG_PEAR_Web
     {
         protected void Application_Start()
         {
+            AutoMapperConfiguration.Configure();
             AreaRegistration.RegisterAllAreas();
 
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
             
             ModelBinders.Binders.DefaultBinder = new DevExpress.Web.Mvc.DevExpressEditorsBinder();

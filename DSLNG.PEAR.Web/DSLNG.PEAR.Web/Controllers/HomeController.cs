@@ -1,26 +1,105 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DSLNG_PEAR_Web.Models;
 
-namespace DSLNG_PEAR_Web.Controllers
+namespace DSLNG.PEAR.Web.Controllers
 {
     public class HomeController : Controller
     {
+        //
+        // GET: /Home/
+
         public ActionResult Index()
         {
-            // DXCOMMENT: Pass a data model for GridView
-            
-            return View();    
+            return View();
         }
-        
-        public ActionResult GridViewPartialView() 
+
+        //
+        // GET: /Home/Details/5
+
+        public ActionResult Details(int id)
         {
-            // DXCOMMENT: Pass a data model for GridView in the PartialView method's second parameter
-            return PartialView("GridViewPartialView");
+            return View();
         }
-    
+
+        //
+        // GET: /Home/Create
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Home/Create
+
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //
+        // GET: /Home/Edit/5
+
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        //
+        // POST: /Home/Edit/5
+
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //
+        // GET: /Home/Delete/5
+
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        //
+        // POST: /Home/Delete/5
+
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }
