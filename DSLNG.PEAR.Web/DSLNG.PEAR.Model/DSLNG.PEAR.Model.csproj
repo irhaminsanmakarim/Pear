@@ -30,7 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -39,7 +46,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Activity.cs" />
+    <Compile Include="Entities\Artifact.cs" />
+    <Compile Include="Entities\ArtifactSerie.cs" />
+    <Compile Include="Entities\ArtifactStack.cs" />
+    <Compile Include="Entities\Conversion.cs" />
+    <Compile Include="Entities\DashboardTemplate.cs" />
+    <Compile Include="Entities\FormatInput.cs" />
+    <Compile Include="Entities\Group.cs" />
+    <Compile Include="Entities\Kpi.cs" />
+    <Compile Include="Entities\KpiAchievement.cs" />
+    <Compile Include="Entities\KpiTarget.cs" />
+    <Compile Include="Entities\LayoutColumn.cs" />
+    <Compile Include="Entities\LayoutRow.cs" />
+    <Compile Include="Entities\Measurement.cs" />
+    <Compile Include="Entities\Method.cs" />
+    <Compile Include="Entities\Periode.cs" />
+    <Compile Include="Entities\PeriodeType.cs" />
+    <Compile Include="Entities\PmsConfig.cs" />
+    <Compile Include="Entities\PmsConfigDetail.cs" />
+    <Compile Include="Entities\PmsSummary.cs" />
+    <Compile Include="Entities\ScoreIndicator.cs" />
+    <Compile Include="Entities\ScoringType.cs" />
+    <Compile Include="Entities\TargetType.cs" />
+    <Compile Include="Entities\Type.cs" />
+    <Compile Include="Entities\Level.cs" />
+    <Compile Include="Entities\Pilar.cs" />
+    <Compile Include="Entities\RoleGroup.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\YtdFormula.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="Persistence\DataContext.cs" />
+    <Compile Include="Persistence\IDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
