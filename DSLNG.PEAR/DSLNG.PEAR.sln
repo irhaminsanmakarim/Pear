@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Model", "DSLNG.PEAR.Model\DSLNG.PEAR.Model.csproj", "{0620FDEA-1C13-4823-92A5-452D930EFA10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Web", "DSLNG.PEAR.Web\DSLNG.PEAR.Web.csproj", "{F950EB93-74B8-41B9-B2E0-65CC8C398EFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0620FDEA-1C13-4823-92A5-452D930EFA10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0620FDEA-1C13-4823-92A5-452D930EFA10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0620FDEA-1C13-4823-92A5-452D930EFA10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0620FDEA-1C13-4823-92A5-452D930EFA10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F950EB93-74B8-41B9-B2E0-65CC8C398EFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F950EB93-74B8-41B9-B2E0-65CC8C398EFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F950EB93-74B8-41B9-B2E0-65CC8C398EFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F950EB93-74B8-41B9-B2E0-65CC8C398EFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
