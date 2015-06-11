@@ -24,6 +24,7 @@ namespace DSLNG.PEAR.Model.Persistence
         IDbSet<LayoutRow> LayoutRows { get; set; }
         IDbSet<Level> Levels { get; set; }
         IDbSet<Measurement> Measurements { get; set; }
+        IDbSet<Menu> Menus { get; set; }
         IDbSet<Method> Methods { get; set; }
         IDbSet<Periode> Periodes { get; set; }
         IDbSet<Pilar> Pilars { get; set; }
