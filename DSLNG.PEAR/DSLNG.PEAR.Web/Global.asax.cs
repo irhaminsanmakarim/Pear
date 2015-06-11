@@ -1,7 +1,10 @@
+using DSLNG.PEAR.Data.Installer;
+using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Web.App_Start;
 using DSLNG.PEAR.Web.AutoMapper;
 using System;
 using System.Collections.Generic;
+//using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -19,6 +22,8 @@ namespace DSLNG.PEAR.Web
         protected void Application_Start()
         {
             AutoMapperConfiguration.Configure();
+            //Database.SetInitializer<DataContext>(new DataInitializer());
+
             AreaRegistration.RegisterAllAreas();
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
