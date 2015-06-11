@@ -3,7 +3,6 @@ using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Services.Responses.User;
-using StructureMap;
 
 namespace DSLNG.PEAR.Services
 {
