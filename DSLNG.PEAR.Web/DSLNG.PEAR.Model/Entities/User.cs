@@ -12,9 +12,11 @@ namespace DSLNG.PEAR.Model.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [MaxLength(100)]
         [Index(IsUnique = true)]
         public string Username { get; set; }
 
+        [MaxLength(100)]
         [Index(IsUnique = true)]
         public string Email { get; set; }
         public RoleGroup Role { get; set; }
