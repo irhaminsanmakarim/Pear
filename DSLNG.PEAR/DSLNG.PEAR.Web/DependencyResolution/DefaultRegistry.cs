@@ -16,7 +16,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using DSLNG.PEAR.Data.Persistence;
-using DSLNG.PEAR.Services.Implementations;
+using DSLNG.PEAR.Services;
 using DSLNG.PEAR.Services.Interfaces;
 using StructureMap.Web.Pipeline;
 
