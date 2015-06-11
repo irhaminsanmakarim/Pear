@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DSLNG.PEAR.Model.Entities
+﻿namespace DSLNG.PEAR.Data.Entities
 {
     public enum PeriodeType
     {

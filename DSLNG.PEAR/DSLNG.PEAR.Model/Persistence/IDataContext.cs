@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DSLNG.PEAR.Model.Entities;
+﻿using System.Data.Entity;
+using DSLNG.PEAR.Data.Entities;
+using Type = DSLNG.PEAR.Data.Entities.Type;
 
-namespace DSLNG.PEAR.Model.Persistence
+namespace DSLNG.PEAR.Data.Persistence
 {
     public interface IDataContext
     {
@@ -33,7 +29,7 @@ namespace DSLNG.PEAR.Model.Persistence
         IDbSet<PmsSummary> PmsSummaries { get; set; }
         IDbSet<RoleGroup> RoleGroups { get; set; }
         IDbSet<ScoreIndicator> ScoreIndicators { get; set; }
-        IDbSet<Entities.Type> Types { get; set; }
+        IDbSet<Type> Types { get; set; }
         IDbSet<User> Users { get; set; }
 
         Database Database { get; }

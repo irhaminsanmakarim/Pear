@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DSLNG.PEAR.Model.Entities
+namespace DSLNG.PEAR.Data.Entities
 {
     public class RoleGroup
     {

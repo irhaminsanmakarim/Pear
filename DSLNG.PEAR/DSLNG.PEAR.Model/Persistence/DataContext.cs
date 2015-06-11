@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DSLNG.PEAR.Model.Entities;
-using Type = DSLNG.PEAR.Model.Entities.Type;
+﻿using System.Data.Entity;
+using DSLNG.PEAR.Data.Entities;
+using Type = DSLNG.PEAR.Data.Entities.Type;
 
-namespace DSLNG.PEAR.Model.Persistence
+namespace DSLNG.PEAR.Data.Persistence
 {
     public class DataContext : DbContext, IDataContext
     {

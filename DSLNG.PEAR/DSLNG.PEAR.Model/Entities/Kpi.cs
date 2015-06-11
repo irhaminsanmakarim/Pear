@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Model.Entities
+namespace DSLNG.PEAR.Data.Entities
 {
     public class Kpi
     {
@@ -20,7 +16,7 @@ namespace DSLNG.PEAR.Model.Entities
         public Pilar Pilar { get; set; }
         public Level Level { get; set; }
         public RoleGroup RoleGroup { get; set; }
-        public Entities.Type Type { get; set; }
+        public Type Type { get; set; }
         public Group Group { get; set; }
         public string IsEconomic { get; set; }
         public int Order { get; set; }

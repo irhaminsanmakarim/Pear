@@ -1,14 +1,10 @@
-using DSLNG.PEAR.Model.Entities;
-using DSLNG.PEAR.Model.Persistence;
+using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Data.Persistence;
+using System.Data.Entity.Migrations;
 
-namespace DSLNG.PEAR.Model.Migrations
+namespace DSLNG.PEAR.Data.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<DSLNG.PEAR.Model.Persistence.DataContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DataContext>
     {
         public Configuration()
         {
@@ -16,7 +12,7 @@ namespace DSLNG.PEAR.Model.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(DSLNG.PEAR.Model.Persistence.DataContext context)
+        protected override void Seed(DataContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -34,7 +30,7 @@ namespace DSLNG.PEAR.Model.Migrations
             AddSomeData(context);
         }
 
-        private void AddSomeData(Persistence.DataContext context)
+        private void AddSomeData(DataContext context)
         {
             var directorateLevel = new Level {Id = 1, Code = "DR", Name = "Directorate", IsActive = true, Number = 1};
             var corporateLevel = new Level {Id = 2, Code = "CR", Name = "Corporate", IsActive = true, Number = 2};
@@ -63,6 +59,11 @@ namespace DSLNG.PEAR.Model.Migrations
             context.RoleGroups.AddOrUpdate(groupFinanceDirectorate);
             context.Users.AddOrUpdate(admin);
             context.SaveChanges();
+        }
+
+        private void AddDummyMenu(DataContext dataContext)
+        {
+            
         }
     }
 }

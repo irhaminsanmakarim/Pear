@@ -1,7 +1,7 @@
 ﻿
 
 
-namespace DSLNG.PEAR.Model.Entities
+namespace DSLNG.PEAR.Data.Entities
 {
     public enum YtdFormula
     {

@@ -15,6 +15,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using DSLNG.PEAR.Data.Persistence;
+using DSLNG.PEAR.Services.Implementations;
+using DSLNG.PEAR.Services.Interfaces;
+using StructureMap.Web.Pipeline;
+
 namespace DSLNG.PEAR.Web.DependencyResolution {
     using StructureMap.Configuration.DSL;
     using StructureMap.Graph;
@@ -30,6 +35,8 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
 					scan.With(new ControllerConvention());
                 });
             //For<IExample>().Use<Example>();
+            For<IDataContext>().LifecycleIs<HttpContextLifecycle>().Use<DataContext>();
+            For<IUserService>().Use<UserService>();
         }
 
         #endregion

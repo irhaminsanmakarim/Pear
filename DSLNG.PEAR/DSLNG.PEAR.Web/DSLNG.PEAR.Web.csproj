@@ -333,6 +333,7 @@
     <Content Include="Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -352,6 +353,7 @@
     <Compile Include="AutoMapper\AutoMapperExtensions.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -361,11 +363,21 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DSLNG.PEAR.Model\DSLNG.PEAR.Data.csproj">
+      <Project>{0620fdea-1c13-4823-92a5-452d930efa10}</Project>
+      <Name>DSLNG.PEAR.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DSLNG.PEAR.Services\DSLNG.PEAR.Services.csproj">
+      <Project>{adbf8f9e-62e8-4a19-869e-519150e87dd5}</Project>
+      <Name>DSLNG.PEAR.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
