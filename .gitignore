@@ -15,11 +15,13 @@
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
-x64/
-x86/
+[Dd]ebug/x64/
+[Dd]ebug/x86/
 build/
 bld/
 [Bb]in/
+[Bb]in/x64/
+[Bb]in/x86/
 [Oo]bj/
 
 # Visual Studo 2015 cache/options directory
