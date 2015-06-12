@@ -1,4 +1,5 @@
-﻿using DSLNG.PEAR.Data.Persistence;
+﻿using AutoMapper;
+using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Level;
 using DSLNG.PEAR.Services.Responses.Level;
@@ -19,12 +20,7 @@ namespace DSLNG.PEAR.Services
         public GetLevelResponse GetLevel(GetLevelRequest request)
         {
             var level = DataContext.Levels.First(x => x.Id == request.Id);
-            var response = new GetLevelResponse
-            {
-                Code = level.Code,
-                Name = level.Name,
-                Number = level.Number
-            };
+            var response = Mapper.Map<GetLevelResponse>(level);
 
             return response;
         }

@@ -16,14 +16,8 @@ namespace DSLNG.PEAR.Services
         public GetUserResponse GetUser(GetUserRequest request)
         {
             var user = DataContext.Users.First(x => x.Id == request.Id);
-            var response2 = Mapper.Map<GetUserResponse>(user);
-            var response = new GetUserResponse
-                {
-                    Email = user.Email,
-                    Id = user.Id,
-                    Username = user.Username
-                };
-
+            var response = Mapper.Map<GetUserResponse>(user);
+            
             return response;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.User;
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -8,8 +9,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
     {
         protected override void Configure()
         {
-            //Mapper.CreateMap<GetUserResponse, User>();
             Mapper.CreateMap<User, GetUserResponse>();
+            Mapper.CreateMap<Level, GetLevelResponse>();
             base.Configure();
         }
     }
