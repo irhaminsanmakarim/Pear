@@ -22,7 +22,8 @@ namespace DSLNG.PEAR.Services
             var response = new GetLevelResponse
             {
                 Code = level.Code,
-                Name = level.Name
+                Name = level.Name,
+                Number = level.Number
             };
 
             return response;
