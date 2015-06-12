@@ -12,5 +12,6 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface ILevelService
     {
         GetLevelResponse GetLevel(GetLevelRequest request);
+        GetLevelsResponse GetLevels(GetLevelsRequest request);
     }
 }

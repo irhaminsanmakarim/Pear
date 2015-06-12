@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Services
 {
@@ -21,6 +22,16 @@ namespace DSLNG.PEAR.Services
         {
             var level = DataContext.Levels.First(x => x.Id == request.Id);
             var response = Mapper.Map<GetLevelResponse>(level);
+
+            return response;
+        }
+
+
+        public GetLevelsResponse GetLevels(GetLevelsRequest request)
+        {
+            var levels = DataContext.Levels.ToList();
+            var response = new GetLevelsResponse();
+            response.Levels = levels.MapTo<GetLevelResponse>();
 
             return response;
         }
