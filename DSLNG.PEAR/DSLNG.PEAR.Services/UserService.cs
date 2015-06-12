@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
@@ -18,6 +19,15 @@ namespace DSLNG.PEAR.Services
             var user = DataContext.Users.First(x => x.Id == request.Id);
             var response = Mapper.Map<GetUserResponse>(user);
             
+            return response;
+        }
+
+        public GetUsersResponse GetUsers(GetUsersRequest request)
+        {
+            var users = DataContext.Users.ToList();
+            var response = new GetUsersResponse();
+            response.Users = Mapper.Map(users, new List<UserResponse>());
+
             return response;
         }
     }

@@ -6,5 +6,6 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IUserService
     {
         GetUserResponse GetUser(GetUserRequest request);
+        GetUsersResponse GetUsers(GetUsersRequest request);
     }
 }

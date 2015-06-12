@@ -1,10 +1,14 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.User.UserViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.User.UserIndexViewModel
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>User</h2>
-@Model.Username
+@foreach (var user in Model.Users)
+{
+    @user.Username <br/>
+    @user.Email
+}
 
 
-@Html.Action("GridViewPartial")
+@*@Html.Action("GridViewPartial")*@

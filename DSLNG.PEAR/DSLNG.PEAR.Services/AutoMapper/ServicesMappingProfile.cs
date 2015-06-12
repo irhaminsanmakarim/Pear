@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
         protected override void Configure()
         {
             Mapper.CreateMap<User, GetUserResponse>();
+            Mapper.CreateMap<User, UserResponse>();
             Mapper.CreateMap<Level, GetLevelResponse>();
             base.Configure();
         }

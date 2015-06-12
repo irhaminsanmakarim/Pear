@@ -9,8 +9,8 @@
     var grid = Html.DevExpress().GridView(settings =>
         {
             settings.Name = "gridPmsSummaryIndex";
-            settings.Columns.Add("OSP");
-            settings.Columns.Add("Performance Indicator");
+            settings.Columns.Add("Osp", "OSP");
+            settings.Columns.Add("PerformanceIndicator", "Performance Indicator");
             settings.Columns.Add("Unit");
             settings.Columns.Add("Weight");
             settings.Columns.AddBand(targetBand =>
@@ -19,7 +19,7 @@
                     targetBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
                     targetBand.Columns.Add("Yearly");
                     targetBand.Columns.Add("Monthly");
-                    targetBand.Columns.Add("YTD");
+                    targetBand.Columns.Add("Ytd", "YTD");
                 });
 
             settings.Columns.AddBand(actualBand =>
@@ -28,7 +28,7 @@
                     actualBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
                     actualBand.Columns.Add("Yearly");
                     actualBand.Columns.Add("Monthly");
-                    actualBand.Columns.Add("YTD");
+                    actualBand.Columns.Add("Ytd", "YTD");
                 });
 
             settings.Columns.AddBand(indexBand =>
@@ -37,7 +37,7 @@
                     indexBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
                     indexBand.Columns.Add("Yearly");
                     indexBand.Columns.Add("Monthly");
-                    indexBand.Columns.Add("YTD");
+                    indexBand.Columns.Add("Ytd", "YTD");
                 });
 
             settings.Columns.Add("Score");

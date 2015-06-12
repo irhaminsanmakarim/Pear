@@ -7,5 +7,6 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 {
     public class PmsSummaryIndexViewModel
     {
+        
     }
 }

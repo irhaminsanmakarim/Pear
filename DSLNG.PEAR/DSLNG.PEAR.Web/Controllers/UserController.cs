@@ -21,19 +21,26 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Index()
         {
-            var user = _userService.GetUser(new GetUserRequest {Id = 1});
+            /*var user = _userService.GetUser(new GetUserRequest {Id = 1});
 
             var userViewModel = new UserViewModel {Email = user.Email, Id = user.Id, Username = user.Username};
-            return View(userViewModel);
+            return View(userViewModel);*/
+
+            var users = _userService.GetUsers(new GetUsersRequest());
+
+            var viewModel = new UserIndexViewModel();
+            viewModel.Users =
+                users.Users.Select(x => new UserViewModel {Email = x.Email, Id = x.Id, Username = x.Username});
+            return View(viewModel);
         }
 
-        DSLNG.PEAR.Data.Persistence.DataContext db = new DSLNG.PEAR.Data.Persistence.DataContext();
+        /*DSLNG.PEAR.Data.Persistence.DataContext db = new DSLNG.PEAR.Data.Persistence.DataContext();
 
         [ValidateInput(false)]
         public ActionResult GridViewPartial()
         {
             var model = db.PmsSummaries;
             return PartialView("_GridViewPartial", model.ToList());
-        }
+        }*/
 	}
 }

@@ -9,7 +9,6 @@ namespace DSLNG.PEAR.Web.AutoMapper
         public static void Configure()
         {
             Mapper.Initialize(cfg => cfg.AddProfile(new ServicesMappingProfile()));
-            //Mapper.CreateMap<User, UserViewModel>();
         }
     }
 }
