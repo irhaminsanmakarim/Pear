@@ -55,10 +55,14 @@
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="Interfaces\ILevelService.cs" />
+    <Compile Include="Interfaces\IPillarService.cs" />
     <Compile Include="LevelService.cs" />
+    <Compile Include="PillarService.cs" />
     <Compile Include="Requests\Level\GetLevelRequest.cs" />
+    <Compile Include="Requests\Pillar\GetPillarRequest.cs" />
     <Compile Include="Responses\BaseResponse.cs" />
     <Compile Include="Responses\Level\GetLevelResponse.cs" />
+    <Compile Include="Responses\Pillar\GetPillarResponse.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

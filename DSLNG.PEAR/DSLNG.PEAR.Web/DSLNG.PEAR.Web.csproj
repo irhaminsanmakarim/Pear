@@ -366,7 +366,11 @@
     <Compile Include="AutoMapper\AutoMapperExtensions.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+<<<<<<< HEAD
+    <Compile Include="Controllers\LevelController.cs" />
+=======
     <Compile Include="Controllers\PmsSummaryController.cs" />
+>>>>>>> 6b8837c0c607a9eea4d7efa005e9f23f66575d55
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
@@ -377,10 +381,17 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< HEAD
+    <Compile Include="ViewModels\Level\LevelViewModel.cs" />
+    <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
+=======
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
+>>>>>>> 6b8837c0c607a9eea4d7efa005e9f23f66575d55
     <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Level\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DSLNG.PEAR.Model\DSLNG.PEAR.Data.csproj">
       <Project>{0620fdea-1c13-4823-92a5-452d930efa10}</Project>
