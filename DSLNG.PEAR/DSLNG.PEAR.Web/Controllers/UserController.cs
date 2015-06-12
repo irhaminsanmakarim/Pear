@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using DSLNG.PEAR.Services.Interfaces;
+﻿using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Web.ViewModels.User;
-using DevExpress.Web.Mvc;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -28,9 +24,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             var users = _userService.GetUsers(new GetUsersRequest());
 
-            var viewModel = new UserIndexViewModel();
-            viewModel.Users =
-                users.Users.Select(x => new UserViewModel {Email = x.Email, Id = x.Id, Username = x.Username});
+            var viewModel = new UserIndexViewModel() { Users = users.Users.Select(x => new UserViewModel { Email = x.Email, Id = x.Id, Username = x.Username }) };
             return View(viewModel);
         }
 
