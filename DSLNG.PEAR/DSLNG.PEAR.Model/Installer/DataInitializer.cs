@@ -10,9 +10,9 @@ namespace DSLNG.PEAR.Data.Installer
         protected override void Seed(DataContext context)
         {
             base.Seed(context);
-            var directorateLevel = new Level { Id = 1, Code = "DR", Name = "Directorate", IsActive = true, Number = 1 };
-            var corporateLevel = new Level { Id = 2, Code = "CR", Name = "Corporate", IsActive = true, Number = 2 };
-            var functionLevel = new Level { Id = 3, Code = "FN", Name = "Function", IsActive = true, Number = 3 };
+            var directorateLevel = new Level { Id = 1, Code = "DIR", Name = "Directorate", IsActive = true, Number = 1 };
+            var corporateLevel = new Level { Id = 2, Code = "COR", Name = "Corporate", IsActive = true, Number = 2 };
+            var functionLevel = new Level { Id = 3, Code = "FNC", Name = "Function", IsActive = true, Number = 3 };
 
             var groupFinanceDirectorate = new RoleGroup
             {
