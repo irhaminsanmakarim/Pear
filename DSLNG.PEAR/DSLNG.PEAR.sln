@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Web", "DSLNG.PEA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Services", "DSLNG.PEAR.Services\DSLNG.PEAR.Services.csproj", "{ADBF8F9E-62E8-4A19-869E-519150E87DD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Common", "DSLNG.PEAR.Common\DSLNG.PEAR.Common.csproj", "{5D8F0913-0C56-45AE-A229-4FDCB7E05979}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{ADBF8F9E-62E8-4A19-869E-519150E87DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADBF8F9E-62E8-4A19-869E-519150E87DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADBF8F9E-62E8-4A19-869E-519150E87DD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D8F0913-0C56-45AE-A229-4FDCB7E05979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D8F0913-0C56-45AE-A229-4FDCB7E05979}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D8F0913-0C56-45AE-A229-4FDCB7E05979}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D8F0913-0C56-45AE-A229-4FDCB7E05979}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -387,6 +387,10 @@
     <Folder Include="Views\Level\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DSLNG.PEAR.Common\DSLNG.PEAR.Common.csproj">
+      <Project>{5d8f0913-0c56-45ae-a229-4fdcb7e05979}</Project>
+      <Name>DSLNG.PEAR.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DSLNG.PEAR.Model\DSLNG.PEAR.Data.csproj">
       <Project>{0620fdea-1c13-4823-92a5-452d930efa10}</Project>
       <Name>DSLNG.PEAR.Data</Name>
