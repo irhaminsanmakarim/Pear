@@ -347,7 +347,9 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\_GridViewPartial.cshtml" />
     <Content Include="Views\PmsSummary\Index.cshtml" />
-    <Content Include="Views\Level\Index.cshtml" />
+    <Content Include="Views\Level\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -365,6 +367,7 @@
     <Compile Include="Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\AutoMapperExtensions.cs" />
+    <Compile Include="AutoMapper\ViewModelMappingProfile.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LevelController.cs" />

@@ -8,7 +8,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
     {
         public static void Configure()
         {
-            Mapper.Initialize(cfg => cfg.AddProfile(new ServicesMappingProfile()));
+            Mapper.Initialize(cfg => { 
+                cfg.AddProfile(new ServicesMappingProfile());
+                cfg.AddProfile(new ViewModelMappingProfile());
+            });
         }
     }
 }
