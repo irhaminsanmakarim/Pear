@@ -5,43 +5,4 @@
 
 <h2>Index</h2>
 
-@{
-    var grid = Html.DevExpress().GridView(settings =>
-        {
-            settings.Name = "gridPmsSummaryIndex";
-            settings.Columns.Add("Osp", "OSP");
-            settings.Columns.Add("PerformanceIndicator", "Performance Indicator");
-            settings.Columns.Add("Unit");
-            settings.Columns.Add("Weight");
-            settings.Columns.AddBand(targetBand =>
-                {
-                    targetBand.Caption = "Target";
-                    targetBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                    targetBand.Columns.Add("Yearly");
-                    targetBand.Columns.Add("Monthly");
-                    targetBand.Columns.Add("Ytd", "YTD");
-                });
-
-            settings.Columns.AddBand(actualBand =>
-                {
-                    actualBand.Caption = "Actual";
-                    actualBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                    actualBand.Columns.Add("Yearly");
-                    actualBand.Columns.Add("Monthly");
-                    actualBand.Columns.Add("Ytd", "YTD");
-                });
-
-            settings.Columns.AddBand(indexBand =>
-                {
-                    indexBand.Caption = "Index";
-                    indexBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                    indexBand.Columns.Add("Yearly");
-                    indexBand.Columns.Add("Monthly");
-                    indexBand.Columns.Add("Ytd", "YTD");
-                });
-
-            settings.Columns.Add("Score");
-        });
-}
-
-@grid.Bind(Model).GetHtml()
+@Html.Partial("_IndexGridPartial", Model.PmsSummaries)

@@ -1,0 +1,46 @@
+﻿@model IList<DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryViewModel>
+
+@Html.DevExpress().GridView(settings =>
+        {
+            settings.Name = "gridPmsSummaryIndex";
+            settings.CallbackRouteValues = new { Controller = "PmsSummary", Action = "IndexGridPartial" };
+            settings.SettingsBehavior.AllowFixedGroups = true;
+            settings.Columns.Add("Osp", "OSP").GroupIndex = 0; ;
+            settings.Columns.Add("PerformanceIndicator", "Performance Indicator");
+            settings.Columns.Add("Unit");
+            settings.Columns.Add("Weight");
+            settings.Columns.AddBand(targetBand =>
+                {
+                    targetBand.Caption = "Target";
+                    targetBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+                    targetBand.Columns.Add("TargetYearly", "Yearly");
+                    targetBand.Columns.Add("TargetMonthly", "Monthly");
+                    targetBand.Columns.Add("TargetYtd", "YTD");
+                });
+
+            settings.Columns.AddBand(actualBand =>
+                {
+                    actualBand.Caption = "Actual";
+                    actualBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+                    actualBand.Columns.Add("ActualYearly", "Yearly");
+                    actualBand.Columns.Add("ActualMonthly", "Monthly");
+                    actualBand.Columns.Add("ActualYtd", "YTD");
+                });
+
+            settings.Columns.AddBand(indexBand =>
+                {
+                    indexBand.Caption = "Index";
+                    indexBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+                    indexBand.Columns.Add("IndexYearly", "Yearly");
+                    indexBand.Columns.Add("IndexMonthly", "Monthly");
+                    indexBand.Columns.Add("IndexYtd", "YTD");
+                });
+
+            settings.Columns.Add("Score");
+            settings.PreRender = (s, e) =>
+            {
+                MVCxGridView gridView = s as MVCxGridView;
+                if (gridView != null)
+                    gridView.ExpandAll();
+            };
+        }).Bind(Model).GetHtml()
