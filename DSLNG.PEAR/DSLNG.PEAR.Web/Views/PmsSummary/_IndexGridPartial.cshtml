@@ -1,4 +1,5 @@
-﻿@model IList<DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryViewModel>
+﻿@using DevExpress.Data
+@model IList<DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryViewModel>
 
 @Html.DevExpress().GridView(settings =>
         {
@@ -37,6 +38,16 @@
                 });
 
             settings.Columns.Add("Score");
+
+            ASPxSummaryItem item = new ASPxSummaryItem();
+            item.ShowInGroupFooterColumn = "Unit";
+            item.SummaryType = SummaryItemType.Sum;
+            item.FieldName = "Score";
+            
+            //item.DisplayFormat = "c";
+            settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleAlways;
+            settings.GroupSummary.Add(item);
+            
             settings.PreRender = (s, e) =>
             {
                 MVCxGridView gridView = s as MVCxGridView;
