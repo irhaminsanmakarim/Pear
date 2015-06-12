@@ -231,7 +231,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\dslng_pear.sdf" />
+    <EmbeddedResource Include="App_Data\dslng_pear.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />
@@ -343,6 +345,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\_GridViewPartial.cshtml" />
+    <Content Include="Views\PmsSummary\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -362,7 +366,11 @@
     <Compile Include="AutoMapper\AutoMapperExtensions.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\LevelController.cs" />
+=======
+    <Compile Include="Controllers\PmsSummaryController.cs" />
+>>>>>>> 6b8837c0c607a9eea4d7efa005e9f23f66575d55
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
@@ -373,8 +381,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< HEAD
     <Compile Include="ViewModels\Level\LevelViewModel.cs" />
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
+=======
+    <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
+>>>>>>> 6b8837c0c607a9eea4d7efa005e9f23f66575d55
     <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

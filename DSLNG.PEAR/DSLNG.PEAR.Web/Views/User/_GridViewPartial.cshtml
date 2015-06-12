@@ -1,0 +1,27 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView";
+        settings.CallbackRouteValues = new { Controller = "User", Action = "GridViewPartial" };
+
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.Columns.Add("Id");
+        settings.Columns.Add("Title");
+        settings.Columns.Add("Periode");
+        settings.Columns.Add("ScoreIndicator");
+        settings.Columns.Add("PmsConfig");
+        settings.Columns.Add("IsActive");
+        settings.Columns.Add("CreatedBy");
+        settings.Columns.Add("UpdatedBy");
+        settings.Columns.Add("CreatedDate");
+        settings.Columns.Add("UpdatedDate");
+    });
+}
+@grid.Bind(Model).GetHtml()

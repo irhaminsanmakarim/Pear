@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Web.ViewModels.User;
+using DevExpress.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -24,6 +25,15 @@ namespace DSLNG.PEAR.Web.Controllers
 
             var userViewModel = new UserViewModel {Email = user.Email, Id = user.Id, Username = user.Username};
             return View(userViewModel);
+        }
+
+        DSLNG.PEAR.Data.Persistence.DataContext db = new DSLNG.PEAR.Data.Persistence.DataContext();
+
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial()
+        {
+            var model = db.PmsSummaries;
+            return PartialView("_GridViewPartial", model.ToList());
         }
 	}
 }
