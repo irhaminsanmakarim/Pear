@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using DSLNG.PEAR.Services;
+using DSLNG.PEAR.Services.AutoMapper;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -10,6 +8,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
     {
         public static void Configure()
         {
+            Mapper.Initialize(cfg => cfg.AddProfile(new ServicesMappingProfile()));
             //Mapper.CreateMap<User, UserViewModel>();
         }
     }
