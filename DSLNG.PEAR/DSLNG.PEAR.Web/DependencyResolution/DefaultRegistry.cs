@@ -37,6 +37,8 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             //For<IExample>().Use<Example>();
             For<IDataContext>().LifecycleIs<HttpContextLifecycle>().Use<DataContext>();
             For<IUserService>().Use<UserService>();
+            For<ILevelService>().Use<LevelService>();
+            For<IPillarService>().Use<PillarService>();
         }
 
         #endregion

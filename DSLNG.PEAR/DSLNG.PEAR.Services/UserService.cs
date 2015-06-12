@@ -5,6 +5,7 @@ using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Services.Responses.User;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Services
 {
@@ -17,7 +18,7 @@ namespace DSLNG.PEAR.Services
         public GetUserResponse GetUser(GetUserRequest request)
         {
             var user = DataContext.Users.First(x => x.Id == request.Id);
-            var response = Mapper.Map<GetUserResponse>(user);
+            var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
             
             return response;
         }
@@ -26,7 +27,7 @@ namespace DSLNG.PEAR.Services
         {
             var users = DataContext.Users.ToList();
             var response = new GetUsersResponse();
-            response.Users = Mapper.Map(users, new List<UserResponse>());
+            response.Users = users.MapTo<UserResponse>();
 
             return response;
         }
