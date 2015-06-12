@@ -1,13 +1,12 @@
 ﻿using DSLNG.PEAR.Services.Interfaces;
-using System;
-using System.Collections.Generic;
+using DSLNG.PEAR.Services.Requests.Level;
+using DSLNG.PEAR.Web.ViewModels.Level;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class LevelController : BaseController
+    public class LevelController : Controller
     {
         private readonly ILevelService _levelService;
 
@@ -19,7 +18,9 @@ namespace DSLNG.PEAR.Web.Controllers
         // GET: /Level/
         public ActionResult Index()
         {
-            return View();
+            var dto = _levelService.GetLevels(new GetLevelsRequest());
+            var model = new LevelsViewModel() { Levels = dto.Levels.Select(x => new LevelViewModel { Id= x.Id, Code = x.Code, Name = x.Name, Number = x.Number, Remark = x.Remark, IsActive = x.IsActive }) };
+            return View(model);
         }
 	}
 }
