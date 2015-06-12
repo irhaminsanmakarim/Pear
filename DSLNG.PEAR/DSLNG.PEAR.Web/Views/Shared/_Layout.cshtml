@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8" />
     <title>@ViewBag.Title</title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     @*<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>*@
     @Styles.Render("~/Content/css")
     @Html.DevExpress().GetStyleSheets(
@@ -35,210 +34,110 @@
 )
 </head>
 
-<body class="skin-black">
-    <!-- header logo: style can be found in header.less -->
-
-    <div class="wrapper row-offcanvas row-offcanvas-left">
-        <!-- Left side column. contains the logo and sidebar -->
-        <aside class="left-side sidebar-offcanvas">
-
-
-            <!-- sidebar: style can be found in sidebar.less -->
-            <section class="sidebar" id="menu">
-
-                <ul class="sidebar-menu-left">
-                    <div style="background-color: #3f454f; height: 70px; padding-top: 15px;">
-                        <img src="@Url.Content("~/Content/img/logopear.png")" />
-                    </div>
-                    <li class="active"><a href="#" class="menu_dashboard"><i class="fa fa-dashboard"></i><span>DASH<br />
-                        BOARD</span></a></li>
-
-                    <li><a href="#" class="menu_plan"><i class="fa fa-calendar"></i><span>PLAN</span></a></li>
-
-                    <li><a href="#" class="menu_execute"><i class="fa fa-gavel"></i><span>EXECUTE</span></a></li>
-
-                    <li><a href="#" class="menu_assess"><i class="fa fa-edit"></i><span>ASSESS</span></a></li>
-
-                    <li><a href="#" class="menu_report"><i class="fa fa-bar-chart-o"></i><span>REPORT</span></a></li>
-
-                </ul>
-
-
-
-                <div class="sidebar-menu-right">
-
-                    <div class="logo_top">
-                        <img src="@Url.Content("~/Content/img/logo_blue.png")" />
-                    </div>
-
-                    <div class="submenu">
-                        <ul class="submenu_dashboard">
-
-                            <div class="accordion">
-                                <a href="#">Corporate Performance<span class="fa fa-angle-down"></span></a><br />
-                                <div class="sublevel">
-                                    <a href="production.html">Productivity & Efficiency</a><br />
-                                    <a href="#">Financial Strength</a><br />
-                                    <a href="#">Stakeholder Responsible</a><br />
-                                    <a href="#">Safety</a>
-                                </div>
-                            </div>
-                            <a href="#">Directorate Performance</a><br />
-                            <div class="accordion">
-                                <a href="#">Function Performance<span class="fa fa-angle-down"></span></a><br />
-                                <div class="sublevel">
-                                    <a href="#">QHSE</a><br />
-                                    <a href="#">HCD</a><br />
-                                    <a href="#">Procurement</a><br />
-                                    <a href="#">Maintance</a><br />
-                                </div>
-                            </div>
-                            <a href="#">Executive Summary</a><br />
-                            <a href="#">Summary KO</a><br />
-                            <a href="#">Economic Summary</a><br />
-                            <a href="index2.html">PMS Summary</a><br />
-                            <div class="accordion">
-                                <a href="#">Configuration Setting<span class="fa fa-angle-down"></span></a><br />
-                                <div class="sublevel">
-                                    <a href="#">Template</a><br />
-                                    <a href="#">Template Editor</a><br />
-                                </div>
-                            </div>
-
-
-
-                        </ul>
-
-                        <ul class="submenu_plan" style="display: none;">
-
-                            <div class="accordion">
-                                <a href="#">Business Indicator<span class="fa fa-angle-down"></span></a><br />
-                                <div class="sublevel">
-                                    <a href="#">Period</a><br />
-                                    <a href="#">Type</a><br />
-                                    <a href="#">Method</a><br />
-                                    <a href="#">Conversion</a><br />
-                                    <a href="#">Level</a><br />
-                                    <a href="#">Pilar</a><br />
-                                    <a href="#">Measurement</a><br />
-                                    <a href="#">Group</a><br />
-                                    <a href="#">Activity</a><br />
-
-                                </div>
-                            </div>
-                            <div class="accordion">
-                                <a href="#">Performance Setting<span class="fa fa-angle-down"></span></a><br />
-                                <div class="sublevel">
-                                    <a href="#">Setting Target</a><br />
-                                    <a href="#">Corporate Portfolio</a><br />
-
-                                </div>
-                            </div>
-                            <a href="#">Plan Resource</a><br />
-                            <a href="#">Project Setting</a><br />
-
-                            <div class="accordion">
-                                <a href="#">Economic Model<span class="fa fa-angle-down"></span></a><br />
-                                <div class="sublevel">
-                                    <a href="#">Configuration</a><br />
-                                    <a href="#">Key Assumption Configuration</a><br />
-                                    <a href="#">Operation Data Configuration</a><br />
-                                    <a href="#">Key Output Configuration</a><br />
-                                    <a href="#">Key Output Template</a><br />
-                                    <a href="#">Master</a><br />
-                                    <a href="#">Operation Data Category</a><br />
-                                    <a href="#">Key Assumption Stage</a><br />
-                                    <a href="#">Key Assumption Category</a><br />
-                                    <a href="#">Key Output Category</a><br />
-                                    <a href="#">Scenario List</a><br />
-                                    <a href="#">EM Summary</a><br />
-                                </div>
-                            </div>
-                        </ul>
-                        <ul class="submenu_execute" style="display: none;">
-
-                            <a href="#">KPI Achievement</a><br />
-                            <a href="#">Actual Resource</a><br />
-                            <a href="#">Project Progress</a><br />
-
-                        </ul>
-                        <ul class="submenu_assess" style="display: none;">
-                            <a href="#">Project Impact</a><br />
-                            <a href="#">Resource Utilization</a><br />
-                            <a href="#">Economic Review</a><br />
-
-                        </ul>
-                        <ul class="submenu_report" style="display: none;">
-                            <a href="#">Daily Execution Report</a><br />
-                            <a href="#">Management Information Report</a><br />
-                            <a href="#">KPI Test</a><br />
-
-                        </ul>
-
-                    </div>
+<body>
+    <div class="main-content">
+        <aside class="left-content">
+            <div class="logo">
+                <div class="pear">
+                    <img src="@Url.Content("~/Content/img/logopear.png")" />
+                </div><!--
+      --><div class="donggi">
+                    <img src="@Url.Content("~/Content/img/logo_blue.png")" />
                 </div>
-
-            </section>
-            <!-- /.sidebar -->
+            </div>
+            <ul class="main-nav">
+                <li class="active"><a href="#" class="menu_dashboard"><i class="fa fa-dashboard"></i><span>DASH BOARD</span></a>
+                    <ul class="sub-nav">
+                        <li>
+                            <a href="#">Corporate Performance<span class="fa fa-angle-down"></span></a><br />
+                            <ul class="sublevel">
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Corporate Performance<span class="fa fa-angle-down"></span></a><br />
+                            <ul class="sublevel">
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#" class="menu_plan"><i class="fa fa-calendar"></i><span>PLAN</span></a>
+                    <ul class="sub-nav">
+                        <li>
+                            <a href="#">Corporate Performance<span class="fa fa-angle-down"></span></a><br />
+                            <ul class="sublevel">
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Corporate Performance<span class="fa fa-angle-down"></span></a><br />
+                            <ul class="sublevel">
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                                <li><a href="production.html">Productivity & Efficiency</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#" class="menu_execute"><i class="fa fa-gavel"></i><span>EXECUTE</span></a></li>
+                <li><a href="#" class="menu_assess"><i class="fa fa-edit"></i><span>ASSESS</span></a></li>
+                <li><a href="#" class="menu_report"><i class="fa fa-bar-chart-o"></i><span>REPORT</span></a></li>
+            </ul>
+            <div class="left-content-toggle">
+                <i class="fa fa-caret-left"></i>
+                <i style="display: none" class="fa fa-caret-right"></i>
+            </div>
         </aside>
-        <aside class="right-side">
-                @RenderBody()
+        <aside class="right-content">
+            @RenderBody()
         </aside>
-       
-        @Scripts.Render("~/bundles/js")
-        <script>
-            $(".menu_dashboard").click(function () {
-                $(".submenu_dashboard").show();
-                $(".submenu_plan").hide();
-                $(".submenu_execute").hide();
-                $(".submenu_assess").hide();
-                $(".submenu_report").hide();
+    </div>
+    @Scripts.Render("~/bundles/js")
+    <script type="text/javascript">
 
+        $(document).ready(function () {
+            $('.sub-nav > li').hover(function () {
+                var $this = $(this);
+                $this.find('ul').stop().slideToggle();
+            })
+            $('.main-nav > li').click(function () {
+                $('.main-nav > li.active').removeClass('active');
+                $(this).addClass('active');
+            })
+            $('.left-content-toggle').click(function () {
+                $(this).find('i').toggle();
+                var $leftContent = $('.left-content');
+                if (!$leftContent.hasClass('pear-hidden')) {
+
+                    $('.main-content').animate({
+                        marginLeft: -230
+                    }, function () {
+                        $leftContent.addClass('pear-hidden');
+                    })
+                } else {
+                    $('.main-content').animate({
+                        marginLeft: 0
+                    }, function () {
+                        $leftContent.removeClass('pear-hidden');
+                    })
+                }
             });
-
-
-            $(".menu_plan").click(function () {
-                $(".submenu_dashboard").hide();
-                $(".submenu_plan").show();
-                $(".submenu_execute").hide();
-                $(".submenu_assess").hide();
-                $(".submenu_report").hide();
-
-            });
-
-            $(".menu_execute").click(function () {
-                $(".submenu_dashboard").hide();
-                $(".submenu_plan").hide();
-                $(".submenu_execute").show();
-                $(".submenu_assess").hide();
-                $(".submenu_report").hide();
-
-            });
-
-            $(".menu_assess").click(function () {
-                $(".submenu_dashboard").hide();
-                $(".submenu_plan").hide();
-                $(".submenu_execute").hide();
-                $(".submenu_assess").show();
-                $(".submenu_report").hide();
-
-            });
-
-            $(".menu_report").click(function () {
-                $(".submenu_dashboard").hide();
-                $(".submenu_plan").hide();
-                $(".submenu_execute").hide();
-                $(".submenu_assess").hide();
-                $(".submenu_report").show();
-
-            });
-
-        </script>
-
-        <script>
-            $(".accordion > div").hide().parent().hover(function (event) {
-                $(this).children("div").slideToggle(event.type === "mouseenter");
-            });
-        </script>
+        })
+    </script>
 </body>
 </html>
