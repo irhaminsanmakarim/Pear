@@ -347,6 +347,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\_GridViewPartial.cshtml" />
     <Content Include="Views\PmsSummary\Index.cshtml" />
+    <Content Include="Views\PmsSummary\_IndexGridPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -378,10 +379,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\PmsSummary\PmsSummaryGridViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelViewModel.cs" />
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
     <Compile Include="ViewModels\User\UserIndexViewModel.cs" />
     <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>
