@@ -8,8 +8,10 @@ namespace DSLNG.PEAR.Services.Responses.Menu
         public int Id { get; set; }
 
         public string Name { get; set; }
+        public ICollection<DSLNG.PEAR.Data.Entities.Menu> Menus { get; set; }
         public int Order { get; set; }
         public bool IsRoot { get; set; }
+        public ICollection<RoleGroup> RoleGroups { get; set; }
         public string Remark { get; set; }
         public string Module { get; set; }
 
