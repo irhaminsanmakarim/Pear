@@ -437,6 +437,8 @@
     <Compile Include="ViewModels\ArtifactDesigner\ArtifactDesignerViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelsViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelViewModel.cs" />
+    <Compile Include="ViewModels\Menu\MenusViewModel.cs" />
+    <Compile Include="ViewModels\Menu\MenuViewModel.cs" />
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
