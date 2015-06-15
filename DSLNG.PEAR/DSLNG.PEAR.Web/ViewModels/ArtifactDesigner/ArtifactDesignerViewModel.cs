@@ -8,9 +8,12 @@ namespace DSLNG.PEAR.Web.ViewModels.ArtifactDesigner
 {
     public class ArtifactDesignerViewModel
     {
+        public ArtifactDesignerViewModel() {
+            GraphicTypes = new List<SelectListItem>();
+        }
         public string GraphicType { get; set; }
         public string GraphicName { get; set; }
         public string HeaderTitle { get; set; }
-        public IEnumerable<SelectListItem> GraphicTypes { get; set; }
+        public IList<SelectListItem> GraphicTypes { get; set; }
     }
 }

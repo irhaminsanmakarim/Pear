@@ -17,7 +17,7 @@ namespace DSLNG.PEAR.Data.Entities
         public string Name { get; set; }
         [Required]
         public string Header { get; set; }
-        public IEnumerable<ArtifactSerie> Series { get; set; }
+        public ICollection<ArtifactSerie> Series { get; set; }
 
         public bool IsActive { get; set; }
         public User CreatedBy { get; set; }

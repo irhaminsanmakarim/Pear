@@ -14,7 +14,7 @@ namespace DSLNG.PEAR.Data.Entities
         public string LayoutContent { get; set; }
         public int RefershTime { get; set; } //in minutes
         public string Remark { get; set; }
-        public IEnumerable<LayoutRow> LayoutRows { get; set; }
+        public ICollection<LayoutRow> LayoutRows { get; set; }
 
         public bool IsActive { get; set; }
         public User CreatedBy { get; set; }

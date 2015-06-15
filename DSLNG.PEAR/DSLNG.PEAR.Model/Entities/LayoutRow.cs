@@ -11,7 +11,7 @@ namespace DSLNG.PEAR.Data.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public IEnumerable<LayoutColumn> LayoutColumns { get; set; }
+        public ICollection<LayoutColumn> LayoutColumns { get; set; }
 
         public bool IsActive { get; set; }
         public User CreatedBy { get; set; }
