@@ -13,7 +13,8 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "PmsSummary");
+            //return View();
         }
 
         //
