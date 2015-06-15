@@ -38,8 +38,12 @@ namespace DSLNG.PEAR.Data.Installer
             context.Levels.AddOrUpdate(corporateLevel);
             context.Levels.AddOrUpdate(functionLevel);
             context.RoleGroups.AddOrUpdate(groupFinanceDirectorate);
-            var menus = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };
-            context.Menus.AddOrUpdate(menus);
+            var menu1 = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };
+            var menu2 = new Menu { Id = 2, IsRoot = true, Module = "PMS", Order = 1, Name = "PMS", IsActive = true, Menus = null, RoleGroups = null };
+            var menu3 = new Menu { Id = 3, IsRoot = true, Module = "Level", Order = 0, Name = "Level", IsActive = true, Menus = null, RoleGroups = null };
+            context.Menus.AddOrUpdate(menu1);
+            context.Menus.AddOrUpdate(menu2);
+            context.Menus.AddOrUpdate(menu3);
             context.Users.AddOrUpdate(admin);
             context.SaveChanges();
         }
