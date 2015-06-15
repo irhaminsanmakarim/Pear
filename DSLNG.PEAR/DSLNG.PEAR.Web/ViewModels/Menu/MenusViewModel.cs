@@ -7,5 +7,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Menu
 {
     public class MenusViewModel
     {
+        public IEnumerable<MenuViewModel> Menus { get; set; }
     }
 }

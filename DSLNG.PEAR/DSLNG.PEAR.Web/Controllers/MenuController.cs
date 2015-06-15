@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Web.ViewModels.Menu;
+using DSLNG.PEAR.Data.Entities;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -17,12 +20,19 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             _menuService = menuService;
         }
+
+
+        public PartialViewResult MainMenu() {
+            return PartialView();
+        }
+
         //
         // GET: /Menu/
         public ActionResult Index()
         {
             var dto = _menuService.GetMenus(new GetMenuRequest());
-            return View();
+            var model = dto.Menus.MapTo<MenusViewModel>();
+            return View(model);
         }
 
         //
