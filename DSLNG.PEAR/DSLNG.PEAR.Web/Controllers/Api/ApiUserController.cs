@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Requests.User;
+using DSLNG.PEAR.Web.ViewModels.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,10 +12,19 @@ namespace DSLNG.PEAR.Web.Controllers.Api
 {
     public class ApiUserController : ApiController
     {
-        // GET api/apiuser
-        public IEnumerable<string> Get()
+        private readonly IUserService _userService;
+
+        public ApiUserController(IUserService userService)
         {
-            return new string[] { "value1", "value2" };
+            _userService = userService;
+        }
+
+        // GET api/apiuser
+        public UserIndexViewModel Get()
+        {
+            var users = _userService.GetUsers(new GetUsersRequest());
+            var viewModel = new UserIndexViewModel() { Users = users.Users.Select(x => new UserViewModel { Email = x.Email, Id = x.Id, Username = x.Username }) };
+            return viewModel;
         }
 
         // GET api/apiuser/5
