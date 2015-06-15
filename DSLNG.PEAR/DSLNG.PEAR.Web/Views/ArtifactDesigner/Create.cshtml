@@ -1,0 +1,38 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.ArtifactDesigner.ArtifactDesignerViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+    
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+      @Html.DevExpress().FormLayout(settings => {
+                    settings.Name = "formLayout";
+                    settings.EncodeHtml = false;
+                    var groupItem = settings.Items.AddGroupItem(itemSettings => {
+                        itemSettings.Caption = "Group Caption";
+                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+                    });
+                    groupItem.Items.Add(m => m.GraphicType, itemSettings => {
+                        itemSettings.HelpText = "Please select graphic type";
+                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
+                        ComboBoxSettings cb = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
+                        cb.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        cb.Properties.TextField = "Text";
+                        cb.Properties.ValueField = "Value";
+                        cb.Properties.ValueType = typeof(int);
+                        cb.Properties.DataSource = Model.GraphicTypes;
+                    });
+                
+                    groupItem.Items.Add(m => m.GraphicName).HelpText = "Please set the name for this graphic";
+                    groupItem.Items.Add(m => m.HeaderTitle).HelpText = "Please set the header title";
+         }).GetHtml();
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
