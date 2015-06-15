@@ -22,7 +22,6 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Index()
         {
             var dto = _menuService.GetMenus(new GetMenuRequest());
-            
             return View();
         }
 

@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Data.Installer
             var directorateLevel = new Level { Id = 1, Code = "DIR", Name = "Directorate", IsActive = true, Number = 1 };
             var corporateLevel = new Level { Id = 2, Code = "COR", Name = "Corporate", IsActive = true, Number = 2 };
             var functionLevel = new Level { Id = 3, Code = "FNC", Name = "Function", IsActive = true, Number = 3 };
+            
 
             var groupFinanceDirectorate = new RoleGroup
             {
@@ -31,10 +32,14 @@ namespace DSLNG.PEAR.Data.Installer
                 Role = groupFinanceDirectorate
             };
 
+            
+
             context.Levels.AddOrUpdate(directorateLevel);
             context.Levels.AddOrUpdate(corporateLevel);
             context.Levels.AddOrUpdate(functionLevel);
             context.RoleGroups.AddOrUpdate(groupFinanceDirectorate);
+            var menus = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };
+            context.Menus.AddOrUpdate(menus);
             context.Users.AddOrUpdate(admin);
             context.SaveChanges();
         }

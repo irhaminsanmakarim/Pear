@@ -21,7 +21,7 @@ namespace DSLNG.PEAR.Services
 
         public GetMenuResponse GetMenus(GetMenuRequest request)
         {
-            var menu = DataContext.Menus.First(x => x.Id == request.Id);
+            var menu = DataContext.Menus;
             var response = Mapper.Map<GetMenuResponse>(menu);
             return response;
         }
