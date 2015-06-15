@@ -28,6 +28,11 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
+        public ActionResult Create()
+        {
+            return View();
+        }
+
         /*DSLNG.PEAR.Data.Persistence.DataContext db = new DSLNG.PEAR.Data.Persistence.DataContext();
 
         [ValidateInput(false)]

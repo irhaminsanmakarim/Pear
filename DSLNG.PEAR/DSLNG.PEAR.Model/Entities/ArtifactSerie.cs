@@ -12,7 +12,7 @@ namespace DSLNG.PEAR.Data.Entities
         public int Id { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public IEnumerable<ArtifactStack> ArtifactStacks { get; set; }
+        public ICollection<ArtifactStack> ArtifactStacks { get; set; }
         public string PeriodeType { get; set; }
         public string Aggregation { get; set; }
         public string Color { get; set; }

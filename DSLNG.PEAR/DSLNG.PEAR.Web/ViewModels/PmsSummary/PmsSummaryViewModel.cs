@@ -24,6 +24,6 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         public decimal IndexMonthly { get; set; }
         public decimal IndexYtd { get; set; }
 
-        public decimal Score { get; set; }
+        public double Score { get; set; }
     }
 }

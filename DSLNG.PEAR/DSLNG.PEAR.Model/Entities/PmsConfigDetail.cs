@@ -17,7 +17,7 @@ namespace DSLNG.PEAR.Data.Entities
         public ScoringType ScoringType { get; set; }
         public bool AsGraphic { get; set; }
         public ScoreIndicator ScoreIndicator { get; set; }
-        public IEnumerable<KpiTarget> KpiTargets { get; set; }
+        public ICollection<KpiTarget> KpiTargets { get; set; }
         public TargetType TargetType { get; set; }
 
         public bool IsActive { get; set; }

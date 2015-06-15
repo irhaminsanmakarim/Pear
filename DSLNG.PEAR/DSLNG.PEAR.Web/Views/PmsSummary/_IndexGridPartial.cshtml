@@ -6,7 +6,11 @@
             settings.Name = "gridPmsSummaryIndex";
             settings.CallbackRouteValues = new { Controller = "PmsSummary", Action = "IndexGridPartial" };
             settings.SettingsBehavior.AllowFixedGroups = true;
-            settings.Columns.Add("Osp", "OSP").GroupIndex = 0; ;
+
+            var ospColumn = new MVCxGridViewColumn("Osp", "OSP");
+            ospColumn.PropertiesEdit.EncodeHtml = false;
+            ospColumn.GroupIndex = 0;
+            settings.Columns.Add(ospColumn);
             settings.Columns.Add("PerformanceIndicator", "Performance Indicator");
             settings.Columns.Add("Unit");
             settings.Columns.Add("Weight");
@@ -37,16 +41,60 @@
                     indexBand.Columns.Add("IndexYtd", "YTD");
                 });
 
-            settings.Columns.Add("Score");
-
-            ASPxSummaryItem item = new ASPxSummaryItem();
-            item.ShowInGroupFooterColumn = "Unit";
-            item.SummaryType = SummaryItemType.Sum;
-            item.FieldName = "Score";
+            settings.Columns.Add(column =>
+                {
+                    column.FieldName = "Score";
+                    column.PropertiesEdit.DisplayFormatString = "0.00";
+                });
             
-            //item.DisplayFormat = "c";
+            //settings.Columns.Add("Score").PropertiesEdit.DisplayFormatString = "0.00";
+
+            
+
+            /*ASPxSummaryItem kpiScore = new ASPxSummaryItem();
+            kpiScore.ShowInGroupFooterColumn = "PerformanceIndicator";
+            kpiScore.SummaryType = SummaryItemType.Sum;
+            kpiScore.FieldName = "Score";
+            kpiScore.DisplayFormat = "Score KPI in this pillar (0.00)";
+
+            ASPxSummaryItem percentageScore = new ASPxSummaryItem("PercentageScore", SummaryItemType.Custom);
+            percentageScore.ShowInGroupFooterColumn = "Score";
+            //percentageScore.SummaryType = SummaryItemType.Custom;
+            //percentageScore.FieldName = "Score";
+            percentageScore.DisplayFormat = "as (0.00)";*/
+            
+            
             settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleAlways;
-            settings.GroupSummary.Add(item);
+
+
+            ASPxSummaryItem kpiScore = new ASPxSummaryItem();
+            kpiScore.ShowInGroupFooterColumn = "PerformanceIndicator";
+            kpiScore.SummaryType = SummaryItemType.Sum;
+            kpiScore.FieldName = "Score";
+            kpiScore.DisplayFormat = "Score KPI in this pillar (0.00)";
+            settings.GroupSummary.Add(kpiScore);
+            
+            ASPxSummaryItem percentageScore = new ASPxSummaryItem();
+            percentageScore.ShowInGroupFooterColumn = "Score";
+            percentageScore.DisplayFormat = "aa (0)";
+            percentageScore.SummaryType = SummaryItemType.Custom;
+            settings.GroupSummary.Add(percentageScore);
+            settings.CustomSummaryCalculate = (sender, e) =>
+                {
+                    e.TotalValue = 999;
+                };
+
+            settings.CustomUnboundColumnData = (sender, e) =>
+            {
+                if (e.Column.FieldName == "Total")
+                {
+                    decimal price = (decimal)e.GetListSourceFieldValue("UnitPrice");
+                    int quantity = Convert.ToInt32(e.GetListSourceFieldValue("Quantity"));
+                    e.Value = price * quantity;
+                }
+            };
+            
+            //settings.GroupSummary.Add(percentageScore);
             
             settings.PreRender = (s, e) =>
             {

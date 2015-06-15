@@ -39,7 +39,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 IndexYtd = 10,
                 Osp = "Safety",
                 PerformanceIndicator = "Fatality/Strap Disability",
-                Score = 20,
+                Score = 35.17,
                 TargetMonthly = 10,
                 TargetYearly = 29,
                 TargetYtd = 20
@@ -57,7 +57,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 IndexYtd = 104,
                 Osp = "Safety",
                 PerformanceIndicator = "RIF",
-                Score = 202,
+                Score = 202.20,
                 TargetMonthly = 101,
                 TargetYearly = 22,
                 TargetYtd = 21
@@ -73,9 +73,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 IndexMonthly = 240,
                 IndexYearly = 539,
                 IndexYtd = 104,
-                Osp = "Productivity and Efficiency",
+                Osp = "<span class='trafficlight grey'></span>Productivity and Efficiency",
                 PerformanceIndicator = "RIF",
-                Score = 202,
+                Score = 202.31,
                 TargetMonthly = 101,
                 TargetYearly = 22,
                 TargetYtd = 21

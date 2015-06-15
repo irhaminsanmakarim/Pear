@@ -11,10 +11,10 @@ namespace DSLNG.PEAR.Data.Entities
         public int Id { get; set; }
 
         public string Name { get; set; }
-        public IEnumerable<Menu> Menus { get; set; }
+        public ICollection<Menu> Menus { get; set; }
         public int Order { get; set; }
         public bool IsRoot { get; set; }
-        public IEnumerable<RoleGroup> RoleGroups { get; set; }
+        public ICollection<RoleGroup> RoleGroups { get; set; }
         public string Remark { get; set; }
         public string Module { get; set; }
 
