@@ -6,6 +6,11 @@ namespace DSLNG.PEAR.Data.Entities
 {
     public class Menu
     {
+        public Menu() {
+            Menus = new List<Menu>();
+            RoleGroups = new List<RoleGroup>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
