@@ -54,10 +54,14 @@
   <ItemGroup>
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
+    <Compile Include="Interfaces\IMenuService.cs" />
+    <Compile Include="MenuService.cs" />
     <Compile Include="Requests\Level\GetLevelsRequest.cs" />
+    <Compile Include="Requests\Menu\GetMenuRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
     <Compile Include="Responses\Level\GetAllLevels.cs" />
     <Compile Include="Responses\Level\LevelResponse.cs" />
+    <Compile Include="Responses\Menu\GetMenuResponse.cs" />
     <Compile Include="Responses\User\GetUsersResponse.cs" />
     <Compile Include="Interfaces\ILevelService.cs" />
     <Compile Include="Interfaces\IPillarService.cs" />
