@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
     {
         public string Osp { get; set; }
         public string PerformanceIndicator { get; set; }
+        public double OspWeight { get; set; }
         public decimal Unit { get; set; }
         public decimal Weight { get; set; }
 
