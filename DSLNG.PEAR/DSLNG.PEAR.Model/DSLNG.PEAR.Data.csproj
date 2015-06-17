@@ -93,6 +93,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Migrations\basic-data.sql" />
     <Content Include="Migrations\readme.txt" />
   </ItemGroup>
   <ItemGroup>

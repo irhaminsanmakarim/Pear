@@ -17,10 +17,21 @@ namespace DSLNG.PEAR.Services
 
         public GetUserResponse GetUser(GetUserRequest request)
         {
-            var user = DataContext.Users.First(x => x.Id == request.Id);
-            var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
-            
-            return response;
+            try
+            {
+                var user = DataContext.Users.First(x => x.Id == request.Id);
+                var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
+
+                return response;
+            }
+            catch (System.InvalidOperationException x)
+            {
+                return new GetUserResponse
+                    {
+                        IsSuccess = false,
+                        Message = x.Message
+                    };
+            }
         }
 
         public GetUsersResponse GetUsers(GetUsersRequest request)

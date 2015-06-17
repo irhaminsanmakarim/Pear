@@ -160,3 +160,20 @@
 .trafficlight, .title, .description_year {
   float: left;
 }
+
+.title_page {
+    border-right: 1px solid grey;
+    float: left;
+    margin-bottom: 15px;
+    margin-left: 25px;
+    margin-top: 10px;
+    padding-right: 30px;
+    width: 51%;
+}
+.description {
+    float: right;
+    margin-left: 15px;
+    margin-right: 20px;
+    text-align: right;
+    width: 40%;
+}

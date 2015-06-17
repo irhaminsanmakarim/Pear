@@ -1,4 +1,5 @@
-﻿using DSLNG.PEAR.Services.Interfaces;
+﻿using DSLNG.PEAR.Services;
+using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Web.ViewModels.User;
 using System;
@@ -13,6 +14,11 @@ namespace DSLNG.PEAR.Web.Controllers.Api
     public class ApiUserController : ApiController
     {
         private readonly IUserService _userService;
+
+        public ApiUserController()
+        {
+            //_userService = new UserService();
+        }
 
         public ApiUserController(IUserService userService)
         {

@@ -14,6 +14,7 @@
             settings.Columns.Add("PerformanceIndicator", "Performance Indicator");
             settings.Columns.Add("Unit");
             settings.Columns.Add("Weight");
+            settings.Columns.Add("OspWeight");
             settings.Columns.AddBand(targetBand =>
                 {
                     targetBand.Caption = "Target";
@@ -46,23 +47,27 @@
                     column.FieldName = "Score";
                     column.PropertiesEdit.DisplayFormatString = "0.00";
                 });
-            
-            //settings.Columns.Add("Score").PropertiesEdit.DisplayFormatString = "0.00";
 
-            
-
-            /*ASPxSummaryItem kpiScore = new ASPxSummaryItem();
-            kpiScore.ShowInGroupFooterColumn = "PerformanceIndicator";
-            kpiScore.SummaryType = SummaryItemType.Sum;
-            kpiScore.FieldName = "Score";
-            kpiScore.DisplayFormat = "Score KPI in this pillar (0.00)";
-
-            ASPxSummaryItem percentageScore = new ASPxSummaryItem("PercentageScore", SummaryItemType.Custom);
-            percentageScore.ShowInGroupFooterColumn = "Score";
-            //percentageScore.SummaryType = SummaryItemType.Custom;
-            //percentageScore.FieldName = "Score";
-            percentageScore.DisplayFormat = "as (0.00)";*/
-            
+            decimal totalScore = 0;
+            settings.CustomSummaryCalculate = (sender, e) =>
+            {
+                ASPxSummaryItem summary = e.Item as ASPxSummaryItem;
+                if (summary.FieldName != "Score") return;
+                if (e.SummaryProcess == CustomSummaryProcess.Start)
+                {
+                    totalScore = 0;
+                }
+                if (e.SummaryProcess == CustomSummaryProcess.Calculate)
+                {
+                    totalScore += Convert.ToDecimal(e.GetValue("Score"));
+                }
+                if (e.SummaryProcess == CustomSummaryProcess.Finalize)
+                {
+                    decimal percent = 0;
+                    if (totalScore > 0) percent = totalScore / 100 * Convert.ToDecimal(e.GetValue("OspWeight"));
+                    e.TotalValue = percent;
+                }
+            };
             
             settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleAlways;
 
@@ -76,25 +81,10 @@
             
             ASPxSummaryItem percentageScore = new ASPxSummaryItem();
             percentageScore.ShowInGroupFooterColumn = "Score";
-            percentageScore.DisplayFormat = "aa (0)";
+            percentageScore.FieldName = "Score";
+            percentageScore.DisplayFormat = "0.00";
             percentageScore.SummaryType = SummaryItemType.Custom;
             settings.GroupSummary.Add(percentageScore);
-            settings.CustomSummaryCalculate = (sender, e) =>
-                {
-                    e.TotalValue = 999;
-                };
-
-            settings.CustomUnboundColumnData = (sender, e) =>
-            {
-                if (e.Column.FieldName == "Total")
-                {
-                    decimal price = (decimal)e.GetListSourceFieldValue("UnitPrice");
-                    int quantity = Convert.ToInt32(e.GetListSourceFieldValue("Quantity"));
-                    e.Value = price * quantity;
-                }
-            };
-            
-            //settings.GroupSummary.Add(percentageScore);
             
             settings.PreRender = (s, e) =>
             {

@@ -39,11 +39,14 @@ namespace DSLNG.PEAR.Web.Controllers
                 IndexYtd = 10,
                 Osp = "Safety",
                 PerformanceIndicator = "Fatality/Strap Disability",
+                OspWeight = 20.00,
                 Score = 35.17,
                 TargetMonthly = 10,
                 TargetYearly = 29,
                 TargetYtd = 20
             };
+            pmsSummary1.Osp = "<span class='trafficlight grey'></span>Safety (" +
+                              pmsSummary1.OspWeight.ToString() + ")";
 
             var pmsSummary2 = new PmsSummaryViewModel
             {
@@ -56,12 +59,15 @@ namespace DSLNG.PEAR.Web.Controllers
                 IndexYearly = 539,
                 IndexYtd = 104,
                 Osp = "Safety",
+                OspWeight = 20.00,
                 PerformanceIndicator = "RIF",
                 Score = 202.20,
                 TargetMonthly = 101,
                 TargetYearly = 22,
                 TargetYtd = 21
             };
+            pmsSummary2.Osp = "<span class='trafficlight grey'></span>Safety (" +
+                              pmsSummary2.OspWeight.ToString() + ")";
 
             var pmsSummary3 = new PmsSummaryViewModel
             {
@@ -73,15 +79,16 @@ namespace DSLNG.PEAR.Web.Controllers
                 IndexMonthly = 240,
                 IndexYearly = 539,
                 IndexYtd = 104,
-                Osp = "<span class='trafficlight grey'></span>Productivity and Efficiency",
+                //Osp = "<span class='trafficlight grey'></span>Productivity and Efficiency",
+                OspWeight = 15.00,
                 PerformanceIndicator = "RIF",
                 Score = 202.31,
                 TargetMonthly = 101,
                 TargetYearly = 22,
                 TargetYtd = 21
             };
-
-
+            pmsSummary3.Osp = "<span class='trafficlight grey'></span>Productivity and Efficiency (" +
+                              pmsSummary3.OspWeight.ToString() + ")";
 
             list.Add(pmsSummary1);
             list.Add(pmsSummary2);
