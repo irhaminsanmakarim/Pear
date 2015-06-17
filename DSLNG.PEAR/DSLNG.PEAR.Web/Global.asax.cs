@@ -2,6 +2,8 @@ using DSLNG.PEAR.Data.Installer;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Web.App_Start;
 using DSLNG.PEAR.Web.AutoMapper;
+using DSLNG.PEAR.Web.DependencyResolution;
+using StructureMap;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -23,7 +25,12 @@ namespace DSLNG.PEAR.Web
         {
             AutoMapperConfiguration.Configure();
             Database.SetInitializer<DataContext>(new DataInitializer());
-
+            
+            //StructureMap Container
+            IContainer container = IoC.Initialize();
+            DependencyResolver.SetResolver(new StructureMapDependencyResolver(container));
+            GlobalConfiguration.Configuration.DependencyResolver = new StructureMapDependencyResolver(container);
+            
             AreaRegistration.RegisterAllAreas();
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
