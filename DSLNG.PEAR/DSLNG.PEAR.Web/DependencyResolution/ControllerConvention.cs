@@ -17,8 +17,8 @@
 
 namespace DSLNG.PEAR.Web.DependencyResolution {
     using System;
+    using System.Web.Http;
     using System.Web.Mvc;
-
     using StructureMap.Configuration.DSL;
     using StructureMap.Graph;
     using StructureMap.Pipeline;
@@ -29,6 +29,11 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
 
         public void Process(Type type, Registry registry) {
             if (type.CanBeCastTo<Controller>() && !type.IsAbstract) {
+                registry.For(type).LifecycleIs(new UniquePerRequestLifecycle());
+            }
+
+            if (type.CanBeCastTo<ApiController>() && !type.IsAbstract)
+            {
                 registry.For(type).LifecycleIs(new UniquePerRequestLifecycle());
             }
         }
