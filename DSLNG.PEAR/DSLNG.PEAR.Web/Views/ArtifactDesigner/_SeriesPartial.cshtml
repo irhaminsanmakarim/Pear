@@ -1,0 +1,12 @@
+﻿ @Html.DevExpress().FormLayout(settings =>
+                     {
+                         settings.Name = "graphicSeries";
+                         settings.EncodeHtml = false;
+                         var groupItem = settings.Items.AddGroupItem(itemSettings =>
+                         {
+                             itemSettings.Caption = "Graphic Series";
+                             itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+                             itemSettings.ColCount = 2;
+                         });
+                         groupItem.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+                     }).GetHtml();

@@ -373,6 +373,7 @@
     <Content Include="Views\ArtifactDesigner\Create.cshtml" />
     <Content Include="Views\Menu\MainMenu.cshtml" />
     <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\ArtifactDesigner\_SeriesPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

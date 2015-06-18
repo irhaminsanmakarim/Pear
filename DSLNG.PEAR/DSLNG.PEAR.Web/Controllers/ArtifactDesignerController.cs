@@ -28,8 +28,15 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new ArtifactDesignerViewModel();
-            viewModel.GraphicTypes.Add(new SelectListItem { Value = "pie", Text = "Pie" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "bar", Text = "Bar" });
+            viewModel.SeriesTypes.Add(new SelectListItem { Value = "single", Text = "Single Series" });
+            viewModel.SeriesTypes.Add(new SelectListItem { Value = "multiple", Text = "Multiple Series" });
             return View(viewModel);
+        }
+
+        public ActionResult SeriesPartial()
+        {
+            return PartialView("_seriesPartial");
         }
 
         //
