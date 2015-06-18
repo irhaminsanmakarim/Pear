@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Services.Requests.Group
+namespace DSLNG.PEAR.Services.Interfaces
 {
-    public class GetGroupRequest
+    public interface IDashboardTemplate
     {
     }
 }
