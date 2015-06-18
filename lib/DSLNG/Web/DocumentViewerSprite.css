@@ -1,0 +1,720 @@
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnDocumentMap_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnDocumentMapLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnFirstPage_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnFirstPageLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnLastPage_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnLastPageLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnNextPage_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnNextPageLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnParameters_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnParametersLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnPrevPage_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnPrevPageLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnPrint_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnPrintLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnPrintPage_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnPrintPageLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnSave_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnSaveLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnSaveWindow_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnSaveWindowLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnSearch_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnSearchLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToCsv_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToCsvLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToHtml_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToHtmlLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToImg_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToImgLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToMht_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToMhtLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToPdf_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToPdfLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToRtf_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToRtfLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToTxt_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToTxtLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToXls_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToXlsLarge_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToXlsx_DSLNG,
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToXlsxLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnDocumentMap_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnDocumentMapDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnDocumentMapLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnDocumentMapLargeDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnFirstPage_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnFirstPageDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnFirstPageLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnFirstPageLargeDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnLastPage_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnLastPageDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnLastPageLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnLastPageLargeDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnNextPage_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnNextPageDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnNextPageLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnNextPageLargeDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnParameters_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnParametersDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnParametersLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnParametersLargeDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnPrevPage_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnPrevPageDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnPrevPageLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnPrevPageLargeDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnPrint_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnPrintDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnPrintLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnPrintLargeDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnPrintPage_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnPrintPageDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnPrintPageLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnPrintPageLargeDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnSave_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnSaveDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnSaveLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnSaveLargeDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnSaveWindow_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnSaveWindowDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnSaveWindowLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnSaveWindowLargeDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnSearch_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnSearchDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnSearchLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_BtnSearchLargeDisabled_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToCsv_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToCsvLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToHtml_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToHtmlLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToImg_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToImgLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToMht_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToMhtLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToPdf_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToPdfLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToRtf_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToRtfLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToTxt_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToTxtLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToXls_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToXlsLarge_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToXlsx_DSLNG,
+.dxWeb_xrdvRibbonIcon_ExportToXlsxLarge_DSLNG
+{
+    background-image: url('DocumentViewerSprite.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnDocumentMap_DSLNG
+{
+    background-position: -595px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnDocumentMapLarge_DSLNG
+{
+    background-position: -495px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnFirstPage_DSLNG
+{
+    background-position: -629px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnFirstPageLarge_DSLNG
+{
+    background-position: -231px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnLastPage_DSLNG
+{
+    background-position: -17px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnLastPageLarge_DSLNG
+{
+    background-position: -99px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnNextPage_DSLNG
+{
+    background-position: -799px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnNextPageLarge_DSLNG
+{
+    background-position: -132px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnParameters_DSLNG
+{
+    background-position: -782px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnParametersLarge_DSLNG
+{
+    background-position: -462px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnPrevPage_DSLNG
+{
+    background-position: -170px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnPrevPageLarge_DSLNG
+{
+    background-position: -759px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnPrint_DSLNG
+{
+    background-position: -187px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnPrintLarge_DSLNG
+{
+    background-position: -528px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnPrintPage_DSLNG
+{
+    background-position: -459px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnPrintPageLarge_DSLNG
+{
+    background-position: -165px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnSave_DSLNG
+{
+    background-position: -425px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnSaveLarge_DSLNG
+{
+    background-position: -693px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnSaveWindow_DSLNG
+{
+    background-position: -34px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnSaveWindowLarge_DSLNG
+{
+    background-position: -165px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnSearch_DSLNG
+{
+    background-position: -765px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_BtnSearchLarge_DSLNG
+{
+    background-position: -396px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToCsv_DSLNG
+{
+    background-position: -255px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToCsvLarge_DSLNG
+{
+    background-position: -99px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToHtml_DSLNG
+{
+    background-position: -374px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToHtmlLarge_DSLNG
+{
+    background-position: -330px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToImg_DSLNG
+{
+    background-position: -476px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToImgLarge_DSLNG
+{
+    background-position: -396px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToMht_DSLNG
+{
+    background-position: -697px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToMhtLarge_DSLNG
+{
+    background-position: -231px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToPdf_DSLNG
+{
+    background-position: -748px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToPdfLarge_DSLNG
+{
+    background-position: -363px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToRtf_DSLNG
+{
+    background-position: -204px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToRtfLarge_DSLNG
+{
+    background-position: -264px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToTxt_DSLNG
+{
+    background-position: -510px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToTxtLarge_DSLNG
+{
+    background-position: -594px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToXls_DSLNG
+{
+    background-position: -238px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToXlsLarge_DSLNG
+{
+    background-position: -33px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToXlsx_DSLNG
+{
+    background-position: -119px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxr-itemHover .dxWeb_xrdvRibbonIcon_ExportToXlsxLarge_DSLNG
+{
+    background-position: -726px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnDocumentMap_DSLNG
+{
+    background-position: -68px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnDocumentMapDisabled_DSLNG
+{
+    background-position: -323px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnDocumentMapLarge_DSLNG
+{
+    background-position: 0px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnDocumentMapLargeDisabled_DSLNG
+{
+    background-position: -825px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnFirstPage_DSLNG
+{
+    background-position: 0px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnFirstPageDisabled_DSLNG
+{
+    background-position: -527px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnFirstPageLarge_DSLNG
+{
+    background-position: -297px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnFirstPageLargeDisabled_DSLNG
+{
+    background-position: -792px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnLastPage_DSLNG
+{
+    background-position: -646px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnLastPageDisabled_DSLNG
+{
+    background-position: -102px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnLastPageLarge_DSLNG
+{
+    background-position: -462px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnLastPageLargeDisabled_DSLNG
+{
+    background-position: -363px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnNextPage_DSLNG
+{
+    background-position: -136px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnNextPageDisabled_DSLNG
+{
+    background-position: -612px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnNextPageLarge_DSLNG
+{
+    background-position: -429px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnNextPageLargeDisabled_DSLNG
+{
+    background-position: -33px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnParameters_DSLNG
+{
+    background-position: -825px -33px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnParametersDisabled_DSLNG
+{
+    background-position: -578px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnParametersLarge_DSLNG
+{
+    background-position: -495px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnParametersLargeDisabled_DSLNG
+{
+    background-position: -561px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnPrevPage_DSLNG
+{
+    background-position: -391px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnPrevPageDisabled_DSLNG
+{
+    background-position: -221px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnPrevPageLarge_DSLNG
+{
+    background-position: -132px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnPrevPageLargeDisabled_DSLNG
+{
+    background-position: -429px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnPrint_DSLNG
+{
+    background-position: -153px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnPrintDisabled_DSLNG
+{
+    background-position: -340px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnPrintLarge_DSLNG
+{
+    background-position: -627px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnPrintLargeDisabled_DSLNG
+{
+    background-position: -66px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnPrintPage_DSLNG
+{
+    background-position: -493px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnPrintPageDisabled_DSLNG
+{
+    background-position: -85px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnPrintPageLarge_DSLNG
+{
+    background-position: -726px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnPrintPageLargeDisabled_DSLNG
+{
+    background-position: -198px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnSave_DSLNG
+{
+    background-position: -51px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnSaveDisabled_DSLNG
+{
+    background-position: -731px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnSaveLarge_DSLNG
+{
+    background-position: -198px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnSaveLargeDisabled_DSLNG
+{
+    background-position: -660px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnSaveWindow_DSLNG
+{
+    background-position: -561px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnSaveWindowDisabled_DSLNG
+{
+    background-position: -306px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnSaveWindowLarge_DSLNG
+{
+    background-position: -264px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnSaveWindowLargeDisabled_DSLNG
+{
+    background-position: -297px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnSearch_DSLNG
+{
+    background-position: -408px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnSearchDisabled_DSLNG
+{
+    background-position: -357px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_BtnSearchLarge_DSLNG
+{
+    background-position: -792px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_BtnSearchLargeDisabled_DSLNG
+{
+    background-position: -528px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToCsv_DSLNG
+{
+    background-position: -842px -33px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToCsvLarge_DSLNG
+{
+    background-position: -66px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToHtml_DSLNG
+{
+    background-position: -442px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToHtmlLarge_DSLNG
+{
+    background-position: -594px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToImg_DSLNG
+{
+    background-position: -663px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToImgLarge_DSLNG
+{
+    background-position: -660px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToMht_DSLNG
+{
+    background-position: -544px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToMhtLarge_DSLNG
+{
+    background-position: 0px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToPdf_DSLNG
+{
+    background-position: -714px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToPdfLarge_DSLNG
+{
+    background-position: -693px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToRtf_DSLNG
+{
+    background-position: -680px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToRtfLarge_DSLNG
+{
+    background-position: -627px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToTxt_DSLNG
+{
+    background-position: -272px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToTxtLarge_DSLNG
+{
+    background-position: -561px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToXls_DSLNG
+{
+    background-position: -816px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToXlsLarge_DSLNG
+{
+    background-position: -330px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToXlsx_DSLNG
+{
+    background-position: -289px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_xrdvRibbonIcon_ExportToXlsxLarge_DSLNG
+{
+    background-position: -759px 0px;
+    width: 32px;
+    height: 32px;
+}
+

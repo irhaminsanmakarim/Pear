@@ -1,0 +1,318 @@
+/* ----------------- Main ----------------- */
+/* Loading panel */
+.dxheLoadingDiv_DSLNG
+{
+    background: white;
+    opacity: 0.85;
+    filter: alpha(opacity=85);
+}
+.dxheLoadingPanel_DSLNG
+{
+	border: 1px solid #C3C3C3;
+	background-color: white;
+	font: 14px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	color: #333333;
+}
+.dxheLoadingPanel_DSLNG td.dx
+{
+	font-size: 1.17em;
+	white-space: nowrap;
+	text-align: center;
+	padding: 10px 14px;
+}
+.dxheLoadingPanel_DSLNG .dxlp-loadingImage
+{
+	background-image: url('../Web/Loading.gif');
+	height: 32px;
+	width: 32px;
+}
+
+.dxheControl_DSLNG
+{
+    font: 14px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+}
+
+/* Area */
+.dxheContentArea_DSLNG
+{
+    padding: 6px 4px;
+}
+.dxheErrorFrame_DSLNG
+{
+	font: 14px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	color: #D00707;
+	background-color: #FBC7C7;
+	margin-bottom: 6px;
+}
+.dxheErrorFrame_DSLNG .dxhe 
+{
+    padding: 5px;
+}
+.dxheErrorFrame_DSLNG .dxhe td 
+{
+    padding: 0;
+}
+.dxheErrorFrame_DSLNG .dxheErrorFrameCloseButton_DSLNG 
+{
+    cursor: pointer;
+}
+.dxheContentArea_DSLNG td.dxheViewArea_DSLNG /*B209529*/
+{
+	line-height: 0;
+}
+.dxheControl_DSLNG .dxheHtmlViewArea_DSLNG,
+.dxheDesignViewArea_DSLNG,
+.dxhePreviewArea_DSLNG 
+{
+    margin: 0px;
+    background: none #FFFFFF;
+    border: 0;
+    font-size: smaller;
+    font: 12px Arial, Helvetica, sans-serif;
+}
+.dxheContentArea_DSLNG .dxeMemo_DSLNG td,
+body.dxheDesignViewArea_DSLNG,
+body.dxhePreviewArea_DSLNG
+{
+    padding: 0 4px 0 4px;
+}
+.dxheControl_DSLNG .dxheContentArea_DSLNG .dxeMemo_DSLNG td
+{
+    padding-right: 0;
+}
+.dxheContentArea_DSLNG .dxeMemoEditArea_DSLNG
+{
+    padding-left: 0;
+    padding-right: 0;
+}
+.dxheControl_DSLNG.dxhe-rtl .dxheContentArea_DSLNG .dxeMemo_DSLNG td
+{
+	padding: 0 4px 0 0;
+}
+.dxWebKitFamily .dxheControl_DSLNG.dxhe-rtl .dxheContentArea_DSLNG .dxeMemo_DSLNG td
+{
+	padding: 0 0 0 4px;
+}
+.dxheControl_DSLNG .dxeMemo_DSLNG textarea 
+{
+	resize: none;
+}
+.dxheControl_DSLNG td.dxheDesignViewArea_DSLNG .dxm-main.dxmtb 
+{
+    border: 1px solid #C3C3C3;
+    background: #ffffff;
+}
+.dxheControl_DSLNG td.dxheDesignViewArea_DSLNG
+{
+    position: relative;
+}
+td.dxheDesignViewArea_DSLNG .dxmLite_DSLNG {
+    position: absolute;
+    right: 0;
+    padding-right: 24px;
+}
+td.dxheDesignViewArea_DSLNG .dxmLite_DSLNG.dxm-rtl {
+    right: inherit;
+    padding-right: 0px;
+    padding-left: 5px;
+}
+.dxheViewArea_DSLNG .dxheAudio
+{
+	background-image: url('dxheAudio.png');
+}
+.dxheViewArea_DSLNG .dxheFlash
+{
+	background-image: url('dxheFlash.png');
+}
+.dxheViewArea_DSLNG .dxheVideo
+{
+	background-image: url('dxheVideo.png');
+}
+.dxheViewArea_DSLNG .dxheYoutube
+{
+	background-image: url('dxheYoutube.png');
+}
+.dxheViewArea_DSLNG img.dxheNotSupported
+{
+	background-image: url('dxheNotSupported.png');
+}
+.dxheViewArea_DSLNG img.dxheAudio,
+.dxheViewArea_DSLNG img.dxheFlash,
+.dxheViewArea_DSLNG img.dxheVideo,
+.dxheViewArea_DSLNG img.dxheYoutube,
+.dxheViewArea_DSLNG img.dxheNotSupported
+{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #cfcfcf;
+    border: 1px dotted #FFFFFF;
+    opacity: 0.8;
+}
+/* Element appearance in DesignView */
+body.dxheDesignViewArea_DSLNG table.dxEmptyBorderTable,
+body.dxheDesignViewArea_DSLNG table.dxEmptyBorderTable td  {
+    border:1px dotted gray;
+}
+@media print 
+{
+	body.dxheDesignViewArea_DSLNG table.dxEmptyBorderTable,
+	body.dxheDesignViewArea_DSLNG table.dxEmptyBorderTable td  
+	{
+		border:0px;
+	}
+}
+body.dxheDesignViewArea_DSLNG
+{
+    word-wrap: inherit;
+}
+body.dxheDesignViewArea_DSLNG pre
+{
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+/* Status Bar */
+.dxheStatusBar_DSLNG 
+{
+}
+.dxheControl_DSLNG .dxheStatusBar_DSLNG .dxheStatusBarTab_DSLNG .dxtc-link
+{
+    padding: 4px 12px 5px 11px;
+}
+.dxheStatusBarActiveTab_DSLNG 
+{
+}
+.dxHtmlEditor_heSizeGrip_DSLNG
+{
+    cursor: se-resize;
+}
+.dxHtmlEditor_heSizeGripRtl_DSLNG
+{
+    cursor: ne-resize;
+}
+.dxheSizeGripContainer_DSLNG
+{
+    width: 100%;
+    text-align: right;
+    font-size: 0;
+    margin-top: -16px;
+}
+.dxheControl_DSLNG.dxhe-rtl .dxheSizeGripContainer_DSLNG 
+{
+	text-align: left;
+}
+/* ----------------- Dialog Forms ----------------- */
+.dxpcLite_DSLNG .dxheDlgFooter,
+.dxpcLite_DSLNG .dxheCustomDialog_DSLNG .dxhecd-Buttons
+{
+    background-color: white;
+    border-top: Solid 1px #E0E0E0;
+	padding: 10px 11px;
+	text-align: right;
+}
+.dxpcLite_DSLNG.dxRtl .dxheDlgFooter,
+.dxpcLite_DSLNG.dxRtl .dxheCustomDialog_DSLNG .dxhecd-Buttons
+{
+    text-align: left;
+}
+.dxpcLite_DSLNG .dxheDlgFooterBtn
+{
+    width: 80px;
+    margin-left: 8px;
+}
+.dxpcLite_DSLNG.dxRtl .dxheDlgFooterBtn
+{
+    margin-right: 8px;
+    margin-left: 0;
+}
+/* Insert Image Form */
+.dxpcLite_DSLNG .dxheDlgInsertImageForm .dxheDlgImagePreviewCell,
+.dxpcLite_DSLNG .dxheDlgSelectImageForm .dxheDlgImagePreviewCell
+{
+    color: #878787;
+    border: dashed 1px #cac8c8;
+}
+.dxpcLite_DSLNG .dxheDlgPasteFromWordForm .dxheDlgPasteContainerCell td
+{
+	border: Solid 1px #9F9F9F;
+}
+/*----------------- Toolbars -----------------*/
+.dxtbSpacing_DSLNG
+{
+	height: 1px;
+}
+.dxtbControl_DSLNG 
+{
+    color: #333333;
+    width: 100%;
+    border-bottom: Solid 1px #c0c0c0;
+}
+.dxtbControl_DSLNG td.dxmMenu_DSLNG
+{
+	border-width: 0px;
+}
+.dxtbControl_DSLNG .dxmLite_DSLNG .dxm-main 
+{
+	background-color: #FFFFFF;
+}
+.dxtbControl_DSLNG .dxmLite_DSLNG .dxmtb.dxm-horizontal .dxm-separator b
+{
+	background-color: #c0c0c0;
+}
+.dxtbComboBoxMenuItem_DSLNG
+{
+    padding-top: 2px;
+}
+.dxheControl_DSLNG .dxrControl_DSLNG .dxr-minBtn
+{
+    padding-right: 8px;
+}
+.dxheControl_DSLNG .dxtbControl_DSLNG.dxtbr_DSLNG,
+.dxheControl_DSLNG .dxrControl_DSLNG .dxpc-mainDiv.dxr-minPopup
+{
+    border: 0;
+}
+
+/* Toolbars Lightweight Mode */
+.dxtbControl_DSLNG .dxmLite_DSLNG .dxm-main 
+{
+    border-width: 0px;
+}
+.dxmLite_DSLNG .dxhetipControl_DSLNG img
+{
+	vertical-align: top;
+}
+.dxtbControl_DSLNG .dxm-horizontal.dxmtb .dxm-dropDownMode .dxtcbColorDiv_DSLNG
+{
+    margin-top: -1px;
+    margin-bottom: -2px;
+}
+
+/* ToolbarColorButton */
+.dxtcbControl_DSLNG { }
+.dxtcbColorDiv_DSLNG
+{
+	width: 16px;
+	height: 3px;
+	font-size: 0;
+	background-color: Transparent;
+}
+
+/*----------------- RoundPanel -----------------*/
+.dxheRP.dxrpControl_DSLNG .dxrpcontent_DSLNG
+{
+    padding: 9px 10px 10px 10px !important;
+}
+
+.dxtcLite_DSLNG.dxhe-dialogSettings
+{
+    width: 230px;
+}
+
+.dxhe-insertYouTubeVideoDialog .dxtcLite_DSLNG.dxhe-dialogSettings,
+.dxhe-insertVideoDialog .dxtcLite_DSLNG.dxhe-dialogSettings,
+.dxhe-insertAudioDialog .dxtcLite_DSLNG.dxhe-dialogSettings 
+{
+    width: 300px;
+}
+

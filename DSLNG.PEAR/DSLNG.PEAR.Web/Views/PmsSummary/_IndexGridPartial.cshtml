@@ -1,11 +1,14 @@
 ﻿@using DevExpress.Data
-@model IList<DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryViewModel>
+@model IEnumerable<DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryViewModel>
 
-@Html.DevExpress().GridView(settings =>
+
+    @Html.DevExpress().GridView(settings =>
         {
             settings.Name = "gridPmsSummaryIndex";
             settings.CallbackRouteValues = new { Controller = "PmsSummary", Action = "IndexGridPartial" };
             settings.SettingsBehavior.AllowFixedGroups = true;
+            settings.Settings.ShowFooter = true;
+            settings.Width = Unit.Percentage(100);
 
             var ospColumn = new MVCxGridViewColumn("Osp", "OSP");
             ospColumn.PropertiesEdit.EncodeHtml = false;
@@ -14,14 +17,15 @@
             settings.Columns.Add("PerformanceIndicator", "Performance Indicator");
             settings.Columns.Add("Unit");
             settings.Columns.Add("Weight");
-            settings.Columns.Add("OspWeight");
-            settings.Columns.AddBand(targetBand =>
+            settings.Columns.Add("OspWeight").Visible = false;
+
+            /*settings.Columns.AddBand(targetBand =>
                 {
                     targetBand.Caption = "Target";
                     targetBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                    targetBand.Columns.Add("TargetYearly", "Yearly");
-                    targetBand.Columns.Add("TargetMonthly", "Monthly");
-                    targetBand.Columns.Add("TargetYtd", "YTD");
+                    targetBand.Columns.Add("TargetYearly", "Yearly").Visible = false;
+                    targetBand.Columns.Add("TargetMonthly", "Monthly").Visible = false;
+                    targetBand.Columns.Add("TargetYtd", "YTD").Visible = false;
                 });
 
             settings.Columns.AddBand(actualBand =>
@@ -31,7 +35,16 @@
                     actualBand.Columns.Add("ActualYearly", "Yearly");
                     actualBand.Columns.Add("ActualMonthly", "Monthly");
                     actualBand.Columns.Add("ActualYtd", "YTD");
-                });
+                });*/
+
+            settings.Columns.AddBand(targetActualBand =>
+            {
+                targetActualBand.Caption = "Target / Actual";
+                targetActualBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+                targetActualBand.Columns.Add("TargetActualYearly", "Yearly");
+                targetActualBand.Columns.Add("TargetActualMonthly", "Monthly");
+                targetActualBand.Columns.Add("TargetActualYtd", "YTD");
+            });
 
             settings.Columns.AddBand(indexBand =>
                 {
@@ -68,9 +81,8 @@
                     e.TotalValue = percent;
                 }
             };
-            
-            settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleAlways;
 
+            settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleAlways;
 
             ASPxSummaryItem kpiScore = new ASPxSummaryItem();
             kpiScore.ShowInGroupFooterColumn = "PerformanceIndicator";
@@ -78,18 +90,31 @@
             kpiScore.FieldName = "Score";
             kpiScore.DisplayFormat = "Score KPI in this pillar (0.00)";
             settings.GroupSummary.Add(kpiScore);
-            
+
             ASPxSummaryItem percentageScore = new ASPxSummaryItem();
             percentageScore.ShowInGroupFooterColumn = "Score";
             percentageScore.FieldName = "Score";
             percentageScore.DisplayFormat = "0.00";
             percentageScore.SummaryType = SummaryItemType.Custom;
             settings.GroupSummary.Add(percentageScore);
-            
+
+            settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Score").DisplayFormat = "0.00";
+
+
+            /*settings.SettingsPager.Position = PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;*/
+            /*settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "1", "2", "5" };*/
+
+
+
             settings.PreRender = (s, e) =>
-            {
-                MVCxGridView gridView = s as MVCxGridView;
-                if (gridView != null)
-                    gridView.ExpandAll();
-            };
+                {
+                    MVCxGridView gridView = s as MVCxGridView;
+                    if (gridView != null)
+                        gridView.ExpandAll();
+                };
         }).Bind(Model).GetHtml()
+
+
