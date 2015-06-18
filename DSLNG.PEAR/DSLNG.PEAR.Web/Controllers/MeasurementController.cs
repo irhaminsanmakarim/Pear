@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DevExpress.Web.Mvc;
+using DSLNG.PEAR.Services.Responses.Measurement;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -35,9 +36,9 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult MeasurementViewPartialAddNew(DSLNG.PEAR.Services.Responses.Measurement.GetMeasurementResponse item)
+        public ActionResult MeasurementViewPartialAddNew(GetMeasurementResponse item)
         {
-            var model = new object[0];
+            var model = item;
             if (ModelState.IsValid)
             {
                 try
