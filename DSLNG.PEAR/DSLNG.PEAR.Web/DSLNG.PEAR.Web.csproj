@@ -376,6 +376,9 @@
     <Content Include="Views\ArtifactDesigner\Create.cshtml" />
     <Content Include="Views\Menu\MainMenu.cshtml" />
     <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Measurement\List.cshtml" />
+    <Content Include="Views\Measurement\_MeasurementViewPartial.cshtml" />
+    <Content Include="Views\Measurement\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -427,6 +430,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LevelController.cs" />
+    <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
     <Compile Include="Controllers\UserController.cs" />
