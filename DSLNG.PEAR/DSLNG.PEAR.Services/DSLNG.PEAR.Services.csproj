@@ -55,13 +55,16 @@
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="GroupService.cs" />
+    <Compile Include="Interfaces\IDashboardTemplate.cs" />
     <Compile Include="Interfaces\IGroupService.cs" />
     <Compile Include="Interfaces\IMenuService.cs" />
     <Compile Include="MenuService.cs" />
+    <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Requests\Group\GetGroupRequest.cs" />
     <Compile Include="Requests\Level\GetLevelsRequest.cs" />
     <Compile Include="Requests\Menu\GetMenuRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
+    <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Responses\Group\GetGroupResponse.cs" />
     <Compile Include="Responses\Level\GetAllLevels.cs" />
     <Compile Include="Responses\Level\LevelResponse.cs" />
