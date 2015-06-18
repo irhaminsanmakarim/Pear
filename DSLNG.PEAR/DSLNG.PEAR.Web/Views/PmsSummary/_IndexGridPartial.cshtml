@@ -47,6 +47,7 @@
             decimal totalPercent = 0;
             settings.CustomSummaryCalculate = (sender, e) =>
                 {
+                    decimal percent = 0;
                     string summaryTag = (e.Item as ASPxSummaryItem).Tag;
                     string fieldName = summaryTag.Remove(summaryTag.Length - 2);
                     if (fieldName != "Score") return;
@@ -64,19 +65,18 @@
                     
                     if (e.SummaryProcess == CustomSummaryProcess.Finalize)
                     {
-                        decimal percent = 0;
+                        
                         if (totalScore > 0)
                         {
                             percent = (totalScore/100) * Convert.ToDecimal(e.GetValue("OspWeight"));
-                            
                         }
                         if (tagIndex == "1")
                         {
                             e.TotalValue = percent;
+                            totalPercent += percent;
                         }
                         else
                         {
-                            totalPercent += percent;
                             e.TotalValue = totalPercent;
                         }
                           
