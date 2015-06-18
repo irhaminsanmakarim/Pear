@@ -1,0 +1,70 @@
+.dxwscCheckedTextContainer_DSLNG
+{
+	background-color: white;
+	border: solid 1px #c0c0c0;
+	vertical-align:top;
+	overflow:auto;
+	height: 110px;
+	width: 340px;
+	padding: 5px;
+}
+.dxwscErrorWord_DSLNG 
+{
+	background: url('scErrorUnderline.gif') bottom;
+	background-repeat:repeat-x;
+	padding-bottom: 3px;
+	color: #333333;
+	font-weight: bold;
+}
+/* -- Loading panel -- */
+.dxwscLoadingPanel_DSLNG
+{
+	border: 1px solid #C3C3C3;
+	background-color: white;
+	font: 14px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	color: #333333;
+}
+.dxwscLoadingPanel_DSLNG td.dx
+{
+	font-size: 1.17em;
+	white-space: nowrap;
+	text-align: center;
+	padding: 10px 14px;
+}
+.dxwscLoadingPanel_DSLNG .dxlp-loadingImage
+{
+	background-image: url('../Web/Loading.gif');
+	height: 32px;
+	width: 32px;
+}
+/* -- Forms -- */
+.dxwsc-main .dxpcLite_DSLNG .dxwscDlgFooter
+{
+	border-top: 1px solid #c0c0c0;
+	padding: 10px 15px;
+	text-align: right;
+}
+.dxwsc-main.dxwsc-rtl .dxpcLite_DSLNG .dxwscDlgFooter
+{
+    text-align: left;
+}
+.dxwsc-main .dxpcLite_DSLNG .dxwscDlgFooterBtn
+{
+    width: 80px;
+    margin-left: 8px;
+}
+.dxwsc-main.dxwsc-rtl .dxpcLite_DSLNG .dxwscDlgFooterBtn
+{
+    margin-right: 8px;
+    margin-left: 0;
+}
+.dxwsc-main .dxpcLite_DSLNG .dxwscDlgSpellCheckBtn
+{
+    width: 120px;
+}
+.dxwsc-main .dxpcLite_DSLNG .dxrpControl_DSLNG .dxrpHeader_DSLNG,
+.dxwsc-main .dxpcLite_DSLNG .dxrpControl_DSLNG .dxrpHeader_DSLNG td.dxrp
+{
+	font-size: 1.83em;
+}
+

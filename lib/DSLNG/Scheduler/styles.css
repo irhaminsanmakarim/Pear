@@ -1,0 +1,445 @@
+.dxscControl_DSLNG
+{
+    background: #c0c0c0;
+    font: 14px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	color: #333333;
+}
+.dxscLoadingPanel_DSLNG
+{
+	border: 1px solid #C3C3C3;
+	background-color: white;
+	font: 14px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+	color: #333333;
+}
+.dxscLoadingPanel_DSLNG td.dx
+{
+	font-size: 1.17em;
+	white-space: nowrap;
+	text-align: center;
+	padding: 10px 14px;
+}
+.dxscLoadingPanel_DSLNG .dxlp-loadingImage
+{
+	background-image: url('../Web/Loading.gif');
+	height: 32px;
+	width: 32px;
+}
+
+/* Headers */
+.dxscDateHeader_DSLNG, 
+.dxscAlternateDateHeader_DSLNG,
+.dxscDayHeader_DSLNG,
+.dxscDateCellHeader_DSLNG,
+.dxscTodayCellHeader_DSLNG,
+.dxscTimelineDateHeader_DSLNG,
+.dxscHorizontalResourceHeader_DSLNG,
+.dxscVerticalResourceHeader_DSLNG
+{    
+    background: white;
+    border: solid 1px #c0c0c0;
+    border-width: 0 1px 1px 0;
+    padding: 4px;
+    text-align: center;
+    vertical-align: top;
+    
+    cursor: default;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.dxscAlternateTimelineDateHeader_DSLNG,
+.dxscAlternateDateHeader_DSLNG
+{
+    background: #ffd554;
+}
+.dxscDayHeader_DSLNG
+{
+    border-width: 1px 1px 0 0;
+}
+.dxscDateCellHeader_DSLNG
+{
+    border-width: 1px;
+}
+.dxscTodayCellHeader_DSLNG
+{    
+    border-top-width: 1px;
+    background: #ffd554;
+}
+.dxscTimelineDateHeader_DSLNG
+{
+    border-width: 1px 1px 1px 0;
+}
+.dxscHorizontalResourceHeader_DSLNG
+{
+    border-width: 1px 1px 1px 0;
+    background: white;
+}
+.dxscVerticalResourceHeader_DSLNG
+{
+    border-width: 1px 1px 0 0;
+    background: white;
+    white-space: normal;
+}
+.dxscSelectionBar_DSLNG 
+{	
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    height: 30px;
+}
+
+/* Corners */
+.dxscLeftTopCorner_DSLNG, 
+.dxscRightTopCorner_DSLNG
+{
+    background: white;
+    width: 1px;
+    border-style: solid;
+    border-color: #c0c0c0;	
+    border-width: 0 0 1px;
+}
+.dxscLeftTopCorner_DSLNG
+{    
+    border-width: 1px 1px 1px 0;
+    font-size: 0.91em;
+    text-align: center;
+    padding: 2px;
+    overflow: hidden;
+}
+
+/* Separators */
+.dxscGroupSeparatorVertical_DSLNG, 
+.dxscGroupSeparatorHorizontal_DSLNG
+{
+    background: white;
+    border: solid 1px #c0c0c0;
+}
+
+.dxscGroupSeparatorVertical_DSLNG
+{
+    width: 1px; 
+    border-width: 0 1px;
+}
+.dxscGroupSeparatorHorizontal_DSLNG
+{
+    height: 1px;
+    border-width: 1px 0 0;
+    font-size: 0;
+}
+
+/* Apts Area */
+.dxscAllDayArea_DSLNG
+{
+    background: white;
+    border: solid 1px #c0c0c0;
+    border-width: 0 1px 1px 0;
+}
+.dxscDateCellBody_DSLNG 
+{
+    	height: 100px;
+    	border: solid 1px;
+    	border-width: 0 1px 0 0;
+}
+.dxscTimeCellBody_DSLNG
+{
+	border: 1px solid;
+	background-color: White;
+}
+.dxscTimelineCellBody_DSLNG
+{
+    	height: 300px;
+    	border-style: solid;
+    	border-width: 1px 1px 0 0;
+}
+
+.dxscAppointment_DSLNG
+{
+    font-size: 0.91em;
+    padding: 0;
+    margin: 0;
+    cursor: default;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    -moz-box-sizing: content-box; 
+    box-sizing: content-box;
+}
+.dxscAppointmentInnerBorders_DSLNG
+{	
+    padding: 0px;
+}
+.dxscAppointmentHorizontalSeparator_DSLNG 
+{
+    height: 1px;
+    width: 100%;
+    overflow: hidden;
+    border-bottom-style: none;
+    border-left-style: none;
+    border-right-style: none;
+}
+.dxscMoreButton_DSLNG
+{
+    font-size: 0.91em;
+    color: #004071;    
+    text-decoration: underline;	
+    padding: 0;
+}
+
+/* Rulers */
+.dxscTimeRulerHoursItem_DSLNG, .dxscTimeRulerMinuteItem_DSLNG
+{
+    color: #6f6f6f;
+    background: white;
+    border: solid 1px #c0c0c0;
+    border-width: 0px 1px 1px 0;
+    vertical-align: top;
+    white-space: nowrap;
+} 
+.dxscTimeRulerHoursItem_DSLNG
+{
+    border-right-width: 0;
+    border-left-color: #c0c0c0;
+    font-size: 1.42em;
+    text-align: right;
+    width: 45px;
+    padding: 2px 4px 0px;
+}
+.dxscTimeRulerMinuteItem_DSLNG
+{
+    border-left-width: 0px;
+    text-align: center;
+    width: 18px;
+    font-size: 0.91em;
+    padding: 4px 1px 4px 1px;
+}
+
+.dxscTimeRulerHeaderHourItem_DSLNG
+{
+    width: 55px;
+}	
+.dxscTimeRulerHeaderMinuteItem_DSLNG
+{
+    width: 16px;
+}
+.dxscScrollHeaderItem_DSLNG
+{
+    width: 16px;
+}
+
+
+/* Control elements */
+.dxscToolbarContainer_DSLNG
+{
+	padding: 8px 0;
+	border: 0px none;
+	background-color: White;
+}
+.dxscToolbar_DSLNG
+{
+    border: none;
+    padding: 4px 7px;    
+}
+.dxscToolbar_DSLNG .dxeCalendar_DSLNG,
+.dxscToolbar_DSLNG .dxeCalendar_DSLNG.dxeFocused_DSLNG
+{
+    border: 1px Solid Silver;
+}
+.dxscResourceNavigator_DSLNG 
+{    
+    background: white;
+    padding: 7px;
+    border: solid 1px #c0c0c0;
+}
+.dxscViewVisibleInterval_DSLNG
+{    
+	white-space: nowrap;
+	font-size: 1.5em;
+	color: #004071;
+}
+.dxscInplaceEditor_DSLNG
+{
+    background: #fdfdfd;
+    border: solid 2px #303030;
+    padding: 0;
+    color: #303030;
+}
+.dxscControlAreaForm_DSLNG
+{
+    font-size: 1.33em;
+    background-color: #efefef;
+    border: none;
+    white-space: normal;
+    padding: 9px 12px;
+}
+.dxscErrorInfo_DSLNG
+{
+    background: #f1abab;
+    color: #853a3a;
+    padding: 10px;
+}
+
+/* Buttons */
+.dxscViewNavigatorButton_DSLNG,
+.dxscViewNavigatorGotoDateButton_DSLNG
+{    
+	font-size: 1.17em;
+    line-height: 100%;
+	padding: 0 4px;
+
+    min-height: 1em;
+    display: block!important;
+}
+.dxscViewNavigatorGotoDateButton_DSLNG 
+{
+	padding: 0 0 0 4px;
+}
+.dxscViewNavigatorButton_DSLNG.dxscViewNavigatorGotoTodayButton
+{    
+    padding: 3px 4px;
+}
+.dxscViewNavigatorButtonHover_DSLNG,
+.dxscViewNavigatorGotoDateButtonHover_DSLNG
+{
+}
+.dxscViewNavigatorButtonHover_DSLNG.dxscViewNavigatorGotoTodayButton
+{    
+    text-decoration: underline;
+}
+.dxscViewNavigatorButtonPressed_DSLNG,
+.dxscViewNavigatorGotoDateButtonPressed_DSLNG
+{
+}
+
+.dxscResourceNavigatorButton_DSLNG,
+.dxscNavigationButton_DSLNG,
+.dxscDVTopMoreButton_DSLNG,
+.dxscDVBottomMoreButton_DSLNG
+{
+	cursor: pointer;
+	padding: 2px;
+}
+
+.dxscResourceNavigator_DSLNG table td:nth-child(6) table  td.dxscResourceNavigatorButton_DSLNG
+{
+	padding: 2px 8px 2px 2px;
+}
+
+.dxscSmartTagButton_DSLNG 
+{
+    border: solid 1px black;
+    background: #ffffee;
+    padding: 4px 5px;
+    cursor: pointer;
+}
+
+.dxscViewSelectorButton_DSLNG 
+{
+	padding: 6px 18px;
+	border: 1px solid White;
+}
+.dxscViewSelectorButtonHover_DSLNG
+{
+    background-color: #004071;
+    color: White;
+}
+.dxscViewSelectorButtonPressed_DSLNG
+{
+	background-color: #C0C0C0;
+    color: White;
+}
+.dxscViewSelectorButtonChecked_DSLNG
+{
+    background: #004071;
+    color: White;
+}
+
+.dxscNoBorderButton_DSLNG
+{
+    border: solid 1px #FDFDFD;
+    background: none;
+    cursor: pointer;
+}
+.dxscNoBorderButtonHover_DSLNG
+{
+    border: solid 1px #A8A8A8;
+}
+
+.dxscToolTipRoundedCornersTopBottomRow_DSLNG 
+{
+    font-size: 0;
+}
+.dxscToolTipRoundedCornersTopSide_DSLNG 
+{
+    border-top: 1px black solid; 
+    vertical-align:bottom; 
+    height:1px;	
+    background-color:#fafad2;
+}
+.dxscToolTipRoundedCornersLeftSide_DSLNG 
+{
+    border-left: 1px black solid; 
+    vertical-align:bottom; 
+    background-color:#fafad2;
+}
+.dxscToolTipRoundedCornersRightSide_DSLNG 
+{
+    border-right: 1px black solid; 
+    vertical-align:bottom; 
+    background-color:#fafad2;
+}
+.dxscToolTipRoundedCornersBottomSide_DSLNG 
+{
+    border-bottom: 1px black solid; 
+    vertical-align:bottom; 
+    height:1px;	
+    background-color:#fafad2;
+}
+.dxscToolTipRoundedCornersContent_DSLNG 
+{
+    background-color:#fafad2;
+    padding:0;
+}
+.dxscToolTipSquaredCorners_DSLNG 
+{
+    background: #f9f9cd;
+    padding: 1px 1px;
+    font-size: 0;
+    color: #303030;
+    white-space: nowrap;
+    border: solid 1px black;
+}
+.dxscTimeMarker_DSLNG 
+{
+    top:-4px;
+}
+.dxscTimeMarkerLine_DSLNG 
+{
+    top:-2px;
+    background-color:Red;
+    height:3px;
+    font-size: 0;
+    
+}
+.dxscTimeMarkerLineV_DSLNG 
+{
+    position:absolute;
+    
+    background-color:#4E4E4E;
+    width:1px;
+    font-size: 0;
+    border:solid 1px #FFC029;
+    border-top-width:0;
+    border-bottom-width:0;
+}
+.dxscTimeMarkerLineH_DSLNG
+{
+    position:absolute;
+    top:-2px;
+    background-color:#4E4E4E;
+    height:1px;
+    font-size: 0;
+    border:solid 1px #FFC029;
+    border-left-width:0;
+    border-right-width:0;
+}
+
+

@@ -1,11 +1,14 @@
 ﻿@using DevExpress.Data
-@model IList<DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryViewModel>
+@model IEnumerable<DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryViewModel>
 
-@Html.DevExpress().GridView(settings =>
+
+    @Html.DevExpress().GridView(settings =>
         {
             settings.Name = "gridPmsSummaryIndex";
             settings.CallbackRouteValues = new { Controller = "PmsSummary", Action = "IndexGridPartial" };
             settings.SettingsBehavior.AllowFixedGroups = true;
+            settings.Settings.ShowFooter = true;
+            settings.Width = Unit.Percentage(100);
 
             var ospColumn = new MVCxGridViewColumn("Osp", "OSP");
             ospColumn.PropertiesEdit.EncodeHtml = false;
@@ -14,24 +17,16 @@
             settings.Columns.Add("PerformanceIndicator", "Performance Indicator");
             settings.Columns.Add("Unit");
             settings.Columns.Add("Weight");
-            settings.Columns.Add("OspWeight");
-            settings.Columns.AddBand(targetBand =>
-                {
-                    targetBand.Caption = "Target";
-                    targetBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                    targetBand.Columns.Add("TargetYearly", "Yearly");
-                    targetBand.Columns.Add("TargetMonthly", "Monthly");
-                    targetBand.Columns.Add("TargetYtd", "YTD");
-                });
+            settings.Columns.Add("OspWeight").Visible = false;
 
-            settings.Columns.AddBand(actualBand =>
-                {
-                    actualBand.Caption = "Actual";
-                    actualBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                    actualBand.Columns.Add("ActualYearly", "Yearly");
-                    actualBand.Columns.Add("ActualMonthly", "Monthly");
-                    actualBand.Columns.Add("ActualYtd", "YTD");
-                });
+            settings.Columns.AddBand(targetActualBand =>
+            {
+                targetActualBand.Caption = "Target / Actual";
+                targetActualBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+                targetActualBand.Columns.Add("TargetActualYearly", "Yearly");
+                targetActualBand.Columns.Add("TargetActualMonthly", "Monthly");
+                targetActualBand.Columns.Add("TargetActualYtd", "YTD");
+            });
 
             settings.Columns.AddBand(indexBand =>
                 {
@@ -49,28 +44,46 @@
                 });
 
             decimal totalScore = 0;
+            decimal totalPercent = 0;
             settings.CustomSummaryCalculate = (sender, e) =>
-            {
-                ASPxSummaryItem summary = e.Item as ASPxSummaryItem;
-                if (summary.FieldName != "Score") return;
-                if (e.SummaryProcess == CustomSummaryProcess.Start)
                 {
-                    totalScore = 0;
-                }
-                if (e.SummaryProcess == CustomSummaryProcess.Calculate)
-                {
-                    totalScore += Convert.ToDecimal(e.GetValue("Score"));
-                }
-                if (e.SummaryProcess == CustomSummaryProcess.Finalize)
-                {
-                    decimal percent = 0;
-                    if (totalScore > 0) percent = totalScore / 100 * Convert.ToDecimal(e.GetValue("OspWeight"));
-                    e.TotalValue = percent;
-                }
-            };
-            
-            settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleAlways;
+                    string summaryTag = (e.Item as ASPxSummaryItem).Tag;
+                    string fieldName = summaryTag.Remove(summaryTag.Length - 2);
+                    if (fieldName != "Score") return;
+                    if (e.SummaryProcess == CustomSummaryProcess.Start)
+                    {
+                        totalScore = 0;
+                    }
 
+                    if (e.SummaryProcess == CustomSummaryProcess.Calculate)
+                    {
+                        totalScore += Convert.ToDecimal(e.GetValue(fieldName));
+                    }
+
+                    string tagIndex = summaryTag.Substring(summaryTag.Length - 1);
+                    
+                    if (e.SummaryProcess == CustomSummaryProcess.Finalize)
+                    {
+                        decimal percent = 0;
+                        if (totalScore > 0)
+                        {
+                            percent = (totalScore/100) * Convert.ToDecimal(e.GetValue("OspWeight"));
+                            
+                        }
+                        if (tagIndex == "1")
+                        {
+                            e.TotalValue = percent;
+                        }
+                        else
+                        {
+                            totalPercent += percent;
+                            e.TotalValue = totalPercent;
+                        }
+                          
+                    }
+                };
+
+            settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleAlways;
 
             ASPxSummaryItem kpiScore = new ASPxSummaryItem();
             kpiScore.ShowInGroupFooterColumn = "PerformanceIndicator";
@@ -78,18 +91,45 @@
             kpiScore.FieldName = "Score";
             kpiScore.DisplayFormat = "Score KPI in this pillar (0.00)";
             settings.GroupSummary.Add(kpiScore);
-            
+
             ASPxSummaryItem percentageScore = new ASPxSummaryItem();
             percentageScore.ShowInGroupFooterColumn = "Score";
+            percentageScore.Tag = "Score_1";
             percentageScore.FieldName = "Score";
             percentageScore.DisplayFormat = "0.00";
             percentageScore.SummaryType = SummaryItemType.Custom;
             settings.GroupSummary.Add(percentageScore);
-            
+
+            ASPxSummaryItem totalScoreLabel = new ASPxSummaryItem();
+            totalScoreLabel.ShowInGroupFooterColumn = "PerformanceIndicator";
+            totalScoreLabel.DisplayFormat = "Total Score";
+            settings.TotalSummary.Add(totalScoreLabel);
+
+            ASPxSummaryItem totalScoreValue = new ASPxSummaryItem();
+            totalScoreValue.Tag = "Score_2";
+            totalScoreValue.FieldName = "Score";
+            totalScoreValue.ShowInGroupFooterColumn = "Score";
+            totalScoreValue.DisplayFormat = "0.00";
+            totalScoreValue.SummaryType = SummaryItemType.Custom;
+
+            //totalScoreValue.FieldName = settings.GroupSummary["Total"];
+            settings.TotalSummary.Add(totalScoreValue);
+
+
+            /*settings.SettingsPager.Position = PagerPosition.Bottom;
+            settings.SettingsPager.FirstPageButton.Visible = true;
+            settings.SettingsPager.LastPageButton.Visible = true;
+            settings.SettingsPager.PageSizeItemSettings.Visible = true;*/
+            /*settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "1", "2", "5" };*/
+
+
+
             settings.PreRender = (s, e) =>
-            {
-                MVCxGridView gridView = s as MVCxGridView;
-                if (gridView != null)
-                    gridView.ExpandAll();
-            };
+                {
+                    MVCxGridView gridView = s as MVCxGridView;
+                    if (gridView != null)
+                        gridView.ExpandAll();
+                };
         }).Bind(Model).GetHtml()
+
+
