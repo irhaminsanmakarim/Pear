@@ -381,7 +381,6 @@
     <Content Include="Views\ArtifactDesigner\_KpiSeriesPartial.cshtml" />
     <Content Include="Views\ArtifactDesigner\_MultiStackSeriesPartial.cshtml" />
     <Content Include="Views\ArtifactDesigner\_StackPartial.cshtml" />
-    <Content Include="Views\Measurement\List.cshtml" />
     <Content Include="Views\Measurement\_MeasurementViewPartial.cshtml" />
     <Content Include="Views\Measurement\Index.cshtml" />
     <Content Include="Views\Measurement\Create.cshtml" />
