@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DSLNG.PEAR.Services.Responses.Kpi
+namespace DSLNG.PEAR.Services.Responses
 {
-    public class Measurement
+    public class MeasurementResponse
     {
         public int Id { get; set; }
 
