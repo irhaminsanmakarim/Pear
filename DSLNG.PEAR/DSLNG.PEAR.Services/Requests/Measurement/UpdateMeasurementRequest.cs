@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.Measurement
 {
-    public class GetMeasurementRequest
+    public class UpdateMeasurementRequest
     {
         public int Id { get; set; }
-    }
-
-    public class GetMeasurementsRequest { 
+        public string Name { get; set; }
+        public bool IsActive { get; set; }
+        public string Remark { get; set; }
     }
 }

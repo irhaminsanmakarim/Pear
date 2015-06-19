@@ -12,8 +12,9 @@ namespace DSLNG.PEAR.Services.Interfaces
     {
         GetMeasurementResponse GetMeasurement(GetMeasurementRequest request);
         GetMeasurementsResponse GetMeasurements(GetMeasurementsRequest request);
-        void Add(GetMeasurementInsert request);
-        void Save(GetMeasurementUpdate request);
         void Delete(GetMeasurementRequest request);
+
+        CreateMeasurementResponse Create(CreateMeasurementRequest request);
+        UpdateMeasurementResponse Update(UpdateMeasurementRequest request);
     }
 }

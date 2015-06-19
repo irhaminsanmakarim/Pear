@@ -379,6 +379,10 @@
     <Content Include="Views\Measurement\List.cshtml" />
     <Content Include="Views\Measurement\_MeasurementViewPartial.cshtml" />
     <Content Include="Views\Measurement\Index.cshtml" />
+    <Content Include="Views\Measurement\Create.cshtml" />
+    <Content Include="Views\Shared\_MessageResponse.cshtml" />
+    <Content Include="Views\Measurement\_Form.cshtml" />
+    <Content Include="Views\Measurement\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -423,7 +427,6 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
-    <Compile Include="AutoMapper\AutoMapperExtensions.cs" />
     <Compile Include="AutoMapper\ViewModelMappingProfile.cs" />
     <Compile Include="Controllers\Api\ApiUserController.cs" />
     <Compile Include="Controllers\ArtifactDesignerController.cs" />
@@ -447,6 +450,8 @@
     <Compile Include="ViewModels\ArtifactDesigner\ArtifactDesignerViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelsViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelViewModel.cs" />
+    <Compile Include="ViewModels\Measurement\CreateMeasurementViewModel.cs" />
+    <Compile Include="ViewModels\Measurement\UpdateMeasurementViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenusViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenuViewModel.cs" />
     <Compile Include="ViewModels\Menu\RoleGroup.cs" />

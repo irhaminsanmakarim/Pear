@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Responses.Measurement
 {
-    public class GetMeasurementResponse
+    public class GetMeasurementResponse : BaseResponse
     {
         public int Id { get; set; }
 

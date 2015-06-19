@@ -67,9 +67,11 @@
     <Compile Include="Requests\Group\GetGroupRequest.cs" />
     <Compile Include="Requests\Kpi\GetKpiRequest.cs" />
     <Compile Include="Requests\Level\GetLevelsRequest.cs" />
+    <Compile Include="Requests\Measurement\CreateMeasurementRequest.cs" />
     <Compile Include="Requests\Measurement\GetMeasurementInsert.cs" />
     <Compile Include="Requests\Measurement\GetMeasurementRequest.cs" />
     <Compile Include="Requests\Measurement\GetMeasurementUpdate.cs" />
+    <Compile Include="Requests\Measurement\UpdateMeasurementRequest.cs" />
     <Compile Include="Requests\Menu\GetMenuRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
@@ -84,7 +86,9 @@
     <Compile Include="Responses\Kpi\YtdFormula.cs" />
     <Compile Include="Responses\Level\GetAllLevels.cs" />
     <Compile Include="Responses\Level\LevelResponse.cs" />
+    <Compile Include="Responses\Measurement\CreateMeasurementResponse.cs" />
     <Compile Include="Responses\Measurement\GetMeasurementResponse.cs" />
+    <Compile Include="Responses\Measurement\UpdateMeasurementResponse.cs" />
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
     <Compile Include="Responses\User\GetUsersResponse.cs" />
     <Compile Include="Interfaces\ILevelService.cs" />

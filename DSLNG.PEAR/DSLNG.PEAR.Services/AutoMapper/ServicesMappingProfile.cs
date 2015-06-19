@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Services.Responses.User;
@@ -25,7 +26,16 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<GetMenuResponse.Level>()));
             Mapper.CreateMap<Group, GetGroupResponse.Group>();
             Mapper.CreateMap<Activity, GetGroupResponse.Activity>();
+
             Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
+            
+            Mapper.CreateMap<CreateMeasurementRequest, Measurement>();
+            Mapper.CreateMap<UpdateMeasurementRequest, Measurement>();
+            Mapper.CreateMap<Measurement, UpdateMeasurementResponse>();
+            Mapper.CreateMap<Measurement, GetMeasurementResponse>();
+            Mapper.CreateMap<GetMeasurementRequest, Measurement>();
+            
+            
             base.Configure();
         }
     }

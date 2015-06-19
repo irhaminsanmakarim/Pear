@@ -1,4 +1,8 @@
-﻿using DSLNG.PEAR.Data.Persistence;
+﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Responses.Measurement;
@@ -20,7 +24,21 @@ namespace DSLNG.PEAR.Services
 
         public GetMeasurementResponse GetMeasurement(GetMeasurementRequest request)
         {
-            throw new NotImplementedException();
+            var response = new GetMeasurementResponse();
+            try
+            {
+                var measurement = DataContext.Measurements.First(x => x.Id == request.Id);
+                response = measurement.MapTo<GetMeasurementResponse>();
+                response.IsSuccess = true;
+                response.Message = "Measurement item has been updated successfully";
+            }
+            catch (ArgumentNullException nullException)
+            {
+                response.Message = nullException.Message;
+            }
+
+            return response;
+
         }
 
         public void Add(GetMeasurementInsert request)
@@ -36,6 +54,45 @@ namespace DSLNG.PEAR.Services
         public void Delete(GetMeasurementRequest request)
         {
             throw new NotImplementedException();
+        }
+
+        public CreateMeasurementResponse Create(CreateMeasurementRequest request)
+        {
+            var response = new CreateMeasurementResponse();
+            try
+            {
+                var measurement = request.MapTo<Measurement>();
+                DataContext.Measurements.Add(measurement);
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Measurement item has been added successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public UpdateMeasurementResponse Update(UpdateMeasurementRequest request)
+        {
+            var response = new UpdateMeasurementResponse();
+            try
+            {
+                var measurement = request.MapTo<Measurement>();
+                DataContext.Measurements.Attach(measurement);
+                DataContext.Entry(measurement).State = EntityState.Modified;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Measurement item has been updated successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
         }
 
 

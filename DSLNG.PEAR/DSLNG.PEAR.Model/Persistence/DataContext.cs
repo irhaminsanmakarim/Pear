@@ -37,6 +37,8 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<Type> Types { get; set; }
         public IDbSet<User> Users { get; set; }
 
+        //public DbEntries 
+
         /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()

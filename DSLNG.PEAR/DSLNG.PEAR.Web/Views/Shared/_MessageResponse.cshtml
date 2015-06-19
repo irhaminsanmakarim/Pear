@@ -1,0 +1,19 @@
+﻿@{
+    if (ViewBag.IsSuccess != null)
+    {
+        if (ViewBag.IsSuccess)
+        {
+            <div class="alert alert-success" role="alert">
+                <strong>Success!</strong> @ViewBag.Message
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                <strong>Error!</strong> @ViewBag.Message
+            </div>
+        }
+    }
+}
+
+

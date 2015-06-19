@@ -1,11 +1,10 @@
-﻿using DSLNG.PEAR.Services.Interfaces;
+﻿using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using DevExpress.Web.Mvc;
+using DSLNG.PEAR.Web.ViewModels.Measurement;
 using DSLNG.PEAR.Services.Responses.Measurement;
 
 namespace DSLNG.PEAR.Web.Controllers
@@ -13,22 +12,65 @@ namespace DSLNG.PEAR.Web.Controllers
     public class MeasurementController : BaseController
     {
 
-        private readonly IMeasurementService _service;
+        private readonly IMeasurementService _measurementService;
 
-        public MeasurementController(IMeasurementService service)
+        public MeasurementController(IMeasurementService measurementService)
         {
-            this._service = service;
+            _measurementService = measurementService;
         }
 
         //
         // GET: /Measurement/
         public ActionResult Index()
         {
-            var dto = _service.GetMeasurements(new GetMeasurementsRequest()).Units.ToList();
+            var dto = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Units.ToList();
             return View(dto);
         }
 
-        [ValidateInput(false)]
+        public ActionResult Create()
+        {
+            var viewModel = new CreateMeasurementViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(CreateMeasurementViewModel viewModel)
+        {
+            var request = viewModel.MapTo<CreateMeasurementRequest>();
+            var response = _measurementService.Create(request);
+            ViewBag.IsSuccess = response.IsSuccess;
+            ViewBag.Message = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View("Create", viewModel);
+        }
+
+        public ActionResult Update(int id)
+        {
+            var response = _measurementService.GetMeasurement(new GetMeasurementRequest {Id = id});
+            var viewModel = response.MapTo<UpdateMeasurementViewModel>();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Update(UpdateMeasurementViewModel viewModel)
+        {
+            var request = viewModel.MapTo<UpdateMeasurementRequest>();
+            var response = _measurementService.Update(request);
+            ViewBag.IsSuccess = response.IsSuccess;
+            ViewBag.Message = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View("Update", viewModel);
+        }
+
+        /*[ValidateInput(false)]
         public ActionResult MeasurementViewPartial()
         {
             var model = _service.GetMeasurements(new GetMeasurementsRequest()).Units.ToList();
@@ -89,6 +131,6 @@ namespace DSLNG.PEAR.Web.Controllers
                 }
             }
             return PartialView("_MeasurementViewPartial", model);
-        }
-	}
+        }*/
+    }
 }
