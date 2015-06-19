@@ -80,6 +80,9 @@
       <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DSLNGTheme">
+      <HintPath>..\..\lib\DSLNGTheme.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -373,6 +376,15 @@
     <Content Include="Views\ArtifactDesigner\Create.cshtml" />
     <Content Include="Views\Menu\MainMenu.cshtml" />
     <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Measurement\_IndexGridPartial.cshtml" />
+    <Content Include="Views\ArtifactDesigner\_SeriesPartial.cshtml" />
+    <Content Include="Views\ArtifactDesigner\_KpiSeriesPartial.cshtml" />
+    <Content Include="Views\ArtifactDesigner\_MultiStackSeriesPartial.cshtml" />
+    <Content Include="Views\ArtifactDesigner\_StackPartial.cshtml" />
+    <Content Include="Views\Measurement\Index.cshtml" />
+    <Content Include="Views\Measurement\Create.cshtml" />
+    <Content Include="Views\Shared\_MessageResponse.cshtml" />
+    <Content Include="Views\Measurement\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -417,31 +429,39 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
-    <Compile Include="AutoMapper\AutoMapperExtensions.cs" />
     <Compile Include="AutoMapper\ViewModelMappingProfile.cs" />
     <Compile Include="Controllers\Api\ApiUserController.cs" />
     <Compile Include="Controllers\ArtifactDesignerController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LevelController.cs" />
+    <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="DependencyResolution\ObjectFactory.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
+    <Compile Include="DevExpressDataProvider\ArtifactDesignerDataProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ArtifactDesigner\ArtifactDesignerViewModel.cs" />
+    <Compile Include="ViewModels\Kpi\KpiToSeriesViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelsViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelViewModel.cs" />
+    <Compile Include="ViewModels\Measurement\CreateMeasurementViewModel.cs" />
+    <Compile Include="ViewModels\Measurement\IndexMeasurementViewModel.cs" />
+    <Compile Include="ViewModels\Measurement\MeasurementViewModel.cs" />
+    <Compile Include="ViewModels\Measurement\UpdateMeasurementViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenusViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenuViewModel.cs" />
+    <Compile Include="ViewModels\Menu\RoleGroup.cs" />
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
@@ -489,7 +509,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:52587/</IISUrl>
+          <IISUrl>http://localhost:65293/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

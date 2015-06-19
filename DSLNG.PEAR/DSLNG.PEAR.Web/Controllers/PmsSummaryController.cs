@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
+using DevExpress.Web;
+using DevExpress.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -19,14 +21,13 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult IndexGridPartial()
         {
+            var request = Request.Params;
             return PartialView("_IndexGridPartial", AddFakePmsSummaryData());
         }
 
-
-
-        private List<PmsSummaryViewModel> AddFakePmsSummaryData()
+       private IEnumerable<PmsSummaryViewModel> AddFakePmsSummaryData()
         {
-            var list = new List<PmsSummaryViewModel>();
+            IList<PmsSummaryViewModel> list = new List<PmsSummaryViewModel>();
             var pmsSummary1 = new PmsSummaryViewModel
             {
                 Unit = 39,
@@ -34,9 +35,6 @@ namespace DSLNG.PEAR.Web.Controllers
                 ActualMonthly = 10,
                 ActualYearly = 20,
                 ActualYtd = 30,
-                IndexMonthly = 40,
-                IndexYearly = 59,
-                IndexYtd = 10,
                 Osp = "Safety",
                 PerformanceIndicator = "Fatality/Strap Disability",
                 OspWeight = 20.00,
@@ -55,9 +53,6 @@ namespace DSLNG.PEAR.Web.Controllers
                 ActualMonthly = 210,
                 ActualYearly = 320,
                 ActualYtd = 340,
-                IndexMonthly = 240,
-                IndexYearly = 539,
-                IndexYtd = 104,
                 Osp = "Safety",
                 OspWeight = 20.00,
                 PerformanceIndicator = "RIF",
@@ -76,9 +71,6 @@ namespace DSLNG.PEAR.Web.Controllers
                 ActualMonthly = 210,
                 ActualYearly = 320,
                 ActualYtd = 340,
-                IndexMonthly = 240,
-                IndexYearly = 539,
-                IndexYtd = 104,
                 //Osp = "<span class='trafficlight grey'></span>Productivity and Efficiency",
                 OspWeight = 15.00,
                 PerformanceIndicator = "RIF",

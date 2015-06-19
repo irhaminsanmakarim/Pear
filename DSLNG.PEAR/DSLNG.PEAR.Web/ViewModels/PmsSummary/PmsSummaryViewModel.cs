@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -21,10 +22,35 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         public decimal ActualMonthly { get; set; }
         public decimal ActualYtd { get; set; }
 
-        public decimal IndexYearly { get; set; }
-        public decimal IndexMonthly { get; set; }
-        public decimal IndexYtd { get; set; }
+        public string IndexYearly
+        {
+            get { return (ActualYearly / TargetYearly).ToString("0.00"); }
+        }
+
+        public string IndexMonthly {
+            get { return (ActualMonthly / TargetMonthly).ToString("0.00"); }
+        }
+
+        public string IndexYtd
+        {
+            get { return (ActualYtd/TargetYtd).ToString("0.00"); }
+        }
 
         public double Score { get; set; }
+
+        public string TargetActualYearly
+        {
+            get { return string.Format(@"{0} / {1}", TargetYearly.ToString("0.00"), ActualYearly.ToString()); }
+        }
+
+        public string TargetActualMonthly
+        {
+            get { return string.Format(@"{0} / {1}", TargetMonthly.ToString("0.00"), ActualMonthly.ToString()); }
+        }
+
+        public string TargetActualYtd
+        {
+            get { return string.Format(@"{0} / {1}", TargetYtd.ToString("0.00"), ActualYtd.ToString()); }
+        }
     }
 }

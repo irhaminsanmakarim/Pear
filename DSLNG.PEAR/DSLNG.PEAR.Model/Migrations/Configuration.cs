@@ -1,3 +1,4 @@
+/*
 using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Persistence;
 using System.Data.Entity.Migrations;
@@ -66,3 +67,4 @@ namespace DSLNG.PEAR.Data.Migrations
     //    }
     //}
 }
+*/

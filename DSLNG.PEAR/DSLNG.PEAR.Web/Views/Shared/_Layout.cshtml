@@ -132,19 +132,20 @@
                 if (!$leftContent.hasClass('pear-hidden')) {
 
                     $('.main-content').animate({
-                        marginLeft: -230
-                    }, function () {
-                        $leftContent.addClass('pear-hidden');
-                    })
+                            marginLeft: -230
+                        }, function () {
+                            $leftContent.addClass('pear-hidden');
+                        })
                 } else {
                     $('.main-content').animate({
-                        marginLeft: 0
-                    }, function () {
-                        $leftContent.removeClass('pear-hidden');
-                    })
+                            marginLeft: 0
+                        }, function () {
+                            $leftContent.removeClass('pear-hidden');
+                        })
                 }
             });
         })
     </script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

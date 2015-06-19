@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DSLNG.PEAR.Services.Responses.Method
+{
+    public class GetMethodResponse
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+        public string Remark { get; set; }
+
+        public bool IsActive { get; set; }
+    }
+
+    public class GetMethodsResponse {
+        IEnumerable<GetMethodResponse> Methods { get; set; }
+    }
+}

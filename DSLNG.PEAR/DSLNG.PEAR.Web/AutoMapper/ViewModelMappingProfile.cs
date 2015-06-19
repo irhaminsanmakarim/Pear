@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Responses.Level;
+using DSLNG.PEAR.Services.Responses.Measurement;
+using DSLNG.PEAR.Services.Responses.Kpi;
+using DSLNG.PEAR.Web.ViewModels.Kpi;
+using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Web.ViewModels.Level;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using DSLNG.PEAR.Web.ViewModels.Measurement;
+using DSLNG.PEAR.Web.ViewModels.Menu;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -13,6 +16,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
         protected override void Configure()
         {
             Mapper.CreateMap<GetLevelResponse, LevelViewModel>();
+            Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
+            Mapper.CreateMap<GetMenuResponse, MenusViewModel>();
+            Mapper.CreateMap<CreateMeasurementViewModel, CreateMeasurementRequest>();
+            Mapper.CreateMap<GetMeasurementResponse, UpdateMeasurementViewModel>();
+            Mapper.CreateMap<UpdateMeasurementViewModel, UpdateMeasurementRequest>();
+            Mapper.CreateMap<GetMeasurementsResponse.Measurement, MeasurementViewModel>();
+            
             base.Configure();
         }
     }

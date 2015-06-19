@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using DSLNG.PEAR.Data.Entities;
 using Type = DSLNG.PEAR.Data.Entities.Type;
 
@@ -34,5 +35,6 @@ namespace DSLNG.PEAR.Data.Persistence
 
         Database Database { get; }
         int SaveChanges();
+        DbEntityEntry Entry(object entity);
     }
 }
