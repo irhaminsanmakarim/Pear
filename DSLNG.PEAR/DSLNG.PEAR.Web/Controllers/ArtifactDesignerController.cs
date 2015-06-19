@@ -29,14 +29,29 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var viewModel = new ArtifactDesignerViewModel();
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "bar", Text = "Bar" });
-            viewModel.SeriesTypes.Add(new SelectListItem { Value = "single", Text = "Single Series" });
-            viewModel.SeriesTypes.Add(new SelectListItem { Value = "multiple", Text = "Multiple Series" });
+            viewModel.SeriesTypes.Add(new SelectListItem { Value = "single", Text = "Single Stack" });
+            viewModel.SeriesTypes.Add(new SelectListItem { Value = "multiple", Text = "Multiple Stack" });
             return View(viewModel);
         }
 
         public ActionResult SeriesPartial()
         {
-            return PartialView("_seriesPartial");
+            if (Request.QueryString["series_type"] == "single")
+            {
+                return PartialView("_SeriesPartial");
+            }
+            else
+            {
+                return PartialView("_MultiStackSeriesPartial");
+            }
+        }
+        public ActionResult KpiSeriesPartial()
+        {
+            return PartialView("_KpiSeriesPartial");
+        }
+        public ActionResult StackPartial()
+        {
+            return PartialView("_StackPartial");
         }
 
         //

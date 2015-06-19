@@ -1,11 +1,11 @@
 ﻿@using DSLNG.PEAR.Web.DevExpressDataProvider
 @Html.DevExpress().FormLayout(settings =>
                      {
-                         settings.Name = "graphicSeries";
+                         settings.Name = "graphicStacks";
                          settings.EncodeHtml = false;
                          var groupItem = settings.Items.AddGroupItem(itemSettings =>
                          {
-                             itemSettings.Caption = "Graphic Series";
+                             itemSettings.Caption = "Graphic Stacks";
                              itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
                              itemSettings.ColCount = 2;
                          });
@@ -20,3 +20,4 @@
 
                              }).HelpText = "Type to search Kpi"; 
                      }).GetHtml()
+

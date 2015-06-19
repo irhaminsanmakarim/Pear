@@ -4,6 +4,8 @@ using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Responses.Group;
+using DSLNG.PEAR.Services.Responses.Kpi;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -21,6 +23,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Level, GetMenuResponse.Level>();
             Mapper.CreateMap<RoleGroup, GetMenuResponse.RoleGroup>()
                 .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<GetMenuResponse.Level>()));
+            Mapper.CreateMap<Group, GetGroupResponse.Group>();
+            Mapper.CreateMap<Activity, GetGroupResponse.Activity>();
+            Mapper.CreateMap<Kpi, GetKpiToSeriesResponse.Kpi>();
             base.Configure();
         }
     }

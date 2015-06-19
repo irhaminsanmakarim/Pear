@@ -6,11 +6,11 @@
 
 <h2>Create</h2>
 <script type="text/javascript">
-    function AddSeries(s, e) {
+    function AddBar(s, e) {
         $.ajax({
             type: "GET",
             url: '@Url.Action("SeriesPartial", "ArtifactDesigner")',
-            //data: { employeeID: s.GetValue() },
+            data: { series_type: $('input[name="barTypes"]').closest('table').find('input[type="hidden"]').val() },
             success: function(response) {
                 $("#series").append(response);
             }
@@ -49,39 +49,39 @@
     <div id="series"></div>
     @Html.DevExpress().FormLayout(settings =>
                      {
-                         settings.Name = "graphicSeries";
+                         settings.Name = "graphicBars";
                          settings.EncodeHtml = false;
                          var groupItem = settings.Items.AddGroupItem(itemSettings =>
                          {
-                             itemSettings.Caption = "Graphic Series";
+                             itemSettings.Caption = "Graphic Bars";
                              itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
                              itemSettings.ColCount = 2;
                          });
                          groupItem.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
                          groupItem.Items.Add(itemSettings =>
                          {
-                             itemSettings.Caption = "Series Type";
+                             itemSettings.Caption = "Bar Types";
                              itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
                              ComboBoxSettings cb = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
                              cb.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                             cb.Name = "seriesTypes";
+                             cb.Name = "barTypes";
                              cb.SelectedIndex = 0;
                              cb.Properties.TextField = "Text";
                              cb.Properties.ValueField = "Value";
                              cb.Properties.ValueType = typeof(string);
                              cb.Properties.DataSource = Model.SeriesTypes;
-                         });
+                         }).HelpText = "Please select Bar type";
                          groupItem.Items.Add(itemSettings =>
                          {
                              itemSettings.Caption = " ";
                              itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
                              var buttonSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
-                             buttonSettings.Name = "addSeries";
-                             buttonSettings.Text = "Add Series";
+                             buttonSettings.Name = "addBar";
+                             buttonSettings.Text = "Add Bar";
                              buttonSettings.UseSubmitBehavior = false;
-                             buttonSettings.ClientSideEvents.Click = "AddSeries";
+                             buttonSettings.ClientSideEvents.Click = "AddBar";
                              buttonSettings.Width = 100;
-                         });
+                         }).HelpText = "&nbsp;"; ;
                      }).GetHtml();
 }
 

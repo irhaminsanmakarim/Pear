@@ -14,12 +14,6 @@ namespace DSLNG.PEAR.Web.Controllers.Api
     public class ApiUserController : ApiController
     {
         private readonly IUserService _userService;
-
-        //public ApiUserController()
-        //{
-        //    //_userService = new UserService();
-        //}
-
         public ApiUserController(IUserService userService)
         {
             _userService = userService;
