@@ -10,7 +10,6 @@ using DSLNG.PEAR.Services.Responses.Kpi;
 using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.Conversion;
-using DSLNG.PEAR.Services.Responses;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -44,7 +43,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<Kpi, GetKpiToSeriesResponse.Kpi>();
             Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
-            Mapper.CreateMap<DSLNG.PEAR.Data.Entities.Method, GetMethodResponse>();
+            Mapper.CreateMap<Data.Entities.Method, GetMethodResponse>();
 
             Mapper.CreateMap<Conversion, GetConversionResponse>();
 
