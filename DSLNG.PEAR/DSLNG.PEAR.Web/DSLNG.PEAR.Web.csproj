@@ -377,6 +377,12 @@
     <Content Include="Views\Menu\MainMenu.cshtml" />
     <Content Include="Views\Menu\Index.cshtml" />
     <Content Include="Views\Measurement\_IndexGridPartial.cshtml" />
+    <Content Include="Views\ArtifactDesigner\_SeriesPartial.cshtml" />
+    <Content Include="Views\ArtifactDesigner\_KpiSeriesPartial.cshtml" />
+    <Content Include="Views\ArtifactDesigner\_MultiStackSeriesPartial.cshtml" />
+    <Content Include="Views\ArtifactDesigner\_StackPartial.cshtml" />
+    <Content Include="Views\Measurement\List.cshtml" />
+    <Content Include="Views\Measurement\_MeasurementViewPartial.cshtml" />
     <Content Include="Views\Measurement\Index.cshtml" />
     <Content Include="Views\Measurement\Create.cshtml" />
     <Content Include="Views\Shared\_MessageResponse.cshtml" />
@@ -438,14 +444,17 @@
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="DependencyResolution\ObjectFactory.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
+    <Compile Include="DevExpressDataProvider\ArtifactDesignerDataProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ArtifactDesigner\ArtifactDesignerViewModel.cs" />
+    <Compile Include="ViewModels\Kpi\KpiToSeriesViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelsViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelViewModel.cs" />
     <Compile Include="ViewModels\Measurement\CreateMeasurementViewModel.cs" />

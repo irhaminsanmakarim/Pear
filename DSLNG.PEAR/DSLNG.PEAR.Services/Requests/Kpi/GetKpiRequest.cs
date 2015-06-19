@@ -8,5 +8,6 @@ namespace DSLNG.PEAR.Services.Requests.Kpi
 {
     public class GetKpiRequest
     {
+        public int Id { get; set; }
     }
 }

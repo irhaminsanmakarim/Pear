@@ -10,10 +10,14 @@ namespace DSLNG.PEAR.Web.ViewModels.ArtifactDesigner
     {
         public ArtifactDesignerViewModel() {
             GraphicTypes = new List<SelectListItem>();
+            SeriesTypes = new List<SelectListItem>();
         }
         public string GraphicType { get; set; }
+        public IList<SelectListItem> GraphicTypes { get; set; }
         public string GraphicName { get; set; }
         public string HeaderTitle { get; set; }
-        public IList<SelectListItem> GraphicTypes { get; set; }
+
+        public IList<SelectListItem> SeriesTypes { get; set; }
+       
     }
 }
