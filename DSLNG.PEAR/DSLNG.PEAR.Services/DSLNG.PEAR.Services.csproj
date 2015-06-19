@@ -70,6 +70,7 @@
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Requests\Group\GetGroupRequest.cs" />
     <Compile Include="Requests\Kpi\GetKpiRequest.cs" />
+    <Compile Include="Requests\Kpi\GetKpiToSeriesRequest.cs" />
     <Compile Include="Requests\Level\GetLevelsRequest.cs" />
     <Compile Include="Requests\Measurement\GetMeasurementInsert.cs" />
     <Compile Include="Requests\Measurement\GetMeasurementRequest.cs" />
@@ -83,6 +84,8 @@
     <Compile Include="Responses\ConversionResponse.cs" />
     <Compile Include="Responses\Kpi\FormatInput.cs" />
     <Compile Include="Responses\Kpi\GetKpiResponse.cs" />
+    <Compile Include="Responses\Kpi\GetKpiToSeriesResponse.cs" />
+    <Compile Include="Responses\Kpi\Measurement.cs" />
     <Compile Include="Responses\MeasurementResponse.cs" />
     <Compile Include="Responses\Kpi\Method.cs" />
     <Compile Include="Responses\Kpi\Periode.cs" />
