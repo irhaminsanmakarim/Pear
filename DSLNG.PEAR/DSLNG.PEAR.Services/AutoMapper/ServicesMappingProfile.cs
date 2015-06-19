@@ -5,8 +5,8 @@ using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Group;
-using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.Method;
+using DSLNG.PEAR.Services.Responses.Measurement;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
