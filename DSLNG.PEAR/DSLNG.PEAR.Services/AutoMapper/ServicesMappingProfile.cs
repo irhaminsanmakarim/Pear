@@ -8,6 +8,7 @@ using DSLNG.PEAR.Services.Responses.Group;
 using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.Conversion;
+using DSLNG.PEAR.Services.Responses;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -27,7 +28,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<GetMenuResponse.Level>()));
             Mapper.CreateMap<Group, GetGroupResponse.Group>();
             Mapper.CreateMap<Activity, GetGroupResponse.Activity>();
-            Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
+            Mapper.CreateMap<Measurement, GetMeasurementResponse>();
             Mapper.CreateMap<Method, GetMethodResponse>();
             Mapper.CreateMap<Conversion, GetConversionResponse>();
             base.Configure();
