@@ -29,9 +29,14 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<GetMenuResponse.Level>()));
             Mapper.CreateMap<Group, GetGroupResponse.Group>();
             Mapper.CreateMap<Activity, GetGroupResponse.Activity>();
+<<<<<<< HEAD
+            Mapper.CreateMap<Measurement, GetMeasurementResponse>();
+            Mapper.CreateMap<Method, GetMethodResponse>();
+=======
             Mapper.CreateMap<Kpi, GetKpiToSeriesResponse.Kpi>();
             Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
             Mapper.CreateMap<DSLNG.PEAR.Data.Entities.Method, GetMethodResponse>();
+>>>>>>> 3efd3b737b496a1ea139c242f3e0a3ca3f676e66
             Mapper.CreateMap<Conversion, GetConversionResponse>();
             base.Configure();
         }
