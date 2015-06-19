@@ -22,6 +22,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CreateMeasurementViewModel, CreateMeasurementRequest>();
             Mapper.CreateMap<GetMeasurementResponse, UpdateMeasurementViewModel>();
             Mapper.CreateMap<UpdateMeasurementViewModel, UpdateMeasurementRequest>();
+            Mapper.CreateMap<GetMeasurementsResponse.Measurement, MeasurementViewModel>();
+            
             base.Configure();
         }
     }

@@ -1,17 +1,13 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
 using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
-using DSLNG.PEAR.Services.Responses.Measurement;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Responses.Measurement;
 
 namespace DSLNG.PEAR.Services
 {
@@ -20,6 +16,14 @@ namespace DSLNG.PEAR.Services
         public MeasurementService(IDataContext dataContext): base(dataContext)
         {
 
+        }
+
+        public GetMeasurementsResponse GetMeasurements(GetMeasurementsRequest request)
+        {
+            var measurements = DataContext.Measurements.ToList();
+            var response = new GetMeasurementsResponse();
+            response.Measurements = measurements.MapTo<GetMeasurementsResponse.Measurement>();
+            return response;
         }
 
         public GetMeasurementResponse GetMeasurement(GetMeasurementRequest request)
@@ -39,21 +43,6 @@ namespace DSLNG.PEAR.Services
 
             return response;
 
-        }
-
-        public void Add(GetMeasurementInsert request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save(GetMeasurementUpdate request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(GetMeasurementRequest request)
-        {
-            throw new NotImplementedException();
         }
 
         public CreateMeasurementResponse Create(CreateMeasurementRequest request)
@@ -95,12 +84,23 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-
-        public GetMeasurementsResponse GetMeasurements(GetMeasurementsRequest request)
+        public DeleteMeasurementResponse Delete(int id)
         {
-            var units = DataContext.Measurements.ToList();
-            var response = new GetMeasurementsResponse();
-            response.Units = units.MapTo<GetMeasurementResponse>();
+            var response = new DeleteMeasurementResponse();
+            try
+            {
+                var measurement = new Measurement {Id = id};
+                DataContext.Measurements.Attach(measurement);
+                DataContext.Entry(measurement).State = EntityState.Deleted;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Measurement item has been deleted successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
             return response;
         }
     }

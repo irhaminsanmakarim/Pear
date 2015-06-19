@@ -42,6 +42,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IMenuService>().Use<MenuService>();
             For<IGroupService>().Use<GroupService>();
             For<IMeasurementService>().Use<MeasurementService>();
+            For<IMethodService>().Use<MethodService>();
         }
 
         #endregion

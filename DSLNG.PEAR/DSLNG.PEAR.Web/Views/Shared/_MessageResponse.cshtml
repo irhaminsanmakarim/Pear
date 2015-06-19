@@ -1,19 +1,17 @@
 ﻿@{
-    if (ViewBag.IsSuccess != null)
+    if (TempData["IsSuccess"] != null)
     {
-        if (ViewBag.IsSuccess)
+        if (Boolean.Parse(TempData["IsSuccess"].ToString()))
         {
             <div class="alert alert-success" role="alert">
-                <strong>Success!</strong> @ViewBag.Message
+                <strong>Success!</strong> @TempData["Message"]
             </div>
         }
         else
         {
             <div class="alert alert-danger" role="alert">
-                <strong>Error!</strong> @ViewBag.Message
+                <strong>Error!</strong> @TempData["Message"]
             </div>
         }
     }
 }
-
-

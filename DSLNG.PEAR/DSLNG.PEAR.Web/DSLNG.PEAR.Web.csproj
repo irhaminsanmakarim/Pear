@@ -376,12 +376,10 @@
     <Content Include="Views\ArtifactDesigner\Create.cshtml" />
     <Content Include="Views\Menu\MainMenu.cshtml" />
     <Content Include="Views\Menu\Index.cshtml" />
-    <Content Include="Views\Measurement\List.cshtml" />
-    <Content Include="Views\Measurement\_MeasurementViewPartial.cshtml" />
+    <Content Include="Views\Measurement\_IndexGridPartial.cshtml" />
     <Content Include="Views\Measurement\Index.cshtml" />
     <Content Include="Views\Measurement\Create.cshtml" />
     <Content Include="Views\Shared\_MessageResponse.cshtml" />
-    <Content Include="Views\Measurement\_Form.cshtml" />
     <Content Include="Views\Measurement\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -451,6 +449,8 @@
     <Compile Include="ViewModels\Level\LevelsViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelViewModel.cs" />
     <Compile Include="ViewModels\Measurement\CreateMeasurementViewModel.cs" />
+    <Compile Include="ViewModels\Measurement\IndexMeasurementViewModel.cs" />
+    <Compile Include="ViewModels\Measurement\MeasurementViewModel.cs" />
     <Compile Include="ViewModels\Measurement\UpdateMeasurementViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenusViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenuViewModel.cs" />

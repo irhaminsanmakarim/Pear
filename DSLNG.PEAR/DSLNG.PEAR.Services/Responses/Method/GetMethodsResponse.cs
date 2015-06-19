@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Services.Responses.Measurement
+namespace DSLNG.PEAR.Services.Responses.Method
 {
-    public class GetMeasurementResponse : BaseResponse
+    public class GetMethodResponse
     {
         public int Id { get; set; }
 
@@ -16,7 +16,7 @@ namespace DSLNG.PEAR.Services.Responses.Measurement
         public bool IsActive { get; set; }
     }
 
-    
-
-    
+    public class GetMethodsResponse {
+        IEnumerable<GetMethodResponse> Methods { get; set; }
+    }
 }

@@ -21,10 +21,10 @@ namespace DSLNG.PEAR.Services.Responses.Kpi
             public string IsEconomic { get; set; }
             public int Order { get; set; }
             public YtdFormula YtdFormula { get; set; }
-            public Measurement Measurement { get; set; }
+            public MeasurementResponse Measurement { get; set; }
             public Method Method { get; set; }
             public int? ConversionId { get; set; }
-            public Conversion Conversion { get; set; }
+            public ConversionResponse Conversion { get; set; }
             public FormatInput FormatInput { get; set; }
             public Periode Periode { get; set; }
             public string Remark { get; set; }
