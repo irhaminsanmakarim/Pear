@@ -55,6 +55,7 @@
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="GroupService.cs" />
+    <Compile Include="Interfaces\IConversionService.cs" />
     <Compile Include="Interfaces\IDashboardTemplate.cs" />
     <Compile Include="Interfaces\IGroupService.cs" />
     <Compile Include="Interfaces\IKpiService.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="MeasurementService.cs" />
     <Compile Include="MenuService.cs" />
     <Compile Include="MethodService.cs" />
+    <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Requests\Group\GetGroupRequest.cs" />
     <Compile Include="Requests\Kpi\GetKpiRequest.cs" />
@@ -75,12 +77,13 @@
     <Compile Include="Requests\Menu\GetMenuRequest.cs" />
     <Compile Include="Requests\Method\GetMethodRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
+    <Compile Include="Responses\Conversion\GetConversionResponse.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Responses\Group\GetGroupResponse.cs" />
-    <Compile Include="Responses\Kpi\Conversion.cs" />
+    <Compile Include="Responses\ConversionResponse.cs" />
     <Compile Include="Responses\Kpi\FormatInput.cs" />
     <Compile Include="Responses\Kpi\GetKpiResponse.cs" />
-    <Compile Include="Responses\Kpi\Measurement.cs" />
+    <Compile Include="Responses\MeasurementResponse.cs" />
     <Compile Include="Responses\Kpi\Method.cs" />
     <Compile Include="Responses\Kpi\Periode.cs" />
     <Compile Include="Responses\Kpi\PeriodeType.cs" />

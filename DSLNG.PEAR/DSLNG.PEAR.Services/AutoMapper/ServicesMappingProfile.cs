@@ -5,8 +5,9 @@ using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Group;
-using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.Method;
+using DSLNG.PEAR.Services.Responses.Measurement;
+using DSLNG.PEAR.Services.Responses.Conversion;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -28,6 +29,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Activity, GetGroupResponse.Activity>();
             Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
             Mapper.CreateMap<Method, GetMethodResponse>();
+            Mapper.CreateMap<Conversion, GetConversionResponse>();
             base.Configure();
         }
     }
