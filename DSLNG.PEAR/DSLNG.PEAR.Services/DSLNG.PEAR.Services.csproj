@@ -60,9 +60,11 @@
     <Compile Include="Interfaces\IKpiService.cs" />
     <Compile Include="Interfaces\IMeasurementService.cs" />
     <Compile Include="Interfaces\IMenuService.cs" />
+    <Compile Include="Interfaces\IMethodService.cs" />
     <Compile Include="KpiService.cs" />
     <Compile Include="MeasurementService.cs" />
     <Compile Include="MenuService.cs" />
+    <Compile Include="MethodService.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Requests\Group\GetGroupRequest.cs" />
     <Compile Include="Requests\Kpi\GetKpiRequest.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Requests\Measurement\GetMeasurementRequest.cs" />
     <Compile Include="Requests\Measurement\GetMeasurementUpdate.cs" />
     <Compile Include="Requests\Menu\GetMenuRequest.cs" />
+    <Compile Include="Requests\Method\GetMethodRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Responses\Group\GetGroupResponse.cs" />
@@ -86,6 +89,7 @@
     <Compile Include="Responses\Level\LevelResponse.cs" />
     <Compile Include="Responses\Measurement\GetMeasurementResponse.cs" />
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
+    <Compile Include="Responses\Method\GetMethodsResponse.cs" />
     <Compile Include="Responses\User\GetUsersResponse.cs" />
     <Compile Include="Interfaces\ILevelService.cs" />
     <Compile Include="Interfaces\IPillarService.cs" />

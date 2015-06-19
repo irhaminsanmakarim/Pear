@@ -6,6 +6,7 @@ using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Group;
 using DSLNG.PEAR.Services.Responses.Measurement;
+using DSLNG.PEAR.Services.Responses.Method;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -26,6 +27,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Group, GetGroupResponse.Group>();
             Mapper.CreateMap<Activity, GetGroupResponse.Activity>();
             Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
+            Mapper.CreateMap<Method, GetMethodResponse>();
             base.Configure();
         }
     }
