@@ -1,88 +1,58 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.ArtifactDesigner.ArtifactDesignerViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "View1";
 }
 
-<h2>Create</h2>
-<script type="text/javascript">
-    function AddBar(s, e) {
-        $.ajax({
-            type: "GET",
-            url: '@Url.Action("SeriesPartial", "ArtifactDesigner")',
-            data: { series_type: $('input[name="barTypes"]').closest('table').find('input[type="hidden"]').val() },
-            success: function(response) {
-                $("#series").append(response);
-            }
-        });
-    }
-</script>
-@using (Html.BeginForm())
+<h2>View1</h2>
+
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
-    @Html.DevExpress().FormLayout(settings =>
-                        {
-                            settings.Name = "graphicDetails";
-                            settings.EncodeHtml = false;
-                            var groupItem = settings.Items.AddGroupItem(itemSettings =>
-                            {
-                                itemSettings.Caption = "Graphic Details";
-                                itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                            });
-                            groupItem.Items.Add(m => m.GraphicType, itemSettings =>
-                            {
-                                itemSettings.HelpText = "Please select graphic type";
-                                itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
-                                ComboBoxSettings cb = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
-                                cb.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                cb.Properties.TextField = "Text";
-                                cb.Properties.ValueField = "Value";
-                                cb.Properties.ValueType = typeof(string);
-                                cb.Properties.DataSource = Model.GraphicTypes;
-                            });
+    <div class="form-horizontal">
+        <h4>ArtifactDesignerViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true)
 
-                            groupItem.Items.Add(m => m.GraphicName).HelpText = "Please set the name for this graphic";
-                            groupItem.Items.Add(m => m.HeaderTitle).HelpText = "Please set the header title";
-                            groupItem.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
-                        }).GetHtml();
-    <div id="series"></div>
-    @Html.DevExpress().FormLayout(settings =>
-                     {
-                         settings.Name = "graphicBars";
-                         settings.EncodeHtml = false;
-                         var groupItem = settings.Items.AddGroupItem(itemSettings =>
-                         {
-                             itemSettings.Caption = "Graphic Bars";
-                             itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                             itemSettings.ColCount = 2;
-                         });
-                         groupItem.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
-                         groupItem.Items.Add(itemSettings =>
-                         {
-                             itemSettings.Caption = "Bar Types";
-                             itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
-                             ComboBoxSettings cb = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
-                             cb.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                             cb.Name = "barTypes";
-                             cb.SelectedIndex = 0;
-                             cb.Properties.TextField = "Text";
-                             cb.Properties.ValueField = "Value";
-                             cb.Properties.ValueType = typeof(string);
-                             cb.Properties.DataSource = Model.SeriesTypes;
-                         }).HelpText = "Please select Bar type";
-                         groupItem.Items.Add(itemSettings =>
-                         {
-                             itemSettings.Caption = " ";
-                             itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
-                             var buttonSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
-                             buttonSettings.Name = "addBar";
-                             buttonSettings.Text = "Add Bar";
-                             buttonSettings.UseSubmitBehavior = false;
-                             buttonSettings.ClientSideEvents.Click = "AddBar";
-                             buttonSettings.Width = 100;
-                         }).HelpText = "&nbsp;"; ;
-                     }).GetHtml();
+        <div class="form-group">
+            @Html.LabelFor(model => model.GraphicType, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.GraphicType,Model.GraphicTypes)
+                @Html.ValidationMessageFor(model => model.GraphicType)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GraphicName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GraphicName)
+                @Html.ValidationMessageFor(model => model.GraphicName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HeaderTitle, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HeaderTitle)
+                @Html.ValidationMessageFor(model => model.HeaderTitle)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MeasurementId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements)
+                @Html.ValidationMessageFor(model => model.MeasurementId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
 }
 
 <div>

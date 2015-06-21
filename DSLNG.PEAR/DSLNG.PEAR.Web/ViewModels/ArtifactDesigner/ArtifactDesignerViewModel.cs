@@ -18,6 +18,9 @@ namespace DSLNG.PEAR.Web.ViewModels.ArtifactDesigner
         public string HeaderTitle { get; set; }
 
         public IList<SelectListItem> SeriesTypes { get; set; }
-       
+        public int MeasurementId { get; set; }
+        public IList<SelectListItem> Measurements { get; set; }
+
+        public BarChartViewModel BarChart { get; set; }
     }
 }
