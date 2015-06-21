@@ -1,10 +1,26 @@
-﻿@{
+﻿@model DSLNG.PEAR.Web.ViewModels.Measurement.IndexMeasurementViewModel
+@{
     ViewBag.Title = "Measurement List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>List</h2>
-@Html.Action("MeasurementViewPartial")
+@Html.Partial("_MessageResponse")
+@Html.ActionLink("Create New", "Create")
+@Html.Partial("_IndexGridPartial", Model.Measurements)
+
+@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function(id) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "Measurement")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+    </script>
+    }
 
 
 

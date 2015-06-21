@@ -8,6 +8,7 @@ namespace DSLNG.PEAR.Services.Requests.Measurement
 {
     public class GetMeasurementRequest
     {
+        public int Id { get; set; }
     }
 
     public class GetMeasurementsRequest { 

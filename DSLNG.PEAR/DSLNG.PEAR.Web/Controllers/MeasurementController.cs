@@ -1,94 +1,81 @@
-﻿using DSLNG.PEAR.Services.Interfaces;
+﻿using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using DevExpress.Web.Mvc;
-using DSLNG.PEAR.Services.Responses.Measurement;
+using DSLNG.PEAR.Web.ViewModels.Measurement;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class MeasurementController : BaseController
     {
 
-        private readonly IMeasurementService _service;
+        private readonly IMeasurementService _measurementService;
 
-        public MeasurementController(IMeasurementService service)
+        public MeasurementController(IMeasurementService measurementService)
         {
-            this._service = service;
+            _measurementService = measurementService;
         }
 
-        //
-        // GET: /Measurement/
         public ActionResult Index()
         {
-            var dto = _service.GetMeasurements(new GetMeasurementsRequest()).Units.ToList();
-            return View(dto);
+            var response = _measurementService.GetMeasurements(new GetMeasurementsRequest());
+            var viewModel = new IndexMeasurementViewModel();
+            viewModel.Measurements = response.Measurements.MapTo<MeasurementViewModel>();
+            return View(viewModel);
         }
 
-        [ValidateInput(false)]
-        public ActionResult MeasurementViewPartial()
+        public ActionResult Create()
         {
-            var model = _service.GetMeasurements(new GetMeasurementsRequest()).Units.ToList();
-            return PartialView("_MeasurementViewPartial", model);
+            var viewModel = new CreateMeasurementViewModel();
+            return View(viewModel);
         }
 
-        [HttpPost, ValidateInput(false)]
-        public ActionResult MeasurementViewPartialAddNew(GetMeasurementResponse item)
+        [HttpPost]
+        public ActionResult Create(CreateMeasurementViewModel viewModel)
         {
-            var model = item;
-            if (ModelState.IsValid)
+            var request = viewModel.MapTo<CreateMeasurementRequest>();
+            var response = _measurementService.Create(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
             {
-                try
-                {
-                    // Insert here a code to insert the new item in your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
+                return RedirectToAction("Index");
             }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            return PartialView("_MeasurementViewPartial", model);
+
+            return View("Create", viewModel);
         }
-        [HttpPost, ValidateInput(false)]
-        public ActionResult MeasurementViewPartialUpdate(DSLNG.PEAR.Services.Responses.Measurement.GetMeasurementResponse item)
+
+        public ActionResult Update(int id)
         {
-            var model = new object[0];
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Insert here a code to update the item in your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            return PartialView("_MeasurementViewPartial", model);
+            var response = _measurementService.GetMeasurement(new GetMeasurementRequest {Id = id});
+            var viewModel = response.MapTo<UpdateMeasurementViewModel>();
+            return View(viewModel);
         }
-        [HttpPost, ValidateInput(false)]
-        public ActionResult MeasurementViewPartialDelete(System.Int32 Id)
+
+        [HttpPost]
+        public ActionResult Update(UpdateMeasurementViewModel viewModel)
         {
-            var model = new object[0];
-            if (Id >= 0)
+            var request = viewModel.MapTo<UpdateMeasurementRequest>();
+            var response = _measurementService.Update(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
             {
-                try
-                {
-                    // Insert here a code to delete the item from your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
+                return RedirectToAction("Index");
             }
-            return PartialView("_MeasurementViewPartial", model);
+
+            return View("Update", viewModel);
         }
-	}
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var response = _measurementService.Delete(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
+        }
+
+        
+    }
 }

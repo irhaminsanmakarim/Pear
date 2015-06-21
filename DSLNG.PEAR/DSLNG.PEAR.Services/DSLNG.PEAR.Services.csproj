@@ -72,9 +72,11 @@
     <Compile Include="Requests\Kpi\GetKpiRequest.cs" />
     <Compile Include="Requests\Kpi\GetKpiToSeriesRequest.cs" />
     <Compile Include="Requests\Level\GetLevelsRequest.cs" />
+    <Compile Include="Requests\Measurement\CreateMeasurementRequest.cs" />
     <Compile Include="Requests\Measurement\GetMeasurementInsert.cs" />
     <Compile Include="Requests\Measurement\GetMeasurementRequest.cs" />
     <Compile Include="Requests\Measurement\GetMeasurementUpdate.cs" />
+    <Compile Include="Requests\Measurement\UpdateMeasurementRequest.cs" />
     <Compile Include="Requests\Menu\GetMenuRequest.cs" />
     <Compile Include="Requests\Method\GetMethodRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
@@ -85,7 +87,7 @@
     <Compile Include="Responses\Kpi\FormatInput.cs" />
     <Compile Include="Responses\Kpi\GetKpiResponse.cs" />
     <Compile Include="Responses\Kpi\GetKpiToSeriesResponse.cs" />
-    <Compile Include="Responses\Kpi\Measurement.cs" />
+    <!--<Compile Include="Responses\Kpi\Measurement.cs" />-->
     <Compile Include="Responses\MeasurementResponse.cs" />
     <Compile Include="Responses\Kpi\Method.cs" />
     <Compile Include="Responses\Kpi\Periode.cs" />
@@ -93,7 +95,11 @@
     <Compile Include="Responses\Kpi\YtdFormula.cs" />
     <Compile Include="Responses\Level\GetAllLevels.cs" />
     <Compile Include="Responses\Level\LevelResponse.cs" />
+    <Compile Include="Responses\Measurement\CreateMeasurementResponse.cs" />
+    <Compile Include="Responses\Measurement\DeleteMeasurementResponse.cs" />
     <Compile Include="Responses\Measurement\GetMeasurementResponse.cs" />
+    <Compile Include="Responses\Measurement\GetMeasurementsResponse.cs" />
+    <Compile Include="Responses\Measurement\UpdateMeasurementResponse.cs" />
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
     <Compile Include="Responses\User\GetUsersResponse.cs" />

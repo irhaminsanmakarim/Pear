@@ -1,20 +1,14 @@
 ﻿using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Responses.Measurement;
-//using DSLNG.PEAR.Services.Responses.MeasurementResponse;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Interfaces
 {
     public interface IMeasurementService
     {
+        CreateMeasurementResponse Create(CreateMeasurementRequest request);
+        UpdateMeasurementResponse Update(UpdateMeasurementRequest request);
+        DeleteMeasurementResponse Delete(int id);
         GetMeasurementResponse GetMeasurement(GetMeasurementRequest request);
         GetMeasurementsResponse GetMeasurements(GetMeasurementsRequest request);
-        void Add(GetMeasurementInsert request);
-        void Save(GetMeasurementUpdate request);
-        void Delete(GetMeasurementRequest request);
     }
 }
