@@ -37,6 +37,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<LevelViewModel, UpdateLevelRequest>();
             Mapper.CreateMap<LevelViewModel, CreateLevelRequest>();
 
+            Mapper.CreateMap<GetUsersResponse.User, UserViewModel>();
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
             
             base.Configure();
