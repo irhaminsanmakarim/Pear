@@ -12,6 +12,11 @@ using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Web.ViewModels.User;
 
+using DSLNG.PEAR.Services.Requests.RoleGroup;
+using DSLNG.PEAR.Services.Responses.RoleGroup;
+using DSLNG.PEAR.Web.ViewModels.RoleGroup;
+
+
 namespace DSLNG.PEAR.Web.AutoMapper
 {
     public class ViewModelMappingProfile : Profile
@@ -28,6 +33,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetMeasurementsResponse.Measurement, MeasurementViewModel>();
 
             Mapper.CreateMap<GetUsersResponse.User, UserViewModel>();
+
+            Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
             
             base.Configure();
         }
