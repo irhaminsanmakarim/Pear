@@ -20,6 +20,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<User, GetUserResponse>()
                   .ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
             Mapper.CreateMap<User, UserResponse>();
+            Mapper.CreateMap<User, GetUsersResponse>();
+            Mapper.CreateMap<User, GetUsersResponse.User>();
             Mapper.CreateMap<Level, GetLevelResponse>();
             Mapper.CreateMap<Menu, GetMenuResponse.Menu>()
                 //.ForMember(m => m.RoleGroups, o => o.MapFrom(m => m.RoleGroups.MapTo<GetMenuResponse.RoleGroup>()))
