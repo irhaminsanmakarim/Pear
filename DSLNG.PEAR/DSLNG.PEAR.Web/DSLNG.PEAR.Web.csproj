@@ -385,6 +385,8 @@
     <Content Include="Views\Measurement\Create.cshtml" />
     <Content Include="Views\Shared\_MessageResponse.cshtml" />
     <Content Include="Views\Measurement\Update.cshtml" />
+    <Content Include="Views\RoleGroup\Index.cshtml" />
+    <Content Include="Views\RoleGroup\_GridViewPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -438,6 +440,7 @@
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
+    <Compile Include="Controllers\RoleGroupController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
@@ -465,6 +468,8 @@
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
+    <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
+    <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
     <Compile Include="ViewModels\User\UserIndexViewModel.cs" />
     <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>
