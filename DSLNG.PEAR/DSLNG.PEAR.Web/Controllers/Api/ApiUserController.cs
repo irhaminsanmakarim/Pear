@@ -20,13 +20,13 @@ namespace DSLNG.PEAR.Web.Controllers.Api
             _userService = userService;
         }
 
-        // GET api/apiuser
-        public UserIndexViewModel Get()
-        {
-            var users = _userService.GetUsers(new GetUsersRequest());
-            var viewModel = new UserIndexViewModel() { Users = users.Users.Select(x => new UserViewModel { Email = x.Email, Id = x.Id, Username = x.Username }) };
-            return viewModel;
-        }
+        //// GET api/apiuser
+        //public UserIndexViewModel Get()
+        //{
+        //    var users = _userService.GetUsers(new GetUsersRequest());
+        //    var viewModel = new UserIndexViewModel() { Users = users.Users.Select(x => new UserViewModel { Email = x.Email, Id = x.Id, Username = x.Username }) };
+        //    return viewModel;
+        //}
 
         // GET api/apiuser/5
         public IHttpActionResult Get(int id)
