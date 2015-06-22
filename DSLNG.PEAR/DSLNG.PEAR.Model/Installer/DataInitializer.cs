@@ -45,6 +45,18 @@ namespace DSLNG.PEAR.Data.Installer
             context.Menus.AddOrUpdate(menu2);
             context.Menus.AddOrUpdate(menu3);
             context.Users.AddOrUpdate(admin);
+            
+            //Measurements
+            context.Measurements.AddOrUpdate(new Measurement { Name = "USD", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "Number", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "Times", IsActive = true });
+            context.SaveChanges();
+            //Kpi
+            var measurement = new Measurement { Id = 1 };
+            context.Kpis.AddOrUpdate(new Kpi { Code = "satu", Name = "Kpi Satu", Measurement = measurement });
+            context.Kpis.AddOrUpdate(new Kpi { Code = "dua", Name = "Kpi Dua", Measurement = measurement });
+            context.Kpis.AddOrUpdate(new Kpi { Code = "tiga", Name = "Kpi Tiga", Measurement = measurement });
+
             context.SaveChanges();
         }
     }

@@ -1,0 +1,59 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+
+@{
+    ViewBag.Title = "Artifact Designer - Create";
+}
+
+@using (Html.BeginForm("Preview", "Artifact")) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Artifact Designer</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GraphicType, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.GraphicType, Model.GraphicTypes, new {id="graphic-type", data_graph_url= Url.Action("GraphSettings","Artifact") })
+                @Html.ValidationMessageFor(model => model.GraphicType)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GraphicName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GraphicName)
+                @Html.ValidationMessageFor(model => model.GraphicName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HeaderTitle, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HeaderTitle)
+                @Html.ValidationMessageFor(model => model.HeaderTitle)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MeasurementId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements)
+                @Html.ValidationMessageFor(model => model.MeasurementId)
+            </div>
+        </div>
+
+        <fieldset>
+            <legend>Graphic Settings</legend>
+            <div id="graphic-settings"></div>
+        </fieldset>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Preview" class="btn btn-default" id="artifact-preview" />
+            </div>
+        </div>
+    </div>
+}

@@ -52,9 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArtifactService.cs" />
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="GroupService.cs" />
+    <Compile Include="Interfaces\IArtifactService.cs" />
     <Compile Include="Interfaces\IConversionService.cs" />
     <Compile Include="Interfaces\IDashboardTemplate.cs" />
     <Compile Include="Interfaces\IGroupService.cs" />
@@ -129,7 +131,10 @@
       <Name>DSLNG.PEAR.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Requests\Artifact\" />
+    <Folder Include="Responses\Artifact\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -7,6 +7,6 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IKpiService
     {
         GetKpiResponse GetBy(GetKpiRequest request);
-        GetKpiToSeriesResponse GetKpiToSeries(GetKpiToSeriesRequest request);
+        GetKpiToSeriesResponse GetKpiToSeries();
     }
 }
