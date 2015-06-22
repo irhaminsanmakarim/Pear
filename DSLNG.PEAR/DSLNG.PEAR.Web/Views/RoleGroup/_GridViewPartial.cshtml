@@ -1,9 +1,9 @@
-@model IEnumerable<DSLNG.PEAR.Web.ViewModels.User.UserViewModel>
+@model IEnumerable<DSLNG.PEAR.Web.ViewModels.RoleGroup.RoleGroupViewModel>
 
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "gridUserIndex";
+        settings.Name = "gridRoleGroupIndex";
 
         settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
         settings.SettingsBehavior.ConfirmDelete = true;
@@ -26,8 +26,9 @@
                     );
             });
         settings.Columns.Add("Id").Visible = false;
-        settings.Columns.Add("Username");
-        settings.Columns.Add("Email");
+        settings.Columns.Add("Name");
+        settings.Columns.Add("Icon");
+        settings.Columns.Add("Remark");
     });
     if (ViewData["EditError"] != null)
     {
