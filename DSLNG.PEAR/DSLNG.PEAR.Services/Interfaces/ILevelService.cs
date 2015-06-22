@@ -11,6 +11,9 @@ namespace DSLNG.PEAR.Services.Interfaces
 {
     public interface ILevelService
     {
+        CreateLevelResponse Create(CreateLevelRequest request);
+        UpdateLevelResponse Update(UpdateLevelRequest request);
+        DeleteLevelResponse Delete(int id);
         GetLevelResponse GetLevel(GetLevelRequest request);
         GetLevelsResponse GetLevels(GetLevelsRequest request);
     }

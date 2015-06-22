@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Web.ViewModels.Level
+namespace DSLNG.PEAR.Services.Requests.Level
 {
-    public class LevelViewModel
+    public class CreateLevelRequest
     {
         public int Id { get; set; }
 
         public string Code { get; set; }
         public string Name { get; set; }
-        [Display(Name = "Order")]
         public int Number { get; set; }
         public string Remark { get; set; }
 

@@ -386,6 +386,8 @@
     <Content Include="Views\Shared\_MessageResponse.cshtml" />
     <Content Include="Views\Measurement\Update.cshtml" />
     <Content Include="Views\PmsSummary\_Details.cshtml" />
+    <Content Include="Views\Level\Update.cshtml" />
+    <Content Include="Views\Level\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

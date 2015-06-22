@@ -4,25 +4,47 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Html.ActionLink("Create New", "Create")
 
-<h2>Index</h2>
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "gridMeasurementIndex";
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th></th>
-    </tr>
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.Width = Unit.Percentage(60);
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+
+        settings.KeyFieldName = "Id";
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Action";
+            column.SetDataItemTemplateContent(c => ViewContext.Writer.Write(
+                                                        Html.ActionLink("Edit", "Update", new { Id = DataBinder.Eval(c.DataItem, "Id") }) + " | " +
+                                                      "<a href='javascript:;' onclick='confirmDelete(" + DataBinder.Eval(c.DataItem, "Id") + ")'>Delete</a>"));
+        });
+        settings.Columns.Add("Id").Visible = false;
+        settings.Columns.Add("Name");
+        settings.Columns.Add("Remark");
+        settings.Columns.Add("IsActive", MVCxGridViewColumnType.CheckBox);
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+    @grid.Bind(Model).GetHtml()
+}
+@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function(id) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "Level")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+    </script>
 }
 
-</table>

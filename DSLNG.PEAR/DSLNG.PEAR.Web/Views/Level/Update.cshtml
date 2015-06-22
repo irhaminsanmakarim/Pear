@@ -1,18 +1,29 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Measurement.UpdateMeasurementViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.Level.LevelViewModel
 @{
-    ViewBag.Title = "Edit Measurement";
+    ViewBag.Title = "Update Level";
 }
 
 <h2>@ViewBag.Title</h2>
 @Html.Partial("_MessageResponse")
+
 <div class="row">
     <div class="col-md-4">
         <form action="@Url.Action("Update")" method="POST">
             @Html.HiddenFor(model => model.Id)
             <div class="form-group">
+                @Html.LabelFor(model => model.Code, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Code)
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(model => model.Name, new { @class = "control-label" })
                 @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Number, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Number, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Number)
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Remark, new { @class = "control-label" })
@@ -33,8 +44,6 @@
 </div>
 
 
-
-
-
-
-
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
