@@ -8,6 +8,9 @@ using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Web.ViewModels.Level;
 using DSLNG.PEAR.Web.ViewModels.Measurement;
 using DSLNG.PEAR.Web.ViewModels.Menu;
+using DSLNG.PEAR.Services.Requests.User;
+using DSLNG.PEAR.Services.Responses.User;
+using DSLNG.PEAR.Web.ViewModels.User;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -18,10 +21,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetLevelResponse, LevelViewModel>();
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
             Mapper.CreateMap<GetMenuResponse, MenusViewModel>();
+            
             Mapper.CreateMap<CreateMeasurementViewModel, CreateMeasurementRequest>();
             Mapper.CreateMap<GetMeasurementResponse, UpdateMeasurementViewModel>();
             Mapper.CreateMap<UpdateMeasurementViewModel, UpdateMeasurementRequest>();
             Mapper.CreateMap<GetMeasurementsResponse.Measurement, MeasurementViewModel>();
+
+            Mapper.CreateMap<GetUsersResponse.User, UserViewModel>();
             
             base.Configure();
         }
