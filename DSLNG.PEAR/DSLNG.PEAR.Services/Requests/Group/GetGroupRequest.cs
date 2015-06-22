@@ -8,5 +8,6 @@ namespace DSLNG.PEAR.Services.Requests.Group
 {
     public class GetGroupRequest
     {
+
     }
 }

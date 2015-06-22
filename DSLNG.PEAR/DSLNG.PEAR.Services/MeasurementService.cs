@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Measurement;
+using System.Collections.Generic;
 
 namespace DSLNG.PEAR.Services
 {
@@ -20,7 +21,15 @@ namespace DSLNG.PEAR.Services
 
         public GetMeasurementsResponse GetMeasurements(GetMeasurementsRequest request)
         {
-            var measurements = DataContext.Measurements.ToList();
+            var measurements = new List<Measurement>();
+            if (request.Take != 0)
+            {
+                measurements = DataContext.Measurements.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();                
+            }
+            else
+            {
+                measurements = DataContext.Measurements.OrderBy(x => x.Id).ToList();
+            }
             var response = new GetMeasurementsResponse();
             response.Measurements = measurements.MapTo<GetMeasurementsResponse.Measurement>();
             return response;

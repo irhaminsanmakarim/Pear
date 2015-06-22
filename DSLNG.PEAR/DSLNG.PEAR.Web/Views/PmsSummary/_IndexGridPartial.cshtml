@@ -5,6 +5,7 @@
     @Html.DevExpress().GridView(settings =>
         {
             settings.Name = "gridPmsSummaryIndex";
+            settings.KeyFieldName = "Id";
             settings.CallbackRouteValues = new { Controller = "PmsSummary", Action = "IndexGridPartial" };
             settings.SettingsBehavior.AllowFixedGroups = true;
             settings.Settings.ShowFooter = true;
@@ -18,6 +19,11 @@
             settings.Columns.Add("Unit");
             settings.Columns.Add("Weight");
             settings.Columns.Add("OspWeight").Visible = false;
+            settings.HtmlDataCellPrepared = (sender, e) =>
+                {
+                    e.Cell.Attributes.Add("onclick", string.Format(
+                        "OnCellClick('{0}', '{1}');", e.VisibleIndex, e.GetValue("Id")));                    
+                };
 
             settings.Columns.AddBand(targetActualBand =>
             {

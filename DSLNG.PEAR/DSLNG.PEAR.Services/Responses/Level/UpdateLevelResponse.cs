@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Responses.Level
 {
-    public class GetLevelsResponse
+    public class UpdateLevelResponse : BaseResponse
     {
-        public IList<GetLevelResponse> Levels { get; set; }
     }
 }

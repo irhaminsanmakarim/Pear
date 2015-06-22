@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
@@ -30,6 +31,7 @@ namespace DSLNG.PEAR.Web.Controllers
             IList<PmsSummaryViewModel> list = new List<PmsSummaryViewModel>();
             var pmsSummary1 = new PmsSummaryViewModel
             {
+                Id = 1,
                 Unit = 39,
                 Weight = 20,
                 ActualMonthly = 10,
@@ -48,6 +50,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             var pmsSummary2 = new PmsSummaryViewModel
             {
+                Id = 2,
                 Unit = 390,
                 Weight = 100,
                 ActualMonthly = 210,
@@ -66,6 +69,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             var pmsSummary3 = new PmsSummaryViewModel
             {
+                Id = 3,
                 Unit = 390,
                 Weight = 100,
                 ActualMonthly = 210,
@@ -87,6 +91,12 @@ namespace DSLNG.PEAR.Web.Controllers
             list.Add(pmsSummary3);
             return list;
 
+        }
+
+        public ActionResult Details()
+        {
+            //Thread.Sleep(2000);
+            return PartialView("_Details");
         }
 	}
 }

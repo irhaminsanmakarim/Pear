@@ -1,15 +1,12 @@
-@model IEnumerable<DSLNG.PEAR.Web.ViewModels.Measurement.MeasurementViewModel>
-
-@{
+@*@model IEnumerable<DSLNG.PEAR.Web.ViewModels.Measurement.MeasurementViewModel>*@
+@*@{
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "gridMeasurementIndex";
-        
+        settings.CallbackRouteValues = new { Controller = "Measurement", Action = "IndexPartial" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
         settings.SettingsBehavior.ConfirmDelete = true;
         settings.Width = Unit.Percentage(60);
-
-
         settings.KeyFieldName = "Id";
 
 
@@ -29,11 +26,50 @@
         settings.Columns.Add("Name");
         settings.Columns.Add("Remark");
         settings.Columns.Add("IsActive", MVCxGridViewColumnType.CheckBox);
+        settings.SettingsPager.PageSize = 2;
+        settings.SettingsPager.Position = PagerPosition.Bottom;
+        settings.SettingsPager.FirstPageButton.Visible = true;
+        settings.SettingsPager.LastPageButton.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
     });
     if (ViewData["EditError"] != null)
     {
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
 }
-@grid.Bind(Model).GetHtml()
+@grid.Bind(Model).GetHtml()*@
 
+
+@Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "gridMeasurementIndex";
+        settings.CallbackRouteValues = new { Controller = "Measurement", Action = "IndexPartial" };
+        settings.CustomBindingRouteValuesCollection.Add(
+            GridViewOperationType.Paging,
+            new { Controller = "Measurement", Action = "PagingAction" }
+        );
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.Width = Unit.Percentage(60);
+        settings.KeyFieldName = "Id";
+        
+        settings.Columns.Add(column =>
+            {
+                column.Caption = "Action";
+                column.SetDataItemTemplateContent(c =>
+                                                  ViewContext.Writer.Write(
+                                                      Html.ActionLink("Edit", "Update", new { Id = DataBinder.Eval(c.DataItem, "Id") }) + " | " +
+                                                      "<a href='javascript:;' onclick='confirmDelete(" + DataBinder.Eval(c.DataItem, "Id") + ")'>Delete</a>"
+                                                      )
+
+
+                    );
+            });
+        settings.Columns.Add("Id").Visible = false;
+        settings.Columns.Add("Name");
+        settings.Columns.Add("Remark");
+        settings.Columns.Add("IsActive", MVCxGridViewColumnType.CheckBox);
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    }).BindToCustomData(Model).GetHtml()
