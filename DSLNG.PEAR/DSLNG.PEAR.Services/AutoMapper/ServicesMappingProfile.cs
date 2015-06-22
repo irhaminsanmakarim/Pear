@@ -10,7 +10,7 @@ using DSLNG.PEAR.Services.Responses.Kpi;
 using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.Conversion;
-using DSLNG.PEAR.Services.Responses.RoleGroup;
+using DSLNG.PEAR.Services.Requests.Level;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -21,9 +21,15 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<User, GetUserResponse>()
                   .ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
             Mapper.CreateMap<User, UserResponse>();
-            Mapper.CreateMap<User, GetUsersResponse>();
-            Mapper.CreateMap<User, GetUsersResponse.User>();
+
+            /*Level*/
+            Mapper.CreateMap<Level, GetLevelsResponse.Level>();
             Mapper.CreateMap<Level, GetLevelResponse>();
+            Mapper.CreateMap<CreateLevelRequest, Level>();
+            Mapper.CreateMap<UpdateLevelRequest, Level>();
+            Mapper.CreateMap<Level, UpdateLevelResponse>();
+
+
             Mapper.CreateMap<Menu, GetMenuResponse.Menu>()
                 //.ForMember(m => m.RoleGroups, o => o.MapFrom(m => m.RoleGroups.MapTo<GetMenuResponse.RoleGroup>()))
                 .ForMember(m => m.Menus, o => o.MapFrom(m => m.Menus.MapTo<GetMenuResponse.Menu>()));

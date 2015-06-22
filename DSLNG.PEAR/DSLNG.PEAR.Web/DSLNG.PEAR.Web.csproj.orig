@@ -385,8 +385,13 @@
     <Content Include="Views\Measurement\Create.cshtml" />
     <Content Include="Views\Shared\_MessageResponse.cshtml" />
     <Content Include="Views\Measurement\Update.cshtml" />
+<<<<<<< HEAD
+    <Content Include="Views\RoleGroup\Index.cshtml" />
+    <Content Include="Views\RoleGroup\_GridViewPartial.cshtml" />
+=======
     <Content Include="Views\Level\Update.cshtml" />
     <Content Include="Views\Level\Create.cshtml" />
+>>>>>>> 9a44d7553908f86b3271f44472620c10500e9999
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
