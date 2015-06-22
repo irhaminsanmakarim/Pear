@@ -15,6 +15,15 @@ namespace DSLNG.PEAR.Services
         {
         }
 
+        public GetUsersResponse GetUsers(GetUsersRequest request)
+        {
+            var users = DataContext.Users.ToList();
+            var response = new GetUsersResponse();
+            response.Users = users.MapTo<GetUsersResponse.User>();
+
+            return response;
+        }
+
         public GetUserResponse GetUser(GetUserRequest request)
         {
             try
@@ -32,15 +41,6 @@ namespace DSLNG.PEAR.Services
                         Message = x.Message
                     };
             }
-        }
-
-        public GetUsersResponse GetUsers(GetUsersRequest request)
-        {
-            var users = DataContext.Users.ToList();
-            var response = new GetUsersResponse();
-            response.Users = users.MapTo<UserResponse>();
-
-            return response;
         }
     }
 }

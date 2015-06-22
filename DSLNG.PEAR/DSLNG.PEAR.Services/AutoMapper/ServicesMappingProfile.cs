@@ -56,6 +56,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<Conversion, GetConversionResponse>();
 
+            Mapper.CreateMap<RoleGroup, GetRoleGroupsResponse.RoleGroup>();
+
             base.Configure();
         }
     }

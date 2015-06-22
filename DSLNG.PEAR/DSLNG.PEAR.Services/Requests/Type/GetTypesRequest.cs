@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Services.Requests.Group
+namespace DSLNG.PEAR.Services.Requests.Type
 {
-    public class GetGroupRequest
+    public class GetTypesRequest
     {
-
     }
 }
