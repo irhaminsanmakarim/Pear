@@ -1,6 +1,7 @@
 ﻿using DSLNG.PEAR.Services;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.User;
+using DSLNG.PEAR.Web.ViewModels;
 using DSLNG.PEAR.Web.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -19,18 +20,27 @@ namespace DSLNG.PEAR.Web.Controllers.Api
             _userService = userService;
         }
 
-        // GET api/apiuser
-        public UserIndexViewModel Get()
-        {
-            var users = _userService.GetUsers(new GetUsersRequest());
-            var viewModel = new UserIndexViewModel() { Users = users.Users.Select(x => new UserViewModel { Email = x.Email, Id = x.Id, Username = x.Username }) };
-            return viewModel;
-        }
+        //// GET api/apiuser
+        //public UserIndexViewModel Get()
+        //{
+        //    var users = _userService.GetUsers(new GetUsersRequest());
+        //    var viewModel = new UserIndexViewModel() { Users = users.Users.Select(x => new UserViewModel { Email = x.Email, Id = x.Id, Username = x.Username }) };
+        //    return viewModel;
+        //}
 
         // GET api/apiuser/5
-        public string Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return "value";
+            var user = _userService.GetUser(new GetUserRequest() {Id = id});
+            //return Ok(user);
+            if (user.IsSuccess != false) { 
+                var viewModel = new UserViewModel() { Email = user.Email, Id = user.Id, Username = user.Username };
+                return Ok(user);
+            }else{
+                return NotFound();
+            }
+
+            
         }
 
         // POST api/apiuser

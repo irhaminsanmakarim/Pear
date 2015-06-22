@@ -8,12 +8,18 @@ using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Web.ViewModels.Level;
 using DSLNG.PEAR.Web.ViewModels.Measurement;
 using DSLNG.PEAR.Web.ViewModels.Menu;
-using DSLNG.PEAR.Services.Requests.Level;
+<<<<<<< HEAD
+using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Web.ViewModels.User;
-using DSLNG.PEAR.Web.ViewModels.RoleGroup;
-using DSLNG.PEAR.Services.Responses.RoleGroup;
 
+using DSLNG.PEAR.Services.Requests.RoleGroup;
+using DSLNG.PEAR.Services.Responses.RoleGroup;
+using DSLNG.PEAR.Web.ViewModels.RoleGroup;
+
+=======
+using DSLNG.PEAR.Services.Requests.Level;
+>>>>>>> 9a44d7553908f86b3271f44472620c10500e9999
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -32,11 +38,15 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetMeasurementResponse, UpdateMeasurementViewModel>();
             Mapper.CreateMap<UpdateMeasurementViewModel, UpdateMeasurementRequest>();
             Mapper.CreateMap<GetMeasurementsResponse.Measurement, MeasurementViewModel>();
-            Mapper.CreateMap<LevelViewModel, UpdateLevelRequest>();
-            Mapper.CreateMap<LevelViewModel, CreateLevelRequest>();
+<<<<<<< HEAD
 
             Mapper.CreateMap<GetUsersResponse.User, UserViewModel>();
+
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
+=======
+            Mapper.CreateMap<LevelViewModel, UpdateLevelRequest>();
+            Mapper.CreateMap<LevelViewModel, CreateLevelRequest>();
+>>>>>>> 9a44d7553908f86b3271f44472620c10500e9999
             
             base.Configure();
         }
