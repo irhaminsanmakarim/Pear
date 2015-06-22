@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using DSLNG.PEAR.Data.Entities;
-using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Services.Responses.User;
@@ -10,11 +9,7 @@ using DSLNG.PEAR.Services.Responses.Kpi;
 using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.Conversion;
-<<<<<<< HEAD
-using DSLNG.PEAR.Services.Responses.RoleGroup;
-=======
-using DSLNG.PEAR.Services.Requests.Level;
->>>>>>> 9a44d7553908f86b3271f44472620c10500e9999
+using DSLNG.PEAR.Services.Responses;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -25,20 +20,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<User, GetUserResponse>()
                   .ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
             Mapper.CreateMap<User, UserResponse>();
-<<<<<<< HEAD
-            Mapper.CreateMap<User, GetUsersResponse>();
-            Mapper.CreateMap<User, GetUsersResponse.User>();
-=======
-
-            /*Level*/
-            Mapper.CreateMap<Level, GetLevelsResponse.Level>();
->>>>>>> 9a44d7553908f86b3271f44472620c10500e9999
             Mapper.CreateMap<Level, GetLevelResponse>();
-            Mapper.CreateMap<CreateLevelRequest, Level>();
-            Mapper.CreateMap<UpdateLevelRequest, Level>();
-            Mapper.CreateMap<Level, UpdateLevelResponse>();
-
-
             Mapper.CreateMap<Menu, GetMenuResponse.Menu>()
                 //.ForMember(m => m.RoleGroups, o => o.MapFrom(m => m.RoleGroups.MapTo<GetMenuResponse.RoleGroup>()))
                 .ForMember(m => m.Menus, o => o.MapFrom(m => m.Menus.MapTo<GetMenuResponse.Menu>()));
@@ -47,26 +29,15 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<GetMenuResponse.Level>()));
             Mapper.CreateMap<Group, GetGroupResponse.Group>();
             Mapper.CreateMap<Activity, GetGroupResponse.Activity>();
-
-
-            Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
-
-            
-            Mapper.CreateMap<CreateMeasurementRequest, Measurement>();
-            Mapper.CreateMap<UpdateMeasurementRequest, Measurement>();
-            Mapper.CreateMap<Measurement, UpdateMeasurementResponse>();
+<<<<<<< HEAD
             Mapper.CreateMap<Measurement, GetMeasurementResponse>();
-            Mapper.CreateMap<GetMeasurementRequest, Measurement>();
-            Mapper.CreateMap<Measurement, GetMeasurementsResponse.Measurement>();
-
+            Mapper.CreateMap<Method, GetMethodResponse>();
+=======
             Mapper.CreateMap<Kpi, GetKpiToSeriesResponse.Kpi>();
             Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
-            Mapper.CreateMap<Data.Entities.Method, GetMethodResponse>();
-
+            Mapper.CreateMap<DSLNG.PEAR.Data.Entities.Method, GetMethodResponse>();
+>>>>>>> 3efd3b737b496a1ea139c242f3e0a3ca3f676e66
             Mapper.CreateMap<Conversion, GetConversionResponse>();
-
-            Mapper.CreateMap<RoleGroup, GetRoleGroupsResponse.RoleGroup>();
-
             base.Configure();
         }
     }

@@ -3,6 +3,8 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using System.Web.Mvc;
 using DSLNG.PEAR.Web.ViewModels.Measurement;
+using DevExpress.Web.Mvc;
+using System.Collections.Generic;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -18,10 +20,57 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Index()
         {
-            var response = _measurementService.GetMeasurements(new GetMeasurementsRequest());
-            var viewModel = new IndexMeasurementViewModel();
-            viewModel.Measurements = response.Measurements.MapTo<MeasurementViewModel>();
-            return View(viewModel);
+            return View();
+        }
+
+        public ActionResult IndexPartial()
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridMeasurementIndex");
+            if (viewModel == null)
+                viewModel = CreateGridViewModel();
+            return BindingCore(viewModel);
+        }
+
+        PartialViewResult BindingCore(GridViewModel gridViewModel)
+        {
+            gridViewModel.ProcessCustomBinding(
+                GetDataRowCount,
+                GetData
+            );
+            return PartialView("_IndexGridPartial", gridViewModel);
+        }
+
+        static GridViewModel CreateGridViewModel()
+        {
+            var viewModel = new GridViewModel();
+            viewModel.KeyFieldName = "Id";
+            viewModel.Columns.Add("Name");
+            viewModel.Columns.Add("Remark");
+            viewModel.Columns.Add("IsActive");
+            viewModel.Pager.PageSize = 10;
+            return viewModel;
+        }
+
+        public ActionResult PagingAction(GridViewPagerState pager)
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridMeasurementIndex");
+            viewModel.ApplyPagingState(pager);
+            return BindingCore(viewModel);
+        }
+
+        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
+        {
+
+            e.DataRowCount = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements.Count;
+        }
+
+        public void GetData(GridViewCustomBindingGetDataArgs e)
+        {
+            e.Data = _measurementService.GetMeasurements(new GetMeasurementsRequest
+            {
+                Skip = e.StartDataRowIndex,
+                Take = e.DataRowCount
+            }).Measurements;
         }
 
         public ActionResult Create()
