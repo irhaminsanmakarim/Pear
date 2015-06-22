@@ -13,7 +13,7 @@ namespace DSLNG.PEAR.Data.Installer
             var directorateLevel = new Level { Id = 1, Code = "DIR", Name = "Directorate", IsActive = true, Number = 1 };
             var corporateLevel = new Level { Id = 2, Code = "COR", Name = "Corporate", IsActive = true, Number = 2 };
             var functionLevel = new Level { Id = 3, Code = "FNC", Name = "Function", IsActive = true, Number = 3 };
-            
+
 
             var groupFinanceDirectorate = new RoleGroup
             {
@@ -32,7 +32,7 @@ namespace DSLNG.PEAR.Data.Installer
                 Role = groupFinanceDirectorate
             };
 
-            
+
 
             context.Levels.AddOrUpdate(directorateLevel);
             context.Levels.AddOrUpdate(corporateLevel);
@@ -45,7 +45,42 @@ namespace DSLNG.PEAR.Data.Installer
             context.Menus.AddOrUpdate(menu2);
             context.Menus.AddOrUpdate(menu3);
             context.Users.AddOrUpdate(admin);
+
+            AddPilar(context);
             context.SaveChanges();
+        }
+
+        private void AddPilar(DataContext context)
+        {
+            var pilar1 = new Pilar();
+            pilar1.Id = 1;
+            pilar1.Code = "sft";
+            pilar1.Name = "Safety";
+            pilar1.Color = "#122381";
+            pilar1.Order = 1;
+            pilar1.Icon = "apalah";
+            pilar1.Remark = "Ini Safety";
+            pilar1.IsActive = true;
+
+            var pilar2 = new Pilar();
+            pilar1.Id = 2;
+            pilar2.Code = "PaC";
+            pilar2.Name = "Productivity and Efficienty";
+            pilar2.Color = "#122381";
+            pilar2.Order = 1;
+            pilar2.Icon = "apalah";
+            pilar2.Remark = "Ini Pac";
+            pilar2.IsActive = true;
+
+            context.Pilars.AddOrUpdate(pilar1);
+            context.Pilars.AddOrUpdate(pilar2);
+        }
+
+        private void AddPmsData()
+        {
+            var pmsConfig = new PmsConfig();
+            pmsConfig.IsActive = true;
+            pmsConfig.Pilar = new Pilar {Id = 1};
         }
     }
 }
