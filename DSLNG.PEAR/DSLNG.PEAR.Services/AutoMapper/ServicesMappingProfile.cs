@@ -12,7 +12,9 @@ using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.Conversion;
 using DSLNG.PEAR.Services.Requests.Level;
 using DSLNG.PEAR.Services.Responses.RoleGroup;
-using DSLNG.PEAR.Services.Responses.RoleGroup;
+using DSLNG.PEAR.Services.Requests.RoleGroup;
+using DSLNG.PEAR.Services.Responses.Type;
+using DSLNG.PEAR.Services.Requests.Type;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -59,6 +61,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Conversion, GetConversionResponse>();
 
             Mapper.CreateMap<RoleGroup, GetRoleGroupsResponse.RoleGroup>();
+            Mapper.CreateMap<Type, GetTypesResponse.Type>();
 
             base.Configure();
         }

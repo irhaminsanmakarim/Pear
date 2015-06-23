@@ -13,6 +13,8 @@ using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Web.ViewModels.User;
 using DSLNG.PEAR.Web.ViewModels.RoleGroup;
 using DSLNG.PEAR.Services.Responses.RoleGroup;
+using DSLNG.PEAR.Web.ViewModels.Type;
+using DSLNG.PEAR.Services.Responses.Type;
 
 
 namespace DSLNG.PEAR.Web.AutoMapper
@@ -37,6 +39,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<GetUsersResponse.User, UserViewModel>();
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
+            Mapper.CreateMap<GetTypesResponse.Type, TypeViewModel>();
             
             base.Configure();
         }
