@@ -45,7 +45,33 @@ namespace DSLNG.PEAR.Data.Installer
             context.Menus.AddOrUpdate(menu2);
             context.Menus.AddOrUpdate(menu3);
             context.Users.AddOrUpdate(admin);
+            
+            //Measurements
+            context.Measurements.AddOrUpdate(new Measurement { Name = "tbtu", Remark="-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "MMSCF", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "MT", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "%", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "days", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "Case", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "Cargo", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "USD(Mio)", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "Times", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "USD/mmbtu", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "Number", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "USD/pax", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "USD", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "Hour", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "MMSCFD", Remark = "-", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "MMBBL", Remark = "Million Barrel", IsActive = true });
+            context.Measurements.AddOrUpdate(new Measurement { Name = "USD/bbl", Remark = "-", IsActive = true });
             context.SaveChanges();
+            //Kpi
+            //var measurement = new Measurement { Id = 1 };
+            //context.Kpis.AddOrUpdate(new Kpi { Code = "satu", Name = "Kpi Satu", Measurement = measurement });
+            //context.Kpis.AddOrUpdate(new Kpi { Code = "dua", Name = "Kpi Dua", Measurement = measurement });
+            //context.Kpis.AddOrUpdate(new Kpi { Code = "tiga", Name = "Kpi Tiga", Measurement = measurement });
+
+            //context.SaveChanges();
         }
     }
 }

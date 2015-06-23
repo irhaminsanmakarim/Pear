@@ -8,6 +8,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 {
     public class PmsSummaryViewModel
     {
+        public int Id { get; set; }
         public string Osp { get; set; }
         public string PerformanceIndicator { get; set; }
         public double OspWeight { get; set; }

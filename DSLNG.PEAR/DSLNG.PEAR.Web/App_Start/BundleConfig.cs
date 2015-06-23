@@ -14,9 +14,14 @@ namespace DSLNG.PEAR.Web.App_Start
             BundleTable.EnableOptimizations = true;
             bundles.Add(new ScriptBundle("~/bundles/js").Include(   
                         //"~/Scripts/jquery-ui-{version}.js",
-                        "~/Content/bootstrap/js/bootstrap.js"));
+                        "~/Content/bootstrap/js/bootstrap.js",
+                        "~/Content/datepicker/js/bootstrap-datepicker.js",
+                        "~/Content/select2/dist/js/select2.js",
+                        "~/Scripts/main.js"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap/css/bootstrap.css",
                 "~/Content/font-awesome/css/font-awesome.css",
+                "~/Content/datepicker/css/datepicker.css",
+                  "~/Content/select2/dist/css/select2.css",
                 "~/Content/style.css"));
         }
     }

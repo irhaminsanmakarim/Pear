@@ -39,7 +39,9 @@
         <aside class="left-content">
             <div class="logo">
                 <div class="pear">
+                <a href="@Url.Action("Index","Master")">
                     <img src="@Url.Content("~/Content/img/logopear.png")" />
+                </a>
                 </div><!--
       --><div class="donggi">
                     <img src="@Url.Content("~/Content/img/logo_blue.png")" />
@@ -111,8 +113,10 @@
             </div>
         </aside>
         <aside class="right-content">
+            <div class="clearfix"></div>
             @RenderBody()
         </aside>
+        
     </div>
     @Scripts.Render("~/bundles/js")
     <script type="text/javascript">

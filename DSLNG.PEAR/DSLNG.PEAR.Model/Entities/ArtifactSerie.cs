@@ -7,17 +7,20 @@ namespace DSLNG.PEAR.Data.Entities
 {
     public class ArtifactSerie
     {
+        public ArtifactSerie() {
+            ArtifactStacks = new List<ArtifactStack>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
+        public string Label { get; set; }
         public ICollection<ArtifactStack> ArtifactStacks { get; set; }
-        public string PeriodeType { get; set; }
+
         public string Aggregation { get; set; }
         public string Color { get; set; }
-        public string RefTable { get; set; }
-        public string RefId { get; set; }
+        public Kpi Kpi { get; set; }
+
         public bool IsActive { get; set; }
     }
 }

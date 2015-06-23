@@ -11,10 +11,8 @@ using DSLNG.PEAR.Web.ViewModels.Menu;
 using DSLNG.PEAR.Services.Requests.Level;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Web.ViewModels.User;
-
-using DSLNG.PEAR.Services.Requests.RoleGroup;
-using DSLNG.PEAR.Services.Responses.RoleGroup;
 using DSLNG.PEAR.Web.ViewModels.RoleGroup;
+using DSLNG.PEAR.Services.Responses.RoleGroup;
 
 
 namespace DSLNG.PEAR.Web.AutoMapper

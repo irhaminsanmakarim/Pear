@@ -10,11 +10,12 @@ using DSLNG.PEAR.Services.Responses.Kpi;
 using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.Conversion;
-<<<<<<< HEAD
-using DSLNG.PEAR.Services.Responses.RoleGroup;
-=======
 using DSLNG.PEAR.Services.Requests.Level;
->>>>>>> 9a44d7553908f86b3271f44472620c10500e9999
+<<<<<<< HEAD
+using DSLNG.PEAR.Services.Requests.RoleGroup;
+=======
+>>>>>>> 70a9d91e68f4bedcc8242cccf21ba09efec82d4b
+using DSLNG.PEAR.Services.Responses.RoleGroup;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -25,14 +26,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<User, GetUserResponse>()
                   .ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
             Mapper.CreateMap<User, UserResponse>();
-<<<<<<< HEAD
-            Mapper.CreateMap<User, GetUsersResponse>();
             Mapper.CreateMap<User, GetUsersResponse.User>();
-=======
-
             /*Level*/
             Mapper.CreateMap<Level, GetLevelsResponse.Level>();
->>>>>>> 9a44d7553908f86b3271f44472620c10500e9999
             Mapper.CreateMap<Level, GetLevelResponse>();
             Mapper.CreateMap<CreateLevelRequest, Level>();
             Mapper.CreateMap<UpdateLevelRequest, Level>();

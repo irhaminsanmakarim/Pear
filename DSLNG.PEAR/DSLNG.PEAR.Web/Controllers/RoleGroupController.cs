@@ -1,8 +1,8 @@
 ﻿using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Interfaces;
-using DSLNG.PEAR.Services.Requests.RoleGroup;
 using System.Web.Mvc;
 using DSLNG.PEAR.Web.ViewModels.RoleGroup;
+using DSLNG.PEAR.Services.Requests.RoleGroup;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
