@@ -3,9 +3,9 @@ using DSLNG.PEAR.Services.Requests.Type;
 
 namespace DSLNG.PEAR.Services.Interfaces
 {
-    public class ITypeService
+    public interface ITypeService
     {
-        GetTypeResponse GetType (GetTypeRequest request);
+        GetTypeResponse GetType(GetTypeRequest request);
         GetTypesResponse GetTypes(GetTypesRequest request);
     }
 }
