@@ -1,7 +1,10 @@
-﻿using DSLNG.PEAR.Data.Entities;
+﻿using System;
+using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Persistence;
 using System.Data.Entity.Migrations;
 using System.Data.Entity;
+using Type = DSLNG.PEAR.Data.Entities.Type;
 
 namespace DSLNG.PEAR.Data.Installer
 {
@@ -50,6 +53,12 @@ namespace DSLNG.PEAR.Data.Installer
             AddPilar(context);
             AddScoreIndicator(context);
             AddPmsData(context);
+            AddGroup(context);
+            AddMeasurement(context);
+            AddConversion(context);
+            AddMethod(context);
+            AddPeriode(context);
+            AddKpi(context);
             context.SaveChanges();
         }
 
@@ -143,22 +152,34 @@ namespace DSLNG.PEAR.Data.Installer
             method.Name = "Manual Input";
             method.IsActive = true;
             method.Remark = "hs";
+            context.Methods.AddOrUpdate(method);
         }
-        private void AddType(DataContext context)
+        /*private void AddType(DataContext context)
         {
-            var level = new Level();
+            var type = new Type();
             level.Id = 1;
             level.Name = "Corporate Portofolio";
             level.Code = "cp";
             level.IsActive = true;
             level.Number = 1;
             level.Remark = "test";
+            context.
+        }*/
+
+        private void AddPeriode(DataContext context)
+        {
+            var periode = new Periode();
+            periode.Id = 1;
+            periode.Name = PeriodeType.Monthly;
+            periode.Remark = "Test";
+            context.Periodes.AddOrUpdate(periode);
         }
 
         private void AddKpi(DataContext context)
         {
             var kpi = new Kpi();
             kpi.Id = 1;
+            kpi.Pilar = new Pilar {Id = 1};
             kpi.Name = "Fatality/Strap Disability";
             kpi.Level = new Level {Id = 2};
             kpi.RoleGroup = new RoleGroup {Id = 1};
@@ -172,6 +193,17 @@ namespace DSLNG.PEAR.Data.Installer
             kpi.Method = new Method {Id = 1};
             kpi.Conversion = new Conversion {Id = 1};
             kpi.ConversionId = 1;
+            kpi.FormatInput = FormatInput.Sum;
+            kpi.Periode = new Periode {Id = 1};
+            kpi.Value = DateTime.Now;
+            context.Kpis.AddOrUpdate(kpi);
+            
+
+
+            //var relationModel1 = new KpiRelationModel();
+            //relationModel1.Kpi
+            //kpi.RelationModels.Add(new KpiRelationModel());
+            //kpi.
             //kpi.
 
         }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Data.Entities
 {
@@ -28,6 +30,8 @@ namespace DSLNG.PEAR.Data.Entities
         public FormatInput FormatInput { get; set; }
         public Periode Periode { get; set; }
         public string Remark { get; set; }
+        public ICollection<KpiRelationModel> RelationModels { get; set; }
+        public DateTime? Value { get; set; }
 
         public bool IsActive { get; set; }
         public User CreatedBy { get; set; }

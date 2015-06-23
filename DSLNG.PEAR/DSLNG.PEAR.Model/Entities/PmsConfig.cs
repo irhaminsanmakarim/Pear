@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Data.Entities
 {

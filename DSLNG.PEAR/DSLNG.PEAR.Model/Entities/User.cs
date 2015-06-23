@@ -19,5 +19,7 @@ namespace DSLNG.PEAR.Data.Entities
         public RoleGroup Role { get; set; }
 
         public bool IsActive { get; set; }
+
+        public string ChangeModel { get; set; }
     }
 }
