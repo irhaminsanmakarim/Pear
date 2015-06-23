@@ -387,6 +387,8 @@
     <Content Include="Views\Measurement\Update.cshtml" />
     <Content Include="Views\Level\Update.cshtml" />
     <Content Include="Views\Level\Create.cshtml" />
+    <Content Include="Views\RoleGroup\Index.cshtml" />
+    <Content Include="Views\RoleGroup\_GridViewPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
