@@ -438,6 +438,7 @@
     <Content Include="Views\PmsSummary\_Details.cshtml" />
     <Content Include="Views\Level\Update.cshtml" />
     <Content Include="Views\Level\Create.cshtml" />
+    <Content Include="Views\Master\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -491,6 +492,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LevelController.cs" />
+    <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
