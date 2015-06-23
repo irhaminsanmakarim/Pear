@@ -1,11 +1,11 @@
-﻿using DSLNG.PEAR.Services.Requests.Type;
-using DSLNG.PEAR.Services.Responses.Type;
+﻿using DSLNG.PEAR.Services.Responses.Type;
+using DSLNG.PEAR.Services.Requests.Type;
 
 namespace DSLNG.PEAR.Services.Interfaces
 {
-    public interface ITypeService
+    public class ITypeService
     {
-        GetTypeResponse GetType(GetTypeRequest request);
+        GetTypeResponse GetType (GetTypeRequest request);
         GetTypesResponse GetTypes(GetTypesRequest request);
     }
 }
