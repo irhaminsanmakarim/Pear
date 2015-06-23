@@ -1,0 +1,145 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.BarChartViewModel
+
+<div class="form-group">
+    @Html.LabelFor(model => model.PeriodeType, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes)
+        @Html.ValidationMessageFor(model => model.PeriodeType)
+    </div>
+</div>
+
+
+
+<div id="monthly-interval" >
+    <div class="form-group">
+        @Html.LabelFor(model => model.Start, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Start, new { data_provide = "datepicker", @class = "datepicker", @Value = Model.Start.ToString("MM/dd/yyyy") })
+            @Html.ValidationMessageFor(model => model.Start)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.End, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.End, new { data_provide = "datepicker", @class = "datepicker", @Value = Model.End.ToString("MM/dd/yyyy") })
+            @Html.ValidationMessageFor(model => model.End)
+        </div>
+    </div>
+
+
+</div>
+<div id="yearly-interval" style="display:none">
+    <div class="form-group">
+        @Html.LabelFor(model => model.StartYear, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.StartYear, new { data_provide = "datepicker", @class = "datepicker yearly", @Value = Model.Start.ToString("yyyy") })
+            @Html.ValidationMessageFor(model => model.StartYear)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EndYear, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.EndYear, new { data_provide = "datepicker", @class = "datepicker yearly", @Value = Model.End.ToString("yyyy") })
+            @Html.ValidationMessageFor(model => model.EndYear)
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ValueAxis, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxises, new { id = "bar-value-axis" })
+        @Html.ValidationMessageFor(model => model.ValueAxis)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.FractionScale, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(model => model.FractionScale)
+        @Html.ValidationMessageFor(model => model.FractionScale)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.MaxValue, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(model => model.MaxValue)
+        @Html.ValidationMessageFor(model => model.MaxValue)
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        @Html.DropDownList("seriesType", Model.SeriesTypes, new { id = "seriesType" })
+        <input type="submit" value="Add Series" class="btn btn-default" id="add-series" />
+    </div>
+</div>
+<div id="series-wrapper">
+</div>
+@for (var i = 0; i < Model.SeriesList.Count; i++)
+{ 
+    <fieldset class="series-template original">
+        <legend>Series</legend>
+        <div class="form-group">
+            @Html.LabelFor(model => model.SeriesList[i].Label, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.SeriesList[i].Label)
+                @Html.ValidationMessageFor(model => model.SeriesList[i].Label)
+            </div>
+        </div>
+        <div class="stacks-wrapper">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" value="Add Stack" class="btn btn-default add-stack"/>
+                </div>
+            </div>
+        </div>
+        <div class="series-details-wrapper">
+            <div class="form-group">
+                @Html.LabelFor(model => model.SeriesList[i].KpiId, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.SeriesList[i].KpiId, Model.KpiList,  new { @class = "kpi-list" } )
+                    @Html.ValidationMessageFor(model => model.SeriesList[i].KpiId)
+                </div>
+            </div>
+            <div class="form-group value-axis">
+                @Html.LabelFor(model => Model.SeriesList[i].ValueAxis, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.SeriesList[i].ValueAxis, Model.ValueAxises)
+                    @Html.ValidationMessageFor(model => model.SeriesList[i].ValueAxis)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.SeriesList[i].Aggregation, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.SeriesList[i].Aggregation, Model.Aggragations)
+                    @Html.ValidationMessageFor(model => model.SeriesList[i].Aggregation)
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    for (var j = 0; j < Model.SeriesList[i].Stacks.Count; j++)
+    { 
+    <fieldset class="stack-template original">
+        <legend>Stack</legend>
+        <div class="form-group">
+            @Html.LabelFor(model => model.SeriesList[i].Stacks[j].Label, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.SeriesList[i].Stacks[j].Label)
+                @Html.ValidationMessageFor(model => model.SeriesList[i].Stacks[j].Label)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.SeriesList[i].Stacks[j].KpiId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SeriesList[i].Stacks[j].KpiId, Model.KpiList,  new { @class = "kpi-list" } )
+                @Html.ValidationMessageFor(model => model.SeriesList[i].Stacks[j].KpiId)
+            </div>
+        </div>
+    </fieldset>
+    }
+}
+
+

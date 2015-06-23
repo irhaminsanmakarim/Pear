@@ -16,7 +16,7 @@ namespace DSLNG.PEAR.Services.Responses.Kpi
             public Pilar Pilar { get; set; }
             public Level Level { get; set; }
             public RoleGroup RoleGroup { get; set; }
-            public Type Type { get; set; }
+            //public Type Type { get; set; }
             public Group Group { get; set; }
             public string IsEconomic { get; set; }
             public int Order { get; set; }

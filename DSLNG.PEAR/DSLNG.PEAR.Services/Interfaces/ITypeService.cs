@@ -1,5 +1,5 @@
-﻿using DSLNG.PEAR.Services.Requests.Type;
-using DSLNG.PEAR.Services.Responses.Type;
+﻿using DSLNG.PEAR.Services.Responses.Type;
+using DSLNG.PEAR.Services.Requests.Type;
 
 namespace DSLNG.PEAR.Services.Interfaces
 {

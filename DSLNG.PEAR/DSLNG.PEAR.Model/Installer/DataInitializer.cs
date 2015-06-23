@@ -171,8 +171,9 @@ namespace DSLNG.PEAR.Data.Installer
             kpi.Measurement = new Measurement {Id = 1};
             kpi.Method = new Method {Id = 1};
             kpi.Conversion = new Conversion {Id = 1};
+            kpi.ConversionId = 1;
+            //kpi.
 
-            
         }
 
         private void AddPmsData(DataContext context)
