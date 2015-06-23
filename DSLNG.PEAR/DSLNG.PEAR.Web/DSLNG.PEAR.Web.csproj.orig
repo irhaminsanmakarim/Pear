@@ -438,8 +438,12 @@
     <Content Include="Views\PmsSummary\_Details.cshtml" />
     <Content Include="Views\Level\Update.cshtml" />
     <Content Include="Views\Level\Create.cshtml" />
-    <Content Include="Views\Master\Index.cshtml" />
+<<<<<<< HEAD
+    <Content Include="Views\RoleGroup\Index.cshtml" />
     <Content Include="Views\RoleGroup\_GridViewPartial.cshtml" />
+=======
+    <Content Include="Views\Master\Index.cshtml" />
+>>>>>>> 70a9d91e68f4bedcc8242cccf21ba09efec82d4b
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
