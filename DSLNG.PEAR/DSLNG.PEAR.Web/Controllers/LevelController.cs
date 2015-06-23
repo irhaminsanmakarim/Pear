@@ -7,7 +7,7 @@ using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class LevelController : Controller
+    public class LevelController : BaseController
     {
         private readonly ILevelService _levelService;
 

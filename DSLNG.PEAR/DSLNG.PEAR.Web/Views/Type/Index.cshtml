@@ -1,0 +1,11 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Type.IndexTypeViewModel
+@{
+    ViewBag.Title = "Type List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Type List</h2>
+@Html.ActionLink("Create New", "Create")
+@Html.Partial("_GridViewPartial", Model.Types);
+
+

@@ -9,14 +9,16 @@ namespace DSLNG.PEAR.Services.Responses.Type
     public class GetTypesResponse : BaseResponse
     {
         public IList<Type> Types { get; set; }
+
+        public class Type
+        {
+            public int Id { get; set; }
+
+            public string Name { get; set; }
+            public string Remark { get; set; }
+            public bool IsActive { get; set; }
+        }
     }
 
-    public class Type
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-        public string Remark { get; set; }
-        public bool IsActive { get; set; }
-    }
+    
 }
