@@ -211,20 +211,24 @@ namespace DSLNG.PEAR.Data.Installer
         private void AddPmsData(DataContext context)
         {
             var pmsConfig = new PmsConfig();
+            pmsConfig.Id = 1;
             pmsConfig.IsActive = true;
             pmsConfig.Pilar = new Pilar {Id = 1};
             pmsConfig.ScoreIndicator = new ScoreIndicator {Id = 1};
             pmsConfig.ScoringType = ScoringType.Positive;
             pmsConfig.Weight = 80;
+            context.PmsConfigs.AddOrUpdate(pmsConfig);
 
-          /*  var pmsConfigDetail = new PmsConfigDetail();
+            var pmsConfigDetail = new PmsConfigDetail();
+            pmsConfigDetail.Id = 1;
             pmsConfigDetail.AsGraphic = true;
             pmsConfigDetail.CreatedBy = new User {Id = 9};
             pmsConfigDetail.UpdatedBy = new User {Id = 9};
             pmsConfigDetail.IsActive = true;
-            pmsConfigDetail.Kpi = new Kpi();*/
+            pmsConfigDetail.Kpi = new Kpi{Id = 1};
+            //pmsConfigDetail.KpiTargets.Add();
 
-            context.PmsConfigs.AddOrUpdate(pmsConfig);
+            
 
         }
     }

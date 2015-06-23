@@ -8,5 +8,6 @@ namespace DSLNG.PEAR.Services.Responses.Measurement
 {
     public class CreateMeasurementResponse : BaseResponse
     {
+
     }
 }

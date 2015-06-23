@@ -8,6 +8,8 @@ namespace DSLNG.PEAR.Services.Responses.Kpi
     public enum YtdFormula
     {
         Sum,
-        Average
+        Average,
+        Max,
+        Min
     }
 }

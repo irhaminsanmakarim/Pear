@@ -440,6 +440,9 @@
     <Content Include="Views\Level\Create.cshtml" />
     <Content Include="Views\Master\Index.cshtml" />
     <Content Include="Views\RoleGroup\_GridViewPartial.cshtml" />
+    <Content Include="Views\Type\_GridViewPartial.cshtml" />
+    <Content Include="Views\Type\Index.cshtml" />
+    <Content Include="Views\RoleGroup\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -497,6 +500,7 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
     <Compile Include="Controllers\RoleGroupController.cs" />
+    <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
@@ -528,6 +532,8 @@
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
+    <Compile Include="ViewModels\Type\IndexTypeViewModel.cs" />
+    <Compile Include="ViewModels\Type\TypeViewModel.cs" />
     <Compile Include="ViewModels\User\UserIndexViewModel.cs" />
     <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>
