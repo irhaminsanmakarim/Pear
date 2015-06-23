@@ -245,6 +245,8 @@
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap\js\npm.js" />
     <Content Include="Content\bs_leftnavi.css" />
+    <Content Include="Content\datepicker\css\datepicker.css" />
+    <Content Include="Content\datepicker\js\bootstrap-datepicker.js" />
     <Content Include="Content\font-awesome\css\font-awesome.css" />
     <Content Include="Content\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\img\active.png" />
@@ -267,6 +269,53 @@
     <Content Include="Content\img\tick.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\select2\dist\css\select2.css" />
+    <Content Include="Content\select2\dist\css\select2.min.css" />
+    <Content Include="Content\select2\dist\js\i18n\az.js" />
+    <Content Include="Content\select2\dist\js\i18n\bg.js" />
+    <Content Include="Content\select2\dist\js\i18n\ca.js" />
+    <Content Include="Content\select2\dist\js\i18n\cs.js" />
+    <Content Include="Content\select2\dist\js\i18n\da.js" />
+    <Content Include="Content\select2\dist\js\i18n\de.js" />
+    <Content Include="Content\select2\dist\js\i18n\en.js" />
+    <Content Include="Content\select2\dist\js\i18n\es.js" />
+    <Content Include="Content\select2\dist\js\i18n\et.js" />
+    <Content Include="Content\select2\dist\js\i18n\eu.js" />
+    <Content Include="Content\select2\dist\js\i18n\fa.js" />
+    <Content Include="Content\select2\dist\js\i18n\fi.js" />
+    <Content Include="Content\select2\dist\js\i18n\fr.js" />
+    <Content Include="Content\select2\dist\js\i18n\gl.js" />
+    <Content Include="Content\select2\dist\js\i18n\he.js" />
+    <Content Include="Content\select2\dist\js\i18n\hi.js" />
+    <Content Include="Content\select2\dist\js\i18n\hr.js" />
+    <Content Include="Content\select2\dist\js\i18n\hu.js" />
+    <Content Include="Content\select2\dist\js\i18n\id.js" />
+    <Content Include="Content\select2\dist\js\i18n\is.js" />
+    <Content Include="Content\select2\dist\js\i18n\it.js" />
+    <Content Include="Content\select2\dist\js\i18n\ko.js" />
+    <Content Include="Content\select2\dist\js\i18n\lt.js" />
+    <Content Include="Content\select2\dist\js\i18n\lv.js" />
+    <Content Include="Content\select2\dist\js\i18n\mk.js" />
+    <Content Include="Content\select2\dist\js\i18n\nb.js" />
+    <Content Include="Content\select2\dist\js\i18n\nl.js" />
+    <Content Include="Content\select2\dist\js\i18n\pl.js" />
+    <Content Include="Content\select2\dist\js\i18n\pt-BR.js" />
+    <Content Include="Content\select2\dist\js\i18n\pt.js" />
+    <Content Include="Content\select2\dist\js\i18n\ro.js" />
+    <Content Include="Content\select2\dist\js\i18n\ru.js" />
+    <Content Include="Content\select2\dist\js\i18n\sk.js" />
+    <Content Include="Content\select2\dist\js\i18n\sr.js" />
+    <Content Include="Content\select2\dist\js\i18n\sv.js" />
+    <Content Include="Content\select2\dist\js\i18n\th.js" />
+    <Content Include="Content\select2\dist\js\i18n\tr.js" />
+    <Content Include="Content\select2\dist\js\i18n\uk.js" />
+    <Content Include="Content\select2\dist\js\i18n\vi.js" />
+    <Content Include="Content\select2\dist\js\i18n\zh-CN.js" />
+    <Content Include="Content\select2\dist\js\i18n\zh-TW.js" />
+    <Content Include="Content\select2\dist\js\select2.full.js" />
+    <Content Include="Content\select2\dist\js\select2.full.min.js" />
+    <Content Include="Content\select2\dist\js\select2.js" />
+    <Content Include="Content\select2\dist\js\select2.min.js" />
     <Content Include="Content\style.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
@@ -346,8 +395,10 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="Content\datepicker\less\datepicker.less" />
     <None Include="Properties\PublishProfiles\donggi.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
@@ -373,26 +424,28 @@
     <Content Include="Views\Level\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\ArtifactDesigner\Create.cshtml" />
     <Content Include="Views\Menu\MainMenu.cshtml" />
     <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Artifact\Designer.cshtml" />
     <Content Include="Views\Measurement\_IndexGridPartial.cshtml" />
-    <Content Include="Views\ArtifactDesigner\_SeriesPartial.cshtml" />
-    <Content Include="Views\ArtifactDesigner\_KpiSeriesPartial.cshtml" />
-    <Content Include="Views\ArtifactDesigner\_MultiStackSeriesPartial.cshtml" />
-    <Content Include="Views\ArtifactDesigner\_StackPartial.cshtml" />
     <Content Include="Views\Measurement\Index.cshtml" />
     <Content Include="Views\Measurement\Create.cshtml" />
     <Content Include="Views\Shared\_MessageResponse.cshtml" />
     <Content Include="Views\Measurement\Update.cshtml" />
+    <Content Include="Views\BarChart\_Create.cshtml" />
+    <Content Include="Views\Artifact\Preview.cshtml" />
+    <Content Include="Views\BarChart\_Display.cshtml" />
+    <Content Include="Views\PmsSummary\_Details.cshtml" />
     <Content Include="Views\Level\Update.cshtml" />
     <Content Include="Views\Level\Create.cshtml" />
     <Content Include="Views\Master\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -434,7 +487,8 @@
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\ViewModelMappingProfile.cs" />
     <Compile Include="Controllers\Api\ApiUserController.cs" />
-    <Compile Include="Controllers\ArtifactDesignerController.cs" />
+    <Compile Include="Controllers\ArtifactController.cs" />
+    <Compile Include="Controllers\BarChartController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LevelController.cs" />
@@ -442,6 +496,7 @@
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
+    <Compile Include="Controllers\RoleGroupController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
@@ -455,7 +510,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\ArtifactDesigner\ArtifactDesignerViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\ArtifactDesignerViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\BarChartDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiToSeriesViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelsViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelViewModel.cs" />
@@ -469,6 +526,8 @@
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
+    <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
+    <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
     <Compile Include="ViewModels\User\UserIndexViewModel.cs" />
     <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>

@@ -52,9 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArtifactService.cs" />
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="GroupService.cs" />
+    <Compile Include="Interfaces\IArtifactService.cs" />
     <Compile Include="Interfaces\IConversionService.cs" />
     <Compile Include="Interfaces\IDashboardTemplate.cs" />
     <Compile Include="Interfaces\IGroupService.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="Interfaces\IMeasurementService.cs" />
     <Compile Include="Interfaces\IMenuService.cs" />
     <Compile Include="Interfaces\IMethodService.cs" />
+    <Compile Include="Interfaces\IRoleGroupService.cs" />
     <Compile Include="KpiService.cs" />
     <Compile Include="MeasurementService.cs" />
     <Compile Include="MenuService.cs" />
@@ -81,6 +84,7 @@
     <Compile Include="Requests\Measurement\UpdateMeasurementRequest.cs" />
     <Compile Include="Requests\Menu\GetMenuRequest.cs" />
     <Compile Include="Requests\Method\GetMethodRequest.cs" />
+    <Compile Include="Requests\RoleGroup\GetRoleGroupRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
     <Compile Include="Responses\Conversion\GetConversionResponse.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
@@ -107,6 +111,8 @@
     <Compile Include="Responses\Measurement\UpdateMeasurementResponse.cs" />
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
+    <Compile Include="Responses\RoleGroup\GetRoleGroupResponse.cs" />
+    <Compile Include="Responses\RoleGroup\GetRoleGroupsResponse.cs" />
     <Compile Include="Responses\User\GetUsersResponse.cs" />
     <Compile Include="Interfaces\ILevelService.cs" />
     <Compile Include="Interfaces\IPillarService.cs" />
@@ -118,6 +124,7 @@
     <Compile Include="Responses\Level\GetLevelResponse.cs" />
     <Compile Include="Responses\User\UserResponse.cs" />
     <Compile Include="Responses\Pillar\GetPillarResponse.cs" />
+    <Compile Include="RoleGroupService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,7 +141,10 @@
       <Name>DSLNG.PEAR.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Requests\Artifact\" />
+    <Folder Include="Responses\Artifact\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

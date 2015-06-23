@@ -1,0 +1,11 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.RoleGroup.IndexRoleGroupViewModel
+@{
+    ViewBag.Title = "RoleGroup List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>RoleGroup List</h2>
+@Html.ActionLink("Create New", "Create")
+@Html.Partial("_GridViewPartial", Model.RoleGroups);
+
+

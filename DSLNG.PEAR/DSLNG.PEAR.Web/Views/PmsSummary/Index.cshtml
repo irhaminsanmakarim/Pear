@@ -2,7 +2,22 @@
 @{
     ViewBag.Title = "Index";
 }
+<script type="text/javascript">
+    /*function OnGridFocusedRowChanged(s, e) {
+        alert('asdsd');
+        s.GetRowValues(s.GetFocusedRowIndex(), 'Id', OnGetRowValues);
+    }
+    function OnGetRowValues(values) {
+        alert(values);
+        
+    }*/
 
+    function OnCellClick(visibleIndex, fieldName) {
+        $('#myModal').modal({
+            remote: '@Url.Action("Details", "PmsSummary")'
+        });
+    }
+</script>
 <section>
     <div class="title_page">
         <div class="row">
@@ -12,7 +27,7 @@
         </div>
         <div class="row">
             <form class="form-inline">
-                <div style="margin:5px 40px 0px 25px;padding-right:30px; border-right:solid 1px #3f454f;" class="form-group">
+                <div style="margin: 5px 40px 0px 25px; padding-right: 30px; border-right: solid 1px #3f454f;" class="form-group">
                     <label>Year Illustration :</label>
                     <select class="form-control">
                         <option>2015</option>
@@ -22,7 +37,7 @@
                         <option>2011</option>
                     </select>
                 </div>
-                <div style="margin-top:5px;" class="form-group">
+                <div style="margin-top: 5px;" class="form-group">
                     <label>Month :</label>
                     <select class="form-control">
                         <option>Jan</option>
@@ -56,4 +71,27 @@
     </div>
 </section>
 
-    
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            
+            <div class="modal-body">
+                
+                    Please wait. <br/>
+                    it still loading ..
+                
+            </div>
+            
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+
+
+

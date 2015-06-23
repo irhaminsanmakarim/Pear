@@ -8,8 +8,9 @@ namespace DSLNG.PEAR.Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string RefType { get; set; }
-        public string RefId { get; set; }
+        public string Label { get; set; }
+        public Kpi Kpi {get;set;}
+        public string Aggregation {get;set;}
         public string Color { get; set; }
         public bool IsActive { get; set; }
     }

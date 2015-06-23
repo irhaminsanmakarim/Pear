@@ -28,15 +28,11 @@ namespace DSLNG.PEAR.Services
         }
 
 
-        public GetKpiToSeriesResponse GetKpiToSeries(GetKpiToSeriesRequest request)
+        public GetKpiToSeriesResponse GetKpiToSeries()
         {
             return new GetKpiToSeriesResponse
             {
-                KpiList = DataContext.Kpis.Where(x => x.Name.Contains(request.Filter))
-                .OrderBy(x => x.Name)
-                .Skip(request.Skip)
-                .Take(request.Take)
-                .ToList()
+                KpiList = DataContext.Kpis.ToList()
                 .MapTo<GetKpiToSeriesResponse.Kpi>()
             };
         }

@@ -1,16 +1,11 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.User.UserIndexViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "User List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>User</h2>
-@foreach (var user in Model.Users)
-{
-    @user.Username <br/>
-    @user.Email
-}
-
-
-@*@Html.Action("GridViewPartial")*@
+@Html.ActionLink("Create New", "Create")
+@Html.Partial("_GridViewPartial", Model.Users);
 
 
