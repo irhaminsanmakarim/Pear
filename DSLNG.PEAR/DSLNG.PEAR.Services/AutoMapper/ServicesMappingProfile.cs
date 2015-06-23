@@ -3,6 +3,7 @@ using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Menu;
+using DSLNG.PEAR.Services.Responses.RoleGroup;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Group;
