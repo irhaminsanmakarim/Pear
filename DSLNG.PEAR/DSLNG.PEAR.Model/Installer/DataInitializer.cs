@@ -46,8 +46,22 @@ namespace DSLNG.PEAR.Data.Installer
             context.Menus.AddOrUpdate(menu3);
             context.Users.AddOrUpdate(admin);
 
+            AddUser(context);
             AddPilar(context);
+            AddScoreIndicator(context);
+            AddPmsData(context);
             context.SaveChanges();
+        }
+
+        private void AddUser(DataContext context)
+        {
+            var user1 = new User();
+            user1.Id = 9;
+            user1.Username = "torres";
+            user1.Email = "fernando@torres.com";
+            user1.IsActive = true;
+            user1.Role = new RoleGroup {Id = 1};
+            context.Users.AddOrUpdate(user1);
         }
 
         private void AddPilar(DataContext context)
@@ -76,11 +90,109 @@ namespace DSLNG.PEAR.Data.Installer
             context.Pilars.AddOrUpdate(pilar2);
         }
 
-        private void AddPmsData()
+        private void AddGroup(DataContext context)
+        {
+            var group = new Group();
+            group.Id = 1;
+            group.Activity = new Activity {Id = 1, IsActive = true, Order = 1, Remark = "remark"};
+            group.IsActive = true;
+            group.Name = "Fatality";
+            group.Order = 1;
+            group.Remark = "test";
+            context.Groups.AddOrUpdate(group);
+        }
+
+        private void AddScoreIndicator(DataContext context)
+        {
+            var scoreIndicator1 = new ScoreIndicator();
+            scoreIndicator1.Id = 1;
+            scoreIndicator1.Color = "#897978";
+            scoreIndicator1.MaxValue = 100;
+            scoreIndicator1.MinValue = 10;
+            scoreIndicator1.IsActive = true;
+            scoreIndicator1.RefId = 1;
+            context.ScoreIndicators.AddOrUpdate(scoreIndicator1);
+        }
+
+        private void AddMeasurement(DataContext context)
+        {
+            var measurement = new Measurement();
+            measurement.Id = 1;
+            measurement.IsActive = true;
+            measurement.Name = "Measurement 1";
+            measurement.Remark = "test";
+            context.Measurements.AddOrUpdate(measurement);
+        }
+
+        private void AddConversion(DataContext context)
+        {
+            var conversion = new Conversion();
+            conversion.Id = 1;
+            conversion.From = new Measurement {Id = 1};
+            conversion.To = new Measurement {Id = 1};
+            conversion.IsReverse = false;
+            conversion.Name = "Conversion One";
+            conversion.Value = 200;
+            context.Conversions.AddOrUpdate(conversion);
+        }
+
+        private void AddMethod(DataContext context)
+        {
+            var method = new Method();
+            method.Id = 1;
+            method.Name = "Manual Input";
+            method.IsActive = true;
+            method.Remark = "hs";
+        }
+        private void AddType(DataContext context)
+        {
+            var level = new Level();
+            level.Id = 1;
+            level.Name = "Corporate Portofolio";
+            level.Code = "cp";
+            level.IsActive = true;
+            level.Number = 1;
+            level.Remark = "test";
+        }
+
+        private void AddKpi(DataContext context)
+        {
+            var kpi = new Kpi();
+            kpi.Id = 1;
+            kpi.Name = "Fatality/Strap Disability";
+            kpi.Level = new Level {Id = 2};
+            kpi.RoleGroup = new RoleGroup {Id = 1};
+            kpi.Type = new Type {Id = 1};
+            kpi.Group = new Group {Id = 1};
+            kpi.Code = "ft";
+            kpi.IsEconomic = false;
+            kpi.Order = 1;
+            kpi.YtdFormula = YtdFormula.Sum;
+            kpi.Measurement = new Measurement {Id = 1};
+            kpi.Method = new Method {Id = 1};
+            kpi.Conversion = new Conversion {Id = 1};
+
+            
+        }
+
+        private void AddPmsData(DataContext context)
         {
             var pmsConfig = new PmsConfig();
             pmsConfig.IsActive = true;
             pmsConfig.Pilar = new Pilar {Id = 1};
+            pmsConfig.ScoreIndicator = new ScoreIndicator {Id = 1};
+            pmsConfig.ScoringType = ScoringType.Positive;
+            pmsConfig.Weight = 80;
+
+          /*  var pmsConfigDetail = new PmsConfigDetail();
+            pmsConfigDetail.AsGraphic = true;
+            pmsConfigDetail.CreatedBy = new User {Id = 9};
+            pmsConfigDetail.UpdatedBy = new User {Id = 9};
+            pmsConfigDetail.IsActive = true;
+            pmsConfigDetail.Kpi = new Kpi();*/
+
+            context.PmsConfigs.AddOrUpdate(pmsConfig);
+
         }
     }
 }

@@ -10,7 +10,7 @@ namespace DSLNG.PEAR.Data.Entities
         public int Id { get; set; }
 
         public Pilar Pilar { get; set; }
-        public int Wight { get; set; }
+        public int Weight { get; set; }
         public ScoringType ScoringType { get; set; }
         public ScoreIndicator ScoreIndicator { get; set; }
         public bool IsActive { get; set; }
