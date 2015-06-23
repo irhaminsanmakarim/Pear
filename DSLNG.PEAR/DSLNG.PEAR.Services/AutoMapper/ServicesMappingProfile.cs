@@ -11,6 +11,8 @@ using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.Conversion;
 using DSLNG.PEAR.Services.Requests.Level;
+using DSLNG.PEAR.Services.Requests.RoleGroup;
+using DSLNG.PEAR.Services.Responses.RoleGroup;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -21,7 +23,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<User, GetUserResponse>()
                   .ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
             Mapper.CreateMap<User, UserResponse>();
-
+            Mapper.CreateMap<User, GetUsersResponse.User>();
             /*Level*/
             Mapper.CreateMap<Level, GetLevelsResponse.Level>();
             Mapper.CreateMap<Level, GetLevelResponse>();
