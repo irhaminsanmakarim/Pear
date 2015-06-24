@@ -120,6 +120,7 @@
     <Compile Include="Responses\RoleGroup\GetRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\GetRoleGroupsResponse.cs" />
     <Compile Include="Responses\User\CreateUserResponse.cs" />
+    <Compile Include="Responses\User\DeleteUserResponse.cs" />
     <Compile Include="Responses\User\GetUsersResponse.cs" />
     <Compile Include="Interfaces\ILevelService.cs" />
     <Compile Include="Interfaces\IPillarService.cs" />
