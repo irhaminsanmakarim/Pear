@@ -119,6 +119,7 @@
     <Compile Include="Responses\Measurement\GetMeasurementsResponse.cs" />
     <Compile Include="Responses\Measurement\UpdateMeasurementResponse.cs" />
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
+    <Compile Include="Responses\Menu\GetMenusResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
     <Compile Include="Responses\RoleGroup\CreateRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
