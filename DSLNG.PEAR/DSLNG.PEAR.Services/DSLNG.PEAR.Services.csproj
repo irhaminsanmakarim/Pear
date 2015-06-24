@@ -87,6 +87,7 @@
     <Compile Include="Requests\Menu\GetMenuRequest.cs" />
     <Compile Include="Requests\Method\GetMethodRequest.cs" />
     <Compile Include="Requests\RoleGroup\GetRoleGroupRequest.cs" />
+    <Compile Include="Requests\User\CreateUserRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
     <Compile Include="Responses\Conversion\GetConversionResponse.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Responses\Type\GetTypesResponse.cs" />
     <Compile Include="Responses\RoleGroup\GetRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\GetRoleGroupsResponse.cs" />
+    <Compile Include="Responses\User\CreateUserResponse.cs" />
     <Compile Include="Responses\User\GetUsersResponse.cs" />
     <Compile Include="Interfaces\ILevelService.cs" />
     <Compile Include="Interfaces\IPillarService.cs" />
