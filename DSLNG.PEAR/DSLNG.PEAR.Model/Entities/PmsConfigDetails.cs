@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DSLNG.PEAR.Data.Enums;
@@ -8,6 +9,11 @@ namespace DSLNG.PEAR.Data.Entities
 {
     public class PmsConfigDetails
     {
+        public PmsConfigDetails()
+        {
+            ScoreIndicators = new Collection<ScoreIndicator>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

@@ -64,7 +64,7 @@ namespace DSLNG.PEAR.Data.Installer
         private void AddUser(DataContext context)
         {
             var user1 = new User();
-            user1.Id = 9;
+            user1.Id = 1;
             user1.Username = "torres";
             user1.Email = "fernando@torres.com";
             user1.IsActive = true;
@@ -180,7 +180,7 @@ namespace DSLNG.PEAR.Data.Installer
             var kpiTargetFirstMonth = new KpiTarget()
             {
                 Id = 1,
-                CreatedBy = new User { Id = 9 },
+                CreatedBy = new User { Id = 1 },
                 CreatedDate = DateTime.Now,
                 IsActive = true,
                 Periode = new DateTime(2015, 1, 1),
@@ -192,7 +192,7 @@ namespace DSLNG.PEAR.Data.Installer
             var kpiTargetSecondMonth = new KpiTarget()
             {
                 Id = 1,
-                CreatedBy = new User { Id = 9 },
+                CreatedBy = new User { Id = 1 },
                 CreatedDate = DateTime.Now,
                 IsActive = true,
                 Periode = new DateTime(2015, 2, 1),
@@ -210,7 +210,7 @@ namespace DSLNG.PEAR.Data.Installer
             var kpiAchievementFirstMonth = new KpiAchievement()
             {
                 Id = 1,
-                CreatedBy = new User { Id = 9 },
+                CreatedBy = new User { Id = 1 },
                 CreatedDate = DateTime.Now,
                 IsActive = true,
                 Periode = new DateTime(2015, 1, 1),
@@ -222,7 +222,7 @@ namespace DSLNG.PEAR.Data.Installer
             var kpiAchievementSecondMonth = new KpiAchievement()
             {
                 Id = 1,
-                CreatedBy = new User { Id = 9 },
+                CreatedBy = new User { Id = 1 },
                 CreatedDate = DateTime.Now,
                 IsActive = true,
                 Periode = new DateTime(2015, 2, 1),
@@ -249,8 +249,8 @@ namespace DSLNG.PEAR.Data.Installer
             var pmsConfigDetails = new PmsConfigDetails();
             pmsConfigDetails.Id = 1;
             pmsConfigDetails.AsGraphic = true;
-            pmsConfigDetails.CreatedBy = new User {Id = 9};
-            pmsConfigDetails.UpdatedBy = new User {Id = 9};
+            pmsConfigDetails.CreatedBy = new User {Id = 1};
+            pmsConfigDetails.UpdatedBy = new User {Id = 1};
             pmsConfigDetails.IsActive = true;
             pmsConfigDetails.Kpi = new Kpi{Id = 1};
             pmsConfigDetails.ScoringType = ScoringType.Positive;
@@ -263,7 +263,7 @@ namespace DSLNG.PEAR.Data.Installer
         private void AddPmsSummary(DataContext context)
         {
             var pmsSummary = new PmsSummary();
-            pmsSummary.CreatedBy = new User {Id = 9};
+            pmsSummary.CreatedBy = new User {Id = 1};
             pmsSummary.Id = 1;
             pmsSummary.IsActive = true;
             pmsSummary.Periode = new Periode {Id = 1};
