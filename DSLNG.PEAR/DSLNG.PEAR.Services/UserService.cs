@@ -85,5 +85,25 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
+
+        public DeleteUserResponse Delete(int id)
+        {
+            var response = new DeleteUserResponse();
+            try
+            {
+                var user = new User { Id = id };
+                DataContext.Users.Attach(user);
+                DataContext.Entry(user).State = EntityState.Deleted;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "User item has been deleted successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
     }
 }
