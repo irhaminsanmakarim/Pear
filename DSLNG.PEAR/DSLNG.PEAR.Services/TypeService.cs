@@ -31,5 +31,24 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
+
+        public CreateTypeResponse Create(CreateTypeRequest request)
+        {
+            var response = new CreateTypeResponse();
+            try
+            {
+                var type = request.MapTo<Data.Entities.Type>();
+                DataContext.Types.Add(type);
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "KPI type item has been added successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
     }
 }

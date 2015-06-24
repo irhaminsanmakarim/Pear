@@ -445,6 +445,7 @@
     <Content Include="Views\RoleGroup\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Update.cshtml" />
+    <Content Include="Views\Type\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -534,6 +535,7 @@
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
+    <Compile Include="ViewModels\Type\CreateTypeViewModel.cs" />
     <Compile Include="ViewModels\Type\IndexTypeViewModel.cs" />
     <Compile Include="ViewModels\Type\TypeViewModel.cs" />
     <Compile Include="ViewModels\User\CreateUserViewModel.cs" />

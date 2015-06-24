@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Services.Requests.Type
 
     public class GetTypesRequest
     {
-
+        public int Skip { get; set; }
+        public int Take { get; set; }
     }
 }
