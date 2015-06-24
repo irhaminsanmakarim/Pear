@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DSLNG.PEAR.Data.Entities
 {
-    public class PmsSummary
+    public class PmsSummary : BaseEntity
     {
+        public PmsSummary()
+        {
+            ScoreIndicators = new Collection<ScoreIndicator>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -18,9 +23,6 @@ namespace DSLNG.PEAR.Data.Entities
         //TODO : what is PMS tar on board?
 
         public bool IsActive { get; set; }
-        public User CreatedBy { get; set; }
-        public User UpdatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
+        
     }
 }

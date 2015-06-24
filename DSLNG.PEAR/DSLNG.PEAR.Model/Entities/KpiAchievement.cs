@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DSLNG.PEAR.Data.Entities
 {
-    public class KpiAchievement
+    public class KpiAchievement : BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -16,9 +16,6 @@ namespace DSLNG.PEAR.Data.Entities
         public string Remark { get; set; }
 
         public bool IsActive { get; set; }
-        public User CreatedBy { get; set; }
-        public User UpdatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
+        
     }
 }

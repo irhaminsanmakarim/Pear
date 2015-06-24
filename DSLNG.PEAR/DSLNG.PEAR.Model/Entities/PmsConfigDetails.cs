@@ -7,7 +7,7 @@ using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Data.Entities
 {
-    public class PmsConfigDetails
+    public class PmsConfigDetails : BaseEntity
     {
         public PmsConfigDetails()
         {
@@ -30,9 +30,5 @@ namespace DSLNG.PEAR.Data.Entities
         public TargetType TargetType { get; set; }
 
         public bool IsActive { get; set; }
-        public User CreatedBy { get; set; }
-        public User UpdatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
     }
 }

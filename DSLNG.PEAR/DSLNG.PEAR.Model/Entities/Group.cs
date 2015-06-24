@@ -12,7 +12,7 @@ namespace DSLNG.PEAR.Data.Entities
         public string Name { get; set; }
         public int?  Order { get; set; }
         public string Remark { get; set; }
-        public Activity Activity { get; set; }
+        //public Activity Activity { get; set; }
         public bool IsActive { get; set; }
     }
 }

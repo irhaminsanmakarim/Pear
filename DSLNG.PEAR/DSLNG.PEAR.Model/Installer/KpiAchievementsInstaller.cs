@@ -6,10 +6,10 @@ using System.Linq;
 
 namespace DSLNG.PEAR.Data.Installer
 {
-    public class KpiTargetsInstaller
+    public class KpiAchievementsInstaller
     {
         private readonly DataContext _context;
-        public KpiTargetsInstaller(DataContext context)
+        public KpiAchievementsInstaller(DataContext context)
         {
             _context = context;
         }
@@ -17,7 +17,7 @@ namespace DSLNG.PEAR.Data.Installer
         public void Install() {
             for (var i = 1; i <= 12; i++)
             {
-                var kpiTarget = new KpiTarget
+                var kpiAchievement = new KpiAchievement
                 {
                     Id = 1,
                     CreatedBy = _context.Users.Local.First(x => x.Id == 1),
@@ -26,14 +26,14 @@ namespace DSLNG.PEAR.Data.Installer
                     IsActive = true,
                     Periode = new DateTime(2015, i, 1),
                     Remark = "Whatever men...",
-                    Value = 10 * i,
+                    Value = 5 * i,
                     Kpi = _context.Kpis.Local.First(x => x.Id == 1)
                 };
-                _context.KpiTargets.Add(kpiTarget);
+                _context.KpiAchievements.Add(kpiAchievement);
             }
             for (var i = 1; i <= 12; i++)
             {
-                var kpiTarget = new KpiTarget
+                var kpiAchievement = new KpiAchievement
                 {
                     Id = 1,
                     CreatedBy = _context.Users.Local.First(x => x.Id == 1),
@@ -45,7 +45,7 @@ namespace DSLNG.PEAR.Data.Installer
                     Value = 10 * i,
                     Kpi = _context.Kpis.Local.First(x => x.Id == 2)
                 };
-                _context.KpiTargets.Add(kpiTarget);
+                _context.KpiAchievements.Add(kpiAchievement);
             }
           
         }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DSLNG.PEAR.Data.Entities
 {
-    public class Pilar
+    public class Pillar
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

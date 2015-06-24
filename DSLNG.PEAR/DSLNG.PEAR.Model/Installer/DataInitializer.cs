@@ -25,11 +25,29 @@ namespace DSLNG.PEAR.Data.Installer
             var measurementsIntaller = new MeasurementsInstaller(context);
             measurementsIntaller.Install();
 
+            var pillarsInstaller = new PillarsInstaller(context);
+            pillarsInstaller.Installer();
+
             var kpisInstaller = new KpisInstaller(context);
             kpisInstaller.Install();
 
             var kpiTargetsInstaller = new KpiTargetsInstaller(context);
             kpiTargetsInstaller.Install();
+
+            var groupsInstaller = new GroupsInstaller(context);
+            groupsInstaller.Installer();
+
+            var kpiAchievementsInstaller = new KpiAchievementsInstaller(context);
+            kpiAchievementsInstaller.Install();
+
+            var pmsConfigsInstaller = new PmsConfigsInstaller(context);
+            pmsConfigsInstaller.Install();
+
+            var pmsConfigDetailsInstaller = new PmsConfigDetailsInstaller(context);
+            pmsConfigDetailsInstaller.Install();
+
+            var pmsSummariesInstaller = new PmsSummariesInstaller(context);
+            pmsSummariesInstaller.Install();
 
             //var menu1 = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };
             //var menu2 = new Menu { Id = 2, IsRoot = true, Module = "PMS", Order = 1, Name = "PMS", IsActive = true, Menus = null, RoleGroups = null };
@@ -54,7 +72,7 @@ namespace DSLNG.PEAR.Data.Installer
             context.SaveChanges();
         }
 
-        private void AddUser(DataContext context)
+        /*private void AddUser(DataContext context)
         {
             var user1 = new User();
             user1.Id = 1;
@@ -63,9 +81,9 @@ namespace DSLNG.PEAR.Data.Installer
             user1.IsActive = true;
             user1.Role = new RoleGroup { Id = 1 };
             context.Users.AddOrUpdate(user1);
-        }
+        }*/
 
-        private void AddPilar(DataContext context)
+        /*private void AddPilar(DataContext context)
         {
             var pilar1 = new Pilar();
             pilar1.Id = 1;
@@ -89,13 +107,12 @@ namespace DSLNG.PEAR.Data.Installer
 
             context.Pilars.AddOrUpdate(pilar1);
             context.Pilars.AddOrUpdate(pilar2);
-        }
+        }*/
 
-        private void AddGroup(DataContext context)
+        /*private void AddGroup(DataContext context)
         {
             var group = new Group();
             group.Id = 1;
-            group.Activity = new Activity { Id = 1, IsActive = true, Order = 1, Remark = "remark" };
             group.IsActive = true;
             group.Name = "Fatality";
             group.Order = 1;
@@ -111,7 +128,7 @@ namespace DSLNG.PEAR.Data.Installer
             measurement.Name = "Measurement 1";
             measurement.Remark = "test";
             context.Measurements.AddOrUpdate(measurement);
-        }
+        }*/
 
         private void AddConversion(DataContext context)
         {
@@ -144,7 +161,7 @@ namespace DSLNG.PEAR.Data.Installer
             context.Periodes.AddOrUpdate(periode);
         }
 
-        private void AddKpi(DataContext context)
+        /*private void AddKpi(DataContext context)
         {
             var kpi = new Kpi();
             kpi.Id = 1;
@@ -166,9 +183,9 @@ namespace DSLNG.PEAR.Data.Installer
             kpi.Periode = new Periode { Id = 1 };
             kpi.Value = DateTime.Now;
             context.Kpis.AddOrUpdate(kpi);
-        }
+        }*/
 
-        private void AddKpiTargets(DataContext context)
+        /*private void AddKpiTargets(DataContext context)
         {
             var kpiTargetFirstMonth = new KpiTarget()
             {
@@ -196,9 +213,9 @@ namespace DSLNG.PEAR.Data.Installer
 
             context.KpiTargets.AddOrUpdate(kpiTargetFirstMonth);
             context.KpiTargets.AddOrUpdate(kpiTargetSecondMonth);
-        }
+        }*/
 
-        private void AddKpiAchievements(DataContext context)
+       /* private void AddKpiAchievements(DataContext context)
         {
             var kpiAchievementFirstMonth = new KpiAchievement()
             {
@@ -226,9 +243,9 @@ namespace DSLNG.PEAR.Data.Installer
 
             context.KpiAchievements.AddOrUpdate(kpiAchievementFirstMonth);
             context.KpiAchievements.AddOrUpdate(kpiAchievementSecondMonth);
-        }
+        }*/
 
-        private void AddPmsData(DataContext context)
+        /*private void AddPmsData(DataContext context)
         {
             var pmsConfig = new PmsConfig();
             pmsConfig.Id = 1;
@@ -251,9 +268,9 @@ namespace DSLNG.PEAR.Data.Installer
             pmsConfigDetails.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 60, MinValue = 21, RefId = 1 });
             pmsConfigDetails.Weight = 100;
             context.PmsConfigDetails.AddOrUpdate(pmsConfigDetails);
-        }
+        }*/
 
-        private void AddPmsSummary(DataContext context)
+       /* private void AddPmsSummary(DataContext context)
         {
             var pmsSummary = new PmsSummary();
             pmsSummary.CreatedBy = new User { Id = 9 };
@@ -266,11 +283,10 @@ namespace DSLNG.PEAR.Data.Installer
                     IsActive = true,
                     Color = "#213243",
                     MaxValue = 100,
-                    MinValue = 20,
-                    RefId = 1
+                    MinValue = 20
                 });
             pmsSummary.Title = "pms summary";
             context.PmsSummaries.AddOrUpdate(pmsSummary);
-        }
+        }*/
     }
 }

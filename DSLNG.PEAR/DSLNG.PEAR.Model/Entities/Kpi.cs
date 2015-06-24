@@ -7,7 +7,7 @@ using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Data.Entities
 {
-    public class Kpi
+    public class Kpi : BaseEntity
     {
         public Kpi()
         {
@@ -22,7 +22,7 @@ namespace DSLNG.PEAR.Data.Entities
         public string Code { get; set; }
         public string Name { get; set; }
         public int? PilarId { get; set; } //to make this nullable we need to include it
-        public Pilar Pilar { get; set; }
+        public Pillar Pillar { get; set; }
         public Level Level { get; set; }
         public RoleGroup RoleGroup { get; set; }
         public Type Type { get; set; }
@@ -43,33 +43,7 @@ namespace DSLNG.PEAR.Data.Entities
         public ICollection<KpiAchievement> KpiAchievements { get; set; }
 
         public bool IsActive { get; set; }
-        public User CreatedBy { get; set; }
-        public User UpdatedBy { get; set; }
         
-        public DateTime CreatedDate
-        {
-            get
-            {
-                return this.createdDate.HasValue
-                   ? this.createdDate.Value
-                   : DateTime.Now;
-            }
-
-            set { this.createdDate = value; }
-        }
-        private DateTime? createdDate = null;
-        private DateTime? updatedDate = null;
-        public DateTime UpdatedDate
-        {
-            get
-            {
-                return this.updatedDate.HasValue
-                   ? this.updatedDate.Value
-                   : DateTime.Now;
-            }
-
-            set { this.updatedDate = value; }
-        }
         
     }
 }

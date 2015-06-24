@@ -24,7 +24,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<Menu> Menus { get; set; }
         IDbSet<Method> Methods { get; set; }
         IDbSet<Periode> Periodes { get; set; }
-        IDbSet<Pilar> Pilars { get; set; }
+        IDbSet<Pillar> Pilars { get; set; }
         IDbSet<PmsConfig> PmsConfigs { get; set; }
         IDbSet<PmsConfigDetails> PmsConfigDetails { get; set; }
         IDbSet<PmsSummary> PmsSummaries { get; set; }
