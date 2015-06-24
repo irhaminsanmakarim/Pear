@@ -13,51 +13,35 @@ namespace DSLNG.PEAR.Data.Installer
         protected override void Seed(DataContext context)
         {
             base.Seed(context);
-            var directorateLevel = new Level { Id = 1, Code = "DIR", Name = "Directorate", IsActive = true, Number = 1 };
-            var corporateLevel = new Level { Id = 2, Code = "COR", Name = "Corporate", IsActive = true, Number = 2 };
-            var functionLevel = new Level { Id = 3, Code = "FNC", Name = "Function", IsActive = true, Number = 3 };
+            var levelsInstaller = new LevelsInstaller(context);
+            levelsInstaller.Install();
 
-            var groupFinanceDirectorate = new RoleGroup
-            {
-                Id = 1,
-                Name = "Finance Directorate",
-                Level = directorateLevel,
-                IsActive = true
-            };
+            var roleGroupsInstaller = new RoleGroupsInstaller(context);
+            roleGroupsInstaller.Install();
 
-            var admin = new User
-            {
-                Id = 1,
-                Email = "admin@regawa.com",
-                IsActive = true,
-                Username = "admin",
-                Role = groupFinanceDirectorate
-            };
+            var usersInstaller = new UsersInstaller(context);
+            usersInstaller.Install();
 
-            context.Levels.AddOrUpdate(directorateLevel);
-            context.Levels.AddOrUpdate(corporateLevel);
-            context.Levels.AddOrUpdate(functionLevel);
-            context.RoleGroups.AddOrUpdate(groupFinanceDirectorate);
-            var menu1 = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };
-            var menu2 = new Menu { Id = 2, IsRoot = true, Module = "PMS", Order = 1, Name = "PMS", IsActive = true, Menus = null, RoleGroups = null };
-            var menu3 = new Menu { Id = 3, IsRoot = true, Module = "Level", Order = 0, Name = "Level", IsActive = true, Menus = null, RoleGroups = null };
-            context.Menus.AddOrUpdate(menu1);
-            context.Menus.AddOrUpdate(menu2);
-            context.Menus.AddOrUpdate(menu3);
-            context.Users.AddOrUpdate(admin);
+            //var menu1 = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };
+            //var menu2 = new Menu { Id = 2, IsRoot = true, Module = "PMS", Order = 1, Name = "PMS", IsActive = true, Menus = null, RoleGroups = null };
+            //var menu3 = new Menu { Id = 3, IsRoot = true, Module = "Level", Order = 0, Name = "Level", IsActive = true, Menus = null, RoleGroups = null };
+            //context.Menus.AddOrUpdate(menu1);
+            //context.Menus.AddOrUpdate(menu2);
+            //context.Menus.AddOrUpdate(menu3);
+            //context.Users.AddOrUpdate(admin);
 
-            AddUser(context);
-            AddPilar(context);
-            AddPmsData(context);
-            AddGroup(context);
-            AddMeasurement(context);
-            AddConversion(context);
-            AddMethod(context);
-            AddPeriode(context);
-            AddKpi(context);
-            AddKpiTargets(context);
-            AddKpiAchievements(context);
-            AddPmsSummary(context);
+            //AddUser(context);
+            //AddPilar(context);
+            //AddPmsData(context);
+            //AddGroup(context);
+            //AddMeasurement(context);
+            //AddConversion(context);
+            //AddMethod(context);
+            //AddPeriode(context);
+            //AddKpi(context);
+            //AddKpiTargets(context);
+            //AddKpiAchievements(context);
+            //AddPmsSummary(context);
             context.SaveChanges();
         }
 
@@ -68,7 +52,7 @@ namespace DSLNG.PEAR.Data.Installer
             user1.Username = "torres";
             user1.Email = "fernando@torres.com";
             user1.IsActive = true;
-            user1.Role = new RoleGroup {Id = 1};
+            user1.Role = new RoleGroup { Id = 1 };
             context.Users.AddOrUpdate(user1);
         }
 
@@ -102,7 +86,7 @@ namespace DSLNG.PEAR.Data.Installer
         {
             var group = new Group();
             group.Id = 1;
-            group.Activity = new Activity {Id = 1, IsActive = true, Order = 1, Remark = "remark"};
+            group.Activity = new Activity { Id = 1, IsActive = true, Order = 1, Remark = "remark" };
             group.IsActive = true;
             group.Name = "Fatality";
             group.Order = 1;
@@ -124,8 +108,8 @@ namespace DSLNG.PEAR.Data.Installer
         {
             var conversion = new Conversion();
             conversion.Id = 1;
-            conversion.From = new Measurement {Id = 1};
-            conversion.To = new Measurement {Id = 1};
+            conversion.From = new Measurement { Id = 1 };
+            conversion.To = new Measurement { Id = 1 };
             conversion.IsReverse = false;
             conversion.Name = "Conversion One";
             conversion.Value = 200;
@@ -141,7 +125,7 @@ namespace DSLNG.PEAR.Data.Installer
             method.Remark = "hs";
             context.Methods.AddOrUpdate(method);
         }
-        
+
         private void AddPeriode(DataContext context)
         {
             var periode = new Periode();
@@ -155,22 +139,22 @@ namespace DSLNG.PEAR.Data.Installer
         {
             var kpi = new Kpi();
             kpi.Id = 1;
-            kpi.Pilar = new Pilar {Id = 1};
+            kpi.Pilar = new Pilar { Id = 1 };
             kpi.Name = "Fatality/Strap Disability";
-            kpi.Level = new Level {Id = 2};
-            kpi.RoleGroup = new RoleGroup {Id = 1};
-            kpi.Type = new Type {Id = 1};
-            kpi.Group = new Group {Id = 1};
+            kpi.Level = new Level { Id = 2 };
+            kpi.RoleGroup = new RoleGroup { Id = 1 };
+            kpi.Type = new Type { Id = 1 };
+            kpi.Group = new Group { Id = 1 };
             kpi.Code = "ft";
             kpi.IsEconomic = false;
             kpi.Order = 1;
             kpi.YtdFormula = YtdFormula.Sum;
-            kpi.Measurement = new Measurement {Id = 1};
-            kpi.Method = new Method {Id = 1};
-            kpi.Conversion = new Conversion {Id = 1};
+            kpi.Measurement = new Measurement { Id = 1 };
+            kpi.Method = new Method { Id = 1 };
+            kpi.Conversion = new Conversion { Id = 1 };
             kpi.ConversionId = 1;
             kpi.FormatInput = FormatInput.Sum;
-            kpi.Periode = new Periode {Id = 1};
+            kpi.Periode = new Periode { Id = 1 };
             kpi.Value = DateTime.Now;
             context.Kpis.AddOrUpdate(kpi);
         }
@@ -186,7 +170,7 @@ namespace DSLNG.PEAR.Data.Installer
                 Periode = new DateTime(2015, 1, 1),
                 Remark = "test",
                 Value = 10,
-                Kpi = new Kpi {Id = 1}
+                Kpi = new Kpi { Id = 1 }
             };
 
             var kpiTargetSecondMonth = new KpiTarget()
@@ -240,8 +224,8 @@ namespace DSLNG.PEAR.Data.Installer
             var pmsConfig = new PmsConfig();
             pmsConfig.Id = 1;
             pmsConfig.IsActive = true;
-            pmsConfig.Pilar = new Pilar {Id = 1};
-            pmsConfig.ScoreIndicator = new ScoreIndicator {IsActive = true, Color = "#126712", MaxValue = 20, MinValue = 0, RefId = 1};
+            pmsConfig.Pilar = new Pilar { Id = 1 };
+            pmsConfig.ScoreIndicator = new ScoreIndicator { IsActive = true, Color = "#126712", MaxValue = 20, MinValue = 0, RefId = 1 };
             pmsConfig.ScoringType = ScoringType.Positive;
             pmsConfig.Weight = 80;
             context.PmsConfigs.AddOrUpdate(pmsConfig);
@@ -249,12 +233,12 @@ namespace DSLNG.PEAR.Data.Installer
             var pmsConfigDetails = new PmsConfigDetails();
             pmsConfigDetails.Id = 1;
             pmsConfigDetails.AsGraphic = true;
-            pmsConfigDetails.CreatedBy = new User {Id = 1};
-            pmsConfigDetails.UpdatedBy = new User {Id = 1};
+            pmsConfigDetails.CreatedBy = new User { Id = 9 };
+            pmsConfigDetails.UpdatedBy = new User { Id = 9 };
             pmsConfigDetails.IsActive = true;
-            pmsConfigDetails.Kpi = new Kpi{Id = 1};
+            pmsConfigDetails.Kpi = new Kpi { Id = 1 };
             pmsConfigDetails.ScoringType = ScoringType.Positive;
-            pmsConfigDetails.ScoreIndicators.Add(new ScoreIndicator{Color = "#897879", IsActive = true, MaxValue = 20, MinValue = 0, RefId = 1});
+            pmsConfigDetails.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 20, MinValue = 0, RefId = 1 });
             pmsConfigDetails.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 60, MinValue = 21, RefId = 1 });
             pmsConfigDetails.Weight = 100;
             context.PmsConfigDetails.AddOrUpdate(pmsConfigDetails);
@@ -263,10 +247,11 @@ namespace DSLNG.PEAR.Data.Installer
         private void AddPmsSummary(DataContext context)
         {
             var pmsSummary = new PmsSummary();
-            pmsSummary.CreatedBy = new User {Id = 1};
+            pmsSummary.CreatedBy = new User { Id = 9 };
+
             pmsSummary.Id = 1;
             pmsSummary.IsActive = true;
-            pmsSummary.Periode = new Periode {Id = 1};
+            pmsSummary.Periode = new Periode { Id = 1 };
             pmsSummary.ScoreIndicators.Add(new ScoreIndicator()
                 {
                     IsActive = true,
