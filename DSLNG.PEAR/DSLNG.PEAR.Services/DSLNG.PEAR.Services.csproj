@@ -87,7 +87,9 @@
     <Compile Include="Requests\Menu\GetMenuRequest.cs" />
     <Compile Include="Requests\Method\GetMethodRequest.cs" />
     <Compile Include="Requests\RoleGroup\GetRoleGroupRequest.cs" />
+    <Compile Include="Requests\User\CreateUserRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
+    <Compile Include="Requests\User\UpdateUserRequest.cs" />
     <Compile Include="Responses\Conversion\GetConversionResponse.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Responses\Group\GetGroupResponse.cs" />
@@ -117,6 +119,8 @@
     <Compile Include="Responses\Type\GetTypesResponse.cs" />
     <Compile Include="Responses\RoleGroup\GetRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\GetRoleGroupsResponse.cs" />
+    <Compile Include="Responses\User\CreateUserResponse.cs" />
+    <Compile Include="Responses\User\DeleteUserResponse.cs" />
     <Compile Include="Responses\User\GetUsersResponse.cs" />
     <Compile Include="Interfaces\ILevelService.cs" />
     <Compile Include="Interfaces\IPillarService.cs" />
@@ -126,6 +130,7 @@
     <Compile Include="Requests\Pillar\GetPillarRequest.cs" />
     <Compile Include="Responses\BaseResponse.cs" />
     <Compile Include="Responses\Level\GetLevelResponse.cs" />
+    <Compile Include="Responses\User\UpdateUserResponse.cs" />
     <Compile Include="Responses\User\UserResponse.cs" />
     <Compile Include="Responses\Pillar\GetPillarResponse.cs" />
     <Compile Include="RoleGroupService.cs" />

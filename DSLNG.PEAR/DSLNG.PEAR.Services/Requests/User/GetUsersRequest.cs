@@ -8,5 +8,7 @@ namespace DSLNG.PEAR.Services.Requests.User
 {
     public class GetUsersRequest
     {
+        public int Skip { get; set; }
+        public int Take { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Web.ViewModels.User;
 using DSLNG.PEAR.Common.Extensions;
 using System.Web.Mvc;
+using DevExpress.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -17,15 +18,108 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Index()
         {
-            var response = _userService.GetUsers(new GetUsersRequest());
-            var viewModel = new UserIndexViewModel();
-            viewModel.Users = response.Users.MapTo<UserViewModel>();
+            return View();
+        }
+
+        public ActionResult IndexPartial()
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridUserIndex");
+            if (viewModel == null)
+                viewModel = CreateGridViewModel();
+            return BindingCore(viewModel);
+        }
+
+        PartialViewResult BindingCore(GridViewModel gridViewModel)
+        {
+            gridViewModel.ProcessCustomBinding(
+                GetDataRowCount,
+                GetData
+            );
+            return PartialView("_GridViewPartial", gridViewModel);
+        }
+
+        static GridViewModel CreateGridViewModel()
+        {
+            var viewModel = new GridViewModel();
+            viewModel.KeyFieldName = "Id";
+            viewModel.Columns.Add("Username");
+            viewModel.Columns.Add("Email");
+            viewModel.Columns.Add("IsActive");
+            viewModel.Pager.PageSize = 10;
+            return viewModel;
+        }
+
+        public ActionResult PagingAction(GridViewPagerState pager)
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridUserIndex");
+            viewModel.ApplyPagingState(pager);
+            return BindingCore(viewModel);
+        }
+
+        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
+        {
+
+            e.DataRowCount = _userService.GetUsers(new GetUsersRequest()).Users.Count;
+        }
+
+        public void GetData(GridViewCustomBindingGetDataArgs e)
+        {
+            e.Data = _userService.GetUsers(new GetUsersRequest
+            {
+                Skip = e.StartDataRowIndex,
+                Take = e.DataRowCount
+            }).Users;
+        }
+        public ActionResult Create()
+        {
+            var viewModel = new CreateUserViewModel();
             return View(viewModel);
         }
 
-        public ActionResult Create()
+        [HttpPost]
+        public ActionResult Create(CreateUserViewModel viewModel)
         {
-            return View();
+            var request = viewModel.MapTo<CreateUserRequest>();
+            var response = _userService.Create(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View("Create", viewModel);
+        }
+
+        public ActionResult Update(int id)
+        {
+            var response = _userService.GetUser(new GetUserRequest { Id = id });
+            var viewModel = response.MapTo<UpdateUserViewModel>();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Update(UpdateUserViewModel viewModel)
+        {
+            var request = viewModel.MapTo<UpdateUserRequest>();
+            var response = _userService.Update(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View("Update", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var response = _userService.Delete(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
         }
 	}
 }
