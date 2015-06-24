@@ -114,5 +114,14 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return View("Update", viewModel);
         }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var response = _typeService.Delete(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
+        }
     }
 }

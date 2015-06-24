@@ -119,6 +119,7 @@
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
     <Compile Include="Responses\Type\CreateTypeResponse.cs" />
+    <Compile Include="Responses\Type\DeleteTypeResponse.cs" />
     <Compile Include="Responses\Type\GetTypeResponse.cs" />
     <Compile Include="Responses\Type\GetTypesResponse.cs" />
     <Compile Include="Responses\RoleGroup\GetRoleGroupResponse.cs" />
