@@ -12,16 +12,14 @@ namespace DSLNG.PEAR.Data.Entities
         {
             ScoreIndicators = new Collection<ScoreIndicator>();
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
         public string Title { get; set; }
-        public Periode Periode { get; set; }
+        public int Year { get; set; }
         public ICollection<ScoreIndicator> ScoreIndicators { get; set; }
         public ICollection<PmsConfig> PmsConfigs { get; set; }
-        //TODO : what is PMS tar on board?
-
         public bool IsActive { get; set; }
         
     }

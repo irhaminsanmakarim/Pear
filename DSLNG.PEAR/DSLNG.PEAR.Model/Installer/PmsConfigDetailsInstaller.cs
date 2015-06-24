@@ -31,6 +31,7 @@ namespace DSLNG.PEAR.Data.Installer
             pmsConfigDetails1.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 20, MinValue = 0 });
             pmsConfigDetails1.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 60, MinValue = 21 });
             pmsConfigDetails1.Weight = 100;
+            pmsConfigDetails1.PmsConfig = _dataContext.PmsConfigs.Local.First(x => x.Id == 1);
 
             var pmsConfigDetails2 = new PmsConfigDetails();
             pmsConfigDetails2.Id = 1;
@@ -43,6 +44,7 @@ namespace DSLNG.PEAR.Data.Installer
             pmsConfigDetails2.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 20, MinValue = 0 });
             pmsConfigDetails2.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 60, MinValue = 21 });
             pmsConfigDetails2.Weight = 100;
+            pmsConfigDetails2.PmsConfig = _dataContext.PmsConfigs.Local.First(x => x.Id == 1);
 
 
             _dataContext.PmsConfigDetails.AddOrUpdate(pmsConfigDetails1);

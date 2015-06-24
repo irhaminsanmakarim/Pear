@@ -33,6 +33,8 @@ namespace DSLNG.PEAR.Data.Installer
                 });
             pmsConfig.ScoringType = ScoringType.Positive;
             pmsConfig.Weight = 80;
+            pmsConfig.PmsSummary = _dataContext.PmsSummaries.Local.First(x => x.Id == 1);
+            
             _dataContext.PmsConfigs.AddOrUpdate(pmsConfig);
         }
     }

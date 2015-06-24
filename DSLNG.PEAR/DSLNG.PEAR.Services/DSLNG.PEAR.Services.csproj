@@ -65,14 +65,17 @@
     <Compile Include="Interfaces\IMeasurementService.cs" />
     <Compile Include="Interfaces\IMenuService.cs" />
     <Compile Include="Interfaces\IMethodService.cs" />
+    <Compile Include="Interfaces\IPmsSummaryService.cs" />
     <Compile Include="Interfaces\IRoleGroupService.cs" />
     <Compile Include="Interfaces\ITypeService.cs" />
     <Compile Include="KpiService.cs" />
     <Compile Include="MeasurementService.cs" />
     <Compile Include="MenuService.cs" />
     <Compile Include="MethodService.cs" />
+    <Compile Include="PmsSummaryService.cs" />
     <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
+    <Compile Include="Requests\PmsSummary\GetPmsSummaryRequest.cs" />
     <Compile Include="Requests\Type\CreateTypeRequest.cs" />
     <Compile Include="Requests\Type\GetTypeRequest.cs" />
     <Compile Include="Requests\Group\GetGroupRequest.cs" />
@@ -118,6 +121,7 @@
     <Compile Include="Responses\Measurement\UpdateMeasurementResponse.cs" />
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
+    <Compile Include="Responses\PmsSummary\GetPmsSummaryResponse.cs" />
     <Compile Include="Responses\Type\CreateTypeResponse.cs" />
     <Compile Include="Responses\Type\GetTypeResponse.cs" />
     <Compile Include="Responses\Type\GetTypesResponse.cs" />

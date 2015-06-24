@@ -25,7 +25,7 @@ namespace DSLNG.PEAR.Data.Installer
 
             pmsSummary.Id = 1;
             pmsSummary.IsActive = true;
-            //pmsSummary.Periode = new Periode { Id = 1 };
+            pmsSummary.Year = 2015;
             pmsSummary.ScoreIndicators.Add(new ScoreIndicator()
             {
                 IsActive = true,
@@ -33,7 +33,8 @@ namespace DSLNG.PEAR.Data.Installer
                 MaxValue = 100,
                 MinValue = 20
             });
-            pmsSummary.Title = "pms summary";
+            pmsSummary.Title = "1st Operation Year";
+            
             _dataContext.PmsSummaries.AddOrUpdate(pmsSummary);
         }
     }

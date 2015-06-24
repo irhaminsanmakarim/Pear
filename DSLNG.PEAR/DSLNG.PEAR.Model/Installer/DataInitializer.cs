@@ -40,14 +40,16 @@ namespace DSLNG.PEAR.Data.Installer
             var kpiAchievementsInstaller = new KpiAchievementsInstaller(context);
             kpiAchievementsInstaller.Install();
 
+            var pmsSummariesInstaller = new PmsSummariesInstaller(context);
+            pmsSummariesInstaller.Install();
+
             var pmsConfigsInstaller = new PmsConfigsInstaller(context);
             pmsConfigsInstaller.Install();
 
             var pmsConfigDetailsInstaller = new PmsConfigDetailsInstaller(context);
             pmsConfigDetailsInstaller.Install();
 
-            var pmsSummariesInstaller = new PmsSummariesInstaller(context);
-            pmsSummariesInstaller.Install();
+            
 
             //var menu1 = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };
             //var menu2 = new Menu { Id = 2, IsRoot = true, Module = "PMS", Order = 1, Name = "PMS", IsActive = true, Menus = null, RoleGroups = null };

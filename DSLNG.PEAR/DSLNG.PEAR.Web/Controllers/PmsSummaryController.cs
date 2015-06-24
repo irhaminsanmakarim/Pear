@@ -4,19 +4,35 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Requests.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class PmsSummaryController : Controller
     {
+        private IPmsSummaryService _pmsSummaryService;
+
+        public PmsSummaryController(IPmsSummaryService pmsSummaryService)
+        {
+            _pmsSummaryService = pmsSummaryService;
+        }
+
         public ActionResult Index()
         {
             var viewModel = new PmsSummaryIndexViewModel();
+            var x =
+                _pmsSummaryService.GetPmsSummary(new GetPmsSummaryRequest
+                    {
+                        Month = DateTime.Now.Month,
+                        Year = DateTime.Now.Year
+                    });
 
-            viewModel.PmsSummaries = AddFakePmsSummaryData();
+            viewModel.PmsSummaries = x.KpiDatas.MapTo<PmsSummaryViewModel>();
             return View(viewModel);
         }
 
@@ -32,7 +48,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var pmsSummary1 = new PmsSummaryViewModel
             {
                 Id = 1,
-                Unit = 39,
+                Unit = "Case",
                 Weight = 20,
                 ActualMonthly = 10,
                 ActualYearly = 20,
@@ -51,7 +67,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var pmsSummary2 = new PmsSummaryViewModel
             {
                 Id = 2,
-                Unit = 390,
+                Unit = "Case",
                 Weight = 100,
                 ActualMonthly = 210,
                 ActualYearly = 320,
@@ -70,7 +86,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var pmsSummary3 = new PmsSummaryViewModel
             {
                 Id = 3,
-                Unit = 390,
+                Unit = "Case",
                 Weight = 100,
                 ActualMonthly = 210,
                 ActualYearly = 320,

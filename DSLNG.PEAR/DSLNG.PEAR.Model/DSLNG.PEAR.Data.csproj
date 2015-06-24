@@ -78,7 +78,7 @@
     <Compile Include="Entities\Method.cs" />
     <Compile Include="Entities\Periode.cs" />
     <Compile Include="Enums\PeriodeType.cs" />
-    <Compile Include="Entities\Pilar.cs" />
+    <Compile Include="Entities\Pillar.cs" />
     <Compile Include="Entities\PmsConfig.cs" />
     <Compile Include="Entities\PmsConfigDetails.cs" />
     <Compile Include="Entities\PmsSummary.cs" />

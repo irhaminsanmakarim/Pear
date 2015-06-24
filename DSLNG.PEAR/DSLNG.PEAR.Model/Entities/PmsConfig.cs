@@ -22,5 +22,6 @@ namespace DSLNG.PEAR.Data.Entities
         public ICollection<ScoreIndicator> ScoreIndicators { get; set; }
         public bool IsActive { get; set; }
         public ICollection<PmsConfigDetails> PmsConfigDetailsList { get; set; }
+        public PmsSummary PmsSummary { get; set; }
     }
 }
