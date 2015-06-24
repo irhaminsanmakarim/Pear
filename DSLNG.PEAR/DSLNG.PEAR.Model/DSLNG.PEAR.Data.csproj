@@ -89,7 +89,10 @@
     <Compile Include="Enums\YtdFormula.cs" />
     <Compile Include="Enums\KpiMethod.cs" />
     <Compile Include="Installer\DataInitializer.cs" />
+    <Compile Include="Installer\KpisInstaller.cs" />
+    <Compile Include="Installer\KpiTargetsInstaller.cs" />
     <Compile Include="Installer\LevelsInstaller.cs" />
+    <Compile Include="Installer\MeasurementsInstaller.cs" />
     <Compile Include="Installer\RoleGroupsInstaller.cs" />
     <Compile Include="Installer\UsersInstaller.cs" />
     <Compile Include="Migrations\Configuration.cs" />

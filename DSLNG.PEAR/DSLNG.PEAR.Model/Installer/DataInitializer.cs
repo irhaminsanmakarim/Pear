@@ -22,6 +22,15 @@ namespace DSLNG.PEAR.Data.Installer
             var usersInstaller = new UsersInstaller(context);
             usersInstaller.Install();
 
+            var measurementsIntaller = new MeasurementsInstaller(context);
+            measurementsIntaller.Install();
+
+            var kpisInstaller = new KpisInstaller(context);
+            kpisInstaller.Install();
+
+            var kpiTargetsInstaller = new KpiTargetsInstaller(context);
+            kpiTargetsInstaller.Install();
+
             //var menu1 = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };
             //var menu2 = new Menu { Id = 2, IsRoot = true, Module = "PMS", Order = 1, Name = "PMS", IsActive = true, Menus = null, RoleGroups = null };
             //var menu3 = new Menu { Id = 3, IsRoot = true, Module = "Level", Order = 0, Name = "Level", IsActive = true, Menus = null, RoleGroups = null };
