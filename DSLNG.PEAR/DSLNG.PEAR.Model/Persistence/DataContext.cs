@@ -30,7 +30,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<Periode> Periodes { get; set; }
         public IDbSet<Pilar> Pilars { get; set; }
         public IDbSet<PmsConfig> PmsConfigs { get; set; }
-        public IDbSet<PmsConfigDetail> PmsConfigDetails { get; set; }
+        public IDbSet<PmsConfigDetails> PmsConfigDetails { get; set; }
         public IDbSet<PmsSummary> PmsSummaries { get; set; }
         public IDbSet<RoleGroup> RoleGroups { get; set; }
         public IDbSet<ScoreIndicator> ScoreIndicators { get; set; }

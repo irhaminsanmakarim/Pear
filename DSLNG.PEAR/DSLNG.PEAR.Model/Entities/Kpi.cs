@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DSLNG.PEAR.Data.Enums;
@@ -8,6 +9,12 @@ namespace DSLNG.PEAR.Data.Entities
 {
     public class Kpi
     {
+        public Kpi()
+        {
+            KpiTargets = new Collection<KpiTarget>();
+            KpiAchievements = new Collection<KpiAchievement>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -32,10 +39,13 @@ namespace DSLNG.PEAR.Data.Entities
         public string Remark { get; set; }
         public ICollection<KpiRelationModel> RelationModels { get; set; }
         public DateTime? Value { get; set; }
+        public ICollection<KpiTarget> KpiTargets { get; set; }
+        public ICollection<KpiAchievement> KpiAchievements { get; set; }
 
         public bool IsActive { get; set; }
         public User CreatedBy { get; set; }
         public User UpdatedBy { get; set; }
+        
         public DateTime CreatedDate
         {
             get

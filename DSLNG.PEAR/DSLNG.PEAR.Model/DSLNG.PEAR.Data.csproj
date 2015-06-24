@@ -78,7 +78,7 @@
     <Compile Include="Enums\PeriodeType.cs" />
     <Compile Include="Entities\Pilar.cs" />
     <Compile Include="Entities\PmsConfig.cs" />
-    <Compile Include="Entities\PmsConfigDetail.cs" />
+    <Compile Include="Entities\PmsConfigDetails.cs" />
     <Compile Include="Entities\PmsSummary.cs" />
     <Compile Include="Entities\RoleGroup.cs" />
     <Compile Include="Entities\ScoreIndicator.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,8 +13,8 @@ namespace DSLNG.PEAR.Data.Entities
 
         public string Title { get; set; }
         public Periode Periode { get; set; }
-        public ScoreIndicator ScoreIndicator { get; set; }
-        public PmsConfig PmsConfig { get; set; }
+        public ICollection<ScoreIndicator> ScoreIndicators { get; set; }
+        public ICollection<PmsConfig> PmsConfigs { get; set; }
         //TODO : what is PMS tar on board?
 
         public bool IsActive { get; set; }
