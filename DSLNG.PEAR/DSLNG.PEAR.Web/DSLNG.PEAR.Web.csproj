@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -446,6 +447,7 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Update.cshtml" />
     <Content Include="Views\Type\Create.cshtml" />
+    <Content Include="Views\Type\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -538,6 +540,7 @@
     <Compile Include="ViewModels\Type\CreateTypeViewModel.cs" />
     <Compile Include="ViewModels\Type\IndexTypeViewModel.cs" />
     <Compile Include="ViewModels\Type\TypeViewModel.cs" />
+    <Compile Include="ViewModels\Type\UpdateTypeViewModel.cs" />
     <Compile Include="ViewModels\User\CreateUserViewModel.cs" />
     <Compile Include="ViewModels\User\UpdateUserViewModel.cs" />
     <Compile Include="ViewModels\User\UserIndexViewModel.cs" />

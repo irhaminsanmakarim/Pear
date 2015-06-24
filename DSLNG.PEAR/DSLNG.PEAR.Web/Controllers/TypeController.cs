@@ -92,5 +92,27 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return View("Create", viewModel);
         }
+
+        public ActionResult Update(int id)
+        {
+            var response = _typeService.GetType(new GetTypeRequest { Id = id });
+            var viewModel = response.MapTo<UpdateTypeViewModel>();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Update(UpdateTypeViewModel viewModel)
+        {
+            var request = viewModel.MapTo<UpdateTypeRequest>();
+            var response = _typeService.Update(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View("Update", viewModel);
+        }
     }
 }

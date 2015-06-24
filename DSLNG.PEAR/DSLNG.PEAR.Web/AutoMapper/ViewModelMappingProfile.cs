@@ -48,8 +48,11 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
 
 
+            Mapper.CreateMap<GetTypeResponse, UpdateTypeViewModel>();
             Mapper.CreateMap<GetTypesResponse.Type, TypeViewModel>();
             Mapper.CreateMap<CreateTypeViewModel, CreateTypeRequest>();
+            Mapper.CreateMap<UpdateTypeViewModel, UpdateTypeRequest>();
+            
             
             base.Configure();
         }

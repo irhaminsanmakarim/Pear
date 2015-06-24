@@ -66,9 +66,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<RoleGroup, GetRoleGroupsResponse.RoleGroup>();
 
-            Mapper.CreateMap<Type, GetTypesResponse.Type>();
             Mapper.CreateMap<Type, GetTypeResponse>();
+            Mapper.CreateMap<Type, GetTypesResponse>();
+            Mapper.CreateMap<Type, GetTypesResponse.Type>();
             Mapper.CreateMap<CreateTypeRequest, Type>();
+            Mapper.CreateMap<UpdateTypeRequest, Type>();
+            Mapper.CreateMap<Type, UpdateTypeResponse>();
 
             base.Configure();
         }

@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -88,6 +89,7 @@
     <Compile Include="Requests\Menu\GetMenuRequest.cs" />
     <Compile Include="Requests\Method\GetMethodRequest.cs" />
     <Compile Include="Requests\RoleGroup\GetRoleGroupRequest.cs" />
+    <Compile Include="Requests\Type\UpdateTypeRequest.cs" />
     <Compile Include="Requests\User\CreateUserRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
     <Compile Include="Requests\User\UpdateUserRequest.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Responses\Type\GetTypesResponse.cs" />
     <Compile Include="Responses\RoleGroup\GetRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\GetRoleGroupsResponse.cs" />
+    <Compile Include="Responses\Type\UpdateTypeResponse.cs" />
     <Compile Include="Responses\User\CreateUserResponse.cs" />
     <Compile Include="Responses\User\DeleteUserResponse.cs" />
     <Compile Include="Responses\User\GetUsersResponse.cs" />
