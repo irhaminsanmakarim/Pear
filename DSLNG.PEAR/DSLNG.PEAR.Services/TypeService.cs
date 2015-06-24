@@ -77,5 +77,25 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
+
+        public DeleteTypeResponse Delete(int id)
+        {
+            var response = new DeleteTypeResponse();
+            try
+            {
+                var type = new Data.Entities.Type { Id = id };
+                DataContext.Types.Attach(type);
+                DataContext.Entry(type).State = EntityState.Deleted;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "KPI type item has been deleted successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
     }
 }

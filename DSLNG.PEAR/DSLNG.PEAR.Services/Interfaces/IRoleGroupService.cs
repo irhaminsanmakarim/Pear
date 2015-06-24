@@ -7,5 +7,8 @@ namespace DSLNG.PEAR.Services.Interfaces
     {
         GetRoleGroupsResponse GetRoleGroups(GetRoleGroupsRequest request);
         GetRoleGroupResponse GetRoleGroup(GetRoleGroupRequest request);
+        CreateRoleGroupResponse Create(CreateRoleGroupRequest request);
+        UpdateRoleGroupResponse Update(UpdateRoleGroupRequest request);
+        DeleteRoleGroupResponse Delete(int id);
     }
 }
