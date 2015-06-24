@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Web.ViewModels.User
+namespace DSLNG.PEAR.Services.Requests.User
 {
-    public class UserViewModel
+    public class UpdateUserRequest
     {
         public int Id { get; set; }
         public string Username { get; set; }

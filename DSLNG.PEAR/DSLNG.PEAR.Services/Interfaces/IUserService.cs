@@ -7,5 +7,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     {
         GetUserResponse GetUser(GetUserRequest request);
         GetUsersResponse GetUsers(GetUsersRequest request);
+        CreateUserResponse Create(CreateUserRequest request);
+        UpdateUserResponse Update(UpdateUserRequest request);
     }
 }
