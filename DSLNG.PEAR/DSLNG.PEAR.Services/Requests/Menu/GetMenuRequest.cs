@@ -8,5 +8,12 @@ namespace DSLNG.PEAR.Services.Requests.Menu
 {
     public class GetMenuRequest
     {
+        public int Id { get; set; }
+    }
+
+    public class GetMenusRequest
+    {
+        public int Skip { get; set; }
+        public int Take { get; set; }
     }
 }

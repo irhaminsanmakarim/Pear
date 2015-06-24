@@ -16,6 +16,7 @@ using DSLNG.PEAR.Web.ViewModels.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.User;
 using DSLNG.PEAR.Web.ViewModels.RoleGroup;
 using DSLNG.PEAR.Services.Responses.RoleGroup;
+using DSLNG.PEAR.Services.Requests.RoleGroup;
 using DSLNG.PEAR.Web.ViewModels.Type;
 using DSLNG.PEAR.Services.Responses.Type;
 using DSLNG.PEAR.Services.Requests.Type;
@@ -32,7 +33,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetLevelsResponse.Level, LevelViewModel>();
 
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
-            Mapper.CreateMap<GetMenuResponse, MenusViewModel>();
+
+            Mapper.CreateMap<GetMenusResponse.Menu, MenusViewModel>();
             
             Mapper.CreateMap<CreateMeasurementViewModel, CreateMeasurementRequest>();
             Mapper.CreateMap<GetMeasurementResponse, UpdateMeasurementViewModel>();
@@ -48,6 +50,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<UpdateUserViewModel, UpdateUserRequest>();
 
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
+            Mapper.CreateMap<CreateRoleGroupViewModel, CreateRoleGroupRequest>();
+            Mapper.CreateMap<GetRoleGroupResponse,UpdateRoleGroupViewModel>();
+            Mapper.CreateMap<UpdateRoleGroupViewModel, UpdateRoleGroupRequest>();
 
 
             Mapper.CreateMap<GetTypeResponse, UpdateTypeViewModel>();

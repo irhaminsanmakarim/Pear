@@ -19,15 +19,32 @@ namespace DSLNG.PEAR.Services
 
         }
 
-        public GetMenuResponse GetMenus(GetMenuRequest request)
+        public GetMenusResponse GetMenus(GetMenusRequest request)
         {
             var menus = DataContext.Menus.ToList();
-            return new GetMenuResponse
+            var response = new GetMenusResponse();
+            response.Menus = menus.MapTo<GetMenusResponse.Menu>();
+
+            return response;
+        }
+
+        public GetMenuResponse GetMenu(GetMenuRequest request)
+        {
+            try
             {
-                Menus = menus.MapTo<GetMenuResponse.Menu>()
-            };
-            //var responsemenu.MapTo<GetMenuResponse>(); //Mapper.Map<GetMenuResponse>(menu);
-            //return response;
+                var menu = DataContext.Menus.First(x => x.Id == request.Id);
+                var response = menu.MapTo<GetMenuResponse>(); 
+
+                return response;
+            }
+            catch (System.InvalidOperationException x)
+            {
+                return new GetMenuResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
+            }
         }
     }
 }

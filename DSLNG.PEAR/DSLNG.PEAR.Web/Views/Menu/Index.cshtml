@@ -1,28 +1,23 @@
-﻿@model IEnumerable<DSLNG.PEAR.Web.ViewModels.Menu.MenusViewModel>
-
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Menu List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Menu List</h2>
+@Html.Partial("_MessageResponse")
+@Html.ActionLink("Create New", "Create")
+@Html.Action("IndexPartial")
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function(id) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "Menu")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+    </script>
 }
-
-</table>

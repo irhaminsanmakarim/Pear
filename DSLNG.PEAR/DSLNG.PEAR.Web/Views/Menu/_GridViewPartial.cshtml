@@ -1,10 +1,10 @@
-@Html.DevExpress().GridView(settings =>
+﻿@Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "gridRoleGroupIndex";
-        settings.CallbackRouteValues = new { Controller = "RoleGroup", Action = "IndexPartial" };
+        settings.Name = "gridMenuIndex";
+        settings.CallbackRouteValues = new { Controller = "Menu", Action = "IndexPartial" };
         settings.CustomBindingRouteValuesCollection.Add(
             GridViewOperationType.Paging,
-            new { Controller = "RoleGroup", Action = "PagingAction" }
+            new { Controller = "Menu", Action = "PagingAction" }
         );
         settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
         settings.SettingsBehavior.ConfirmDelete = true;
@@ -25,8 +25,10 @@
             });
         settings.Columns.Add("Id").Visible = false;
         settings.Columns.Add("Name");
-        settings.Columns.Add("Icon");
+        settings.Columns.Add("Order");
+        settings.Columns.Add("IsRoot", MVCxGridViewColumnType.CheckBox);
         settings.Columns.Add("Remark");
+        settings.Columns.Add("Module");
         settings.Columns.Add("IsActive", MVCxGridViewColumnType.CheckBox);
         settings.SettingsPager.PageSizeItemSettings.Visible = true;
         settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };

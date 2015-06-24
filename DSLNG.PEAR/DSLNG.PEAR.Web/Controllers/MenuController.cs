@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Web.ViewModels.Menu;
 using DSLNG.PEAR.Data.Entities;
+using DevExpress.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -22,24 +23,63 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
 
-        public PartialViewResult MainMenu() {
-            return PartialView();
-        }
-
-        //
-        // GET: /Menu/
         public ActionResult Index()
         {
-            var dto = _menuService.GetMenus(new GetMenuRequest());
-            var model = dto.Menus.MapTo<MenusViewModel>();
-            return View(model);
+
+            return View();
         }
 
-        //
-        // GET: /Menu/Details/5
-        public ActionResult Details(int id)
+        public ActionResult IndexPartial()
         {
-            return View();
+            var viewModel = GridViewExtension.GetViewModel("gridMenuIndex");
+            if (viewModel == null)
+                viewModel = CreateGridViewModel();
+            return BindingCore(viewModel);
+        }
+
+        PartialViewResult BindingCore(GridViewModel gridViewModel)
+        {
+            gridViewModel.ProcessCustomBinding(
+                GetDataRowCount,
+                GetData
+            );
+            return PartialView("_GridViewPartial", gridViewModel);
+        }
+
+        static GridViewModel CreateGridViewModel()
+        {
+            var viewModel = new GridViewModel();
+            viewModel.KeyFieldName = "Id";
+            viewModel.Columns.Add("Name");
+            viewModel.Columns.Add("Order");
+            viewModel.Columns.Add("IsRoot");
+            viewModel.Columns.Add("Remark");
+            viewModel.Columns.Add("Module");
+            viewModel.Columns.Add("IsActive");
+            viewModel.Pager.PageSize = 10;
+            return viewModel;
+        }
+
+        public ActionResult PagingAction(GridViewPagerState pager)
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridMenuIndex");
+            viewModel.ApplyPagingState(pager);
+            return BindingCore(viewModel);
+        }
+
+        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
+        {
+
+            e.DataRowCount = _menuService.GetMenus(new GetMenusRequest()).Menus.Count;
+        }
+
+        public void GetData(GridViewCustomBindingGetDataArgs e)
+        {
+            e.Data = _menuService.GetMenus(new GetMenusRequest
+            {
+                Skip = e.StartDataRowIndex,
+                Take = e.DataRowCount
+            }).Menus;
         }
 
         //
