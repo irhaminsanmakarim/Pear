@@ -29,6 +29,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<User, UserResponse>();
             Mapper.CreateMap<User, GetUsersResponse.User>();
             Mapper.CreateMap<CreateUserRequest, User>();
+            Mapper.CreateMap<UpdateUserRequest, User>();
+            Mapper.CreateMap<User, GetUserResponse>();
+            Mapper.CreateMap<User, GetUsersResponse.User>();
+            Mapper.CreateMap<GetUserRequest, User>();
             /*Level*/
             Mapper.CreateMap<Level, GetLevelsResponse.Level>();
             Mapper.CreateMap<Level, GetLevelResponse>();

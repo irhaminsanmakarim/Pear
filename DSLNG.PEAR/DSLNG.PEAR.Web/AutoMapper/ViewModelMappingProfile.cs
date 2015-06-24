@@ -41,6 +41,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<GetUsersResponse.User, UserViewModel>();
             Mapper.CreateMap<CreateUserViewModel, CreateUserRequest>();
+            Mapper.CreateMap<GetUserResponse, UpdateUserViewModel>();
+            Mapper.CreateMap<UpdateUserViewModel, UpdateUserRequest>();
 
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
             Mapper.CreateMap<GetTypesResponse.Type, TypeViewModel>();

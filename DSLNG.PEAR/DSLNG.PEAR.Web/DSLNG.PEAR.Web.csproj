@@ -444,6 +444,7 @@
     <Content Include="Views\Type\Index.cshtml" />
     <Content Include="Views\RoleGroup\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -536,6 +537,7 @@
     <Compile Include="ViewModels\Type\IndexTypeViewModel.cs" />
     <Compile Include="ViewModels\Type\TypeViewModel.cs" />
     <Compile Include="ViewModels\User\CreateUserViewModel.cs" />
+    <Compile Include="ViewModels\User\UpdateUserViewModel.cs" />
     <Compile Include="ViewModels\User\UserIndexViewModel.cs" />
     <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>

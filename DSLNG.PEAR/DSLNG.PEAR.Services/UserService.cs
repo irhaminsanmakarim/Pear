@@ -8,6 +8,7 @@ using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 
 
 namespace DSLNG.PEAR.Services
@@ -56,6 +57,26 @@ namespace DSLNG.PEAR.Services
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "User item has been added successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public UpdateUserResponse Update(UpdateUserRequest request)
+        {
+            var response = new UpdateUserResponse();
+            try
+            {
+                var user = request.MapTo<User>();
+                DataContext.Users.Attach(user);
+                DataContext.Entry(user).State = EntityState.Modified;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "User item has been updated successfully";
             }
             catch (DbUpdateException dbUpdateException)
             {
