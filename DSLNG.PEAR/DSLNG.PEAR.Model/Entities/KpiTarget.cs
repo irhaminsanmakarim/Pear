@@ -9,9 +9,10 @@ namespace DSLNG.PEAR.Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public PmsConfigDetail PmsConfigDetail { get; set; }
+        public Kpi Kpi { get; set; }
+        //public PmsConfigDetails PmsConfigDetail { get; set; }
         public int Value { get; set; }
-        public int Month { get; set; }
+        public DateTime Periode { get; set; }
         public string Remark { get; set; }
 
         public bool IsActive { get; set; }

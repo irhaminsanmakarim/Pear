@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DSLNG.PEAR.Data.Enums;
 
@@ -15,5 +16,6 @@ namespace DSLNG.PEAR.Data.Entities
         public ScoringType ScoringType { get; set; }
         public ScoreIndicator ScoreIndicator { get; set; }
         public bool IsActive { get; set; }
+        public ICollection<PmsConfigDetails> PmsConfigDetailsList { get; set; }
     }
 }
