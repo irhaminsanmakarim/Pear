@@ -1,0 +1,34 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Type.UpdateTypeViewModel
+@{
+    ViewBag.Title = "Edit KPI Type";
+}
+
+<h2>@ViewBag.Title</h2>
+@Html.Partial("_MessageResponse")
+<div class="row">
+    <div class="col-md-4">
+        <form action="@Url.Action("Update")" method="POST">
+            @Html.HiddenFor(model => model.Id)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Remark, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Remark, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Remark)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
+                @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IsActive)
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+            <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+
+        </form>
+    </div>
+</div>
+

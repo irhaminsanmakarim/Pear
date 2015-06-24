@@ -1,17 +1,15 @@
-@model IEnumerable<DSLNG.PEAR.Web.ViewModels.Type.TypeViewModel>
-
-@{
-    var grid = Html.DevExpress().GridView(settings =>
+@Html.DevExpress().GridView(settings =>
     {
         settings.Name = "gridTypeIndex";
-
+        settings.CallbackRouteValues = new { Controller = "Type", Action = "IndexPartial" };
+        settings.CustomBindingRouteValuesCollection.Add(
+            GridViewOperationType.Paging,
+            new { Controller = "Type", Action = "PagingAction" }
+        );
         settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
         settings.SettingsBehavior.ConfirmDelete = true;
         settings.Width = Unit.Percentage(60);
-
-
         settings.KeyFieldName = "Id";
-
 
         settings.Columns.Add(column =>
             {
@@ -28,11 +26,7 @@
         settings.Columns.Add("Id").Visible = false;
         settings.Columns.Add("Name");
         settings.Columns.Add("Remark");
-    });
-    if (ViewData["EditError"] != null)
-    {
-        grid.SetEditErrorText((string)ViewData["EditError"]);
-    }
-}
-@grid.Bind(Model).GetHtml()
-
+        settings.Columns.Add("IsActive", MVCxGridViewColumnType.CheckBox);
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    }).BindToCustomData(Model).GetHtml()

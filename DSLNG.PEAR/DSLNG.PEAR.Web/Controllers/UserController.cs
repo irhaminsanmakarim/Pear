@@ -70,6 +70,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Take = e.DataRowCount
             }).Users;
         }
+
         public ActionResult Create()
         {
             var viewModel = new CreateUserViewModel();

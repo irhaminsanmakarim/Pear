@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -72,6 +73,7 @@
     <Compile Include="MethodService.cs" />
     <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
+    <Compile Include="Requests\Type\CreateTypeRequest.cs" />
     <Compile Include="Requests\Type\GetTypeRequest.cs" />
     <Compile Include="Requests\Group\GetGroupRequest.cs" />
     <Compile Include="Requests\Kpi\GetKpiRequest.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="Requests\Menu\GetMenuRequest.cs" />
     <Compile Include="Requests\Method\GetMethodRequest.cs" />
     <Compile Include="Requests\RoleGroup\GetRoleGroupRequest.cs" />
+    <Compile Include="Requests\Type\UpdateTypeRequest.cs" />
     <Compile Include="Requests\User\CreateUserRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
     <Compile Include="Requests\User\UpdateUserRequest.cs" />
@@ -115,10 +118,12 @@
     <Compile Include="Responses\Measurement\UpdateMeasurementResponse.cs" />
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
+    <Compile Include="Responses\Type\CreateTypeResponse.cs" />
     <Compile Include="Responses\Type\GetTypeResponse.cs" />
     <Compile Include="Responses\Type\GetTypesResponse.cs" />
     <Compile Include="Responses\RoleGroup\GetRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\GetRoleGroupsResponse.cs" />
+    <Compile Include="Responses\Type\UpdateTypeResponse.cs" />
     <Compile Include="Responses\User\CreateUserResponse.cs" />
     <Compile Include="Responses\User\DeleteUserResponse.cs" />
     <Compile Include="Responses\User\GetUsersResponse.cs" />
