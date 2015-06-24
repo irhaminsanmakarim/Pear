@@ -73,6 +73,8 @@
     <Compile Include="MethodService.cs" />
     <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
+    <Compile Include="Requests\RoleGroup\CreateRoleGroupRequest.cs" />
+    <Compile Include="Requests\RoleGroup\UpdateRoleGroupRequest.cs" />
     <Compile Include="Requests\Type\CreateTypeRequest.cs" />
     <Compile Include="Requests\Type\GetTypeRequest.cs" />
     <Compile Include="Requests\Group\GetGroupRequest.cs" />
@@ -118,6 +120,9 @@
     <Compile Include="Responses\Measurement\UpdateMeasurementResponse.cs" />
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
+    <Compile Include="Responses\RoleGroup\CreateRoleGroupResponse.cs" />
+    <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
+    <Compile Include="Responses\RoleGroup\UpdateRoleGroupResponse.cs" />
     <Compile Include="Responses\Type\CreateTypeResponse.cs" />
     <Compile Include="Responses\Type\DeleteTypeResponse.cs" />
     <Compile Include="Responses\Type\GetTypeResponse.cs" />

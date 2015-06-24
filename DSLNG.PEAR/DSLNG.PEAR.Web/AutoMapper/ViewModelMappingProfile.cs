@@ -14,6 +14,7 @@ using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Web.ViewModels.User;
 using DSLNG.PEAR.Web.ViewModels.RoleGroup;
 using DSLNG.PEAR.Services.Responses.RoleGroup;
+using DSLNG.PEAR.Services.Requests.RoleGroup;
 using DSLNG.PEAR.Web.ViewModels.Type;
 using DSLNG.PEAR.Services.Responses.Type;
 using DSLNG.PEAR.Services.Requests.Type;
@@ -46,6 +47,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<UpdateUserViewModel, UpdateUserRequest>();
 
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
+            Mapper.CreateMap<CreateRoleGroupViewModel, CreateRoleGroupRequest>();
+            Mapper.CreateMap<GetRoleGroupResponse,UpdateRoleGroupViewModel>();
+            Mapper.CreateMap<UpdateRoleGroupViewModel, UpdateRoleGroupRequest>();
 
 
             Mapper.CreateMap<GetTypeResponse, UpdateTypeViewModel>();
