@@ -3,7 +3,6 @@ using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Menu;
-using DSLNG.PEAR.Services.Responses.RoleGroup;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Common.Extensions;
@@ -52,8 +51,6 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
 
             Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
-
-            
             Mapper.CreateMap<CreateMeasurementRequest, Measurement>();
             Mapper.CreateMap<UpdateMeasurementRequest, Measurement>();
             Mapper.CreateMap<Measurement, UpdateMeasurementResponse>();
@@ -68,7 +65,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Conversion, GetConversionResponse>();
 
             Mapper.CreateMap<RoleGroup, GetRoleGroupsResponse.RoleGroup>();
+
+            Mapper.CreateMap<Type, GetTypeResponse>();
+            Mapper.CreateMap<Type, GetTypesResponse>();
             Mapper.CreateMap<Type, GetTypesResponse.Type>();
+            Mapper.CreateMap<CreateTypeRequest, Type>();
+            Mapper.CreateMap<UpdateTypeRequest, Type>();
+            Mapper.CreateMap<Type, UpdateTypeResponse>();
 
             base.Configure();
         }

@@ -7,5 +7,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     {
         GetTypeResponse GetType(GetTypeRequest request);
         GetTypesResponse GetTypes(GetTypesRequest request);
+        CreateTypeResponse Create(CreateTypeRequest request);
+        UpdateTypeResponse Update(UpdateTypeRequest request);
     }
 }
