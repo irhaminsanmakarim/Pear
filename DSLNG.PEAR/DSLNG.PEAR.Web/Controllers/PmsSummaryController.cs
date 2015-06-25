@@ -16,10 +16,14 @@ namespace DSLNG.PEAR.Web.Controllers
     public class PmsSummaryController : Controller
     {
         private IPmsSummaryService _pmsSummaryService;
+        private IPmsConfigDetailsService _pmsConfigDetailsService;
 
-        public PmsSummaryController(IPmsSummaryService pmsSummaryService)
+        public PmsSummaryController(
+            IPmsSummaryService pmsSummaryService, 
+            IPmsConfigDetailsService pmsConfigDetailsService)
         {
             _pmsSummaryService = pmsSummaryService;
+            _pmsConfigDetailsService = pmsConfigDetailsService;
         }
 
         public ActionResult Index()
@@ -109,10 +113,14 @@ namespace DSLNG.PEAR.Web.Controllers
 
         }
 
-        public ActionResult Details()
+        public ActionResult Details(int id, int month)
         {
             //Thread.Sleep(2000);
-            return PartialView("_Details");
+            var viewModel = new PmsConfigDetailsViewModel();
+            var x = _pmsConfigDetailsService.GetPmsConfigDetails(new Services.Requests.PmsConfigDetails.GetPmsConfigDetailsRequest { Id = id, Month = month });
+            viewModel.GroupKpi = x.GroupKpi.MapTo<PmsConfigDetailsViewModel.Kpi>();
+            viewModel.Remarks = x.KpiAchievments.MapTo<PmsConfigDetailsViewModel.KpiAchievment>();
+            return PartialView("_Details", viewModel);
         }
 	}
 }

@@ -20,6 +20,7 @@ using DSLNG.PEAR.Services.Requests.RoleGroup;
 using DSLNG.PEAR.Web.ViewModels.Type;
 using DSLNG.PEAR.Services.Responses.Type;
 using DSLNG.PEAR.Services.Requests.Type;
+using DSLNG.PEAR.Services.Responses.PmsConfigDetails;
 
 
 namespace DSLNG.PEAR.Web.AutoMapper
@@ -61,6 +62,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<UpdateTypeViewModel, UpdateTypeRequest>();
 
             Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
+            Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiData, PmsConfigDetailsViewModel.Kpi>();
+            Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiAchievmentMonthly, PmsConfigDetailsViewModel.KpiAchievment>();
             
             
             base.Configure();

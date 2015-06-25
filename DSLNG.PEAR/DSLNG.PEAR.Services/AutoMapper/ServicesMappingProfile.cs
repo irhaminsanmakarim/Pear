@@ -16,6 +16,7 @@ using DSLNG.PEAR.Services.Responses.RoleGroup;
 using DSLNG.PEAR.Services.Requests.RoleGroup;
 using DSLNG.PEAR.Services.Responses.Type;
 using DSLNG.PEAR.Services.Requests.Type;
+using DSLNG.PEAR.Services.Responses.PmsConfigDetails;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -77,7 +78,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreateTypeRequest, Type>();
             Mapper.CreateMap<UpdateTypeRequest, Type>();
             Mapper.CreateMap<Type, UpdateTypeResponse>();
-
+            Mapper.CreateMap<Kpi, GetPmsConfigDetailsResponse.KpiData>()
+                .ForMember(k => k.Group, o => o.MapFrom(k => k.Group.Name))
+                .ForMember(k => k.Period, o => o.MapFrom(k => k.Periode.Name))
+                .ForMember(k => k.Unit, o => o.MapFrom(k => k.Measurement.Name));
+            Mapper.CreateMap<KpiAchievement, GetPmsConfigDetailsResponse.KpiAchievmentMonthly>();
             base.Configure();
         }
     }

@@ -65,6 +65,7 @@
     <Compile Include="Interfaces\IMeasurementService.cs" />
     <Compile Include="Interfaces\IMenuService.cs" />
     <Compile Include="Interfaces\IMethodService.cs" />
+    <Compile Include="Interfaces\IPmsConfigDetailsService.cs" />
     <Compile Include="Interfaces\IPmsSummaryService.cs" />
     <Compile Include="Interfaces\IRoleGroupService.cs" />
     <Compile Include="Interfaces\ITypeService.cs" />
@@ -72,9 +73,11 @@
     <Compile Include="MeasurementService.cs" />
     <Compile Include="MenuService.cs" />
     <Compile Include="MethodService.cs" />
+    <Compile Include="PmsConfigDetailsService.cs" />
     <Compile Include="PmsSummaryService.cs" />
     <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
+    <Compile Include="Requests\PmsConfigDetails\GetPmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\GetPmsSummaryRequest.cs" />
     <Compile Include="Requests\RoleGroup\CreateRoleGroupRequest.cs" />
     <Compile Include="Requests\RoleGroup\UpdateRoleGroupRequest.cs" />
@@ -124,6 +127,7 @@
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
     <Compile Include="Responses\Menu\GetMenusResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
+    <Compile Include="Responses\PmsConfigDetails\GetPmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsSummaryResponse.cs" />
     <Compile Include="Responses\RoleGroup\CreateRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />

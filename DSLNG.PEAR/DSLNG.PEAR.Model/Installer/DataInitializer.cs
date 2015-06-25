@@ -49,6 +49,7 @@ namespace DSLNG.PEAR.Data.Installer
             var pmsConfigDetailsInstaller = new PmsConfigDetailsInstaller(context);
             pmsConfigDetailsInstaller.Install();
 
+            AddPeriode(context);
             
 
             //var menu1 = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };

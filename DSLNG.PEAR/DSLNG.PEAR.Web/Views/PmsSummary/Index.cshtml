@@ -13,8 +13,9 @@
     }*/
 
     function OnCellClick(visibleIndex, fieldName) {
+        var month = $("#filter-month").val();
         $('#myModal').modal({
-            remote: '@Url.Action("Details", "PmsSummary")'
+            remote: '@Url.Action("Details", "PmsSummary")' + '/' + fieldName + '?month=' + month
         });
     }
 </script>
@@ -39,19 +40,19 @@
                 </div>
                 <div style="margin-top: 5px;" class="form-group">
                     <label>Month :</label>
-                    <select class="form-control">
-                        <option>Jan</option>
-                        <option>Feb</option>
-                        <option>Mar</option>
-                        <option>Apr</option>
-                        <option>May</option>
-                        <option>Jun</option>
-                        <option>Jul</option>
-                        <option>Aug</option>
-                        <option>Sep</option>
-                        <option>Oct</option>
-                        <option>Nov</option>
-                        <option>Dec</option>
+                    <select class="form-control" id="filter-month">
+                        <option value="1">Jan</option>
+                        <option value="2">Feb</option>
+                        <option value="3">Mar</option>
+                        <option value="4">Apr</option>
+                        <option value="5">May</option>
+                        <option value="6">Jun</option>
+                        <option value="7">Jul</option>
+                        <option value="8">Aug</option>
+                        <option value="9">Sep</option>
+                        <option value="10">Oct</option>
+                        <option value="11">Nov</option>
+                        <option value="12">Dec</option>
                     </select>
                 </div>
             </form>

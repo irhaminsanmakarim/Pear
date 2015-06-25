@@ -1,4 +1,5 @@
-﻿<div class="modal-header">
+﻿@model DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsConfigDetailsViewModel
+<div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span
             aria-hidden="true">&times;</span></button>
@@ -64,12 +65,12 @@
                     <tbody>
                         <tr data-toggle="modal" data-target="#ModalFatality">
 
-                            <td>Fatality</td>
-                            <td>Fatality / Strap Disability</td>
-                            <td>Case</td>
-                            <td>Monthly</td>
-                            <td>0</td>
-                            <td></td>
+                            <td>@Model.GroupKpi.Group</td>
+                            <td>@Model.GroupKpi.Name</td>
+                            <td>@Model.GroupKpi.Unit</td>
+                            <td>@Model.GroupKpi.Period</td>
+                            <td>@Model.GroupKpi.ActualYearly</td>
+                            <td>@Model.GroupKpi.ActualMonthly</td>
 
 
                         </tr>
@@ -225,77 +226,26 @@
                     <tbody>
                         <tr>
 
-                            <td>Yearly</td>
+                            @*<td>Yearly</td>
                             <td>2015</td>
-                            <td>-</td>
+                            <td>-</td>*@
 
                         </tr>
-                        <tr>
-
-                            <td>Monthly</td>
-                            <td>January</td>
-                            <td></td>
-
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>February</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>March</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>April</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-
-                            <td></td>
-                            <td>May</td>
-                            <td></td>
-
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>June</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>July</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>August</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-
-                            <td></td>
-                            <td>September</td>
-                            <td></td>
-
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>October</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>November</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>December</td>
-                            <td></td>
-                        </tr>
+                        @for (int i = 0; i < Model.Remarks.Count; i++)
+                        {
+                            <tr>
+                                @if (i == 0)
+                                {
+                                    <td>Monthly</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                <td>@Model.Remarks[i].Period</td>
+                                <td>@Model.Remarks[i].Remark</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
 
