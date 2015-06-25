@@ -28,9 +28,9 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
             public decimal TargetMonthly { get; set; }
             public decimal TargetYtd { get; set; }
 
-            public decimal ActualYearly { get; set; }
-            public decimal ActualMonthly { get; set; }
-            public decimal ActualYtd { get; set; }
+            public decimal? ActualYearly { get; set; }
+            public decimal? ActualMonthly { get; set; }
+            public decimal? ActualYtd { get; set; }
 
             /*public string TargetYearly { get; set; }
             public string TargetMonthly { get; set; }

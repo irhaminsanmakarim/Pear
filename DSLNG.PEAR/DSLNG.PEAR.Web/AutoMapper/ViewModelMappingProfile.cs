@@ -61,6 +61,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<UpdateTypeViewModel, UpdateTypeRequest>();
 
             Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
+                //.ForMember(x => x.Score, y => y.MapFrom(z => z.ActualYearly / z.TargetYearly))
             
             
             base.Configure();

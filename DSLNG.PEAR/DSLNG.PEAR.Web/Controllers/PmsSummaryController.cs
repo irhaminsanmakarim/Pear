@@ -32,7 +32,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         Year = DateTime.Now.Year
                     });
 
-            viewModel.PmsSummaries = x.KpiDatas.MapTo<PmsSummaryViewModel>();
+            //viewModel.PmsSummaries = x.KpiDatas.MapTo<PmsSummaryViewModel>();
+            viewModel.PmsSummaries = AddFakePmsSummaryData();
             return View(viewModel);
         }
 
@@ -59,7 +60,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 Score = 35.17,
                 TargetMonthly = 10,
                 TargetYearly = 29,
-                TargetYtd = 20
+                TargetYtd = 20,
+                KpiScoreInPilar = 123
             };
             pmsSummary1.Osp = "<span class='trafficlight grey'></span>Safety (" +
                               pmsSummary1.OspWeight.ToString() + ")";
@@ -78,7 +80,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 Score = 202.20,
                 TargetMonthly = 101,
                 TargetYearly = 22,
-                TargetYtd = 21
+                TargetYtd = 21,
+                KpiScoreInPilar = 123
             };
             pmsSummary2.Osp = "<span class='trafficlight grey'></span>Safety (" +
                               pmsSummary2.OspWeight.ToString() + ")";
@@ -97,7 +100,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 Score = 202.31,
                 TargetMonthly = 101,
                 TargetYearly = 22,
-                TargetYtd = 21
+                TargetYtd = 21,
+                KpiScoreInPilar = 231
             };
             pmsSummary3.Osp = "<span class='trafficlight grey'></span>Productivity and Efficiency (" +
                               pmsSummary3.OspWeight.ToString() + ")";
