@@ -82,28 +82,26 @@ namespace DSLNG.PEAR.Web.Controllers
             }).Menus;
         }
 
-        //
-        // GET: /Menu/Create
+        
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new CreateMenuViewModel();
+            return View(viewModel);
         }
 
-        //
-        // POST: /Menu/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(CreateMenuViewModel viewModel)
         {
-            try
+            var request = viewModel.MapTo<CreateMenuRequest>();
+            var response = _menuService.Create(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
             {
-                // TODO: Add insert logic here
-
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View("Create", viewModel);
         }
 
         //
