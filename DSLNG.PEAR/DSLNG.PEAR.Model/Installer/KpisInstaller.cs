@@ -33,7 +33,7 @@ namespace DSLNG.PEAR.Data.Installer
                 Id = 3,
                 Name = "RIF",
                 Measurement = _context.Measurements.Local.First(x => x.Id == 1),
-                Pillar = _context.Pilars.Local.First(x => x.Id == 1)
+                Pillar = _context.Pillars.Local.First(x => x.Id == 1)
             };
             _context.Kpis.Add(fatality);
             _context.Kpis.Add(securityIncident);

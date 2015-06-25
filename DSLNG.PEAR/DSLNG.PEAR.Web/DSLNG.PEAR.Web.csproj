@@ -451,6 +451,8 @@
     <Content Include="Views\RoleGroup\Create.cshtml" />
     <Content Include="Views\RoleGroup\Update.cshtml" />
     <Content Include="Views\Menu\_GridViewPartial.cshtml" />
+    <Content Include="Views\Kpi\Index.cshtml" />
+    <Content Include="Views\Kpi\_GridViewPartial.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
@@ -512,6 +514,7 @@
     <Compile Include="Controllers\LevelController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\KpiController.cs" />
     <Compile Include="Controllers\PillarController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
     <Compile Include="Controllers\RoleGroupController.cs" />
@@ -533,6 +536,7 @@
     <Compile Include="ViewModels\Artifact\BarChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiToSeriesViewModel.cs" />
+    <Compile Include="ViewModels\Kpi\KpiViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelsViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelViewModel.cs" />
     <Compile Include="ViewModels\Measurement\CreateMeasurementViewModel.cs" />

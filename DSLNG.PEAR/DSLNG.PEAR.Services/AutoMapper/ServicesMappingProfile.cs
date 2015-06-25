@@ -67,6 +67,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Measurement, GetMeasurementsResponse.Measurement>();
 
             Mapper.CreateMap<Kpi, GetKpiToSeriesResponse.Kpi>();
+            Mapper.CreateMap<Kpi, GetKpisResponse.Kpi>();
+
             Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
             Mapper.CreateMap<Data.Entities.Method, GetMethodResponse>();
 
