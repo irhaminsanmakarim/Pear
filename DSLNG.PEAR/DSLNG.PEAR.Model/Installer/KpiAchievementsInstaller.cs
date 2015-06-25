@@ -1,4 +1,5 @@
 ﻿using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Persistence;
 using System;
 using System.Data.Entity;
@@ -25,6 +26,7 @@ namespace DSLNG.PEAR.Data.Installer
                     UpdatedDate = DateTime.Now,
                     IsActive = true,
                     Periode = new DateTime(2015, i, 1),
+                    PeriodeType = PeriodeType.Monthly,
                     Remark = "Whatever men...",
                     Value = 5 * i,
                     Kpi = _context.Kpis.Local.First(x => x.Id == 1)
@@ -41,6 +43,7 @@ namespace DSLNG.PEAR.Data.Installer
                     UpdatedDate = DateTime.Now,
                     IsActive = true,
                     Periode = new DateTime(2015, i, 1),
+                    PeriodeType = PeriodeType.Monthly,
                     Remark = "Whatever men...",
                     Value = 10 * i,
                     Kpi = _context.Kpis.Local.First(x => x.Id == 2)
