@@ -108,6 +108,7 @@
     <Compile Include="Responses\ConversionResponse.cs" />
     <Compile Include="Responses\Kpi\FormatInput.cs" />
     <Compile Include="Responses\Kpi\GetKpiResponse.cs" />
+    <Compile Include="Responses\Kpi\GetKpisResponse.cs" />
     <Compile Include="Responses\Kpi\GetKpiToSeriesResponse.cs" />
     <!--<Compile Include="Responses\Kpi\Measurement.cs" />-->
     <Compile Include="Responses\Level\CreateLevelResponse.cs" />
