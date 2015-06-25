@@ -53,5 +53,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get { return string.Format(@"{0} / {1}", TargetYtd.ToString("0.00"), ActualYtd.ToString()); }
         }
+
+        public double KpiScoreInPilar { get; set; }
     }
 }

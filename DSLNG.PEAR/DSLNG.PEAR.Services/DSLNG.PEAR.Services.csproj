@@ -78,6 +78,10 @@
     <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Requests\PmsConfigDetails\GetPmsConfigDetailsRequest.cs" />
+    <Compile Include="Requests\Menu\CreateMenuRequest.cs" />
+    <Compile Include="Requests\Menu\UpdateMenuRequest.cs" />
+    <Compile Include="Requests\Pillar\CreatePillarRequest.cs" />
+    <Compile Include="Requests\Pillar\UpdatePillarRequest.cs" />
     <Compile Include="Requests\PmsSummary\GetPmsSummaryRequest.cs" />
     <Compile Include="Requests\RoleGroup\CreateRoleGroupRequest.cs" />
     <Compile Include="Requests\RoleGroup\UpdateRoleGroupRequest.cs" />
@@ -107,6 +111,7 @@
     <Compile Include="Responses\ConversionResponse.cs" />
     <Compile Include="Responses\Kpi\FormatInput.cs" />
     <Compile Include="Responses\Kpi\GetKpiResponse.cs" />
+    <Compile Include="Responses\Kpi\GetKpisResponse.cs" />
     <Compile Include="Responses\Kpi\GetKpiToSeriesResponse.cs" />
     <!--<Compile Include="Responses\Kpi\Measurement.cs" />-->
     <Compile Include="Responses\Level\CreateLevelResponse.cs" />
@@ -124,10 +129,16 @@
     <Compile Include="Responses\Measurement\GetMeasurementResponse.cs" />
     <Compile Include="Responses\Measurement\GetMeasurementsResponse.cs" />
     <Compile Include="Responses\Measurement\UpdateMeasurementResponse.cs" />
+    <Compile Include="Responses\Menu\CreateMenuResponse.cs" />
+    <Compile Include="Responses\Menu\DeleteMenuResponse.cs" />
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
     <Compile Include="Responses\Menu\GetMenusResponse.cs" />
+    <Compile Include="Responses\Menu\UpdateMenuResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
     <Compile Include="Responses\PmsConfigDetails\GetPmsConfigDetailsResponse.cs" />
+    <Compile Include="Responses\Pillar\CreatePillarResponse.cs" />
+    <Compile Include="Responses\Pillar\DeletePillarResponse.cs" />
+    <Compile Include="Responses\Pillar\UpdatePillarResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsSummaryResponse.cs" />
     <Compile Include="Responses\RoleGroup\CreateRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />

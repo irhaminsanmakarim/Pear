@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Data.Entities
 {
@@ -11,8 +12,9 @@ namespace DSLNG.PEAR.Data.Entities
         public int Id { get; set; }
         public Kpi Kpi { get; set; }
         //public PmsConfigDetails PmsConfigDetail { get; set; }
-        public int Value { get; set; }
+        public decimal? Value { get; set; }
         public DateTime Periode { get; set; }
+        public PeriodeType PeriodeType { get; set; }
         public string Remark { get; set; }
 
         public bool IsActive { get; set; }

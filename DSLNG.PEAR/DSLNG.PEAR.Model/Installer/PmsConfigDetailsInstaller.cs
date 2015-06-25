@@ -46,9 +46,22 @@ namespace DSLNG.PEAR.Data.Installer
             pmsConfigDetails2.Weight = 100;
             pmsConfigDetails2.PmsConfig = _dataContext.PmsConfigs.Local.First(x => x.Id == 1);
 
+            var pmsConfigDetails3 = new PmsConfigDetails();
+            pmsConfigDetails3.Id = 1;
+            pmsConfigDetails3.AsGraphic = true;
+            pmsConfigDetails3.CreatedBy = _dataContext.Users.Local.First(x => x.Id == 1);
+            pmsConfigDetails3.UpdatedBy = _dataContext.Users.Local.First(x => x.Id == 1);
+            pmsConfigDetails3.IsActive = true;
+            pmsConfigDetails3.Kpi = _dataContext.Kpis.Local.First(x => x.Id == 3);
+            pmsConfigDetails3.ScoringType = ScoringType.Positive;
+            pmsConfigDetails3.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 20, MinValue = 0 });
+            pmsConfigDetails3.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 60, MinValue = 21 });
+            pmsConfigDetails3.Weight = 100;
+            pmsConfigDetails3.PmsConfig = _dataContext.PmsConfigs.Local.First(x => x.Id == 1);
+
 
             _dataContext.PmsConfigDetails.AddOrUpdate(pmsConfigDetails1);
-            _dataContext.PmsConfigDetails.AddOrUpdate(pmsConfigDetails2);
+            _dataContext.PmsConfigDetails.AddOrUpdate(pmsConfigDetails3);
         }
     }
 }

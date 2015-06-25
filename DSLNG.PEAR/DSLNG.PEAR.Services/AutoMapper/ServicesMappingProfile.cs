@@ -3,6 +3,7 @@ using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Menu;
+using DSLNG.PEAR.Services.Requests.Menu;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Common.Extensions;
@@ -17,6 +18,8 @@ using DSLNG.PEAR.Services.Requests.RoleGroup;
 using DSLNG.PEAR.Services.Responses.Type;
 using DSLNG.PEAR.Services.Requests.Type;
 using DSLNG.PEAR.Services.Responses.PmsConfigDetails;
+using DSLNG.PEAR.Services.Responses.Pillar;
+using DSLNG.PEAR.Services.Requests.Pillar;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -44,6 +47,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Menu, GetMenuResponse.Menu>()
                 //.ForMember(m => m.RoleGroups, o => o.MapFrom(m => m.RoleGroups.MapTo<GetMenuResponse.RoleGroup>()))
                 .ForMember(m => m.Menus, o => o.MapFrom(m => m.Menus.MapTo<GetMenuResponse.Menu>()));
+            Mapper.CreateMap<CreateMenuRequest, Menu>();
+            Mapper.CreateMap<Menu, GetMenusResponse.Menu>();
+            Mapper.CreateMap<Menu, GetMenuResponse>();
+            Mapper.CreateMap<UpdateMenuRequest, Menu>();
+
             Mapper.CreateMap<Level, GetMenuResponse.Level>();
             Mapper.CreateMap<RoleGroup, GetMenuResponse.RoleGroup>()
                 .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<GetMenuResponse.Level>()));
@@ -60,6 +68,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Measurement, GetMeasurementsResponse.Measurement>();
 
             Mapper.CreateMap<Kpi, GetKpiToSeriesResponse.Kpi>();
+            Mapper.CreateMap<Kpi, GetKpisResponse.Kpi>();
+
             Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
             Mapper.CreateMap<Data.Entities.Method, GetMethodResponse>();
 
@@ -83,6 +93,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(k => k.Period, o => o.MapFrom(k => k.Periode.Name))
                 .ForMember(k => k.Unit, o => o.MapFrom(k => k.Measurement.Name));
             Mapper.CreateMap<KpiAchievement, GetPmsConfigDetailsResponse.KpiAchievmentMonthly>();
+
+            Mapper.CreateMap<Pillar, GetPillarsResponse>();
+            Mapper.CreateMap<Pillar, GetPillarResponse>();
+            Mapper.CreateMap<Pillar, GetPillarsResponse.Pillar>();
+            Mapper.CreateMap<CreatePillarRequest, Pillar>();
+            Mapper.CreateMap<UpdatePillarRequest, Pillar>();
+
             base.Configure();
         }
     }

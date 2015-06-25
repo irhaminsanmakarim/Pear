@@ -451,6 +451,14 @@
     <Content Include="Views\RoleGroup\Create.cshtml" />
     <Content Include="Views\RoleGroup\Update.cshtml" />
     <Content Include="Views\Menu\_GridViewPartial.cshtml" />
+    <Content Include="Views\Kpi\Index.cshtml" />
+    <Content Include="Views\Kpi\_GridViewPartial.cshtml" />
+    <None Include="Views\Menu\Create.cshtml" />
+    <Content Include="Views\Menu\Update.cshtml" />
+    <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
+    <Content Include="Views\Pillar\Index.cshtml" />
+    <Content Include="Views\Pillar\Create.cshtml" />
+    <Content Include="Views\Pillar\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -506,6 +514,8 @@
     <Compile Include="Controllers\LevelController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\KpiController.cs" />
+    <Compile Include="Controllers\PillarController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
     <Compile Include="Controllers\RoleGroupController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
@@ -526,17 +536,22 @@
     <Compile Include="ViewModels\Artifact\BarChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiToSeriesViewModel.cs" />
+    <Compile Include="ViewModels\Kpi\KpiViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelsViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelViewModel.cs" />
     <Compile Include="ViewModels\Measurement\CreateMeasurementViewModel.cs" />
     <Compile Include="ViewModels\Measurement\IndexMeasurementViewModel.cs" />
     <Compile Include="ViewModels\Measurement\MeasurementViewModel.cs" />
     <Compile Include="ViewModels\Measurement\UpdateMeasurementViewModel.cs" />
+    <Compile Include="ViewModels\Menu\CreateMenuViewModel.cs" />
     <Compile Include="ViewModels\Menu\IndexMenuViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenusViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenuViewModel.cs" />
+    <Compile Include="ViewModels\Menu\UpdateMenuViewModel.cs" />
+    <Compile Include="ViewModels\Pillar\CreatePillarViewModel.cs" />
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsConfigDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Pillar\UpdatePillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\CreateRoleGroupViewModel.cs" />
@@ -593,7 +608,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:65293/</IISUrl>
+          <IISUrl>http://localhost:10359/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

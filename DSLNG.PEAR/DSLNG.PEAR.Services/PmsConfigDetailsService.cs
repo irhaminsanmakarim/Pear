@@ -33,8 +33,8 @@ namespace DSLNG.PEAR.Services
                 .Include("Kpi.RelationModels")
                 .FirstOrDefault(x => x.Id == request.Id);
             response.GroupKpi = config.Kpi.MapTo<GetPmsConfigDetailsResponse.KpiData>();
-            response.GroupKpi.ActualYearly = config.Kpi.KpiAchievements.Sum(x => x.Value);
-            response.GroupKpi.ActualMonthly = config.Kpi.KpiAchievements.Where(x => x.Periode.Month == request.Month).Sum(x => x.Value);
+            response.GroupKpi.ActualYearly = config.Kpi.KpiAchievements.Sum(x => x.Value.Value);
+            response.GroupKpi.ActualMonthly = config.Kpi.KpiAchievements.Where(x => x.Periode.Month == request.Month).Sum(x => x.Value.Value);
             var kpiAchievments = config.Kpi.KpiAchievements.OrderBy(x => x.Periode);
             response.KpiAchievments = new List<GetPmsConfigDetailsResponse.KpiAchievmentMonthly>();
 

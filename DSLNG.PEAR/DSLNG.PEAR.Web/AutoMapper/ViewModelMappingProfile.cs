@@ -6,6 +6,7 @@ using DSLNG.PEAR.Services.Responses.Kpi;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.Kpi;
 using DSLNG.PEAR.Services.Responses.Menu;
+using DSLNG.PEAR.Services.Requests.Menu;
 using DSLNG.PEAR.Web.ViewModels.Level;
 using DSLNG.PEAR.Web.ViewModels.Measurement;
 using DSLNG.PEAR.Web.ViewModels.Menu;
@@ -21,6 +22,9 @@ using DSLNG.PEAR.Web.ViewModels.Type;
 using DSLNG.PEAR.Services.Responses.Type;
 using DSLNG.PEAR.Services.Requests.Type;
 using DSLNG.PEAR.Services.Responses.PmsConfigDetails;
+using DSLNG.PEAR.Services.Responses.Pillar;
+using DSLNG.PEAR.Services.Requests.Pillar;
+using DSLNG.PEAR.Web.ViewModels.Pillar;
 
 
 namespace DSLNG.PEAR.Web.AutoMapper
@@ -36,6 +40,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
 
             Mapper.CreateMap<GetMenusResponse.Menu, MenusViewModel>();
+            Mapper.CreateMap<CreateMenuViewModel, CreateMenuRequest>();
+            Mapper.CreateMap<GetMenuResponse, UpdateMenuViewModel>();
+            Mapper.CreateMap<UpdateMenuViewModel, UpdateMenuRequest>();
             
             Mapper.CreateMap<CreateMeasurementViewModel, CreateMeasurementRequest>();
             Mapper.CreateMap<GetMeasurementResponse, UpdateMeasurementViewModel>();
@@ -61,9 +68,14 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CreateTypeViewModel, CreateTypeRequest>();
             Mapper.CreateMap<UpdateTypeViewModel, UpdateTypeRequest>();
 
+            Mapper.CreateMap<CreatePillarViewModel, CreatePillarRequest>();
+            Mapper.CreateMap<GetPillarResponse, UpdatePillarViewModel>();
+            Mapper.CreateMap<UpdatePillarViewModel, UpdatePillarRequest>();
+
             Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
             Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiData, PmsConfigDetailsViewModel.Kpi>();
             Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiAchievmentMonthly, PmsConfigDetailsViewModel.KpiAchievment>();
+                //.ForMember(x => x.Score, y => y.MapFrom(z => z.ActualYearly / z.TargetYearly))
             
             
             base.Configure();
