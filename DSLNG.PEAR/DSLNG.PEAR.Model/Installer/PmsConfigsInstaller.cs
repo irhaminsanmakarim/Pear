@@ -23,7 +23,7 @@ namespace DSLNG.PEAR.Data.Installer
             var pmsConfig = new PmsConfig();
             pmsConfig.Id = 1;
             pmsConfig.IsActive = true;
-            pmsConfig.Pillar = _dataContext.Pilars.Local.First(x => x.Id == 1);
+            pmsConfig.Pillar = _dataContext.Pillars.Local.First(x => x.Id == 1);
             pmsConfig.ScoreIndicators.Add(new ScoreIndicator
                 {
                     IsActive = true,

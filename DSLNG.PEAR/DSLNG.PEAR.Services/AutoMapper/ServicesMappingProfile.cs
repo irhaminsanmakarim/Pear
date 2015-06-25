@@ -17,6 +17,8 @@ using DSLNG.PEAR.Services.Responses.RoleGroup;
 using DSLNG.PEAR.Services.Requests.RoleGroup;
 using DSLNG.PEAR.Services.Responses.Type;
 using DSLNG.PEAR.Services.Requests.Type;
+using DSLNG.PEAR.Services.Responses.Pillar;
+using DSLNG.PEAR.Services.Requests.Pillar;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -83,6 +85,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreateTypeRequest, Type>();
             Mapper.CreateMap<UpdateTypeRequest, Type>();
             Mapper.CreateMap<Type, UpdateTypeResponse>();
+
+            Mapper.CreateMap<Pillar, GetPillarsResponse>();
+            Mapper.CreateMap<Pillar, GetPillarResponse>();
+            Mapper.CreateMap<Pillar, GetPillarsResponse.Pillar>();
+            Mapper.CreateMap<CreatePillarRequest, Pillar>();
+            Mapper.CreateMap<UpdatePillarRequest, Pillar>();
 
             base.Configure();
         }
