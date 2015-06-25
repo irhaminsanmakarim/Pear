@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DSLNG.PEAR.Common.Extensions;
+using System.Data.Entity.Infrastructure;
+using DSLNG.PEAR.Data.Entities;
 
 namespace DSLNG.PEAR.Services
 {
@@ -45,6 +47,25 @@ namespace DSLNG.PEAR.Services
                     Message = x.Message
                 };
             }
+        }
+
+        public CreateMenuResponse Create(CreateMenuRequest request)
+        {
+            var response = new CreateMenuResponse();
+            try
+            {
+                var menu = request.MapTo<Menu>();
+                DataContext.Menus.Add(menu);
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Menu item has been added successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
         }
     }
 }

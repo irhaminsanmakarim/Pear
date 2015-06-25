@@ -7,5 +7,6 @@ namespace DSLNG.PEAR.Services.Interfaces
     {
         GetMenuResponse GetMenu(GetMenuRequest request);
         GetMenusResponse GetMenus(GetMenusRequest request);
+        CreateMenuResponse Create(CreateMenuRequest request);
     }
 }
