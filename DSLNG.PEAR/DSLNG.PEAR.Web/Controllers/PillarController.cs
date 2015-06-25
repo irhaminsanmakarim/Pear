@@ -1,25 +1,25 @@
-﻿using DSLNG.PEAR.Services.Interfaces;
-using DSLNG.PEAR.Services.Requests.Menu;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DSLNG.PEAR.Services;
+using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Responses.Pillar;
 using System.Web.Mvc;
-using DSLNG.PEAR.Common.Extensions;
-using DSLNG.PEAR.Web.ViewModels.Menu;
-using DSLNG.PEAR.Data.Entities;
 using DevExpress.Web.Mvc;
+using DSLNG.PEAR.Services.Requests.Pillar;
+using DSLNG.PEAR.Web.ViewModels.Pillar;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class MenuController : BaseController
+    public class PillarController : BaseController
     {
+        private readonly IPillarService _pillarService;
 
-        private readonly IMenuService _menuService;
-
-        public MenuController(IMenuService menuService)
+        public PillarController(IPillarService service)
         {
-            _menuService = menuService;
+            _pillarService = service;
         }
 
 
@@ -31,7 +31,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult IndexPartial()
         {
-            var viewModel = GridViewExtension.GetViewModel("gridMenuIndex");
+            var viewModel = GridViewExtension.GetViewModel("gridPillarIndex");
             if (viewModel == null)
                 viewModel = CreateGridViewModel();
             return BindingCore(viewModel);
@@ -51,10 +51,11 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = new GridViewModel();
             viewModel.KeyFieldName = "Id";
             viewModel.Columns.Add("Name");
+            viewModel.Columns.Add("Code");
             viewModel.Columns.Add("Order");
-            viewModel.Columns.Add("IsRoot");
+            viewModel.Columns.Add("Color");
+            viewModel.Columns.Add("Icon");
             viewModel.Columns.Add("Remark");
-            viewModel.Columns.Add("Module");
             viewModel.Columns.Add("IsActive");
             viewModel.Pager.PageSize = 10;
             return viewModel;
@@ -62,7 +63,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult PagingAction(GridViewPagerState pager)
         {
-            var viewModel = GridViewExtension.GetViewModel("gridMenuIndex");
+            var viewModel = GridViewExtension.GetViewModel("gridPillarIndex");
             viewModel.ApplyPagingState(pager);
             return BindingCore(viewModel);
         }
@@ -70,30 +71,30 @@ namespace DSLNG.PEAR.Web.Controllers
         public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
         {
 
-            e.DataRowCount = _menuService.GetMenus(new GetMenusRequest()).Menus.Count;
+            e.DataRowCount = _pillarService.GetPillars(new GetPillarsRequest()).Pillars.Count;
         }
 
         public void GetData(GridViewCustomBindingGetDataArgs e)
         {
-            e.Data = _menuService.GetMenus(new GetMenusRequest
+            e.Data = _pillarService.GetPillars(new GetPillarsRequest
             {
                 Skip = e.StartDataRowIndex,
                 Take = e.DataRowCount
-            }).Menus;
+            }).Pillars;
         }
 
-        
+
         public ActionResult Create()
         {
-            var viewModel = new CreateMenuViewModel();
+            var viewModel = new CreatePillarViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Create(CreateMenuViewModel viewModel)
+        public ActionResult Create(CreatePillarViewModel viewModel)
         {
-            var request = viewModel.MapTo<CreateMenuRequest>();
-            var response = _menuService.Create(request);
+            var request = viewModel.MapTo<CreatePillarRequest>();
+            var response = _pillarService.Create(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
@@ -106,16 +107,16 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Update(int id)
         {
-            var response = _menuService.GetMenu(new GetMenuRequest { Id = id });
-            var viewModel = response.MapTo<UpdateMenuViewModel>();
+            var response = _pillarService.GetPillar(new GetPillarRequest { Id = id });
+            var viewModel = response.MapTo<UpdatePillarViewModel>();
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Update(UpdateMenuViewModel viewModel)
+        public ActionResult Update(UpdatePillarViewModel viewModel)
         {
-            var request = viewModel.MapTo<UpdateMenuRequest>();
-            var response = _menuService.Update(request);
+            var request = viewModel.MapTo<UpdatePillarRequest>();
+            var response = _pillarService.Update(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             if (response.IsSuccess)
@@ -129,7 +130,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var response = _menuService.Delete(id);
+            var response = _pillarService.Delete(id);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");

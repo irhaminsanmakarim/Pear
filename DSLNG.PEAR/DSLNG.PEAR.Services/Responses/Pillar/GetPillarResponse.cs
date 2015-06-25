@@ -17,4 +17,20 @@ namespace DSLNG.PEAR.Services.Responses.Pillar
         public string Remark { get; set; }
         public bool IsActive { get; set; }
     }
+
+    public class GetPillarsResponse : BaseResponse
+    {
+        public IList<Pillar> Pillars { get; set; }
+        public class Pillar
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Code { get; set; }
+            public int Oder { get; set; }
+            public string Color { get; set; }
+            public string Icon { get; set; }
+            public string Remark { get; set; }
+            public bool IsActive { get; set; }
+        }
+    }
 }

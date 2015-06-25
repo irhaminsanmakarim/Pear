@@ -39,8 +39,8 @@ namespace DSLNG.PEAR.Data.Installer
             pilar2.Remark = "Ini Pac";
             pilar2.IsActive = true;
 
-            _dataContext.Pilars.AddOrUpdate(pilar1);
-            _dataContext.Pilars.AddOrUpdate(pilar2);
+            _dataContext.Pillars.AddOrUpdate(pilar1);
+            _dataContext.Pillars.AddOrUpdate(pilar2);
         }
     }
 }

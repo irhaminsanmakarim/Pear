@@ -77,6 +77,8 @@
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Requests\Menu\CreateMenuRequest.cs" />
     <Compile Include="Requests\Menu\UpdateMenuRequest.cs" />
+    <Compile Include="Requests\Pillar\CreatePillarRequest.cs" />
+    <Compile Include="Requests\Pillar\UpdatePillarRequest.cs" />
     <Compile Include="Requests\PmsSummary\GetPmsSummaryRequest.cs" />
     <Compile Include="Requests\RoleGroup\CreateRoleGroupRequest.cs" />
     <Compile Include="Requests\RoleGroup\UpdateRoleGroupRequest.cs" />
@@ -129,6 +131,9 @@
     <Compile Include="Responses\Menu\GetMenusResponse.cs" />
     <Compile Include="Responses\Menu\UpdateMenuResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
+    <Compile Include="Responses\Pillar\CreatePillarResponse.cs" />
+    <Compile Include="Responses\Pillar\DeletePillarResponse.cs" />
+    <Compile Include="Responses\Pillar\UpdatePillarResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsSummaryResponse.cs" />
     <Compile Include="Responses\RoleGroup\CreateRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
