@@ -6,6 +6,7 @@ using DSLNG.PEAR.Services.Responses.Kpi;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.Kpi;
 using DSLNG.PEAR.Services.Responses.Menu;
+using DSLNG.PEAR.Services.Requests.Menu;
 using DSLNG.PEAR.Web.ViewModels.Level;
 using DSLNG.PEAR.Web.ViewModels.Measurement;
 using DSLNG.PEAR.Web.ViewModels.Menu;
@@ -35,6 +36,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
 
             Mapper.CreateMap<GetMenusResponse.Menu, MenusViewModel>();
+            Mapper.CreateMap<CreateMenuViewModel, CreateMenuRequest>();
+            Mapper.CreateMap<GetMenuResponse, UpdateMenuViewModel>();
+            Mapper.CreateMap<UpdateMenuViewModel, UpdateMenuRequest>();
             
             Mapper.CreateMap<CreateMeasurementViewModel, CreateMeasurementRequest>();
             Mapper.CreateMap<GetMeasurementResponse, UpdateMeasurementViewModel>();
