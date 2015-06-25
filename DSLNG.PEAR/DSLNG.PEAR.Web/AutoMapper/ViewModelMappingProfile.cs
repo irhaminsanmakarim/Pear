@@ -37,6 +37,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<GetMenusResponse.Menu, MenusViewModel>();
             Mapper.CreateMap<CreateMenuViewModel, CreateMenuRequest>();
+            Mapper.CreateMap<GetMenuResponse, UpdateMenuViewModel>();
+            Mapper.CreateMap<UpdateMenuViewModel, UpdateMenuRequest>();
             
             Mapper.CreateMap<CreateMeasurementViewModel, CreateMeasurementRequest>();
             Mapper.CreateMap<GetMeasurementResponse, UpdateMeasurementViewModel>();

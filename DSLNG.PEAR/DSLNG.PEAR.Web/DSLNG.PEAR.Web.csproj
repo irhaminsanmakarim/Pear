@@ -452,6 +452,7 @@
     <Content Include="Views\RoleGroup\Update.cshtml" />
     <Content Include="Views\Menu\_GridViewPartial.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
+    <Content Include="Views\Menu\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -537,6 +538,7 @@
     <Compile Include="ViewModels\Menu\IndexMenuViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenusViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenuViewModel.cs" />
+    <Compile Include="ViewModels\Menu\UpdateMenuViewModel.cs" />
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
