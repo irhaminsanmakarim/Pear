@@ -104,52 +104,35 @@ namespace DSLNG.PEAR.Web.Controllers
             return View("Create", viewModel);
         }
 
-        //
-        // GET: /Menu/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Update(int id)
         {
-            return View();
+            var response = _menuService.GetMenu(new GetMenuRequest { Id = id });
+            var viewModel = response.MapTo<UpdateMenuViewModel>();
+            return View(viewModel);
         }
 
-        //
-        // POST: /Menu/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Update(UpdateMenuViewModel viewModel)
         {
-            try
+            var request = viewModel.MapTo<UpdateMenuRequest>();
+            var response = _menuService.Update(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
             {
-                // TODO: Add update logic here
-
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View("Update", viewModel);
         }
 
-        //
-        // GET: /Menu/Delete/5
+        [HttpPost]
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        //
-        // POST: /Menu/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var response = _menuService.Delete(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
         }
     }
 }
