@@ -85,6 +85,8 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
 
             public int KpiOrder { get; set; }
 
+            public string Color { get; set; }
+
             /*public string TargetYearly { get; set; }
             public string TargetMonthly { get; set; }
             public string TargetYtd { get; set; }

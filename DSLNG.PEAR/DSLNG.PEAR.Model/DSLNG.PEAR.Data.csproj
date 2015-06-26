@@ -93,6 +93,7 @@
     <Compile Include="Enums\ValueAxis.cs" />
     <Compile Include="Enums\YtdFormula.cs" />
     <Compile Include="Enums\KpiMethod.cs" />
+    <Compile Include="Installer\KpiWithRelationModelInstaller.cs" />
     <Compile Include="Installer\PmsConfigDetailsInstaller.cs" />
     <Compile Include="Installer\PmsConfigsInstaller.cs" />
     <Compile Include="Installer\KpiAchievementsInstaller.cs" />
