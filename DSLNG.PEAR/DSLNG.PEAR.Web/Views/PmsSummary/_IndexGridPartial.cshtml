@@ -114,9 +114,10 @@
             settings.GroupSummary.Add(percentageScore);
 
             ASPxSummaryItem totalScoreLabel = new ASPxSummaryItem();
+            totalScoreLabel.FieldName = "PerformanceIndicator";
             totalScoreLabel.ShowInGroupFooterColumn = "PerformanceIndicator";
             totalScoreLabel.DisplayFormat = "Total Score";
-            settings.TotalSummary.Add(totalScoreLabel);
+            totalScoreLabel.SummaryType = SummaryItemType.Count;
 
             ASPxSummaryItem totalScoreValue = new ASPxSummaryItem();
             totalScoreValue.Tag = "Score_2";
@@ -127,15 +128,13 @@
 
             //totalScoreValue.FieldName = settings.GroupSummary["Total"];
             settings.TotalSummary.Add(totalScoreValue);
-
+            settings.TotalSummary.Add(totalScoreLabel);
 
             /*settings.SettingsPager.Position = PagerPosition.Bottom;
             settings.SettingsPager.FirstPageButton.Visible = true;
             settings.SettingsPager.LastPageButton.Visible = true;
             settings.SettingsPager.PageSizeItemSettings.Visible = true;*/
             /*settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "1", "2", "5" };*/
-
-
 
             settings.PreRender = (s, e) =>
                 {

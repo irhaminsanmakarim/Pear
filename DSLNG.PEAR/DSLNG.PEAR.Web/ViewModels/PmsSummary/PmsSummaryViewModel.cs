@@ -32,7 +32,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0} / {1}", TargetYearly.HasValue ? TargetYearly.Value.ToString() : "N/A", ActualYearly.HasValue ? ActualYearly.Value.ToString() : "N/A");
+                return string.Format(@"{0} / {1}", TargetYearly.HasValue ? TargetYearly.Value.ToString("0.00") : "N/A", ActualYearly.HasValue ? ActualYearly.Value.ToString("0.00") : "N/A");
             }
         }
 
@@ -40,7 +40,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0} / {1}", TargetMonthly.HasValue ? TargetMonthly.Value.ToString() : "N/A", ActualMonthly.HasValue ? ActualMonthly.Value.ToString() : "N/A");
+                return string.Format(@"{0} / {1}", TargetMonthly.HasValue ? TargetMonthly.Value.ToString("0.00") : "N/A", ActualMonthly.HasValue ? ActualMonthly.Value.ToString("0.00") : "N/A");
             }
         }
 
@@ -48,7 +48,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0} / {1}", TargetYtd.HasValue ? TargetYtd.Value.ToString() : "N/A", ActualYtd.HasValue ? ActualYtd.Value.ToString() : "N/A");
+                return string.Format(@"{0} / {1}", TargetYtd.HasValue ? TargetYtd.Value.ToString("0.00") : "N/A", ActualYtd.HasValue ? ActualYtd.Value.ToString("0.00") : "N/A");
             }
         }
 
@@ -56,7 +56,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0}", IndexYearly.HasValue ? IndexYearly.Value.ToString() : "N/A");
+                return string.Format(@"{0}", IndexYearly.HasValue ? IndexYearly.Value.ToString("0.00") : "N/A");
             }
         }
 
@@ -64,7 +64,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0}", IndexMonthly.HasValue ? IndexMonthly.Value.ToString() : "N/A");
+                return string.Format(@"{0}", IndexMonthly.HasValue ? IndexMonthly.Value.ToString("0.00") : "N/A");
             }
         }
 
@@ -72,7 +72,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0}", IndexYtd.HasValue ? IndexYtd.Value.ToString() : "N/A");
+                return string.Format(@"{0}", IndexYtd.HasValue ? IndexYtd.Value.ToString("0.00") : "N/A");
             }
         }
 
@@ -80,7 +80,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0}", Score.HasValue ? Score.Value.ToString() : "N/A");
+                return string.Format(@"{0}", Score.HasValue ? Score.Value.ToString("0.00") : "N/A");
             }
         }
 
@@ -117,17 +117,17 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 
         public string TargetActualYearly
         {
-            get { return string.Format(@"{0} / {1}", TargetYearly.ToString("0.00"), ActualYearly.ToString()); }
+            get { return string.Format(@"{0} / {1}", TargetYearly.ToString("0.00"), ActualYearly.ToString("0.00")); }
         }
 
         public string TargetActualMonthly
         {
-            get { return string.Format(@"{0} / {1}", TargetMonthly.ToString("0.00"), ActualMonthly.ToString()); }
+            get { return string.Format(@"{0} / {1}", TargetMonthly.ToString("0.00"), ActualMonthly.ToString("0.00")); }
         }
 
         public string TargetActualYtd
         {
-            get { return string.Format(@"{0} / {1}", TargetYtd.ToString("0.00"), ActualYtd.ToString()); }
+            get { return string.Format(@"{0} / {1}", TargetYtd.ToString("0.00"), ActualYtd.ToString("0.00")); }
         }
 
         public double KpiScoreInPilar { get; set; }*/
