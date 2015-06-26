@@ -11,14 +11,13 @@
             settings.Settings.ShowFooter = true;
             settings.Width = Unit.Percentage(100);
 
-            var ospColumn = new MVCxGridViewColumn("Osp", "OSP");
-            ospColumn.PropertiesEdit.EncodeHtml = false;
-            ospColumn.GroupIndex = 0;
-            settings.Columns.Add(ospColumn);
+            var pillarColumn = new MVCxGridViewColumn("Pillar", "OSP");
+            pillarColumn.PropertiesEdit.EncodeHtml = false;
+            pillarColumn.GroupIndex = 0;
+            settings.Columns.Add(pillarColumn);
             settings.Columns.Add("PerformanceIndicator", "Performance Indicator");
             settings.Columns.Add("Unit");
             settings.Columns.Add("Weight");
-            settings.Columns.Add("OspWeight").Visible = false;
             settings.HtmlDataCellPrepared = (sender, e) =>
                 {
                     e.Cell.Attributes.Add("onclick", string.Format(
@@ -38,16 +37,24 @@
                 {
                     indexBand.Caption = "Index";
                     indexBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                    indexBand.Columns.Add("IndexYearly", "Yearly");
-                    indexBand.Columns.Add("IndexMonthly", "Monthly");
-                    indexBand.Columns.Add("IndexYtd", "YTD");
+                    indexBand.Columns.Add("IndexYearlyStr", "Yearly");
+                    indexBand.Columns.Add("IndexMonthlyStr", "Monthly");
+                    indexBand.Columns.Add("IndexYtdStr", "YTD");
                 });
 
             settings.Columns.Add(column =>
                 {
                     column.FieldName = "Score";
                     column.PropertiesEdit.DisplayFormatString = "0.00";
+                    column.Visible = false;
                 });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ScoreStr";
+                column.Caption = "Score";
+                column.PropertiesEdit.DisplayFormatString = "0.00";
+            });
 
             decimal totalScore = 0;
             decimal totalPercent = 0;
@@ -74,7 +81,7 @@
                         
                         if (totalScore > 0)
                         {
-                            percent = (totalScore/100) * Convert.ToDecimal(e.GetValue("OspWeight"));
+                            percent = (totalScore/100) * Convert.ToDecimal(e.GetValue("Weight"));
                         }
                         if (tagIndex == "1")
                         {

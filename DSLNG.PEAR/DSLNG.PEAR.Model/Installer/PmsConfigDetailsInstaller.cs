@@ -27,10 +27,10 @@ namespace DSLNG.PEAR.Data.Installer
             pmsConfigDetails1.UpdatedBy = _dataContext.Users.Local.First(x => x.Id == 1);
             pmsConfigDetails1.IsActive = true;
             pmsConfigDetails1.Kpi = _dataContext.Kpis.Local.First(x => x.Id == 1);
-            pmsConfigDetails1.ScoringType = ScoringType.Positive;
+            pmsConfigDetails1.ScoringType = ScoringType.Custom;
             pmsConfigDetails1.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 20, MinValue = 0 });
             pmsConfigDetails1.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 60, MinValue = 21 });
-            pmsConfigDetails1.Weight = 100;
+            pmsConfigDetails1.Weight = 50;
             pmsConfigDetails1.PmsConfig = _dataContext.PmsConfigs.Local.First(x => x.Id == 1);
 
             var pmsConfigDetails2 = new PmsConfigDetails();
@@ -43,7 +43,7 @@ namespace DSLNG.PEAR.Data.Installer
             pmsConfigDetails2.ScoringType = ScoringType.Positive;
             pmsConfigDetails2.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 20, MinValue = 0 });
             pmsConfigDetails2.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 60, MinValue = 21 });
-            pmsConfigDetails2.Weight = 100;
+            pmsConfigDetails2.Weight = 30;
             pmsConfigDetails2.PmsConfig = _dataContext.PmsConfigs.Local.First(x => x.Id == 1);
 
             var pmsConfigDetails3 = new PmsConfigDetails();
@@ -53,14 +53,14 @@ namespace DSLNG.PEAR.Data.Installer
             pmsConfigDetails3.UpdatedBy = _dataContext.Users.Local.First(x => x.Id == 1);
             pmsConfigDetails3.IsActive = true;
             pmsConfigDetails3.Kpi = _dataContext.Kpis.Local.First(x => x.Id == 3);
-            pmsConfigDetails3.ScoringType = ScoringType.Positive;
+            pmsConfigDetails3.ScoringType = ScoringType.Negative;
             pmsConfigDetails3.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 20, MinValue = 0 });
             pmsConfigDetails3.ScoreIndicators.Add(new ScoreIndicator { Color = "#897879", IsActive = true, MaxValue = 60, MinValue = 21 });
-            pmsConfigDetails3.Weight = 100;
+            pmsConfigDetails3.Weight = 20;
             pmsConfigDetails3.PmsConfig = _dataContext.PmsConfigs.Local.First(x => x.Id == 1);
 
-
             _dataContext.PmsConfigDetails.AddOrUpdate(pmsConfigDetails1);
+            _dataContext.PmsConfigDetails.AddOrUpdate(pmsConfigDetails2);
             _dataContext.PmsConfigDetails.AddOrUpdate(pmsConfigDetails3);
         }
     }

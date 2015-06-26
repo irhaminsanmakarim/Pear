@@ -9,6 +9,82 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
     public class PmsSummaryViewModel
     {
         public int Id { get; set; }
+        public string Pillar { get; set; }
+        public string PerformanceIndicator { get; set; }
+        public string Unit { get; set; }
+        public decimal Weight { get; set; }
+
+        public double? TargetYearly { get; set; }
+        public double? TargetMonthly { get; set; }
+        public double? TargetYtd { get; set; }
+
+        public double? ActualYearly { get; set; }
+        public double? ActualMonthly { get; set; }
+        public double? ActualYtd { get; set; }
+
+        public double? IndexYearly { get; set; }
+        public double? IndexMonthly { get; set; }
+        public double? IndexYtd { get; set; }
+
+        public double? Score { get; set; }
+
+        public string TargetActualYearly
+        {
+            get
+            {
+                return string.Format(@"{0} / {1}", TargetYearly.HasValue ? TargetYearly.Value.ToString() : "N/A", ActualYearly.HasValue ? ActualYearly.Value.ToString() : "N/A");
+            }
+        }
+
+        public string TargetActualMonthly
+        {
+            get
+            {
+                return string.Format(@"{0} / {1}", TargetMonthly.HasValue ? TargetMonthly.Value.ToString() : "N/A", ActualMonthly.HasValue ? ActualMonthly.Value.ToString() : "N/A");
+            }
+        }
+
+        public string TargetActualYtd
+        {
+            get
+            {
+                return string.Format(@"{0} / {1}", TargetYtd.HasValue ? TargetYtd.Value.ToString() : "N/A", ActualYtd.HasValue ? ActualYtd.Value.ToString() : "N/A");
+            }
+        }
+
+        public string IndexYearlyStr
+        {
+            get
+            {
+                return string.Format(@"{0}", IndexYearly.HasValue ? IndexYearly.Value.ToString() : "N/A");
+            }
+        }
+
+        public string IndexMonthlyStr
+        {
+            get
+            {
+                return string.Format(@"{0}", IndexMonthly.HasValue ? IndexMonthly.Value.ToString() : "N/A");
+            }
+        }
+
+        public string IndexYtdStr
+        {
+            get
+            {
+                return string.Format(@"{0}", IndexYtd.HasValue ? IndexYtd.Value.ToString() : "N/A");
+            }
+        }
+
+        public string ScoreStr
+        {
+            get
+            {
+                return string.Format(@"{0}", Score.HasValue ? Score.Value.ToString() : "N/A");
+            }
+        }
+
+        /*public int Id { get; set; }
         public string Osp { get; set; }
         public string PerformanceIndicator { get; set; }
         public double OspWeight { get; set; }
@@ -54,6 +130,6 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
             get { return string.Format(@"{0} / {1}", TargetYtd.ToString("0.00"), ActualYtd.ToString()); }
         }
 
-        public double KpiScoreInPilar { get; set; }
+        public double KpiScoreInPilar { get; set; }*/
     }
 }

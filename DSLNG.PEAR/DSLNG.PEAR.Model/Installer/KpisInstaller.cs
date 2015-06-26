@@ -24,7 +24,7 @@ namespace DSLNG.PEAR.Data.Installer
             var securityIncident = new Kpi
             {
                 Id = 2,
-                Name = "Security Incident",
+                Name = "QHSE Training Attend",
                 Measurement = _context.Measurements.Local.First(x => x.Id == 1),
                 Pillar = _context.Pilars.Local.First(x => x.Id == 1)
             };
