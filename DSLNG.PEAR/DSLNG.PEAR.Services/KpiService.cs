@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 
 namespace DSLNG.PEAR.Services
 {
@@ -76,6 +77,46 @@ namespace DSLNG.PEAR.Services
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "KPI item has been added successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public UpdateKpiResponse Update(UpdateKpiRequest request)
+        {
+            var response = new UpdateKpiResponse();
+            try
+            {
+                var kpi = request.MapTo<Kpi>();
+                DataContext.Kpis.Attach(kpi);
+                DataContext.Entry(kpi).State = EntityState.Modified;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "KPI item has been updated successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public DeleteKpiResponse Delete(int id)
+        {
+            var response = new DeleteKpiResponse();
+            try
+            {
+                var kpi = new Kpi { Id = id };
+                DataContext.Kpis.Attach(kpi);
+                DataContext.Entry(kpi).State = EntityState.Deleted;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "KPI item has been deleted successfully";
             }
             catch (DbUpdateException dbUpdateException)
             {
