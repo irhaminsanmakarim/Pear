@@ -21,7 +21,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
             public string Pillar { get; set; }
             public string PerformanceIndicator { get; set; }
             public string Unit { get; set; }
-            public decimal Weight { get; set; }
+            public double Weight { get; set; }
 
             public double? TargetYearly { get; set; }
             public double? TargetMonthly { get; set; }

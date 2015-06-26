@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
@@ -33,7 +34,6 @@ namespace DSLNG.PEAR.Web.Controllers
                     });
 
             viewModel.PmsSummaries = response.KpiDatas.MapTo<PmsSummaryViewModel>();
-            //viewModel.PmsSummaries = AddFakePmsSummaryData();
             return View(viewModel);
         }
 
