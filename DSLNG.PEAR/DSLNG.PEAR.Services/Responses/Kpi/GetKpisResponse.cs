@@ -6,38 +6,41 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Responses.Kpi
 {
-    public class GetKpiResponse : BaseResponse
+    public class GetKpisResponse : BaseResponse
     {
+        public IList<Kpi> Kpis { get; set; }
+
         public class Kpi
         {
-            public int Id { get;set; }
+            public int Id { get; set; }
+
             public string Code { get; set; }
             public string Name { get; set; }
             public int? PilarId { get; set; } //to make this nullable we need to include it
-            public Pilar Pilar { get; set; }
+            public Pillar Pillar { get; set; }
             public Level Level { get; set; }
             public RoleGroup RoleGroup { get; set; }
-            //public Type Type { get; set; }
+            public Type Type { get; set; }
             public Group Group { get; set; }
-            public string IsEconomic { get; set; }
+            public bool IsEconomic { get; set; }
             public int Order { get; set; }
             public YtdFormula YtdFormula { get; set; }
-            public MeasurementResponse Measurement { get; set; }
+            public Measurement Measurement { get; set; }
             public Method Method { get; set; }
             public int? ConversionId { get; set; }
-            public ConversionResponse Conversion { get; set; }
+            public Conversion Conversion { get; set; }
             public FormatInput FormatInput { get; set; }
             public Periode Periode { get; set; }
             public string Remark { get; set; }
+            public ICollection<KpiRelationModel> RelationModels { get; set; }
+            public DateTime? Value { get; set; }
+            public ICollection<KpiTarget> KpiTargets { get; set; }
+            public ICollection<KpiAchievement> KpiAchievements { get; set; }
 
             public bool IsActive { get; set; }
-            public User.UserResponse CreatedBy { get; set; }
-            public User.UserResponse UpdatedBy { get; set; }
-            public DateTime CreatedDate { get; set; }
-            public DateTime UpdatedDate { get; set; }
         }
 
-        public class Pilar
+        public class Pillar
         {
             public int Id { get; set; }
             public string Name { get; set; }
@@ -87,6 +90,55 @@ namespace DSLNG.PEAR.Services.Responses.Kpi
 
             public string Name { get; set; }
             public string Remark { get; set; }
+            public bool IsActive { get; set; }
+        }
+
+        public class Measurement
+        {
+            public int Id { get; set; }
+
+            public string Name { get; set; }
+            public string Remark { get; set; }
+
+            public bool IsActive { get; set; }
+        }
+
+        public class Conversion
+        {
+            public int Id { get; set; }
+            public Measurement From { get; set; }
+            public Measurement To { get; set; }
+            public float Value { get; set; }
+            public string Name { get; set; }
+            public bool IsReverse { get; set; }
+            public bool IsActive { get; set; }
+        }
+
+        public class KpiRelationModel
+        {
+            public int Id { get; set; }
+            public string Method { get; set; }
+        }
+
+        public class KpiTarget
+        {
+            public int Id { get; set; }
+            public decimal? Value { get; set; }
+            public DateTime Periode { get; set; }
+            public PeriodeType PeriodeType { get; set; }
+            public string Remark { get; set; }
+
+            public bool IsActive { get; set; }
+        }
+
+        public class KpiAchievement
+        {
+            public int Id { get; set; }
+            public decimal? Value { get; set; }
+            public DateTime Periode { get; set; }
+            public PeriodeType PeriodeType { get; set; }
+            public string Remark { get; set; }
+
             public bool IsActive { get; set; }
         }
     }

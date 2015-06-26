@@ -19,21 +19,21 @@ namespace DSLNG.PEAR.Data.Installer
                 Id = 1,
                 Name = "Fatality/Strap Disability",
                 Measurement = _context.Measurements.Local.First(x => x.Id == 1),
-                Pillar = _context.Pilars.Local.First(x => x.Id == 1)
+                Pillar = _context.Pillars.Local.First(x => x.Id == 1)
             };
             var securityIncident = new Kpi
             {
                 Id = 2,
                 Name = "QHSE Training Attend",
                 Measurement = _context.Measurements.Local.First(x => x.Id == 1),
-                Pillar = _context.Pilars.Local.First(x => x.Id == 1)
+                Pillar = _context.Pillars.Local.First(x => x.Id == 1)
             };
             var rif = new Kpi
             {
                 Id = 3,
                 Name = "RIF",
                 Measurement = _context.Measurements.Local.First(x => x.Id == 1),
-                Pillar = _context.Pilars.Local.First(x => x.Id == 1)
+                Pillar = _context.Pillars.Local.First(x => x.Id == 1)
             };
             _context.Kpis.Add(fatality);
             _context.Kpis.Add(securityIncident);
