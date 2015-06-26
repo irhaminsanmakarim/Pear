@@ -36,5 +36,32 @@ namespace DSLNG.PEAR.Services
                 .MapTo<GetKpiToSeriesResponse.Kpi>()
             };
         }
+
+        public GetKpiResponse GetKpi(GetKpiRequest request)
+        {
+            try
+            {
+                var kpi = DataContext.Kpis.First(x => x.Id == request.Id);
+                var response = kpi.MapTo<GetKpiResponse>(); 
+
+                return response;
+            }
+            catch (System.InvalidOperationException x)
+            {
+                return new GetKpiResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
+            }
+        }
+        public GetKpisResponse GetKpis(GetKpisRequest request)
+        {
+            var kpis = DataContext.Kpis.ToList();
+            var response = new GetKpisResponse();
+            response.Kpis = kpis.MapTo<GetKpisResponse.Kpi>();
+
+            return response;
+        }
     }
 }

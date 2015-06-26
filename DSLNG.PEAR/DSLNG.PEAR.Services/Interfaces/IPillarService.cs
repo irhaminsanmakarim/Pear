@@ -11,5 +11,9 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IPillarService 
     {
         GetPillarResponse GetPillar(GetPillarRequest request);
+        GetPillarsResponse GetPillars(GetPillarsRequest request);
+        CreatePillarResponse Create(CreatePillarRequest request);
+        UpdatePillarResponse Update(UpdatePillarRequest request);
+        DeletePillarResponse Delete(int id);
     }
 }

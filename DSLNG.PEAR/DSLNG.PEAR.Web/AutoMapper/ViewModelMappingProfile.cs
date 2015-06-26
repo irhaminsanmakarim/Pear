@@ -21,6 +21,9 @@ using DSLNG.PEAR.Services.Requests.RoleGroup;
 using DSLNG.PEAR.Web.ViewModels.Type;
 using DSLNG.PEAR.Services.Responses.Type;
 using DSLNG.PEAR.Services.Requests.Type;
+using DSLNG.PEAR.Services.Responses.Pillar;
+using DSLNG.PEAR.Services.Requests.Pillar;
+using DSLNG.PEAR.Web.ViewModels.Pillar;
 
 
 namespace DSLNG.PEAR.Web.AutoMapper
@@ -64,7 +67,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CreateTypeViewModel, CreateTypeRequest>();
             Mapper.CreateMap<UpdateTypeViewModel, UpdateTypeRequest>();
 
+            Mapper.CreateMap<CreatePillarViewModel, CreatePillarRequest>();
+            Mapper.CreateMap<GetPillarResponse, UpdatePillarViewModel>();
+            Mapper.CreateMap<UpdatePillarViewModel, UpdatePillarRequest>();
+
             Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
+                //.ForMember(x => x.Score, y => y.MapFrom(z => z.ActualYearly / z.TargetYearly))
             
             
             base.Configure();
