@@ -14,7 +14,8 @@ namespace DSLNG.PEAR.Data.Installer
         {
             _context = context;
         }
-        public void Install() {
+        public void Install()
+        {
             var fatality = new Kpi
             {
                 Id = 1,
@@ -35,7 +36,7 @@ namespace DSLNG.PEAR.Data.Installer
             var securityIncident = new Kpi
             {
                 Id = 2,
-                Name = "Security Incident",
+                Name = "QHSE Training Attend",
                 Measurement = _context.Measurements.Local.First(x => x.Id == 1),
                 Pillar = _context.Pillars.Local.First(x => x.Id == 1),
                 Group = _context.Groups.Local.First(x => x.Id == 1),
@@ -64,6 +65,15 @@ namespace DSLNG.PEAR.Data.Installer
                 CreatedDate = DateTime.Now,
                 UpdatedDate = DateTime.Now
             };
+
+            var plantAvailability = new Kpi
+                {
+                    Id = 4,
+                    Name = "Plant Availability",
+                    Measurement = _context.Measurements.Local.First(x => x.Id == 1),
+                    Pillar = _context.Pillars.Local.First(x => x.Id == 2),
+                    Order = 3
+                };
             var dafwc = new Kpi
             {
                 Id = 4,
@@ -84,6 +94,7 @@ namespace DSLNG.PEAR.Data.Installer
             _context.Kpis.Add(securityIncident);
 	        _context.Kpis.Add(dafwc);
             _context.Kpis.Add(rif);
+            _context.Kpis.Add(plantAvailability);
         }
     }
 }

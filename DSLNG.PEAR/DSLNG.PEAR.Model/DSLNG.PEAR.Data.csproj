@@ -84,10 +84,13 @@
     <Compile Include="Entities\PmsSummary.cs" />
     <Compile Include="Entities\RoleGroup.cs" />
     <Compile Include="Entities\ScoreIndicator.cs" />
+    <Compile Include="Enums\RangeFilter.cs" />
     <Compile Include="Enums\ScoringType.cs" />
+    <Compile Include="Enums\SeriesType.cs" />
     <Compile Include="Enums\TargetType.cs" />
     <Compile Include="Entities\Type.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Enums\ValueAxis.cs" />
     <Compile Include="Enums\YtdFormula.cs" />
     <Compile Include="Enums\KpiMethod.cs" />
     <Compile Include="Installer\ActivityInstaller.cs" />

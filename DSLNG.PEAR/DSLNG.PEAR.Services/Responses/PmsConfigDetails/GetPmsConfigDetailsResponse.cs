@@ -21,8 +21,8 @@ namespace DSLNG.PEAR.Services.Responses.PmsConfigDetails
             public string Name { get; set; }
             public string Unit { get; set; }
             public string Period { get; set; }
-            public decimal ActualYearly { get; set; }
-            public decimal ActualMonthly { get; set; }
+            public double ActualYearly { get; set; }
+            public double ActualMonthly { get; set; }
         }
 
         public class KpiAchievment
@@ -37,8 +37,8 @@ namespace DSLNG.PEAR.Services.Responses.PmsConfigDetails
             public string Name { get; set; }
             public string Unit { get; set; }
             public string RelationModel { get; set; }
-            public decimal ActualYearly { get; set; }
-            public decimal ActualMonthly { get; set; }
+            public double ActualYearly { get; set; }
+            public double ActualMonthly { get; set; }
         }
     }
 }

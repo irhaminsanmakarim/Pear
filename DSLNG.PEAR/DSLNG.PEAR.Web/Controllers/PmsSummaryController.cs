@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
@@ -15,7 +16,7 @@ namespace DSLNG.PEAR.Web.Controllers
 {
     public class PmsSummaryController : Controller
     {
-        private IPmsSummaryService _pmsSummaryService;
+        private readonly IPmsSummaryService _pmsSummaryService;
         private IPmsConfigDetailsService _pmsConfigDetailsService;
 
         public PmsSummaryController(
@@ -29,22 +30,29 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Index()
         {
             var viewModel = new PmsSummaryIndexViewModel();
-            var x =
+            var response =
                 _pmsSummaryService.GetPmsSummary(new GetPmsSummaryRequest
                     {
                         Month = DateTime.Now.Month,
                         Year = DateTime.Now.Year
                     });
 
-            //viewModel.PmsSummaries = x.KpiDatas.MapTo<PmsSummaryViewModel>();
-            viewModel.PmsSummaries = AddFakePmsSummaryData();
+            viewModel.PmsSummaries = response.KpiDatas.MapTo<PmsSummaryViewModel>();
             return View(viewModel);
         }
 
         public ActionResult IndexGridPartial()
         {
             var request = Request.Params;
-            return PartialView("_IndexGridPartial", AddFakePmsSummaryData());
+            var response =
+                _pmsSummaryService.GetPmsSummary(new GetPmsSummaryRequest
+                    {
+                        Month = DateTime.Now.Month,
+                        Year = DateTime.Now.Year
+                    });
+            var viewModel = new PmsSummaryIndexViewModel();
+            viewModel.PmsSummaries = response.KpiDatas.MapTo<PmsSummaryViewModel>();
+            return PartialView("_IndexGridPartial", viewModel.PmsSummaries);
         }
 
        private IEnumerable<PmsSummaryViewModel> AddFakePmsSummaryData()
@@ -54,21 +62,19 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 Id = 1,
                 Unit = "Case",
-                Weight = 20,
                 ActualMonthly = 10,
                 ActualYearly = 20,
                 ActualYtd = 30,
-                Osp = "Safety",
+                Pillar = "Safety",
                 PerformanceIndicator = "Fatality/Strap Disability",
-                OspWeight = 20.00,
+                Weight = 20,
                 Score = 35.17,
                 TargetMonthly = 10,
                 TargetYearly = 29,
                 TargetYtd = 20,
-                KpiScoreInPilar = 123
             };
-            pmsSummary1.Osp = "<span class='trafficlight grey'></span>Safety (" +
-                              pmsSummary1.OspWeight.ToString() + ")";
+            pmsSummary1.Pillar = "<span class='trafficlight grey'></span>Safety (" +
+                              pmsSummary1.Weight.ToString() + ")";
 
             var pmsSummary2 = new PmsSummaryViewModel
             {
@@ -78,17 +84,16 @@ namespace DSLNG.PEAR.Web.Controllers
                 ActualMonthly = 210,
                 ActualYearly = 320,
                 ActualYtd = 340,
-                Osp = "Safety",
-                OspWeight = 20.00,
+                Pillar = "Safety",
+                //OspWeight = 20.00,
                 PerformanceIndicator = "RIF",
                 Score = 202.20,
                 TargetMonthly = 101,
                 TargetYearly = 22,
-                TargetYtd = 21,
-                KpiScoreInPilar = 123
+                TargetYtd = 21
             };
-            pmsSummary2.Osp = "<span class='trafficlight grey'></span>Safety (" +
-                              pmsSummary2.OspWeight.ToString() + ")";
+            pmsSummary2.Pillar = "<span class='trafficlight grey'></span>Safety (" +
+                              pmsSummary2.Weight.ToString() + ")";
 
             var pmsSummary3 = new PmsSummaryViewModel
             {
@@ -98,17 +103,14 @@ namespace DSLNG.PEAR.Web.Controllers
                 ActualMonthly = 210,
                 ActualYearly = 320,
                 ActualYtd = 340,
-                //Osp = "<span class='trafficlight grey'></span>Productivity and Efficiency",
-                OspWeight = 15.00,
                 PerformanceIndicator = "RIF",
                 Score = 202.31,
                 TargetMonthly = 101,
                 TargetYearly = 22,
-                TargetYtd = 21,
-                KpiScoreInPilar = 231
+                TargetYtd = 21
             };
-            pmsSummary3.Osp = "<span class='trafficlight grey'></span>Productivity and Efficiency (" +
-                              pmsSummary3.OspWeight.ToString() + ")";
+            pmsSummary3.Pillar = "<span class='trafficlight grey'></span>Productivity and Efficiency (" +
+                              pmsSummary3.Weight.ToString() + ")";
 
             list.Add(pmsSummary1);
             list.Add(pmsSummary2);

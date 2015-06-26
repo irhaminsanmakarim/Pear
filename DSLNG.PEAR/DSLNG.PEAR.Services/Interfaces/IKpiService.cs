@@ -11,5 +11,8 @@ namespace DSLNG.PEAR.Services.Interfaces
 
         GetKpiResponse GetKpi(GetKpiRequest request);
         GetKpisResponse GetKpis(GetKpisRequest request);
+        CreateKpiResponse Create(CreateKpiRequest request);
+        UpdateKpiResponse Update(UpdateKpiRequest request);
+        DeleteKpiResponse Delete(int id);
     }
 }

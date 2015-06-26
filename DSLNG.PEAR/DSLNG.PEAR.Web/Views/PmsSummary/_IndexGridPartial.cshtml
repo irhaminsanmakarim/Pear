@@ -1,4 +1,5 @@
 ﻿@using DevExpress.Data
+@using DevExpress.XtraGrid
 @model IEnumerable<DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryViewModel>
 
 
@@ -11,14 +12,20 @@
             settings.Settings.ShowFooter = true;
             settings.Width = Unit.Percentage(100);
 
-            var ospColumn = new MVCxGridViewColumn("Osp", "OSP");
-            ospColumn.PropertiesEdit.EncodeHtml = false;
-            ospColumn.GroupIndex = 0;
-            settings.Columns.Add(ospColumn);
+            var pillarColumn = new MVCxGridViewColumn("Pillar", "OSP");
+            pillarColumn.PropertiesEdit.EncodeHtml = false;
+            pillarColumn.GroupIndex = 0;
+            pillarColumn.Settings.SortMode = ColumnSortMode.Custom;
+            pillarColumn.SortOrder = ColumnSortOrder.Ascending;
+            settings.Columns.Add(pillarColumn);
             settings.Columns.Add("PerformanceIndicator", "Performance Indicator");
             settings.Columns.Add("Unit");
             settings.Columns.Add("Weight");
-            settings.Columns.Add("OspWeight").Visible = false;
+            var kpiOrderColumn = new MVCxGridViewColumn("KpiOrder");
+            kpiOrderColumn.SortAscending();
+            kpiOrderColumn.Visible = false;
+            settings.Columns.Add(kpiOrderColumn);
+            settings.Columns.Add("PillarOrder").Visible = false;
             settings.HtmlDataCellPrepared = (sender, e) =>
                 {
                     e.Cell.Attributes.Add("onclick", string.Format(
@@ -38,16 +45,24 @@
                 {
                     indexBand.Caption = "Index";
                     indexBand.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
-                    indexBand.Columns.Add("IndexYearly", "Yearly");
-                    indexBand.Columns.Add("IndexMonthly", "Monthly");
-                    indexBand.Columns.Add("IndexYtd", "YTD");
+                    indexBand.Columns.Add("IndexYearlyStr", "Yearly");
+                    indexBand.Columns.Add("IndexMonthlyStr", "Monthly");
+                    indexBand.Columns.Add("IndexYtdStr", "YTD");
                 });
 
             settings.Columns.Add(column =>
                 {
                     column.FieldName = "Score";
                     column.PropertiesEdit.DisplayFormatString = "0.00";
+                    column.Visible = false;
                 });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "ScoreStr";
+                column.Caption = "Score";
+                column.PropertiesEdit.DisplayFormatString = "0.00";
+            });
 
             decimal totalScore = 0;
             decimal totalPercent = 0;
@@ -74,7 +89,7 @@
                         
                         if (totalScore > 0)
                         {
-                            percent = (totalScore/100) * Convert.ToDecimal(e.GetValue("OspWeight"));
+                            percent = (totalScore/100) * Convert.ToDecimal(e.GetValue("Weight"));
                         }
                         if (tagIndex == "1")
                         {
@@ -107,29 +122,39 @@
             settings.GroupSummary.Add(percentageScore);
 
             ASPxSummaryItem totalScoreLabel = new ASPxSummaryItem();
+            totalScoreLabel.FieldName = "PerformanceIndicator";
             totalScoreLabel.ShowInGroupFooterColumn = "PerformanceIndicator";
             totalScoreLabel.DisplayFormat = "Total Score";
-            settings.TotalSummary.Add(totalScoreLabel);
+            totalScoreLabel.SummaryType = SummaryItemType.Count;
 
             ASPxSummaryItem totalScoreValue = new ASPxSummaryItem();
             totalScoreValue.Tag = "Score_2";
-            totalScoreValue.FieldName = "Score";
-            totalScoreValue.ShowInGroupFooterColumn = "Score";
+            totalScoreValue.FieldName = "ScoreStr";
+            totalScoreValue.ShowInGroupFooterColumn = "ScoreStr";
             totalScoreValue.DisplayFormat = "0.00";
             totalScoreValue.SummaryType = SummaryItemType.Custom;
 
             //totalScoreValue.FieldName = settings.GroupSummary["Total"];
             settings.TotalSummary.Add(totalScoreValue);
-
+            settings.TotalSummary.Add(totalScoreLabel);
 
             /*settings.SettingsPager.Position = PagerPosition.Bottom;
             settings.SettingsPager.FirstPageButton.Visible = true;
             settings.SettingsPager.LastPageButton.Visible = true;
             settings.SettingsPager.PageSizeItemSettings.Visible = true;*/
             /*settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "1", "2", "5" };*/
+            settings.CustomColumnGroup = (sender, e) =>
+                {
+                    if (e.Column.FieldName != "Pillar") return;
 
+                    var sortOrder1 = int.Parse(e.GetRow1Value("PillarOrder").ToString());
+                    var sortOrder2 = int.Parse(e.GetRow2Value("PillarOrder").ToString());
 
+                    e.Result = sortOrder1.CompareTo(sortOrder2);
+                    e.Handled = true;
+                };
 
+            settings.CustomColumnSort = settings.CustomColumnGroup;
             settings.PreRender = (s, e) =>
                 {
                     MVCxGridView gridView = s as MVCxGridView;

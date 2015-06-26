@@ -20,7 +20,7 @@ namespace DSLNG.PEAR.Data.Entities
 
         public PmsConfig PmsConfig { get; set; }
         public Kpi Kpi { get; set; }
-        public int Weight { get; set; }
+        public double Weight { get; set; }
         public ScoringType ScoringType { get; set; }
         public bool AsGraphic { get; set; }
         public ICollection<ScoreIndicator> ScoreIndicators { get; set; } 
