@@ -105,7 +105,7 @@ namespace DSLNG.PEAR.Services
                             case ScoringType.Custom:
                                 bool isMoreThanZero = false;
                                 var kpiAchievement = pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue).ToList();
-                                bool isNull = kpiAchievement.Count > 0;
+                                bool isNull = kpiAchievement.Count == 0;
                                 foreach (var achievement in kpiAchievement)
                                 {
                                     if (achievement.Value > 0)
