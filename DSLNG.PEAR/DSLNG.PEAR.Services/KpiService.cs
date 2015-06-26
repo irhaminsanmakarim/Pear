@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Data.Entities;
+using System.Data.Entity.Infrastructure;
 
 namespace DSLNG.PEAR.Services
 {
@@ -60,6 +62,25 @@ namespace DSLNG.PEAR.Services
             var kpis = DataContext.Kpis.ToList();
             var response = new GetKpisResponse();
             response.Kpis = kpis.MapTo<GetKpisResponse.Kpi>();
+
+            return response;
+        }
+
+        public CreateKpiResponse Create(CreateKpiRequest request)
+        {
+            var response = new CreateKpiResponse();
+            try
+            {
+                var kpi = request.MapTo<Kpi>();
+                DataContext.Kpis.Add(kpi);
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "KPI item has been added successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
 
             return response;
         }

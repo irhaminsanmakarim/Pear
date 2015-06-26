@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Services.Responses.Kpi
+namespace DSLNG.PEAR.Services.Requests.Kpi
 {
-    public class GetKpiResponse : BaseResponse
+    public class CreateKpiRequest
     {
-        public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public int? PilarId { get; set; } //to make this nullable we need to include it

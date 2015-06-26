@@ -49,15 +49,15 @@ namespace DSLNG.PEAR.Web.Controllers
         static GridViewModel CreateGridViewModel()
         {
             var viewModel = new GridViewModel();
-            viewModel.KeyFieldName = "Id";
-            viewModel.Columns.Add("Code");
-            viewModel.Columns.Add("Name");
-            viewModel.Columns.Add("PillarId");
-            viewModel.Columns.Add("Order");
-            viewModel.Columns.Add("IsEconomic");
-            viewModel.Columns.Add("Remark");
-            viewModel.Columns.Add("IsActive");
-            viewModel.Pager.PageSize = 10;
+            //viewModel.KeyFieldName = "Id";
+            //viewModel.Columns.Add("Code");
+            //viewModel.Columns.Add("Name");
+            //viewModel.Columns.Add("PillarId");
+            //viewModel.Columns.Add("Order");
+            //viewModel.Columns.Add("IsEconomic");
+            //viewModel.Columns.Add("Remark");
+            //viewModel.Columns.Add("IsActive");
+            //viewModel.Pager.PageSize = 10;
             return viewModel;
         }
 
@@ -84,26 +84,26 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
 
-        //public ActionResult Create()
-        //{
-        //    var viewModel = new CreatePillarViewModel();
-        //    return View(viewModel);
-        //}
+        public ActionResult Create()
+        {
+            var viewModel = new CreateKpiViewModel();
+            return View(viewModel);
+        }
 
-        //[HttpPost]
-        //public ActionResult Create(CreatePillarViewModel viewModel)
-        //{
-        //    var request = viewModel.MapTo<CreatePillarRequest>();
-        //    var response = _pillarService.Create(request);
-        //    TempData["IsSuccess"] = response.IsSuccess;
-        //    TempData["Message"] = response.Message;
-        //    if (response.IsSuccess)
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
+        [HttpPost]
+        public ActionResult Create(CreateKpiViewModel viewModel)
+        {
+            var request = viewModel.MapTo<CreateKpiRequest>();
+            var response = _kpiService.Create(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
 
-        //    return View("Create", viewModel);
-        //}
+            return View("Create", viewModel);
+        }
 
         //public ActionResult Update(int id)
         //{
