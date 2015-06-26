@@ -7,10 +7,13 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 {
     public class PmsConfigDetailsViewModel
     {
+        public string Title { get; set; }
+        public int Year { get; set; }
+        public string Month { get; set; }
         public Kpi GroupKpi { get; set; }
         public List<KpiAchievment> RemarksMonthly { get; set; }
         public KpiAchievment RemarksYearly { get; set; }
-        public List<KpiRelationModel> CausalModel { get; set; }
+        public List<KpiRelationModel> ClausalModel { get; set; }
 
         public class Kpi
         {

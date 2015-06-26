@@ -5,9 +5,9 @@
             aria-hidden="true">&times;</span></button>
     <div class="row">
         <div class="trafficlight green"></div>
-        <div class="title">Fatality / Strap Disability</div>
-        <div class="description_year">1st Operation year</div>
-        <div class="description_month">June 2015</div>
+        <div class="title">@Model.GroupKpi.Name</div>
+        <div class="description_year">@Model.Title</div>
+        <div class="description_month">@Model.Month @Model.Year</div>
     </div>
 
 </div>
@@ -96,7 +96,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.CausalModel)
+                        @foreach (var item in Model.ClausalModel)
                         {
                             <tr data-toggle="modal" data-target="#ModalFatality">
                                 <td>@item.Name</td>

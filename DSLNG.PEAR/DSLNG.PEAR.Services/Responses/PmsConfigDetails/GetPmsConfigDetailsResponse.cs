@@ -8,6 +8,8 @@ namespace DSLNG.PEAR.Services.Responses.PmsConfigDetails
 {
     public class GetPmsConfigDetailsResponse : BaseResponse
     {
+        public string Title { get; set; }
+        public int Year { get; set; }
         public KpiData GroupKpi { get; set; }
         public List<KpiAchievment> KpiAchievments { get; set; }
         public KpiAchievment KpiAchievmentYearly { get; set; }

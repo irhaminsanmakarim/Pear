@@ -122,9 +122,14 @@ namespace DSLNG.PEAR.Web.Controllers
             //Thread.Sleep(2000);
             var viewModel = new PmsConfigDetailsViewModel();
             var x = _pmsConfigDetailsService.GetPmsConfigDetails(new Services.Requests.PmsConfigDetails.GetPmsConfigDetailsRequest { Id = id, Month = month });
+            var operationDate = new DateTime(x.Year, month, 1);
+            viewModel.Title = x.Title;
+            viewModel.Year = x.Year;
+            viewModel.Month = operationDate.ToString("MMM");
             viewModel.GroupKpi = x.GroupKpi.MapTo<PmsConfigDetailsViewModel.Kpi>();
             viewModel.RemarksMonthly = x.KpiAchievments.MapTo<PmsConfigDetailsViewModel.KpiAchievment>();
             viewModel.RemarksYearly = x.KpiAchievmentYearly.MapTo<PmsConfigDetailsViewModel.KpiAchievment>();
+            viewModel.ClausalModel = x.KpiRelations.MapTo<PmsConfigDetailsViewModel.KpiRelationModel>();
             return PartialView("_Details", viewModel);
         }
 	}
