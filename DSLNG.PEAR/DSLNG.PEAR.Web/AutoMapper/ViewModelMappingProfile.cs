@@ -74,7 +74,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
             Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiData, PmsConfigDetailsViewModel.Kpi>();
-            Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiAchievmentMonthly, PmsConfigDetailsViewModel.KpiAchievment>();
+            Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiAchievment, PmsConfigDetailsViewModel.KpiAchievment>();
+            Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiRelation, PmsConfigDetailsViewModel.KpiRelationModel>();
                 //.ForMember(x => x.Score, y => y.MapFrom(z => z.ActualYearly / z.TargetYearly))
             
             

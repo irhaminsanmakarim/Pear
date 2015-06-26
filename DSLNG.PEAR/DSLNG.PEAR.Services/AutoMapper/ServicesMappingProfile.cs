@@ -92,7 +92,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(k => k.Group, o => o.MapFrom(k => k.Group.Name))
                 .ForMember(k => k.Period, o => o.MapFrom(k => k.Periode.Name))
                 .ForMember(k => k.Unit, o => o.MapFrom(k => k.Measurement.Name));
-            Mapper.CreateMap<KpiAchievement, GetPmsConfigDetailsResponse.KpiAchievmentMonthly>();
+            Mapper.CreateMap<KpiAchievement, GetPmsConfigDetailsResponse.KpiAchievment>();
 
             Mapper.CreateMap<Pillar, GetPillarsResponse>();
             Mapper.CreateMap<Pillar, GetPillarResponse>();

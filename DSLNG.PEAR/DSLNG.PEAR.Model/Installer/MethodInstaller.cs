@@ -6,25 +6,25 @@ using System.Text;
 using System.Threading.Tasks;
 using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Persistence;
-using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Data.Installer
 {
-    public class PeriodeInstaller
+    public class MethodInstaller
     {
         private readonly DataContext _dataContext;
-        public PeriodeInstaller(DataContext dataContext)
+        public MethodInstaller(DataContext dataContext)
         {
             _dataContext = dataContext;
         }
 
         public void Install()
         {
-            var periode = new Periode();
-            periode.Id = 1;
-            periode.Name = PeriodeType.Monthly;
-            periode.Remark = "Test";
-            _dataContext.Periodes.AddOrUpdate(periode);
+            var method = new Method();
+            method.Id = 1;
+            method.Name = "Manual Input";
+            method.IsActive = true;
+            method.Remark = "hs";
+            _dataContext.Methods.AddOrUpdate(method);
         }
     }
 }

@@ -31,20 +31,42 @@ namespace DSLNG.PEAR.Services
                 .Include("Kpi.Measurement")
                 .Include("Kpi.Periode")
                 .Include("Kpi.RelationModels")
+                .Include("Kpi.RelationModels.Kpi")
+                .Include("Kpi.RelationModels.Kpi.KpiAchievements")
+                .Include("Kpi.RelationModels.Kpi.Measurement")
                 .FirstOrDefault(x => x.Id == request.Id);
             response.GroupKpi = config.Kpi.MapTo<GetPmsConfigDetailsResponse.KpiData>();
             response.GroupKpi.ActualYearly = config.Kpi.KpiAchievements.Sum(x => x.Value.Value);
             response.GroupKpi.ActualMonthly = config.Kpi.KpiAchievements.Where(x => x.Periode.Month == request.Month).Sum(x => x.Value.Value);
-            var kpiAchievments = config.Kpi.KpiAchievements.OrderBy(x => x.Periode);
-            response.KpiAchievments = new List<GetPmsConfigDetailsResponse.KpiAchievmentMonthly>();
+            var kpiAchievmentsMonthly = config.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly).OrderBy(x => x.Periode);
+            var kpiAchievmentsYearly = config.Kpi.KpiAchievements.First(x => x.PeriodeType == Data.Enums.PeriodeType.Yearly);
+            response.KpiAchievments = new List<GetPmsConfigDetailsResponse.KpiAchievment>();
 
-            foreach (var item in kpiAchievments)
+            foreach (var item in kpiAchievmentsMonthly)
             {
-                response.KpiAchievments.Add(new GetPmsConfigDetailsResponse.KpiAchievmentMonthly
+                response.KpiAchievments.Add(new GetPmsConfigDetailsResponse.KpiAchievment
                 {
                     Period = item.Periode.ToString("MMM", CultureInfo.InvariantCulture),
-                    Remark = item.Remark
+                    Remark = item.Remark,
+                    Type = item.PeriodeType.ToString()
                 });
+            }
+
+            response.KpiAchievmentYearly.Period = kpiAchievmentsYearly.Periode.ToString("yyyy");
+            response.KpiAchievmentYearly.Type = kpiAchievmentsYearly.PeriodeType.ToString();
+            response.KpiAchievmentYearly.Remark = kpiAchievmentsYearly.Remark;
+            response.KpiRelations = new List<GetPmsConfigDetailsResponse.KpiRelation>();
+            var kpiRelationModel = config.Kpi.RelationModels;
+            foreach (var item in kpiRelationModel)
+            {
+                response.KpiRelations.Add(new GetPmsConfigDetailsResponse.KpiRelation
+                    {
+                        Name = item.Kpi.Name,
+                        Unit = item.Kpi.Measurement.Name,
+                        RelationModel = item.Method,
+                        ActualYearly = item.Kpi.KpiAchievements.Sum(x => x.Value.Value),
+                        ActualMonthly = item.Kpi.KpiAchievements.Where(x => x.Periode.Month == request.Month).Sum(x => x.Value.Value)
+                    });
             }
             return response;
         }

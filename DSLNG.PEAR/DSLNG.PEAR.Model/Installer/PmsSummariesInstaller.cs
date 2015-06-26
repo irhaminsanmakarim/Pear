@@ -34,7 +34,8 @@ namespace DSLNG.PEAR.Data.Installer
                 MinValue = 20
             });
             pmsSummary.Title = "1st Operation Year";
-            
+            pmsSummary.CreatedDate = DateTime.Now;
+            pmsSummary.UpdatedDate = DateTime.Now;
             _dataContext.PmsSummaries.AddOrUpdate(pmsSummary);
         }
     }

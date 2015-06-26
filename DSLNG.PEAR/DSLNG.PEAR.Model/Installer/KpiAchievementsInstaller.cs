@@ -61,7 +61,8 @@ namespace DSLNG.PEAR.Data.Installer
                 Periode = new DateTime(2015, 1, 1),
                 Remark = "Whatever men...",
                 Value = 10,
-                Kpi = _context.Kpis.Local.First(x => x.Id == 2)
+                Kpi = _context.Kpis.Local.First(x => x.Id == 2),
+                PeriodeType = PeriodeType.Yearly
             };
             _context.KpiAchievements.Add(kpiAchievementYearly);
           

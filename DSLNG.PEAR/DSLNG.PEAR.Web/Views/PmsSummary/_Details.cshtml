@@ -96,46 +96,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr data-toggle="modal" data-target="#ModalFatality">
-
-                            <td>DAFWC</td>
-                            <td>Case</td>
-                            <td>Quanlitative (+)</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr data-toggle="modal" data-target="#ModalFatality">
-
-                            <td>LOPC</td>
-                            <td>Case</td>
-                            <td>Quanlitative (+)</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr data-toggle="modal" data-target="#ModalFatality">
-
-                            <td>Security Incident</td>
-                            <td>Case</td>
-                            <td>Quanlitative (+)</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr data-toggle="modal" data-target="#ModalFatality">
-
-                            <td>QHSE Training Attend (%)</td>
-                            <td>%</td>
-                            <td>Quanlitative (+)</td>
-                            <td>20</td>
-                            <td></td>
-                        </tr>
-                        <tr data-toggle="modal" data-target="#ModalFatality">
-
-                            <td>QHSE Closure Actions (%)</td>
-                            <td>%</td>
-                            <td>Quanlitative (+)</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        @foreach (var item in Model.CausalModel)
+                        {
+                            <tr data-toggle="modal" data-target="#ModalFatality">
+                                <td>@item.Name</td>
+                                <td>@item.Unit</td>
+                                <td>@item.RelationModel</td>
+                                <td>@item.ActualYearly</td>
+                                <td>@item.ActualMonthly</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
 
@@ -226,24 +196,24 @@
                     <tbody>
                         <tr>
 
-                            @*<td>Yearly</td>
-                            <td>2015</td>
-                            <td>-</td>*@
+                            <td>@Model.RemarksYearly.Type</td>
+                            <td>@Model.RemarksYearly.Period</td>
+                            <td>@Model.RemarksYearly.Remark</td>
 
                         </tr>
-                        @for (int i = 0; i < Model.Remarks.Count; i++)
+                        @for (int i = 0; i < Model.RemarksMonthly.Count; i++)
                         {
                             <tr>
                                 @if (i == 0)
                                 {
-                                    <td>Monthly</td>
+                                    <td>@Model.RemarksMonthly[i].Type</td>
                                 }
                                 else
                                 {
                                     <td></td>
                                 }
-                                <td>@Model.Remarks[i].Period</td>
-                                <td>@Model.Remarks[i].Remark</td>
+                                <td>@Model.RemarksMonthly[i].Period</td>
+                                <td>@Model.RemarksMonthly[i].Remark</td>
                             </tr>
                         }
                     </tbody>

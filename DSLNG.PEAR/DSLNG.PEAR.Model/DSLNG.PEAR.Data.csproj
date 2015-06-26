@@ -90,6 +90,9 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Enums\YtdFormula.cs" />
     <Compile Include="Enums\KpiMethod.cs" />
+    <Compile Include="Installer\ActivityInstaller.cs" />
+    <Compile Include="Installer\MethodInstaller.cs" />
+    <Compile Include="Installer\PeriodeInstaller.cs" />
     <Compile Include="Installer\PmsConfigDetailsInstaller.cs" />
     <Compile Include="Installer\PmsConfigsInstaller.cs" />
     <Compile Include="Installer\KpiAchievementsInstaller.cs" />
@@ -102,6 +105,7 @@
     <Compile Include="Installer\PillarsInstaller.cs" />
     <Compile Include="Installer\PmsSummariesInstaller.cs" />
     <Compile Include="Installer\RoleGroupsInstaller.cs" />
+    <Compile Include="Installer\ScoreIndicatorsInstaller.cs" />
     <Compile Include="Installer\UsersInstaller.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\DataContext.cs" />

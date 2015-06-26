@@ -61,6 +61,7 @@ namespace DSLNG.PEAR.Data.Installer
 
 
             _dataContext.PmsConfigDetails.AddOrUpdate(pmsConfigDetails1);
+            _dataContext.PmsConfigDetails.AddOrUpdate(pmsConfigDetails2);
             _dataContext.PmsConfigDetails.AddOrUpdate(pmsConfigDetails3);
         }
     }

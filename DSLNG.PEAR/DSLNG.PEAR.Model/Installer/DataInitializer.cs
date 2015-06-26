@@ -22,26 +22,23 @@ namespace DSLNG.PEAR.Data.Installer
             var usersInstaller = new UsersInstaller(context);
             usersInstaller.Install();
 
+            var methodInstaller = new MethodInstaller(context);
+            methodInstaller.Install();
+
             var measurementsIntaller = new MeasurementsInstaller(context);
             measurementsIntaller.Install();
 
             var pillarsInstaller = new PillarsInstaller(context);
             pillarsInstaller.Installer();
 
-            var kpisInstaller = new KpisInstaller(context);
-            kpisInstaller.Install();
-
-            var kpiTargetsInstaller = new KpiTargetsInstaller(context);
-            kpiTargetsInstaller.Install();
-
             var groupsInstaller = new GroupsInstaller(context);
             groupsInstaller.Installer();
 
-            var kpiAchievementsInstaller = new KpiAchievementsInstaller(context);
-            kpiAchievementsInstaller.Install();
+            var periode = new PeriodeInstaller(context);
+            periode.Install();
 
-            var pmsSummariesInstaller = new PmsSummariesInstaller(context);
-            pmsSummariesInstaller.Install();
+            var kpisInstaller = new KpisInstaller(context);
+            kpisInstaller.Install();
 
             var pmsConfigsInstaller = new PmsConfigsInstaller(context);
             pmsConfigsInstaller.Install();
@@ -49,7 +46,14 @@ namespace DSLNG.PEAR.Data.Installer
             var pmsConfigDetailsInstaller = new PmsConfigDetailsInstaller(context);
             pmsConfigDetailsInstaller.Install();
 
-            AddPeriode(context);
+            var kpiTargetsInstaller = new KpiTargetsInstaller(context);
+            kpiTargetsInstaller.Install();
+
+            var kpiAchievementsInstaller = new KpiAchievementsInstaller(context);
+            kpiAchievementsInstaller.Install();
+
+            var pmsSummariesInstaller = new PmsSummariesInstaller(context);
+            pmsSummariesInstaller.Install();
             
 
             //var menu1 = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };

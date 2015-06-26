@@ -9,9 +9,9 @@ namespace DSLNG.PEAR.Services.Responses.PmsConfigDetails
     public class GetPmsConfigDetailsResponse : BaseResponse
     {
         public KpiData GroupKpi { get; set; }
-        public List<KpiAchievmentMonthly> KpiAchievments { get; set; }
+        public List<KpiAchievment> KpiAchievments { get; set; }
+        public KpiAchievment KpiAchievmentYearly { get; set; }
         public List<KpiRelation> KpiRelations { get; set; }
-        public KpiAchievmentYearly KpiAchievment { get; set; }
 
         public class KpiData
         {
@@ -23,14 +23,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsConfigDetails
             public decimal ActualMonthly { get; set; }
         }
 
-        public class KpiAchievmentMonthly
-        {
-            public string Type { get; set; }
-            public string Period { get; set; }
-            public string Remark { get; set; }
-        }
-
-        public class KpiAchievmentYearly
+        public class KpiAchievment
         {
             public string Type { get; set; }
             public string Period { get; set; }
