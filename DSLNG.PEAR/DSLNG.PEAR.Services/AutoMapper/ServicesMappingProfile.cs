@@ -19,6 +19,7 @@ using DSLNG.PEAR.Services.Responses.Type;
 using DSLNG.PEAR.Services.Requests.Type;
 using DSLNG.PEAR.Services.Responses.Pillar;
 using DSLNG.PEAR.Services.Requests.Pillar;
+using DSLNG.PEAR.Services.Requests.Kpi;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -36,11 +37,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<User, GetUsersResponse.User>();
             Mapper.CreateMap<GetUserRequest, User>();
             /*Level*/
-            Mapper.CreateMap<Level, GetLevelsResponse.Level>();
-            Mapper.CreateMap<Level, GetLevelResponse>();
-            Mapper.CreateMap<CreateLevelRequest, Level>();
-            Mapper.CreateMap<UpdateLevelRequest, Level>();
-            Mapper.CreateMap<Level, UpdateLevelResponse>();
+            Mapper.CreateMap<Data.Entities.Level, GetLevelsResponse.Level>();
+            Mapper.CreateMap<Data.Entities.Level, GetLevelResponse>();
+            Mapper.CreateMap<CreateLevelRequest, Data.Entities.Level>();
+            Mapper.CreateMap<UpdateLevelRequest, Data.Entities.Level>();
+            Mapper.CreateMap<Data.Entities.Level, UpdateLevelResponse>();
 
 
             Mapper.CreateMap<Menu, GetMenuResponse.Menu>()
@@ -51,48 +52,51 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Menu, GetMenuResponse>();
             Mapper.CreateMap<UpdateMenuRequest, Menu>();
 
-            Mapper.CreateMap<Level, GetMenuResponse.Level>();
-            Mapper.CreateMap<RoleGroup, GetMenuResponse.RoleGroup>()
+            Mapper.CreateMap<Data.Entities.Level, GetMenuResponse.Level>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, GetMenuResponse.RoleGroup>()
                 .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<GetMenuResponse.Level>()));
-            Mapper.CreateMap<Group, GetGroupResponse.Group>();
+            Mapper.CreateMap<Data.Entities.Group, GetGroupResponse.Group>();
             Mapper.CreateMap<Activity, GetGroupResponse.Activity>();
 
 
-            Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
-            Mapper.CreateMap<CreateMeasurementRequest, Measurement>();
-            Mapper.CreateMap<UpdateMeasurementRequest, Measurement>();
-            Mapper.CreateMap<Measurement, UpdateMeasurementResponse>();
-            Mapper.CreateMap<Measurement, GetMeasurementResponse>();
-            Mapper.CreateMap<GetMeasurementRequest, Measurement>();
-            Mapper.CreateMap<Measurement, GetMeasurementsResponse.Measurement>();
+            Mapper.CreateMap<Data.Entities.Measurement, GetMeasurementsResponse>();
+            Mapper.CreateMap<CreateMeasurementRequest, Data.Entities.Measurement>();
+            Mapper.CreateMap<UpdateMeasurementRequest, Data.Entities.Measurement>();
+            Mapper.CreateMap<Data.Entities.Measurement, UpdateMeasurementResponse>();
+            Mapper.CreateMap<Data.Entities.Measurement, GetMeasurementResponse>();
+            Mapper.CreateMap<GetMeasurementRequest, Data.Entities.Measurement>();
+            Mapper.CreateMap<Data.Entities.Measurement, GetMeasurementsResponse.Measurement>();
 
             Mapper.CreateMap<Kpi, GetKpiToSeriesResponse.Kpi>();
             Mapper.CreateMap<Kpi, GetKpisResponse.Kpi>();
+            Mapper.CreateMap<CreateKpiRequest, Kpi>();
+            Mapper.CreateMap<Kpi, GetKpiResponse>();
+            Mapper.CreateMap<UpdateKpiRequest, Kpi>();
 
-            Mapper.CreateMap<Measurement, GetMeasurementsResponse>();
+            Mapper.CreateMap<Data.Entities.Measurement, GetMeasurementsResponse>();
             Mapper.CreateMap<Data.Entities.Method, GetMethodResponse>();
 
-            Mapper.CreateMap<Conversion, GetConversionResponse>();
+            Mapper.CreateMap<Data.Entities.Conversion, GetConversionResponse>();
 
-            Mapper.CreateMap<RoleGroup, GetRoleGroupsResponse.RoleGroup>();
-            Mapper.CreateMap<RoleGroup, GetRoleGroupsResponse>();
-            Mapper.CreateMap<RoleGroup, GetRoleGroupResponse>();
-            Mapper.CreateMap<CreateRoleGroupRequest, RoleGroup>();
-            Mapper.CreateMap<UpdateRoleGroupRequest, RoleGroup>();
-            Mapper.CreateMap<RoleGroup, UpdateRoleGroupResponse>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupsResponse.RoleGroup>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupsResponse>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupResponse>();
+            Mapper.CreateMap<CreateRoleGroupRequest, Data.Entities.RoleGroup>();
+            Mapper.CreateMap<UpdateRoleGroupRequest, Data.Entities.RoleGroup>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, UpdateRoleGroupResponse>();
 
-            Mapper.CreateMap<Type, GetTypeResponse>();
-            Mapper.CreateMap<Type, GetTypesResponse>();
-            Mapper.CreateMap<Type, GetTypesResponse.Type>();
-            Mapper.CreateMap<CreateTypeRequest, Type>();
-            Mapper.CreateMap<UpdateTypeRequest, Type>();
-            Mapper.CreateMap<Type, UpdateTypeResponse>();
+            Mapper.CreateMap<Data.Entities.Type, GetTypeResponse>();
+            Mapper.CreateMap<Data.Entities.Type, GetTypesResponse>();
+            Mapper.CreateMap<Data.Entities.Type, GetTypesResponse.Type>();
+            Mapper.CreateMap<CreateTypeRequest, Data.Entities.Type>();
+            Mapper.CreateMap<UpdateTypeRequest, Data.Entities.Type>();
+            Mapper.CreateMap<Data.Entities.Type, UpdateTypeResponse>();
 
-            Mapper.CreateMap<Pillar, GetPillarsResponse>();
-            Mapper.CreateMap<Pillar, GetPillarResponse>();
-            Mapper.CreateMap<Pillar, GetPillarsResponse.Pillar>();
-            Mapper.CreateMap<CreatePillarRequest, Pillar>();
-            Mapper.CreateMap<UpdatePillarRequest, Pillar>();
+            Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse>();
+            Mapper.CreateMap<Data.Entities.Pillar, GetPillarResponse>();
+            Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse.Pillar>();
+            Mapper.CreateMap<CreatePillarRequest, Data.Entities.Pillar>();
+            Mapper.CreateMap<UpdatePillarRequest, Data.Entities.Pillar>();
 
             base.Configure();
         }

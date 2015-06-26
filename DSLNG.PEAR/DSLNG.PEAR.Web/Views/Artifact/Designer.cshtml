@@ -4,7 +4,7 @@
     ViewBag.Title = "Artifact Designer - Create";
 }
 
-@using (Html.BeginForm("Preview", "Artifact")) 
+@using (Html.BeginForm("Create", "Artifact"))
 {
     @Html.AntiForgeryToken()
     
@@ -16,7 +16,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.GraphicType, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.GraphicType, Model.GraphicTypes, new {id="graphic-type", data_graph_url= Url.Action("GraphSettings","Artifact") })
+                @Html.DropDownListFor(model => model.GraphicType, Model.GraphicTypes, new { id = "graphic-type", data_graph_url = Url.Action("GraphSettings", "Artifact") })
                 @Html.ValidationMessageFor(model => model.GraphicType)
             </div>
         </div>
@@ -52,8 +52,23 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Preview" class="btn btn-default" id="artifact-preview" />
+                <input data-preview-url="@Url.Action("Preview","Artifact")" type="button" value="Preview" class="btn btn-default" id="graphic-preview-btn" />
             </div>
         </div>
     </div>
 }
+<div id="hidden-fields-holder"></div>
+<!-- Modal -->
+<div class="modal fade" id="graphic-preview" tabindex="-1" role="dialog" aria-labelledby="graphicPreview" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myLargeModalLabel">Artifact Preview</h4>
+        </div>
+            <div class="modal-body">
+                <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+            </div>
+        </div>
+    </div>
+</div>

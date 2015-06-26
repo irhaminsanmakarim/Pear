@@ -8,7 +8,6 @@ namespace DSLNG.PEAR.Services.Requests.Level
 {
     public class CreateLevelRequest
     {
-        public int Id { get; set; }
 
         public string Code { get; set; }
         public string Name { get; set; }

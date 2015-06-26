@@ -1,8 +1,13 @@
-﻿using DSLNG.PEAR.Services.Interfaces;
+﻿using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
+using System;
 using System.Linq;
 using System.Web.Mvc;
+using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Requests.Artifact;
+using System.Collections.Generic;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -10,10 +15,14 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         public IMeasurementService _measurementService;
         public IKpiService _kpiService;
+        public IArtifactService _artifactServie;
+
         public ArtifactController(IMeasurementService measurementService,
-            IKpiService kpiService) {
+            IKpiService kpiService,
+            IArtifactService artifactServcie) {
             _measurementService = measurementService;
             _kpiService = kpiService;
+            _artifactServie = artifactServcie;
         }
 
         public ActionResult Designer()
@@ -33,36 +42,55 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 case "bar":
                     var viewModel = new BarChartViewModel();
-                    viewModel.PeriodeTypes.Add(new SelectListItem { Value = "monthly", Text = "Monthly" });
-                    viewModel.PeriodeTypes.Add(new SelectListItem { Value = "yearly", Text = "Yearly" });
-                    viewModel.PeriodeTypes.Add(new SelectListItem { Value = "ytd", Text = "Year To Date" });
-                    viewModel.ValueAxises.Add(new SelectListItem { Value = "kpi-target", Text = "Kpi Target" });
-                    viewModel.ValueAxises.Add(new SelectListItem { Value = "kpi-actual", Text = "Kpi Actual" });
-                    viewModel.ValueAxises.Add(new SelectListItem { Value = "kpi-economic", Text = "Kpi Economic" });
-                    viewModel.ValueAxises.Add(new SelectListItem { Value = "unique-axis", Text = "Uniqe Each Series" });
-                    viewModel.SeriesTypes.Add(new SelectListItem { Value = "single", Text = "Single Stack" });
-                    viewModel.SeriesTypes.Add(new SelectListItem { Value = "multiple", Text = "Multiple Stack" });
-                    viewModel.Aggragations.Add(new SelectListItem { Value = "no-aggregation", Text = "-" });
-                    viewModel.Aggragations.Add(new SelectListItem { Value = "sum", Text = "SUM" });
-                    viewModel.Aggragations.Add(new SelectListItem { Value = "min", Text = "SUM" });
-                    viewModel.Aggragations.Add(new SelectListItem { Value = "max", Text = "SUM" });
-                    viewModel.Aggragations.Add(new SelectListItem { Value = "avg", Text = "SUM" });
-                    viewModel.Aggragations.Add(new SelectListItem { Value = "count", Text = "SUM" });
+                    viewModel.PeriodeTypes = Enum.GetNames(typeof(PeriodeType)).Select(x => new SelectListItem { Text = x, Value = x }).ToList();
+
+                    viewModel.RangeFilters.Add(new SelectListItem { Value = RangeFilter.CurrentHour.ToString(), Text = "CURRENT HOUR" });
+                    viewModel.RangeFilters.Add(new SelectListItem { Value = RangeFilter.CurrentDay.ToString(), Text = "CURRENT DAY" });
+                    viewModel.RangeFilters.Add(new SelectListItem { Value = RangeFilter.CurrentWeek.ToString(), Text = "CURRENT WEEK" });
+                    viewModel.RangeFilters.Add(new SelectListItem { Value = RangeFilter.CurrentMonth.ToString(), Text = "CURRENT MONTH" });
+                    viewModel.RangeFilters.Add(new SelectListItem { Value = RangeFilter.CurrentYear.ToString(), Text = "CURRENT YEAR" });
+                    viewModel.RangeFilters.Add(new SelectListItem { Value = RangeFilter.DTD.ToString(), Text = "DAY TO DATE" });
+                    viewModel.RangeFilters.Add(new SelectListItem { Value = RangeFilter.MTD.ToString(), Text = "MONTH TO DATE" });
+                    viewModel.RangeFilters.Add(new SelectListItem { Value = RangeFilter.YTD.ToString(), Text = "YEAR TO DATE" });
+                    viewModel.RangeFilters.Add(new SelectListItem { Value = RangeFilter.Interval.ToString(), Text = "INTERVAL" });
+
+                    viewModel.ValueAxes.Add(new SelectListItem { Value = ValueAxis.KpiTarget.ToString(), Text = "Kpi Target" });
+                    viewModel.ValueAxes.Add(new SelectListItem { Value = ValueAxis.KpiActual.ToString(), Text = "Kpi Actual" });
+                    viewModel.ValueAxes.Add(new SelectListItem { Value = ValueAxis.KpiEconomic.ToString(), Text = "Kpi Economic" });
+                    viewModel.ValueAxes.Add(new SelectListItem { Value = ValueAxis.Custom.ToString(), Text = "Uniqe Each Series" });
                     
+                    viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                    viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+                     
                     viewModel.KpiList = _kpiService.GetKpiToSeries().KpiList.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
                     var series = new BarChartViewModel.Series();
                     series.Stacks.Add(new BarChartViewModel.Stack());
                     viewModel.SeriesList.Add(series);
-
-                    return PartialView("~/Views/BarChart/_Create.cshtml", viewModel);
+                    var artifactViewModel = new ArtifactDesignerViewModel();
+                    artifactViewModel.BarChart = viewModel;
+                    return PartialView("~/Views/BarChart/_Create.cshtml", artifactViewModel);
                 default:
                     return PartialView("NotImplementedChart.cshtml");
             }
         }
         [HttpPost]
         public ActionResult Preview(ArtifactDesignerViewModel viewModel) {
-
-            return View(BarChartDataViewModel.GetSeries());
+            var previewViewModel = new ArtifactPreviewViewModel();
+            switch (viewModel.GraphicType) { 
+                default:
+                    previewViewModel.GraphicType = viewModel.GraphicType;
+                    previewViewModel.BarChart = new BarChartDataViewModel();
+                    previewViewModel.BarChart.Title = viewModel.HeaderTitle;
+                    previewViewModel.BarChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+                    var periodes = new List<string>();
+                    if (viewModel.BarChart.PeriodeType == PeriodeType.Monthly.ToString() && viewModel.BarChart.RangeFilter == RangeFilter.CurrentYear.ToString()) { 
+                        previewViewModel.BarChart.Periodes = new string[12] {"Jan", "Feb", "Mar", "Apr", "Mey", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"};
+                    }
+                    previewViewModel.BarChart.Series = _artifactServie.GetSeries(viewModel.BarChart.MapTo<GetSeriesRequest>()).Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
+                    break;
+            }
+            return Json(previewViewModel);
+            //return View(BarChartDataViewModel.GetSeries());
         }
     }
 }
