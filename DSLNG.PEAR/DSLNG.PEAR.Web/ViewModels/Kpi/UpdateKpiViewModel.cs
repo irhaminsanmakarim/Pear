@@ -1,24 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using DSLNG.PEAR.Data.Enums;
+using System.Linq;
+using System.Web;
 
-namespace DSLNG.PEAR.Data.Entities
+namespace DSLNG.PEAR.Web.ViewModels.Kpi
 {
-    public class Kpi : BaseEntity
+    public class UpdateKpiViewModel
     {
-        public Kpi()
-        {
-            KpiTargets = new Collection<KpiTarget>();
-            KpiAchievements = new Collection<KpiAchievement>();
-        }
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
         public string Code { get; set; }
         public string Name { get; set; }
         public int? PillarId { get; set; } //to make this nullable we need to include it
@@ -41,9 +30,6 @@ namespace DSLNG.PEAR.Data.Entities
         public DateTime? Value { get; set; }
         public ICollection<KpiTarget> KpiTargets { get; set; }
         public ICollection<KpiAchievement> KpiAchievements { get; set; }
-
         public bool IsActive { get; set; }
-        
-        
     }
 }
