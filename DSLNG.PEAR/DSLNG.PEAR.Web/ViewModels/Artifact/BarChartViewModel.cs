@@ -27,7 +27,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public IList<SelectListItem> RangeFilters { get; set; }
         public DateTime Start { get {
             if (this.PeriodeType == EPeriodeType.Monthly.ToString()) {
-                return DateTime.ParseExact("01" + this.StartInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                return DateTime.ParseExact("01/" + this.StartInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             }
             if (this.PeriodeType == EPeriodeType.Yearly.ToString()) {
                 return DateTime.ParseExact("01/01/" + this.StartInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -40,7 +40,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         }}
         public DateTime End { get {
             if (this.PeriodeType == EPeriodeType.Monthly.ToString()) {
-                return DateTime.ParseExact("01" + this.EndInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                return DateTime.ParseExact("01/" + this.EndInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             }
             if (this.PeriodeType == EPeriodeType.Yearly.ToString()) {
                 return DateTime.ParseExact("01/01/" + this.EndInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);

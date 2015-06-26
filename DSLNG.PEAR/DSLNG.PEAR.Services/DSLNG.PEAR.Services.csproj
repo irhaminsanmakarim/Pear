@@ -73,6 +73,7 @@
     <Compile Include="MenuService.cs" />
     <Compile Include="MethodService.cs" />
     <Compile Include="PmsSummaryService.cs" />
+    <Compile Include="Requests\Artifact\GetSeriesRequest.cs" />
     <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Requests\Menu\CreateMenuRequest.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Requests\User\CreateUserRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
     <Compile Include="Requests\User\UpdateUserRequest.cs" />
+    <Compile Include="Responses\Artifact\GetSeriesResponse.cs" />
     <Compile Include="Responses\Conversion\GetConversionResponse.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Responses\Group\GetGroupResponse.cs" />
@@ -178,10 +180,7 @@
       <Name>DSLNG.PEAR.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Requests\Artifact\" />
-    <Folder Include="Responses\Artifact\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

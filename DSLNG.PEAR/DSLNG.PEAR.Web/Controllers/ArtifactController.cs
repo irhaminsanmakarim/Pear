@@ -5,6 +5,9 @@ using DSLNG.PEAR.Web.ViewModels.Artifact;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Requests.Artifact;
+using System.Collections.Generic;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -12,10 +15,14 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         public IMeasurementService _measurementService;
         public IKpiService _kpiService;
+        public IArtifactService _artifactServie;
+
         public ArtifactController(IMeasurementService measurementService,
-            IKpiService kpiService) {
+            IKpiService kpiService,
+            IArtifactService artifactServcie) {
             _measurementService = measurementService;
             _kpiService = kpiService;
+            _artifactServie = artifactServcie;
         }
 
         public ActionResult Designer()
@@ -68,8 +75,22 @@ namespace DSLNG.PEAR.Web.Controllers
         }
         [HttpPost]
         public ActionResult Preview(ArtifactDesignerViewModel viewModel) {
-
-            return View(BarChartDataViewModel.GetSeries());
+            var previewViewModel = new ArtifactPreviewViewModel();
+            switch (viewModel.GraphicType) { 
+                default:
+                    previewViewModel.GraphicType = viewModel.GraphicType;
+                    previewViewModel.BarChart = new BarChartDataViewModel();
+                    previewViewModel.BarChart.Title = viewModel.HeaderTitle;
+                    previewViewModel.BarChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+                    var periodes = new List<string>();
+                    if (viewModel.BarChart.PeriodeType == PeriodeType.Monthly.ToString() && viewModel.BarChart.RangeFilter == RangeFilter.CurrentYear.ToString()) { 
+                        previewViewModel.BarChart.Periodes = new string[12] {"Jan", "Feb", "Mar", "Apr", "Mey", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"};
+                    }
+                    previewViewModel.BarChart.Series = _artifactServie.GetSeries(viewModel.BarChart.MapTo<GetSeriesRequest>()).Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
+                    break;
+            }
+            return Json(previewViewModel);
+            //return View(BarChartDataViewModel.GetSeries());
         }
     }
 }

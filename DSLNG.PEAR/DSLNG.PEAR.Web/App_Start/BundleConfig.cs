@@ -20,6 +20,7 @@ namespace DSLNG.PEAR.Web.App_Start
                         "~/Scripts/bootstrap-datetimepicker.js",
                         "~/Content/select2/dist/js/select2.js",
                         "~/Scripts/highcharts.js",
+                        "~/Scripts/exporting.js",
                         "~/Scripts/main.js"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap/css/bootstrap.css",
                 "~/Content/font-awesome/css/font-awesome.css",

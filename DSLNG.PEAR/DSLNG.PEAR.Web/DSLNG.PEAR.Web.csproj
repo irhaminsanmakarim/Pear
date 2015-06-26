@@ -333,8 +333,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bs_leftnavi.js" />
+    <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\globalize.cultures.js" />
     <Content Include="Scripts\globalize.js" />
+    <Content Include="Scripts\highcharts.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -555,6 +557,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Artifact\ArtifactDesignerViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\ArtifactPreviewViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiToSeriesViewModel.cs" />

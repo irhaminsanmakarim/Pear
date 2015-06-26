@@ -4,7 +4,7 @@
     ViewBag.Title = "Artifact Designer - Create";
 }
 
-@using (Html.BeginForm("Preview", "Artifact"))
+@using (Html.BeginForm("Create", "Artifact"))
 {
     @Html.AntiForgeryToken()
     
@@ -52,7 +52,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Preview" class="btn btn-default" id="graphic-preview-btn" />
+                <input data-preview-url="@Url.Action("Preview","Artifact")" type="button" value="Preview" class="btn btn-default" id="graphic-preview-btn" />
             </div>
         </div>
     </div>
