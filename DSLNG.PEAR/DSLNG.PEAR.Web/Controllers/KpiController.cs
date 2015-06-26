@@ -105,35 +105,35 @@ namespace DSLNG.PEAR.Web.Controllers
             return View("Create", viewModel);
         }
 
-        //public ActionResult Update(int id)
-        //{
-        //    var response = _pillarService.GetPillar(new GetPillarRequest { Id = id });
-        //    var viewModel = response.MapTo<UpdatePillarViewModel>();
-        //    return View(viewModel);
-        //}
+        public ActionResult Update(int id)
+        {
+            var response = _kpiService.GetKpi(new GetKpiRequest { Id = id });
+            var viewModel = response.MapTo<UpdateKpiViewModel>();
+            return View(viewModel);
+        }
 
-        //[HttpPost]
-        //public ActionResult Update(UpdatePillarViewModel viewModel)
-        //{
-        //    var request = viewModel.MapTo<UpdatePillarRequest>();
-        //    var response = _pillarService.Update(request);
-        //    TempData["IsSuccess"] = response.IsSuccess;
-        //    TempData["Message"] = response.Message;
-        //    if (response.IsSuccess)
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
+        [HttpPost]
+        public ActionResult Update(UpdateKpiViewModel viewModel)
+        {
+            var request = viewModel.MapTo<UpdateKpiRequest>();
+            var response = _kpiService.Update(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
 
-        //    return View("Update", viewModel);
-        //}
+            return View("Update", viewModel);
+        }
 
-        //[HttpPost]
-        //public ActionResult Delete(int id)
-        //{
-        //    var response = _pillarService.Delete(id);
-        //    TempData["IsSuccess"] = response.IsSuccess;
-        //    TempData["Message"] = response.Message;
-        //    return RedirectToAction("Index");
-        //}
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var response = _kpiService.Delete(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
+        }
     }
 }

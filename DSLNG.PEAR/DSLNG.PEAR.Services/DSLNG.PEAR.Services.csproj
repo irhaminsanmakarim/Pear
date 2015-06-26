@@ -88,6 +88,7 @@
     <Compile Include="Requests\Kpi\KpiRequest\RoleGroup.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Type.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\YtdFormula.cs" />
+    <Compile Include="Requests\Kpi\UpdateKpiRequest.cs" />
     <Compile Include="Requests\Menu\CreateMenuRequest.cs" />
     <Compile Include="Requests\Menu\UpdateMenuRequest.cs" />
     <Compile Include="Requests\Pillar\CreatePillarRequest.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Responses\Group\GetGroupResponse.cs" />
     <Compile Include="Responses\ConversionResponse.cs" />
     <Compile Include="Responses\Kpi\CreateKpiResponse.cs" />
+    <Compile Include="Responses\Kpi\DeleteKpiResponse.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\Conversion.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\FormatInput.cs" />
     <Compile Include="Responses\Kpi\GetKpiResponse.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Responses\Kpi\KpiResponse\Pillar.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\RoleGroup.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\Type.cs" />
+    <Compile Include="Responses\Kpi\UpdateKpiResponse.cs" />
     <Compile Include="Responses\Level\CreateLevelResponse.cs" />
     <Compile Include="Responses\Level\DeleteLevelResponse.cs" />
     <Compile Include="Responses\Level\GetLevelsResponse.cs" />
