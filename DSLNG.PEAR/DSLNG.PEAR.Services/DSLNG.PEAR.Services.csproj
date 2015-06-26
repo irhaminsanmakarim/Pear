@@ -78,17 +78,12 @@
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Requests\Kpi\CreateKpiRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Conversion.cs" />
-    <Compile Include="Requests\Kpi\KpiRequest\FormatInput.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Group.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Level.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Measurement.cs" />
-    <Compile Include="Requests\Kpi\KpiRequest\Method.cs" />
-    <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
-    <Compile Include="Requests\Kpi\KpiRequest\PeriodeType.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Pillar.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\RoleGroup.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Type.cs" />
-    <Compile Include="Requests\Kpi\KpiRequest\YtdFormula.cs" />
     <Compile Include="Requests\Kpi\UpdateKpiRequest.cs" />
     <Compile Include="Requests\Menu\CreateMenuRequest.cs" />
     <Compile Include="Requests\Menu\UpdateMenuRequest.cs" />
