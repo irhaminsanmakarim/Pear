@@ -10,7 +10,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public int? PilarId { get; set; } //to make this nullable we need to include it
+        public int? PillarId { get; set; } //to make this nullable we need to include it
         public Pillar Pillar { get; set; }
         public Level Level { get; set; }
         public RoleGroup RoleGroup { get; set; }

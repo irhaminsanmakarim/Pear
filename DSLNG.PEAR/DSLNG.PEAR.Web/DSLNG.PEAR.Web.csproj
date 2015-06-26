@@ -453,6 +453,7 @@
     <Content Include="Views\Menu\_GridViewPartial.cshtml" />
     <Content Include="Views\Kpi\Index.cshtml" />
     <Content Include="Views\Kpi\_GridViewPartial.cshtml" />
+    <Content Include="Views\Kpi\Create.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
@@ -535,6 +536,7 @@
     <Compile Include="ViewModels\Artifact\ArtifactDesignerViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
+    <Compile Include="ViewModels\Kpi\CreateKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiToSeriesViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelsViewModel.cs" />
