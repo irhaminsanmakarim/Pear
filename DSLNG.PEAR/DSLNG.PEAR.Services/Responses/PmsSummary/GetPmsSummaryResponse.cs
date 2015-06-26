@@ -81,6 +81,10 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
 
             public double? Score { get; set; }
 
+            public int PillarOrder { get; set; }
+
+            public int KpiOrder { get; set; }
+
             /*public string TargetYearly { get; set; }
             public string TargetMonthly { get; set; }
             public string TargetYtd { get; set; }

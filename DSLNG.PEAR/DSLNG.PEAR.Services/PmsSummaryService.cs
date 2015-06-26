@@ -22,117 +22,134 @@ namespace DSLNG.PEAR.Services
         public GetPmsSummaryResponse GetPmsSummary(GetPmsSummaryRequest request)
         {
             var response = new GetPmsSummaryResponse();
-            var pmsSummary = DataContext.PmsSummaries
+            try
+            {
+                var pmsSummary = DataContext.PmsSummaries
                 .Include("PmsConfigs.Pillar")
                 .Include("PmsConfigs.PmsConfigDetailsList.Kpi.Measurement")
                 .Include("PmsConfigs.PmsConfigDetailsList.Kpi.KpiTargets")
                 .Include("PmsConfigs.PmsConfigDetailsList.Kpi.KpiAchievements")
-                .First(x => x.IsActive == true && x.Year == request.Year);
+                .First(x => x.IsActive && x.Year == request.Year);
 
-            
-            foreach (var pmsConfig in pmsSummary.PmsConfigs)
-            {
-                foreach (var pmsConfigDetails in pmsConfig.PmsConfigDetailsList)
+                foreach (var pmsConfig in pmsSummary.PmsConfigs)
                 {
-                    var kpiData = new GetPmsSummaryResponse.KpiData();
-                    kpiData.Id = pmsConfigDetails.Id;
-                    kpiData.Pillar = pmsConfig.Pillar.Name;
-                    kpiData.PerformanceIndicator = pmsConfigDetails.Kpi.Name;
-                    kpiData.Unit = pmsConfigDetails.Kpi.Measurement.Name;
-                    kpiData.Weight = pmsConfigDetails.Weight;
-
-                    #region KPI Achievement
-
-                    var kpiAchievementYearly = pmsConfigDetails.Kpi.KpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly);
-                    if (kpiAchievementYearly != null && kpiAchievementYearly.Value != null)
-                        kpiData.ActualYearly = kpiAchievementYearly.Value.Value;
-                    
-
-                    var kpiAchievementMonthly = 
-                        pmsConfigDetails.Kpi.KpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month);
-                    if (kpiAchievementMonthly != null && kpiAchievementMonthly.Value.HasValue)
-                        kpiData.ActualMonthly = kpiAchievementMonthly.Value.Value;
-                    
-                    
-                    var kpiAchievementYtd = pmsConfigDetails.Kpi.KpiAchievements.Where(
-                        x => x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
-                    if (kpiAchievementYtd.Count > 0) kpiData.ActualYtd = 0;
-                    foreach (var achievementYtd in kpiAchievementYtd)
+                    foreach (var pmsConfigDetails in pmsConfig.PmsConfigDetailsList)
                     {
-                        if (achievementYtd.Value.HasValue)
-                            kpiData.ActualYtd += achievementYtd.Value;
-                    }
+                        var kpiData = new GetPmsSummaryResponse.KpiData();
+                        kpiData.Id = pmsConfigDetails.Id;
+                        kpiData.Pillar = pmsConfig.Pillar.Name;
+                        kpiData.PerformanceIndicator = pmsConfigDetails.Kpi.Name;
+                        kpiData.Unit = pmsConfigDetails.Kpi.Measurement.Name;
+                        kpiData.Weight = pmsConfigDetails.Weight;
+                        kpiData.PillarOrder = pmsConfigDetails.Kpi.Pillar.Order;
+                        kpiData.KpiOrder = pmsConfigDetails.Kpi.Order;
 
-                    #endregion
-                    
-                    #region KPI Target
+                        #region KPI Achievement
 
-                    var kpiTargetYearly = pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly);
-                    if (kpiTargetYearly != null && kpiTargetYearly.Value != null)
-                        kpiData.TargetYearly = kpiTargetYearly.Value.Value;
-
-
-                    var kpiTargetMonthly =
-                        pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month);
-                    if (kpiTargetMonthly != null && kpiTargetMonthly.Value.HasValue)
-                        kpiData.TargetMonthly = kpiTargetMonthly.Value.Value;
+                        var kpiAchievementYearly = pmsConfigDetails.Kpi.KpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly);
+                        if (kpiAchievementYearly != null && kpiAchievementYearly.Value != null)
+                            kpiData.ActualYearly = kpiAchievementYearly.Value.Value;
 
 
-                    var kpiTargetYtd = pmsConfigDetails.Kpi.KpiTargets.Where(
-                        x => x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
-                    if (kpiTargetYtd.Count > 0) kpiData.TargetYtd = 0;
-                    foreach (var targetYtd in kpiTargetYtd)
-                    {
-                        if (targetYtd.Value.HasValue)
-                            kpiData.TargetYtd += targetYtd.Value;
-                    }
+                        var kpiAchievementMonthly =
+                            pmsConfigDetails.Kpi.KpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month);
+                        if (kpiAchievementMonthly != null && kpiAchievementMonthly.Value.HasValue)
+                            kpiData.ActualMonthly = kpiAchievementMonthly.Value.Value;
 
-                    #endregion
 
-                    #region Score
-                    if (kpiData.ActualYtd.HasValue && kpiData.TargetYtd.HasValue)
-                    {
-                        var indexYtd = (kpiData.ActualYtd.Value / kpiData.TargetYtd.Value);
-                    
-                        switch (pmsConfigDetails.ScoringType)
+                        var kpiAchievementYtd = pmsConfigDetails.Kpi.KpiAchievements.Where(
+                            x => x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
+                        if (kpiAchievementYtd.Count > 0) kpiData.ActualYtd = 0;
+                        foreach (var achievementYtd in kpiAchievementYtd)
                         {
-                            case ScoringType.Positive:
-                                kpiData.Score = pmsConfigDetails.Weight * indexYtd;
-                                break;
-                            case ScoringType.Negative:
-                                kpiData.Score = pmsConfigDetails.Weight / indexYtd;
-                                break;
-                            case ScoringType.Custom:
-                                bool isMoreThanZero = false;
-                                var kpiAchievement = pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue).ToList();
-                                bool isNull = kpiAchievement.Count == 0;
-                                foreach (var achievement in kpiAchievement)
-                                {
-                                    if (achievement.Value > 0)
-                                        isMoreThanZero = true;
-                                }
-
-
-                                if (!isNull)
-                                {
-                                    kpiData.Score = isMoreThanZero ? 0 : Double.Parse(kpiData.Weight.ToString());
-                                }
-
-                                break;
+                            if (achievementYtd.Value.HasValue)
+                                kpiData.ActualYtd += achievementYtd.Value;
                         }
-                        
+
+                        #endregion
+
+                        #region KPI Target
+
+                        var kpiTargetYearly = pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly);
+                        if (kpiTargetYearly != null && kpiTargetYearly.Value != null)
+                            kpiData.TargetYearly = kpiTargetYearly.Value.Value;
+
+
+                        var kpiTargetMonthly =
+                            pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month);
+                        if (kpiTargetMonthly != null && kpiTargetMonthly.Value.HasValue)
+                            kpiData.TargetMonthly = kpiTargetMonthly.Value.Value;
+
+
+                        var kpiTargetYtd = pmsConfigDetails.Kpi.KpiTargets.Where(
+                            x => x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
+                        if (kpiTargetYtd.Count > 0) kpiData.TargetYtd = 0;
+                        foreach (var targetYtd in kpiTargetYtd)
+                        {
+                            if (targetYtd.Value.HasValue)
+                                kpiData.TargetYtd += targetYtd.Value;
+                        }
+
+                        #endregion
+
+                        #region Score
+                        if (kpiData.ActualYtd.HasValue && kpiData.TargetYtd.HasValue)
+                        {
+                            var indexYtd = (kpiData.ActualYtd.Value / kpiData.TargetYtd.Value);
+
+                            switch (pmsConfigDetails.ScoringType)
+                            {
+                                case ScoringType.Positive:
+                                    kpiData.Score = pmsConfigDetails.Weight * indexYtd;
+                                    break;
+                                case ScoringType.Negative:
+                                    if (indexYtd == 0)
+                                    {
+                                        response.IsSuccess = false;
+                                        response.Message =
+                                            string.Format(
+                                                @"KPI {0} memiliki nilai index YTD 0 dengan Nilai Scoring Type negative yang mengakibatkan terjadinya nilai infinity");
+                                        return response;
+                                    }
+                                    kpiData.Score = pmsConfigDetails.Weight / indexYtd;
+                                    break;
+                                case ScoringType.Custom:
+                                    bool isMoreThanZero = false;
+                                    var kpiAchievement = pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue).ToList();
+                                    bool isNull = kpiAchievement.Count == 0;
+                                    foreach (var achievement in kpiAchievement)
+                                    {
+                                        if (achievement.Value > 0)
+                                            isMoreThanZero = true;
+                                    }
+
+
+                                    if (!isNull)
+                                    {
+                                        kpiData.Score = isMoreThanZero ? 0 : Double.Parse(kpiData.Weight.ToString());
+                                    }
+
+                                    break;
+                            }
+
+                        }
+
+
+                        #endregion
+
+                        response.KpiDatas.Add(kpiData);
                     }
-                    
-
-                    #endregion
-
-                    response.KpiDatas.Add(kpiData);
                 }
+
+                //response.KpiDatas = response.KpiDatas;//.OrderBy(x => x.Order).ToList();
+                response.IsSuccess = true;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
             }
 
             return response;
-
-            //return new GetPmsSummaryResponse();
         }
     }
 }

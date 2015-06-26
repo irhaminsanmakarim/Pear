@@ -1,4 +1,5 @@
 ﻿@using DevExpress.Data
+@using DevExpress.XtraGrid
 @model IEnumerable<DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryViewModel>
 
 
@@ -14,10 +15,17 @@
             var pillarColumn = new MVCxGridViewColumn("Pillar", "OSP");
             pillarColumn.PropertiesEdit.EncodeHtml = false;
             pillarColumn.GroupIndex = 0;
+            pillarColumn.Settings.SortMode = ColumnSortMode.Custom;
+            pillarColumn.SortOrder = ColumnSortOrder.Ascending;
             settings.Columns.Add(pillarColumn);
             settings.Columns.Add("PerformanceIndicator", "Performance Indicator");
             settings.Columns.Add("Unit");
             settings.Columns.Add("Weight");
+            var kpiOrderColumn = new MVCxGridViewColumn("KpiOrder");
+            kpiOrderColumn.SortAscending();
+            kpiOrderColumn.Visible = false;
+            settings.Columns.Add(kpiOrderColumn);
+            settings.Columns.Add("PillarOrder").Visible = false;
             settings.HtmlDataCellPrepared = (sender, e) =>
                 {
                     e.Cell.Attributes.Add("onclick", string.Format(
@@ -135,7 +143,18 @@
             settings.SettingsPager.LastPageButton.Visible = true;
             settings.SettingsPager.PageSizeItemSettings.Visible = true;*/
             /*settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "1", "2", "5" };*/
+            settings.CustomColumnGroup = (sender, e) =>
+                {
+                    if (e.Column.FieldName != "Pillar") return;
 
+                    var sortOrder1 = int.Parse(e.GetRow1Value("PillarOrder").ToString());
+                    var sortOrder2 = int.Parse(e.GetRow2Value("PillarOrder").ToString());
+
+                    e.Result = sortOrder1.CompareTo(sortOrder2);
+                    e.Handled = true;
+                };
+
+            settings.CustomColumnSort = settings.CustomColumnGroup;
             settings.PreRender = (s, e) =>
                 {
                     MVCxGridView gridView = s as MVCxGridView;

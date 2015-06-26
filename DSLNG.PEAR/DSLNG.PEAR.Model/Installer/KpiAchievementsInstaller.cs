@@ -21,6 +21,7 @@ namespace DSLNG.PEAR.Data.Installer
             double?[] qhseTrainingAttendArr = new double?[]
                 {999, 20, 10, 5, 5, 20, null, null, null, null, null, null, null, 99};
             double?[] plantAvailibiltyArr = new double?[] {999, null, null, null, null, null, null, null, null, null, null, null, null, 99};
+            //double?[] plantAvailibiltyArr = new double?[] { 999, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 99 };
             
             
             for (var i = 1; i <= 13; i++)

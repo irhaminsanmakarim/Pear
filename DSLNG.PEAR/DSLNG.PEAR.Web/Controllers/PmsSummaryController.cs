@@ -16,7 +16,7 @@ namespace DSLNG.PEAR.Web.Controllers
 {
     public class PmsSummaryController : Controller
     {
-        private IPmsSummaryService _pmsSummaryService;
+        private readonly IPmsSummaryService _pmsSummaryService;
 
         public PmsSummaryController(IPmsSummaryService pmsSummaryService)
         {
