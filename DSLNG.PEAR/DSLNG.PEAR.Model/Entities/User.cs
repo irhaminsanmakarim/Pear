@@ -20,6 +20,6 @@ namespace DSLNG.PEAR.Data.Entities
 
         public bool IsActive { get; set; }
 
-        public string ChangeModel { get; set; }
+        //public string ChangeModel { get; set; }
     }
 }

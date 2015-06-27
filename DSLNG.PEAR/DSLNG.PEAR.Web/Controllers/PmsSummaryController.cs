@@ -123,15 +123,14 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             //Thread.Sleep(2000);
             var viewModel = new PmsConfigDetailsViewModel();
-            var x = _pmsConfigDetailsService.GetPmsConfigDetails(new Services.Requests.PmsConfigDetails.GetPmsConfigDetailsRequest { Id = id, Month = month });
-            var operationDate = new DateTime(x.Year, month, 1);
-            viewModel.Title = x.Title;
-            viewModel.Year = x.Year;
+            var response = _pmsConfigDetailsService.GetPmsConfigDetails(new Services.Requests.PmsConfigDetails.GetPmsConfigDetailsRequest { Id = id, Month = month });
+            viewModel = response.MapTo<PmsConfigDetailsViewModel>();
+            var operationDate = new DateTime(response.Year, month, 1);
+            viewModel.Title = response.Title;
+            viewModel.Year = response.Year;
             viewModel.Month = operationDate.ToString("MMM");
-            viewModel.GroupKpi = x.GroupKpi.MapTo<PmsConfigDetailsViewModel.Kpi>();
-            viewModel.RemarksMonthly = x.KpiAchievments.MapTo<PmsConfigDetailsViewModel.KpiAchievment>();
-            viewModel.RemarksYearly = x.KpiAchievmentYearly.MapTo<PmsConfigDetailsViewModel.KpiAchievment>();
-            viewModel.ClausalModel = x.KpiRelations.MapTo<PmsConfigDetailsViewModel.KpiRelationModel>();
+            viewModel.KpiAchievmentMonthly = response.KpiAchievmentMonthly.MapTo<PmsConfigDetailsViewModel.KpiAchievment>();
+            viewModel.KpiRelations = response.KpiRelations.MapTo<PmsConfigDetailsViewModel.KpiRelation>();
             return PartialView("_Details", viewModel);
         }
 	}

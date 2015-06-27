@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public Kpi KpiParent { get; set; }
         public Kpi Kpi { get; set; }
         public string Method { get; set; } //qualitative or quantitative
     }

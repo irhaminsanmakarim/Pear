@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Data.Entities
         {
             KpiTargets = new Collection<KpiTarget>();
             KpiAchievements = new Collection<KpiAchievement>();
+            RelationModels = new Collection<KpiRelationModel>();
         }
 
         [Key]

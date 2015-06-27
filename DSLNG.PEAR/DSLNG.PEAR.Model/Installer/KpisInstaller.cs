@@ -4,6 +4,7 @@ using DSLNG.PEAR.Data.Persistence;
 using System.Linq;
 using System.Data.Entity;
 using System;
+using System.Collections.ObjectModel;
 
 namespace DSLNG.PEAR.Data.Installer
 {
@@ -63,7 +64,7 @@ namespace DSLNG.PEAR.Data.Installer
                 FormatInput = FormatInput.Sum,
                 IsActive = true,
                 CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now
+                UpdatedDate = DateTime.Now,
             };
 
             var plantAvailability = new Kpi

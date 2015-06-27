@@ -10,20 +10,17 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         public string Title { get; set; }
         public int Year { get; set; }
         public string Month { get; set; }
-        public Kpi GroupKpi { get; set; }
-        public List<KpiAchievment> RemarksMonthly { get; set; }
-        public KpiAchievment RemarksYearly { get; set; }
-        public List<KpiRelationModel> ClausalModel { get; set; }
-
-        public class Kpi
-        {
-            public string Group { get; set; }
-            public string Name { get; set; }
-            public string Unit { get; set; }
-            public string Period { get; set; }
-            public double ActualYearly { get; set; }
-            public double ActualMonthly { get; set; }
-        }
+        public string KpiTypeYearly { get; set; }
+        public string KpiPeriodYearly { get; set; }
+        public string KpiRemarkYearly { get; set; }
+        public string KpiGroup { get; set; }
+        public string KpiName { get; set; }
+        public string KpiUnit { get; set; }
+        public string KpiPeriod { get; set; }
+        public double? KpiActualYearly { get; set; }
+        public double? KpiActualMonthly { get; set; }
+        public List<KpiAchievment> KpiAchievmentMonthly { get; set; }
+        public List<KpiRelation> KpiRelations { get; set; }
 
         public class KpiAchievment
         {
@@ -32,13 +29,13 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
             public string Remark { get; set; }
         }
 
-        public class KpiRelationModel
+        public class KpiRelation
         {
             public string Name { get; set; }
             public string Unit { get; set; }
-            public string RelationModel { get; set; }
-            public double ActualYearly { get; set; }
-            public double ActualMonthly { get; set; }
+            public string Method { get; set; }
+            public double? ActualYearly { get; set; }
+            public double? ActualMonthly { get; set; }
         }
     }
 }

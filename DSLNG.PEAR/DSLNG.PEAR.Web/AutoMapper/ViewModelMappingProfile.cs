@@ -84,10 +84,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<UpdatePillarViewModel, UpdatePillarRequest>();
 
             Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
-            Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiData, PmsConfigDetailsViewModel.Kpi>();
+            Mapper.CreateMap<GetPmsConfigDetailsResponse, PmsConfigDetailsViewModel>();
             Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiAchievment, PmsConfigDetailsViewModel.KpiAchievment>();
-            Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiRelation, PmsConfigDetailsViewModel.KpiRelationModel>();
-                //.ForMember(x => x.Score, y => y.MapFrom(z => z.ActualYearly / z.TargetYearly))
+            Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiRelation, PmsConfigDetailsViewModel.KpiRelation>();
 
             Mapper.CreateMap<BarChartViewModel, GetSeriesRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))

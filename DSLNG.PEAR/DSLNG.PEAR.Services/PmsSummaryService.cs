@@ -113,7 +113,7 @@ namespace DSLNG.PEAR.Services
                                     }
                                     kpiData.Score = pmsConfigDetails.Weight / indexYtd;
                                     break;
-                                case ScoringType.Custom:
+                                case ScoringType.Boolean:
                                     bool isMoreThanZero = false;
                                     var kpiAchievement = pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue).ToList();
                                     bool isNull = kpiAchievement.Count == 0;

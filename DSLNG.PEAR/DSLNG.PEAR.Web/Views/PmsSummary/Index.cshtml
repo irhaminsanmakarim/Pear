@@ -9,14 +9,23 @@
     }
     function OnGetRowValues(values) {
         alert(values);
-        
+
     }*/
 
     function OnCellClick(visibleIndex, fieldName) {
         var month = $("#filter-month").val();
-        $('#myModal').modal({
-            remote: '@Url.Action("Details", "PmsSummary")' + '/' + fieldName + '?month=' + month
+        $.ajax({
+            url: '@Url.Action("Details", "PmsSummary")' + '/' + fieldName + '?month=' + month,
+            type: 'GET',
+            success: function (partialView) {
+                $('.modal-body').html(partialView);
+                $('#myModal').modal('show');
+            }
         });
+
+        @*$('#myModal').modal({
+            //remote: '@Url.Action("Details", "PmsSummary")' + '/' + fieldName + '?month=' + month,
+        });*@
     }
 </script>
 <section>
