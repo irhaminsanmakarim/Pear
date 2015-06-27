@@ -11,11 +11,11 @@ namespace DSLNG.PEAR.Data.Entities
 
         //public int RefId { get; set; }
         public string Color { get; set; }
-        //public string Expression { get; set; }
-        public double? MinValue { get; set; }
-        public double? MaxValue { get; set; }
+        public string Expression { get; set; }
+        /*public double? MinValue { get; set; }
+        public double? MaxValue { get; set; }*/
 
-        public bool IsActive { get; set; }
+        //public bool IsActive { get; set; }
     }
 }
 

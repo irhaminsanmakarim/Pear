@@ -19,7 +19,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
         {
             public int Id { get; set; }
             public string Pillar { get; set; }
-            public string PerformanceIndicator { get; set; }
+            public string Kpi { get; set; }
             public string Unit { get; set; }
             public double Weight { get; set; }
 
@@ -85,7 +85,11 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
 
             public int KpiOrder { get; set; }
 
-            public string Color { get; set; }
+            public string KpiColor { get; set; }
+
+            //public string Color { get; set; }
+
+            
 
             /*public string TargetYearly { get; set; }
             public string TargetMonthly { get; set; }

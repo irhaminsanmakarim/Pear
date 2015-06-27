@@ -10,7 +10,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
     {
         public int Id { get; set; }
         public string Pillar { get; set; }
-        public string PerformanceIndicator { get; set; }
+        public string Kpi { get; set; }
         public string Unit { get; set; }
         public decimal Weight { get; set; }
 
@@ -87,6 +87,13 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         public int PillarOrder { get; set; }
 
         public int KpiOrder { get; set; }
+
+        public string KpiColor { get; set; }
+
+        public string KpiNameWithColor
+        {
+            get { return string.Format(@"<span style='color:{0}'>{1}</span>", KpiColor, Kpi); }
+        }
 
         /*public int Id { get; set; }
         public string Osp { get; set; }
