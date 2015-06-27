@@ -39,10 +39,10 @@ namespace DSLNG.PEAR.Services
             {
                 response.Title = config.PmsConfig.PmsSummary.Title;
                 response.Year = config.PmsConfig.PmsSummary.Year;
-                response.KpiGroup = config.Kpi.Group.Name;
+                response.KpiGroup = config.Kpi.Group != null ? config.Kpi.Group.Name : "";
                 response.KpiName = config.Kpi.Name;
-                response.KpiUnit = config.Kpi.Measurement.Name;
-                response.KpiPeriod = config.Kpi.Periode.Name.ToString();
+                response.KpiUnit = config.Kpi.Measurement != null ? config.Kpi.Measurement.Name : "";
+                response.KpiPeriod = config.Kpi.Periode != null ? config.Kpi.Periode.Name.ToString() : "";
                 var kpiActualYearly = config.Kpi.KpiAchievements.FirstOrDefault(x => x.PeriodeType == Data.Enums.PeriodeType.Yearly);
                 if (kpiActualYearly != null)
                 {
