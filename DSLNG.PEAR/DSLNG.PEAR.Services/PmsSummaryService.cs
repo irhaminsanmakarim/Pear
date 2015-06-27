@@ -155,13 +155,13 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        private string GetKpiColor(double? value, IEnumerable<ScoreIndicator> scoreIndicators)
+        private string GetKpiColor(double? score, IEnumerable<ScoreIndicator> scoreIndicators)
         {
-            if (value.HasValue)
+            if (score.HasValue)
             {
                 foreach (var scoreIndicator in scoreIndicators)
                 {
-                    Expression e = new Expression(scoreIndicator.Expression.Replace("x", value.ToString()));
+                    Expression e = new Expression(scoreIndicator.Expression.Replace("x", score.ToString()));
                     bool isPassed = (bool)e.Evaluate();
                     if (isPassed)
                     {
