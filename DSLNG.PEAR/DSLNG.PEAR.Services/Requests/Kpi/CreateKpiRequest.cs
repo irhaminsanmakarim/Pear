@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSLNG.PEAR.Services.Responses.Kpi;
 
 namespace DSLNG.PEAR.Services.Requests.Kpi
 {
@@ -20,7 +21,7 @@ namespace DSLNG.PEAR.Services.Requests.Kpi
         public int Order { get; set; }
         public YtdFormula YtdFormula { get; set; }
         public Measurement Measurement { get; set; }
-        public Method Method { get; set; }
+        //public Method Method { get; set; }
         public int? ConversionId { get; set; }
         public Conversion Conversion { get; set; }
         public FormatInput FormatInput { get; set; }

@@ -24,30 +24,26 @@ namespace DSLNG.PEAR.Data.Installer
             pmsConfigSafety.Id = 1;
             pmsConfigSafety.IsActive = true;
             pmsConfigSafety.Pillar = _dataContext.Pillars.Local.First(x => x.Id == 1);
-            pmsConfigSafety.ScoreIndicators.Add(new ScoreIndicator
+            /*pmsConfigSafety.ScoreIndicators.Add(new ScoreIndicator
                 {
                     IsActive = true,
-                    Color = "#126712",
-                    MaxValue = 20,
-                    MinValue = 0
-                });
+                    Color = "#126712"
+                });*/
             pmsConfigSafety.ScoringType = ScoringType.Positive;
-            pmsConfigSafety.Weight = 80;
+            pmsConfigSafety.Weight = 20;
             pmsConfigSafety.PmsSummary = _dataContext.PmsSummaries.Local.First(x => x.Id == 1);
 
             var pmsConfigProductivity = new PmsConfig();
             pmsConfigProductivity.Id = 2;
             pmsConfigProductivity.IsActive = true;
             pmsConfigProductivity.Pillar = _dataContext.Pillars.Local.First(x => x.Id == 2);
-            pmsConfigProductivity.ScoreIndicators.Add(new ScoreIndicator
+            /*pmsConfigProductivity.ScoreIndicators.Add(new ScoreIndicator
             {
                 IsActive = true,
-                Color = "#126712",
-                MaxValue = 20,
-                MinValue = 0
-            });
+                Color = "#126712"
+            });*/
             pmsConfigProductivity.ScoringType = ScoringType.Positive;
-            pmsConfigProductivity.Weight = 80;
+            pmsConfigProductivity.Weight = 40;
             pmsConfigProductivity.PmsSummary = _dataContext.PmsSummaries.Local.First(x => x.Id == 1);
             
             _dataContext.PmsConfigs.AddOrUpdate(pmsConfigSafety);

@@ -7,6 +7,6 @@ namespace DSLNG.PEAR.Data.Enums
     {
         Positive,
         Negative,
-        Custom
+        Boolean
     }
 }

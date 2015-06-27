@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
 using System.Data.Entity;
+using NCalc;
 
 namespace DSLNG.PEAR.Services
 {
@@ -27,8 +30,9 @@ namespace DSLNG.PEAR.Services
                 var pmsSummary = DataContext.PmsSummaries
                 .Include("PmsConfigs.Pillar")
                 .Include("PmsConfigs.PmsConfigDetailsList.Kpi.Measurement")
-                .Include("PmsConfigs.PmsConfigDetailsList.Kpi.KpiTargets")
                 .Include("PmsConfigs.PmsConfigDetailsList.Kpi.KpiAchievements")
+                .Include("PmsConfigs.PmsConfigDetailsList.Kpi.KpiTargets")
+                .Include("PmsConfigs.PmsConfigDetailsList.ScoreIndicators")
                 .First(x => x.IsActive && x.Year == request.Year);
 
                 foreach (var pmsConfig in pmsSummary.PmsConfigs)
@@ -38,7 +42,7 @@ namespace DSLNG.PEAR.Services
                         var kpiData = new GetPmsSummaryResponse.KpiData();
                         kpiData.Id = pmsConfigDetails.Id;
                         kpiData.Pillar = pmsConfig.Pillar.Name;
-                        kpiData.PerformanceIndicator = pmsConfigDetails.Kpi.Name;
+                        kpiData.Kpi = pmsConfigDetails.Kpi.Name;
                         kpiData.Unit = pmsConfigDetails.Kpi.Measurement.Name;
                         kpiData.Weight = pmsConfigDetails.Weight;
                         kpiData.PillarOrder = pmsConfigDetails.Kpi.Pillar.Order;
@@ -108,12 +112,12 @@ namespace DSLNG.PEAR.Services
                                         response.IsSuccess = false;
                                         response.Message =
                                             string.Format(
-                                                @"KPI {0} memiliki nilai index YTD 0 dengan Nilai Scoring Type negative yang mengakibatkan terjadinya nilai infinity");
+                                                @"KPI {0} memiliki nilai index YTD 0 dengan Nilai Scoring Type negative yang mengakibatkan terjadinya nilai infinity", pmsConfigDetails.Kpi.Name);
                                         return response;
                                     }
                                     kpiData.Score = pmsConfigDetails.Weight / indexYtd;
                                     break;
-                                case ScoringType.Custom:
+                                case ScoringType.Boolean:
                                     bool isMoreThanZero = false;
                                     var kpiAchievement = pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue).ToList();
                                     bool isNull = kpiAchievement.Count == 0;
@@ -122,7 +126,6 @@ namespace DSLNG.PEAR.Services
                                         if (achievement.Value > 0)
                                             isMoreThanZero = true;
                                     }
-
 
                                     if (!isNull)
                                     {
@@ -134,14 +137,14 @@ namespace DSLNG.PEAR.Services
 
                         }
 
-
                         #endregion
+
+                        kpiData.KpiColor = GetKpiColor(kpiData.Score, pmsConfigDetails.ScoreIndicators);
 
                         response.KpiDatas.Add(kpiData);
                     }
                 }
 
-                //response.KpiDatas = response.KpiDatas;//.OrderBy(x => x.Order).ToList();
                 response.IsSuccess = true;
             }
             catch (InvalidOperationException invalidOperationException)
@@ -150,6 +153,24 @@ namespace DSLNG.PEAR.Services
             }
 
             return response;
+        }
+
+        private string GetKpiColor(double? score, IEnumerable<ScoreIndicator> scoreIndicators)
+        {
+            if (score.HasValue)
+            {
+                foreach (var scoreIndicator in scoreIndicators)
+                {
+                    Expression e = new Expression(scoreIndicator.Expression.Replace("x", score.ToString()));
+                    bool isPassed = (bool)e.Evaluate();
+                    if (isPassed)
+                    {
+                        return scoreIndicator.Color;
+                    }
+                }
+            }
+
+            return "grey";
         }
     }
 }
