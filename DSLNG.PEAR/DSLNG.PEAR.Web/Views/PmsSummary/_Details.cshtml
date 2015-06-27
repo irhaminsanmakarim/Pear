@@ -28,12 +28,12 @@
                     <div>Clausal Model</div>
                 </a>
             </li>
-            <li role="presentation">
+            @*<li role="presentation">
                 <a href="#graphchart" aria-controls="home" role="tab" data-toggle="tab">
                     <div class="fa fa-bar-chart-o"></div>
                     <div>Graph Chart</div>
                 </a>
-            </li>
+            </li>*@
             <li role="presentation">
                 <a href="#remark" aria-controls="home" role="tab" data-toggle="tab">
                     <div class="fa fa-pencil"></div>
@@ -80,6 +80,8 @@
             </div>
 
             <div role="tabpanel" class="tab-pane" id="clausalmodel">
+               @if (Model.KpiRelations.Count > 0)
+               {
                 <table class="table table-striped table-bordered table-responsive">
                     <thead>
                         <tr>
@@ -108,7 +110,11 @@
                         }
                     </tbody>
                 </table>
-
+               }
+               else
+               {
+                    <span>No Kpi Relation.</span>
+               }
             </div>
             <div role="tabpanel" class="tab-pane" id="graphchart">
 
