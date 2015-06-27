@@ -25,7 +25,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         [Display(Name="Range Filter")]
         public string RangeFilter { get; set; }
         public IList<SelectListItem> RangeFilters { get; set; }
-        public DateTime Start { get {
+        public DateTime? Start { get {
+            if (string.IsNullOrEmpty(this.StartInDisplay)) {
+                return null;
+            }
             if (this.PeriodeType == EPeriodeType.Monthly.ToString()) {
                 return DateTime.ParseExact("01/" + this.StartInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             }
@@ -38,7 +41,11 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             }
             return DateTime.ParseExact(this.StartInDisplay, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
         }}
-        public DateTime End { get {
+        public DateTime? End { get {
+            if (string.IsNullOrEmpty(this.EndInDisplay))
+            {
+                return null;
+            }
             if (this.PeriodeType == EPeriodeType.Monthly.ToString()) {
                 return DateTime.ParseExact("01/" + this.EndInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             }

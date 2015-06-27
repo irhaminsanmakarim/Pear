@@ -85,16 +85,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
                 //.ForMember(x => x.Score, y => y.MapFrom(z => z.ActualYearly / z.TargetYearly))
 
-            Mapper.CreateMap<BarChartViewModel, GetSeriesRequest>()
+            Mapper.CreateMap<BarChartViewModel, GetChartDataRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
                 .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
                 .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)))
-                .ForMember(x => x.SeriesList, o => o.MapFrom(s => s.SeriesList.MapTo<GetSeriesRequest.Series>()));
+                .ForMember(x => x.SeriesList, o => o.MapFrom(s => s.SeriesList.MapTo<GetChartDataRequest.Series>()));
 
-            Mapper.CreateMap<BarChartViewModel.Series, GetSeriesRequest.Series>()
-                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetSeriesRequest.Stack>()));
-            Mapper.CreateMap<BarChartViewModel.Stack, GetSeriesRequest.Stack>();
-            Mapper.CreateMap<GetSeriesResponse.SeriesResponse, BarChartDataViewModel.SeriesViewModel>();
+            Mapper.CreateMap<BarChartViewModel.Series, GetChartDataRequest.Series>()
+                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetChartDataRequest.Stack>()));
+            Mapper.CreateMap<BarChartViewModel.Stack, GetChartDataRequest.Stack>();
+            Mapper.CreateMap<GetChartDataResponse.SeriesResponse, BarChartDataViewModel.SeriesViewModel>();
             base.Configure();
         }
     }
