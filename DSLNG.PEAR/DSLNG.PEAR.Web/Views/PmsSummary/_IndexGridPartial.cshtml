@@ -18,7 +18,7 @@
             pillarColumn.Settings.SortMode = ColumnSortMode.Custom;
             pillarColumn.SortOrder = ColumnSortOrder.Ascending;
             settings.Columns.Add(pillarColumn);
-            settings.Columns.Add("PerformanceIndicator", "Performance Indicator");
+            settings.Columns.Add("KpiNameWithColor", "Performance Indicator").PropertiesEdit.EncodeHtml = false;
             settings.Columns.Add("Unit");
             settings.Columns.Add("Weight");
             var kpiOrderColumn = new MVCxGridViewColumn("KpiOrder");
