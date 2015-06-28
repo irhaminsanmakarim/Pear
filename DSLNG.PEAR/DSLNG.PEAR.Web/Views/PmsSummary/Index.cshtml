@@ -3,34 +3,28 @@
     ViewBag.Title = "Index";
 }
 <script type="text/javascript">
-    /*function OnGridFocusedRowChanged(s, e) {
-        alert('asdsd');
-        s.GetRowValues(s.GetFocusedRowIndex(), 'Id', OnGetRowValues);
-    }
-    function OnGetRowValues(values) {
-        alert(values);
-
-    }*/
     $(document).ready(function () {
         $('#myModal').on('hidden.bs.modal', function(e) {
             $(this).removeData('bs.modal');
+        });
+        
+        $('#month, #year').change(function () {
+            var year = $('#year').val();
+            var month = $('#month').val();
+            var url = '@Html.Raw( Url.Action("Index", "PmsSummary", new {year = "_year_", month = "_month_"}) )'.replace('_year_', year).replace('_month_', month);
+            window.location = url;
         });
     });
     
     function OnCellClick(visibleIndex, fieldName) {
         var month = $("#filter-month").val();
         $('#myModal').modal({
-            remote: '@Url.Action("Details", "PmsSummary")' + '/' + fieldName + '?month=' + month,
-
+            remote: '@Url.Action("Details", "PmsSummary")' + '/' + fieldName + '?month=' + month
         });
     }
+
     
-    function changeDropdownYearMonth() {
-        var year = $('#year').val();
-        var month = $('#month').val();
-        var url = '@Html.Raw( Url.Action("Index", "PmsSummary", new {year = "_year_", month = "_month_"}) )'.replace('_year_', year).replace('_month_', month);;
-        window.location = url;
-    }
+    
 </script>
 <section>
     <div class="title_page">
@@ -43,30 +37,19 @@
             <form class="form-inline">
                 <div style="margin: 5px 40px 0px 25px; padding-right: 30px; border-right: solid 1px #3f454f;" class="form-group">
                     <label>Year Illustration :</label>
-                    <select class="form-control" name="year" id="year" onchange="changeDropdownYearMonth()">
+                    @Html.DropDownListFor(x => x.Year, Model.YearList, new {@class="form-control", id="year"})
+                    @*<select class="form-control" name="year" id="year">
                         <option>2015</option>
                         <option>2014</option>
                         <option>2013</option>
                         <option>2012</option>
                         <option>2011</option>
-                    </select>
+                    </select>*@
                 </div>
                 <div style="margin-top: 5px;" class="form-group">
                     <label>Month :</label>
-                    <select class="form-control" id="month" onchange="changeDropdownYearMonth()">
-                        <option value="1">Jan</option>
-                        <option value="2">Feb</option>
-                        <option value="3">Mar</option>
-                        <option value="4">Apr</option>
-                        <option value="5">May</option>
-                        <option value="6">Jun</option>
-                        <option value="7">Jul</option>
-                        <option value="8">Aug</option>
-                        <option value="9">Sep</option>
-                        <option value="10">Oct</option>
-                        <option value="11">Nov</option>
-                        <option value="12">Dec</option>
-                    </select>
+                    @Html.DropDownListFor(x => x.Month, Model.MonthList, new {@class="form-control", id="month"})
+                    
                 </div>
             </form>
         </div>
@@ -81,7 +64,7 @@
         </p>
     </div>
     <div class="col-md-12">
-        @Html.Partial("_IndexGridPartial", Model.PmsSummaries)
+        @Html.Partial("_IndexGridPartial", Model)
     </div>
 </section>
 

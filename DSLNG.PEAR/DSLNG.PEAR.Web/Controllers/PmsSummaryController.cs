@@ -17,10 +17,10 @@ namespace DSLNG.PEAR.Web.Controllers
     public class PmsSummaryController : Controller
     {
         private readonly IPmsSummaryService _pmsSummaryService;
-        private IPmsConfigDetailsService _pmsConfigDetailsService;
+        private readonly IPmsConfigDetailsService _pmsConfigDetailsService;
 
         public PmsSummaryController(
-            IPmsSummaryService pmsSummaryService, 
+            IPmsSummaryService pmsSummaryService,
             IPmsConfigDetailsService pmsConfigDetailsService)
         {
             _pmsSummaryService = pmsSummaryService;
@@ -29,35 +29,37 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Index(int? month, int? year)
         {
-            var queryString = Request.QueryString;
             var viewModel = new PmsSummaryIndexViewModel();
-            var response =
-                _pmsSummaryService.GetPmsSummary(new GetPmsSummaryRequest
-                    {
-                        Month = month.HasValue ? month.Value : DateTime.Now.Month,
-                        Year = year.HasValue ? year.Value : DateTime.Now.Year
-                    });
+            var request = new GetPmsSummaryRequest
+                {
+                    Month = month.HasValue ? month.Value : DateTime.Now.Month,
+                    Year = year.HasValue ? year.Value : DateTime.Now.Year
+                };
 
+            var response = _pmsSummaryService.GetPmsSummary(request);
             viewModel.PmsSummaries = response.KpiDatas.MapTo<PmsSummaryViewModel>();
+            viewModel.Year = request.Year;
+            viewModel.Month = request.Month;
             return View(viewModel);
         }
 
-        public ActionResult IndexGridPartial()
+        public ActionResult IndexGridPartial(int? month, int? year)
         {
-            var queryString = Request.QueryString;
-            var request = Request.Params;
-            var response =
-                _pmsSummaryService.GetPmsSummary(new GetPmsSummaryRequest
-                    {
-                        Month = DateTime.Now.Month,
-                        Year = DateTime.Now.Year
-                    });
             var viewModel = new PmsSummaryIndexViewModel();
+            var request = new GetPmsSummaryRequest
+            {
+                Month = month.HasValue ? month.Value : DateTime.Now.Month,
+                Year = year.HasValue ? year.Value : DateTime.Now.Year
+            };
+
+            var response = _pmsSummaryService.GetPmsSummary(request);
             viewModel.PmsSummaries = response.KpiDatas.MapTo<PmsSummaryViewModel>();
-            return PartialView("_IndexGridPartial", viewModel.PmsSummaries);
+            viewModel.Year = request.Year;
+            viewModel.Month = request.Month;
+            return PartialView("_IndexGridPartial", viewModel);
         }
 
-       private IEnumerable<PmsSummaryViewModel> AddFakePmsSummaryData()
+        private IEnumerable<PmsSummaryViewModel> AddFakePmsSummaryData()
         {
             IList<PmsSummaryViewModel> list = new List<PmsSummaryViewModel>();
             var pmsSummary1 = new PmsSummaryViewModel
@@ -135,5 +137,5 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.KpiRelations = response.KpiRelations.MapTo<PmsConfigDetailsViewModel.KpiRelation>();
             return PartialView("_Details", viewModel);
         }
-	}
+    }
 }
