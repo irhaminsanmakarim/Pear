@@ -1,12 +1,12 @@
 ﻿@using DevExpress.Data
 @using DevExpress.XtraGrid
-@model IEnumerable<DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryViewModel>
+@model DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryIndexViewModel
 
 @Html.DevExpress().GridView(settings =>
         {
             settings.Name = "gridPmsSummaryIndex";
             settings.KeyFieldName = "Id";
-            settings.CallbackRouteValues = new { Controller = "PmsSummary", Action = "IndexGridPartial" };
+            settings.CallbackRouteValues = new { Controller = "PmsSummary", Action = "IndexGridPartial", year = Model.Year, month = Model.Month };
             settings.SettingsBehavior.AllowFixedGroups = true;
             settings.Settings.ShowFooter = true;
             settings.Width = Unit.Percentage(100);
@@ -124,7 +124,7 @@
             ASPxSummaryItem totalScoreLabel = new ASPxSummaryItem();
             totalScoreLabel.FieldName = "KpiNameWithColor";
             totalScoreLabel.ShowInGroupFooterColumn = "KpiNameWithColor";
-            totalScoreLabel.DisplayFormat = string.Format(@"<span class='{0}' style='background-color:{1}'></span> Total Score", "trafficlight", Model.FirstOrDefault() != null ? Model.FirstOrDefault().TotalScoreColor : "grey");
+            totalScoreLabel.DisplayFormat = string.Format(@"<span class='{0}' style='background-color:{1}'></span> Total Score", "trafficlight", Model.PmsSummaries.FirstOrDefault() != null ? Model.PmsSummaries.FirstOrDefault().TotalScoreColor : "grey");
             totalScoreLabel.SummaryType = SummaryItemType.Count;
             
 
@@ -162,6 +162,6 @@
                     if (gridView != null)
                         gridView.ExpandAll();
                 };
-        }).Bind(Model).GetHtml()
+        }).Bind(Model.PmsSummaries).GetHtml()
 
 
