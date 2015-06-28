@@ -27,11 +27,11 @@ namespace DSLNG.PEAR.Data.Installer
             group.Remark = "test";
 
             var group2 = new Group();
-            group.Id = 2;
-            group.IsActive = true;
-            group.Name = "Security";
-            group.Order = 2;
-            group.Remark = "test";
+            group2.Id = 2;
+            group2.IsActive = true;
+            group2.Name = "Security";
+            group2.Order = 2;
+            group2.Remark = "test";
 
             _dataContext.Groups.AddOrUpdate(group);
             _dataContext.Groups.AddOrUpdate(group2);

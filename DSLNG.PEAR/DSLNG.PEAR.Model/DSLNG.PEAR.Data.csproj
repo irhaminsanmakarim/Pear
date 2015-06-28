@@ -77,6 +77,8 @@
     <Compile Include="Entities\Menu.cs" />
     <Compile Include="Entities\Method.cs" />
     <Compile Include="Entities\Periode.cs" />
+    <Compile Include="Enums\MonthPeriode.cs" />
+    <Compile Include="Entities\PmsSummaryScoringIndicator.cs" />
     <Compile Include="Enums\PeriodeType.cs" />
     <Compile Include="Entities\Pillar.cs" />
     <Compile Include="Entities\PmsConfig.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Entities\PmsSummary.cs" />
     <Compile Include="Entities\RoleGroup.cs" />
     <Compile Include="Entities\ScoreIndicator.cs" />
+    <Compile Include="Enums\PmsSummaryScoringIndicatorType.cs" />
     <Compile Include="Enums\RangeFilter.cs" />
     <Compile Include="Enums\ScoringType.cs" />
     <Compile Include="Enums\SeriesType.cs" />

@@ -7,15 +7,16 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Data.Enums;
 using EPeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 using System.Globalization;
+
 namespace DSLNG.PEAR.Web.ViewModels.Artifact
 {
-    public class BarChartViewModel
+    public class LineChartViewModel
     {
-        public BarChartViewModel() {
+        public LineChartViewModel()
+        {
             PeriodeTypes = new List<SelectListItem>();
             ValueAxes = new List<SelectListItem>();
             SeriesList = new List<Series>();
-            SeriesTypes = new List<SelectListItem>();
             KpiList = new List<SelectListItem>();
             RangeFilters = new List<SelectListItem>();
         }
@@ -70,21 +71,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         [Display(Name = "Maximum Scale")]
         public double MaxValue { get; set; }
         public IList<Series> SeriesList { get; set; }
-        public IList<SelectListItem> SeriesTypes { get; set; }
         public IList<SelectListItem> KpiList { get; set; }
         public class Series
-        {
-            public Series() {
-                Stacks = new List<Stack>();
-            }
-            [Display(Name="Kpi")]
-            public int KpiId { get; set; }
-            public string Label { get; set; }
-            public string ValueAxis { get; set; }
-            public IList<Stack> Stacks { get; set; }
-        }
-
-        public class Stack
         {
             [Display(Name="Kpi")]
             public int KpiId { get; set; }

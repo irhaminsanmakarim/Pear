@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 namespace DSLNG.PEAR.Web.ViewModels.Artifact
 {
-    public class BarChartDataViewModel
+    public class LineChartDataViewModel
     {
-        public BarChartDataViewModel() {
+        public LineChartDataViewModel()
+        {
             Series = new List<SeriesViewModel>();
         }
         public string SeriesType { get; set; }
@@ -16,9 +17,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         {
             public string name { get; set; }
             public IList<double> data { get; set; }
-            public string stack { get; set; }
         }
     }
-
-    
 }

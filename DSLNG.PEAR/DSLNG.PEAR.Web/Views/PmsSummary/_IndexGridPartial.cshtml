@@ -1,18 +1,17 @@
 ﻿@using DevExpress.Data
 @using DevExpress.XtraGrid
-@model IEnumerable<DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryViewModel>
+@model DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryIndexViewModel
 
-
-    @Html.DevExpress().GridView(settings =>
+@Html.DevExpress().GridView(settings =>
         {
             settings.Name = "gridPmsSummaryIndex";
             settings.KeyFieldName = "Id";
-            settings.CallbackRouteValues = new { Controller = "PmsSummary", Action = "IndexGridPartial" };
+            settings.CallbackRouteValues = new { Controller = "PmsSummary", Action = "IndexGridPartial", year = Model.Year, month = Model.Month };
             settings.SettingsBehavior.AllowFixedGroups = true;
             settings.Settings.ShowFooter = true;
             settings.Width = Unit.Percentage(100);
 
-            var pillarColumn = new MVCxGridViewColumn("Pillar", "OSP");
+            var pillarColumn = new MVCxGridViewColumn("PillarNameWithColor", "OSP");
             pillarColumn.PropertiesEdit.EncodeHtml = false;
             pillarColumn.GroupIndex = 0;
             pillarColumn.Settings.SortMode = ColumnSortMode.Custom;
@@ -20,7 +19,8 @@
             settings.Columns.Add(pillarColumn);
             settings.Columns.Add("KpiNameWithColor", "Performance Indicator").PropertiesEdit.EncodeHtml = false;
             settings.Columns.Add("Unit");
-            settings.Columns.Add("Weight");
+            settings.Columns.Add("Weight").CellStyle.HorizontalAlign = HorizontalAlign.Center;
+            settings.Columns.Add("PillarWeight").Visible = false;
             var kpiOrderColumn = new MVCxGridViewColumn("KpiOrder");
             kpiOrderColumn.SortAscending();
             kpiOrderColumn.Visible = false;
@@ -89,7 +89,7 @@
                         
                         if (totalScore > 0)
                         {
-                            percent = (totalScore/100) * Convert.ToDecimal(e.GetValue("Weight"));
+                            percent = (totalScore/100) * Convert.ToDecimal(e.GetValue("PillarWeight"));
                         }
                         if (tagIndex == "1")
                         {
@@ -107,7 +107,7 @@
             settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleAlways;
 
             ASPxSummaryItem kpiScore = new ASPxSummaryItem();
-            kpiScore.ShowInGroupFooterColumn = "PerformanceIndicator";
+            kpiScore.ShowInGroupFooterColumn = "KpiNameWithColor";
             kpiScore.SummaryType = SummaryItemType.Sum;
             kpiScore.FieldName = "Score";
             kpiScore.DisplayFormat = "Score KPI in this pillar (0.00)";
@@ -122,10 +122,11 @@
             settings.GroupSummary.Add(percentageScore);
 
             ASPxSummaryItem totalScoreLabel = new ASPxSummaryItem();
-            totalScoreLabel.FieldName = "PerformanceIndicator";
-            totalScoreLabel.ShowInGroupFooterColumn = "PerformanceIndicator";
-            totalScoreLabel.DisplayFormat = "Total Score";
+            totalScoreLabel.FieldName = "KpiNameWithColor";
+            totalScoreLabel.ShowInGroupFooterColumn = "KpiNameWithColor";
+            totalScoreLabel.DisplayFormat = string.Format(@"<span class='{0}' style='background-color:{1}'></span> Total Score", "trafficlight", Model.PmsSummaries.FirstOrDefault() != null ? Model.PmsSummaries.FirstOrDefault().TotalScoreColor : "grey");
             totalScoreLabel.SummaryType = SummaryItemType.Count;
+            
 
             ASPxSummaryItem totalScoreValue = new ASPxSummaryItem();
             totalScoreValue.Tag = "Score_2";
@@ -145,7 +146,7 @@
             /*settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "1", "2", "5" };*/
             settings.CustomColumnGroup = (sender, e) =>
                 {
-                    if (e.Column.FieldName != "Pillar") return;
+                    if (e.Column.FieldName != "PillarNameWithColor") return;
 
                     var sortOrder1 = int.Parse(e.GetRow1Value("PillarOrder").ToString());
                     var sortOrder2 = int.Parse(e.GetRow2Value("PillarOrder").ToString());
@@ -161,6 +162,6 @@
                     if (gridView != null)
                         gridView.ExpandAll();
                 };
-        }).Bind(Model).GetHtml()
+        }).Bind(Model.PmsSummaries).GetHtml()
 
 

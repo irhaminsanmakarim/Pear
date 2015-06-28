@@ -82,6 +82,7 @@
     <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Requests\Group\GetGroupsRequest.cs" />
+    <Compile Include="Requests\Artifact\GetChartDataRequest.cs" />
     <Compile Include="Requests\Kpi\CreateKpiRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Conversion.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Group.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Requests\User\CreateUserRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
     <Compile Include="Requests\User\UpdateUserRequest.cs" />
+    <Compile Include="Responses\Artifact\GetChartDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetSeriesResponse.cs" />
     <Compile Include="Responses\Conversion\GetConversionResponse.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
