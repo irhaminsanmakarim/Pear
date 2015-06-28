@@ -12,9 +12,9 @@
 
     }*/
     $(document).ready(function () {
-        $('#myModal').on('hidden.bs.modal', function (e) {
+        $('#myModal').on('hidden.bs.modal', function(e) {
             $(this).removeData('bs.modal');
-        })
+        });
     });
     
     function OnCellClick(visibleIndex, fieldName) {
@@ -23,6 +23,13 @@
             remote: '@Url.Action("Details", "PmsSummary")' + '/' + fieldName + '?month=' + month,
 
         });
+    }
+    
+    function changeDropdownYearMonth() {
+        var year = $('#year').val();
+        var month = $('#month').val();
+        var url = '@Html.Raw( Url.Action("Index", "PmsSummary", new {year = "_year_", month = "_month_"}) )'.replace('_year_', year).replace('_month_', month);;
+        window.location = url;
     }
 </script>
 <section>
@@ -36,7 +43,7 @@
             <form class="form-inline">
                 <div style="margin: 5px 40px 0px 25px; padding-right: 30px; border-right: solid 1px #3f454f;" class="form-group">
                     <label>Year Illustration :</label>
-                    <select class="form-control">
+                    <select class="form-control" name="year" id="year" onchange="changeDropdownYearMonth()">
                         <option>2015</option>
                         <option>2014</option>
                         <option>2013</option>
@@ -46,7 +53,7 @@
                 </div>
                 <div style="margin-top: 5px;" class="form-group">
                     <label>Month :</label>
-                    <select class="form-control" id="filter-month">
+                    <select class="form-control" id="month" onchange="changeDropdownYearMonth()">
                         <option value="1">Jan</option>
                         <option value="2">Feb</option>
                         <option value="3">Mar</option>

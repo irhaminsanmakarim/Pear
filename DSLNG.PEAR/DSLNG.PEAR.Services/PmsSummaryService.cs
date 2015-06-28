@@ -39,12 +39,10 @@ namespace DSLNG.PEAR.Services
                 .First(x => x.IsActive && x.Year == request.Year);
 
                 var pillarScoringIndicators =
-                    pmsSummary.PmsSummaryScoringIndicators.Where(x => x.Type == PmsSummaryScoringIndicatorType.Pillar)
-                              .ToList();
+                    pmsSummary.PmsSummaryScoringIndicators.FirstOrDefault(x => x.Type == PmsSummaryScoringIndicatorType.Pillar);
 
                 var totalScoreScoringIndicators =
-                    pmsSummary.PmsSummaryScoringIndicators.Where(x => x.Type == PmsSummaryScoringIndicatorType.TotalScore)
-                              .ToList();
+                    pmsSummary.PmsSummaryScoringIndicators.FirstOrDefault(x => x.Type == PmsSummaryScoringIndicatorType.TotalScore);
 
                 foreach (var pmsConfig in pmsSummary.PmsConfigs)
                 {
@@ -58,6 +56,7 @@ namespace DSLNG.PEAR.Services
                         kpiData.Weight = pmsConfigDetails.Weight;
                         kpiData.PillarOrder = pmsConfigDetails.Kpi.Pillar.Order;
                         kpiData.KpiOrder = pmsConfigDetails.Kpi.Order;
+                        kpiData.PillarWeight = pmsConfig.Weight;
 
                         #region KPI Achievement
 
@@ -73,7 +72,7 @@ namespace DSLNG.PEAR.Services
 
 
                         var kpiAchievementYtd = pmsConfigDetails.Kpi.KpiAchievements.Where(
-                            x => x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
+                            x => x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue &&(x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
                         if (kpiAchievementYtd.Count > 0) kpiData.ActualYtd = 0;
                         foreach (var achievementYtd in kpiAchievementYtd)
                         {
@@ -97,7 +96,7 @@ namespace DSLNG.PEAR.Services
 
 
                         var kpiTargetYtd = pmsConfigDetails.Kpi.KpiTargets.Where(
-                            x => x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
+                            x => x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue && (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
                         if (kpiTargetYtd.Count > 0) kpiData.TargetYtd = 0;
                         foreach (var targetYtd in kpiTargetYtd)
                         {
@@ -167,6 +166,7 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+
         private string GetKpiColor(double? score, IEnumerable<ScoreIndicator> scoreIndicators)
         {
             if (score.HasValue)
@@ -185,19 +185,50 @@ namespace DSLNG.PEAR.Services
             return "grey";
         }
         
-        private IList<GetPmsSummaryResponse.KpiData> SetPillarAndTotalScoreColor(IList<GetPmsSummaryResponse.KpiData> kpiDatas, List<PmsSummaryScoringIndicator> pillarScoringIndicators, List<PmsSummaryScoringIndicator> totalScoreScoringIndicators)
+        private IList<GetPmsSummaryResponse.KpiData> SetPillarAndTotalScoreColor(IList<GetPmsSummaryResponse.KpiData> kpiDatas, PmsSummaryScoringIndicator pillarScoringIndicators, PmsSummaryScoringIndicator totalScoreScoringIndicators)
         {
-            //var totalPillar = kpiDatas.GroupBy(x => x.Pillar).Select(x => x.ToList()).ToList();
-            //IDictionary<string, int> totalPillar = kpiDatas.GroupBy(x => x.Pillar).Select(x => x.Sum(y => y.Score)).ToList();
-            var totalPillar =
-                kpiDatas.GroupBy(x => x.Pillar).ToDictionary(x => x.Key, x => x.Sum(y => y.Score));
-
-            /*foreach (var tp in totalPillar)
+            IDictionary<string, double?[]> totalPillar = new Dictionary<string, double?[]>();
+            var groupedPillars = kpiDatas.GroupBy(x => x.Pillar);
+            foreach (var groupedPillar in groupedPillars)
             {
-                kpiDatas.Where(x => x.Pillar == tp.Key).ToList();
-            }*/
+                double? totalScore = null;
+                var notNullPillar = groupedPillar.Where(x => x.Score.HasValue).ToList();
+                if (notNullPillar.Count > 0)
+                    totalScore = 0;
 
-            return kpiDatas;
+                foreach (var item in notNullPillar)
+                {
+                    if (item.Score.HasValue)
+                    {
+                        totalScore += item.Score.Value;
+                    }
+                }
+
+                totalPillar.Add(groupedPillar.Key, new double?[] { totalScore, groupedPillar.First().PillarWeight });
+            }
+
+            double? allTotalScore = null;
+            if (totalPillar.Count > 0)
+                allTotalScore = 0;
+
+            foreach (var tp in totalPillar)
+            {
+                if (tp.Value[0].HasValue && tp.Value[1].HasValue)
+                {
+                    allTotalScore += tp.Value[0] / 100 * tp.Value[1];    
+                }
+                var kpiWithPillars  = kpiDatas.Where(x => x.Pillar == tp.Key).ToList();
+                foreach (var kpiWithPillar in kpiWithPillars)
+                {
+                    kpiWithPillar.PillarColor = GetKpiColor(tp.Value[0], pillarScoringIndicators.ScoreIndicators);
+                }
+            }
+
+            return kpiDatas.Select(x =>
+                {
+                    x.TotalScoreColor = GetKpiColor(allTotalScore, totalScoreScoringIndicators.ScoreIndicators);
+                    return x;
+                }).ToList();
         }
     }
 }

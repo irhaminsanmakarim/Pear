@@ -27,14 +27,15 @@ namespace DSLNG.PEAR.Web.Controllers
             _pmsConfigDetailsService = pmsConfigDetailsService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? month, int? year)
         {
+            var queryString = Request.QueryString;
             var viewModel = new PmsSummaryIndexViewModel();
             var response =
                 _pmsSummaryService.GetPmsSummary(new GetPmsSummaryRequest
                     {
-                        Month = DateTime.Now.Month,
-                        Year = DateTime.Now.Year
+                        Month = month.HasValue ? month.Value : DateTime.Now.Month,
+                        Year = year.HasValue ? year.Value : DateTime.Now.Year
                     });
 
             viewModel.PmsSummaries = response.KpiDatas.MapTo<PmsSummaryViewModel>();
@@ -43,6 +44,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult IndexGridPartial()
         {
+            var queryString = Request.QueryString;
             var request = Request.Params;
             var response =
                 _pmsSummaryService.GetPmsSummary(new GetPmsSummaryRequest
