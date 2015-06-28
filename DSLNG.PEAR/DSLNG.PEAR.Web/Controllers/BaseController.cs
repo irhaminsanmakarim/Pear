@@ -8,6 +8,9 @@ namespace DSLNG.PEAR.Web.Controllers
 {
     public class BaseController : Controller
     {
-        
+        public ContentResult ErrorPage(string message)
+        {
+            return Content(message);
+        }
     }
 }

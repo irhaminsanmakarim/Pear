@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
+using DSLNG.PEAR.Services.Responses.Kpi;
+using DSLNG.PEAR.Services.Responses.Pillar;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
 using System.Data.Entity;
 using NCalc;
+using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 
 namespace DSLNG.PEAR.Services
 {
@@ -166,6 +168,49 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public GetPmsSummaryListResponse GetPmsSummaryList(GetPmsSummaryListRequest request)
+        {
+            var response = new GetPmsSummaryListResponse();
+            try
+            {
+                var summaries = DataContext.PmsSummaries.ToList();
+                response.PmsSummaryList = summaries.MapTo<GetPmsSummaryListResponse.PmsSummary>();
+                response.IsSuccess = true;
+            }
+            catch (ArgumentNullException exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
+        public GetPmsSummaryConfigurationResponse GetPmsSummaryConfiguration(GetPmsSummaryConfigurationRequest request)
+        {
+            var response = new GetPmsSummaryConfigurationResponse();
+            try
+            {
+                var pmsSummary = DataContext.PmsSummaries
+                    .Include(x => x.PmsConfigs.Select(y => y.PmsConfigDetailsList.Select(z => z.ScoreIndicators)))
+                    .First(x => x.Id == request.Id);
+                
+                response.Pillars = DataContext.Pillars.ToList().MapTo<GetPmsSummaryConfigurationResponse.Pillar>();
+                response.Kpis = DataContext.Kpis.Include(x => x.Measurement).ToList().MapTo<GetPmsSummaryConfigurationResponse.Kpi>();
+                response.PmsConfigs = pmsSummary.PmsConfigs.MapTo<GetPmsSummaryConfigurationResponse.PmsConfig>();
+                
+                response.IsSuccess = true;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
 
         private string GetKpiColor(double? score, IEnumerable<ScoreIndicator> scoreIndicators)
         {

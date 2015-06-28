@@ -482,6 +482,8 @@
     <Content Include="Views\Kpi\_GridViewPartial.cshtml" />
     <Content Include="Views\Kpi\Create.cshtml" />
     <Content Include="Views\Kpi\Update.cshtml" />
+    <Content Include="Views\CorporatePortofolio\Index.cshtml" />
+    <Content Include="Views\CorporatePortofolio\PmsSummaryConfiguration.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
@@ -539,6 +541,7 @@
     <Compile Include="Controllers\ArtifactController.cs" />
     <Compile Include="Controllers\BarChartController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CorporatePortofolioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LevelController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
@@ -566,6 +569,8 @@
     <Compile Include="ViewModels\Artifact\ArtifactPreviewViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
+    <Compile Include="ViewModels\CorporatePortofolio\IndexCorporatePortofolioViewModel.cs" />
+    <Compile Include="ViewModels\CorporatePortofolio\PmsSummaryConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Kpi\CreateKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiToSeriesViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiViewModel.cs" />

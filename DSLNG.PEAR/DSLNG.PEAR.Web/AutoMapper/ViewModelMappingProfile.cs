@@ -1,10 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Web.Mvc;
+using AutoMapper;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
 using DSLNG.PEAR.Services.Responses.Kpi;
 using DSLNG.PEAR.Services.Requests.Kpi;
+using DSLNG.PEAR.Web.ViewModels.CorporatePortofolio;
 using DSLNG.PEAR.Web.ViewModels.Kpi;
 using DSLNG.PEAR.Web.ViewModels.Kpi;
 using DSLNG.PEAR.Services.Responses.Menu;
@@ -34,6 +36,7 @@ using EPeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Artifact;
+using System.Linq;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -54,7 +57,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CreateMenuViewModel, CreateMenuRequest>();
             Mapper.CreateMap<GetMenuResponse, UpdateMenuViewModel>();
             Mapper.CreateMap<UpdateMenuViewModel, UpdateMenuRequest>();
-            
+
             Mapper.CreateMap<CreateMeasurementViewModel, CreateMeasurementRequest>();
             Mapper.CreateMap<GetMeasurementResponse, UpdateMeasurementViewModel>();
             Mapper.CreateMap<UpdateMeasurementViewModel, UpdateMeasurementRequest>();
@@ -70,7 +73,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
             Mapper.CreateMap<CreateRoleGroupViewModel, CreateRoleGroupRequest>();
-            Mapper.CreateMap<GetRoleGroupResponse,UpdateRoleGroupViewModel>();
+            Mapper.CreateMap<GetRoleGroupResponse, UpdateRoleGroupViewModel>();
             Mapper.CreateMap<UpdateRoleGroupViewModel, UpdateRoleGroupRequest>();
 
 
@@ -98,7 +101,34 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetChartDataRequest.Stack>()));
             Mapper.CreateMap<BarChartViewModel.Stack, GetChartDataRequest.Stack>();
             Mapper.CreateMap<GetChartDataResponse.SeriesResponse, BarChartDataViewModel.SeriesViewModel>();
+
+            ConfigureCorporatePortofolio();
             base.Configure();
+        }
+
+        private void ConfigureCorporatePortofolio()
+        {
+            Mapper.CreateMap<GetPmsSummaryListResponse.PmsSummary, IndexCorporatePortofolioViewModel.CorporatePortofolio>();
+            Mapper.CreateMap<GetPmsSummaryConfigurationResponse.PmsConfig, PmsSummaryConfigurationViewModel.PmsConfig>();
+            Mapper.CreateMap<GetPmsSummaryConfigurationResponse.PmsConfigDetails, PmsSummaryConfigurationViewModel.PmsConfigDetails>()
+                .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
+                .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name));
+            
+            Mapper.CreateMap<GetPmsSummaryConfigurationResponse, PmsSummaryConfigurationViewModel>()
+                  .ForMember(x => x.Kpis, y => y.MapFrom(z => z.Kpis.Select(a => new SelectListItem
+                      {
+                          Text = a.Name,
+                          Value = a.Id.ToString()
+                      })))
+                  .ForMember(x => x.Pillars, y => y.MapFrom(z => z.Pillars.Select(a => new SelectListItem
+                      {
+                          Text = a.Name,
+                          Value = a.Id.ToString()
+                      })));
+
+            Mapper
+                .CreateMap
+                <GetPmsSummaryConfigurationResponse.ScoreIndicator, PmsSummaryConfigurationViewModel.ScoreIndicator>();
         }
     }
 }
