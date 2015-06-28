@@ -27,7 +27,7 @@ String.prototype.isNullOrEmpty = function () {
                 success: function (data) {
                     $('#graphic-settings').html(data);
                     var $hiddenFields = $('#hidden-fields');
-                    $('#hidden-fields-holder').append($hiddenFields.html());
+                    $('#hidden-fields-holder').html($hiddenFields.html());
                     $hiddenFields.remove();
                     if (callback.hasOwnProperty(type)) {
                         callback[type]();
@@ -340,6 +340,155 @@ String.prototype.isNullOrEmpty = function () {
                 }
             },
             series: data.BarChart.Series
+        });
+    }
+
+    //line chart
+    artifactDesigner._setupCallbacks.line = function () {
+        var removeSeriesOrStack = function () {
+            $('.series-template .remove, .stack-template .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('fieldset').remove();
+            });
+        }
+        var addSeries = function () {
+            var seriesCount = 0;
+            $('#add-series').click(function (e) {
+                e.preventDefault();
+                var seriesTemplate = $('.series-template.original').clone(true);
+                seriesTemplate.find('.kpi-list').select2();
+                seriesTemplate.removeClass('original');
+                seriesTemplate.attr('data-series-pos', seriesCount);
+                if (seriesCount !== 0) {
+                    var fields = ['Label', 'KpiId'];
+                    for (var i in fields) {
+                        var field = fields[i];
+                        seriesTemplate.find('#LineChart_SeriesList_0__' + field).attr('name', 'LineChart.SeriesList[' + seriesCount + '].' + field);
+                    }
+                }
+                seriesTemplate.addClass('singlestack');
+                $('#series-holder').append(seriesTemplate);
+                seriesCount++;
+            });
+        };
+       
+        var rangeDatePicker = function () {
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY hh:00 A"
+            });
+            $('.datepicker').change(function (e) {
+                console.log(this);
+            });
+            $('#BarChart_PeriodeType').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var clearValue = $('.datepicker').each(function (i, val) {
+                    $(val).val('');
+                    $(val).data("DateTimePicker").destroy();
+                });
+                switch ($this.val().toLowerCase().trim()) {
+                    case 'hourly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY hh:00 A"
+                        });
+                        break;
+                    case 'daily':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY"
+                        });
+                        break;
+                    case 'weekly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY",
+                            daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                        });
+                        break;
+                    case 'monthly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/YYYY"
+                        });
+                        break;
+                    case 'yearly':
+                        $('.datepicker').datetimepicker({
+                            format: "YYYY"
+                        });
+                        break;
+                    default:
+
+                }
+            });
+        };
+        var rangeControl = function () {
+            $('#LineChart_RangeFilter').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $('#range-holder').prop('class', $this.val().toLowerCase().trim());
+            });
+            var original = $('#LineChart_RangeFilter').clone(true);
+            var rangeFilterSetup = function (periodeType) {
+                var toRemove = {};
+                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
+                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
+                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
+                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
+                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
+                var originalClone = original.clone(true);
+                originalClone.find('option').each(function (i, val) {
+                    if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
+                        originalClone.find(val).remove();
+                    }
+                });
+                $('#LineChart_RangeFilter').replaceWith(originalClone);
+            };
+
+            rangeFilterSetup($('#LineChart_PeriodeType').val().toLowerCase().trim());
+            $('#LineChart_PeriodeType').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                rangeFilterSetup($this.val().toLowerCase().trim());
+                $('#range-holder').removeAttr('class');
+            });
+
+        };
+        rangeControl();
+        rangeDatePicker();
+        removeSeriesOrStack();
+        addSeries();
+    }
+    artifactDesigner._previewCallbacks.line = function (data) {
+        $('#container').highcharts({
+            title: {
+                text: data.LineChart.Title,
+                x: -20 //center
+            },
+            //subtitle: {
+            //    text: 'Source: WorldClimate.com',
+            //    x: -20
+            //},
+            xAxis: {
+                categories: data.LineChart.Periodes
+            },
+            yAxis: {
+                title: {
+                    text: data.LineChart.ValueAxisTitle
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: data.LineChart.ValueAxisTitle
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: data.LineChart.Series
         });
     }
 

@@ -98,6 +98,15 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetChartDataRequest.Stack>()));
             Mapper.CreateMap<BarChartViewModel.Stack, GetChartDataRequest.Stack>();
             Mapper.CreateMap<GetChartDataResponse.SeriesResponse, BarChartDataViewModel.SeriesViewModel>();
+
+            Mapper.CreateMap<LineChartViewModel, GetChartDataRequest>()
+                .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
+                .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
+                .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)))
+                .ForMember(x => x.SeriesList, o => o.MapFrom(s => s.SeriesList.MapTo<GetChartDataRequest.Series>()));
+
+            Mapper.CreateMap<LineChartViewModel.Series, GetChartDataRequest.Series>();
+            Mapper.CreateMap<GetChartDataResponse.SeriesResponse, LineChartDataViewModel.SeriesViewModel>();
             base.Configure();
         }
     }
