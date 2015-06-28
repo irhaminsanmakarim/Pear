@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.Group
 {
-    public class GetGroupRequest
+    public class GetGroupsRequest
     {
-        public int Id { get; set; }
+
     }
 }

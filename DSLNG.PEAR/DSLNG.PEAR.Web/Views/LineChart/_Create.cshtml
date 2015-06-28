@@ -1,0 +1,106 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+
+<div class="form-group">
+    @Html.LabelFor(model => model.LineChart.PeriodeType, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.LineChart.PeriodeType, Model.LineChart.PeriodeTypes)
+        @Html.ValidationMessageFor(model => model.LineChart.PeriodeType)
+    </div>
+</div>
+
+<div id="range-filter-holder">
+    <div class="form-group">
+    @Html.LabelFor(model => model.LineChart.RangeFilter, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.LineChart.RangeFilter, Model.LineChart.RangeFilters)
+        @Html.ValidationMessageFor(model => model.LineChart.RangeFilter)
+    </div>
+</div>
+
+</div>
+
+@*@Html.HiddenFor(model => model.LineChart.Start, new { @id = "periode-start" })
+@Html.HiddenFor(model => model.LineChart.End, new { @id = "periode-end" })*@
+
+
+
+<div id="range-holder">
+    <div class="form-group">
+        @Html.LabelFor(model => model.LineChart.StartInDisplay, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.LineChart.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker" })
+            @Html.ValidationMessageFor(model => model.LineChart.StartInDisplay)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LineChart.EndInDisplay, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.LineChart.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker" })
+            @Html.ValidationMessageFor(model => model.LineChart.EndInDisplay)
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.LineChart.ValueAxis, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.LineChart.ValueAxis, Model.LineChart.ValueAxes, new { id = "bar-value-axis" })
+        @Html.ValidationMessageFor(model => model.LineChart.ValueAxis)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.LineChart.FractionScale, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(model => model.LineChart.FractionScale)
+        @Html.ValidationMessageFor(model => model.LineChart.FractionScale)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.LineChart.MaxValue, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(model => model.LineChart.MaxValue)
+        @Html.ValidationMessageFor(model => model.LineChart.MaxValue)
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="button" value="Add Series" class="btn btn-default" id="add-series" />
+    </div>
+</div>
+
+<div id="series-holder">
+</div>
+
+<div id="hidden-fields">
+    @for (var i = 0; i < Model.LineChart.SeriesList.Count; i++)
+    { 
+        <fieldset class="series-template original">
+            <legend>Series</legend>
+            <div class="form-group">
+                @Html.LabelFor(model => model.LineChart.SeriesList[i].Label, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.LineChart.SeriesList[i].Label)
+                    @Html.ValidationMessageFor(model => model.LineChart.SeriesList[i].Label)
+                </div>
+            </div>
+            <div class="series-details-holder">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LineChart.SeriesList[i].KpiId, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.LineChart.SeriesList[i].KpiId, Model.LineChart.KpiList, new { @class = "kpi-list" })
+                        @Html.ValidationMessageFor(model => model.LineChart.SeriesList[i].KpiId)
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="Remove" class="remove" />
+        </fieldset>
+    }
+
+</div>
+
+
+

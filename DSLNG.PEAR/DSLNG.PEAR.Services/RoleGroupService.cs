@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.RoleGroup;
+using System.Collections.Generic;
 
 namespace DSLNG.PEAR.Services
 {
@@ -18,7 +19,15 @@ namespace DSLNG.PEAR.Services
         }
 
         public GetRoleGroupsResponse GetRoleGroups (GetRoleGroupsRequest request){
-            var roleGroups = DataContext.RoleGroups.ToList();
+            var roleGroups = new List<RoleGroup>();
+            if (request.Take != 0)
+            {
+                roleGroups = DataContext.RoleGroups.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
+            }
+            else
+            {
+                roleGroups = DataContext.RoleGroups.ToList();
+            }
             var response = new GetRoleGroupsResponse();
             response.RoleGroups = roleGroups.MapTo<GetRoleGroupsResponse.RoleGroup>();
             return response;

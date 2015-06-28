@@ -113,6 +113,7 @@
     <Compile Include="Installer\PmsSummariesInstaller.cs" />
     <Compile Include="Installer\RoleGroupsInstaller.cs" />
     <Compile Include="Installer\ScoreIndicatorsInstaller.cs" />
+    <Compile Include="Installer\TypeInstaller.cs" />
     <Compile Include="Installer\UsersInstaller.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\DataContext.cs" />

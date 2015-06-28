@@ -11,5 +11,6 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IGroupService
     {
         GetGroupResponse GetGroup(GetGroupRequest request);
+        GetGroupsResponse GetGroups(GetGroupsRequest request);
     }
 }
