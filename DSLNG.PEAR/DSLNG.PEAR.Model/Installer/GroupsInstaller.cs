@@ -25,7 +25,16 @@ namespace DSLNG.PEAR.Data.Installer
             group.Name = "Fatality";
             group.Order = 1;
             group.Remark = "test";
+
+            var group2 = new Group();
+            group2.Id = 2;
+            group2.IsActive = true;
+            group2.Name = "Security";
+            group2.Order = 2;
+            group2.Remark = "test";
+
             _dataContext.Groups.AddOrUpdate(group);
+            _dataContext.Groups.AddOrUpdate(group2);
         }
     }
 }

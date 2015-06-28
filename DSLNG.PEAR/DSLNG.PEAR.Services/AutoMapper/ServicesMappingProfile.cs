@@ -17,6 +17,7 @@ using DSLNG.PEAR.Services.Responses.RoleGroup;
 using DSLNG.PEAR.Services.Requests.RoleGroup;
 using DSLNG.PEAR.Services.Responses.Type;
 using DSLNG.PEAR.Services.Requests.Type;
+using DSLNG.PEAR.Services.Responses.PmsConfigDetails;
 using DSLNG.PEAR.Services.Responses.Pillar;
 using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Services.Requests.Kpi;
@@ -91,6 +92,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreateTypeRequest, Data.Entities.Type>();
             Mapper.CreateMap<UpdateTypeRequest, Data.Entities.Type>();
             Mapper.CreateMap<Data.Entities.Type, UpdateTypeResponse>();
+            Mapper.CreateMap<KpiAchievement, GetPmsConfigDetailsResponse.KpiAchievment>()
+                .ForMember(k => k.Period, o => o.MapFrom(k => k.Periode.ToString("MMM")))
+                .ForMember(k => k.Type, o => o.MapFrom(k => k.PeriodeType.ToString()));
 
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarResponse>();

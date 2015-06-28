@@ -9,13 +9,27 @@
     }
     function OnGetRowValues(values) {
         alert(values);
-        
-    }*/
 
-    function OnCellClick(visibleIndex, fieldName) {
-        $('#myModal').modal({
-            remote: '@Url.Action("Details", "PmsSummary")'
+    }*/
+    $(document).ready(function () {
+        $('#myModal').on('hidden.bs.modal', function(e) {
+            $(this).removeData('bs.modal');
         });
+    });
+    
+    function OnCellClick(visibleIndex, fieldName) {
+        var month = $("#filter-month").val();
+        $('#myModal').modal({
+            remote: '@Url.Action("Details", "PmsSummary")' + '/' + fieldName + '?month=' + month,
+
+        });
+    }
+    
+    function changeDropdownYearMonth() {
+        var year = $('#year').val();
+        var month = $('#month').val();
+        var url = '@Html.Raw( Url.Action("Index", "PmsSummary", new {year = "_year_", month = "_month_"}) )'.replace('_year_', year).replace('_month_', month);;
+        window.location = url;
     }
 </script>
 <section>
@@ -29,7 +43,7 @@
             <form class="form-inline">
                 <div style="margin: 5px 40px 0px 25px; padding-right: 30px; border-right: solid 1px #3f454f;" class="form-group">
                     <label>Year Illustration :</label>
-                    <select class="form-control">
+                    <select class="form-control" name="year" id="year" onchange="changeDropdownYearMonth()">
                         <option>2015</option>
                         <option>2014</option>
                         <option>2013</option>
@@ -39,19 +53,19 @@
                 </div>
                 <div style="margin-top: 5px;" class="form-group">
                     <label>Month :</label>
-                    <select class="form-control">
-                        <option>Jan</option>
-                        <option>Feb</option>
-                        <option>Mar</option>
-                        <option>Apr</option>
-                        <option>May</option>
-                        <option>Jun</option>
-                        <option>Jul</option>
-                        <option>Aug</option>
-                        <option>Sep</option>
-                        <option>Oct</option>
-                        <option>Nov</option>
-                        <option>Dec</option>
+                    <select class="form-control" id="month" onchange="changeDropdownYearMonth()">
+                        <option value="1">Jan</option>
+                        <option value="2">Feb</option>
+                        <option value="3">Mar</option>
+                        <option value="4">Apr</option>
+                        <option value="5">May</option>
+                        <option value="6">Jun</option>
+                        <option value="7">Jul</option>
+                        <option value="8">Aug</option>
+                        <option value="9">Sep</option>
+                        <option value="10">Oct</option>
+                        <option value="11">Nov</option>
+                        <option value="12">Dec</option>
                     </select>
                 </div>
             </form>

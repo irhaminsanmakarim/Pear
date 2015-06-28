@@ -17,20 +17,25 @@ namespace DSLNG.PEAR.Web.Controllers
     public class PmsSummaryController : Controller
     {
         private readonly IPmsSummaryService _pmsSummaryService;
+        private IPmsConfigDetailsService _pmsConfigDetailsService;
 
-        public PmsSummaryController(IPmsSummaryService pmsSummaryService)
+        public PmsSummaryController(
+            IPmsSummaryService pmsSummaryService, 
+            IPmsConfigDetailsService pmsConfigDetailsService)
         {
             _pmsSummaryService = pmsSummaryService;
+            _pmsConfigDetailsService = pmsConfigDetailsService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? month, int? year)
         {
+            var queryString = Request.QueryString;
             var viewModel = new PmsSummaryIndexViewModel();
             var response =
                 _pmsSummaryService.GetPmsSummary(new GetPmsSummaryRequest
                     {
-                        Month = DateTime.Now.Month,
-                        Year = DateTime.Now.Year
+                        Month = month.HasValue ? month.Value : DateTime.Now.Month,
+                        Year = year.HasValue ? year.Value : DateTime.Now.Year
                     });
 
             viewModel.PmsSummaries = response.KpiDatas.MapTo<PmsSummaryViewModel>();
@@ -39,6 +44,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult IndexGridPartial()
         {
+            var queryString = Request.QueryString;
             var request = Request.Params;
             var response =
                 _pmsSummaryService.GetPmsSummary(new GetPmsSummaryRequest
@@ -115,10 +121,19 @@ namespace DSLNG.PEAR.Web.Controllers
 
         }
 
-        public ActionResult Details()
+        public ActionResult Details(int id, int month)
         {
             //Thread.Sleep(2000);
-            return PartialView("_Details");
+            var viewModel = new PmsConfigDetailsViewModel();
+            var response = _pmsConfigDetailsService.GetPmsConfigDetails(new Services.Requests.PmsConfigDetails.GetPmsConfigDetailsRequest { Id = id, Month = month });
+            viewModel = response.MapTo<PmsConfigDetailsViewModel>();
+            var operationDate = new DateTime(response.Year, month, 1);
+            viewModel.Title = response.Title;
+            viewModel.Year = response.Year;
+            viewModel.Month = operationDate.ToString("MMM");
+            viewModel.KpiAchievmentMonthly = response.KpiAchievmentMonthly.MapTo<PmsConfigDetailsViewModel.KpiAchievment>();
+            viewModel.KpiRelations = response.KpiRelations.MapTo<PmsConfigDetailsViewModel.KpiRelation>();
+            return PartialView("_Details", viewModel);
         }
 	}
 }

@@ -36,8 +36,8 @@ namespace DSLNG.PEAR.Data.Installer
                     Periode = i == 13 ? new DateTime(2015, 1, 1) : new DateTime(2015, i, 1),
                     PeriodeType = i == 13 ? PeriodeType.Yearly : PeriodeType.Monthly,
                     Remark = "Whatever men...",
+                    Kpi = _context.Kpis.Local.First(x => x.Id == 1),
                     Value = fatalityArr[i],
-                    Kpi = _context.Kpis.Local.First(x => x.Id == 1)
                 };
                 _context.KpiAchievements.Add(kpiAchievement);
             }
@@ -60,6 +60,21 @@ namespace DSLNG.PEAR.Data.Installer
                 _context.KpiAchievements.Add(kpiAchievement);
             }
 
+            var kpiAchievementYearly = new KpiAchievement
+            {
+                Id = 1,
+                CreatedBy = _context.Users.Local.First(x => x.Id == 1),
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
+                IsActive = true,
+                Periode = new DateTime(2015, 1, 1),
+                Remark = "Whatever men...",
+                Value = 10,
+                Kpi = _context.Kpis.Local.First(x => x.Id == 2),
+                PeriodeType = PeriodeType.Yearly
+            };
+            _context.KpiAchievements.Add(kpiAchievementYearly);
+          
             for (var i = 1; i <= 13; i++)
             {
                 var kpiAchievement = new KpiAchievement
@@ -77,7 +92,6 @@ namespace DSLNG.PEAR.Data.Installer
                 };
                 _context.KpiAchievements.Add(kpiAchievement);
             }
-
         }
 
     }

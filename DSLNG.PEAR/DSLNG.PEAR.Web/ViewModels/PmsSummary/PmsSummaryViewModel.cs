@@ -90,10 +90,21 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 
         public string KpiColor { get; set; }
 
+        public string PillarColor { get; set; }
+
+        public double PillarWeight { get; set; }
+
         public string KpiNameWithColor
         {
-            get { return string.Format(@"<span style='color:{0}'>{1}</span>", KpiColor, Kpi); }
+            get { return string.Format(@"<span class='trafficlight {0}'></span>{1}", KpiColor, Kpi); }
         }
+
+        public string PillarNameWithColor
+        {
+            get { return string.Format(@"<span class='trafficlight {0}'></span>{1} ({2})", PillarColor, Pillar, PillarWeight.ToString()); }
+        }
+
+        public string TotalScoreColor { get; set; }
 
         /*public int Id { get; set; }
         public string Osp { get; set; }

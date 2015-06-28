@@ -1,27 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Data.Entities
 {
-    public class PmsConfig
+    public class PmsSummaryScoringIndicator
     {
-        public PmsConfig()
+        public PmsSummaryScoringIndicator()
         {
             ScoreIndicators = new Collection<ScoreIndicator>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-        public Pillar Pillar { get; set; }
-        public double Weight { get; set; }
-        public ScoringType ScoringType { get; set; }
+        public PmsSummaryScoringIndicatorType Type { get; set; }
         public ICollection<ScoreIndicator> ScoreIndicators { get; set; }
-        public bool IsActive { get; set; }
-        public ICollection<PmsConfigDetails> PmsConfigDetailsList { get; set; }
-        public PmsSummary PmsSummary { get; set; }
     }
 }

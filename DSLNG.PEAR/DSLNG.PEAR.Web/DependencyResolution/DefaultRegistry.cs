@@ -49,6 +49,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<ITypeService>().Use<TypeService>();
             For<IPmsSummaryService>().Use<PmsSummaryService>();
             For<IArtifactService>().Use<ArtifactService>();
+            For<IPmsConfigDetailsService>().Use<PmsConfigDetailsService>();
         }
 
         #endregion

@@ -583,6 +583,7 @@
     <Compile Include="ViewModels\Menu\UpdateMenuViewModel.cs" />
     <Compile Include="ViewModels\Pillar\CreatePillarViewModel.cs" />
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\PmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\Pillar\UpdatePillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
@@ -641,7 +642,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:65293/</IISUrl>
+          <IISUrl>http://localhost:10359/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

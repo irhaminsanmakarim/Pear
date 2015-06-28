@@ -68,6 +68,7 @@
     <Compile Include="Interfaces\IMeasurementService.cs" />
     <Compile Include="Interfaces\IMenuService.cs" />
     <Compile Include="Interfaces\IMethodService.cs" />
+    <Compile Include="Interfaces\IPmsConfigDetailsService.cs" />
     <Compile Include="Interfaces\IPmsSummaryService.cs" />
     <Compile Include="Interfaces\IRoleGroupService.cs" />
     <Compile Include="Interfaces\ITypeService.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="MeasurementService.cs" />
     <Compile Include="MenuService.cs" />
     <Compile Include="MethodService.cs" />
+    <Compile Include="PmsConfigDetailsService.cs" />
     <Compile Include="PmsSummaryService.cs" />
     <Compile Include="Requests\Artifact\GetSeriesRequest.cs" />
     <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Requests\Kpi\KpiRequest\RoleGroup.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Type.cs" />
     <Compile Include="Requests\Kpi\UpdateKpiRequest.cs" />
+    <Compile Include="Requests\PmsConfigDetails\GetPmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\Menu\CreateMenuRequest.cs" />
     <Compile Include="Requests\Menu\UpdateMenuRequest.cs" />
     <Compile Include="Requests\Pillar\CreatePillarRequest.cs" />
@@ -158,6 +161,7 @@
     <Compile Include="Responses\Menu\GetMenusResponse.cs" />
     <Compile Include="Responses\Menu\UpdateMenuResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
+    <Compile Include="Responses\PmsConfigDetails\GetPmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\Pillar\CreatePillarResponse.cs" />
     <Compile Include="Responses\Pillar\DeletePillarResponse.cs" />
     <Compile Include="Responses\Pillar\UpdatePillarResponse.cs" />
