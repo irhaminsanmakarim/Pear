@@ -36,7 +36,8 @@ namespace DSLNG.PEAR.Data.Entities
         public int? ConversionId { get; set; }
         public Conversion Conversion { get; set; }
         public FormatInput FormatInput { get; set; }
-        public Periode Periode { get; set; }
+        public PeriodeType Period { get; set; }
+        //public Periode Periode { get; set; }
         public string Remark { get; set; }
         public ICollection<KpiRelationModel> RelationModels { get; set; }
         public DateTime? Value { get; set; }
