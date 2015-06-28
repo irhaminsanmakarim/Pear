@@ -154,7 +154,7 @@ namespace DSLNG.PEAR.Services
             switch (periodeType)
             {
                 case PeriodeType.Hourly:
-                    var hourlyFormat = "MM/DD/YYYY hh:mm A";
+                    var hourlyFormat = "MM/DD/yyyy hh:mm A";
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentHour:
@@ -168,7 +168,8 @@ namespace DSLNG.PEAR.Services
                             dateTimePeriodes.Add(startHour);
                             for (double i = 1; i < 24; i++)
                             {
-                                periodes.Add(startHour.AddHours(1).ToString(hourlyFormat));
+                                startHour = startHour.AddHours(1);
+                                periodes.Add(startHour.ToString(hourlyFormat));
                                 dateTimePeriodes.Add(startHour);
                             }
                             break;
@@ -177,13 +178,13 @@ namespace DSLNG.PEAR.Services
                             {
                                 periodes.Add(End.Value.ToString(hourlyFormat));
                                 dateTimePeriodes.Add(Start.Value);
-                                Start.Value.AddHours(1);
+                                Start = Start.Value.AddHours(1);
                             }
                             break;
                     }
                     break;
                 case PeriodeType.Daily:
-                    var dailyFormat = "MM/DD/YYYY";
+                    var dailyFormat = "MM/DD/yyyy";
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentDay:
@@ -198,7 +199,7 @@ namespace DSLNG.PEAR.Services
                             {
                                 periodes.Add(startDay.ToString(dailyFormat));
                                 dateTimePeriodes.Add(startDay);
-                                startDay.AddDays(1);
+                                startDay = startDay.AddDays(1);
                             }
                             break;
                         default:
@@ -206,14 +207,14 @@ namespace DSLNG.PEAR.Services
                             {
                                 periodes.Add(End.Value.ToString(dailyFormat));
                                 dateTimePeriodes.Add(Start.Value);
-                                Start.Value.AddDays(1);
+                                Start = Start.Value.AddDays(1);
                             }
                             break;
 
                     }
                     break;
                 case PeriodeType.Monthly:
-                    var monthlyFormat = "MM/YYYY";
+                    var monthlyFormat = "MM/yyyy";
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentMonth:
@@ -229,7 +230,7 @@ namespace DSLNG.PEAR.Services
                             {
                                 periodes.Add(startMonth.ToString(monthlyFormat));
                                 dateTimePeriodes.Add(startMonth);
-                                startMonth.AddMonths(1);
+                                startMonth = startMonth.AddMonths(1);
                             }
                             break;
                         default:
@@ -237,13 +238,13 @@ namespace DSLNG.PEAR.Services
                             {
                                 dateTimePeriodes.Add(Start.Value);
                                 periodes.Add(End.Value.ToString(monthlyFormat));
-                                Start.Value.AddMonths(1);
+                                Start = Start.Value.AddMonths(1);
                             }
                             break;
                     }
                     break;
                 default:
-                    var yearlyFormat = "YYYY";
+                    var yearlyFormat = "yyyy";
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentYear:
@@ -255,7 +256,7 @@ namespace DSLNG.PEAR.Services
                             {
                                 periodes.Add(End.Value.ToString(yearlyFormat));
                                 dateTimePeriodes.Add(Start.Value);
-                                Start.Value.AddYears(1);
+                                Start = Start.Value.AddYears(1);
                             }
                             break;
                     }
@@ -268,13 +269,15 @@ namespace DSLNG.PEAR.Services
         private IList<GetChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetChartDataRequest.Series> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType)
         {
             var seriesResponse = new List<GetChartDataResponse.SeriesResponse>();
+            var start = dateTimePeriodes[0];
+            var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
             foreach (var series in configSeries)
             {
 
                 if (series.Stacks.Count == 0)
                 {
                     var kpiTargets = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
-                      x.Periode >= dateTimePeriodes[0] && x.Periode <= dateTimePeriodes[dateTimePeriodes.Count - 1] && x.Kpi.Id == series.KpiId)
+                      x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId)
                       .OrderBy(x => x.Periode).ToList();
                     var aSeries = new GetChartDataResponse.SeriesResponse
                     {
@@ -299,7 +302,7 @@ namespace DSLNG.PEAR.Services
                     foreach (var stack in series.Stacks)
                     {
                         var kpiTargets = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
-                        x.Periode >= dateTimePeriodes[0] && x.Periode <= dateTimePeriodes[dateTimePeriodes.Count - 1] && x.Kpi.Id == stack.KpiId)
+                        x.Periode >= start && x.Periode <= end && x.Kpi.Id == stack.KpiId)
                         .OrderBy(x => x.Periode).ToList();
                         if (seriesType == "multi-stacks-grouped")
                         {
