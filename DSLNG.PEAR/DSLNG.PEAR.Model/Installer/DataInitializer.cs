@@ -25,6 +25,15 @@ namespace DSLNG.PEAR.Data.Installer
             var measurementsIntaller = new MeasurementsInstaller(context);
             measurementsIntaller.Install();
 
+            var periodeInstaller = new PeriodeInstaller(context);
+            periodeInstaller.Install();
+
+            var methodInstaller = new MethodInstaller(context);
+            methodInstaller.Install();
+
+            var groupsInstaller = new GroupsInstaller(context);
+            groupsInstaller.Installer();
+
             var pillarsInstaller = new PillarsInstaller(context);
             pillarsInstaller.Installer();
 
@@ -33,9 +42,6 @@ namespace DSLNG.PEAR.Data.Installer
 
             var kpiTargetsInstaller = new KpiTargetsInstaller(context);
             kpiTargetsInstaller.Install();
-
-            var groupsInstaller = new GroupsInstaller(context);
-            groupsInstaller.Installer();
 
             var kpiAchievementsInstaller = new KpiAchievementsInstaller(context);
             kpiAchievementsInstaller.Install();
@@ -49,7 +55,10 @@ namespace DSLNG.PEAR.Data.Installer
             var pmsConfigDetailsInstaller = new PmsConfigDetailsInstaller(context);
             pmsConfigDetailsInstaller.Install();
 
-            
+            //var kpiWithRelationModel = new KpiWithRelationModelInstaller(context);
+            //kpiWithRelationModel.Install();
+
+
 
             //var menu1 = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };
             //var menu2 = new Menu { Id = 2, IsRoot = true, Module = "PMS", Order = 1, Name = "PMS", IsActive = true, Menus = null, RoleGroups = null };
@@ -217,35 +226,35 @@ namespace DSLNG.PEAR.Data.Installer
             context.KpiTargets.AddOrUpdate(kpiTargetSecondMonth);
         }*/
 
-       /* private void AddKpiAchievements(DataContext context)
-        {
-            var kpiAchievementFirstMonth = new KpiAchievement()
-            {
-                Id = 1,
-                CreatedBy = new User { Id = 1 },
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Periode = new DateTime(2015, 1, 1),
-                Remark = "test",
-                Value = 5,
-                Kpi = new Kpi { Id = 1 }
-            };
+        /* private void AddKpiAchievements(DataContext context)
+         {
+             var kpiAchievementFirstMonth = new KpiAchievement()
+             {
+                 Id = 1,
+                 CreatedBy = new User { Id = 1 },
+                 CreatedDate = DateTime.Now,
+                 IsActive = true,
+                 Periode = new DateTime(2015, 1, 1),
+                 Remark = "test",
+                 Value = 5,
+                 Kpi = new Kpi { Id = 1 }
+             };
 
-            var kpiAchievementSecondMonth = new KpiAchievement()
-            {
-                Id = 1,
-                CreatedBy = new User { Id = 1 },
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Periode = new DateTime(2015, 2, 1),
-                Remark = "test",
-                Value = 20,
-                Kpi = new Kpi { Id = 1 }
-            };
+             var kpiAchievementSecondMonth = new KpiAchievement()
+             {
+                 Id = 1,
+                 CreatedBy = new User { Id = 1 },
+                 CreatedDate = DateTime.Now,
+                 IsActive = true,
+                 Periode = new DateTime(2015, 2, 1),
+                 Remark = "test",
+                 Value = 20,
+                 Kpi = new Kpi { Id = 1 }
+             };
 
-            context.KpiAchievements.AddOrUpdate(kpiAchievementFirstMonth);
-            context.KpiAchievements.AddOrUpdate(kpiAchievementSecondMonth);
-        }*/
+             context.KpiAchievements.AddOrUpdate(kpiAchievementFirstMonth);
+             context.KpiAchievements.AddOrUpdate(kpiAchievementSecondMonth);
+         }*/
 
         /*private void AddPmsData(DataContext context)
         {
@@ -272,23 +281,23 @@ namespace DSLNG.PEAR.Data.Installer
             context.PmsConfigDetails.AddOrUpdate(pmsConfigDetails);
         }*/
 
-       /* private void AddPmsSummary(DataContext context)
-        {
-            var pmsSummary = new PmsSummary();
-            pmsSummary.CreatedBy = new User { Id = 9 };
+        /* private void AddPmsSummary(DataContext context)
+         {
+             var pmsSummary = new PmsSummary();
+             pmsSummary.CreatedBy = new User { Id = 9 };
 
-            pmsSummary.Id = 1;
-            pmsSummary.IsActive = true;
-            pmsSummary.Periode = new Periode { Id = 1 };
-            pmsSummary.ScoreIndicators.Add(new ScoreIndicator()
-                {
-                    IsActive = true,
-                    Color = "#213243",
-                    MaxValue = 100,
-                    MinValue = 20
-                });
-            pmsSummary.Title = "pms summary";
-            context.PmsSummaries.AddOrUpdate(pmsSummary);
-        }*/
+             pmsSummary.Id = 1;
+             pmsSummary.IsActive = true;
+             pmsSummary.Periode = new Periode { Id = 1 };
+             pmsSummary.ScoreIndicators.Add(new ScoreIndicator()
+                 {
+                     IsActive = true,
+                     Color = "#213243",
+                     MaxValue = 100,
+                     MinValue = 20
+                 });
+             pmsSummary.Title = "pms summary";
+             context.PmsSummaries.AddOrUpdate(pmsSummary);
+         }*/
     }
 }

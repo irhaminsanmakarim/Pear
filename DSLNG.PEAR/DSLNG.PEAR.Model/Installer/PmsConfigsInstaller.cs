@@ -20,22 +20,34 @@ namespace DSLNG.PEAR.Data.Installer
 
         public void Install()
         {
-            var pmsConfig = new PmsConfig();
-            pmsConfig.Id = 1;
-            pmsConfig.IsActive = true;
-            pmsConfig.Pillar = _dataContext.Pillars.Local.First(x => x.Id == 1);
-            pmsConfig.ScoreIndicators.Add(new ScoreIndicator
+            var pmsConfigSafety = new PmsConfig();
+            pmsConfigSafety.Id = 1;
+            pmsConfigSafety.IsActive = true;
+            pmsConfigSafety.Pillar = _dataContext.Pillars.Local.First(x => x.Id == 1);
+            /*pmsConfigSafety.ScoreIndicators.Add(new ScoreIndicator
                 {
                     IsActive = true,
-                    Color = "#126712",
-                    MaxValue = 20,
-                    MinValue = 0
-                });
-            pmsConfig.ScoringType = ScoringType.Positive;
-            pmsConfig.Weight = 80;
-            pmsConfig.PmsSummary = _dataContext.PmsSummaries.Local.First(x => x.Id == 1);
+                    Color = "#126712"
+                });*/
+            pmsConfigSafety.ScoringType = ScoringType.Positive;
+            pmsConfigSafety.Weight = 20;
+            pmsConfigSafety.PmsSummary = _dataContext.PmsSummaries.Local.First(x => x.Id == 1);
+
+            var pmsConfigProductivity = new PmsConfig();
+            pmsConfigProductivity.Id = 2;
+            pmsConfigProductivity.IsActive = true;
+            pmsConfigProductivity.Pillar = _dataContext.Pillars.Local.First(x => x.Id == 2);
+            /*pmsConfigProductivity.ScoreIndicators.Add(new ScoreIndicator
+            {
+                IsActive = true,
+                Color = "#126712"
+            });*/
+            pmsConfigProductivity.ScoringType = ScoringType.Positive;
+            pmsConfigProductivity.Weight = 40;
+            pmsConfigProductivity.PmsSummary = _dataContext.PmsSummaries.Local.First(x => x.Id == 1);
             
-            _dataContext.PmsConfigs.AddOrUpdate(pmsConfig);
+            _dataContext.PmsConfigs.AddOrUpdate(pmsConfigSafety);
+            _dataContext.PmsConfigs.AddOrUpdate(pmsConfigProductivity);
         }
     }
 }

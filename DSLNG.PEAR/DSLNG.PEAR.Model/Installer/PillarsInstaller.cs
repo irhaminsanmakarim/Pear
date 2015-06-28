@@ -34,7 +34,7 @@ namespace DSLNG.PEAR.Data.Installer
             pilar2.Code = "PaC";
             pilar2.Name = "Productivity and Efficienty";
             pilar2.Color = "#122381";
-            pilar2.Order = 1;
+            pilar2.Order = 2;
             pilar2.Icon = "apalah";
             pilar2.Remark = "Ini Pac";
             pilar2.IsActive = true;

@@ -12,7 +12,7 @@ namespace DSLNG.PEAR.Data.Entities
         public int Id { get; set; }
         public Kpi Kpi { get; set; }
         //public PmsConfigDetails PmsConfigDetail { get; set; }
-        public decimal? Value { get; set; }
+        public double? Value { get; set; }
         public DateTime Periode { get; set; }
         public PeriodeType PeriodeType { get; set; }
         public string Remark { get; set; }

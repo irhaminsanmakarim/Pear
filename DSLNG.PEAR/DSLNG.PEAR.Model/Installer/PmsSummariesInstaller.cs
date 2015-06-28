@@ -28,13 +28,11 @@ namespace DSLNG.PEAR.Data.Installer
             pmsSummary.Year = 2015;
             pmsSummary.ScoreIndicators.Add(new ScoreIndicator()
             {
-                IsActive = true,
-                Color = "#213243",
-                MaxValue = 100,
-                MinValue = 20
+                Color = "#213243"
             });
             pmsSummary.Title = "1st Operation Year";
-            
+            pmsSummary.CreatedDate = DateTime.Now;
+            pmsSummary.UpdatedDate = DateTime.Now;
             _dataContext.PmsSummaries.AddOrUpdate(pmsSummary);
         }
     }

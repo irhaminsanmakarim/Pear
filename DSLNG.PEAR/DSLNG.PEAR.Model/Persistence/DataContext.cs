@@ -6,7 +6,8 @@ namespace DSLNG.PEAR.Data.Persistence
 {
     public class DataContext : DbContext, IDataContext
     {
-        public DataContext() : base("DefaultConnection")
+        public DataContext()
+            : base("DefaultConnection")
         {
         }
 
@@ -37,6 +38,14 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<Type> Types { get; set; }
         public IDbSet<User> Users { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Kpi>()
+                        .HasMany(x => x.RelationModels)
+                        .WithRequired(x => x.KpiParent);
+            
+            base.OnModelCreating(modelBuilder);
+        }
         //public DbEntries 
 
         /*protected override void OnModelCreating(DbModelBuilder modelBuilder)

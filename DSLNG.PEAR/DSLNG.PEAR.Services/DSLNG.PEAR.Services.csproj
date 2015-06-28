@@ -41,6 +41,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="NCalc">
+      <HintPath>..\packages\ncalc.1.3.8\lib\NCalc.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
     </Reference>
@@ -68,6 +71,7 @@
     <Compile Include="Interfaces\IMeasurementService.cs" />
     <Compile Include="Interfaces\IMenuService.cs" />
     <Compile Include="Interfaces\IMethodService.cs" />
+    <Compile Include="Interfaces\IPmsConfigDetailsService.cs" />
     <Compile Include="Interfaces\IPmsSummaryService.cs" />
     <Compile Include="Interfaces\IRoleGroupService.cs" />
     <Compile Include="Interfaces\ITypeService.cs" />
@@ -75,23 +79,21 @@
     <Compile Include="MeasurementService.cs" />
     <Compile Include="MenuService.cs" />
     <Compile Include="MethodService.cs" />
+    <Compile Include="PmsConfigDetailsService.cs" />
     <Compile Include="PmsSummaryService.cs" />
+    <Compile Include="Requests\Artifact\GetSeriesRequest.cs" />
     <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Requests\Kpi\CreateKpiRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Conversion.cs" />
-    <Compile Include="Requests\Kpi\KpiRequest\FormatInput.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Group.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Level.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Measurement.cs" />
-    <Compile Include="Requests\Kpi\KpiRequest\Method.cs" />
-    <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
-    <Compile Include="Requests\Kpi\KpiRequest\PeriodeType.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Pillar.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\RoleGroup.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Type.cs" />
-    <Compile Include="Requests\Kpi\KpiRequest\YtdFormula.cs" />
     <Compile Include="Requests\Kpi\UpdateKpiRequest.cs" />
+    <Compile Include="Requests\PmsConfigDetails\GetPmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\Menu\CreateMenuRequest.cs" />
     <Compile Include="Requests\Menu\UpdateMenuRequest.cs" />
     <Compile Include="Requests\Pillar\CreatePillarRequest.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="Requests\User\CreateUserRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
     <Compile Include="Requests\User\UpdateUserRequest.cs" />
+    <Compile Include="Responses\Artifact\GetSeriesResponse.cs" />
     <Compile Include="Responses\Conversion\GetConversionResponse.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Responses\Group\GetGroupResponse.cs" />
@@ -160,7 +163,7 @@
     <Compile Include="Responses\Menu\UpdateMenuResponse.cs" />
     <Compile Include="Responses\Method\DeleteMethodResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
-    <Compile Include="Responses\Method\UpdateMethodResponse.cs" />
+    <Compile Include="Responses\PmsConfigDetails\GetPmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\Pillar\CreatePillarResponse.cs" />
     <Compile Include="Responses\Pillar\DeletePillarResponse.cs" />
     <Compile Include="Responses\Pillar\UpdatePillarResponse.cs" />
@@ -207,10 +210,7 @@
       <Name>DSLNG.PEAR.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Requests\Artifact\" />
-    <Folder Include="Responses\Artifact\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
