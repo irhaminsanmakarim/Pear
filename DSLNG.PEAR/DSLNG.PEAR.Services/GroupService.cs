@@ -1,4 +1,5 @@
-﻿using DSLNG.PEAR.Data.Persistence;
+﻿using DSLNG.PEAR.Data.Entities;
+using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Group;
 using DSLNG.PEAR.Services.Responses.Group;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Services
 {
@@ -20,7 +22,30 @@ namespace DSLNG.PEAR.Services
 
         public GetGroupResponse GetGroup(GetGroupRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var group = DataContext.Groups.First(x => x.Id == request.Id);
+                var response = group.MapTo<GetGroupResponse>();
+
+                return response;
+            }
+            catch (System.InvalidOperationException x)
+            {
+                return new GetGroupResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
+            }
+        }
+
+
+        public GetGroupsResponse GetGroups(GetGroupsRequest request)
+        {
+            var response = new GetGroupsResponse();
+            var groups = DataContext.Groups.ToList();
+            response.Groups = groups.MapTo<GetGroupsResponse.Group>();
+            return response;
         }
     }
 }

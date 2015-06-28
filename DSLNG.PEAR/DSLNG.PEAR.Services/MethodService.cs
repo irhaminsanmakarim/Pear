@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Services
 {
@@ -21,12 +22,29 @@ namespace DSLNG.PEAR.Services
 
         public GetMethodResponse GetMethod(GetMethodRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var method = DataContext.Methods.First(x => x.Id == request.Id);
+                var response = method.MapTo<GetMethodResponse>();
+
+                return response;
+            }
+            catch (System.InvalidOperationException x)
+            {
+                return new GetMethodResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
+            }
         }
 
         public GetMethodsResponse GetMethods(GetMethodsRequest requests)
         {
-            throw new NotImplementedException();
+            var methods = DataContext.Methods.ToList();
+            var response = new GetMethodsResponse();
+            response.Methods = methods.MapTo<GetMethodsResponse.Method>();
+            return response;
         }
 
         public void Add(AddMethod request)
