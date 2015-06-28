@@ -7,7 +7,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public BarChartDataViewModel() {
             Series = new List<SeriesViewModel>();
         }
-        public string BarType { get; set; }
+        public string SeriesType { get; set; }
         public string Title { get; set; }
         public string[] Periodes { get; set; }
         public string ValueAxisTitle { get; set; }

@@ -78,15 +78,19 @@ namespace DSLNG.PEAR.Web.Controllers
             var previewViewModel = new ArtifactPreviewViewModel();
             switch (viewModel.GraphicType) { 
                 default:
+                    var chartData = _artifactServie.GetChartData(viewModel.BarChart.MapTo<GetChartDataRequest>());
                     previewViewModel.GraphicType = viewModel.GraphicType;
                     previewViewModel.BarChart = new BarChartDataViewModel();
                     previewViewModel.BarChart.Title = viewModel.HeaderTitle;
                     previewViewModel.BarChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
-                    var periodes = new List<string>();
-                    if (viewModel.BarChart.PeriodeType == PeriodeType.Monthly.ToString() && viewModel.BarChart.RangeFilter == RangeFilter.CurrentYear.ToString()) { 
-                        previewViewModel.BarChart.Periodes = new string[12] {"Jan", "Feb", "Mar", "Apr", "Mey", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"};
-                    }
-                    previewViewModel.BarChart.Series = _artifactServie.GetSeries(viewModel.BarChart.MapTo<GetSeriesRequest>()).Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
+                    previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
+                    previewViewModel.BarChart.Periodes = chartData.Periodes;
+                    previewViewModel.BarChart.SeriesType = chartData.SeriesType;
+                    //var periodes = new List<string>();
+                    //if (viewModel.BarChart.PeriodeType == PeriodeType.Monthly.ToString() && viewModel.BarChart.RangeFilter == RangeFilter.CurrentYear.ToString()) { 
+                    //    previewViewModel.BarChart.Periodes = new string[12] {"Jan", "Feb", "Mar", "Apr", "Mey", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"};
+                    //}
+                    //previewViewModel.BarChart.Series = _artifactServie.GetSeries(viewModel.BarChart.MapTo<GetSeriesRequest>()).Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
                     break;
             }
             return Json(previewViewModel);

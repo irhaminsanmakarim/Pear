@@ -45,8 +45,36 @@ String.prototype.isNullOrEmpty = function () {
         var initialGraphicType = $('#graphic-type');
         loadGraph(initialGraphicType.data('graph-url'), initialGraphicType.val());
     };
-
     artifactDesigner._setupCallbacks = {};
+   
+    artifactDesigner.Preview = function () {
+        $('#graphic-preview-btn').click(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var callback = Pear.Artifact.Designer._previewCallbacks;
+            $.ajax({
+                url: $this.data('preview-url'),
+                data: $this.closest('form').serialize(),
+                method: 'POST',
+                success: function (data) {
+                    if (callback.hasOwnProperty(data.GraphicType)) {
+                        callback[data.GraphicType](data);
+                    }
+                    $('#graphic-preview').modal('show');
+                }
+            });
+        });
+        $('#graphic-preview').on('show.bs.modal', function () {
+            $('#container').css('visibility', 'hidden');
+        });
+        $('#graphic-preview').on('shown.bs.modal', function () {
+            $('#container').css('visibility', 'initial');
+            $('#container').highcharts().reflow();
+        });
+    };
+    artifactDesigner._previewCallbacks = {};
+
+    //bar chart
     artifactDesigner._setupCallbacks.bar = function () {
         var removeSeriesOrStack = function () {
             $('.series-template .remove, .stack-template .remove').click(function (e) {
@@ -148,8 +176,8 @@ String.prototype.isNullOrEmpty = function () {
             var original = $('#BarChart_RangeFilter').clone(true);
             var rangeFilterSetup = function (periodeType) {
                 var toRemove = {};
-                toRemove.hourly = ['YTD', 'MTD'];
-                toRemove.daily = ['CurrentHour', 'DTD', 'YTD'];
+                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
+                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
                 toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
                 toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
                 toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
@@ -177,36 +205,16 @@ String.prototype.isNullOrEmpty = function () {
         addSeries();
         addStack();
     };
-
-    artifactDesigner.Preview = function () {
-        $('#graphic-preview-btn').click(function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            var callback = Pear.Artifact.Designer._previewCallbacks;
-            $.ajax({
-                url: $this.data('preview-url'),
-                data: $this.closest('form').serialize(),
-                method: 'POST',
-                success: function (data) {
-                    if (callback.hasOwnProperty(data.GraphicType)) {
-                        callback[data.GraphicType](data);
-                    }
-                    $('#graphic-preview').modal('show');
-                }
-            });
-        });
-        $('#graphic-preview').on('show.bs.modal', function () {
-            $('#container').css('visibility', 'hidden');
-        });
-        $('#graphic-preview').on('shown.bs.modal', function () {
-            $('#container').css('visibility', 'initial');
-            $('#container').highcharts().reflow();
-        });
-    };
-
-    artifactDesigner._previewCallbacks = {};
     artifactDesigner._previewCallbacks.bar = function (data) {
-        console.log(data);
+        if (data.BarChart.SeriesType == "single-stack") {
+            Pear.Artifact.Designer._displayBasicBarChart(data);
+        } else if (data.BarChart.SeriesType == "multi-stack") {
+            Pear.Artifact.Designer._displayMultistacksBarChart(data);
+        } else {
+            Pear.Artifact.Designer._displayMultistacksGroupedBarChart(data);
+        }
+    };
+    artifactDesigner._displayBasicBarChart = function (data) {
         $('#container').highcharts({
             chart: {
                 type: 'column'
@@ -215,20 +223,7 @@ String.prototype.isNullOrEmpty = function () {
                 text: data.BarChart.Title
             },
             xAxis: {
-                categories: [
-                    'Jan',
-                    'Feb',
-                    'Mar',
-                    'Apr',
-                    'May',
-                    'Jun',
-                    'Jul',
-                    'Aug',
-                    'Sep',
-                    'Oct',
-                    'Nov',
-                    'Dec'
-                ],
+                categories: data.BarChart.Periodes,
                 crosshair: true
             },
             yAxis: {
@@ -240,7 +235,7 @@ String.prototype.isNullOrEmpty = function () {
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    '<td style="padding:0"><b>{point.y:.1f} ' + data.BarChart.ValueAxisTitle + '</b></td></tr>',
                 footerFormat: '</table>',
                 shared: true,
                 useHTML: true
@@ -251,7 +246,100 @@ String.prototype.isNullOrEmpty = function () {
                     borderWidth: 0
                 }
             },
-            series:data.BarChart.Series
+            series: data.BarChart.Series
+        });
+    };
+    artifactDesigner._displayMultistacksBarChart = function (data) {
+        $('#container').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: data.BarChart.Title
+            },
+            xAxis: {
+                categories: data.BarChart.Periodes,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: data.BarChart.ValueAxisTitle
+                },
+                stackLabels: {
+                    enabled: true,
+                    style: {
+                        fontWeight: 'bold',
+                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                    }
+                }
+            },
+            legend: {
+                align: 'right',
+                x: -30,
+                verticalAlign: 'top',
+                y: 25,
+                floating: true,
+                backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+                borderColor: '#CCC',
+                borderWidth: 1,
+                shadow: false
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.x + '</b><br/>' +
+                        this.series.name + ': ' + this.y + '<br/>' +
+                        'Total: ' + this.point.stackTotal;
+                }
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true,
+                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                        style: {
+                            textShadow: '0 0 3px black'
+                        }
+                    }
+                }
+            },
+            series: data.BarChart.Series
+        });
+    };
+    artifactDesigner._displayMultistacksGroupedBarChart = function (data) {
+        $('#container').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: data.BarChart.Title
+            },
+            xAxis: {
+                categories: data.BarChart.Periodes,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: data.BarChart.ValueAxisTitle
+                }
+            },
+
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.x + '</b><br/>' +
+                        this.series.name + ': ' + this.y + '<br/>' +
+                        'Total: ' + this.point.stackTotal;
+                }
+            },
+
+            plotOptions: {
+                column: {
+                    stacking: 'normal'
+                }
+            },
+            series: data.BarChart.Series
         });
     }
 
