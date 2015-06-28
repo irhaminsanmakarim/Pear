@@ -6,14 +6,11 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.Method
 {
-    public class GetMethodRequest
+    public class UpdateMethodRequest
     {
         public int Id { get; set; }
+        public string Name { get; set; }
+        public string Remark { get; set; }
+        public bool IsActive { get; set; }
     }
-
-    public class GetMethodsRequest {
-        public int Take { get; set; }
-        public int Skip { get; set; }
-    }
-
 }

@@ -461,6 +461,10 @@
     <Content Include="Views\Pillar\Index.cshtml" />
     <Content Include="Views\Pillar\Create.cshtml" />
     <Content Include="Views\Pillar\Update.cshtml" />
+    <Content Include="Views\Method\_GridViewPartial.cshtml" />
+    <Content Include="Views\Method\Create.cshtml" />
+    <Content Include="Views\Method\Index.cshtml" />
+    <Content Include="Views\Method\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -517,6 +521,7 @@
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\KpiController.cs" />
+    <Compile Include="Controllers\MethodController.cs" />
     <Compile Include="Controllers\PillarController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
     <Compile Include="Controllers\RoleGroupController.cs" />
@@ -552,6 +557,9 @@
     <Compile Include="ViewModels\Menu\MenusViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenuViewModel.cs" />
     <Compile Include="ViewModels\Menu\UpdateMenuViewModel.cs" />
+    <Compile Include="ViewModels\Method\CreateMethodViewModel.cs" />
+    <Compile Include="ViewModels\Method\IndexMethodViewModel.cs" />
+    <Compile Include="ViewModels\Method\UpdateMethodViewModel.cs" />
     <Compile Include="ViewModels\Pillar\CreatePillarViewModel.cs" />
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
     <Compile Include="ViewModels\Pillar\UpdatePillarViewModel.cs" />

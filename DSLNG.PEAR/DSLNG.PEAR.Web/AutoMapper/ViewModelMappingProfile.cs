@@ -6,7 +6,6 @@ using DSLNG.PEAR.Services.Responses.PmsSummary;
 using DSLNG.PEAR.Services.Responses.Kpi;
 using DSLNG.PEAR.Services.Requests.Kpi;
 using DSLNG.PEAR.Web.ViewModels.Kpi;
-using DSLNG.PEAR.Web.ViewModels.Kpi;
 using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Services.Requests.Menu;
 using DSLNG.PEAR.Web.ViewModels.Level;
@@ -26,6 +25,9 @@ using DSLNG.PEAR.Services.Requests.Type;
 using DSLNG.PEAR.Services.Responses.Pillar;
 using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Web.ViewModels.Pillar;
+using DSLNG.PEAR.Web.ViewModels.Method;
+using DSLNG.PEAR.Services.Requests.Method;
+using DSLNG.PEAR.Services.Responses.Method;
 
 
 namespace DSLNG.PEAR.Web.AutoMapper
@@ -75,6 +77,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CreatePillarViewModel, CreatePillarRequest>();
             Mapper.CreateMap<GetPillarResponse, UpdatePillarViewModel>();
             Mapper.CreateMap<UpdatePillarViewModel, UpdatePillarRequest>();
+
+            Mapper.CreateMap<CreateMethodViewModel, CreateMethodRequest>();
+            Mapper.CreateMap<GetMethodRequest, UpdateMethodViewModel>();
+            Mapper.CreateMap<UpdateMethodRequest, UpdateMethodViewModel>();
+            Mapper.CreateMap<GetMethodResponse, UpdateMethodViewModel>();
+            Mapper.CreateMap<UpdateMethodViewModel, UpdateMethodRequest>();
 
             Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
                 //.ForMember(x => x.Score, y => y.MapFrom(z => z.ActualYearly / z.TargetYearly))

@@ -12,7 +12,8 @@ namespace DSLNG.PEAR.Services.Interfaces
     {
         GetMethodResponse GetMethod(GetMethodRequest request);
         GetMethodsResponse GetMethods(GetMethodsRequest requests);
-        void Add(AddMethod request);
-        void Save(SaveMethod request);
+        CreateMethodResponse Create(CreateMethodRequest request);
+        UpdateMethodResponse Update(UpdateMethodRequest request);
+        DeleteMethodResponse Delete(int id);
     }
 }
