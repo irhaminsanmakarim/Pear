@@ -107,7 +107,7 @@
             settings.Settings.ShowGroupFooter = GridViewGroupFooterMode.VisibleAlways;
 
             ASPxSummaryItem kpiScore = new ASPxSummaryItem();
-            kpiScore.ShowInGroupFooterColumn = "PerformanceIndicator";
+            kpiScore.ShowInGroupFooterColumn = "KpiNameWithColor";
             kpiScore.SummaryType = SummaryItemType.Sum;
             kpiScore.FieldName = "Score";
             kpiScore.DisplayFormat = "Score KPI in this pillar (0.00)";
@@ -122,10 +122,11 @@
             settings.GroupSummary.Add(percentageScore);
 
             ASPxSummaryItem totalScoreLabel = new ASPxSummaryItem();
-            totalScoreLabel.FieldName = "PerformanceIndicator";
-            totalScoreLabel.ShowInGroupFooterColumn = "PerformanceIndicator";
-            totalScoreLabel.DisplayFormat = "Total Score";
+            totalScoreLabel.FieldName = "KpiNameWithColor";
+            totalScoreLabel.ShowInGroupFooterColumn = "KpiNameWithColor";
+            totalScoreLabel.DisplayFormat = string.Format(@"<span class='{0}' style='background-color:{1}'></span> Total Score", "trafficlight", "grey");
             totalScoreLabel.SummaryType = SummaryItemType.Count;
+            
 
             ASPxSummaryItem totalScoreValue = new ASPxSummaryItem();
             totalScoreValue.Tag = "Score_2";

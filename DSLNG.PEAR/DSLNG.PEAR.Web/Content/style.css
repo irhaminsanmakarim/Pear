@@ -229,7 +229,10 @@ aside.left-content > * {
 .trafficlight {
     width: 10px;
     height: 20px;
-    margin: 6px;
+    margin-top: 1px;
+    margin-bottom: 3px;
+    margin-left: 3px;
+    margin-right: 5px;
 }
 
 #gridPmsSummaryIndex_DXMainTable .dxgvDataRow_DSLNG:hover {
@@ -383,10 +386,16 @@ aside.left-content > * {
     background-color: green;
 }
 
-.trafficlight {
-    width: 10px;
-    height: 20px;
-    margin: 6px;
+.trafficlight.yellow {
+    background-color: yellow;
+}
+
+.trafficlight.red {
+    background-color: red;
+}
+
+.trafficlight.grey {
+    background-color: grey;
 }
 
 .trafficlight, .title, .description_year {

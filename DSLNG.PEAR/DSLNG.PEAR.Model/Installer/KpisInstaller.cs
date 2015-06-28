@@ -67,14 +67,6 @@ namespace DSLNG.PEAR.Data.Installer
                 UpdatedDate = DateTime.Now,
             };
 
-            var plantAvailability = new Kpi
-                {
-                    Id = 4,
-                    Name = "Plant Availability",
-                    Measurement = _context.Measurements.Local.First(x => x.Id == 1),
-                    Pillar = _context.Pillars.Local.First(x => x.Id == 2),
-                    Order = 3
-                };
             var dafwc = new Kpi
             {
                 Id = 4,
@@ -91,9 +83,19 @@ namespace DSLNG.PEAR.Data.Installer
                 CreatedDate = DateTime.Now,
                 UpdatedDate = DateTime.Now
             };
+
+            var plantAvailability = new Kpi
+            {
+                Id = 5,
+                Name = "Plant Availability",
+                Measurement = _context.Measurements.Local.First(x => x.Id == 1),
+                Pillar = _context.Pillars.Local.First(x => x.Id == 2),
+                Order = 3
+            };
+
             _context.Kpis.Add(fatality);
             _context.Kpis.Add(securityIncident);
-	        _context.Kpis.Add(dafwc);
+            _context.Kpis.Add(dafwc);
             _context.Kpis.Add(rif);
             _context.Kpis.Add(plantAvailability);
         }

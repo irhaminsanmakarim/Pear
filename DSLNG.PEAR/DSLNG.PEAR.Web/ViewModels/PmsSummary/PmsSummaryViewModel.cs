@@ -92,7 +92,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 
         public string KpiNameWithColor
         {
-            get { return string.Format(@"<span style='color:{0}'>{1}</span>", KpiColor, Kpi); }
+            get { return string.Format(@"<span class='trafficlight {0}'></span>{1}", KpiColor, Kpi); }
         }
 
         /*public int Id { get; set; }

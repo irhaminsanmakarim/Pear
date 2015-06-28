@@ -27,13 +27,24 @@ namespace DSLNG.PEAR.Services
             var response = new GetPmsSummaryResponse();
             try
             {
+                //var xxx = DataContext.PmsSummaries.Include(x => x.PmsSummaryScoringIndicators.Select(a => a.)).ToList();
                 var pmsSummary = DataContext.PmsSummaries
+                .Include("PmsSummaryScoringIndicators")
+                .Include("PmsSummaryScoringIndicators.ScoreIndicators")
                 .Include("PmsConfigs.Pillar")
                 .Include("PmsConfigs.PmsConfigDetailsList.Kpi.Measurement")
                 .Include("PmsConfigs.PmsConfigDetailsList.Kpi.KpiAchievements")
                 .Include("PmsConfigs.PmsConfigDetailsList.Kpi.KpiTargets")
                 .Include("PmsConfigs.PmsConfigDetailsList.ScoreIndicators")
                 .First(x => x.IsActive && x.Year == request.Year);
+
+                var pillarScoringIndicators =
+                    pmsSummary.PmsSummaryScoringIndicators.Where(x => x.Type == PmsSummaryScoringIndicatorType.Pillar)
+                              .ToList();
+
+                var totalScoreScoringIndicators =
+                    pmsSummary.PmsSummaryScoringIndicators.Where(x => x.Type == PmsSummaryScoringIndicatorType.TotalScore)
+                              .ToList();
 
                 foreach (var pmsConfig in pmsSummary.PmsConfigs)
                 {
@@ -145,6 +156,7 @@ namespace DSLNG.PEAR.Services
                     }
                 }
 
+                response.KpiDatas = SetPillarAndTotalScoreColor(response.KpiDatas, pillarScoringIndicators, totalScoreScoringIndicators);
                 response.IsSuccess = true;
             }
             catch (InvalidOperationException invalidOperationException)
@@ -171,6 +183,21 @@ namespace DSLNG.PEAR.Services
             }
 
             return "grey";
+        }
+        
+        private IList<GetPmsSummaryResponse.KpiData> SetPillarAndTotalScoreColor(IList<GetPmsSummaryResponse.KpiData> kpiDatas, List<PmsSummaryScoringIndicator> pillarScoringIndicators, List<PmsSummaryScoringIndicator> totalScoreScoringIndicators)
+        {
+            //var totalPillar = kpiDatas.GroupBy(x => x.Pillar).Select(x => x.ToList()).ToList();
+            //IDictionary<string, int> totalPillar = kpiDatas.GroupBy(x => x.Pillar).Select(x => x.Sum(y => y.Score)).ToList();
+            var totalPillar =
+                kpiDatas.GroupBy(x => x.Pillar).ToDictionary(x => x.Key, x => x.Sum(y => y.Score));
+
+            /*foreach (var tp in totalPillar)
+            {
+                kpiDatas.Where(x => x.Pillar == tp.Key).ToList();
+            }*/
+
+            return kpiDatas;
         }
     }
 }
