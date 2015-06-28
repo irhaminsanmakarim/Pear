@@ -173,6 +173,8 @@ namespace DSLNG.PEAR.Web.Controllers
             if (ModelState.IsValid)
             {
                 viewModel.Code = viewModel.CodeFromPillar + viewModel.CodeFromLevel + viewModel.Code;
+                viewModel.YtdFormula = (DSLNG.PEAR.Web.ViewModels.Kpi.YtdFormula)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.YtdFormula), viewModel.YtdFormulaValue);
+                viewModel.Periode = (DSLNG.PEAR.Web.ViewModels.Kpi.PeriodeType)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.PeriodeType), viewModel.PeriodeValue);
                 var request = viewModel.MapTo<CreateKpiRequest>();
                 var response = _kpiService.Create(request);
                 TempData["IsSuccess"] = response.IsSuccess;

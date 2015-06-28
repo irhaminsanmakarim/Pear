@@ -31,7 +31,7 @@ namespace DSLNG.PEAR.Services.Requests.Kpi
         public int? ConversionId { get; set; }
         public Conversion Conversion { get; set; }
         public FormatInput FormatInput { get; set; }
-        //public Periode Periode { get; set; }
+        public PeriodeType Periode { get; set; }
         public string Remark { get; set; }
 
         public bool IsActive { get; set; }

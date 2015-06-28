@@ -20,6 +20,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
             YtdFormulaList = new List<SelectListItem>();
             KpiList = new List<SelectListItem>();
             PillarList = new List<SelectListItem>();
+            PeriodeList = new List<SelectListItem>();
         }
         public string CodeFromLevel { get; set; }
         public string CodeFromPillar { get; set; }
@@ -91,7 +92,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         [Display(Name = "Period Input")]
         public string PeriodeValue { get; set; }
         public List<SelectListItem> PeriodeList { get; set; }
-        public PeriodeType PeriodeType { get; set; }
+        public PeriodeType Periode { get; set; }
 
         public string Remark { get; set; }
 
