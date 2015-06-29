@@ -23,6 +23,8 @@ using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Services.Requests.Kpi;
 using DSLNG.PEAR.Services.Requests.Method;
 using DSLNG.PEAR.Services.Responses.Method;
+using DSLNG.PEAR.Services.Requests.Periode;
+using DSLNG.PEAR.Services.Responses.Periode;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -134,6 +136,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Method, DSLNG.PEAR.Services.Responses.Kpi.Method>();
             Mapper.CreateMap<Data.Entities.Method, GetMethodResponse>();
             Mapper.CreateMap<Data.Entities.Level, Data.Entities.Kpi>();
+
+            Mapper.CreateMap<Data.Entities.Periode, GetPeriodesResponse.Periode>();
+            Mapper.CreateMap<Data.Entities.Periode, GetPeriodeResponse>();
+            Mapper.CreateMap<CreatePeriodeRequest, Data.Entities.Periode>();
+            Mapper.CreateMap<UpdatePeriodeRequest, Data.Entities.Periode>();
             base.Configure();
         }
     }
