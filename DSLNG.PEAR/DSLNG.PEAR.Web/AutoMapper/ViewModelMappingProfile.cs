@@ -39,6 +39,9 @@ using DSLNG.PEAR.Web.ViewModels.Group;
 using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Web.ViewModels.Method;
 using DSLNG.PEAR.Services.Requests.Method;
+using DSLNG.PEAR.Services.Requests.Periode;
+using DSLNG.PEAR.Web.ViewModels.Periode;
+using DSLNG.PEAR.Services.Responses.Periode;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -138,6 +141,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CreateGroupViewModel, CreateGroupRequest>();
             Mapper.CreateMap<GetGroupResponse, UpdateGroupViewModel>();
             Mapper.CreateMap<UpdateGroupViewModel, UpdateGroupRequest>();
+
+            Mapper.CreateMap<CreatePeriodeViewModel, CreatePeriodeRequest>();
+            Mapper.CreateMap<GetPeriodeResponse, UpdatePeriodeViewModel>();
+            Mapper.CreateMap<UpdatePeriodeViewModel, UpdatePeriodeRequest>();
 
             base.Configure();
         }
