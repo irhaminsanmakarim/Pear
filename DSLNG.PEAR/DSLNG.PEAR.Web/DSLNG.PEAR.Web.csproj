@@ -483,6 +483,7 @@
     <Content Include="Views\Kpi\Create.cshtml" />
     <Content Include="Views\Kpi\Update.cshtml" />
     <Content Include="Views\LineChart\_Create.cshtml" />
+    <Content Include="Views\Level\_GridViewPartial.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
@@ -577,8 +578,9 @@
     <Compile Include="ViewModels\Kpi\KpiToSeriesViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\UpdateKpiViewModel.cs" />
-    <Compile Include="ViewModels\Level\LevelsViewModel.cs" />
+    <Compile Include="ViewModels\Level\CreateLevelViewModel.cs" />
     <Compile Include="ViewModels\Level\LevelViewModel.cs" />
+    <Compile Include="ViewModels\Level\UpdateLevelViewModel.cs" />
     <Compile Include="ViewModels\Measurement\CreateMeasurementViewModel.cs" />
     <Compile Include="ViewModels\Measurement\IndexMeasurementViewModel.cs" />
     <Compile Include="ViewModels\Measurement\MeasurementViewModel.cs" />

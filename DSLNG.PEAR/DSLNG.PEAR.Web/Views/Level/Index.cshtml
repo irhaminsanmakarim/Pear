@@ -1,43 +1,17 @@
-@model IEnumerable<DSLNG.PEAR.Web.ViewModels.Level.LevelViewModel>
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Level List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h2>Level List</h2>
+@Html.Partial("_MessageResponse")
 @Html.ActionLink("Create New", "Create")
-
-@{
-    var grid = Html.DevExpress().GridView(settings =>
-    {
-        settings.Name = "gridMeasurementIndex";
-
-        settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
-        settings.SettingsBehavior.ConfirmDelete = true;
-        settings.Width = Unit.Percentage(60);
+@Html.Action("IndexPartial")
 
 
-        settings.KeyFieldName = "Id";
-        settings.Columns.Add(column =>
-        {
-            column.Caption = "Action";
-            column.SetDataItemTemplateContent(c => ViewContext.Writer.Write(
-                                                        Html.ActionLink("Edit", "Update", new { Id = DataBinder.Eval(c.DataItem, "Id") }) + " | " +
-                                                      "<a href='javascript:;' onclick='confirmDelete(" + DataBinder.Eval(c.DataItem, "Id") + ")'>Delete</a>"));
-        });
-        settings.Columns.Add("Id").Visible = false;
-        settings.Columns.Add("Name");
-        settings.Columns.Add("Remark");
-        settings.Columns.Add("IsActive", MVCxGridViewColumnType.CheckBox);
-    });
-    if (ViewData["EditError"] != null)
-    {
-        grid.SetEditErrorText((string)ViewData["EditError"]);
-    }
-    @grid.Bind(Model).GetHtml()
-}
 @section Scripts{
     <script type="text/javascript">
-        var confirmDelete = function(id) {
+        var confirmDelete = function (id) {
             if (confirm('Are you sure want to delete this item?')) {
                 var url = '@Url.Action("Delete", "Level")';
                 $('<form action="' + url + '" method="POST">' +
@@ -47,4 +21,3 @@
         };
     </script>
 }
-
