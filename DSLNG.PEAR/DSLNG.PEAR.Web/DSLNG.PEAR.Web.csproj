@@ -497,6 +497,7 @@
     <Content Include="Views\Pillar\Index.cshtml" />
     <Content Include="Views\Pillar\Create.cshtml" />
     <Content Include="Views\Pillar\Update.cshtml" />
+    <Content Include="Views\SpeedometerChart\_Create.cshtml" />
     <Content Include="Views\Method\_GridViewPartial.cshtml" />
     <Content Include="Views\Method\Create.cshtml" />
     <Content Include="Views\Method\Index.cshtml" />
@@ -592,6 +593,8 @@
     <Compile Include="ViewModels\CorporatePortofolio\PmsSummaryConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Artifact\LineChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\LineChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\SpeedometerChartDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\SpeedometerChartViewModel.cs" />
     <Compile Include="ViewModels\Group\CreateGroupViewModel.cs" />
     <Compile Include="ViewModels\Group\IndexGroupViewModel.cs" />
     <Compile Include="ViewModels\Group\UpdateGroupViewModel.cs" />

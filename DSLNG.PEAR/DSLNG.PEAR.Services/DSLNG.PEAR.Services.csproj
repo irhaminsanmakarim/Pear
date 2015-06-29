@@ -96,6 +96,7 @@
     <Compile Include="PmsConfigDetailsService.cs" />
     <Compile Include="PmsSummaryService.cs" />
     <Compile Include="Requests\Artifact\GetSeriesRequest.cs" />
+    <Compile Include="Requests\Artifact\GetSpeedometerChartDataRequest.cs" />
     <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Requests\Group\GetGroupsRequest.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Requests\User\UpdateUserRequest.cs" />
     <Compile Include="Responses\Artifact\GetChartDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetSeriesResponse.cs" />
+    <Compile Include="Responses\Artifact\GetSpeedometerChartDataResponse.cs" />
     <Compile Include="Responses\Conversion\GetConversionResponse.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Responses\Group\GetGroupResponse.cs" />

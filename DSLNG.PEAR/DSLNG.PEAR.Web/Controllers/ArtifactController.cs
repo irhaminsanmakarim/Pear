@@ -30,6 +30,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = new ArtifactDesignerViewModel();
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "bar", Text = "Bar" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
 
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
@@ -69,6 +70,17 @@ namespace DSLNG.PEAR.Web.Controllers
                         var artifactViewModel = new ArtifactDesignerViewModel();
                         artifactViewModel.LineChart = viewModel;
                         return PartialView("~/Views/LineChart/_Create.cshtml", artifactViewModel);
+                    }
+                case "speedometer":
+                    {
+                        var viewModel = new SpeedometerChartViewModel();
+                        this.SetPeriodeTypes(viewModel.PeriodeTypes);
+                        this.SetRangeFilters(viewModel.RangeFilters);
+                        this.SetValueAxes(viewModel.ValueAxes);
+                        this.SetKpiList(viewModel.KpiList);
+                        var artifactViewModel = new ArtifactDesignerViewModel();
+                        artifactViewModel.SpeedometerChart = viewModel;
+                        return PartialView("~/Views/SpeedometerChart/_Create.cshtml", artifactViewModel);
                     }
                 default:
                     return PartialView("NotImplementedChart.cshtml");
@@ -119,6 +131,17 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.LineChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
                         previewViewModel.LineChart.Series = chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
                         previewViewModel.LineChart.Periodes = chartData.Periodes;
+                    }
+                    break;
+                case "speedometer":
+                    {
+                        var chartData = _artifactServie.GetSpeedometerChartData(viewModel.SpeedometerChart.MapTo<GetSpeedometerChartDataRequest>());
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.SpeedometerChart = new SpeedometerChartDataViewModel();
+                        previewViewModel.SpeedometerChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.SpeedometerChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+                        previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
                     }
                     break;
                 default:

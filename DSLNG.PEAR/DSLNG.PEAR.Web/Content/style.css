@@ -177,17 +177,19 @@ aside.left-content > * {
         height: 100%;
     }
 
-.series-template.original, .stack-template.original, .series-details-holder, .value-axis, .stacks-holder, #range-holder {
+.series-template.original, .stack-template.original, .series-details-holder, .value-axis, .stacks-holder, #range-holder,#hidden-fields-holder {
     display: none;
 }
 
 .series-template,
-.stack-template {
+.stack-template,
+.plot-band-template {
     position: relative;
 }
 
     .series-template .remove,
-    .stack-template .remove {
+    .stack-template .remove,
+    .plot-band-template .remove {
         position:absolute;
         top:0;
         right:0;
