@@ -8,6 +8,7 @@ using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Group;
+using DSLNG.PEAR.Services.Requests.Group;
 using DSLNG.PEAR.Services.Responses.Kpi;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.Conversion;
@@ -59,6 +60,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<GetMenuResponse.Level>()));
             Mapper.CreateMap<Data.Entities.Group, GetGroupResponse>();
             Mapper.CreateMap<Data.Entities.Group, GetGroupsResponse.Group>();
+            Mapper.CreateMap<CreateGroupRequest, Data.Entities.Group>();
+            Mapper.CreateMap<UpdateGroupRequest, Data.Entities.Group>();
             //Mapper.CreateMap<Activity, GetGroupResponse.Activity>();
 
 

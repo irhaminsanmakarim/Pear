@@ -34,6 +34,8 @@ using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Artifact;
 using DSLNG.PEAR.Services.Responses.Group;
+using DSLNG.PEAR.Services.Requests.Group;
+using DSLNG.PEAR.Web.ViewModels.Group;
 using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Web.ViewModels.Method;
 using DSLNG.PEAR.Services.Requests.Method;
@@ -132,6 +134,11 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<LineChartViewModel.Series, GetChartDataRequest.Series>();
             Mapper.CreateMap<GetChartDataResponse.SeriesResponse, LineChartDataViewModel.SeriesViewModel>();
+
+            Mapper.CreateMap<CreateGroupViewModel, CreateGroupRequest>();
+            Mapper.CreateMap<GetGroupResponse, UpdateGroupViewModel>();
+            Mapper.CreateMap<UpdateGroupViewModel, UpdateGroupRequest>();
+
             base.Configure();
         }
     }

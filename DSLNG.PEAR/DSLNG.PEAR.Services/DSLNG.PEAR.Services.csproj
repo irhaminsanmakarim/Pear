@@ -60,8 +60,13 @@
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="GroupService.cs" />
+    <Compile Include="Requests\Group\CreateGroupRequest.cs" />
+    <Compile Include="Requests\Group\UpdateGroupRequest.cs" />
     <Compile Include="Requests\Method\CreateMethodRequest.cs" />
     <Compile Include="Requests\Method\UpdateMethodRequest.cs" />
+    <Compile Include="Responses\Group\CreateGroupResponse.cs" />
+    <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
+    <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
     <Compile Include="Responses\Method\CreateMethodResponse.cs" />
     <Compile Include="Interfaces\IArtifactService.cs" />
     <Compile Include="Interfaces\IConversionService.cs" />

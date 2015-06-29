@@ -66,7 +66,7 @@ namespace DSLNG.PEAR.Services
                 DataContext.Entry(_level).State = EntityState.Modified;
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                response.Message = "Measurement item has been updated successfully";
+                response.Message = "Level item has been updated successfully";
             }
             catch (DbUpdateException dbUpdateException)
             {
@@ -85,7 +85,7 @@ namespace DSLNG.PEAR.Services
                 DataContext.Entry(_level).State = EntityState.Deleted;
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
-                response.Message = "Measurement item has been updated successfully";
+                response.Message = "Level item has been updated successfully";
             }
             catch (DbUpdateException dbUpdateException)
             {

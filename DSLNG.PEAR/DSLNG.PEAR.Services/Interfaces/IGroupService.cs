@@ -12,5 +12,8 @@ namespace DSLNG.PEAR.Services.Interfaces
     {
         GetGroupResponse GetGroup(GetGroupRequest request);
         GetGroupsResponse GetGroups(GetGroupsRequest request);
+        CreateGroupResponse Create(CreateGroupRequest request);
+        UpdateGroupResponse Update(UpdateGroupRequest request);
+        DeleteGroupResponse Delete(int id);
     }
 }
