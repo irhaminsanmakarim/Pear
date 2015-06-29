@@ -166,6 +166,7 @@
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
     <Compile Include="Responses\Menu\GetMenusResponse.cs" />
     <Compile Include="Responses\Menu\UpdateMenuResponse.cs" />
+    <Compile Include="Responses\Method\DeleteMethodResponse.cs" />
     <Compile Include="Responses\Method\GetMethodResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
     <Compile Include="Responses\Method\UpdateMethodResponse.cs" />
