@@ -3,6 +3,7 @@
     public enum FormatInput
     {
         //TODO : complete the category
-        Sum = 1, 
+        Numeric = 1,
+        Money = 2
     }
 }

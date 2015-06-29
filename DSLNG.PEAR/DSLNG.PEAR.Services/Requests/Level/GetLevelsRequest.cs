@@ -8,5 +8,7 @@ namespace DSLNG.PEAR.Services.Requests.Level
 {
     public class GetLevelsRequest
     {
+        public int Take { get; set; }
+        public int Skip { get; set; }
     }
 }

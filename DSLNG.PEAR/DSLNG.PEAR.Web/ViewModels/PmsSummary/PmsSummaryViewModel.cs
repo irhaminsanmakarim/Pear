@@ -96,12 +96,12 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 
         public string KpiNameWithColor
         {
-            get { return string.Format(@"<span class='trafficlight {0}'></span>{1}", KpiColor, Kpi); }
+            get { return string.Format(@"<span class='trafficlight' style='background-color:{0}'></span>{1}", KpiColor, Kpi); }
         }
 
         public string PillarNameWithColor
         {
-            get { return string.Format(@"<span class='trafficlight {0}'></span>{1} ({2})", PillarColor, Pillar, PillarWeight.ToString()); }
+            get { return string.Format(@"<span class='trafficlight' style='background-color:{0}'></span>{1} ({2})", PillarColor, Pillar, PillarWeight.ToString("0.00")); }
         }
 
         public string TotalScoreColor { get; set; }

@@ -4,12 +4,13 @@ using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Services.Requests.Menu;
+using DSLNG.PEAR.Services.Responses.PmsSummary;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Group;
+using DSLNG.PEAR.Services.Requests.Group;
 using DSLNG.PEAR.Services.Responses.Kpi;
-using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.Conversion;
 using DSLNG.PEAR.Services.Requests.Level;
@@ -21,6 +22,10 @@ using DSLNG.PEAR.Services.Responses.PmsConfigDetails;
 using DSLNG.PEAR.Services.Responses.Pillar;
 using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Services.Requests.Kpi;
+using DSLNG.PEAR.Services.Requests.Method;
+using DSLNG.PEAR.Services.Responses.Method;
+using DSLNG.PEAR.Services.Requests.Periode;
+using DSLNG.PEAR.Services.Responses.Periode;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -28,6 +33,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
     {
         protected override void Configure()
         {
+            ConfigurePmsSummary();
+            ConfigureKpi();
+
             Mapper.CreateMap<User, GetUserResponse>()
                   .ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
             Mapper.CreateMap<User, UserResponse>();
@@ -56,8 +64,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Level, GetMenuResponse.Level>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetMenuResponse.RoleGroup>()
                 .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<GetMenuResponse.Level>()));
-            Mapper.CreateMap<Data.Entities.Group, GetGroupResponse.Group>();
-            Mapper.CreateMap<Activity, GetGroupResponse.Activity>();
+            Mapper.CreateMap<Data.Entities.Group, GetGroupResponse>();
+            Mapper.CreateMap<Data.Entities.Group, GetGroupsResponse.Group>();
+            Mapper.CreateMap<CreateGroupRequest, Data.Entities.Group>();
+            Mapper.CreateMap<UpdateGroupRequest, Data.Entities.Group>();
+            //Mapper.CreateMap<Activity, GetGroupResponse.Activity>();
 
 
             Mapper.CreateMap<Data.Entities.Measurement, GetMeasurementsResponse>();
@@ -71,6 +82,20 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Kpi, GetKpiToSeriesResponse.Kpi>();
             Mapper.CreateMap<Kpi, GetKpisResponse.Kpi>();
             Mapper.CreateMap<CreateKpiRequest, Kpi>();
+            Mapper.CreateMap<CreateKpiRequest, Data.Entities.Type>();
+            Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.KpiRelationModel, DSLNG.PEAR.Data.Entities.KpiRelationModel>();
+            //Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.Level, Data.Entities.Level>();
+            //Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.RoleGroup, Data.Entities.RoleGroup>();
+            //Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.Type, Data.Entities.Type>();
+            //Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.Group, Data.Entities.Group>();
+            //Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.Measurement, Data.Entities.Measurement>();
+            Mapper.CreateMap<Data.Entities.Level, DSLNG.PEAR.Services.Requests.Kpi.Level>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, DSLNG.PEAR.Services.Requests.Kpi.RoleGroup>();
+            Mapper.CreateMap<Data.Entities.Group, DSLNG.PEAR.Services.Requests.Kpi.Group>();
+            Mapper.CreateMap<Data.Entities.Measurement, DSLNG.PEAR.Services.Requests.Kpi.Measurement>();
+            Mapper.CreateMap<Data.Entities.Level, GetKpisResponse.Level>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, GetKpisResponse.RoleGroup>();
+            Mapper.CreateMap<Data.Entities.Type, GetKpisResponse.Type>();
             Mapper.CreateMap<Kpi, GetKpiResponse>();
             Mapper.CreateMap<UpdateKpiRequest, Kpi>();
 
@@ -99,10 +124,52 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse.Pillar>();
+            
             Mapper.CreateMap<CreatePillarRequest, Data.Entities.Pillar>();
             Mapper.CreateMap<UpdatePillarRequest, Data.Entities.Pillar>();
 
+            Mapper.CreateMap<Data.Entities.Method, GetMethodResponse>();
+            Mapper.CreateMap<CreateMethodRequest, Data.Entities.Method>();
+            Mapper.CreateMap<Data.Entities.Method, GetMethodsResponse.Method>();
+            Mapper.CreateMap<UpdateMethodRequest, Data.Entities.Method>();
+
+            
+
+            Mapper.CreateMap<Data.Entities.Method, GetMethodsResponse.Method>();
+            Mapper.CreateMap<Data.Entities.Group, GetGroupResponse>();
+            
+            Mapper.CreateMap<Data.Entities.Method, Responses.Kpi.Method>();
+            Mapper.CreateMap<Data.Entities.Method, GetMethodResponse>();
+            Mapper.CreateMap<Data.Entities.Level, Data.Entities.Kpi>();
+            Mapper.CreateMap<Data.Entities.Periode, GetPeriodesResponse.Periode>();
+            Mapper.CreateMap<Data.Entities.Periode, GetPeriodeResponse>();
+            Mapper.CreateMap<CreatePeriodeRequest, Data.Entities.Periode>();
+            Mapper.CreateMap<UpdatePeriodeRequest, Data.Entities.Periode>();
+
             base.Configure();
+        }
+
+        private void ConfigurePmsSummary()
+        {
+            Mapper.CreateMap<PmsSummary, GetPmsSummaryListResponse.PmsSummary>();
+            Mapper.CreateMap<Kpi, GetPmsSummaryConfigurationResponse.Kpi>()
+                  .ForMember(x => x.Measurement, y => y.MapFrom(z => z.Measurement.Name));
+            Mapper.CreateMap<Data.Entities.Pillar, GetPmsSummaryConfigurationResponse.Pillar>();
+            Mapper.CreateMap<PmsConfig, GetPmsSummaryConfigurationResponse.PmsConfig>()
+                .ForMember(x => x.PillarId, y => y.MapFrom(z => z.Pillar.Id))
+                .ForMember(x => x.PmsConfigDetailsList, y => y.MapFrom(z => z.PmsConfigDetailsList));
+            Mapper.CreateMap<ScoreIndicator, GetPmsSummaryConfigurationResponse.ScoreIndicator>();
+            Mapper.CreateMap<PmsConfigDetails, GetPmsSummaryConfigurationResponse.PmsConfigDetails>();
+
+            /*Mapper.CreateMap<Data.Entities.PmsConfigDetails, GetPmsSummaryConfigurationResponse.PmsConfigDetails>()
+                .ForMember(x => x.);*/
+        }
+
+        private void ConfigureKpi()
+        {
+            Mapper.CreateMap<Data.Entities.Group, GetKpisResponse.Group>();
+            Mapper.CreateMap<Data.Entities.Measurement, GetKpisResponse.Measurement>();
+            Mapper.CreateMap<Data.Entities.Pillar, GetKpisResponse.Pillar>();
         }
     }
 }

@@ -8,6 +8,6 @@ namespace DSLNG.PEAR.Services.Requests.Group
 {
     public class GetGroupRequest
     {
-
+        public int Id { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.Type;
 using DSLNG.PEAR.Services.Responses.Type;
+using System.Collections.Generic;
 
 namespace DSLNG.PEAR.Services
 {
@@ -32,7 +33,16 @@ namespace DSLNG.PEAR.Services
             }
         }
         public GetTypesResponse GetTypes(GetTypesRequest request){
-            var types = DataContext.Types.ToList();
+            var types = new List<DSLNG.PEAR.Data.Entities.Type>(); 
+            if (request.Take != 0)
+            {
+                types = DataContext.Types.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
+            }
+            else
+            {
+                types = DataContext.Types.ToList();
+            }
+            
             var response = new GetTypesResponse();
             response.Types = types.MapTo<GetTypesResponse.Type>();
 

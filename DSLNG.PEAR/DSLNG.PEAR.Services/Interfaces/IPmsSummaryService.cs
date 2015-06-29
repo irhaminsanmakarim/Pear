@@ -11,5 +11,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface IPmsSummaryService
     {
         GetPmsSummaryResponse GetPmsSummary(GetPmsSummaryRequest request);
+        GetPmsSummaryListResponse GetPmsSummaryList(GetPmsSummaryListRequest request);
+        GetPmsSummaryConfigurationResponse GetPmsSummaryConfiguration(GetPmsSummaryConfigurationRequest request);
     }
 }
