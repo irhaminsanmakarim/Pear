@@ -84,9 +84,12 @@
     <Compile Include="Requests\Artifact\GetSeriesRequest.cs" />
     <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
+    <Compile Include="Requests\Group\GetGroupsRequest.cs" />
+    <Compile Include="Requests\Artifact\GetChartDataRequest.cs" />
     <Compile Include="Requests\Kpi\CreateKpiRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Conversion.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Group.cs" />
+    <Compile Include="Requests\Kpi\KpiRequest\KpiRelationModel.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Level.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Measurement.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Pillar.cs" />
@@ -121,11 +124,13 @@
     <Compile Include="Requests\User\CreateUserRequest.cs" />
     <Compile Include="Requests\User\GetUsersRequest.cs" />
     <Compile Include="Requests\User\UpdateUserRequest.cs" />
+    <Compile Include="Responses\Artifact\GetChartDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetSeriesResponse.cs" />
     <Compile Include="Responses\Conversion\GetConversionResponse.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Responses\Group\GetGroupResponse.cs" />
     <Compile Include="Responses\ConversionResponse.cs" />
+    <Compile Include="Responses\Group\GetGroupsResponse.cs" />
     <Compile Include="Responses\Kpi\CreateKpiResponse.cs" />
     <Compile Include="Responses\Kpi\DeleteKpiResponse.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\Conversion.cs" />
@@ -137,6 +142,7 @@
     <Compile Include="Responses\Kpi\KpiResponse\Group.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\Level.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\Measurement.cs" />
+    <Compile Include="Responses\Kpi\KpiResponse\Method.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\Pillar.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\RoleGroup.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\Type.cs" />
@@ -146,7 +152,6 @@
     <Compile Include="Responses\Level\GetLevelsResponse.cs" />
     <Compile Include="Responses\Level\UpdateLevelResponse.cs" />
     <Compile Include="Responses\MeasurementResponse.cs" />
-    <Compile Include="Responses\Kpi\KpiResponse\Method.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\Periode.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\PeriodeType.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\YtdFormula.cs" />
@@ -161,7 +166,7 @@
     <Compile Include="Responses\Menu\GetMenuResponse.cs" />
     <Compile Include="Responses\Menu\GetMenusResponse.cs" />
     <Compile Include="Responses\Menu\UpdateMenuResponse.cs" />
-    <Compile Include="Responses\Method\DeleteMethodResponse.cs" />
+    <Compile Include="Responses\Method\GetMethodResponse.cs" />
     <Compile Include="Responses\Method\GetMethodsResponse.cs" />
     <Compile Include="Responses\Method\UpdateMethodResponse.cs" />
     <Compile Include="Responses\PmsConfigDetails\GetPmsConfigDetailsResponse.cs" />

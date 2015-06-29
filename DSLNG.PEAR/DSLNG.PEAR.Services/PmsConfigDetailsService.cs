@@ -28,7 +28,6 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Kpi.Group)
                 .Include(x => x.Kpi.KpiAchievements)
                 .Include(x => x.Kpi.Measurement)
-                .Include(x => x.Kpi.Periode)
                 .Include(x => x.Kpi.RelationModels)
                 .Include(x => x.Kpi.RelationModels.Select(y => y.Kpi))
                 .Include(x => x.Kpi.RelationModels.Select(y => y.Kpi).Select(z => z.KpiAchievements))
@@ -42,7 +41,7 @@ namespace DSLNG.PEAR.Services
                 response.KpiGroup = config.Kpi.Group != null ? config.Kpi.Group.Name : "";
                 response.KpiName = config.Kpi.Name;
                 response.KpiUnit = config.Kpi.Measurement != null ? config.Kpi.Measurement.Name : "";
-                response.KpiPeriod = config.Kpi.Periode != null ? config.Kpi.Periode.Name.ToString() : "";
+                response.KpiPeriod = config.Kpi.Period != null ? config.Kpi.Period.ToString() : "";
                 var kpiActualYearly = config.Kpi.KpiAchievements.FirstOrDefault(x => x.PeriodeType == Data.Enums.PeriodeType.Yearly);
                 if (kpiActualYearly != null)
                 {

@@ -7,6 +7,7 @@ namespace DSLNG.PEAR.Services.Interfaces
 {
     public interface IArtifactService
     {
-        GetSeriesResponse GetSeries(GetSeriesRequest request);
+        //GetSeriesResponse GetSeries(GetSeriesRequest request);
+        GetChartDataResponse GetChartData(GetChartDataRequest request);
     }
 }

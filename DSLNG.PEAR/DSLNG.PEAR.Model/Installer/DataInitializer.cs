@@ -13,6 +13,10 @@ namespace DSLNG.PEAR.Data.Installer
         protected override void Seed(DataContext context)
         {
             base.Seed(context);
+
+            var typeInstaller = new TypeInstaller(context);
+            typeInstaller.Install();
+
             var levelsInstaller = new LevelsInstaller(context);
             levelsInstaller.Install();
 

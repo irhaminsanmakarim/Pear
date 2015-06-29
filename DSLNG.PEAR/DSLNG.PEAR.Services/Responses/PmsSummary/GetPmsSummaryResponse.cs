@@ -83,9 +83,17 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
 
             public int PillarOrder { get; set; }
 
+            public string PillarColor { get; set; }
+
+            public double PillarWeight { get; set; }
+
             public int KpiOrder { get; set; }
 
             public string KpiColor { get; set; }
+
+            public string TotalScoreColor { get; set; }
+
+            
 
             //public string Color { get; set; }
 

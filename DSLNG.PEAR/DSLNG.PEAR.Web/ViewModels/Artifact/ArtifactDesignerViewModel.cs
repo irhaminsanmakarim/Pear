@@ -23,5 +23,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public IList<SelectListItem> Measurements { get; set; }
 
         public BarChartViewModel BarChart { get; set; }
+        public LineChartViewModel LineChart { get; set; }
     }
 }

@@ -6,7 +6,7 @@
     LevelList.Add(new SelectListItem { Text = "Financial", Value = "Financial" });
     LevelList.Add(new SelectListItem { Text = "Director", Value = "Director" });
     ViewBag.LevelList = LevelList;
-    
+
 }
 
 <h2>@ViewBag.Title</h2>
@@ -20,14 +20,47 @@
                 @Html.ValidationMessageFor(model => model.Name)
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Code, new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
+                @Html.LabelFor(model => model.LevelId, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.LevelId, Model.LevelList, "", new { @class = "form-control", @onChange = "levelOnChange(this)" })
+                @Html.ValidationMessageFor(model => model.LevelId)
+            </div>
+            <div class="form-group pillar" style="display:none">
+                @Html.LabelFor(model => model.PillarId, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.PillarId, Model.PillarList, "", new { @class = "form-control", @onChange = "pillarOnChange(this)" })
+                @Html.ValidationMessageFor(model => model.PillarId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RoleGroupId, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.RoleGroupId, Model.RoleGroupList, "", new { @class = "form-control"})
+                @Html.ValidationMessageFor(model => model.RoleGroupId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.TypeId, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.TypeId, Model.TypeList, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TypeId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.GroupId, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.GroupId, Model.GroupList, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.GroupId)
+            </div>
+            @Html.LabelFor(model => model.Code, new { @class = "control-label" })
+            <div class="form-group">
+                <div class="col-lg-4">
+                    <input type="text" name="CodeFromPillar" readonly="readonly" class="form-control" />
+                </div>
+                <div class="col-lg-4">
+                    <input type="text" name="CodeFromLevel" readonly="readonly" class="form-control" />
+                </div>
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
+                </div>
                 @Html.ValidationMessageFor(model => model.Code)
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.PillarId, new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.PillarId, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PillarId)
+                @Html.LabelFor(model => model.YtdFormulaValue, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.YtdFormulaValue, Model.YtdFormulaList, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.YtdFormulaValue)
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.IsEconomic, new { @class = "control-label" })
@@ -35,9 +68,46 @@
                 @Html.ValidationMessageFor(model => model.IsEconomic)
             </div>
             <div class="form-group">
+                @Html.LabelFor(model => model.MeasurementId, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.MeasurementId, Model.MeasurementList, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MeasurementId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.MethodId, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.MethodId, Model.MethodList, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MethodId)
+            </div>
+            <div class="relation-box">
+                <label class="control-label">Relation Model</label>
+                <div class="form-group relation-list">
+                    <div class="col-lg-6">
+                        <select name="RelationModels[0].Id" class="form-control">
+                            @foreach (var item in Model.KpiList)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <select name="RelationModels[0].Method" class="form-control">
+                            <option value="Quantitative">Quantitative</option>
+                            <option value="Qualitative">Qualitative</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <button type="button" class="btn btn-default btn-sm" onclick="addRelation()">Add more</button>
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(model => model.Order, new { @class = "control-label" })
                 @Html.TextBoxFor(model => model.Order, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Order)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PeriodeValue, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.PeriodeValue, Model.PeriodeList, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodeValue)
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Remark, new { @class = "control-label" })
@@ -55,3 +125,44 @@
         </form>
     </div>
 </div>
+<script>
+    function addRelation() {
+        var $relationList = $('.relation-box .relation-list:last');
+        var kpiName = $relationList.find('div:first select').prop('name');
+        var methodName = $relationList.find('div:last select').prop('name');
+        var countInput = $('.relation-list').find('div').length - 1;
+        var clone = $relationList.clone().insertAfter($relationList);
+        clone.find('select[name="' + kpiName + '"]').attr('name', 'RelationModels[' + countInput + '].Id');
+        clone.find('select[name="' + methodName + '"]').attr('name', 'RelationModels[' + countInput + '].Method');
+    }
+
+    function levelOnChange(val)
+    {
+        var levelId = $(val).val();
+        $.ajax({
+            url: '@Url.Action("GetLevelCode")',
+            data: { id: levelId },
+            type: 'GET',
+            success: function (data) {
+                $("input[name=CodeFromLevel]").val(data);
+            }
+        });
+        var selectedText = $(val).find("option:selected").text();
+        if (selectedText == "Corporate") {
+            $(".pillar").show();
+        }
+    }
+
+    function pillarOnChange(val)
+    {
+        var pillarId = $(val).val();
+        $.ajax({
+            url: '@Url.Action("GetPillarCode")',
+            data: { id: pillarId },
+            type: 'GET',
+            success: function (data) {
+                $("input[name=CodeFromPillar]").val(data);
+            }
+        });
+    }
+</script>

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Services.Requests.Group
+namespace DSLNG.PEAR.Data.Enums
 {
-    public class GetGroupRequest
+    public enum PmsSummaryScoringIndicatorType
     {
-        public int Id { get; set; }
+        TotalScore,
+        Pillar
     }
 }

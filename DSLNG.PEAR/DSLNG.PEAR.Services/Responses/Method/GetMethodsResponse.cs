@@ -8,14 +8,16 @@ namespace DSLNG.PEAR.Services.Responses.Method
 {
     public class GetMethodResponse : BaseResponse
     {
-        public int Id { get; set; }
+        public IList<Method> Methods { get; set; }
+        public class Method
+        {
+            public int Id { get; set; }
 
-        public string Name { get; set; }
-        public string Remark { get; set; }
+            public string Name { get; set; }
+            public string Remark { get; set; }
 
-        public bool IsActive { get; set; }
-    }
-
+            public bool IsActive { get; set; }
+        }
     public class GetMethodsResponse : BaseResponse
     {
         public IList<Method> Methods { get; set; }

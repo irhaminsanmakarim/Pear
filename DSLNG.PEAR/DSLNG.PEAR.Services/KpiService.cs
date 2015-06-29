@@ -60,7 +60,15 @@ namespace DSLNG.PEAR.Services
         }
         public GetKpisResponse GetKpis(GetKpisRequest request)
         {
-            var kpis = DataContext.Kpis.ToList();
+            var kpis = new List<Kpi>();
+            if (request.Take != 0)
+            {
+                kpis = DataContext.Kpis.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
+            }
+            else
+            {
+                kpis = DataContext.Kpis.ToList();
+            }
             var response = new GetKpisResponse();
             response.Kpis = kpis.MapTo<GetKpisResponse.Kpi>();
 
@@ -73,6 +81,40 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var kpi = request.MapTo<Kpi>();
+                if (request.PillarId.HasValue)
+                {
+                    kpi.Pillar = DataContext.Pillars.FirstOrDefault(x => x.Id == request.PillarId);
+                }
+                if (request.GroupId.HasValue)
+                {
+                    kpi.Group = DataContext.Groups.FirstOrDefault(x => x.Id == request.GroupId);                
+                }
+                if (request.RoleGroupId.HasValue)
+                {
+                    kpi.RoleGroup = DataContext.RoleGroups.FirstOrDefault(x => x.Id == request.RoleGroupId.Value);                    
+                }
+                if (request.MeasurementId.HasValue)
+                {
+                    kpi.Measurement = DataContext.Measurements.FirstOrDefault(x => x.Id == request.MeasurementId);                    
+                }
+                kpi.Level = DataContext.Levels.FirstOrDefault(x => x.Id == request.LevelId);
+                kpi.Type = DataContext.Types.FirstOrDefault(x => x.Id == request.TypeId);
+                kpi.Method = DataContext.Methods.FirstOrDefault(x => x.Id == request.MethodId);
+                if (request.RelationModels.Count > 0)
+                {
+                    var relation = new List<DSLNG.PEAR.Data.Entities.KpiRelationModel>();
+                    foreach (var item in request.RelationModels)
+                    {
+                        var kpiRelation = DataContext.Kpis.FirstOrDefault(x=>x.Id == item.Id);
+                        relation.Add(new DSLNG.PEAR.Data.Entities.KpiRelationModel
+                        {
+                            Kpi = kpiRelation,
+                            Method = item.Method
+                        });
+                    }
+                    kpi.RelationModels = relation;
+                }
+                
                 DataContext.Kpis.Add(kpi);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
