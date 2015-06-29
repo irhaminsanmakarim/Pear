@@ -94,6 +94,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<UpdatePillarViewModel, UpdatePillarRequest>();
             Mapper.CreateMap<GetPillarsResponse, DSLNG.PEAR.Web.ViewModels.Kpi.Pillar>();
 
+            Mapper.CreateMap<CreateMethodViewModel, CreateMethodRequest>();
+            Mapper.CreateMap<GetMethodRequest, UpdateMethodViewModel>();
+            Mapper.CreateMap<UpdateMethodRequest, UpdateMethodViewModel>();
+            Mapper.CreateMap<GetMethodResponse, UpdateMethodViewModel>();
+            Mapper.CreateMap<UpdateMethodViewModel, UpdateMethodRequest>();
+
             Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
             Mapper.CreateMap<GetPmsConfigDetailsResponse, PmsConfigDetailsViewModel>();
             Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiAchievment, PmsConfigDetailsViewModel.KpiAchievment>();

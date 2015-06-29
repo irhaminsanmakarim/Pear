@@ -9,7 +9,6 @@ using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Group;
 using DSLNG.PEAR.Services.Responses.Kpi;
-using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.Conversion;
 using DSLNG.PEAR.Services.Requests.Level;
@@ -21,6 +20,8 @@ using DSLNG.PEAR.Services.Responses.PmsConfigDetails;
 using DSLNG.PEAR.Services.Responses.Pillar;
 using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Services.Requests.Kpi;
+using DSLNG.PEAR.Services.Requests.Method;
+using DSLNG.PEAR.Services.Responses.Method;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -116,8 +117,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse.Pillar>();
             Mapper.CreateMap<CreatePillarRequest, Data.Entities.Pillar>();
             Mapper.CreateMap<UpdatePillarRequest, Data.Entities.Pillar>();
-            Mapper.CreateMap<Data.Entities.Pillar, GetKpisResponse.Pillar>();
 
+            Mapper.CreateMap<Data.Entities.Method, GetMethodResponse>();
+            Mapper.CreateMap<CreateMethodRequest, Data.Entities.Method>();
+            Mapper.CreateMap<Data.Entities.Method, GetMethodsResponse.Method>();
+            Mapper.CreateMap<UpdateMethodRequest, Data.Entities.Method>();
 
             Mapper.CreateMap<Data.Entities.Method, GetMethodsResponse.Method>();
             Mapper.CreateMap<Data.Entities.Group, GetGroupResponse>();
