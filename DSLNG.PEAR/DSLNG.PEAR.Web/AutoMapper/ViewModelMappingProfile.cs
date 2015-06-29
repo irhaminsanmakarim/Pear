@@ -35,6 +35,8 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Artifact;
 using DSLNG.PEAR.Services.Responses.Group;
 using DSLNG.PEAR.Services.Responses.Method;
+using DSLNG.PEAR.Web.ViewModels.Method;
+using DSLNG.PEAR.Services.Requests.Method;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
