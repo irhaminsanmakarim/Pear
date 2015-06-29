@@ -44,10 +44,6 @@ namespace DSLNG.PEAR.Web.AutoMapper
     {
         protected override void Configure()
         {
-            Mapper.CreateMap<GetLevelResponse, LevelViewModel>();
-            Mapper.CreateMap<GetLevelsResponse, LevelsViewModel>();
-            Mapper.CreateMap<GetLevelsResponse.Level, LevelViewModel>();
-            Mapper.CreateMap<GetLevelResponse, DSLNG.PEAR.Web.ViewModels.Kpi.Level>();
 
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
             Mapper.CreateMap<CreateKpiViewModel, CreateKpiRequest>();
@@ -71,8 +67,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetMeasurementsResponse.Measurement, MeasurementViewModel>();
             Mapper.CreateMap<GetMeasurementResponse, DSLNG.PEAR.Web.ViewModels.Kpi.Measurement>();
 
-            Mapper.CreateMap<LevelViewModel, UpdateLevelRequest>();
-            Mapper.CreateMap<LevelViewModel, CreateLevelRequest>();
+            Mapper.CreateMap<CreateLevelViewModel, CreateLevelRequest>();
+            Mapper.CreateMap<GetLevelResponse, UpdateLevelViewModel>();
+            Mapper.CreateMap<UpdateLevelViewModel, UpdateLevelRequest>();
 
             Mapper.CreateMap<GetUsersResponse.User, UserViewModel>();
             Mapper.CreateMap<CreateUserViewModel, CreateUserRequest>();

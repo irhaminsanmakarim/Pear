@@ -4,6 +4,7 @@ using DSLNG.PEAR.Web.ViewModels.Level;
 using System.Linq;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
+using DevExpress.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -19,19 +20,69 @@ namespace DSLNG.PEAR.Web.Controllers
         // GET: /Level/
         public ActionResult Index()
         {
-            var dto = _levelService.GetLevels(new GetLevelsRequest());
-            var model = dto.Levels.MapTo<LevelViewModel>();
-            //var model = new LevelsViewModel() { Levels = dto.Levels.Select(x => new LevelViewModel { Id= x.Id, Code = x.Code, Name = x.Name, Number = x.Number, Remark = x.Remark, IsActive = x.IsActive }) };
-            return View(model);
+            return View();
+        }
+
+        public ActionResult IndexPartial()
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridLevelIndex");
+
+            if (viewModel == null)
+                viewModel = CreateGridViewModel();
+            return BindingCore(viewModel);
+        }
+
+        PartialViewResult BindingCore(GridViewModel gridViewModel)
+        {
+            gridViewModel.ProcessCustomBinding(
+                GetDataRowCount,
+                GetData
+            );
+            return PartialView("_GridViewPartial", gridViewModel);
+        }
+
+        static GridViewModel CreateGridViewModel()
+        {
+            var viewModel = new GridViewModel();
+            viewModel.KeyFieldName = "Id";
+            viewModel.Columns.Add("Code");
+            viewModel.Columns.Add("Name");
+            viewModel.Columns.Add("Number");
+            viewModel.Columns.Add("Remark");
+            viewModel.Columns.Add("IsActive");
+            viewModel.Pager.PageSize = 10;
+            return viewModel;
+        }
+
+        public ActionResult PagingAction(GridViewPagerState pager)
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridLevelIndex");
+            viewModel.ApplyPagingState(pager);
+            return BindingCore(viewModel);
+        }
+
+        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
+        {
+
+            e.DataRowCount = _levelService.GetLevels(new GetLevelsRequest()).Levels.Count;
+        }
+
+        public void GetData(GridViewCustomBindingGetDataArgs e)
+        {
+            e.Data = _levelService.GetLevels(new GetLevelsRequest
+            {
+                Skip = e.StartDataRowIndex,
+                Take = e.DataRowCount
+            }).Levels;
         }
 
         public ActionResult Create() {
-            var viewModel = new LevelViewModel();
+            var viewModel = new CreateLevelViewModel();
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Create(LevelViewModel viewModel)
+        public ActionResult Create(CreateLevelViewModel viewModel)
         { 
             var request  = viewModel.MapTo<CreateLevelRequest>();
             var response = _levelService.Create(request);
@@ -48,12 +99,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Update(int id)
         {
             var response = _levelService.GetLevel(new GetLevelRequest { Id = id });
-            var viewModel = response.MapTo<LevelViewModel>();
+            var viewModel = response.MapTo<UpdateLevelViewModel>();
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Update(LevelViewModel viewModel)
+        public ActionResult Update(UpdateLevelViewModel viewModel)
         {
             var request = viewModel.MapTo<UpdateLevelRequest>();
             var response = _levelService.Update(request);
