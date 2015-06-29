@@ -484,6 +484,10 @@
     <Content Include="Views\Kpi\Update.cshtml" />
     <Content Include="Views\LineChart\_Create.cshtml" />
     <Content Include="Views\Level\_GridViewPartial.cshtml" />
+    <Content Include="Views\Group\_GridViewPartial.cshtml" />
+    <Content Include="Views\Group\Create.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\Group\Update.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
@@ -544,6 +548,7 @@
     <Compile Include="Controllers\Api\ApiUserController.cs" />
     <Compile Include="Controllers\ArtifactController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LevelController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
@@ -574,6 +579,9 @@
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\LineChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\LineChartViewModel.cs" />
+    <Compile Include="ViewModels\Group\CreateGroupViewModel.cs" />
+    <Compile Include="ViewModels\Group\IndexGroupViewModel.cs" />
+    <Compile Include="ViewModels\Group\UpdateGroupViewModel.cs" />
     <Compile Include="ViewModels\Kpi\CreateKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiToSeriesViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiViewModel.cs" />
