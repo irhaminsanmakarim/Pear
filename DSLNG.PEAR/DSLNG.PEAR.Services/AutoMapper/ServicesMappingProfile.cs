@@ -26,6 +26,7 @@ using DSLNG.PEAR.Services.Requests.Method;
 using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Services.Requests.Periode;
 using DSLNG.PEAR.Services.Responses.Periode;
+using DSLNG.PEAR.Services.Requests.KpiTarget;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -163,6 +164,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             /*Mapper.CreateMap<Data.Entities.PmsConfigDetails, GetPmsSummaryConfigurationResponse.PmsConfigDetails>()
                 .ForMember(x => x.);*/
+
+            Mapper.CreateMap<CreateKpiTargetRequest.KpiTarget, KpiTarget>();
         }
 
         private void ConfigureKpi()

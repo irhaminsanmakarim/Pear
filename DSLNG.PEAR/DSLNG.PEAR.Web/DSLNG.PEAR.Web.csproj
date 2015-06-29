@@ -490,6 +490,7 @@
     <Content Include="Views\Group\Create.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Group\Update.cshtml" />
+    <Content Include="Views\KpiTarget\Create.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
@@ -558,6 +559,7 @@
     <Compile Include="Controllers\CorporatePortofolioController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KpiTargetController.cs" />
     <Compile Include="Controllers\LevelController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -593,6 +595,8 @@
     <Compile Include="ViewModels\Group\CreateGroupViewModel.cs" />
     <Compile Include="ViewModels\Group\IndexGroupViewModel.cs" />
     <Compile Include="ViewModels\Group\UpdateGroupViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\CreateKpiTargetViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\KpiTargetViewModel.cs" />
     <Compile Include="ViewModels\Kpi\CreateKpiViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiToSeriesViewModel.cs" />
     <Compile Include="ViewModels\Kpi\KpiViewModel.cs" />

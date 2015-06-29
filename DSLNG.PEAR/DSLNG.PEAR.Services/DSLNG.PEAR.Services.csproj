@@ -60,10 +60,13 @@
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="GroupService.cs" />
+    <Compile Include="Interfaces\IKpiTargetService.cs" />
     <Compile Include="Interfaces\IPeriodeService.cs" />
+    <Compile Include="KpiTargetService.cs" />
     <Compile Include="PeriodeService.cs" />
     <Compile Include="Requests\Group\CreateGroupRequest.cs" />
     <Compile Include="Requests\Group\UpdateGroupRequest.cs" />
+    <Compile Include="Requests\KpiTarget\CreateKpiTargetRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\PeriodeType.cs" />
     <Compile Include="Requests\Method\CreateMethodRequest.cs" />
@@ -72,6 +75,7 @@
     <Compile Include="Responses\Group\CreateGroupResponse.cs" />
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
+    <Compile Include="Responses\KpiTarget\CreateKpiTargetResponse.cs" />
     <Compile Include="Responses\Method\CreateMethodResponse.cs" />
     <Compile Include="Interfaces\IArtifactService.cs" />
     <Compile Include="Interfaces\IConversionService.cs" />

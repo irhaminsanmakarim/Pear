@@ -1,0 +1,60 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.KpiTarget.CreateKpiTargetViewModel
+
+@{
+    ViewBag.Title = "Create Kpi Target";
+}
+
+<h2>@ViewBag.Title</h2>
+@Html.Partial("_MessageResponse")
+<div class="row">
+    <div class="col-md-12">
+        <form action="@Url.Action("Create")" method="POST">
+            <div class="form-group">
+                @Html.LabelFor(model => model.PeriodeTypeValue, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.PeriodeTypeValue, Model.PeriodeTypeList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodeTypeValue)
+            </div>
+            @for (int i = 0; i < Model.PillarKpiTarget.Count; i++)
+            {
+                <div class="form-group">
+                    @Html.DropDownListFor(model => Model.PillarKpiTarget[i].PillarId, Model.PillarKpiTarget[i].PillarList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => Model.PillarKpiTarget[i].PillarId)
+                </div>
+                for (int k = 0; k < Model.PillarKpiTarget[i].KpiTargetList.Count; k++)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].KpiId, Model.PillarKpiTarget[i].KpiTargetList[k].KpiList, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].KpiId)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.DisplayFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Kpi.Unit)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Remark, Model.PillarKpiTarget[i].KpiTargetList[k].Remark, new { @class = "form-control", @placeholder = "Remark" })
+                            @Html.ValidationMessageFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Remark)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @{ 
+                                var id = "PillarKpiTarget_"+ i + "__KpiTargetList_" + k + "__Value";
+                                var name = "PillarKpiTarget["+ i + "].KpiTargetList[" + k + "].Value";
+                            }
+                            <input type="text" name="@name" id="@id" class="form-control">
+                            @*@Html.TextBoxFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Value, Model.PillarKpiTarget[i].KpiTargetList[k].Value, new { @class = "form-control" })*@
+                            @*@Html.ValidationMessageFor(model => kpi.ValueKpi)*@
+                        </div>
+                    </div>
+                }
+            }
+            <button type="submit" class="btn btn-default">Submit</button>
+            <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+
+        </form>
+    </div>
+</div>
