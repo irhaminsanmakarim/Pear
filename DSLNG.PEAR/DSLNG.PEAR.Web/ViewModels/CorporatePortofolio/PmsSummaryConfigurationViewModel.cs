@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Web.ViewModels.CorporatePortofolio
     public class PmsSummaryConfigurationViewModel
     {
         public IList<SelectListItem> Pillars { get; set; }
+        //public PillarSelectList PillarSelect { get;set;}
         public IList<SelectListItem> Kpis { get; set; }
         public IList<PmsConfig> PmsConfigs { get; set; }
         public int[] PillarIds { get; set; } 
@@ -54,6 +55,12 @@ namespace DSLNG.PEAR.Web.ViewModels.CorporatePortofolio
         {
             public string Color { get; set; }
             public string Expression { get; set; }
+        }
+
+        public class PillarSelectList
+        {
+            public SelectList SelectList { get; set; }
+            public int PillarId { get; set; }
         }
     }
 }

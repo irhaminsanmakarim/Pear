@@ -10,8 +10,8 @@
     for (int i = 0; i < Model.PmsConfigs.Count; i++)
     {
         int i1 = i;
-        @Html.DropDownListFor(x => x.PmsConfigs[i1].PillarId, Model.Pillars)
-        @Model.PmsConfigs[i1].PillarId
+    
+        @Html.DropDownListFor(x => x.PmsConfigs[i1].PillarId,new SelectList(Model.Pillars,"Value","Text", Model.PmsConfigs[i1].PillarId))
     }
 }
 

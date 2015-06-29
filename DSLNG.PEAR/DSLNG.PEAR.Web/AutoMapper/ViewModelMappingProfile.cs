@@ -37,7 +37,14 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Artifact;
 using System.Linq;
 using DSLNG.PEAR.Services.Responses.Group;
+using DSLNG.PEAR.Services.Requests.Group;
+using DSLNG.PEAR.Web.ViewModels.Group;
 using DSLNG.PEAR.Services.Responses.Method;
+using DSLNG.PEAR.Web.ViewModels.Method;
+using DSLNG.PEAR.Services.Requests.Method;
+using DSLNG.PEAR.Services.Requests.Periode;
+using DSLNG.PEAR.Web.ViewModels.Periode;
+using DSLNG.PEAR.Services.Responses.Periode;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -45,11 +52,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
     {
         protected override void Configure()
         {
-            Mapper.CreateMap<GetLevelResponse, LevelViewModel>();
-            Mapper.CreateMap<GetLevelsResponse, LevelsViewModel>();
-            Mapper.CreateMap<GetLevelsResponse.Level, LevelViewModel>();
-            Mapper.CreateMap<GetLevelResponse, DSLNG.PEAR.Web.ViewModels.Kpi.Level>();
-
+            ConfigureCorporatePortofolio();
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
             Mapper.CreateMap<CreateKpiViewModel, CreateKpiRequest>();
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.KpiRelationModel, DSLNG.PEAR.Services.Requests.Kpi.KpiRelationModel>();
@@ -72,8 +75,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetMeasurementsResponse.Measurement, MeasurementViewModel>();
             Mapper.CreateMap<GetMeasurementResponse, DSLNG.PEAR.Web.ViewModels.Kpi.Measurement>();
 
-            Mapper.CreateMap<LevelViewModel, UpdateLevelRequest>();
-            Mapper.CreateMap<LevelViewModel, CreateLevelRequest>();
+            Mapper.CreateMap<CreateLevelViewModel, CreateLevelRequest>();
+            Mapper.CreateMap<GetLevelResponse, UpdateLevelViewModel>();
+            Mapper.CreateMap<UpdateLevelViewModel, UpdateLevelRequest>();
 
             Mapper.CreateMap<GetUsersResponse.User, UserViewModel>();
             Mapper.CreateMap<CreateUserViewModel, CreateUserRequest>();
@@ -96,6 +100,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPillarResponse, UpdatePillarViewModel>();
             Mapper.CreateMap<UpdatePillarViewModel, UpdatePillarRequest>();
             Mapper.CreateMap<GetPillarsResponse, DSLNG.PEAR.Web.ViewModels.Kpi.Pillar>();
+
+            Mapper.CreateMap<CreateMethodViewModel, CreateMethodRequest>();
+            Mapper.CreateMap<GetMethodRequest, UpdateMethodViewModel>();
+            Mapper.CreateMap<UpdateMethodRequest, UpdateMethodViewModel>();
+            Mapper.CreateMap<GetMethodResponse, UpdateMethodViewModel>();
+            Mapper.CreateMap<UpdateMethodViewModel, UpdateMethodRequest>();
 
             Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
             Mapper.CreateMap<GetPmsConfigDetailsResponse, PmsConfigDetailsViewModel>();
@@ -131,7 +141,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<LineChartViewModel.Series, GetChartDataRequest.Series>();
             Mapper.CreateMap<GetChartDataResponse.SeriesResponse, LineChartDataViewModel.SeriesViewModel>();
 
-            ConfigureCorporatePortofolio();
+            Mapper.CreateMap<CreateGroupViewModel, CreateGroupRequest>();
+            Mapper.CreateMap<GetGroupResponse, UpdateGroupViewModel>();
+            Mapper.CreateMap<UpdateGroupViewModel, UpdateGroupRequest>();
+
+            Mapper.CreateMap<CreatePeriodeViewModel, CreatePeriodeRequest>();
+            Mapper.CreateMap<GetPeriodeResponse, UpdatePeriodeViewModel>();
+            Mapper.CreateMap<UpdatePeriodeViewModel, UpdatePeriodeRequest>();
 
             base.Configure();
         }

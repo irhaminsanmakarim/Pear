@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Responses.Method
 {
+
     public class GetMethodsResponse : BaseResponse
     {
         public IList<Method> Methods { get; set; }
+
         public class Method
         {
             public int Id { get; set; }
