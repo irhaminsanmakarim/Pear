@@ -93,7 +93,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
             Mapper.CreateMap<CreateRoleGroupViewModel, CreateRoleGroupRequest>();
-            Mapper.CreateMap<GetRoleGroupResponse, UpdateRoleGroupViewModel>();
+            Mapper.CreateMap<GetRoleGroupResponse, UpdateRoleGroupViewModel>()
+                .ForMember(o => o.LevelId, p => p.MapFrom(k => k.Level.Id));
             Mapper.CreateMap<UpdateRoleGroupViewModel, UpdateRoleGroupRequest>();
             Mapper.CreateMap<GetRoleGroupResponse, DSLNG.PEAR.Web.ViewModels.Kpi.RoleGroup>();
 

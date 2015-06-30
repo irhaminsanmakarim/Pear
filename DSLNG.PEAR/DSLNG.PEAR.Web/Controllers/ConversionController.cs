@@ -49,8 +49,8 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var viewModel = new GridViewModel();
             viewModel.KeyFieldName = "Id";
-            viewModel.Columns.Add("From");
-            viewModel.Columns.Add("To");
+            viewModel.Columns.Add("FromName");
+            viewModel.Columns.Add("ToName");
             viewModel.Columns.Add("Value");
             viewModel.Columns.Add("Name");
             viewModel.Columns.Add("IsReverse");

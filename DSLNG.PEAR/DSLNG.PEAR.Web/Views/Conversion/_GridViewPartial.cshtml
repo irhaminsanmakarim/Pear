@@ -1,14 +1,14 @@
 @Html.DevExpress().GridView(settings =>
     {
         settings.Name = "gridConversionIndex";
-        settings.CallbackRouteValues = new { Controller = "User", Action = "IndexPartial" };
+        settings.CallbackRouteValues = new { Controller = "Conversion", Action = "IndexPartial" };
         settings.CustomBindingRouteValuesCollection.Add(
             GridViewOperationType.Paging,
-            new { Controller = "User", Action = "PagingAction" }
+            new { Controller = "Conversion", Action = "PagingAction" }
         );
         settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
         settings.SettingsBehavior.ConfirmDelete = true;
-        settings.Width = Unit.Percentage(60);
+        settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "Id";
 
         settings.Columns.Add(column =>
@@ -25,8 +25,8 @@
             });
         settings.Columns.Add("Id").Visible = false;
         settings.Columns.Add("Name");
-        settings.Columns.Add("FromName");
-        settings.Columns.Add("ToName");
+        settings.Columns.Add("FromName","Measurement From");
+        settings.Columns.Add("ToName", "Measurement To");
         settings.Columns.Add("Value");
         settings.Columns.Add("IsReverse", MVCxGridViewColumnType.CheckBox);
         settings.Columns.Add("IsActive", MVCxGridViewColumnType.CheckBox);

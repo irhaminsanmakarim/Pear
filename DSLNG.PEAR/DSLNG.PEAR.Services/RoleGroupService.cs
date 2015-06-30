@@ -22,11 +22,11 @@ namespace DSLNG.PEAR.Services
             var roleGroups = new List<RoleGroup>();
             if (request.Take != 0)
             {
-                roleGroups = DataContext.RoleGroups.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
+                roleGroups = DataContext.RoleGroups.Include(x => x.Level).OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
             }
             else
             {
-                roleGroups = DataContext.RoleGroups.ToList();
+                roleGroups = DataContext.RoleGroups.Include(x => x.Level).ToList();
             }
             var response = new GetRoleGroupsResponse();
             response.RoleGroups = roleGroups.MapTo<GetRoleGroupsResponse.RoleGroup>();
@@ -36,7 +36,7 @@ namespace DSLNG.PEAR.Services
         public GetRoleGroupResponse GetRoleGroup (GetRoleGroupRequest request){
             try
             {
-                var roleGroup = DataContext.RoleGroups.First(x => x.Id == request.Id);
+                var roleGroup = DataContext.RoleGroups.Include(x => x.Level).First(x => x.Id == request.Id);
                 var response = roleGroup.MapTo<GetRoleGroupResponse>();
 
                 return response;
@@ -57,6 +57,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var roleGroup = request.MapTo<RoleGroup>();
+                roleGroup.Level = DataContext.Levels.FirstOrDefault(x => x.Id == request.LevelId);
                 DataContext.RoleGroups.Add(roleGroup);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
@@ -76,9 +77,11 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var roleGroup = request.MapTo<RoleGroup>();
+                roleGroup.Level = DataContext.Levels.FirstOrDefault(x => x.Id == request.LevelId);
                 DataContext.RoleGroups.Attach(roleGroup);
                 DataContext.Entry(roleGroup).State = EntityState.Modified;
                 DataContext.SaveChanges();
+
                 response.IsSuccess = true;
                 response.Message = "User RoleGroup item has been updated successfully";
             }
