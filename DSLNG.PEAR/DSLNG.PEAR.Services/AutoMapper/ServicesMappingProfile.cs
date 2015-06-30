@@ -161,7 +161,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<UpdateConversionRequest, Data.Entities.Conversion>();
             Mapper.CreateMap<KpiTarget, GetKpiTargetsResponse.KpiTarget>()
                .ForMember(k => k.KpiName, o => o.MapFrom(k => k.Kpi.Name))
-               .ForMember(k => k.PeriodeType, o => o.MapFrom(k => k.Kpi.Period.ToString()));
+               .ForMember(k => k.PeriodeType, o => o.MapFrom(k => k.PeriodeType.ToString()));
 
             base.Configure();
         }

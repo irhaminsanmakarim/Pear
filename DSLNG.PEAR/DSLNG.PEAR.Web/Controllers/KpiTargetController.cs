@@ -80,8 +80,6 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var viewModel = new CreateKpiTargetViewModel();
             viewModel = SetViewModel(viewModel);
-            viewModel.PeriodeTypeList.Add(new SelectListItem { Text = "Yearly", Value = "Yearly" });
-            //viewModel.PeriodeTypeList.Add(new SelectListItem { Text = "Monthly", Value = "Monthly" });
             return View(viewModel);
         }
 
@@ -134,9 +132,28 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         foreach (var kpiTargetList in item.KpiTargetList)
                         {
-                            kpiTargetList.PeriodeType = (DSLNG.PEAR.Data.Enums.PeriodeType)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.PeriodeType), viewModel.PeriodeTypeValue);
-                            var kpiTarget = kpiTargetList.MapTo<CreateKpiTargetRequest.KpiTarget>();
-                            request.KpiTargets.Add(kpiTarget);
+                            if (kpiTargetList.ValueList.Count > 0)
+                            {
+                                for (int i = 0; i < kpiTargetList.ValueList.Count; i++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        kpiTargetList.PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType.Yearly;
+                                        kpiTargetList.Value = kpiTargetList.ValueList[0];
+                                        var kpiTarget = kpiTargetList.MapTo<CreateKpiTargetRequest.KpiTarget>();
+                                        request.KpiTargets.Add(kpiTarget);
+                                    }
+                                    else
+                                    {
+                                        kpiTargetList.PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType.Monthly;
+                                        kpiTargetList.Periode = new DateTime(kpiTargetList.Periode.Year, i, 1);
+                                        kpiTargetList.Value = kpiTargetList.ValueList[i];
+                                        var kpiTarget = kpiTargetList.MapTo<CreateKpiTargetRequest.KpiTarget>();
+                                        request.KpiTargets.Add(kpiTarget);
+                                    }
+
+                                }
+                            }
                         }
                     }
                 }
@@ -148,8 +165,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            viewModel.PillarKpiTarget = FakeListConfigDetail();
-            viewModel.PeriodeTypeList.Add(new SelectListItem { Text = "Yearly", Value = "Yearly" });
+            viewModel = SetViewModel(viewModel);
             return View(viewModel);
         }
 

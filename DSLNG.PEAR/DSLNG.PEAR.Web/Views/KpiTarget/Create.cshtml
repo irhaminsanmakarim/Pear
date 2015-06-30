@@ -9,11 +9,11 @@
 <div class="row">
     <div class="col-md-12">
         <form action="@Url.Action("Create")" method="POST">
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(model => model.PeriodeTypeValue, new { @class = "control-label" })
                 @Html.DropDownListFor(model => model.PeriodeTypeValue, Model.PeriodeTypeList, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.PeriodeTypeValue)
-            </div>
+            </div>*@
             @for (int i = 0; i < Model.PillarKpiTarget.Count; i++)
             {
                 <div class="form-group">
@@ -42,11 +42,12 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             @{
-                    var idYearly = "PillarKpiTarget_" + i + "__KpiTargetList_" + k + "__Value";
-                    var nameYearly = "PillarKpiTarget[" + i + "].KpiTargetList[" + k + "].Value";
+                    var idYearly = "PillarKpiTarget_" + i + "__KpiTargetList_" + k + "__ValueList_0";
+                    var nameYearly = "PillarKpiTarget[" + i + "].KpiTargetList[" + k + "].ValueList[0]";
                             }
                             <input type="text" name="@nameYearly" id="@idYearly" class="form-control" placeholder="Yearly">
                             @Html.HiddenFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Periode)
+                            @Html.HiddenFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].IsActive)
                         </div>
 
                     </div>
@@ -61,8 +62,8 @@
                             <div class="col-md-1">
                                 <div class="form-group">
                                     @{
-                            var id = "PillarKpiTarget_" + i + "__KpiTargetList_" + k + "__Value_"+v;
-                            var name = "PillarKpiTarget[" + i + "].KpiTargetList[" + k + "].Value_["+v +"]";
+                            var id = "PillarKpiTarget_" + i + "__KpiTargetList_" + k + "__ValueList_"+v;
+                            var name = "PillarKpiTarget[" + i + "].KpiTargetList[" + k + "].ValueList["+v+"]";
                             var periode = Model.PillarKpiTarget[i].KpiTargetList[k].Periode;
                             var month = new DateTime(periode.Year, v, 1).ToString("MMM");
                                     }
