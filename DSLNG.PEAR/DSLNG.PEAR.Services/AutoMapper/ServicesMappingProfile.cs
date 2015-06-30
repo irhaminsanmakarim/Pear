@@ -61,6 +61,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Menu, GetMenusResponse.Menu>();
             Mapper.CreateMap<Menu, GetMenuResponse>();
             Mapper.CreateMap<UpdateMenuRequest, Menu>();
+            //Mapper.CreateMap<Data.Entities.RoleGroup, GetMenusResponse.RoleGroup>();
+            //Mapper.CreateMap<Data.Entities.Level, GetMenusResponse.Level>();
 
             Mapper.CreateMap<Data.Entities.Level, GetMenuResponse.Level>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetMenuResponse.RoleGroup>()
