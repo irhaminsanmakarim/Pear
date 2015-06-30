@@ -37,15 +37,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigurePmsSummary();
             ConfigureKpi();
 
-            Mapper.CreateMap<User, GetUserResponse>()
-                  .ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
-            Mapper.CreateMap<User, UserResponse>();
             Mapper.CreateMap<User, GetUsersResponse.User>();
+                //.ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
             Mapper.CreateMap<CreateUserRequest, User>();
             Mapper.CreateMap<UpdateUserRequest, User>();
-            Mapper.CreateMap<User, GetUserResponse>();
-            Mapper.CreateMap<User, GetUsersResponse.User>();
             Mapper.CreateMap<GetUserRequest, User>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, GetUserResponse.RoleGroup>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, GetUsersResponse.RoleGroup>();
             /*Level*/
             Mapper.CreateMap<Data.Entities.Level, GetLevelsResponse.Level>();
             Mapper.CreateMap<Data.Entities.Level, GetLevelResponse>();
@@ -97,6 +95,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Level, GetKpisResponse.Level>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetKpisResponse.RoleGroup>();
             Mapper.CreateMap<Data.Entities.Type, GetKpisResponse.Type>();
+            Mapper.CreateMap<Data.Entities.Pillar, GetKpisResponse.Pillar>();
             Mapper.CreateMap<Kpi, GetKpiResponse>();
             Mapper.CreateMap<UpdateKpiRequest, Kpi>();
 
