@@ -16,5 +16,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetScoreIndicatorsResponse GetScoreIndicators(int pmsConfigDetailId);
         GetPmsDetailsResponse GetPmsDetails(GetPmsDetailsRequest request);
         GetPmsConfigDetailsResponse GetPmsConfigDetails(int id);
+        GetKpisByPillarIdResponse GetKpis(int pillarId);
     }
 }

@@ -74,5 +74,29 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return base.ErrorPage(response.Message);
         }
+
+        public ActionResult GetKpis(int id)
+        {
+            int pillarId = id;
+            var response = _pmsSummaryService.GetKpis(pillarId);
+            if (response.IsSuccess)
+            {
+                var result = (from s in response.Kpis
+                              select new
+                                  {
+                                      id = s.Id,
+                                      name = s.Name
+                                  }).ToList();
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json("error when load data kpi wit pillar id = " + 1, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult UpdatePmsConfigDetails(DialogPmsConfigDetailViewModel viewModel)
+        {
+            return Content("in progress");
+        }
 	}
 }

@@ -447,3 +447,31 @@ th {
     text-align: center;
     font-weight: normal;
 }
+
+
+.btn-darkblue
+ {
+     background-color: #004071;
+     color:white;
+     padding:4px;
+
+ }
+
+.btn-large
+{
+    width:30%;
+    padding:15px!important;
+    margin-top:20px;
+    margin:10px;
+
+}
+
+a:hover.btn-darkblue{background-color:#febe10;color:white;}
+a:hover.btn-lightblue{background-color:#febe10;color:white;}
+
+.btn-lightblue
+{
+    background-color: #9bd4f4;
+    color:white;
+    padding:4px;
+}

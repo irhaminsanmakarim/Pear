@@ -122,6 +122,7 @@
     <Compile Include="Requests\Pillar\CreatePillarRequest.cs" />
     <Compile Include="Requests\Pillar\UpdatePillarRequest.cs" />
     <Compile Include="Requests\PmsSummary\GetPmsSummaryConfigurationRequest.cs" />
+    <Compile Include="Responses\PmsSummary\GetKpisByPillarIdResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsSummaryConfigurationResponse.cs" />
     <Compile Include="Requests\PmsSummary\GetPmsSummaryListRequest.cs" />
     <Compile Include="Requests\PmsSummary\GetPmsSummaryRequest.cs" />

@@ -137,9 +137,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreateMethodRequest, Data.Entities.Method>();
             Mapper.CreateMap<Data.Entities.Method, GetMethodsResponse.Method>();
             Mapper.CreateMap<UpdateMethodRequest, Data.Entities.Method>();
-
             
-
             Mapper.CreateMap<Data.Entities.Method, GetMethodsResponse.Method>();
             Mapper.CreateMap<Data.Entities.Group, GetGroupResponse>();
             
@@ -190,6 +188,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.);*/
 
             Mapper.CreateMap<CreateKpiTargetRequest.KpiTarget, KpiTarget>();
+            Mapper.CreateMap<Kpi, GetKpisByPillarIdResponse.Kpi>();
         }
         
         private void ConfigureKpi()

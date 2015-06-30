@@ -417,6 +417,24 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public GetKpisByPillarIdResponse GetKpis(int pillarId)
+        {
+            var response = new GetKpisByPillarIdResponse();
+            try
+            {
+                var kpis = DataContext.Kpis.Include(x => x.Pillar).Where(x => x.Pillar.Id == pillarId).ToList();
+                response.Kpis = kpis.MapTo<GetKpisByPillarIdResponse.Kpi>();
+                response.IsSuccess = true;
+                return response;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+
+            return response;
+        }
+
         private string GetScoreColor(double? score, IEnumerable<ScoreIndicator> scoreIndicators)
         {
             if (score.HasValue)
