@@ -10,7 +10,7 @@ namespace DSLNG.PEAR.Services.Responses.User
         public string Email { get; set; }
         public bool IsActive { get; set; }
         public RoleGroup Role { get; set; }
-        ////public int RoleId { get; set; }
+        public int RoleId { get; set; }
         public string RoleName { get; set; }
 
         public class RoleGroup
