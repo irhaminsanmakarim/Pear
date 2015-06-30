@@ -10,5 +10,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public string GraphicType { get; set; }
         public BarChartDataViewModel BarChart { get; set; }
         public LineChartDataViewModel LineChart { get; set; }
+        public SpeedometerChartDataViewModel SpeedometerChart { get; set; }
     }
 }

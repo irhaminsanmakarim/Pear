@@ -41,7 +41,7 @@ namespace DSLNG.PEAR.Services
                 response.KpiGroup = config.Kpi.Group != null ? config.Kpi.Group.Name : "";
                 response.KpiName = config.Kpi.Name;
                 response.KpiUnit = config.Kpi.Measurement != null ? config.Kpi.Measurement.Name : "";
-                response.KpiPeriod = config.Kpi.Period != null ? config.Kpi.Period.ToString() : "";
+                response.KpiPeriod = config.Kpi.Period.ToString();
                 var kpiActualYearly = config.Kpi.KpiAchievements.FirstOrDefault(x => x.PeriodeType == Data.Enums.PeriodeType.Yearly);
                 if (kpiActualYearly != null)
                 {
@@ -50,9 +50,9 @@ namespace DSLNG.PEAR.Services
                     response.KpiTypeYearly = kpiActualYearly.PeriodeType.ToString();
                     response.KpiRemarkYearly = kpiActualYearly.Remark;
                 }
-                var kpiActualMonthly = config.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly);
+                var kpiActualMonthly = config.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly).ToList();
                 response.KpiAchievmentMonthly = new List<GetPmsConfigDetailsResponse.KpiAchievment>();
-                if (kpiActualMonthly != null)
+                if (kpiActualMonthly.Count > 0)
                 {
                     var kpiActualMonth = kpiActualMonthly.FirstOrDefault(x => x.Periode.Month == request.Month);
                     response.KpiActualMonthly = kpiActualMonth != null ? kpiActualMonth.Value : null;
@@ -66,14 +66,14 @@ namespace DSLNG.PEAR.Services
                     foreach (var item in kpiRelationModel)
                     {
                         var actualYearly = item.Kpi.KpiAchievements.FirstOrDefault(x => x.PeriodeType == Data.Enums.PeriodeType.Yearly);
-                        var actualMonthly = item.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly);
+                        var actualMonthly = item.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly).ToList();
                         response.KpiRelations.Add(new GetPmsConfigDetailsResponse.KpiRelation
                         {
                             Name = item.Kpi.Name,
                             Unit = item.Kpi.Measurement.Name,
                             Method = item.Method,
                             ActualYearly = actualYearly != null ? actualYearly.Value : null,
-                            ActualMonthly = actualMonthly != null ? actualMonthly.Sum(x => x.Value) : null
+                            ActualMonthly = actualMonthly.Count > 0 ? actualMonthly.Sum(x => x.Value) : null
                         });
                     }
                 }

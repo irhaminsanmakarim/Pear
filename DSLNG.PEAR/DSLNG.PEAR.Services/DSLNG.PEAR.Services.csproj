@@ -60,10 +60,13 @@
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="GroupService.cs" />
+    <Compile Include="Interfaces\IKpiTargetService.cs" />
     <Compile Include="Interfaces\IPeriodeService.cs" />
+    <Compile Include="KpiTargetService.cs" />
     <Compile Include="PeriodeService.cs" />
     <Compile Include="Requests\Group\CreateGroupRequest.cs" />
     <Compile Include="Requests\Group\UpdateGroupRequest.cs" />
+    <Compile Include="Requests\KpiTarget\CreateKpiTargetRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\PeriodeType.cs" />
     <Compile Include="Requests\Method\CreateMethodRequest.cs" />
@@ -72,6 +75,7 @@
     <Compile Include="Responses\Group\CreateGroupResponse.cs" />
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
+    <Compile Include="Responses\KpiTarget\CreateKpiTargetResponse.cs" />
     <Compile Include="Responses\Method\CreateMethodResponse.cs" />
     <Compile Include="Interfaces\IArtifactService.cs" />
     <Compile Include="Interfaces\IConversionService.cs" />
@@ -92,6 +96,7 @@
     <Compile Include="PmsConfigDetailsService.cs" />
     <Compile Include="PmsSummaryService.cs" />
     <Compile Include="Requests\Artifact\GetSeriesRequest.cs" />
+    <Compile Include="Requests\Artifact\GetSpeedometerChartDataRequest.cs" />
     <Compile Include="Requests\Conversion\GetConversionRequest.cs" />
     <Compile Include="Requests\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Requests\Group\GetGroupsRequest.cs" />
@@ -111,6 +116,9 @@
     <Compile Include="Requests\Menu\UpdateMenuRequest.cs" />
     <Compile Include="Requests\Pillar\CreatePillarRequest.cs" />
     <Compile Include="Requests\Pillar\UpdatePillarRequest.cs" />
+    <Compile Include="Requests\PmsSummary\GetPmsSummaryConfigurationRequest.cs" />
+    <Compile Include="Responses\PmsSummary\GetPmsSummaryConfigurationResponse.cs" />
+    <Compile Include="Requests\PmsSummary\GetPmsSummaryListRequest.cs" />
     <Compile Include="Requests\PmsSummary\GetPmsSummaryRequest.cs" />
     <Compile Include="Requests\RoleGroup\CreateRoleGroupRequest.cs" />
     <Compile Include="Requests\RoleGroup\UpdateRoleGroupRequest.cs" />
@@ -136,6 +144,7 @@
     <Compile Include="Requests\User\UpdateUserRequest.cs" />
     <Compile Include="Responses\Artifact\GetChartDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetSeriesResponse.cs" />
+    <Compile Include="Responses\Artifact\GetSpeedometerChartDataResponse.cs" />
     <Compile Include="Responses\Conversion\GetConversionResponse.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Responses\Group\GetGroupResponse.cs" />
@@ -185,6 +194,7 @@
     <Compile Include="Responses\Pillar\CreatePillarResponse.cs" />
     <Compile Include="Responses\Pillar\DeletePillarResponse.cs" />
     <Compile Include="Responses\Pillar\UpdatePillarResponse.cs" />
+    <Compile Include="Responses\PmsSummary\GetPmsSummaryListResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsSummaryResponse.cs" />
     <Compile Include="Responses\RoleGroup\CreateRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />

@@ -46,7 +46,7 @@ String.prototype.isNullOrEmpty = function () {
         loadGraph(initialGraphicType.data('graph-url'), initialGraphicType.val());
     };
     artifactDesigner._setupCallbacks = {};
-   
+
     artifactDesigner.Preview = function () {
         $('#graphic-preview-btn').click(function (e) {
             e.preventDefault();
@@ -372,7 +372,7 @@ String.prototype.isNullOrEmpty = function () {
                 seriesCount++;
             });
         };
-       
+
         var rangeDatePicker = function () {
             $('.datepicker').datetimepicker({
                 format: "MM/DD/YYYY hh:00 A"
@@ -380,7 +380,7 @@ String.prototype.isNullOrEmpty = function () {
             $('.datepicker').change(function (e) {
                 console.log(this);
             });
-            $('#BarChart_PeriodeType').change(function (e) {
+            $('#LineChart_PeriodeType').change(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 var clearValue = $('.datepicker').each(function (i, val) {
@@ -489,6 +489,216 @@ String.prototype.isNullOrEmpty = function () {
                 borderWidth: 0
             },
             series: data.LineChart.Series
+        });
+    }
+
+    //speedometer
+    artifactDesigner._setupCallbacks.speedometer = function () {
+        $('.plot-band-template .remove').click(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            $this.closest('fieldset').remove();
+            var plots = $('#plot-bands-holder').children('fieldset');
+            for (var i = 0; i < plots.length; i++) {
+                $(plots[i]).find('input[type="text"]').each(function (j, input) {
+                    var $input = $(input);
+                    console.log(i);
+                    if ($input.attr('name').endsWith('From')) {
+                        $input.attr('name', 'SpeedometerChart.PlotBands[' + i + '].From');
+                    } else if ($input.attr('name').endsWith('To')) {
+                        $input.attr('name', 'SpeedometerChart.PlotBands[' + i + '].To');
+                    } else if ($input.attr('name').endsWith('Color')) {
+                        $input.attr('name', 'SpeedometerChart.PlotBands[' + i + '].Color');
+                    }
+                });
+
+            }
+
+        });
+        $('#add-plot').click(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var plotBandTemplate = $('.plot-band-template.original').clone(true);
+            plotBandTemplate.removeClass('original');
+            var plotPos = $('#plot-bands-holder').children('fieldset').length;
+            var fields = ['From', 'To', 'Color'];
+            for (var i in fields) {
+                var field = fields[i];
+                plotBandTemplate.find('#SpeedometerChart_PlotBands_0__' + field).attr('name', 'SpeedometerChart.PlotBands[' + plotPos + '].' + field);
+            }
+            $('#plot-bands-holder').append(plotBandTemplate);
+        });
+        var rangeDatePicker = function () {
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY hh:00 A"
+            });
+            $('.datepicker').change(function (e) {
+                console.log(this);
+            });
+            $('#SpeedometerChart_PeriodeType').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var clearValue = $('.datepicker').each(function (i, val) {
+                    $(val).val('');
+                    $(val).data("DateTimePicker").destroy();
+                });
+                switch ($this.val().toLowerCase().trim()) {
+                    case 'hourly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY hh:00 A"
+                        });
+                        break;
+                    case 'daily':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY"
+                        });
+                        break;
+                    case 'weekly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY",
+                            daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                        });
+                        break;
+                    case 'monthly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/YYYY"
+                        });
+                        break;
+                    case 'yearly':
+                        $('.datepicker').datetimepicker({
+                            format: "YYYY"
+                        });
+                        break;
+                    default:
+
+                }
+            });
+        };
+        var rangeControl = function () {
+            $('#SpeedometerChart_RangeFilter').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $('#range-holder').prop('class', $this.val().toLowerCase().trim());
+            });
+            var original = $('#SpeedometerChart_RangeFilter').clone(true);
+            var rangeFilterSetup = function (periodeType) {
+                var toRemove = {};
+                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
+                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
+                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
+                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
+                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
+                var originalClone = original.clone(true);
+                originalClone.find('option').each(function (i, val) {
+                    if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
+                        originalClone.find(val).remove();
+                    }
+                });
+                $('#SpeedometerChart_RangeFilter').replaceWith(originalClone);
+            };
+
+            rangeFilterSetup($('#SpeedometerChart_PeriodeType').val().toLowerCase().trim());
+            $('#SpeedometerChart_PeriodeType').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                rangeFilterSetup($this.val().toLowerCase().trim());
+                $('#range-holder').removeAttr('class');
+            });
+
+        };
+        rangeControl();
+        rangeDatePicker();
+    };
+    artifactDesigner._previewCallbacks.speedometer = function (data) {
+        var plotBands = [];
+        for (var i in data.SpeedometerChart.PlotBands) {
+            plotBands.push({
+                from: data.SpeedometerChart.PlotBands[i].from,
+                to: data.SpeedometerChart.PlotBands[i].to,
+            color : data.SpeedometerChart.PlotBands[i].color
+            });
+        }
+        console.log(plotBands);
+        $('#container').highcharts({
+            chart: {
+                type: 'gauge',
+                plotBackgroundColor: null,
+                plotBackgroundImage: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+
+            title: {
+                text: data.SpeedometerChart.Title
+            },
+
+            pane: {
+                startAngle: -150,
+                endAngle: 150,
+                background: [{
+                    backgroundColor: {
+                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                        stops: [
+                            [0, '#FFF'],
+                            [1, '#333']
+                        ]
+                    },
+                    borderWidth: 0,
+                    outerRadius: '109%'
+                }, {
+                    backgroundColor: {
+                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                        stops: [
+                            [0, '#333'],
+                            [1, '#FFF']
+                        ]
+                    },
+                    borderWidth: 1,
+                    outerRadius: '107%'
+                }, {
+                    // default background
+                }, {
+                    backgroundColor: '#DDD',
+                    borderWidth: 0,
+                    outerRadius: '105%',
+                    innerRadius: '103%'
+                }]
+            },
+
+            // the value axis
+            yAxis: {
+                min: 0,
+                max: 200,
+
+                minorTickInterval: 'auto',
+                minorTickWidth: 1,
+                minorTickLength: 10,
+                minorTickPosition: 'inside',
+                minorTickColor: '#666',
+
+                tickPixelInterval: 30,
+                tickWidth: 2,
+                tickPosition: 'inside',
+                tickLength: 10,
+                tickColor: '#666',
+                labels: {
+                    step: 2,
+                    rotation: 'auto'
+                },
+                title: {
+                    text: data.SpeedometerChart.ValueAxisTitle
+                },
+                plotBands: plotBands
+            },
+
+            series: [{
+                name: data.SpeedometerChart.Series.name,
+                data: data.SpeedometerChart.Series.data,
+                tooltip: {
+                    valueSuffix: ' ' + data.SpeedometerChart.ValueAxisTitle
+                }
+            }]
+
         });
     }
 

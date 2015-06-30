@@ -51,6 +51,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IArtifactService>().Use<ArtifactService>();
             For<IPmsConfigDetailsService>().Use<PmsConfigDetailsService>();
             For<IPeriodeService>().Use<PeriodeService>();
+            For<IKpiTargetService>().Use<KpiTargetService>();
         }
 
         #endregion
