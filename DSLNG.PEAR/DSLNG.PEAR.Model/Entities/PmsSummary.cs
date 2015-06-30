@@ -10,7 +10,7 @@ namespace DSLNG.PEAR.Data.Entities
     {
         public PmsSummary()
         {
-            PmsSummaryScoringIndicators = new Collection<PmsSummaryScoringIndicator>();
+            ScoreIndicators = new Collection<ScoreIndicator>();
             PmsConfigs = new Collection<PmsConfig>();
         }
 
@@ -19,8 +19,8 @@ namespace DSLNG.PEAR.Data.Entities
         public int Id { get; set; }
         public string Title { get; set; }
         public int Year { get; set; }
-        //public ICollection<ScoreIndicator> ScoreIndicators { get; set; }
-        public ICollection<PmsSummaryScoringIndicator> PmsSummaryScoringIndicators { get; set; }
+        public ICollection<ScoreIndicator> ScoreIndicators { get; set; }
+        //public ICollection<PmsSummaryScoringIndicator> PmsSummaryScoringIndicators { get; set; }
         public ICollection<PmsConfig> PmsConfigs { get; set; }
         public bool IsActive { get; set; }
 

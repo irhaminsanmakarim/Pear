@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
         public class KpiData
         {
             public int Id { get; set; }
+            public int PillarId { get; set; }
             public string Pillar { get; set; }
             public string Kpi { get; set; }
             public string Unit { get; set; }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 {
-    public class PmsConfigDetailsViewModel
+    public class PmsDetailsViewModel
     {
         public string Title { get; set; }
         public int Year { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using AutoMapper;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Responses.Level;
@@ -24,7 +25,6 @@ using DSLNG.PEAR.Services.Requests.RoleGroup;
 using DSLNG.PEAR.Web.ViewModels.Type;
 using DSLNG.PEAR.Services.Responses.Type;
 using DSLNG.PEAR.Services.Requests.Type;
-using DSLNG.PEAR.Services.Responses.PmsConfigDetails;
 using DSLNG.PEAR.Services.Responses.Pillar;
 using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Web.ViewModels.Pillar;
@@ -53,6 +53,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
         protected override void Configure()
         {
             ConfigureCorporatePortofolio();
+            ConfigurePmsSummary();
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
             Mapper.CreateMap<CreateKpiViewModel, CreateKpiRequest>();
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.KpiRelationModel, DSLNG.PEAR.Services.Requests.Kpi.KpiRelationModel>();
@@ -107,11 +108,6 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetMethodResponse, UpdateMethodViewModel>();
             Mapper.CreateMap<UpdateMethodViewModel, UpdateMethodRequest>();
 
-            Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
-            Mapper.CreateMap<GetPmsConfigDetailsResponse, PmsConfigDetailsViewModel>();
-            Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiAchievment, PmsConfigDetailsViewModel.KpiAchievment>();
-            Mapper.CreateMap<GetPmsConfigDetailsResponse.KpiRelation, PmsConfigDetailsViewModel.KpiRelation>();
-
             Mapper.CreateMap<BarChartViewModel, GetChartDataRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
                 .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
@@ -158,8 +154,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPmsSummaryConfigurationResponse.PmsConfig, PmsSummaryConfigurationViewModel.PmsConfig>();
             Mapper.CreateMap<GetPmsSummaryConfigurationResponse.PmsConfigDetails, PmsSummaryConfigurationViewModel.PmsConfigDetails>()
                 .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
-                .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name));
-            
+                .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name))
+                .ForMember(x => x.KpiMeasurement, y => y.MapFrom(z => z.Kpi.Measurement))
+                .ForMember(x => x.ScoringType, y => y.MapFrom(z => z.ScoringType.ToString()));
+
             Mapper.CreateMap<GetPmsSummaryConfigurationResponse, PmsSummaryConfigurationViewModel>()
                   .ForMember(x => x.Kpis, y => y.MapFrom(z => z.Kpis.Select(a => new SelectListItem
                       {
@@ -175,6 +173,39 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper
                 .CreateMap
                 <GetPmsSummaryConfigurationResponse.ScoreIndicator, PmsSummaryConfigurationViewModel.ScoreIndicator>();
+
+            Mapper.CreateMap<GetScoreIndicatorsResponse, DialogScoreIndicatorViewModel>();
+            Mapper.CreateMap<GetScoreIndicatorsResponse.ScoreIndicator, ScoreIndicatorViewModel>();
+            Mapper.CreateMap<GetPmsDetailsResponse.ScoreIndicator, ScoreIndicatorViewModel>();
+
+            Mapper.CreateMap<GetPmsConfigDetailsResponse, DialogPmsConfigDetailViewModel>()
+                .ForMember(x => x.ScoringTypes, y => y.MapFrom(z => new List<SelectListItem>
+                      {
+                          new SelectListItem {Text = ScoringType.Positive.ToString(), Value = ScoringType.Positive.ToString()},
+                          new SelectListItem {Text = ScoringType.Negative.ToString(), Value = ScoringType.Negative.ToString()},
+                          new SelectListItem {Text = ScoringType.Boolean.ToString(), Value = ScoringType.Boolean.ToString()}
+                      }))
+                  .ForMember(x => x.Pillars, y => y.MapFrom(z => z.Pillars.Select(x => new SelectListItem
+                      {
+                          Value = x.Id.ToString(),
+                          Text = x.Name.ToString()
+                      })))
+                      .ForMember(x => x.Kpis, y => y.MapFrom(z => z.Kpis.Where(a => a.PillarId == z.PillarId)
+                          .Select(x => new SelectListItem
+                      {
+                          Value = x.Id.ToString(),
+                          Text = x.Name.ToString()
+                      })));
+            Mapper.CreateMap<GetPmsConfigDetailsResponse.ScoreIndicator, ScoreIndicatorViewModel>();
+
+        }
+
+        private void ConfigurePmsSummary()
+        {
+            Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
+            Mapper.CreateMap<GetPmsDetailsResponse, PmsDetailsViewModel>();
+            Mapper.CreateMap<GetPmsDetailsResponse.KpiAchievment, PmsDetailsViewModel.KpiAchievment>();
+            Mapper.CreateMap<GetPmsDetailsResponse.KpiRelation, PmsDetailsViewModel.KpiRelation>();
         }
     }
 }

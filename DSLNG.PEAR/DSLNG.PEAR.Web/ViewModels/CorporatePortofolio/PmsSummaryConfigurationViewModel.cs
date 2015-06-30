@@ -44,9 +44,12 @@ namespace DSLNG.PEAR.Web.ViewModels.CorporatePortofolio
         public class PmsConfigDetails
         {
             //public Kpi Kpi { get; set; }
+            public int Id { get; set; }
             public int KpiId { get; set; }
             public string KpiName { get; set; }
             public double Weight { get; set; }
+            public string KpiMeasurement { get; set; }
+            public string ScoringType { get; set; }
             //public bool KpiAsGraphic { get; set; }
             public IList<ScoreIndicator> ScoreIndicators { get; set; }
         }
@@ -55,12 +58,6 @@ namespace DSLNG.PEAR.Web.ViewModels.CorporatePortofolio
         {
             public string Color { get; set; }
             public string Expression { get; set; }
-        }
-
-        public class PillarSelectList
-        {
-            public SelectList SelectList { get; set; }
-            public int PillarId { get; set; }
         }
     }
 }

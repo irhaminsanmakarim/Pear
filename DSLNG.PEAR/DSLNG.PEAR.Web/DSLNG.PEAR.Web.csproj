@@ -490,6 +490,8 @@
     <Content Include="Views\Group\Create.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Group\Update.cshtml" />
+    <Content Include="Views\CorporatePortofolio\_DialogScoreIndicator.cshtml" />
+    <Content Include="Views\CorporatePortofolio\_DialogPmsConfigDetails.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
@@ -617,10 +619,13 @@
     <Compile Include="ViewModels\Periode\UpdatePeriodeViewModel.cs" />
     <Compile Include="ViewModels\Pillar\CreatePillarViewModel.cs" />
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\DialogPmsConfigDetailViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\DialogScoreIndicatorViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\Pillar\UpdatePillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\ScoreIndicatorViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\CreateRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />

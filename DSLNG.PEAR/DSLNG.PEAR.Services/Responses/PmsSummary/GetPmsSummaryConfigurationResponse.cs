@@ -39,10 +39,12 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
 
         public class PmsConfigDetails
         {
+            public int Id { get; set; }
             public Kpi Kpi { get; set; }
             public double Weight { get; set; }
             //public bool KpiAsGraphic { get; set; }
-            public IList<ScoreIndicator> ScoreIndicators { get; set; } 
+            public IList<ScoreIndicator> ScoreIndicators { get; set; }
+            public ScoringType ScoringType { get; set; }
         }
 
         public class ScoreIndicator

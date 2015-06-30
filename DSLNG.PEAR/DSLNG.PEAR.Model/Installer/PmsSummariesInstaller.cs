@@ -34,25 +34,7 @@ namespace DSLNG.PEAR.Data.Installer
                     new ScoreIndicator {Color = "yellow", Expression = "50 <= x < 80"},
                     new ScoreIndicator {Color = "green", Expression = "80 <= x < 100"}
                 };
-            pmsSummary.PmsSummaryScoringIndicators.Add(new PmsSummaryScoringIndicator
-                {
-                    Id = 1, ScoreIndicators = listScoreIndicator, Type = PmsSummaryScoringIndicatorType.TotalScore
-                });
-
-            var listScoreIndicator2 = new Collection<ScoreIndicator>
-                {
-                    new ScoreIndicator {Color = "red", Expression = "0 < x < 50"},
-                    new ScoreIndicator {Color = "yellow", Expression = "50 <= x < 80"},
-                    new ScoreIndicator {Color = "green", Expression = "80 <= x < 100"}
-                };
-
-            pmsSummary.PmsSummaryScoringIndicators.Add(new PmsSummaryScoringIndicator()
-            {
-                Id = 2,
-                ScoreIndicators = listScoreIndicator2,
-                Type = PmsSummaryScoringIndicatorType.Pillar
-            });
-
+            pmsSummary.ScoreIndicators = listScoreIndicator;
             pmsSummary.Title = "1st Operation Year";
             pmsSummary.CreatedDate = DateTime.Now;
             pmsSummary.UpdatedDate = DateTime.Now;

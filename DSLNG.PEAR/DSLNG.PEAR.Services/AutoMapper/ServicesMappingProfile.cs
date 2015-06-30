@@ -18,7 +18,6 @@ using DSLNG.PEAR.Services.Responses.RoleGroup;
 using DSLNG.PEAR.Services.Requests.RoleGroup;
 using DSLNG.PEAR.Services.Responses.Type;
 using DSLNG.PEAR.Services.Requests.Type;
-using DSLNG.PEAR.Services.Responses.PmsConfigDetails;
 using DSLNG.PEAR.Services.Responses.Pillar;
 using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Services.Requests.Kpi;
@@ -117,7 +116,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreateTypeRequest, Data.Entities.Type>();
             Mapper.CreateMap<UpdateTypeRequest, Data.Entities.Type>();
             Mapper.CreateMap<Data.Entities.Type, UpdateTypeResponse>();
-            Mapper.CreateMap<KpiAchievement, GetPmsConfigDetailsResponse.KpiAchievment>()
+            Mapper.CreateMap<KpiAchievement, GetPmsDetailsResponse.KpiAchievment>()
                 .ForMember(k => k.Period, o => o.MapFrom(k => k.Periode.ToString("MMM")))
                 .ForMember(k => k.Type, o => o.MapFrom(k => k.PeriodeType.ToString()));
 
@@ -160,11 +159,23 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.PmsConfigDetailsList, y => y.MapFrom(z => z.PmsConfigDetailsList));
             Mapper.CreateMap<ScoreIndicator, GetPmsSummaryConfigurationResponse.ScoreIndicator>();
             Mapper.CreateMap<PmsConfigDetails, GetPmsSummaryConfigurationResponse.PmsConfigDetails>();
+            Mapper.CreateMap<ScoreIndicator, GetScoreIndicatorsResponse.ScoreIndicator>();
+            Mapper.CreateMap<ScoreIndicator, GetPmsDetailsResponse.ScoreIndicator>();
+
+            Mapper.CreateMap<PmsConfigDetails, GetPmsConfigDetailsResponse>()
+                  .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
+                  .ForMember(x => x.PillarId, y => y.MapFrom(z => z.Kpi.Pillar.Id));
+
+            Mapper.CreateMap<Kpi, GetPmsConfigDetailsResponse.Kpi>()
+                  .ForMember(x => x.PillarId, y => y.MapFrom(z => z.Pillar.Id));
+            Mapper.CreateMap<Data.Entities.Pillar, GetPmsConfigDetailsResponse.Pillar>();
+            Mapper.CreateMap<ScoreIndicator, GetPmsConfigDetailsResponse.ScoreIndicator>();
+            
 
             /*Mapper.CreateMap<Data.Entities.PmsConfigDetails, GetPmsSummaryConfigurationResponse.PmsConfigDetails>()
                 .ForMember(x => x.);*/
         }
-
+        
         private void ConfigureKpi()
         {
             Mapper.CreateMap<Data.Entities.Group, GetKpisResponse.Group>();

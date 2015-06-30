@@ -7,6 +7,7 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.CorporatePortofolio;
+using DSLNG.PEAR.Web.ViewModels.PmsSummary;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -45,6 +46,30 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 var viewModel = response.MapTo<PmsSummaryConfigurationViewModel>();
                 return View(viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
+        }
+
+        public ActionResult ScoreIndicator(int id)
+        {
+            var response = _pmsSummaryService.GetScoreIndicators(id);
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<DialogScoreIndicatorViewModel>();
+                return PartialView("_DialogScoreIndicator", viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
+        }
+
+        public ActionResult PmsConfigDetails(int id)
+        {
+            var response = _pmsSummaryService.GetPmsConfigDetails(id);
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<DialogPmsConfigDetailViewModel>();
+                return PartialView("_DialogPmsConfigDetails", viewModel);
             }
 
             return base.ErrorPage(response.Message);

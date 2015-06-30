@@ -17,14 +17,10 @@ namespace DSLNG.PEAR.Web.Controllers
     public class PmsSummaryController : Controller
     {
         private readonly IPmsSummaryService _pmsSummaryService;
-        private readonly IPmsConfigDetailsService _pmsConfigDetailsService;
 
-        public PmsSummaryController(
-            IPmsSummaryService pmsSummaryService,
-            IPmsConfigDetailsService pmsConfigDetailsService)
+        public PmsSummaryController(IPmsSummaryService pmsSummaryService)
         {
             _pmsSummaryService = pmsSummaryService;
-            _pmsConfigDetailsService = pmsConfigDetailsService;
         }
 
         public ActionResult Index(int? month, int? year)
@@ -125,16 +121,14 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Details(int id, int month)
         {
-            //Thread.Sleep(2000);
-            var viewModel = new PmsConfigDetailsViewModel();
-            var response = _pmsConfigDetailsService.GetPmsConfigDetails(new Services.Requests.PmsConfigDetails.GetPmsConfigDetailsRequest { Id = id, Month = month });
-            viewModel = response.MapTo<PmsConfigDetailsViewModel>();
+            var response = _pmsSummaryService.GetPmsDetails(new GetPmsDetailsRequest() { Id = id, Month = month });
+            var viewModel = response.MapTo<PmsDetailsViewModel>();
             var operationDate = new DateTime(response.Year, month, 1);
             viewModel.Title = response.Title;
             viewModel.Year = response.Year;
             viewModel.Month = operationDate.ToString("MMM");
-            viewModel.KpiAchievmentMonthly = response.KpiAchievmentMonthly.MapTo<PmsConfigDetailsViewModel.KpiAchievment>();
-            viewModel.KpiRelations = response.KpiRelations.MapTo<PmsConfigDetailsViewModel.KpiRelation>();
+            viewModel.KpiAchievmentMonthly = response.KpiAchievmentMonthly.MapTo<PmsDetailsViewModel.KpiAchievment>();
+            viewModel.KpiRelations = response.KpiRelations.MapTo<PmsDetailsViewModel.KpiRelation>();
             return PartialView("_Details", viewModel);
         }
     }
