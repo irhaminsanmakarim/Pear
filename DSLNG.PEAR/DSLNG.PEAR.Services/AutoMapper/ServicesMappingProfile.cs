@@ -172,6 +172,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Pillar, GetPmsSummaryConfigurationResponse.Pillar>();
             Mapper.CreateMap<PmsConfig, GetPmsSummaryConfigurationResponse.PmsConfig>()
                 .ForMember(x => x.PillarId, y => y.MapFrom(z => z.Pillar.Id))
+                .ForMember(x => x.PillarName, y => y.MapFrom(z => z.Pillar.Name))
                 .ForMember(x => x.PmsConfigDetailsList, y => y.MapFrom(z => z.PmsConfigDetailsList));
             Mapper.CreateMap<ScoreIndicator, GetPmsSummaryConfigurationResponse.ScoreIndicator>();
             Mapper.CreateMap<PmsConfigDetails, GetPmsSummaryConfigurationResponse.PmsConfigDetails>();

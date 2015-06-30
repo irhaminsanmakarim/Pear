@@ -60,17 +60,24 @@ namespace DSLNG.PEAR.Services
         }
         public GetKpisResponse GetKpis(GetKpisRequest request)
         {
-            var kpis = new List<Kpi>();
+            IQueryable<Kpi> kpis;
+            //var kpis = new Queryable<Kpi>();
             if (request.Take != 0)
             {
-                kpis = DataContext.Kpis.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take).ToList();
+                kpis = DataContext.Kpis.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take);
             }
             else
             {
-                kpis = DataContext.Kpis.ToList();
+                kpis = DataContext.Kpis;
             }
+
+            if (request.PillarId > 0)
+            {
+                kpis = kpis.Include(x => x.Pillar).Where(x => x.Pillar.Id == request.PillarId);
+            }
+
             var response = new GetKpisResponse();
-            response.Kpis = kpis.MapTo<GetKpisResponse.Kpi>();
+            response.Kpis = kpis.ToList().MapTo<GetKpisResponse.Kpi>();
 
             return response;
         }

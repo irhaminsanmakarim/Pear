@@ -32,6 +32,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
 
             public int Id { get; set; }
             public int PillarId { get; set; }
+            public string PillarName { get; set; }
             public double Weight { get; set; }
             public ScoringType ScoringType { get; set; }
             public IList<PmsConfigDetails> PmsConfigDetailsList { get; set; }

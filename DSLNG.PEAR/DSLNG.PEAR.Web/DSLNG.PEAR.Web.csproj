@@ -499,6 +499,8 @@
     <Content Include="Views\Conversion\Update.cshtml" />
     <Content Include="Views\KpiTarget\Index.cshtml" />
     <Content Include="Views\KpiTarget\_GridViewPartial.cshtml" />
+    <Content Include="Views\CorporatePortofolio\_CreatePmsConfig.cshtml" />
+    <Content Include="Views\CorporatePortofolio\_CreatePmsConfigDetails.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
@@ -602,6 +604,8 @@
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\Measurement.cs" />
     <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
+    <Compile Include="ViewModels\CorporatePortofolio\CreatePmsConfigDetailsViewModel.cs" />
+    <Compile Include="ViewModels\CorporatePortofolio\CreatePmsConfigViewModel.cs" />
     <Compile Include="ViewModels\CorporatePortofolio\IndexCorporatePortofolioViewModel.cs" />
     <Compile Include="ViewModels\CorporatePortofolio\PmsSummaryConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Artifact\LineChartDataViewModel.cs" />

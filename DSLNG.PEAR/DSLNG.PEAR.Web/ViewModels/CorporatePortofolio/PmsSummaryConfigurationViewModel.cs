@@ -36,7 +36,7 @@ namespace DSLNG.PEAR.Web.ViewModels.CorporatePortofolio
 
             public int Id { get; set; }
             public int PillarId { get; set; }
-            public int PillarName { get; set; }
+            public string PillarName { get; set; }
             public double Weight { get; set; }
             public ScoringType ScoringType { get; set; }
             public IList<PmsConfigDetails> PmsConfigDetailsList { get; set; }
