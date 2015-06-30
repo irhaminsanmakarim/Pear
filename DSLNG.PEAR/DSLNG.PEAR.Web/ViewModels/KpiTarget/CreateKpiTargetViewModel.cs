@@ -12,11 +12,7 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
         public CreateKpiTargetViewModel()
         {
             PillarKpiTarget = new List<PillarTarget>();
-            PeriodeTypeList = new List<SelectListItem>();
         }
-
-        public string PeriodeTypeValue { get; set; }
-        public List<SelectListItem> PeriodeTypeList { get; set; }
         public List<PillarTarget> PillarKpiTarget { get; set; }
 
         public List<KpiTarget> KpiTargets { get; set; }
