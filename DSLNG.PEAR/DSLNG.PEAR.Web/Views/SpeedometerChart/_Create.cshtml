@@ -1,0 +1,98 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+
+<div class="form-group">
+    @Html.LabelFor(model => model.SpeedometerChart.PeriodeType, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.SpeedometerChart.PeriodeType, Model.SpeedometerChart.PeriodeTypes)
+        @Html.ValidationMessageFor(model => model.SpeedometerChart.PeriodeType)
+    </div>
+</div>
+
+<div id="range-filter-holder">
+    <div class="form-group">
+        @Html.LabelFor(model => model.SpeedometerChart.RangeFilter, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.SpeedometerChart.RangeFilter, Model.SpeedometerChart.RangeFilters)
+            @Html.ValidationMessageFor(model => model.SpeedometerChart.RangeFilter)
+        </div>
+    </div>
+
+</div>
+
+<div id="range-holder">
+    <div class="form-group">
+        @Html.LabelFor(model => model.SpeedometerChart.StartInDisplay, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.SpeedometerChart.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker" })
+            @Html.ValidationMessageFor(model => model.SpeedometerChart.StartInDisplay)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SpeedometerChart.EndInDisplay, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.SpeedometerChart.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker" })
+            @Html.ValidationMessageFor(model => model.SpeedometerChart.EndInDisplay)
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.SpeedometerChart.ValueAxis, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.SpeedometerChart.ValueAxis, Model.SpeedometerChart.ValueAxes, new { id = "bar-value-axis" })
+        @Html.ValidationMessageFor(model => model.SpeedometerChart.ValueAxis)
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.SpeedometerChart.Series.Label, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(model => model.SpeedometerChart.Series.Label)
+        @Html.ValidationMessageFor(model => model.SpeedometerChart.Series.Label)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.SpeedometerChart.Series.KpiId, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.SpeedometerChart.Series.KpiId, Model.SpeedometerChart.KpiList, new { @class = "kpi-list" })
+        @Html.ValidationMessageFor(model => model.SpeedometerChart.Series.KpiId)
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="button" value="Add Plot Bands" class="btn btn-default" id="add-plot" />
+    </div>
+</div>
+<div id="plot-bands-holder">
+  </div>
+<div id="hidden-fields">
+    <fieldset class="plot-band-template original">
+        <legend>Plot Bands</legend>
+        @for (var i = 0; i < Model.SpeedometerChart.PlotBands.Count; i++)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.SpeedometerChart.PlotBands[i].From, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.SpeedometerChart.PlotBands[i].From)
+                    @Html.ValidationMessageFor(model => model.SpeedometerChart.PlotBands[i].From)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.SpeedometerChart.PlotBands[i].To, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.SpeedometerChart.PlotBands[i].To)
+                    @Html.ValidationMessageFor(model => model.SpeedometerChart.PlotBands[i].To)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.SpeedometerChart.PlotBands[i].Color, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.SpeedometerChart.PlotBands[i].Color)
+                    @Html.ValidationMessageFor(model => model.SpeedometerChart.PlotBands[i].Color)
+                </div>
+            </div>
+        }
+        <input type="button" value="Remove" class="remove" />
+    </fieldset>
+</div>

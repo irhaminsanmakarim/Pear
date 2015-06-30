@@ -35,6 +35,7 @@ using EPeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Artifact;
+using System.Collections.Generic;
 using System.Linq;
 using DSLNG.PEAR.Services.Responses.Group;
 using DSLNG.PEAR.Services.Requests.Group;
@@ -45,6 +46,11 @@ using DSLNG.PEAR.Services.Requests.Method;
 using DSLNG.PEAR.Services.Requests.Periode;
 using DSLNG.PEAR.Web.ViewModels.Periode;
 using DSLNG.PEAR.Services.Responses.Periode;
+using DSLNG.PEAR.Web.ViewModels.KpiTarget;
+using DSLNG.PEAR.Services.Requests.KpiTarget;
+using DSLNG.PEAR.Services.Requests.Conversion;
+using DSLNG.PEAR.Services.Responses.Conversion;
+using DSLNG.PEAR.Web.ViewModels.Conversion;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -80,14 +86,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetLevelResponse, UpdateLevelViewModel>();
             Mapper.CreateMap<UpdateLevelViewModel, UpdateLevelRequest>();
 
-            Mapper.CreateMap<GetUsersResponse.User, UserViewModel>();
             Mapper.CreateMap<CreateUserViewModel, CreateUserRequest>();
             Mapper.CreateMap<GetUserResponse, UpdateUserViewModel>();
             Mapper.CreateMap<UpdateUserViewModel, UpdateUserRequest>();
+            Mapper.CreateMap<GetUsersResponse.User, UserViewModel>()
+                .ForMember(x => x.RoleName, y => y.MapFrom(z => z.Role.Name));
 
             Mapper.CreateMap<GetRoleGroupsResponse.RoleGroup, RoleGroupViewModel>();
             Mapper.CreateMap<CreateRoleGroupViewModel, CreateRoleGroupRequest>();
-            Mapper.CreateMap<GetRoleGroupResponse, UpdateRoleGroupViewModel>();
+            Mapper.CreateMap<GetRoleGroupResponse, UpdateRoleGroupViewModel>()
+                .ForMember(o => o.LevelId, p => p.MapFrom(k => k.Level.Id));
             Mapper.CreateMap<UpdateRoleGroupViewModel, UpdateRoleGroupRequest>();
             Mapper.CreateMap<GetRoleGroupResponse, DSLNG.PEAR.Web.ViewModels.Kpi.RoleGroup>();
 
@@ -137,6 +145,18 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<LineChartViewModel.Series, GetChartDataRequest.Series>();
             Mapper.CreateMap<GetChartDataResponse.SeriesResponse, LineChartDataViewModel.SeriesViewModel>();
 
+            Mapper.CreateMap<SpeedometerChartViewModel, GetSpeedometerChartDataRequest>()
+                .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
+                .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
+                .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)))
+                .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<GetSpeedometerChartDataRequest.SeriesRequest>()))
+                .ForMember(x => x.PlotBands, o => o.MapFrom(s => s.PlotBands.MapTo<GetSpeedometerChartDataRequest.PlotBandRequest>()));
+
+            Mapper.CreateMap<SpeedometerChartViewModel.SeriesViewModel, GetSpeedometerChartDataRequest.SeriesRequest>();
+            Mapper.CreateMap<SpeedometerChartViewModel.PlotBand, GetSpeedometerChartDataRequest.PlotBandRequest>();
+            Mapper.CreateMap<GetSpeedometerChartDataResponse.SeriesResponse, SpeedometerChartDataViewModel.SeriesViewModel>()
+                .ForMember(x => x.data, o => o.MapFrom(s => new List<double> { s.data }));
+            Mapper.CreateMap<GetSpeedometerChartDataResponse.PlotBandResponse, SpeedometerChartDataViewModel.PlotBandViewModel>();
             Mapper.CreateMap<CreateGroupViewModel, CreateGroupRequest>();
             Mapper.CreateMap<GetGroupResponse, UpdateGroupViewModel>();
             Mapper.CreateMap<UpdateGroupViewModel, UpdateGroupRequest>();
@@ -144,7 +164,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CreatePeriodeViewModel, CreatePeriodeRequest>();
             Mapper.CreateMap<GetPeriodeResponse, UpdatePeriodeViewModel>();
             Mapper.CreateMap<UpdatePeriodeViewModel, UpdatePeriodeRequest>();
+            Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.KpiTarget.KpiTarget, CreateKpiTargetRequest.KpiTarget>();
 
+            Mapper.CreateMap<CreateConversionViewModel, CreateConversionRequest>();
+            Mapper.CreateMap<GetConversionResponse, UpdateConversionViewModel>()
+                .ForMember(x => x.MeasurementFrom, o => o.MapFrom(k => k.From.Id))
+                .ForMember(x => x.MeasurementTo, o => o.MapFrom(k => k.To.Id));
+            Mapper.CreateMap<UpdateConversionViewModel, UpdateConversionRequest>();
             base.Configure();
         }
 

@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Services.Interfaces
     {
         //GetSeriesResponse GetSeries(GetSeriesRequest request);
         GetChartDataResponse GetChartData(GetChartDataRequest request);
+        GetSpeedometerChartDataResponse GetSpeedometerChartData(GetSpeedometerChartDataRequest request);
     }
 }

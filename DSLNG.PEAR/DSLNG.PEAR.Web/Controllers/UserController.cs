@@ -4,16 +4,20 @@ using DSLNG.PEAR.Web.ViewModels.User;
 using DSLNG.PEAR.Common.Extensions;
 using System.Web.Mvc;
 using DevExpress.Web.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
     public class UserController : BaseController
     {
         private readonly IUserService _userService;
+        private readonly IRoleGroupService _roleGroupService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IRoleGroupService roleGroupService)
         {
             _userService = userService;
+            _roleGroupService = roleGroupService;
         }
 
         public ActionResult Index()
@@ -45,6 +49,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Columns.Add("Username");
             viewModel.Columns.Add("Email");
             viewModel.Columns.Add("IsActive");
+            viewModel.Columns.Add("RoleName");
             viewModel.Pager.PageSize = 10;
             return viewModel;
         }
@@ -71,9 +76,23 @@ namespace DSLNG.PEAR.Web.Controllers
             }).Users;
         }
 
+        public CreateUserViewModel CreateViewModel(CreateUserViewModel viewModel)
+        {
+            viewModel.RoleGroupList = _roleGroupService.GetRoleGroups(
+                new Services.Requests.RoleGroup.GetRoleGroupsRequest { Skip = 0, Take = 0 }).RoleGroups.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
+
+            return viewModel;
+        }
+
         public ActionResult Create()
         {
             var viewModel = new CreateUserViewModel();
+            viewModel = CreateViewModel(viewModel);
+
             return View(viewModel);
         }
 
@@ -92,10 +111,26 @@ namespace DSLNG.PEAR.Web.Controllers
             return View("Create", viewModel);
         }
 
+        public UpdateUserViewModel UpdateViewModel(UpdateUserViewModel viewModel)
+        {
+            viewModel.RoleGroupList = _roleGroupService.GetRoleGroups(
+                new Services.Requests.RoleGroup.GetRoleGroupsRequest { Skip = 0, Take = 0 }).RoleGroups.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString(),
+                    Selected = viewModel.RoleId==x.Id ? true : false
+                }).ToList();
+
+            return viewModel;
+        }
+
         public ActionResult Update(int id)
         {
             var response = _userService.GetUser(new GetUserRequest { Id = id });
             var viewModel = response.MapTo<UpdateUserViewModel>();
+
+            viewModel = UpdateViewModel(viewModel);
+
             return View(viewModel);
         }
 

@@ -12,5 +12,6 @@ namespace DSLNG.PEAR.Services.Requests.RoleGroup
         public string Icon { get; set; }
         public string Remark { get; set; }
         public bool IsActive { get; set; }
+        public int LevelId { get; set; }
     }
 }

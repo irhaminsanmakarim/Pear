@@ -17,6 +17,8 @@ namespace DSLNG.PEAR.Data.Entities
         [Index(IsUnique = true)]
         public string Email { get; set; }
         public RoleGroup Role { get; set; }
+        public int? RoleId { get; set; }
+        
 
         public bool IsActive { get; set; }
 

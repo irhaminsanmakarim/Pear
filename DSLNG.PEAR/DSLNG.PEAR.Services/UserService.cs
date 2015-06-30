@@ -21,8 +21,9 @@ namespace DSLNG.PEAR.Services
 
         public GetUsersResponse GetUsers(GetUsersRequest request)
         {
-            var users = DataContext.Users.ToList();
+            var users = DataContext.Users.Include(u => u.Role).ToList();
             var response = new GetUsersResponse();
+            
             response.Users = users.MapTo<GetUsersResponse.User>();
 
             return response;
@@ -34,6 +35,7 @@ namespace DSLNG.PEAR.Services
             {
                 var user = DataContext.Users.First(x => x.Id == request.Id);
                 var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
+                //response.RoleName = DataContext.RoleGroups.FirstOrDefault(x => x.Id == user.RoleId).Name.ToString();
 
                 return response;
             }
@@ -53,6 +55,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var user = request.MapTo<User>();
+                user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
                 DataContext.Users.Add(user);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
@@ -72,6 +75,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var user = request.MapTo<User>();
+                user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
                 DataContext.Users.Attach(user);
                 DataContext.Entry(user).State = EntityState.Modified;
                 DataContext.SaveChanges();

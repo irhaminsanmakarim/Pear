@@ -24,5 +24,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
 
         public BarChartViewModel BarChart { get; set; }
         public LineChartViewModel LineChart { get; set; }
+        public SpeedometerChartViewModel SpeedometerChart { get; set; }
     }
 }

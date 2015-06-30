@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DSLNG.PEAR.Services.Responses.Method
+{
+<<<<<<< HEAD
+    public class GetMethodResponse : BaseResponse
+=======
+    public class GetMethodsResponse : BaseResponse
+>>>>>>> 7944b2e8e29ba8e0677f93af43e1bc67cefc87c8
+    {
+        public IList<Method> Methods { get; set; }
+        public class Method
+        {
+            public int Id { get; set; }
+
+            public string Name { get; set; }
+            public string Remark { get; set; }
+
+<<<<<<< HEAD
+        public bool IsActive { get; set; }
+    }
+
+    public class GetMethodsResponse : BaseResponse
+    {
+        public IList<Method> Methods { get; set; }
+
+        public class Method
+        {
+            public int Id { get; set; }
+
+            public string Name { get; set; }
+            public string Remark { get; set; }
+
+=======
+>>>>>>> 7944b2e8e29ba8e0677f93af43e1bc67cefc87c8
+            public bool IsActive { get; set; }
+        }
+    }
+}

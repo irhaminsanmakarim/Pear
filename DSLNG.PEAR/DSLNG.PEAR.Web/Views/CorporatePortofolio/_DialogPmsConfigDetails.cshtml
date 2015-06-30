@@ -1,0 +1,45 @@
+﻿@using System.Linq;
+@model DSLNG.PEAR.Web.ViewModels.PmsSummary.DialogPmsConfigDetailViewModel
+
+<div class="whitebox">
+    <h4>Update Pms Config Detail</h4>
+    <form class="form-group">
+        @Html.EditorFor(x => x.Id)
+        <div class="form-group form-list">
+            <label>Pillar</label>
+            @Html.DropDownListFor(x => x.PillarId, Model.Pillars, new {@class = "form-control"})
+            @Html.ValidationMessageFor(x => x.PillarId)
+        </div>
+        
+        <div class="form-group form-list">
+            <label>KPI</label>
+            @Html.DropDownListFor(x => x.KpiId, Model.Kpis, new {@class = "form-control"})
+            @Html.ValidationMessageFor(x => x.KpiId)
+        </div>
+
+        <div class="form-group form-list">
+            <label>Scoring Type</label>
+            @Html.DropDownListFor(x => x.ScoringType, Model.ScoringTypes, new {@class = "form-control"})
+            @Html.ValidationMessageFor(x => x.ScoringType)
+        </div>
+
+        <div class="form-group form-list">
+            <label>Weight</label>
+            @Html.TextBoxFor(x => x.Weight)
+            @Html.ValidationMessageFor(x => x.Weight)
+        </div>
+        
+        @{
+            int i = 0;
+        }
+        
+        <div class="form-group form-list">
+            <label>Scoring Indicator</label>    
+        </div>
+        @foreach (var item in Model.ScoreIndicators)
+        {
+            @Html.TextBoxFor(x => Model.ScoreIndicators.ElementAt(i).Expression)
+            @Html.TextBoxFor(x => Model.ScoreIndicators.ElementAt(i).Color)
+        }
+    </form>
+</div>
