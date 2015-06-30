@@ -16,10 +16,12 @@ namespace DSLNG.PEAR.Web.Controllers
     {
 
         private readonly IMenuService _menuService;
+        private readonly IRoleGroupService _roleService;
 
-        public MenuController(IMenuService menuService)
+        public MenuController(IMenuService menuService, IRoleGroupService roleService)
         {
             _menuService = menuService;
+            _roleService = roleService;
         }
 
 
@@ -82,10 +84,30 @@ namespace DSLNG.PEAR.Web.Controllers
             }).Menus;
         }
 
-        
+        public CreateMenuViewModel CreateViewModel(CreateMenuViewModel viewModel){
+            viewModel.RoleGroupOptions = _roleService.GetRoleGroups(
+                new Services.Requests.RoleGroup.GetRoleGroupsRequest { Skip = 0, Take = 0 }).RoleGroups.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
+
+            List<SelectListItem> menuList = _menuService.GetMenus(
+                new Services.Requests.Menu.GetMenusRequest { Skip = 0, Take = 0 }).Menus.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
+            menuList.Insert(0, new SelectListItem { Text = "This is Root", Value = "0", Selected = true });
+            viewModel.MenuOptions = menuList;
+
+            return viewModel;
+        }
         public ActionResult Create()
         {
             var viewModel = new CreateMenuViewModel();
+            viewModel = CreateViewModel(viewModel);
+
             return View(viewModel);
         }
 

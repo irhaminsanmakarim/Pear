@@ -56,10 +56,43 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var menu = request.MapTo<Menu>();
+                //set IsRoot if no menu as parent
+                menu.IsRoot = request.ParentMenuId <= 0;
+
+                //check if has role group
+                if (request.RoleGroupIds.Count > 0)
+                {
+                    foreach (int roleGroupId in request.RoleGroupIds)
+                    {
+                        var roleGroup = DataContext.RoleGroups.FirstOrDefault(r => r.Id == roleGroupId);
+                        
+                        //add selected role group to menu
+                        menu.RoleGroups.Add(roleGroup);
+                    }
+                }
+                
                 DataContext.Menus.Add(menu);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "Menu item has been added successfully";
+
+                //add this menu as child if not root
+                if (!menu.IsRoot)
+                {
+                    //get parent menu
+                    try
+                    {
+                        var parent = DataContext.Menus.First(p => p.Id == request.ParentMenuId);
+                        parent.Menus.Add(menu);
+                        DataContext.Menus.Attach(parent);
+                        DataContext.Entry(parent).State = EntityState.Modified;
+                        DataContext.SaveChanges();
+                    }
+                    catch (DbUpdateException dbUpdateException)
+                    {
+                        response.Message = dbUpdateException.Message;
+                    }
+                }
             }
             catch (DbUpdateException dbUpdateException)
             {
