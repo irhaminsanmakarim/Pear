@@ -27,6 +27,7 @@ using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Services.Requests.Periode;
 using DSLNG.PEAR.Services.Responses.Periode;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
+using DSLNG.PEAR.Services.Requests.Conversion;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -146,6 +147,14 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Periode, GetPeriodeResponse>();
             Mapper.CreateMap<CreatePeriodeRequest, Data.Entities.Periode>();
             Mapper.CreateMap<UpdatePeriodeRequest, Data.Entities.Periode>();
+
+            Mapper.CreateMap<CreateConversionRequest, Data.Entities.Conversion>();
+            Mapper.CreateMap<Data.Entities.Conversion, GetConversionsResponse.Conversion>()
+                .ForMember(f => f.FromName, o => o.MapFrom(k => k.From.Name))
+                .ForMember(f => f.ToName, o => o.MapFrom(k => k.To.Name));
+            Mapper.CreateMap<Data.Entities.Conversion, GetConversionResponse>();
+            Mapper.CreateMap<Data.Entities.Measurement, Responses.Conversion.Measurement>();
+            Mapper.CreateMap<UpdateConversionRequest, Data.Entities.Conversion>();
 
             base.Configure();
         }

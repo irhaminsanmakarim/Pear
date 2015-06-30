@@ -59,11 +59,14 @@
     <Compile Include="ArtifactService.cs" />
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
+    <Compile Include="ConversionService.cs" />
     <Compile Include="GroupService.cs" />
     <Compile Include="Interfaces\IKpiTargetService.cs" />
     <Compile Include="Interfaces\IPeriodeService.cs" />
     <Compile Include="KpiTargetService.cs" />
     <Compile Include="PeriodeService.cs" />
+    <Compile Include="Requests\Conversion\CreateConversionRequest.cs" />
+    <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
     <Compile Include="Requests\Group\CreateGroupRequest.cs" />
     <Compile Include="Requests\Group\UpdateGroupRequest.cs" />
     <Compile Include="Requests\KpiTarget\CreateKpiTargetRequest.cs" />
@@ -72,6 +75,10 @@
     <Compile Include="Requests\Method\CreateMethodRequest.cs" />
     <Compile Include="Requests\Method\UpdateMethodRequest.cs" />
     <Compile Include="Requests\Periode\PeriodeRequest.cs" />
+    <Compile Include="Responses\Conversion\CreateConversionResponse.cs" />
+    <Compile Include="Responses\Conversion\DeleteConversionResponse.cs" />
+    <Compile Include="Responses\Conversion\Measurement.cs" />
+    <Compile Include="Responses\Conversion\UpdateConversionResponse.cs" />
     <Compile Include="Responses\Group\CreateGroupResponse.cs" />
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
@@ -148,7 +155,6 @@
     <Compile Include="Responses\Conversion\GetConversionResponse.cs" />
     <Compile Include="Responses\DashboardTemplate\GetDashboardTemplateResponse.cs" />
     <Compile Include="Responses\Group\GetGroupResponse.cs" />
-    <Compile Include="Responses\ConversionResponse.cs" />
     <Compile Include="Responses\Group\GetGroupsResponse.cs" />
     <Compile Include="Responses\Kpi\CreateKpiResponse.cs" />
     <Compile Include="Responses\Kpi\DeleteKpiResponse.cs" />

@@ -48,6 +48,9 @@ using DSLNG.PEAR.Web.ViewModels.Periode;
 using DSLNG.PEAR.Services.Responses.Periode;
 using DSLNG.PEAR.Web.ViewModels.KpiTarget;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
+using DSLNG.PEAR.Services.Requests.Conversion;
+using DSLNG.PEAR.Services.Responses.Conversion;
+using DSLNG.PEAR.Web.ViewModels.Conversion;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -165,7 +168,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPeriodeResponse, UpdatePeriodeViewModel>();
             Mapper.CreateMap<UpdatePeriodeViewModel, UpdatePeriodeRequest>();
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.KpiTarget.KpiTarget, CreateKpiTargetRequest.KpiTarget>();
-            
+
+            Mapper.CreateMap<CreateConversionViewModel, CreateConversionRequest>();
+            Mapper.CreateMap<GetConversionResponse, UpdateConversionViewModel>()
+                .ForMember(x => x.MeasurementFrom, o => o.MapFrom(k => k.From.Id))
+                .ForMember(x => x.MeasurementTo, o => o.MapFrom(k => k.To.Id));
+            Mapper.CreateMap<UpdateConversionViewModel, UpdateConversionRequest>();
             base.Configure();
         }
 
