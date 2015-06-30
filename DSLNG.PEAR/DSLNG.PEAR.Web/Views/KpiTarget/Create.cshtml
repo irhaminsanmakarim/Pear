@@ -7,13 +7,14 @@
 <h3>@ViewBag.Title</h3>
 <hr />
 @Html.Partial("_MessageResponse")
-<div class="form-group">
+<div class="form-inline clearfix">
     <label>Periode Type : </label>
     <select id="periodeType" class="form-control">
         <option value="yearly">Yearly</option>
         <option value="monthly">Monthly</option>
     </select>
-</div>
+</div><br/>
+
 <div class="row">
     <div class="col-md-12">
         <form action="@Url.Action("Create")" method="POST">
