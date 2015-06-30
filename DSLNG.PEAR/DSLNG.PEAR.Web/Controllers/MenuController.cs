@@ -126,10 +126,33 @@ namespace DSLNG.PEAR.Web.Controllers
             return View("Create", viewModel);
         }
 
+        public UpdateMenuViewModel UpdateViewModel(UpdateMenuViewModel viewModel)
+        {
+            viewModel.RoleGroupOptions = _roleService.GetRoleGroups(
+                new Services.Requests.RoleGroup.GetRoleGroupsRequest { Skip = 0, Take = 0 }).RoleGroups.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
+
+            List<SelectListItem> menuList = _menuService.GetMenus(
+                new Services.Requests.Menu.GetMenusRequest { Skip = 0, Take = 0 }).Menus.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
+            menuList.Insert(0, new SelectListItem { Text = "This is Root", Value = "0" });
+            viewModel.MenuOptions = menuList;
+
+            return viewModel;
+        }
+
         public ActionResult Update(int id)
         {
             var response = _menuService.GetMenu(new GetMenuRequest { Id = id });
             var viewModel = response.MapTo<UpdateMenuViewModel>();
+            viewModel = UpdateViewModel(viewModel);
+
             return View(viewModel);
         }
 

@@ -55,7 +55,7 @@ namespace DSLNG.PEAR.Services
             var response = new CreateMenuResponse();
             try
             {
-                var menu = request.MapTo<Menu>();
+                var menu = request.MapTo<Data.Entities.Menu>();
                 //set IsRoot if no menu as parent
                 menu.IsRoot = request.ParentMenuId <= 0;
 
@@ -107,7 +107,7 @@ namespace DSLNG.PEAR.Services
             var response = new UpdateMenuResponse();
             try
             {
-                var menu = request.MapTo<Menu>();
+                var menu = request.MapTo<Data.Entities.Menu>();
                 DataContext.Menus.Attach(menu);
                 DataContext.Entry(menu).State = EntityState.Modified;
                 DataContext.SaveChanges();
@@ -127,7 +127,7 @@ namespace DSLNG.PEAR.Services
             var response = new DeleteMenuResponse();
             try
             {
-                var menu = new Menu { Id = id };
+                var menu = new Data.Entities.Menu { Id = id };
                 DataContext.Menus.Attach(menu);
                 DataContext.Entry(menu).State = EntityState.Deleted;
                 DataContext.SaveChanges();
