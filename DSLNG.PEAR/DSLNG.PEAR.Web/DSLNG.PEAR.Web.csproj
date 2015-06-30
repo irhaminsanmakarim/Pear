@@ -497,6 +497,8 @@
     <Content Include="Views\Conversion\Create.cshtml" />
     <Content Include="Views\Conversion\Index.cshtml" />
     <Content Include="Views\Conversion\Update.cshtml" />
+    <Content Include="Views\KpiTarget\Index.cshtml" />
+    <Content Include="Views\KpiTarget\_GridViewPartial.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />

@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
+using DevExpress.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -24,13 +25,98 @@ namespace DSLNG.PEAR.Web.Controllers
             return View();
         }
 
+        public ActionResult IndexPartial()
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridKpiTargetIndex");
+            if (viewModel == null)
+                viewModel = CreateGridViewModel();
+            return BindingCore(viewModel);
+        }
+
+        PartialViewResult BindingCore(GridViewModel gridViewModel)
+        {
+            gridViewModel.ProcessCustomBinding(
+                GetDataRowCount,
+                GetData
+            );
+            return PartialView("_GridViewPartial", gridViewModel);
+        }
+
+        static GridViewModel CreateGridViewModel()
+        {
+            var viewModel = new GridViewModel();
+            viewModel.KeyFieldName = "Id";
+            viewModel.Columns.Add("KpiName");
+            viewModel.Columns.Add("PeriodeType");
+            viewModel.Columns.Add("Value");
+            viewModel.Columns.Add("IsActive");
+            viewModel.Pager.PageSize = 10;
+            return viewModel;
+        }
+
+        public ActionResult PagingAction(GridViewPagerState pager)
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridKpiTargetIndex");
+            viewModel.ApplyPagingState(pager);
+            return BindingCore(viewModel);
+        }
+
+        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
+        {
+
+            e.DataRowCount = _kpiTargetService.GetKpiTargets(new GetKpiTargetsRequest { Take = 0, Skip = 0 }).KpiTargets.Count;
+        }
+
+        public void GetData(GridViewCustomBindingGetDataArgs e)
+        {
+            e.Data = _kpiTargetService.GetKpiTargets(new GetKpiTargetsRequest
+            {
+                Skip = e.StartDataRowIndex,
+                Take = e.DataRowCount
+            }).KpiTargets;
+        }
+
         public ActionResult Create()
         {
             var viewModel = new CreateKpiTargetViewModel();
-            viewModel.PillarKpiTarget = FakeListConfigDetail();
-            viewModel.PeriodeTypeList.Add(new SelectListItem { Text = "Yearly", Value = "Yearly" });
-            //viewModel.PeriodeTypeList.Add(new SelectListItem { Text = "Monthly", Value = "Monthly" });
+            viewModel = SetViewModel(viewModel);
             return View(viewModel);
+        }
+
+        public CreateKpiTargetViewModel SetViewModel(CreateKpiTargetViewModel viewModel)
+        {
+            var pmsConfigs = _kpiTargetService.GetPmsConfigs(new GetPmsConfigsRequest { Id = 1 }).PmsConfigs;
+            if (pmsConfigs.Count > 0)
+            {
+                foreach (var pmsConfig in pmsConfigs)
+                {
+                    var pillarSelectListItem = new List<SelectListItem>();
+                    pillarSelectListItem.Add(new SelectListItem { Text = pmsConfig.Pillar.Name, Value = pmsConfig.Pillar.Id.ToString() });
+                    var pmsConfigDetails = pmsConfig.PmsConfigDetailsList;
+                    if (pmsConfigDetails.Count > 0)
+                    {
+                        var kpiTargetList = new List<KpiTarget>();
+                        foreach (var pmsConfigDetail in pmsConfigDetails)
+                        {
+                            var kpiSelectListItem = new List<SelectListItem>();
+                            kpiSelectListItem.Add(new SelectListItem { Text = pmsConfigDetail.Kpi.Name, Value = pmsConfigDetail.Kpi.Id.ToString() });
+                            var kpi = pmsConfigDetail.Kpi.MapTo<Kpi>();
+                            kpiTargetList.Add(new KpiTarget { 
+                                Kpi = kpi, 
+                                KpiList = kpiSelectListItem, 
+                                Periode = new DateTime(pmsConfig.PmsSummary.Year, 1, 1),
+                                IsActive = pmsConfig.IsActive 
+                            });
+                        }
+                        viewModel.PillarKpiTarget.Add(new PillarTarget
+                        {
+                            PillarList = pillarSelectListItem,
+                            KpiTargetList = kpiTargetList
+                        });
+                    }
+                }
+            }
+            return viewModel;
         }
 
         [HttpPost]
@@ -46,9 +132,28 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         foreach (var kpiTargetList in item.KpiTargetList)
                         {
-                            kpiTargetList.PeriodeType = (DSLNG.PEAR.Data.Enums.PeriodeType)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.PeriodeType), viewModel.PeriodeTypeValue);
-                            var kpiTarget = kpiTargetList.MapTo<CreateKpiTargetRequest.KpiTarget>();
-                            request.KpiTargets.Add(kpiTarget);
+                            if (kpiTargetList.ValueList.Count > 0)
+                            {
+                                for (int i = 0; i < kpiTargetList.ValueList.Count; i++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        kpiTargetList.PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType.Yearly;
+                                        kpiTargetList.Value = kpiTargetList.ValueList[0];
+                                        var kpiTarget = kpiTargetList.MapTo<CreateKpiTargetRequest.KpiTarget>();
+                                        request.KpiTargets.Add(kpiTarget);
+                                    }
+                                    else
+                                    {
+                                        kpiTargetList.PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType.Monthly;
+                                        kpiTargetList.Periode = new DateTime(kpiTargetList.Periode.Year, i, 1);
+                                        kpiTargetList.Value = kpiTargetList.ValueList[i];
+                                        var kpiTarget = kpiTargetList.MapTo<CreateKpiTargetRequest.KpiTarget>();
+                                        request.KpiTargets.Add(kpiTarget);
+                                    }
+
+                                }
+                            }
                         }
                     }
                 }
@@ -60,8 +165,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            viewModel.PillarKpiTarget = FakeListConfigDetail();
-            viewModel.PeriodeTypeList.Add(new SelectListItem { Text = "Yearly", Value = "Yearly" });
+            viewModel = SetViewModel(viewModel);
             return View(viewModel);
         }
 
@@ -78,7 +182,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     //get list pillar from pmsConfig
                     var pillarSelectListItem = new List<SelectListItem>();
                     pillarSelectListItem.Add(new SelectListItem { Text = pillar.Name, Value = pillar.Id.ToString() });
-                    
+
                     //get list kpi by pillarId
                     var kpiList = new List<Kpi>();
                     kpiList.Add(new Kpi
