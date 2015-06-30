@@ -14,7 +14,7 @@ using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class PmsSummaryController : Controller
+    public class PmsSummaryController : BaseController
     {
         private readonly IPmsSummaryService _pmsSummaryService;
 
@@ -33,10 +33,16 @@ namespace DSLNG.PEAR.Web.Controllers
                 };
 
             var response = _pmsSummaryService.GetPmsSummary(request);
-            viewModel.PmsSummaries = response.KpiDatas.MapTo<PmsSummaryViewModel>();
-            viewModel.Year = request.Year;
-            viewModel.Month = request.Month;
-            return View(viewModel);
+            if (response.IsSuccess)
+            {
+                viewModel.PmsSummaries = response.KpiDatas.MapTo<PmsSummaryViewModel>();
+                viewModel.Year = request.Year;
+                viewModel.Month = request.Month;
+                return View(viewModel);    
+            }
+
+            return base.ErrorPage(response.Message);
+
         }
 
         public ActionResult IndexGridPartial(int? month, int? year)

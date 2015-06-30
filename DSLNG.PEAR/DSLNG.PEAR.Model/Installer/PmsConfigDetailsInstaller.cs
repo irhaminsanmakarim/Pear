@@ -70,7 +70,7 @@ namespace DSLNG.PEAR.Data.Installer
             pmsConfigDetails4.Kpi = _dataContext.Kpis.Local.First(x => x.Id == 4);
             pmsConfigDetails4.ScoringType = ScoringType.Positive;
             pmsConfigDetails4.ScoreIndicators.Add(new ScoreIndicator { Color = "red", Expression = "x < 75"});
-            pmsConfigDetails4.ScoreIndicators.Add(new ScoreIndicator { Color = "yellow", Expression = "75 <= x < 85"});
+            pmsConfigDetails4.ScoreIndicators.Add(new ScoreIndicator { Color = "yellow", Expression = "75 <= x && x < 85" });
             pmsConfigDetails4.ScoreIndicators.Add(new ScoreIndicator { Color = "red", Expression = "x >= 85" });
             pmsConfigDetails4.Weight = 25;
             pmsConfigDetails4.PmsConfig = _dataContext.PmsConfigs.Local.First(x => x.Id == 1);
@@ -84,7 +84,7 @@ namespace DSLNG.PEAR.Data.Installer
             pmsConfigDetails5.Kpi = _dataContext.Kpis.Local.First(x => x.Id == 5);
             pmsConfigDetails5.ScoringType = ScoringType.Positive;
             pmsConfigDetails5.ScoreIndicators.Add(new ScoreIndicator { Color = "red", Expression = "x < 75" });
-            pmsConfigDetails5.ScoreIndicators.Add(new ScoreIndicator { Color = "yellow", Expression = "75 <= x < 85" });
+            pmsConfigDetails5.ScoreIndicators.Add(new ScoreIndicator { Color = "yellow", Expression = "75 <= x && x< 85" });
             pmsConfigDetails5.ScoreIndicators.Add(new ScoreIndicator { Color = "red", Expression = "x >= 85" });
             pmsConfigDetails5.Weight = 25;
             pmsConfigDetails5.PmsConfig = _dataContext.PmsConfigs.Local.First(x => x.Id == 2);
