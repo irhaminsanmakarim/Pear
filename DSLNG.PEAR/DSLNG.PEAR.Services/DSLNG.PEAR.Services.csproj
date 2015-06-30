@@ -204,6 +204,7 @@
     <Compile Include="Responses\PmsSummary\GetPmsSummaryResponse.cs" />
     <Compile Include="Responses\RoleGroup\CreateRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
+    <Compile Include="Responses\RoleGroup\Level.cs" />
     <Compile Include="Responses\RoleGroup\UpdateRoleGroupResponse.cs" />
     <Compile Include="Responses\Type\CreateTypeResponse.cs" />
     <Compile Include="Responses\Type\DeleteTypeResponse.cs" />

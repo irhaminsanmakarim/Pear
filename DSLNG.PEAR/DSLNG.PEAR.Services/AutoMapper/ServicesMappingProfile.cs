@@ -86,12 +86,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreateKpiRequest, Data.Entities.Type>();
             Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.KpiRelationModel, DSLNG.PEAR.Data.Entities.KpiRelationModel>();
             //Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.Level, Data.Entities.Level>();
-            //Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.RoleGroup, Data.Entities.RoleGroup>();
+            Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.RoleGroup, Data.Entities.RoleGroup>();
             //Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.Type, Data.Entities.Type>();
             //Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.Group, Data.Entities.Group>();
             //Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.Measurement, Data.Entities.Measurement>();
             Mapper.CreateMap<Data.Entities.Level, DSLNG.PEAR.Services.Requests.Kpi.Level>();
-            Mapper.CreateMap<Data.Entities.RoleGroup, DSLNG.PEAR.Services.Requests.Kpi.RoleGroup>();
+            //Mapper.CreateMap<Data.Entities.RoleGroup, DSLNG.PEAR.Services.Requests.Kpi.RoleGroup>();
             Mapper.CreateMap<Data.Entities.Group, DSLNG.PEAR.Services.Requests.Kpi.Group>();
             Mapper.CreateMap<Data.Entities.Measurement, DSLNG.PEAR.Services.Requests.Kpi.Measurement>();
             Mapper.CreateMap<Data.Entities.Level, GetKpisResponse.Level>();
@@ -106,8 +106,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<Data.Entities.Conversion, GetConversionResponse>();
 
-            Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupsResponse.RoleGroup>();
-            Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupsResponse>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupsResponse.RoleGroup>()
+                .ForMember(x => x.LevelName, o => o.MapFrom(k=>k.Level.Name));
+            Mapper.CreateMap<Data.Entities.Level, Responses.RoleGroup.Level>();
+            //Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupsResponse>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupResponse>();
             Mapper.CreateMap<CreateRoleGroupRequest, Data.Entities.RoleGroup>();
             Mapper.CreateMap<UpdateRoleGroupRequest, Data.Entities.RoleGroup>();
