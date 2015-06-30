@@ -27,6 +27,7 @@ using DSLNG.PEAR.Services.Requests.Periode;
 using DSLNG.PEAR.Services.Responses.Periode;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Services.Requests.Conversion;
+using DSLNG.PEAR.Services.Responses.KpiTarget;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -36,6 +37,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
         {
             ConfigurePmsSummary();
             ConfigureKpi();
+            ConfigureKpiTarget();
 
             Mapper.CreateMap<User, GetUsersResponse.User>();
                 //.ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
@@ -157,6 +159,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Conversion, GetConversionResponse>();
             Mapper.CreateMap<Data.Entities.Measurement, Responses.Conversion.Measurement>();
             Mapper.CreateMap<UpdateConversionRequest, Data.Entities.Conversion>();
+            Mapper.CreateMap<KpiTarget, GetKpiTargetsResponse.KpiTarget>()
+               .ForMember(k => k.KpiName, o => o.MapFrom(k => k.Kpi.Name))
+               .ForMember(k => k.PeriodeType, o => o.MapFrom(k => k.Kpi.Period.ToString()));
 
             base.Configure();
         }
@@ -196,6 +201,16 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Group, GetKpisResponse.Group>();
             Mapper.CreateMap<Data.Entities.Measurement, GetKpisResponse.Measurement>();
             Mapper.CreateMap<Data.Entities.Pillar, GetKpisResponse.Pillar>();
+        }
+
+        private void ConfigureKpiTarget()
+        {
+            Mapper.CreateMap<Data.Entities.Kpi, GetPmsConfigsResponse.Kpi>();
+            Mapper.CreateMap<Data.Entities.Measurement, GetPmsConfigsResponse.Measurement>();
+            Mapper.CreateMap<Data.Entities.PmsConfigDetails, GetPmsConfigsResponse.PmsConfigDetails>();
+            Mapper.CreateMap<Data.Entities.Pillar, GetPmsConfigsResponse.Pillar>();
+            Mapper.CreateMap<Data.Entities.PmsSummary, GetPmsConfigsResponse.PmsSummary>();
+            Mapper.CreateMap<Data.Entities.PmsConfig, GetPmsConfigsResponse.PmsConfig>();
         }
     }
 }

@@ -35,7 +35,6 @@ using EPeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Responses.Artifact;
-using System.Collections.Generic;
 using System.Linq;
 using DSLNG.PEAR.Services.Responses.Group;
 using DSLNG.PEAR.Services.Requests.Group;
@@ -51,6 +50,7 @@ using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Services.Requests.Conversion;
 using DSLNG.PEAR.Services.Responses.Conversion;
 using DSLNG.PEAR.Web.ViewModels.Conversion;
+using DSLNG.PEAR.Services.Responses.KpiTarget;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -60,6 +60,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
         {
             ConfigureCorporatePortofolio();
             ConfigurePmsSummary();
+            ConfigureKpiTarget();
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
             Mapper.CreateMap<CreateKpiViewModel, CreateKpiRequest>();
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.KpiRelationModel, DSLNG.PEAR.Services.Requests.Kpi.KpiRelationModel>();
@@ -232,6 +233,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPmsDetailsResponse, PmsDetailsViewModel>();
             Mapper.CreateMap<GetPmsDetailsResponse.KpiAchievment, PmsDetailsViewModel.KpiAchievment>();
             Mapper.CreateMap<GetPmsDetailsResponse.KpiRelation, PmsDetailsViewModel.KpiRelation>();
+        }
+
+        private void ConfigureKpiTarget()
+        {
+            Mapper.CreateMap<GetPmsConfigsResponse.Kpi, Kpi>()
+                .ForMember(k => k.Unit, o => o.MapFrom(k => k.Measurement.Name));
         }
     }
 }
