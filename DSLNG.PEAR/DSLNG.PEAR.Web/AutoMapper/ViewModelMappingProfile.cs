@@ -71,7 +71,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.Measurement, DSLNG.PEAR.Services.Requests.Kpi.Measurement>();
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.Type, DSLNG.PEAR.Services.Requests.Kpi.Type>();
 
-            Mapper.CreateMap<GetMenusResponse.Menu, MenusViewModel>();
+            //Mapper.CreateMap<GetMenusResponse.Menu, MenuViewModel>();
             Mapper.CreateMap<CreateMenuViewModel, CreateMenuRequest>();
             Mapper.CreateMap<GetMenuResponse, UpdateMenuViewModel>();
             Mapper.CreateMap<UpdateMenuViewModel, UpdateMenuRequest>();

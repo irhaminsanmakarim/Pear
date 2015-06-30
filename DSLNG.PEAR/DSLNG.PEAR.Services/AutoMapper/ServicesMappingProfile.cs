@@ -53,19 +53,18 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Level, UpdateLevelResponse>();
 
 
-            Mapper.CreateMap<Menu, GetMenuResponse.Menu>()
+            Mapper.CreateMap<Data.Entities.Menu, GetMenusResponse.Menu>()
                 //.ForMember(m => m.RoleGroups, o => o.MapFrom(m => m.RoleGroups.MapTo<GetMenuResponse.RoleGroup>()))
-                .ForMember(m => m.Menus, o => o.MapFrom(m => m.Menus.MapTo<GetMenuResponse.Menu>()));
-            Mapper.CreateMap<CreateMenuRequest, Menu>();
-            Mapper.CreateMap<Menu, GetMenusResponse.Menu>();
-            Mapper.CreateMap<Menu, GetMenuResponse>();
-            Mapper.CreateMap<UpdateMenuRequest, Menu>();
+                .ForMember(m => m.Menus, o => o.MapFrom(m => m.Menus.MapTo<GetMenusResponse.Menu>()));
+            Mapper.CreateMap<CreateMenuRequest, Data.Entities.Menu>();
+            Mapper.CreateMap<Data.Entities.Menu, GetMenusResponse.Menu>();
+            Mapper.CreateMap<Data.Entities.Menu, GetMenuResponse>();
+            Mapper.CreateMap<UpdateMenuRequest, Data.Entities.Menu>();
             //Mapper.CreateMap<Data.Entities.RoleGroup, GetMenusResponse.RoleGroup>();
             //Mapper.CreateMap<Data.Entities.Level, GetMenusResponse.Level>();
-
-            Mapper.CreateMap<Data.Entities.Level, GetMenuResponse.Level>();
-            Mapper.CreateMap<Data.Entities.RoleGroup, GetMenuResponse.RoleGroup>()
-                .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<GetMenuResponse.Level>()));
+            Mapper.CreateMap<Data.Entities.Level, Responses.Menu.Level>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, Responses.Menu.RoleGroup>()
+                .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<Responses.Menu.Level>()));
             Mapper.CreateMap<Data.Entities.Group, GetGroupResponse>();
             Mapper.CreateMap<Data.Entities.Group, GetGroupsResponse.Group>();
             Mapper.CreateMap<CreateGroupRequest, Data.Entities.Group>();
