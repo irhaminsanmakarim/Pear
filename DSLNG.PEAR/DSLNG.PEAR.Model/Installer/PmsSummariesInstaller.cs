@@ -30,9 +30,9 @@ namespace DSLNG.PEAR.Data.Installer
             pmsSummary.Year = 2015;
             var listScoreIndicator = new Collection<ScoreIndicator>
                 {
-                    new ScoreIndicator {Color = "red", Expression = "0 < x < 50"},
-                    new ScoreIndicator {Color = "yellow", Expression = "50 <= x < 80"},
-                    new ScoreIndicator {Color = "green", Expression = "80 <= x < 100"}
+                    new ScoreIndicator {Color = "red", Expression = "0 < x && x < 50"},
+                    new ScoreIndicator {Color = "yellow", Expression = "50 <= x && x < 80"},
+                    new ScoreIndicator {Color = "green", Expression = "80 <= x && x < 100"}
                 };
             pmsSummary.ScoreIndicators = listScoreIndicator;
             pmsSummary.Title = "1st Operation Year";

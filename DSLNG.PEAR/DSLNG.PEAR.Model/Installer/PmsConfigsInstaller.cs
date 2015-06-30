@@ -29,7 +29,7 @@ namespace DSLNG.PEAR.Data.Installer
                 {
                     new ScoreIndicator {Color = "red", Expression = "0 < x && x < 50"},
                     new ScoreIndicator {Color = "yellow", Expression = "50 <= x && x < 80"},
-                    new ScoreIndicator {Color = "green", Expression = "80 <= x < 100"}
+                    new ScoreIndicator {Color = "green", Expression = "x >= 80"}
                 };
             pmsConfigSafety.ScoreIndicators = scoreIndicatorSafety;
 
@@ -44,8 +44,8 @@ namespace DSLNG.PEAR.Data.Installer
             var scoreIndicatorProductivity = new Collection<ScoreIndicator>
                 {
                     new ScoreIndicator {Color = "red", Expression = "0 < x && x < 50"},
-                    new ScoreIndicator {Color = "yellow", Expression = "50 <= x && x< 80"},
-                    new ScoreIndicator {Color = "green", Expression = "80 <= x && x < 100"}
+                    new ScoreIndicator {Color = "yellow", Expression = "50 <= x && x < 80"},
+                    new ScoreIndicator {Color = "green", Expression = "x >= 80"}
                 };
             pmsConfigProductivity.ScoreIndicators = scoreIndicatorProductivity;
             pmsConfigProductivity.ScoringType = ScoringType.Positive;

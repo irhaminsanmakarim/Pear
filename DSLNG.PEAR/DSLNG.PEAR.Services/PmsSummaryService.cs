@@ -193,7 +193,8 @@ namespace DSLNG.PEAR.Services
                 totalScore = 0;
                 foreach (var datum in data)
                 {
-                    totalScore += datum.Score/100 * datum.PillarWeight;
+                    //totalScore += datum.Score/100 * datum.PillarWeight;
+                    totalScore += datum.Score;
                 }
             }
 
