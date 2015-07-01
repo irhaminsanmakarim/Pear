@@ -1,5 +1,6 @@
 ﻿
 
+using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
@@ -8,6 +9,8 @@ using DSLNG.PEAR.Services.Responses.Artifact;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DSLNG.PEAR.Common.Extensions;
+using System.Data.Entity;
 
 namespace DSLNG.PEAR.Services
 {
@@ -509,6 +512,66 @@ namespace DSLNG.PEAR.Services
                 }
             }
             return seriesResponse;
+        }
+
+
+        public CreateArtifactResponse Create(CreateArtifactRequest request)
+        {
+            var artifact = request.MapTo<Artifact>();
+            var measurement = new Measurement { Id = request.MeasurementId };
+            DataContext.Measurements.Attach(measurement);
+            artifact.Measurement = measurement;
+
+            foreach (var seriesReq in request.Series) {
+                var series = seriesReq.MapTo<ArtifactSerie>();
+                var kpi = new Kpi { Id = seriesReq.KpiId };
+                if (DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault() == null)
+                {
+                    DataContext.Kpis.Attach(kpi);                
+                }
+                series.Kpi = kpi;
+                foreach(var stackReq in seriesReq.Stacks){
+                    var stack = stackReq.MapTo<ArtifactStack>();
+                    var kpiInStack = new Kpi { Id = stackReq.KpiId };
+                    if (DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault() == null) {
+                        DataContext.Kpis.Attach(kpiInStack);
+                    }
+                    stack.Kpi = kpiInStack;
+                    series.Stacks.Add(stack);
+                }
+                artifact.Series.Add(series);
+            }
+            foreach (var plotReq in request.Plots) {
+                var plot = plotReq.MapTo<ArtifactPlot>();
+                artifact.Plots.Add(plot);
+            }
+            DataContext.Artifacts.Add(artifact);
+            DataContext.SaveChanges();
+            return new CreateArtifactResponse();
+        }
+
+
+        public GetArtifactsResponse GetArtifacts(GetArtifactsRequest request)
+        {
+            if (request.OnlyCount)
+            {
+                return new GetArtifactsResponse { Count = DataContext.Artifacts.Count() };
+            }
+            else
+            {
+                return new GetArtifactsResponse
+                {
+                    Artifacts = DataContext.Artifacts.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take)
+                                    .ToList().MapTo<GetArtifactsResponse.Artifact>()
+                };
+            }
+        }
+
+        public GetArtifactResponse GetArtifact(GetArtifactRequest request) {
+            return DataContext.Artifacts.Include(x => x.Measurement)
+                .Include(x => x.Series)
+                .Include(x => x.Plots)
+                .FirstOrDefault(x => x.Id == request.Id).MapTo<GetArtifactResponse>();
         }
     }
 }

@@ -255,6 +255,8 @@
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap\js\npm.js" />
     <Content Include="Content\bs_leftnavi.css" />
+    <Content Include="Content\colpick\css\colpick.css" />
+    <Content Include="Content\colpick\js\colpick.js" />
     <Content Include="Content\datepicker\css\datepicker.css" />
     <Content Include="Content\datepicker\js\bootstrap-datepicker.js" />
     <Content Include="Content\font-awesome\css\font-awesome.css" />
@@ -347,6 +349,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\colpick\colpick.jquery.json" />
+    <Content Include="Content\colpick\LICENSE" />
+    <Content Include="Content\colpick\README.md" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.0.js" />
     <Content Include="Scripts\jquery-1.9.0.min.js" />
@@ -490,6 +495,8 @@
     <Content Include="Views\Group\Create.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Group\Update.cshtml" />
+    <Content Include="Views\Artifact\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Artifact\Index.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />

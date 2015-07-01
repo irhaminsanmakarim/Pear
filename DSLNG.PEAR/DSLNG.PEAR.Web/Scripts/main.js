@@ -15,7 +15,31 @@ String.prototype.isNullOrEmpty = function () {
     Pear.Artifact.Designer = {};
 
     var artifactDesigner = Pear.Artifact.Designer;
-
+    
+    artifactDesigner.ListSetup = function () {
+        $(document).on('click', '.artifact-view', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var callback = Pear.Artifact.Designer._previewCallbacks;
+            $.ajax({
+                url: $this.attr('href'),
+                method: 'GET',
+                success: function (data) {
+                    if (callback.hasOwnProperty(data.GraphicType)) {
+                        callback[data.GraphicType](data);
+                    }
+                    $('#graphic-preview').modal('show');
+                }
+            });
+            $('#graphic-preview').on('show.bs.modal', function () {
+                $('#container').css('visibility', 'hidden');
+            });
+            $('#graphic-preview').on('shown.bs.modal', function () {
+                $('#container').css('visibility', 'initial');
+                $('#container').highcharts().reflow();
+            });
+        });
+    };
     artifactDesigner.GraphicSettingSetup = function () {
         var callback = Pear.Artifact.Designer._setupCallbacks;
         var loadGraph = function (url, type) {
@@ -524,10 +548,21 @@ String.prototype.isNullOrEmpty = function () {
             var fields = ['From', 'To', 'Color'];
             for (var i in fields) {
                 var field = fields[i];
-                plotBandTemplate.find('#SpeedometerChart_PlotBands_0__' + field).attr('name', 'SpeedometerChart.PlotBands[' + plotPos + '].' + field);
+                plotBandTemplate.find('#SpeedometerChart_PlotBands_0__' + field).attr('name', 'SpeedometerChart.PlotBands[' + plotPos + '].' + field).attr('id', 'plot-bands-' + i);
             }
+            plotBandTemplate.find('.colorpicker input').colpick({
+                submit: 0,
+                onChange: function (hsb, hex, rgb, el, bySetColor) {
+                    $(el).closest('.colorpicker').find('i').css('background-color', '#' + hex);
+                    // Fill the text box just if the color was set using the picker, and not the colpickSetColor function.
+                    if (!bySetColor) $(el).val('#' + hex);
+                }
+            }).keyup(function () {
+                $(this).colpickSetColor(this.value.replace('#', ''));
+            });
             $('#plot-bands-holder').append(plotBandTemplate);
         });
+        
         var rangeDatePicker = function () {
             $('.datepicker').datetimepicker({
                 format: "MM/DD/YYYY hh:00 A"
@@ -610,15 +645,6 @@ String.prototype.isNullOrEmpty = function () {
         rangeDatePicker();
     };
     artifactDesigner._previewCallbacks.speedometer = function (data) {
-        var plotBands = [];
-        for (var i in data.SpeedometerChart.PlotBands) {
-            plotBands.push({
-                from: data.SpeedometerChart.PlotBands[i].from,
-                to: data.SpeedometerChart.PlotBands[i].to,
-            color : data.SpeedometerChart.PlotBands[i].color
-            });
-        }
-        console.log(plotBands);
         $('#container').highcharts({
             chart: {
                 type: 'gauge',
@@ -688,7 +714,7 @@ String.prototype.isNullOrEmpty = function () {
                 title: {
                     text: data.SpeedometerChart.ValueAxisTitle
                 },
-                plotBands: plotBands
+                plotBands: data.SpeedometerChart.PlotBands
             },
 
             series: [{
@@ -705,6 +731,7 @@ String.prototype.isNullOrEmpty = function () {
     $(document).ready(function () {
         Pear.Artifact.Designer.GraphicSettingSetup();
         Pear.Artifact.Designer.Preview();
+        Pear.Artifact.Designer.ListSetup();
     });
     window.Pear = Pear;
 }(window, jQuery, undefined));

@@ -26,6 +26,8 @@ using DSLNG.PEAR.Services.Requests.Method;
 using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Services.Requests.Periode;
 using DSLNG.PEAR.Services.Responses.Periode;
+using DSLNG.PEAR.Services.Requests.Artifact;
+using DSLNG.PEAR.Services.Responses.Artifact;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -145,6 +147,23 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Periode, GetPeriodeResponse>();
             Mapper.CreateMap<CreatePeriodeRequest, Data.Entities.Periode>();
             Mapper.CreateMap<UpdatePeriodeRequest, Data.Entities.Periode>();
+
+            Mapper.CreateMap<CreateArtifactRequest, Data.Entities.Artifact>()
+                .ForMember(x => x.Series, o => o.Ignore())
+                .ForMember(x => x.Plots, o => o.Ignore());
+            Mapper.CreateMap<CreateArtifactRequest.SeriesRequest, Data.Entities.ArtifactSerie>();
+            Mapper.CreateMap<CreateArtifactRequest.PlotRequest, Data.Entities.ArtifactPlot>();
+            Mapper.CreateMap<CreateArtifactRequest.StackRequest, Data.Entities.ArtifactStack>();
+
+            Mapper.CreateMap<Artifact, GetArtifactsResponse.Artifact>();
+            Mapper.CreateMap<Artifact, GetArtifactResponse>()
+                .ForMember(x => x.PlotBands, o => o.MapFrom(s => s.Plots.MapTo<GetArtifactResponse.PlotResponse>()))
+                .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<GetArtifactResponse.SeriesResponse>()))
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
+            Mapper.CreateMap<ArtifactPlot, GetArtifactResponse.PlotResponse>();
+            Mapper.CreateMap<ArtifactSerie, GetArtifactResponse.SeriesResponse>()
+                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetArtifactResponse.StackResponse>()));
+            Mapper.CreateMap<ArtifactStack, GetArtifactResponse.StackResponse>();
 
             base.Configure();
         }

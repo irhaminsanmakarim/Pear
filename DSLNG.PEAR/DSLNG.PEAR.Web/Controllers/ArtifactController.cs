@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.Artifact;
 using System.Collections.Generic;
+using DevExpress.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -23,6 +24,58 @@ namespace DSLNG.PEAR.Web.Controllers
             _measurementService = measurementService;
             _kpiService = kpiService;
             _artifactServie = artifactServcie;
+        }
+
+        public ActionResult Index() {
+            return View();
+        }
+        public ActionResult IndexPartial()
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridArtifactIndex");
+            if (viewModel == null)
+                viewModel = CreateGridViewModel();
+            return BindingCore(viewModel);
+        }
+
+        PartialViewResult BindingCore(GridViewModel gridViewModel)
+        {
+            gridViewModel.ProcessCustomBinding(
+                GetDataRowCount,
+                GetData
+            );
+            return PartialView("_IndexGridPartial", gridViewModel);
+        }
+
+        static GridViewModel CreateGridViewModel()
+        {
+            var viewModel = new GridViewModel();
+            viewModel.KeyFieldName = "Id";
+            viewModel.Columns.Add("GraphicName");
+            viewModel.Columns.Add("GraphicType");
+            viewModel.Pager.PageSize = 10;
+            return viewModel;
+        }
+
+        public ActionResult PagingAction(GridViewPagerState pager)
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridArtifactIndex");
+            viewModel.ApplyPagingState(pager);
+            return BindingCore(viewModel);
+        }
+
+        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
+        {
+
+            e.DataRowCount = _artifactServie.GetArtifacts(new GetArtifactsRequest { OnlyCount = true }).Count;
+        }
+
+        public void GetData(GridViewCustomBindingGetDataArgs e)
+        {
+            e.Data = _artifactServie.GetArtifacts(new GetArtifactsRequest
+            {
+                Skip = e.StartDataRowIndex,
+                Take = e.DataRowCount
+            }).Artifacts;
         }
 
         public ActionResult Designer()
@@ -118,6 +171,49 @@ namespace DSLNG.PEAR.Web.Controllers
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.Interval.ToString(), Text = "INTERVAL" });
         }
 
+        public ActionResult View(int id) {
+            var artifactResp = _artifactServie.GetArtifact(new GetArtifactRequest { Id = id });
+            var previewViewModel = new ArtifactPreviewViewModel();
+            switch (artifactResp.GraphicType)
+            {
+                case "line":
+                    {
+                        var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetChartDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.LineChart = new LineChartDataViewModel();
+                        previewViewModel.LineChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.LineChart.ValueAxisTitle = artifactResp.Measurement;
+                        previewViewModel.LineChart.Series = chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.LineChart.Periodes = chartData.Periodes;
+                    }
+                    break;
+                case "speedometer":
+                    {
+                        var chartData = _artifactServie.GetSpeedometerChartData(artifactResp.MapTo<GetSpeedometerChartDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.SpeedometerChart = new SpeedometerChartDataViewModel();
+                        previewViewModel.SpeedometerChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.SpeedometerChart.ValueAxisTitle = artifactResp.Measurement;
+                        previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
+                default:
+                    {
+                        var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetChartDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.BarChart = new BarChartDataViewModel();
+                        previewViewModel.BarChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.BarChart.ValueAxisTitle = artifactResp.Measurement; //.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+                        previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.BarChart.Periodes = chartData.Periodes;
+                        previewViewModel.BarChart.SeriesType = chartData.SeriesType;
+                    }
+                    break;
+            }
+            return Json(previewViewModel,JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult Preview(ArtifactDesignerViewModel viewModel) {
             var previewViewModel = new ArtifactPreviewViewModel();
@@ -158,6 +254,34 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
             }
             return Json(previewViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(ArtifactDesignerViewModel viewModel) {
+            switch (viewModel.GraphicType) {
+                case "line":
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        viewModel.LineChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
+                        _artifactServie.Create(request);
+                    }
+                    break;
+                case "speedometer":
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        viewModel.SpeedometerChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
+                        _artifactServie.Create(request);
+                    }
+                    break;
+                default:
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        viewModel.BarChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
+                        _artifactServie.Create(request);
+                    }
+                    break;
+            }
+           return  RedirectToAction("Index");
         }
     }
 }

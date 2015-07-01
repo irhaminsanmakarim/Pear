@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSLNG.PEAR.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,21 +8,31 @@ namespace DSLNG.PEAR.Data.Entities
 {
     public class Artifact
     {
+        public Artifact() {
+            Series = new List<ArtifactSerie>();
+            Plots = new List<ArtifactPlot>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        
+
         [Required]
-        public string Type { get; set; }
+        public string GraphicType { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string GraphicName { get; set; }
         [Required]
-        public string Header { get; set; }
+        public string HeaderTitle { get; set; }
+
         public ICollection<ArtifactSerie> Series { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-        public string PeriodeType { get; set; }
-        public string ValueAxis { get; set; }
+        public ICollection<ArtifactPlot> Plots { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
+        public PeriodeType PeriodeType { get; set; }
+        public ValueAxis ValueAxis { get; set; }
+        public RangeFilter RangeFilter { get; set; }
+        public Measurement Measurement { get; set; }
+        public double FractionScale { get; set; }
+        public double MaxValue { get; set; }
 
         public bool IsActive { get; set; }
         public User CreatedBy { get; set; }

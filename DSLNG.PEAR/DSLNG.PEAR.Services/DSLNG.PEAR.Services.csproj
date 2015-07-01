@@ -62,6 +62,9 @@
     <Compile Include="GroupService.cs" />
     <Compile Include="Interfaces\IPeriodeService.cs" />
     <Compile Include="PeriodeService.cs" />
+    <Compile Include="Requests\Artifact\CreateArtifactRequest.cs" />
+    <Compile Include="Requests\Artifact\GetArtifactRequest.cs" />
+    <Compile Include="Requests\Artifact\GetArtifactsRequest.cs" />
     <Compile Include="Requests\Group\CreateGroupRequest.cs" />
     <Compile Include="Requests\Group\UpdateGroupRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
@@ -69,6 +72,9 @@
     <Compile Include="Requests\Method\CreateMethodRequest.cs" />
     <Compile Include="Requests\Method\UpdateMethodRequest.cs" />
     <Compile Include="Requests\Periode\PeriodeRequest.cs" />
+    <Compile Include="Responses\Artifact\CreateArtifactResponse.cs" />
+    <Compile Include="Responses\Artifact\GetArtifactResponse.cs" />
+    <Compile Include="Responses\Artifact\GetArtifactsResponse.cs" />
     <Compile Include="Responses\Group\CreateGroupResponse.cs" />
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
