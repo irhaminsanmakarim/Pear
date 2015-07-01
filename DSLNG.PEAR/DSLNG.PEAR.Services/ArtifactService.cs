@@ -254,7 +254,7 @@ namespace DSLNG.PEAR.Services
                         default:
                             while (Start.Value <= End.Value)
                             {
-                                periodes.Add(End.Value.ToString(hourlyFormat));
+                                periodes.Add(Start.Value.ToString(hourlyFormat));
                                 dateTimePeriodes.Add(Start.Value);
                                 Start = Start.Value.AddHours(1);
                             }
@@ -283,7 +283,7 @@ namespace DSLNG.PEAR.Services
                         default:
                             while (Start.Value <= End.Value)
                             {
-                                periodes.Add(End.Value.ToString(dailyFormat));
+                                periodes.Add(Start.Value.ToString(dailyFormat));
                                 dateTimePeriodes.Add(Start.Value);
                                 Start = Start.Value.AddDays(1);
                             }
@@ -315,7 +315,7 @@ namespace DSLNG.PEAR.Services
                             while (Start.Value <= End.Value)
                             {
                                 dateTimePeriodes.Add(Start.Value);
-                                periodes.Add(End.Value.ToString(monthlyFormat));
+                                periodes.Add(Start.Value.ToString(monthlyFormat));
                                 Start = Start.Value.AddMonths(1);
                             }
                             break;
@@ -332,7 +332,7 @@ namespace DSLNG.PEAR.Services
                         default:
                             while (Start.Value <= End.Value)
                             {
-                                periodes.Add(End.Value.ToString(yearlyFormat));
+                                periodes.Add(Start.Value.ToString(yearlyFormat));
                                 dateTimePeriodes.Add(Start.Value);
                                 Start = Start.Value.AddYears(1);
                             }
@@ -570,6 +570,9 @@ namespace DSLNG.PEAR.Services
         public GetArtifactResponse GetArtifact(GetArtifactRequest request) {
             return DataContext.Artifacts.Include(x => x.Measurement)
                 .Include(x => x.Series)
+                .Include(x => x.Series.Select(y => y.Kpi))
+                .Include(x => x.Series.Select(y => y.Stacks))
+                .Include(x => x.Series.Select(y => y.Stacks.Select(z => z.Kpi)))
                 .Include(x => x.Plots)
                 .FirstOrDefault(x => x.Id == request.Id).MapTo<GetArtifactResponse>();
         }

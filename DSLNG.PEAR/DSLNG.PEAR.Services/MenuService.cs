@@ -55,11 +55,44 @@ namespace DSLNG.PEAR.Services
             var response = new CreateMenuResponse();
             try
             {
-                var menu = request.MapTo<Menu>();
+                var menu = request.MapTo<Data.Entities.Menu>();
+                //set IsRoot if no menu as parent
+                menu.IsRoot = request.ParentMenuId <= 0;
+
+                //check if has role group
+                if (request.RoleGroupIds.Count > 0)
+                {
+                    foreach (int roleGroupId in request.RoleGroupIds)
+                    {
+                        var roleGroup = DataContext.RoleGroups.FirstOrDefault(r => r.Id == roleGroupId);
+                        
+                        //add selected role group to menu
+                        menu.RoleGroups.Add(roleGroup);
+                    }
+                }
+                
                 DataContext.Menus.Add(menu);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "Menu item has been added successfully";
+
+                //add this menu as child if not root
+                if (!menu.IsRoot)
+                {
+                    //get parent menu
+                    try
+                    {
+                        var parent = DataContext.Menus.First(p => p.Id == request.ParentMenuId);
+                        parent.Menus.Add(menu);
+                        DataContext.Menus.Attach(parent);
+                        DataContext.Entry(parent).State = EntityState.Modified;
+                        DataContext.SaveChanges();
+                    }
+                    catch (DbUpdateException dbUpdateException)
+                    {
+                        response.Message = dbUpdateException.Message;
+                    }
+                }
             }
             catch (DbUpdateException dbUpdateException)
             {
@@ -74,7 +107,7 @@ namespace DSLNG.PEAR.Services
             var response = new UpdateMenuResponse();
             try
             {
-                var menu = request.MapTo<Menu>();
+                var menu = request.MapTo<Data.Entities.Menu>();
                 DataContext.Menus.Attach(menu);
                 DataContext.Entry(menu).State = EntityState.Modified;
                 DataContext.SaveChanges();
@@ -94,7 +127,7 @@ namespace DSLNG.PEAR.Services
             var response = new DeleteMenuResponse();
             try
             {
-                var menu = new Menu { Id = id };
+                var menu = new Data.Entities.Menu { Id = id };
                 DataContext.Menus.Attach(menu);
                 DataContext.Entry(menu).State = EntityState.Deleted;
                 DataContext.SaveChanges();

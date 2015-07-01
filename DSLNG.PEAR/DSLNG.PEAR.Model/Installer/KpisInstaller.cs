@@ -31,7 +31,8 @@ namespace DSLNG.PEAR.Data.Installer
                 IsActive = true,
                 CreatedDate = DateTime.Now,
                 UpdatedDate = DateTime.Now,
-                Method = _context.Methods.Local.First(x => x.Id == 1)
+                Method = _context.Methods.Local.First(x => x.Id == 1),
+                Level = _context.Levels.Local.First(x => x.Code == "COR")
             };
             var securityIncident = new Kpi
             {
@@ -46,7 +47,8 @@ namespace DSLNG.PEAR.Data.Installer
                 FormatInput = FormatInput.Numeric,
                 IsActive = true,
                 CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now
+                UpdatedDate = DateTime.Now,
+                Level = _context.Levels.Local.First(x => x.Code == "COR")
             };
             var rif = new Kpi
             {
@@ -62,6 +64,7 @@ namespace DSLNG.PEAR.Data.Installer
                 IsActive = true,
                 CreatedDate = DateTime.Now,
                 UpdatedDate = DateTime.Now,
+                Level = _context.Levels.Local.First(x => x.Code == "COR")
             };
 
             var dafwc = new Kpi
@@ -77,7 +80,8 @@ namespace DSLNG.PEAR.Data.Installer
                 FormatInput = FormatInput.Numeric,
                 IsActive = true,
                 CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now
+                UpdatedDate = DateTime.Now,
+                Level = _context.Levels.Local.First(x => x.Code == "COR")
             };
 
             var plantAvailability = new Kpi
@@ -86,7 +90,8 @@ namespace DSLNG.PEAR.Data.Installer
                 Name = "Plant Availability",
                 Measurement = _context.Measurements.Local.First(x => x.Id == 1),
                 Pillar = _context.Pillars.Local.First(x => x.Id == 2),
-                Order = 3
+                Order = 3,
+                Level = _context.Levels.Local.First(x => x.Code == "COR")
             };
 
             _context.Kpis.Add(fatality);

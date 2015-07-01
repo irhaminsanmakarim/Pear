@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Services.Requests.PmsConfigDetails
+namespace DSLNG.PEAR.Services.Responses.Conversion
 {
-    public class GetPmsConfigDetailsRequest
+    public class DeleteConversionResponse : BaseResponse
     {
         public int Id { get; set; }
-        public int Month { get; set; }
     }
 }

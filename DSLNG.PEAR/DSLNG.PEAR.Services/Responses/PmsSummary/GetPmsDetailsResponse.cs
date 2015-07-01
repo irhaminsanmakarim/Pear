@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace DSLNG.PEAR.Services.Responses.PmsConfigDetails
+using System.Collections.Generic;
+
+namespace DSLNG.PEAR.Services.Responses.PmsSummary
 {
-    public class GetPmsConfigDetailsResponse : BaseResponse
+    public class GetPmsDetailsResponse : BaseResponse
     {
         public string Title { get; set; }
         public int Year { get; set; }
@@ -21,6 +19,9 @@ namespace DSLNG.PEAR.Services.Responses.PmsConfigDetails
         public double? KpiActualMonthly { get; set; }
         public List<KpiAchievment> KpiAchievmentMonthly { get; set; }
         public List<KpiRelation> KpiRelations { get; set; }
+        public IList<ScoreIndicator> ScoreIndicators { get; set; }
+        public double Weight { get; set; }
+        public string ScoringType { get; set; }
 
         public class KpiAchievment
         {
@@ -37,5 +38,13 @@ namespace DSLNG.PEAR.Services.Responses.PmsConfigDetails
             public double? ActualYearly { get; set; }
             public double? ActualMonthly { get; set; }
         }
+
+        public class ScoreIndicator
+        {
+            public string Expression { get; set; }
+            public string Color { get; set; }
+        }
     }
+
+    
 }

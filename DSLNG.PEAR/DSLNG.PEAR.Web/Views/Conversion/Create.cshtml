@@ -1,0 +1,47 @@
+﻿
+@model DSLNG.PEAR.Web.ViewModels.Conversion.CreateConversionViewModel
+@{    
+    ViewBag.Title = "Create New User";
+}
+
+<h2>@ViewBag.Title</h2>
+@Html.Partial("_MessageResponse")
+<div class="row">
+    <div class="col-md-4">
+        <form action="@Url.Action("Create")" method="POST">
+            <div class="form-group">
+                @Html.LabelFor(model => model.MeasurementFrom, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.MeasurementFrom, Model.MeasurementList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MeasurementFrom)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.MeasurementTo, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.MeasurementTo, Model.MeasurementList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MeasurementTo)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Value, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Value, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Value)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsReverse, new { @class = "control-label" })
+                @Html.EditorFor(model => model.IsReverse, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IsReverse)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
+                @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IsActive)
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+            <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+
+        </form>
+    </div>
+</div>

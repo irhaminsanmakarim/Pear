@@ -8,13 +8,17 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
 {
     public class GetArtifactResponse
     {
+        public GetArtifactResponse() {
+            Series = new List<SeriesResponse>();
+            PlotBands = new List<PlotResponse>();
+        }
         public int Id { get; set; }
         public string GraphicType { get; set; }
         public string GraphicName { get; set; }
         public string HeaderTitle { get; set; }
 
         public IList<SeriesResponse> Series { get; set; }
-        public IList<SeriesResponse> PlotBands { get; set; }
+        public IList<PlotResponse> PlotBands { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public PeriodeType PeriodeType { get; set; }

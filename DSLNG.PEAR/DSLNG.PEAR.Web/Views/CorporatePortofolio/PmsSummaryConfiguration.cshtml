@@ -1,17 +1,80 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.CorporatePortofolio.PmsSummaryConfigurationViewModel 
+﻿@model DSLNG.PEAR.Web.ViewModels.CorporatePortofolio.PmsSummaryConfigurationViewModel
 @{
     ViewBag.Title = "PmsSummaryConfiguration";
 }
 
-<h2>PmsSummaryConfiguration</h2>
+<h3>Pms Summary Configuration</h3><hr/>
 
-<h1>Pillar & Key Performance Indicator</h1>
+<h4>Pillar & Key Performance Indicator</h4>
+<a class="btn btn-default btn-darkblue" href="@Url.Action("CreatePmsConfig")"  data-toggle="modal" data-target="#modalDialog">Add Pms Config</a>
+
+<p>Total Score For All Pillar : <span id="totalScoreAllPillar"></span></p>
 @{
     for (int i = 0; i < Model.PmsConfigs.Count; i++)
     {
         int i1 = i;
-    
-        @Html.DropDownListFor(x => x.PmsConfigs[i1].PillarId,new SelectList(Model.Pillars,"Value","Text", Model.PmsConfigs[i1].PillarId))
+        <h4 style="display: inline">Pillar Name : @Model.PmsConfigs[i1].PillarName</h4>
+        <a href="@Url.Action("CreatePmsConfigDetails", new {id = Model.PmsConfigs[i1].PillarId})" class="btn btn-default btn-darkblue pull-right" data-toggle="modal" data-target="#modalDialog" style="margin-bottom: 8px;">Add Pms Config Detail</a>
+        //Html.DropDownListFor(x => x.PmsConfigs[i1].PillarId, new SelectList(Model.Pillars, "Value", "Text", Model.PmsConfigs[i1].PillarId))
+
+    <table class="table table-striped table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th rowspan="2">Kpi Name</th>
+                <th rowspan="2">Measurement</th>
+                <th rowspan="2">Weight</th>
+                <th rowspan="2">Scoring Type</th>
+                <th rowspan="2">Scoring Indicator</th>
+                <th rowspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var pmsConfigDetails in Model.PmsConfigs[i1].PmsConfigDetailsList)
+            {
+                <tr>
+                    <td>@pmsConfigDetails.KpiName</td>
+                    <td>@pmsConfigDetails.KpiMeasurement</td>
+                    <td>@pmsConfigDetails.Weight</td>
+                    <td>@pmsConfigDetails.ScoringType</td>
+                    <td><a href="@Url.Action("ScoreIndicator", "CorporatePortofolio", new { id = pmsConfigDetails.Id })" data-toggle="modal" data-target="#modalDialog">View Scoring Indicator</a></td>
+                    <td>@Html.ActionLink("Edit", "PmsConfigDetails", "CorporatePortofolio", new { id = pmsConfigDetails.Id }, new { data_toggle = "modal", data_target = "#modalDialog" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+        
     }
 }
 
+
+<!-- Modal -->
+<div class="modal fade" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                Please wait.
+                <br />
+                it still loading ..
+                
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#modalDialog').on('hidden.bs.modal', function (e) {
+                $(this).removeData('bs.modal');
+            });
+        });
+    </script>
+}

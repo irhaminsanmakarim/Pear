@@ -13,5 +13,9 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetPmsSummaryResponse GetPmsSummary(GetPmsSummaryRequest request);
         GetPmsSummaryListResponse GetPmsSummaryList(GetPmsSummaryListRequest request);
         GetPmsSummaryConfigurationResponse GetPmsSummaryConfiguration(GetPmsSummaryConfigurationRequest request);
+        GetScoreIndicatorsResponse GetScoreIndicators(int pmsConfigDetailId);
+        GetPmsDetailsResponse GetPmsDetails(GetPmsDetailsRequest request);
+        GetPmsConfigDetailsResponse GetPmsConfigDetails(int id);
+        GetKpisByPillarIdResponse GetKpis(int pillarId);
     }
 }
