@@ -203,10 +203,13 @@ namespace DSLNG.PEAR.Services
                 {
                     seriesType = "multi-stacks-grouped";
                 }
+                else if (request.RangeFilter == RangeFilter.YTD) {
+                    seriesType = "multi-stack";
+                }
             }
             else
             {
-                if (request.SeriesList.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null)
+                if (request.SeriesList.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null || RangeFilter.YTD == request.RangeFilter)
                 {
                     seriesType = "multi-stack";
                 }
@@ -214,7 +217,7 @@ namespace DSLNG.PEAR.Services
             switch (request.ValueAxis)
             {
                 case ValueAxis.KpiTarget:
-                    seriesResponse = this._getKpiTargetSeries(request.SeriesList, request.PeriodeType, dateTimePeriodes, seriesType);
+                    seriesResponse = this._getKpiTargetSeries(request.SeriesList, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter);
                     break;
                 case ValueAxis.KpiActual:
                     seriesResponse = this._getKpiActualSeries(request.SeriesList, request.PeriodeType, dateTimePeriodes, seriesType);
@@ -296,19 +299,35 @@ namespace DSLNG.PEAR.Services
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentMonth:
-                            var currentMonth = DateTime.Now.Date;
-                            dateTimePeriodes.Add(currentMonth);
-                            periodes.Add(currentMonth.ToString(monthlyFormat));
+                            {
+                                var currentMonth = DateTime.Now.Date;
+                                dateTimePeriodes.Add(currentMonth);
+                                periodes.Add(currentMonth.ToString(monthlyFormat));
+                            }
                             break;
                         case RangeFilter.CurrentYear:
-                            var currentYear = DateTime.Now.Year;
-                            var startMonth = new DateTime(DateTime.Now.Year, 1, 1);
-
-                            while (currentYear == startMonth.Year)
                             {
-                                periodes.Add(startMonth.ToString(monthlyFormat));
-                                dateTimePeriodes.Add(startMonth);
-                                startMonth = startMonth.AddMonths(1);
+                                var currentYear = DateTime.Now.Year;
+                                var startMonth = new DateTime(DateTime.Now.Year, 1, 1);
+
+                                while (currentYear == startMonth.Year)
+                                {
+                                    periodes.Add(startMonth.ToString(monthlyFormat));
+                                    dateTimePeriodes.Add(startMonth);
+                                    startMonth = startMonth.AddMonths(1);
+                                }
+                            }
+                            break;
+                        case RangeFilter.YTD:
+                            {
+                                var currentYear = DateTime.Now.Year;
+                                var startMonth = new DateTime(DateTime.Now.Year, 1, 1);
+                                var currentMont = DateTime.Now.Month;
+                                while (startMonth.Month <= currentMont) {
+                                    periodes.Add(startMonth.ToString(monthlyFormat));
+                                    dateTimePeriodes.Add(startMonth);
+                                    startMonth = startMonth.AddMonths(1);
+                                }
                             }
                             break;
                         default:
@@ -344,7 +363,7 @@ namespace DSLNG.PEAR.Services
             return periodes.ToArray();
         }
 
-        private IList<GetChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetChartDataRequest.Series> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType)
+        private IList<GetChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetChartDataRequest.Series> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter)
         {
             var seriesResponse = new List<GetChartDataResponse.SeriesResponse>();
             var start = dateTimePeriodes[0];
@@ -357,6 +376,7 @@ namespace DSLNG.PEAR.Services
                     var kpiTargets = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
                       x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId)
                       .OrderBy(x => x.Periode).ToList();
+                    
                     var aSeries = new GetChartDataResponse.SeriesResponse
                     {
                         name = series.Label
@@ -374,6 +394,21 @@ namespace DSLNG.PEAR.Services
                         }
                     }
                     seriesResponse.Add(aSeries);
+                    if (rangeFilter == RangeFilter.YTD) {
+                        var previousSeries = new GetChartDataResponse.SeriesResponse
+                        {
+                            name = "Previous"
+                        };
+                        for (var i = 0; i < aSeries.data.Count; i++) {
+                            double data = 0;
+                            for (var j = 0; j < i; j++) {
+                                data += aSeries.data[j];
+                            }
+                            previousSeries.data.Add(data);
+                        }
+                        seriesResponse.Add(previousSeries);
+                    }
+                    
                 }
                 else
                 {
