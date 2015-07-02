@@ -14,7 +14,6 @@ namespace DSLNG.PEAR.Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
         public string Name { get; set; }
         public ICollection<Menu> Menus { get; set; }
         public int Order { get; set; }
@@ -22,7 +21,8 @@ namespace DSLNG.PEAR.Data.Entities
         public ICollection<RoleGroup> RoleGroups { get; set; }
         public string Remark { get; set; }
         public string Module { get; set; }
-
+        public Menu Parent { get; set; }
+        public int? ParentId { get; set; }
         public bool IsActive { get; set; }
     }
 }

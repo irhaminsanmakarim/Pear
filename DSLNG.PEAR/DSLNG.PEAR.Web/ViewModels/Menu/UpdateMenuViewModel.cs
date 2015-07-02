@@ -21,7 +21,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Menu
         [Required]
         public string Name { get; set; }
         public int Order { get; set; }
-        //public ICollection<RoleGroup> RoleGroups { get; set; }
         public string Remark { get; set; }
         public string Module { get; set; }
         [Required]
@@ -29,7 +28,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Menu
         [Display(Name = "Select Role Groups")]
         public List<int> RoleGroupIds { get; set; }
         [Display(Name = "Parent Menu")]
-        public int ParentMenuId { get; set; }
+        public int ParentId { get; set; }
         public List<SelectListItem> RoleGroupOptions { get; set; }
         public List<SelectListItem> MenuOptions { get; set; }
     }

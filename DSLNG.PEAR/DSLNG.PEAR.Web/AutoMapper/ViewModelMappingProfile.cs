@@ -74,7 +74,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             //Mapper.CreateMap<GetMenusResponse.Menu, MenuViewModel>();
             Mapper.CreateMap<CreateMenuViewModel, CreateMenuRequest>();
-            Mapper.CreateMap<GetMenuResponse, UpdateMenuViewModel>();
+            Mapper.CreateMap<GetMenuResponse, UpdateMenuViewModel>()
+                .ForMember(x => x.RoleGroupIds, o => o.MapFrom(k => k.RoleGroups.Select(x => x.Id).ToList()));
             Mapper.CreateMap<UpdateMenuViewModel, UpdateMenuRequest>();
 
             Mapper.CreateMap<CreateMeasurementViewModel, CreateMeasurementRequest>();

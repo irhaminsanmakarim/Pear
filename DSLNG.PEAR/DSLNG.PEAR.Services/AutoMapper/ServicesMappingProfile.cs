@@ -62,13 +62,14 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(m => m.Menus, o => o.MapFrom(m => m.Menus.MapTo<GetMenusResponse.Menu>()));
             Mapper.CreateMap<CreateMenuRequest, Data.Entities.Menu>();
             Mapper.CreateMap<Data.Entities.Menu, GetMenusResponse.Menu>();
-            Mapper.CreateMap<Data.Entities.Menu, GetMenuResponse>();
+            Mapper.CreateMap<Data.Entities.Menu, GetMenuResponse>()
+                .ForMember(x => x.RoleGroups, o => o.MapFrom(k => k.RoleGroups));
+
             Mapper.CreateMap<UpdateMenuRequest, Data.Entities.Menu>();
             //Mapper.CreateMap<Data.Entities.RoleGroup, GetMenusResponse.RoleGroup>();
             //Mapper.CreateMap<Data.Entities.Level, GetMenusResponse.Level>();
             Mapper.CreateMap<Data.Entities.Level, Responses.Menu.Level>();
-            Mapper.CreateMap<Data.Entities.RoleGroup, Responses.Menu.RoleGroup>()
-                .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<Responses.Menu.Level>()));
+            Mapper.CreateMap<Data.Entities.RoleGroup, Responses.Menu.RoleGroup>();
             Mapper.CreateMap<Data.Entities.Group, GetGroupResponse>();
             Mapper.CreateMap<Data.Entities.Group, GetGroupsResponse.Group>();
             Mapper.CreateMap<CreateGroupRequest, Data.Entities.Group>();

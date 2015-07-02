@@ -99,6 +99,7 @@
     <Compile Include="Enums\KpiMethod.cs" />
     <Compile Include="Installer\KpiWithRelationModelInstaller.cs" />
     <Compile Include="Installer\ActivityInstaller.cs" />
+    <Compile Include="Installer\MenuInstaller.cs" />
     <Compile Include="Installer\MethodInstaller.cs" />
     <Compile Include="Installer\PeriodeInstaller.cs" />
     <Compile Include="Installer\PmsConfigDetailsInstaller.cs" />
