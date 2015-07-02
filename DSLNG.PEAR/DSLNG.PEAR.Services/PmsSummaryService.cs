@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
@@ -286,7 +287,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.ScoreIndicators)
                     .First(x => x.Id == pmsConfigDetailId);
                 response.ScoreIndicators =
-                    pmsConfigDetails.ScoreIndicators.MapTo<GetScoreIndicatorsResponse.ScoreIndicator>();
+                    pmsConfigDetails.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
                 response.IsSuccess = true;
             }
             catch (ArgumentNullException argumentNullException)
@@ -329,7 +330,7 @@ namespace DSLNG.PEAR.Services
                     response.KpiUnit = config.Kpi.Measurement != null ? config.Kpi.Measurement.Name : "";
                     response.KpiPeriod = config.Kpi.Period.ToString();
                     response.ScoreIndicators =
-                        config.ScoreIndicators.MapTo<GetPmsDetailsResponse.ScoreIndicator>();
+                        config.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
                     response.Weight = config.Weight;
                     response.ScoringType = config.ScoringType.ToString();
                     var kpiActualYearly =
@@ -431,6 +432,55 @@ namespace DSLNG.PEAR.Services
             catch (ArgumentNullException argumentNullException)
             {
                 response.Message = argumentNullException.Message;
+            }
+
+            return response;
+        }
+
+        public UpdatePmsConfigResponse UpdatePmsConfig(UpdatePmsConfigRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CreatePmsConfigResponse CreatePmsConfig(CreatePmsConfigRequest request)
+        {
+            var response = new CreatePmsConfigResponse();
+
+            try
+            {
+                var pmsConfig = new PmsConfig();
+                pmsConfig.Pillar = DataContext.Pillars.First(x => x.Id == request.PillarId);
+                pmsConfig.PmsSummary = DataContext.PmsSummaries.First(x => x.Id == request.PmsSummaryId);
+                pmsConfig.IsActive = true;
+                //DataContext.
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
+
+        public CreatePmsSummaryResponse CreatePmsSummary(CreatePmsSummaryRequest request)
+        {
+            var response = new CreatePmsSummaryResponse();
+            try
+            {
+                var pmsSummary = request.MapTo<PmsSummary>();
+                DataContext.PmsSummaries.Add(pmsSummary);
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
             }
 
             return response;

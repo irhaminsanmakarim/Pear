@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Services.Common.PmsSummary;
 using DSLNG.PEAR.Services.Responses.Pillar;
 
 namespace DSLNG.PEAR.Services.Responses.PmsSummary
@@ -46,12 +47,6 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
             //public bool KpiAsGraphic { get; set; }
             public IList<ScoreIndicator> ScoreIndicators { get; set; }
             public ScoringType ScoringType { get; set; }
-        }
-
-        public class ScoreIndicator
-        {
-            public string Color { get; set; }
-            public string Expression { get; set; }
         }
      
     }

@@ -5,11 +5,12 @@
     <span
         aria-hidden="true">&times;</span></button>
 <div class="whitebox">
-    <h4>Create Pms Config Detail</h4>
-    <form class="form-group" action="@Url.Action("CreatePmsConfigDetails")" method="POST">
+    <h4>Create Pms Config</h4>
+    <form class="form-group" action="@Url.Action("CreatePmsConfig")" method="POST">
+        @Html.HiddenFor(x => x.PmsSummaryId)
         <div class="form-group form-list">
             <label>Pillar</label>
-            @Html.DropDownListFor(x => x.PillarId, Model.Pillars, new { @class = "form-control ddl-pillar" })
+            @Html.DropDownListFor(x => x.PillarId, Model.Pillars, "Select Pillar",  new { @class = "form-control ddl-pillar" })
             @Html.ValidationMessageFor(x => x.PillarId)
         </div>
 
@@ -30,7 +31,7 @@
         }
 
         <div class="form-group form-list">
-            <label>Scoring Indicator</label>
+            <label>Scoring Indicator</label> <button type="button" class="btn btn-default form-inline add-score-indicator"><i class="glyphicon glyphicon-plus"></i></button>
         </div>
         <div class="score-indicator-wrapper">
             @foreach (var item in Model.ScoreIndicators)
@@ -49,9 +50,9 @@
                         <option value="<=">>=</option>
                     </select>
                     <input type="text" value="" class="form-control" style="width: 55px;"/>*@
+                        <input type="text" name="ScoreIndicators.Index" value="@i" />
                         @Html.TextBoxFor(x => Model.ScoreIndicators[i].Expression, new { @class = "form-control", placeholder = "Expression" })
                         @Html.TextBoxFor(x => Model.ScoreIndicators[i].Color, new { @class = "form-control", placeholder = "Color" })
-                        <button type="button" class="btn btn-default form-control add-score-indicator"><i class="glyphicon glyphicon-plus"></i></button>
                         <button type="button" class="btn btn-default form-control remove-score-indicator" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
                     </div>
                 </div>
@@ -70,9 +71,10 @@
 
 <div class="row hidden-scoring-indicator" style="margin-bottom: 10px; display: none">
     <div class="col-sm-12 form-inline">
-        <input class="form-control" id="Expression" name="Expression" placeholder="Expression, e.g : x > 20" type="text" value="">
-        <input class="form-control" id="Color" name="Color" placeholder="Color" type="text" value="">
-        <button type="button" class="btn btn-default form-control add-score-indicator"><i class="glyphicon glyphicon-plus"></i></button>
+        <input type="text" name="ScoreIndicators.Index" value="1" />
+        <input class="form-control si-expression" name="Expression" placeholder="Expression, e.g : x > 20" type="text" value="">
+        <input class="form-control si-color" name="Color" placeholder="Color" type="text" value="">
+        
         <button type="button" class="btn btn-default form-control remove-score-indicator" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
     </div>
 </div>
@@ -81,19 +83,22 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+        
         var i = $('#counter').attr('data-score-indicator');
         i = parseInt(i) === NaN ? 0 : parseInt(i);
-        if (i <= 1) {
-            $('.remove-score-indicator').hide();
-        }
         $('.add-score-indicator').click(function () {
-            i++;
-            $('.hidden-scoring-indicator').clone(true)
-            .appendTo('.score-indicator-wrapper').removeClass('hidden-scoring-indicator').show();
-            //$('.score-indicator-wrapper #Color').attr('name')
-            if (i > 1) {
+            var clone = $('.hidden-scoring-indicator').clone(true);
+            clone.find('input[name="ScoreIndicators.Index"]').val(i);
+            clone.find('.si-expression').attr('name', 'ScoreIndicators['+ i +'].Expression');
+            clone.find('.si-color').attr('name', 'ScoreIndicators[' + i + '].Color');
+            clone.appendTo('.score-indicator-wrapper').removeClass('hidden-scoring-indicator').show();
+            if (i > 0) {
                 $('.remove-score-indicator').show();
             }
+            i++;
         });
 
         $('.remove-score-indicator').click(function () {

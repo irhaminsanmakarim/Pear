@@ -1,6 +1,7 @@
 ﻿
 
 using System.Collections.Generic;
+using DSLNG.PEAR.Web.ViewModels.PmsSummary.Common;
 
 namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 {

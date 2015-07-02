@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using AutoMapper;
+using DSLNG.PEAR.Services.Common.PmsSummary;
+using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
+using DSLNG.PEAR.Services.Requests.PmsSummary;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
@@ -18,6 +21,7 @@ using DSLNG.PEAR.Services.Requests.Level;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
+using DSLNG.PEAR.Web.ViewModels.PmsSummary.Common;
 using DSLNG.PEAR.Web.ViewModels.User;
 using DSLNG.PEAR.Web.ViewModels.RoleGroup;
 using DSLNG.PEAR.Services.Responses.RoleGroup;
@@ -61,6 +65,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureCorporatePortofolio();
             ConfigurePmsSummary();
             ConfigureKpiTarget();
+            Mapper.CreateMap<Dropdown, SelectListItem>();
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
             Mapper.CreateMap<CreateKpiViewModel, CreateKpiRequest>();
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.KpiRelationModel, DSLNG.PEAR.Services.Requests.Kpi.KpiRelationModel>();
@@ -196,14 +201,14 @@ namespace DSLNG.PEAR.Web.AutoMapper
                           Text = a.Name,
                           Value = a.Id.ToString()
                       })));
+                      
 
             Mapper
-                .CreateMap
-                <GetPmsSummaryConfigurationResponse.ScoreIndicator, PmsSummaryConfigurationViewModel.ScoreIndicator>();
+                .CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
 
             Mapper.CreateMap<GetScoreIndicatorsResponse, DialogScoreIndicatorViewModel>();
-            Mapper.CreateMap<GetScoreIndicatorsResponse.ScoreIndicator, ScoreIndicatorViewModel>();
-            Mapper.CreateMap<GetPmsDetailsResponse.ScoreIndicator, ScoreIndicatorViewModel>();
+            Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
+            Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
 
             Mapper.CreateMap<GetPmsConfigDetailsResponse, DialogPmsConfigDetailViewModel>()
                 .ForMember(x => x.ScoringTypes, y => y.MapFrom(z => new List<SelectListItem>
@@ -223,7 +228,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
                           Value = x.Id.ToString(),
                           Text = x.Name.ToString()
                       })));
-            Mapper.CreateMap<GetPmsConfigDetailsResponse.ScoreIndicator, ScoreIndicatorViewModel>();
+            Mapper.CreateMap<ScoreIndicatorViewModel, ScoreIndicator>();
+            Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
+            Mapper.CreateMap<CreatePmsSummaryViewModel, CreatePmsSummaryRequest>();
+
 
         }
 
@@ -233,6 +241,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPmsDetailsResponse, PmsDetailsViewModel>();
             Mapper.CreateMap<GetPmsDetailsResponse.KpiAchievment, PmsDetailsViewModel.KpiAchievment>();
             Mapper.CreateMap<GetPmsDetailsResponse.KpiRelation, PmsDetailsViewModel.KpiRelation>();
+            Mapper.CreateMap<CreatePmsConfigViewModel, CreatePmsConfigRequest>();
         }
 
         private void ConfigureKpiTarget()

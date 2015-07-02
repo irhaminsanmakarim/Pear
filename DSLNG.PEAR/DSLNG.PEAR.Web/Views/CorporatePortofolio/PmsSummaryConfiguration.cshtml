@@ -6,7 +6,7 @@
 <h3>Pms Summary Configuration</h3><hr/>
 
 <h4>Pillar & Key Performance Indicator</h4>
-<a class="btn btn-default btn-darkblue" href="@Url.Action("CreatePmsConfig")"  data-toggle="modal" data-target="#modalDialog">Add Pms Config</a>
+<a class="btn btn-default btn-darkblue" href="@Url.Action("CreatePmsConfig", new {id = Model.PmsSummaryId})"  data-toggle="modal" data-target="#modalDialog">Add Pillar</a>
 
 <p>Total Score For All Pillar : <span id="totalScoreAllPillar"></span></p>
 @{

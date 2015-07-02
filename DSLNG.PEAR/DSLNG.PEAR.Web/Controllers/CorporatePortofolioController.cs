@@ -17,14 +17,12 @@ namespace DSLNG.PEAR.Web.Controllers
     public class CorporatePortofolioController : BaseController
     {
         private readonly IPmsSummaryService _pmsSummaryService;
-        private readonly IPillarService _pillarService;
-        private readonly IKpiService _kpiService;
+        private readonly IDropdownService _dropdownService;
 
-        public CorporatePortofolioController(IPmsSummaryService pmsSummaryService, IPillarService pillarService, IKpiService kpiService)
+        public CorporatePortofolioController(IPmsSummaryService pmsSummaryService, IDropdownService dropdownService)
         {
             _pmsSummaryService = pmsSummaryService;
-            _pillarService = pillarService;
-            _kpiService = kpiService;
+            _dropdownService = dropdownService;
         }
 
         public ActionResult Index()
@@ -41,6 +39,47 @@ namespace DSLNG.PEAR.Web.Controllers
             return base.ErrorPage(response.Message);
         }
 
+        public ActionResult CreatePmsSummary()
+        {
+            var viewModel = new CreatePmsSummaryViewModel();
+            viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+            return PartialView("_CreatePmsSummary", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult CreatePmsSummary(CreatePmsSummaryViewModel viewModel)
+        {
+            var request = viewModel.MapTo<CreatePmsSummaryRequest>();
+            var response = _pmsSummaryService.CreatePmsSummary(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult CreatePmsConfig(int id)
+        {
+            var viewModel = new CreatePmsConfigViewModel();
+            viewModel.PmsSummaryId = id;
+            viewModel.Pillars = _dropdownService.GetPillars(id).MapTo<SelectListItem>();
+            viewModel.ScoringTypes = _dropdownService.GetScoringTypes().MapTo<SelectListItem>();
+            return PartialView("_CreatePmsConfig", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult CreatePmsConfig(CreatePmsConfigViewModel viewModel)
+        {
+            var request = viewModel.MapTo<CreatePmsConfigRequest>();
+            var response = _pmsSummaryService.CreatePmsConfig(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            if (response.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return base.ErrorPage(response.Message);
+        }
+
         public ActionResult Details(int id)
         {
             return View("Details");
@@ -52,6 +91,7 @@ namespace DSLNG.PEAR.Web.Controllers
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<PmsSummaryConfigurationViewModel>();
+                viewModel.PmsSummaryId = id;
                 return View(viewModel);
             }
 
@@ -106,36 +146,14 @@ namespace DSLNG.PEAR.Web.Controllers
             return Content("in progress");
         }
 
-        public ActionResult CreatePmsConfig()
-        {
-            var viewModel = new CreatePmsConfigViewModel();
-            viewModel.Pillars =
-                _pillarService.GetPillars(new GetPillarsRequest())
-                    .Pillars.Select(x => new SelectListItem {Text = x.Name, Value = x.Id.ToString()})
-                    .ToList();
-            viewModel.ScoringTypes = new List<SelectListItem>()
-                {
-                    new SelectListItem {Text = ScoringType.Boolean.ToString(), Value = ScoringType.Boolean.ToString()},
-                    new SelectListItem {Text = ScoringType.Positive.ToString(), Value = ScoringType.Positive.ToString()},
-                    new SelectListItem {Text = ScoringType.Negative.ToString(), Value = ScoringType.Negative.ToString()}
-                };
-            return PartialView("_CreatePmsConfig", viewModel);
-        }
-
         public ActionResult CreatePmsConfigDetails(int id)
         {
             var viewModel = new CreatePmsConfigDetailsViewModel();
-            viewModel.Kpis = _kpiService.GetKpis(new GetKpisRequest{PillarId = id})
-                                        .Kpis.Select(
-                                            x => new SelectListItem { Text = x.Name.ToString(), Value = x.Id.ToString() })
-                                        .ToList();
-            viewModel.ScoringTypes = new List<SelectListItem>()
-                {
-                    new SelectListItem {Text = ScoringType.Boolean.ToString(), Value = ScoringType.Boolean.ToString()},
-                    new SelectListItem {Text = ScoringType.Positive.ToString(), Value = ScoringType.Positive.ToString()},
-                    new SelectListItem {Text = ScoringType.Negative.ToString(), Value = ScoringType.Negative.ToString()}
-                };
+            viewModel.Kpis = _dropdownService.GetKpis(id).MapTo<SelectListItem>();
+            viewModel.ScoringTypes = _dropdownService.GetScoringTypes().MapTo<SelectListItem>();
             return PartialView("_CreatePmsConfigDetails", viewModel);
         }
+
+        
 	}
 }

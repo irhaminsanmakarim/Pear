@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
+using DSLNG.PEAR.Web.ViewModels.PmsSummary.Common;
 
 namespace DSLNG.PEAR.Web.ViewModels.CorporatePortofolio
 {
