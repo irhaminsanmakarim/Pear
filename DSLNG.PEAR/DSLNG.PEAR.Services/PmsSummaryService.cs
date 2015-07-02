@@ -25,9 +25,57 @@ namespace DSLNG.PEAR.Services
         {
         }
 
-        public GetPmsSummaryResponse GetPmsSummary(GetPmsSummaryRequest request)
+        public UpdatePmsSummaryResponse UpdatePmsSummary(UpdatePmsSummaryRequest request)
         {
-            var response = new GetPmsSummaryResponse();
+            var response = new UpdatePmsSummaryResponse();
+            try
+            {
+                var updatedPmsSummary = request.MapTo<PmsSummary>();
+                var existedPmsSummary = DataContext.PmsSummaries
+                    .Where(x => x.Id == request.Id)
+                    .Include(x => x.ScoreIndicators)
+                    .Single();
+                var existedPmsSummaryEntry = DataContext.Entry(existedPmsSummary);
+                existedPmsSummaryEntry.CurrentValues.SetValues(updatedPmsSummary);
+
+                foreach (var scoreIndicator in updatedPmsSummary.ScoreIndicators)
+                {
+                    var existedScoreIndicator = existedPmsSummary.ScoreIndicators.SingleOrDefault(x => x.Id == scoreIndicator.Id && x.Id != 0);
+                    if (existedScoreIndicator != null)
+                    {
+                        var scoreIndicatorEntry = DataContext.Entry(existedScoreIndicator);
+                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicatorEntry);
+                    }
+                    else
+                    {
+                        scoreIndicator.Id = 0;
+                        existedPmsSummary.ScoreIndicators.Add(scoreIndicator);
+                    }
+                }
+
+                foreach (var item in existedPmsSummary.ScoreIndicators.Where(x => x.Id != 0).ToList())
+                {
+                    if (updatedPmsSummary.ScoreIndicators.All(x => x.Id != item.Id))
+                    {
+                        DataContext.ScoreIndicators.Remove(item);
+                    }
+                }
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Pms Summary has been updated";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public GetPmsSummaryReportResponse GetPmsSummaryReport(GetPmsSummaryReportRequest request)
+        {
+            var response = new GetPmsSummaryReportResponse();
             try
             {
                 //var xxx = DataContext.PmsSummaries.Include(x => x.PmsSummaryScoringIndicators.Select(a => a.)).ToList();
@@ -48,7 +96,7 @@ namespace DSLNG.PEAR.Services
                 {
                     foreach (var pmsConfigDetails in pmsConfig.PmsConfigDetailsList)
                     {
-                        var kpiData = new GetPmsSummaryResponse.KpiData();
+                        var kpiData = new GetPmsSummaryReportResponse.KpiData();
                         kpiData.Id = pmsConfigDetails.Id;
                         kpiData.Pillar = pmsConfig.Pillar.Name;
                         kpiData.PillarId = pmsConfig.Pillar.Id;
@@ -119,12 +167,12 @@ namespace DSLNG.PEAR.Services
 
                         if (kpiData.ActualYtd.HasValue && kpiData.TargetYtd.HasValue)
                         {
-                            var indexYtd = (kpiData.ActualYtd.Value/kpiData.TargetYtd.Value);
+                            var indexYtd = (kpiData.ActualYtd.Value / kpiData.TargetYtd.Value);
 
                             switch (pmsConfigDetails.ScoringType)
                             {
                                 case ScoringType.Positive:
-                                    kpiData.Score = pmsConfigDetails.Weight*indexYtd;
+                                    kpiData.Score = pmsConfigDetails.Weight * indexYtd;
                                     break;
                                 case ScoringType.Negative:
                                     if (indexYtd == 0)
@@ -136,7 +184,7 @@ namespace DSLNG.PEAR.Services
                                                 pmsConfigDetails.Kpi.Name);
                                         return response;
                                     }
-                                    kpiData.Score = pmsConfigDetails.Weight/indexYtd;
+                                    kpiData.Score = pmsConfigDetails.Weight / indexYtd;
                                     break;
                                 case ScoringType.Boolean:
                                     bool isMoreThanZero = false;
@@ -185,7 +233,7 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        private IList<GetPmsSummaryResponse.KpiData> SetPmsConfigColor(IList<GetPmsSummaryResponse.KpiData> kpiDatas, ICollection<ScoreIndicator> scoreIndicators, int pillarId)
+        private IList<GetPmsSummaryReportResponse.KpiData> SetPmsConfigColor(IList<GetPmsSummaryReportResponse.KpiData> kpiDatas, ICollection<ScoreIndicator> scoreIndicators, int pillarId)
         {
             var data = kpiDatas.Where(x => x.PillarId == pillarId && x.Score.HasValue).ToList();
             double? totalScore = null;
@@ -208,7 +256,7 @@ namespace DSLNG.PEAR.Services
             return kpiDatas;
         }
 
-        private IList<GetPmsSummaryResponse.KpiData> SetPmsSummaryColor(IList<GetPmsSummaryResponse.KpiData> kpiDatas, ICollection<ScoreIndicator> scoreIndicators)
+        private IList<GetPmsSummaryReportResponse.KpiData> SetPmsSummaryColor(IList<GetPmsSummaryReportResponse.KpiData> kpiDatas, ICollection<ScoreIndicator> scoreIndicators)
         {
             var groupedPillars = kpiDatas.GroupBy(x => x.Pillar);
             double? totalScore = null;
@@ -222,7 +270,7 @@ namespace DSLNG.PEAR.Services
                 {
                     if (item.Score.HasValue)
                     {
-                        totalScore += item.Score.Value/100 * item.PillarWeight;
+                        totalScore += item.Score.Value / 100 * item.PillarWeight;
                     }
                 }
             }
@@ -476,6 +524,7 @@ namespace DSLNG.PEAR.Services
                 var pmsSummary = request.MapTo<PmsSummary>();
                 DataContext.PmsSummaries.Add(pmsSummary);
                 DataContext.SaveChanges();
+                response.Message = "Configuration has been added successfully";
                 response.IsSuccess = true;
             }
             catch (DbUpdateException dbUpdateException)
@@ -504,7 +553,7 @@ namespace DSLNG.PEAR.Services
             return "grey";
         }
 
-        private IList<GetPmsSummaryResponse.KpiData> SetPillarAndTotalScoreColor(IList<GetPmsSummaryResponse.KpiData> kpiDatas, PmsSummaryScoringIndicator pillarScoringIndicators, PmsSummaryScoringIndicator totalScoreScoringIndicators)
+        private IList<GetPmsSummaryReportResponse.KpiData> SetPillarAndTotalScoreColor(IList<GetPmsSummaryReportResponse.KpiData> kpiDatas, PmsSummaryScoringIndicator pillarScoringIndicators, PmsSummaryScoringIndicator totalScoreScoringIndicators)
         {
             IDictionary<string, double?[]> totalPillar = new Dictionary<string, double?[]>();
             var groupedPillars = kpiDatas.GroupBy(x => x.Pillar);
@@ -548,6 +597,30 @@ namespace DSLNG.PEAR.Services
                     x.TotalScoreColor = GetScoreColor(allTotalScore, totalScoreScoringIndicators.ScoreIndicators);
                     return x;
                 }).ToList();
+        }
+
+
+        public GetPmsSummaryResponse GetPmsSummary(int id)
+        {
+            var response = new GetPmsSummaryResponse();
+            try
+            {
+                var pmsSummary = DataContext.PmsSummaries
+                                            .Include(x => x.ScoreIndicators)
+                                            .First(x => x.Id == id);
+                response = pmsSummary.MapTo<GetPmsSummaryResponse>();
+                response.IsSuccess = true;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
         }
     }
 }

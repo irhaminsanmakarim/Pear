@@ -138,7 +138,7 @@
     <Compile Include="Responses\PmsSummary\GetKpisByPillarIdResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsSummaryConfigurationResponse.cs" />
     <Compile Include="Requests\PmsSummary\GetPmsSummaryListRequest.cs" />
-    <Compile Include="Requests\PmsSummary\GetPmsSummaryRequest.cs" />
+    <Compile Include="Requests\PmsSummary\GetPmsSummaryReportRequest.cs" />
     <Compile Include="Requests\RoleGroup\CreateRoleGroupRequest.cs" />
     <Compile Include="Requests\RoleGroup\UpdateRoleGroupRequest.cs" />
     <Compile Include="Requests\Type\CreateTypeRequest.cs" />
@@ -213,10 +213,13 @@
     <Compile Include="Responses\Pillar\DeletePillarResponse.cs" />
     <Compile Include="Responses\Pillar\UpdatePillarResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsSummaryListResponse.cs" />
+    <Compile Include="Responses\PmsSummary\GetPmsSummaryReportResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsSummaryResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetScoreIndicatorsResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\PmsSummary\UpdatePmsConfigResponse.cs" />
+    <Compile Include="Requests\PmsSummary\UpdatePmsSummaryRequest.cs" />
+    <Compile Include="Responses\PmsSummary\UpdatePmsSummaryResponse.cs" />
     <Compile Include="Responses\RoleGroup\CreateRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\Level.cs" />

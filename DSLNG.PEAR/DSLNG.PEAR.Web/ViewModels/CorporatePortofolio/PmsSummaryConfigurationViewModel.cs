@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Data.Enums;
-using DSLNG.PEAR.Web.ViewModels.PmsSummary.Common;
+using DSLNG.PEAR.Web.ViewModels.Common;
+using DSLNG.PEAR.Web.ViewModels.Common.PmsSummary;
 
 namespace DSLNG.PEAR.Web.ViewModels.CorporatePortofolio
 {

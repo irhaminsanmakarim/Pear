@@ -10,6 +10,8 @@ using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
 using DSLNG.PEAR.Services.Responses.Kpi;
 using DSLNG.PEAR.Services.Requests.Kpi;
+using DSLNG.PEAR.Web.ViewModels.Common;
+using DSLNG.PEAR.Web.ViewModels.Common.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.CorporatePortofolio;
 using DSLNG.PEAR.Web.ViewModels.Kpi;
 using DSLNG.PEAR.Services.Responses.Menu;
@@ -21,7 +23,6 @@ using DSLNG.PEAR.Services.Requests.Level;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
-using DSLNG.PEAR.Web.ViewModels.PmsSummary.Common;
 using DSLNG.PEAR.Web.ViewModels.User;
 using DSLNG.PEAR.Web.ViewModels.RoleGroup;
 using DSLNG.PEAR.Services.Responses.RoleGroup;
@@ -182,7 +183,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
         private void ConfigureCorporatePortofolio()
         {
-            Mapper.CreateMap<GetPmsSummaryListResponse.PmsSummary, IndexCorporatePortofolioViewModel.CorporatePortofolio>();
+            Mapper.CreateMap<GetPmsSummaryListResponse.PmsSummary, ConfigurationPmsSummaryViewModel.CorporatePortofolio>();
             Mapper.CreateMap<GetPmsSummaryConfigurationResponse.PmsConfig, PmsSummaryConfigurationViewModel.PmsConfig>();
             Mapper.CreateMap<GetPmsSummaryConfigurationResponse.PmsConfigDetails, PmsSummaryConfigurationViewModel.PmsConfigDetails>()
                 .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
@@ -230,14 +231,18 @@ namespace DSLNG.PEAR.Web.AutoMapper
                       })));
             Mapper.CreateMap<ScoreIndicatorViewModel, ScoreIndicator>();
             Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
-            Mapper.CreateMap<CreatePmsSummaryViewModel, CreatePmsSummaryRequest>();
+            
 
 
         }
 
         private void ConfigurePmsSummary()
         {
-            Mapper.CreateMap<GetPmsSummaryResponse.KpiData, PmsSummaryViewModel>();
+            Mapper.CreateMap<CreatePmsSummaryViewModel, CreatePmsSummaryRequest>();
+            Mapper.CreateMap<GetPmsSummaryResponse, UpdatePmsSummaryViewModel>();
+            Mapper.CreateMap<UpdatePmsSummaryViewModel, UpdatePmsSummaryRequest>();
+
+            Mapper.CreateMap<GetPmsSummaryReportResponse.KpiData, PmsSummaryViewModel>();
             Mapper.CreateMap<GetPmsDetailsResponse, PmsDetailsViewModel>();
             Mapper.CreateMap<GetPmsDetailsResponse.KpiAchievment, PmsDetailsViewModel.KpiAchievment>();
             Mapper.CreateMap<GetPmsDetailsResponse.KpiRelation, PmsDetailsViewModel.KpiRelation>();

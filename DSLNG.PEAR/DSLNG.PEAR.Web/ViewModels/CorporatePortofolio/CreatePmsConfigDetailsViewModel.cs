@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DSLNG.PEAR.Web.ViewModels.Common;
+using DSLNG.PEAR.Web.ViewModels.Common.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
-using DSLNG.PEAR.Web.ViewModels.PmsSummary.Common;
 
 namespace DSLNG.PEAR.Web.ViewModels.CorporatePortofolio
 {

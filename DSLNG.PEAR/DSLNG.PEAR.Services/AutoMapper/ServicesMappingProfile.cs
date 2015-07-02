@@ -174,6 +174,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Common.PmsSummary.ScoreIndicator, ScoreIndicator>();
             Mapper.CreateMap<ScoreIndicator, Common.PmsSummary.ScoreIndicator>();
 
+            //pms summary
+            Mapper.CreateMap<PmsSummary, GetPmsSummaryResponse>();
+            Mapper.CreateMap<UpdatePmsSummaryRequest, PmsSummary>();
 
             Mapper.CreateMap<PmsSummary, GetPmsSummaryListResponse.PmsSummary>();
             Mapper.CreateMap<Kpi, GetPmsSummaryConfigurationResponse.Kpi>()

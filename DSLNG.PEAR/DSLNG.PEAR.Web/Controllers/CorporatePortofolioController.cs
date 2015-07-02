@@ -24,37 +24,8 @@ namespace DSLNG.PEAR.Web.Controllers
             _pmsSummaryService = pmsSummaryService;
             _dropdownService = dropdownService;
         }
-
-        public ActionResult Index()
-        {
-            var response = _pmsSummaryService.GetPmsSummaryList(new GetPmsSummaryListRequest());
-            if (response.IsSuccess)
-            {
-                var viewModel = new IndexCorporatePortofolioViewModel();
-                viewModel.CorporatePortofolios =
-                    response.PmsSummaryList.MapTo<IndexCorporatePortofolioViewModel.CorporatePortofolio>();
-                return View(viewModel);    
-            }
-
-            return base.ErrorPage(response.Message);
-        }
-
-        public ActionResult CreatePmsSummary()
-        {
-            var viewModel = new CreatePmsSummaryViewModel();
-            viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
-            return PartialView("_CreatePmsSummary", viewModel);
-        }
-
-        [HttpPost]
-        public ActionResult CreatePmsSummary(CreatePmsSummaryViewModel viewModel)
-        {
-            var request = viewModel.MapTo<CreatePmsSummaryRequest>();
-            var response = _pmsSummaryService.CreatePmsSummary(request);
-            TempData["IsSuccess"] = response.IsSuccess;
-            TempData["Message"] = response.Message;
-            return RedirectToAction("Index");
-        }
+        
+        
 
         public ActionResult CreatePmsConfig(int id)
         {
