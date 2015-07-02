@@ -14,6 +14,6 @@ namespace DSLNG.PEAR.Services.Requests.Menu
         public string Module { get; set; }
         public bool IsActive { get; set; }
         public List<int> RoleGroupIds { get; set; }
-        public int ParentMenuId { get; set; }
+        public int ParentId { get; set; }
     }
 }

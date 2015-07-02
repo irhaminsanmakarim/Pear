@@ -62,6 +62,8 @@ namespace DSLNG.PEAR.Data.Installer
             //var kpiWithRelationModel = new KpiWithRelationModelInstaller(context);
             //kpiWithRelationModel.Install();
 
+            var menuInstaller = new MenuInstaller(context);
+            menuInstaller.Install();
 
 
             //var menu1 = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };

@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Data.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public Level Level { get; set; }
+        public int? LevelId { get; set; }
         public string Icon { get; set; }
         public string Remark { get; set; }
         public bool IsActive { get; set; }
