@@ -61,6 +61,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureCorporatePortofolio();
             ConfigurePmsSummary();
             ConfigureKpiTarget();
+            Mapper.CreateMap<SearchKpiViewModel, GetKpiToSeriesRequest>();
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
             Mapper.CreateMap<CreateKpiViewModel, CreateKpiRequest>();
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.KpiRelationModel, DSLNG.PEAR.Services.Requests.Kpi.KpiRelationModel>();

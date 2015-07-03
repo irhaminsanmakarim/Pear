@@ -9,6 +9,8 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.Artifact;
 using System.Collections.Generic;
 using DevExpress.Web.Mvc;
+using DSLNG.PEAR.Services.Requests.Kpi;
+using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -78,6 +80,12 @@ namespace DSLNG.PEAR.Web.Controllers
             }).Artifacts;
         }
 
+
+        public ActionResult KpiList(SearchKpiViewModel viewModel) {
+            var kpis = _kpiService.GetKpiToSeries(viewModel.MapTo<GetKpiToSeriesRequest>()).KpiList;
+            return Json(new { results = kpis }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Designer()
         {
             var viewModel = new ArtifactDesignerViewModel();
@@ -91,7 +99,7 @@ namespace DSLNG.PEAR.Web.Controllers
             this.SetPeriodeTypes(viewModel.PeriodeTypes);
             this.SetRangeFilters(viewModel.RangeFilters);
             this.SetValueAxes(viewModel.ValueAxes);
-            this.SetKpiList(viewModel.KpiList);
+            //this.SetKpiList(viewModel.KpiList);
             return View(viewModel);
         }
 
@@ -119,7 +127,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         this.SetPeriodeTypes(viewModel.PeriodeTypes);
                         this.SetRangeFilters(viewModel.RangeFilters);
                         this.SetValueAxes(viewModel.ValueAxes);
-                        this.SetKpiList(viewModel.KpiList);
+                        //this.SetKpiList(viewModel.KpiList);
                         var series = new LineChartViewModel.Series();
                         viewModel.SeriesList.Add(series);
                         var artifactViewModel = new ArtifactDesignerViewModel();
@@ -132,7 +140,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         this.SetPeriodeTypes(viewModel.PeriodeTypes);
                         this.SetRangeFilters(viewModel.RangeFilters);
                         this.SetValueAxes(viewModel.ValueAxes);
-                        this.SetKpiList(viewModel.KpiList);
+                        //this.SetKpiList(viewModel.KpiList);
                         var artifactViewModel = new ArtifactDesignerViewModel();
                         artifactViewModel.SpeedometerChart = viewModel;
                         return PartialView("~/Views/SpeedometerChart/_Create.cshtml", artifactViewModel);
@@ -142,11 +150,11 @@ namespace DSLNG.PEAR.Web.Controllers
             }
         }
 
-        public void SetKpiList(IList<SelectListItem> kpiList) {
-            foreach(var kpi in _kpiService.GetKpiToSeries().KpiList){
-                kpiList.Add(new SelectListItem { Value = kpi.Id.ToString(), Text = kpi.Name });
-            }
-        }
+        //public void SetKpiList(IList<SelectListItem> kpiList) {
+        //    foreach(var kpi in _kpiService.GetKpiToSeries().KpiList){
+        //        kpiList.Add(new SelectListItem { Value = kpi.Id.ToString(), Text = kpi.Name });
+        //    }
+        //}
 
         public void SetValueAxes(IList<SelectListItem> valueAxes) {
             valueAxes.Add(new SelectListItem { Value = ValueAxis.KpiTarget.ToString(), Text = "Kpi Target" });

@@ -15,7 +15,16 @@ String.prototype.isNullOrEmpty = function () {
     Pear.Artifact.Designer = {};
 
     var artifactDesigner = Pear.Artifact.Designer;
-    
+
+    artifactDesigner._formatKpi = function (kpi) {
+        //console.log(kpi);
+        if (kpi.loading) return kpi.text;
+        return '<div class="clearfix"><div class="col-sm-12">' + kpi.Name + '</div></div>';
+    };
+    artifactDesigner._formatKpiSelection = function (kpi) {
+        return kpi.Name || kpi.text;
+    };
+
     artifactDesigner.ListSetup = function () {
         $(document).on('click', '.artifact-view', function (e) {
             e.preventDefault();
@@ -140,7 +149,7 @@ String.prototype.isNullOrEmpty = function () {
             });
 
         };
-      
+
         $('#graphic-type').change(function (e) {
             e.preventDefault();
             var $this = $(this);
@@ -199,7 +208,27 @@ String.prototype.isNullOrEmpty = function () {
             $('#add-series').click(function (e) {
                 e.preventDefault();
                 var seriesTemplate = $('.series-template.original').clone(true);
-                seriesTemplate.find('.kpi-list').select2();
+                seriesTemplate.find('.kpi-list').select2({
+                    ajax: {
+                        url: seriesTemplate.data('kpi-url'),
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                term: params.term, // search term
+                                measurementId: $('#MeasurementId').val()
+                            };
+                        },
+                        processResults: function (data, page) {
+                            return data;
+                        },
+                        cache: true
+                    },
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 1,
+                    templateResult: Pear.Artifact.Designer._formatKpi, // omitted for brevity, see the source of this page
+                    templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
+                });
                 seriesTemplate.removeClass('original');
                 seriesTemplate.attr('data-series-pos', seriesCount);
                 if (seriesCount !== 0) {
@@ -232,7 +261,7 @@ String.prototype.isNullOrEmpty = function () {
                 $this.closest('.stacks-holder').append(stackTemplate);
             });
         };
-       
+
         removeSeriesOrStack();
         addSeries();
         addStack();
@@ -489,7 +518,7 @@ String.prototype.isNullOrEmpty = function () {
             });
             $('#plot-bands-holder').append(plotBandTemplate);
         });
-        
+
         var rangeDatePicker = function () {
             $('.datepicker').datetimepicker({
                 format: "MM/DD/YYYY hh:00 A"

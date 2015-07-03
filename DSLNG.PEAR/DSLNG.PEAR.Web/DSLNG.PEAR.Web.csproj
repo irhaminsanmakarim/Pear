@@ -609,6 +609,7 @@
     <Compile Include="ViewModels\Artifact\BarChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\ChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\SearchKpiViewModel.cs" />
     <Compile Include="ViewModels\Artifact\SpiderwebChartViewModel.cs" />
     <Compile Include="ViewModels\Conversion\CreateConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
