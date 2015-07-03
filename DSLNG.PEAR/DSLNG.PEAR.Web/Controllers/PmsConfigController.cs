@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
-using DSLNG.PEAR.Web.ViewModels.CorporatePortofolio;
 using DSLNG.PEAR.Web.ViewModels.PmsConfig;
 
 namespace DSLNG.PEAR.Web.Controllers

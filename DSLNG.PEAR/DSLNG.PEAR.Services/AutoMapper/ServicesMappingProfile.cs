@@ -44,6 +44,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigurePmsSummary();
             ConfigureKpi();
             ConfigureKpiTarget();
+            ConfigurePmsConfigDetails();
             
             Mapper.CreateMap<User, GetUsersResponse.User>();
                 //.ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
@@ -249,6 +250,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<PmsConfig, GetPmsConfigResponse>()
                 .ForMember(x => x.PillarName, y => y.MapFrom(z => z.Pillar.Name));
             Mapper.CreateMap<UpdatePmsConfigRequest, PmsConfig>();
+        }
+
+        private void ConfigurePmsConfigDetails()
+        {
+            Mapper.CreateMap<CreatePmsConfigDetailsRequest, PmsConfigDetails>()
+                  .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof (ScoringType), z.ScoringType)));
         }
     }
 }

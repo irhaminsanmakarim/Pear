@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         IEnumerable<Dropdown> GetKpis(int pillarId);
         IEnumerable<Dropdown> GetYears();
         IEnumerable<Dropdown> GetMonths();
+        IEnumerable<Dropdown> GetKpisForPmsConfigDetails(int pmsConfigId);
     }
 
     public class Dropdown

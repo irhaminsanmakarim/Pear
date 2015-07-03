@@ -9,7 +9,6 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Kpi;
 using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
-using DSLNG.PEAR.Web.ViewModels.CorporatePortofolio;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
 
 namespace DSLNG.PEAR.Web.Controllers

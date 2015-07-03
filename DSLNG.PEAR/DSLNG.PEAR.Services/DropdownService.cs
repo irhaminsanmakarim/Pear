@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
@@ -58,6 +59,22 @@ namespace DSLNG.PEAR.Services
                         Text = x.Name,
                         Value = x.Id.ToString()
                     }).ToList();
+        }
+
+        public IEnumerable<Dropdown> GetKpisForPmsConfigDetails(int pmsConfigId)
+        {
+            var pmsConfig = DataContext.PmsConfigs.Include(x => x.Pillar)
+                                       .Include(x => x.PmsConfigDetailsList.Select(y => y.Kpi))
+                                       .Single(x => x.Id == pmsConfigId);
+            var kpiIds = pmsConfig.PmsConfigDetailsList.Select(x => x.Kpi.Id);
+
+            return DataContext.Kpis.Where(x => x.Type.Code.ToLower() == "cp" && x.Pillar.Id == pmsConfig.Pillar.Id 
+                && !kpiIds.Contains(x.Id))
+                .Select(x => new Dropdown
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
         }
 
         public IEnumerable<Dropdown> GetMonths()

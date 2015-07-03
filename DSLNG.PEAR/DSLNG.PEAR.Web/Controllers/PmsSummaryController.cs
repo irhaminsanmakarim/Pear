@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
-using DSLNG.PEAR.Web.ViewModels.CorporatePortofolio;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;

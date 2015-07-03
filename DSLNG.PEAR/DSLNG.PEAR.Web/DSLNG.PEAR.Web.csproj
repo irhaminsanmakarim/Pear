@@ -497,7 +497,7 @@
     <Content Include="Views\Group\Update.cshtml" />
     <Content Include="Views\Artifact\_IndexGridPartial.cshtml" />
     <Content Include="Views\Artifact\Index.cshtml" />
-    <Content Include="Views\CorporatePortofolio\_DialogScoreIndicator.cshtml" />
+    <Content Include="Views\PmsConfigDetails\_ScoreIndicatorDetails.cshtml" />
     <Content Include="Views\PmsConfigDetails\_Update.cshtml" />
     <Content Include="Views\KpiTarget\Create.cshtml" />
     <Content Include="Views\Conversion\_GridViewPartial.cshtml" />
@@ -622,7 +622,7 @@
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\Measurement.cs" />
     <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
-    <Compile Include="ViewModels\CorporatePortofolio\CreatePmsConfigDetailsViewModel.cs" />
+    <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\CreatePmsConfigViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\CreatePmsSummaryViewModel.cs" />
@@ -663,7 +663,7 @@
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
     <Compile Include="ViewModels\Common\PmsSummary\ScoreIndicatorViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\DialogPmsConfigDetailViewModel.cs" />
-    <Compile Include="ViewModels\PmsSummary\DialogScoreIndicatorViewModel.cs" />
+    <Compile Include="ViewModels\PmsConfigDetails\ScoreIndicatorDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsReportDetailsViewModel.cs" />
     <Compile Include="ViewModels\Pillar\UpdatePillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
@@ -684,6 +684,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ViewModels\CorporatePortofolio\" />
+    <Folder Include="Views\CorporatePortofolio\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

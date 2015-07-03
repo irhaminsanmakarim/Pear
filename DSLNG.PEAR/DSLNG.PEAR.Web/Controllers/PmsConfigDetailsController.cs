@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Interfaces;
-using DSLNG.PEAR.Web.ViewModels.CorporatePortofolio;
+using DSLNG.PEAR.Services.Requests.PmsSummary;
+using DSLNG.PEAR.Web.ViewModels.PmsConfigDetails;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
 
 namespace DSLNG.PEAR.Web.Controllers
@@ -28,10 +29,22 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Create(int id)
         {
+            int pmsConfigId = id;
             var viewModel = new CreatePmsConfigDetailsViewModel();
-            viewModel.Kpis = _dropdownService.GetKpis(id).MapTo<SelectListItem>();
+            viewModel.PmsConfigId = pmsConfigId;
+            viewModel.Kpis = _dropdownService.GetKpisForPmsConfigDetails(pmsConfigId).MapTo<SelectListItem>();
             viewModel.ScoringTypes = _dropdownService.GetScoringTypes().MapTo<SelectListItem>();
             return PartialView("_Create", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(CreatePmsConfigDetailsViewModel viewModel)
+        {
+            var request = viewModel.MapTo<CreatePmsConfigDetailsRequest>();
+            var response = _pmsSummaryService.CreatePmsConfigDetails(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Details", "PmsSummary", new { id = response.PmsSummaryId });
         }
 
         public ActionResult Update(int id)
@@ -48,10 +61,11 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult ScoreIndicatorDetails(int id)
         {
-            var response = _pmsSummaryService.GetScoreIndicators(id);
+            int pmsConfigDetailsId = id;
+            var response = _pmsSummaryService.GetScoreIndicators(pmsConfigDetailsId);
             if (response.IsSuccess)
             {
-                var viewModel = response.MapTo<DialogScoreIndicatorViewModel>();
+                var viewModel = response.MapTo<ScoreIndicatorDetailsViewModel>();
                 return PartialView("_ScoreIndicatorDetails", viewModel);
             }
 
