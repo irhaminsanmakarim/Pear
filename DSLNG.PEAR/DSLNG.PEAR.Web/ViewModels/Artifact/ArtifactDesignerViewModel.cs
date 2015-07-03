@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Web.Mvc;
+using EPeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
 
 namespace DSLNG.PEAR.Web.ViewModels.Artifact
 {
@@ -9,6 +12,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public ArtifactDesignerViewModel() {
             GraphicTypes = new List<SelectListItem>();
             Measurements = new List<SelectListItem>();
+            PeriodeTypes = new List<SelectListItem>();
+            ValueAxes = new List<SelectListItem>();
+            KpiList = new List<SelectListItem>();
+            RangeFilters = new List<SelectListItem>();
         }
         [Display(Name= "Graphic Type")]
         public string GraphicType { get; set; }
@@ -22,8 +29,74 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public int MeasurementId { get; set; }
         public IList<SelectListItem> Measurements { get; set; }
 
+        [Display(Name = "Periode Type")]
+        [Required]
+        public string PeriodeType { get; set; }
+        public IList<SelectListItem> PeriodeTypes { get; set; }
+        [Display(Name = "Range Filter")]
+        [Required]
+        public string RangeFilter { get; set; }
+        public IList<SelectListItem> RangeFilters { get; set; }
+        public DateTime? Start
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.StartInDisplay))
+                {
+                    return null;
+                }
+                if (this.PeriodeType == EPeriodeType.Monthly.ToString())
+                {
+                    return DateTime.ParseExact("01/" + this.StartInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                }
+                if (this.PeriodeType == EPeriodeType.Yearly.ToString())
+                {
+                    return DateTime.ParseExact("01/01/" + this.StartInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                }
+                if (this.PeriodeType == EPeriodeType.Daily.ToString() || this.PeriodeType == EPeriodeType.Weekly.ToString())
+                {
+                    return DateTime.ParseExact(this.StartInDisplay, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                }
+                return DateTime.ParseExact(this.StartInDisplay, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
+            }
+        }
+        public DateTime? End
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.EndInDisplay))
+                {
+                    return null;
+                }
+                if (this.PeriodeType == EPeriodeType.Monthly.ToString())
+                {
+                    return DateTime.ParseExact("01/" + this.EndInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                }
+                if (this.PeriodeType == EPeriodeType.Yearly.ToString())
+                {
+                    return DateTime.ParseExact("01/01/" + this.EndInDisplay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                }
+                if (this.PeriodeType == EPeriodeType.Daily.ToString() || this.PeriodeType == EPeriodeType.Weekly.ToString())
+                {
+                    return DateTime.ParseExact(this.EndInDisplay, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                }
+                return DateTime.ParseExact(this.EndInDisplay, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
+            }
+        }
+        [Display(Name = "Start")]
+        public string StartInDisplay { get; set; }
+        [Display(Name = "End")]
+        public string EndInDisplay { get; set; }
+        [Display(Name = "Value Axis")]
+        [Required]
+        public string ValueAxis { get; set; }
+        public IList<SelectListItem> ValueAxes { get; set; }
+        public IList<SelectListItem> KpiList { get; set; }
+
+        //chart
         public BarChartViewModel BarChart { get; set; }
         public LineChartViewModel LineChart { get; set; }
         public SpeedometerChartViewModel SpeedometerChart { get; set; }
+        public SpiderwebChartViewModel SpiderwebChart { get; set; }
     }
 }

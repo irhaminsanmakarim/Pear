@@ -15,7 +15,16 @@ String.prototype.isNullOrEmpty = function () {
     Pear.Artifact.Designer = {};
 
     var artifactDesigner = Pear.Artifact.Designer;
-    
+
+    artifactDesigner._formatKpi = function (kpi) {
+        //console.log(kpi);
+        if (kpi.loading) return kpi.text;
+        return '<div class="clearfix"><div class="col-sm-12">' + kpi.Name + '</div></div>';
+    };
+    artifactDesigner._formatKpiSelection = function (kpi) {
+        return kpi.Name || kpi.text;
+    };
+
     artifactDesigner.ListSetup = function () {
         $(document).on('click', '.artifact-view', function (e) {
             e.preventDefault();
@@ -53,96 +62,13 @@ String.prototype.isNullOrEmpty = function () {
                     var $hiddenFields = $('#hidden-fields');
                     $('#hidden-fields-holder').html($hiddenFields.html());
                     $hiddenFields.remove();
+                    $('.graphic-properties').each(function (i, val) {
+                        $(val).html('');
+                    });
                     if (callback.hasOwnProperty(type)) {
                         callback[type]();
                     }
                 }
-            });
-        };
-
-        $('#graphic-type').change(function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            loadGraph($this.data('graph-url'), $this.val());
-        });
-
-        var initialGraphicType = $('#graphic-type');
-        loadGraph(initialGraphicType.data('graph-url'), initialGraphicType.val());
-    };
-    artifactDesigner._setupCallbacks = {};
-
-    artifactDesigner.Preview = function () {
-        $('#graphic-preview-btn').click(function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            var callback = Pear.Artifact.Designer._previewCallbacks;
-            $.ajax({
-                url: $this.data('preview-url'),
-                data: $this.closest('form').serialize(),
-                method: 'POST',
-                success: function (data) {
-                    if (callback.hasOwnProperty(data.GraphicType)) {
-                        callback[data.GraphicType](data);
-                    }
-                    $('#graphic-preview').modal('show');
-                }
-            });
-        });
-        $('#graphic-preview').on('show.bs.modal', function () {
-            $('#container').css('visibility', 'hidden');
-        });
-        $('#graphic-preview').on('shown.bs.modal', function () {
-            $('#container').css('visibility', 'initial');
-            $('#container').highcharts().reflow();
-        });
-    };
-    artifactDesigner._previewCallbacks = {};
-
-    //bar chart
-    artifactDesigner._setupCallbacks.bar = function () {
-        var removeSeriesOrStack = function () {
-            $('.series-template .remove, .stack-template .remove').click(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                $this.closest('fieldset').remove();
-            });
-        }
-        var addSeries = function () {
-            var seriesCount = 0;
-            $('#add-series').click(function (e) {
-                e.preventDefault();
-                var seriesTemplate = $('.series-template.original').clone(true);
-                seriesTemplate.find('.kpi-list').select2();
-                seriesTemplate.removeClass('original');
-                seriesTemplate.attr('data-series-pos', seriesCount);
-                if (seriesCount !== 0) {
-                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Aggregation'];
-                    for (var i in fields) {
-                        var field = fields[i];
-                        seriesTemplate.find('#BarChart_SeriesList_0__' + field).attr('name', 'BarChart.SeriesList[' + seriesCount + '].' + field);
-                    }
-                }
-                seriesTemplate.addClass($('#seriesType').val().toLowerCase());
-                seriesTemplate.addClass($('#bar-value-axis').val());
-                $('#series-holder').append(seriesTemplate);
-                seriesCount++;
-            });
-        };
-        var addStack = function () {
-            $('.add-stack').click(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                var stackTemplate = $('.stack-template.original').clone(true);
-                stackTemplate.removeClass('original');
-                stackTemplate.find('.kpi-list').select2();
-                var stackPos = $this.closest('.stacks-holder').children('fieldset').length;
-                var seriesPos = $this.closest('.series-template').data('series-pos');
-                var fields = ['Label', 'KpiId', 'ValueAxis', 'Aggregation'];
-                for (var i in fields) {
-                    var field = fields[i];
-                    stackTemplate.find('#BarChart_SeriesList_0__Stacks_0__' + field).attr('name', 'BarChart.SeriesList[' + seriesPos + '].Stacks[' + stackPos + '].' + field);
-                }
-                $this.closest('.stacks-holder').append(stackTemplate);
             });
         };
         var rangeDatePicker = function () {
@@ -152,7 +78,7 @@ String.prototype.isNullOrEmpty = function () {
             $('.datepicker').change(function (e) {
                 console.log(this);
             });
-            $('#BarChart_PeriodeType').change(function (e) {
+            $('#PeriodeType').change(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 var clearValue = $('.datepicker').each(function (i, val) {
@@ -192,12 +118,12 @@ String.prototype.isNullOrEmpty = function () {
             });
         };
         var rangeControl = function () {
-            $('#BarChart_RangeFilter').change(function (e) {
+            $('#RangeFilter').change(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 $('#range-holder').prop('class', $this.val().toLowerCase().trim());
             });
-            var original = $('#BarChart_RangeFilter').clone(true);
+            var original = $('#RangeFilter').clone(true);
             var rangeFilterSetup = function (periodeType) {
                 var toRemove = {};
                 toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
@@ -211,11 +137,11 @@ String.prototype.isNullOrEmpty = function () {
                         originalClone.find(val).remove();
                     }
                 });
-                $('#BarChart_RangeFilter').replaceWith(originalClone);
+                $('#RangeFilter').replaceWith(originalClone);
             };
 
-            rangeFilterSetup($('#BarChart_PeriodeType').val().toLowerCase().trim());
-            $('#BarChart_PeriodeType').change(function (e) {
+            rangeFilterSetup($('#PeriodeType').val().toLowerCase().trim());
+            $('#PeriodeType').change(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 rangeFilterSetup($this.val().toLowerCase().trim());
@@ -223,8 +149,119 @@ String.prototype.isNullOrEmpty = function () {
             });
 
         };
+
+        $('#graphic-type').change(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            loadGraph($this.data('graph-url'), $this.val());
+        });
+
+        var initialGraphicType = $('#graphic-type');
+        loadGraph(initialGraphicType.data('graph-url'), initialGraphicType.val());
         rangeControl();
         rangeDatePicker();
+    };
+    artifactDesigner._setupCallbacks = {};
+
+    artifactDesigner.Preview = function () {
+        $('#graphic-preview-btn').click(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var callback = Pear.Artifact.Designer._previewCallbacks;
+            $.ajax({
+                url: $this.data('preview-url'),
+                data: $this.closest('form').serialize(),
+                method: 'POST',
+                success: function (data) {
+                    if (callback.hasOwnProperty(data.GraphicType)) {
+                        callback[data.GraphicType](data);
+                    }
+                    $('#graphic-preview').modal('show');
+                }
+            });
+        });
+        $('#graphic-preview').on('show.bs.modal', function () {
+            $('#container').css('visibility', 'hidden');
+        });
+        $('#graphic-preview').on('shown.bs.modal', function () {
+            $('#container').css('visibility', 'initial');
+            $('#container').highcharts().reflow();
+        });
+    };
+    artifactDesigner._previewCallbacks = {};
+
+    //bar chart
+    artifactDesigner._setupCallbacks.bar = function () {
+        var removeSeriesOrStack = function () {
+            $('.series-template .remove, .stack-template .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                if ($this.closest('.series-template').length) {
+                    $this.closest('.series-template').remove();
+                } else {
+                    $this.closest('.stack-template').remove();
+                }
+            });
+        }
+        var addSeries = function () {
+            var seriesCount = 0;
+            $('#add-series').click(function (e) {
+                e.preventDefault();
+                var seriesTemplate = $('.series-template.original').clone(true);
+                seriesTemplate.find('.kpi-list').select2({
+                    ajax: {
+                        url: seriesTemplate.data('kpi-url'),
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                term: params.term, // search term
+                                measurementId: $('#MeasurementId').val()
+                            };
+                        },
+                        processResults: function (data, page) {
+                            return data;
+                        },
+                        cache: true
+                    },
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 1,
+                    templateResult: Pear.Artifact.Designer._formatKpi, // omitted for brevity, see the source of this page
+                    templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
+                });
+                seriesTemplate.removeClass('original');
+                seriesTemplate.attr('data-series-pos', seriesCount);
+                if (seriesCount !== 0) {
+                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Aggregation'];
+                    for (var i in fields) {
+                        var field = fields[i];
+                        seriesTemplate.find('#BarChart_SeriesList_0__' + field).attr('name', 'BarChart.SeriesList[' + seriesCount + '].' + field);
+                    }
+                }
+                seriesTemplate.addClass($('#seriesType').val().toLowerCase());
+                seriesTemplate.addClass($('#bar-value-axis').val());
+                $('#series-holder').append(seriesTemplate);
+                seriesCount++;
+            });
+        };
+        var addStack = function () {
+            $('.add-stack').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var stackTemplate = $('.stack-template.original').clone(true);
+                stackTemplate.removeClass('original');
+                stackTemplate.find('.kpi-list').select2();
+                var stackPos = $this.closest('.stacks-holder').children('fieldset').length;
+                var seriesPos = $this.closest('.series-template').data('series-pos');
+                var fields = ['Label', 'KpiId', 'ValueAxis', 'Aggregation'];
+                for (var i in fields) {
+                    var field = fields[i];
+                    stackTemplate.find('#BarChart_SeriesList_0__Stacks_0__' + field).attr('name', 'BarChart.SeriesList[' + seriesPos + '].Stacks[' + stackPos + '].' + field);
+                }
+                $this.closest('.stacks-holder').append(stackTemplate);
+            });
+        };
+
         removeSeriesOrStack();
         addSeries();
         addStack();
@@ -370,7 +407,7 @@ String.prototype.isNullOrEmpty = function () {
     //line chart
     artifactDesigner._setupCallbacks.line = function () {
         var removeSeriesOrStack = function () {
-            $('.series-template .remove, .stack-template .remove').click(function (e) {
+            $('.series-template .remove').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 $this.closest('fieldset').remove();
@@ -396,87 +433,6 @@ String.prototype.isNullOrEmpty = function () {
                 seriesCount++;
             });
         };
-
-        var rangeDatePicker = function () {
-            $('.datepicker').datetimepicker({
-                format: "MM/DD/YYYY hh:00 A"
-            });
-            $('.datepicker').change(function (e) {
-                console.log(this);
-            });
-            $('#LineChart_PeriodeType').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                var clearValue = $('.datepicker').each(function (i, val) {
-                    $(val).val('');
-                    $(val).data("DateTimePicker").destroy();
-                });
-                switch ($this.val().toLowerCase().trim()) {
-                    case 'hourly':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY hh:00 A"
-                        });
-                        break;
-                    case 'daily':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY"
-                        });
-                        break;
-                    case 'weekly':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY",
-                            daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
-                        });
-                        break;
-                    case 'monthly':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/YYYY"
-                        });
-                        break;
-                    case 'yearly':
-                        $('.datepicker').datetimepicker({
-                            format: "YYYY"
-                        });
-                        break;
-                    default:
-
-                }
-            });
-        };
-        var rangeControl = function () {
-            $('#LineChart_RangeFilter').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                $('#range-holder').prop('class', $this.val().toLowerCase().trim());
-            });
-            var original = $('#LineChart_RangeFilter').clone(true);
-            var rangeFilterSetup = function (periodeType) {
-                var toRemove = {};
-                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
-                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
-                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
-                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
-                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
-                var originalClone = original.clone(true);
-                originalClone.find('option').each(function (i, val) {
-                    if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
-                        originalClone.find(val).remove();
-                    }
-                });
-                $('#LineChart_RangeFilter').replaceWith(originalClone);
-            };
-
-            rangeFilterSetup($('#LineChart_PeriodeType').val().toLowerCase().trim());
-            $('#LineChart_PeriodeType').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                rangeFilterSetup($this.val().toLowerCase().trim());
-                $('#range-holder').removeAttr('class');
-            });
-
-        };
-        rangeControl();
-        rangeDatePicker();
         removeSeriesOrStack();
         addSeries();
     }
@@ -562,7 +518,7 @@ String.prototype.isNullOrEmpty = function () {
             });
             $('#plot-bands-holder').append(plotBandTemplate);
         });
-        
+
         var rangeDatePicker = function () {
             $('.datepicker').datetimepicker({
                 format: "MM/DD/YYYY hh:00 A"
