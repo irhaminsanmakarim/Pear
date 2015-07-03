@@ -20,12 +20,14 @@ namespace DSLNG.PEAR.Web.ViewModels.Menu
         //public ICollection<RoleGroup> RoleGroups { get; set; }
         public string Remark { get; set; }
         public string Module { get; set; }
+        public string Icon { get; set; }
+        public string Url { get; set; }
         [Required]
         public bool IsActive { get; set; }
         [Display(Name = "Select Role Groups")]
         public List<int> RoleGroupIds { get; set; }
         [Display(Name = "Parent Menu")]
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
         public List<SelectListItem> RoleGroupOptions { get; set; }
         public List<SelectListItem> MenuOptions { get; set; }
     }

@@ -117,20 +117,24 @@
     <Compile Include="Installer\ScoreIndicatorsInstaller.cs" />
     <Compile Include="Installer\TypeInstaller.cs" />
     <Compile Include="Installer\UsersInstaller.cs" />
+    <Compile Include="Migrations\201507030914300_Initial.cs" />
+    <Compile Include="Migrations\201507030914300_Initial.Designer.cs">
+      <DependentUpon>201507030914300_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\DataContext.cs" />
     <Compile Include="Persistence\IDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Migrations\basic-data.sql" />
-    <Content Include="Migrations\readme.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201507030914300_Initial.resx">
+      <DependentUpon>201507030914300_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

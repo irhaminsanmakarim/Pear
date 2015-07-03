@@ -13,7 +13,7 @@
                 <div class="col-md-7">
                     <div class="form-group">
                         @Html.LabelFor(model => model.ParentId, new { @class = "control-label" })
-                        @Html.DropDownListFor(model => model.ParentId, Model.MenuOptions, "", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.ParentId, Model.MenuOptions, "Select Parent Menu", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ParentId)
                     </div>
                     <div class="form-group">
@@ -45,14 +45,19 @@
                 <div class="col-md-5">
                     <div class="form-group">
                         @Html.LabelFor(model => model.RoleGroupIds, new { @class = "control-label" })
-                        @Html.ListBoxFor(model => model.RoleGroupIds, Model.RoleGroupOptions, new { @class = "form-control", @size = "5" })
+                        @Html.ListBoxFor(model => model.RoleGroupIds, Model.RoleGroupOptions,new { @class = "form-control", @size = "5" })
                         @Html.ValidationMessageFor(model => model.RoleGroupIds)
                     </div>
-                    @*<div class="form-group">
-                        @Html.LabelFor(model => model.RoleGroupIds, new { @class = "control-label" })
-                        @Html.DropDownListFor(model => model.RoleGroupIds, Model.RoleGroupOptions, "", new { @class = "form-control", @multiple = "multiple", @size = "5" })
-                        @Html.ValidationMessageFor(model => model.RoleGroupIds)
-                    </div>*@
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Icon, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Icon, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Icon)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Url, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Url, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Url)
+                    </div>
                 </div>
             </div>
 

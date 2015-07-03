@@ -524,6 +524,7 @@
     <Content Include="Views\Periode\Index.cshtml" />
     <Content Include="Views\Periode\Update.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\PillarSelectList.cshtml" />
+    <Content Include="Views\Menu\_SiteMap.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

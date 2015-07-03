@@ -22,6 +22,15 @@ namespace DSLNG.PEAR.Data.Installer
                 IsActive = true
             };
             _context.RoleGroups.Add(groupFinanceDirectorate);
+
+            var groupCorporateDirectorate = new RoleGroup
+            {
+                Id = 2,
+                Name = "Corporate Directorate",
+                Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
+                IsActive = true
+            };
+            _context.RoleGroups.Add(groupCorporateDirectorate);
         }
     }
 }
