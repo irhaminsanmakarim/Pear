@@ -1,91 +1,31 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
-
-<div class="form-group">
-    @Html.LabelFor(model => model.BarChart.PeriodeType, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.DropDownListFor(model => model.BarChart.PeriodeType, Model.BarChart.PeriodeTypes)
-        @Html.ValidationMessageFor(model => model.BarChart.PeriodeType)
-    </div>
+@*<div class="form-group form-list">
+    @Html.LabelFor(model => model.BarChart.FractionScale)
+    @Html.TextBoxFor(model => model.BarChart.FractionScale, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.BarChart.FractionScale)
 </div>
 
-<div id="range-filter-holder">
-    <div class="form-group">
-    @Html.LabelFor(model => model.BarChart.RangeFilter, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.DropDownListFor(model => model.BarChart.RangeFilter, Model.BarChart.RangeFilters)
-        @Html.ValidationMessageFor(model => model.BarChart.RangeFilter)
-    </div>
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.BarChart.MaxValue)
+    @Html.TextBoxFor(model => model.BarChart.MaxValue, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.BarChart.MaxValue)
+</div>*@
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.BarChart.SeriesTypes)
+    @Html.DropDownList("seriesType", Model.BarChart.SeriesTypes, new { id = "seriesType", @class = "form-control" })
+    <input type="submit" value="Add Series" class="btn btn-lightblue" id="add-series" />
 </div>
 
-</div>
-
-@*@Html.HiddenFor(model => model.BarChart.Start, new { @id = "periode-start" })
-@Html.HiddenFor(model => model.BarChart.End, new { @id = "periode-end" })*@
-
-
-
-<div id="range-holder">
-    <div class="form-group">
-        @Html.LabelFor(model => model.BarChart.StartInDisplay, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.BarChart.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker" })
-            @Html.ValidationMessageFor(model => model.BarChart.StartInDisplay)
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.BarChart.EndInDisplay, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.BarChart.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker" })
-            @Html.ValidationMessageFor(model => model.BarChart.EndInDisplay)
-        </div>
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.BarChart.ValueAxis, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.DropDownListFor(model => model.BarChart.ValueAxis, Model.BarChart.ValueAxes, new { id = "bar-value-axis" })
-        @Html.ValidationMessageFor(model => model.BarChart.ValueAxis)
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.BarChart.FractionScale, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.TextBoxFor(model => model.BarChart.FractionScale)
-        @Html.ValidationMessageFor(model => model.BarChart.FractionScale)
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.BarChart.MaxValue, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.TextBoxFor(model => model.BarChart.MaxValue)
-        @Html.ValidationMessageFor(model => model.BarChart.MaxValue)
-    </div>
-</div>
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        @Html.DropDownList("seriesType", Model.BarChart.SeriesTypes, new { id = "seriesType" })
-        <input type="submit" value="Add Series" class="btn btn-default" id="add-series" />
-    </div>
-</div>
-
-<div id="series-holder">
-</div>
 
 <div id="hidden-fields">
     @for (var i = 0; i < Model.BarChart.SeriesList.Count; i++)
     { 
-        <fieldset class="series-template original">
-            <legend>Series</legend>
-            <div class="form-group">
-                @Html.LabelFor(model => model.BarChart.SeriesList[i].Label, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.BarChart.SeriesList[i].Label)
-                    @Html.ValidationMessageFor(model => model.BarChart.SeriesList[i].Label)
-                </div>
+        <div data-kpi-url="@Url.Action("KpiList","Artifact")" class="series-template original whitebox">
+            <h2>Series</h2>
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.BarChart.SeriesList[i].Label)
+                @Html.TextBoxFor(model => model.BarChart.SeriesList[i].Label, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BarChart.SeriesList[i].Label)
             </div>
             <div class="stacks-holder">
                 <div class="form-group">
@@ -95,23 +35,19 @@
                 </div>
             </div>
             <div class="series-details-holder">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.BarChart.SeriesList[i].KpiId, new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.BarChart.SeriesList[i].KpiId, Model.BarChart.KpiList, new { @class = "kpi-list" })
-                        @Html.ValidationMessageFor(model => model.BarChart.SeriesList[i].KpiId)
-                    </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.BarChart.SeriesList[i].KpiId)
+                    @Html.DropDownListFor(model => model.BarChart.SeriesList[i].KpiId, Model.BarChart.KpiList, new { @class = "kpi-list form-control", style="width:200px" })
+                    @Html.ValidationMessageFor(model => model.BarChart.SeriesList[i].KpiId)
                 </div>
-                <div class="form-group value-axis">
-                    @Html.LabelFor(model => Model.BarChart.SeriesList[i].ValueAxis, new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.BarChart.SeriesList[i].ValueAxis, Model.BarChart.ValueAxes)
-                        @Html.ValidationMessageFor(model => model.BarChart.SeriesList[i].ValueAxis)
-                    </div>
+                <div class="form-group value-axis form-list">
+                    @Html.LabelFor(model => Model.BarChart.SeriesList[i].ValueAxis)
+                    @Html.DropDownListFor(model => model.BarChart.SeriesList[i].ValueAxis, Model.BarChart.ValueAxes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.BarChart.SeriesList[i].ValueAxis)
                 </div>
             </div>
             <input type="button" value="Remove" class="remove" />
-        </fieldset>
+        </div>
         for (var j = 0; j < Model.BarChart.SeriesList[i].Stacks.Count; j++)
         { 
         <fieldset class="stack-template original">
@@ -130,7 +66,7 @@
                     @Html.ValidationMessageFor(model => model.BarChart.SeriesList[i].Stacks[j].KpiId)
                 </div>
             </div>
-                        <input type="button" value="Remove" class="remove" />
+            <input type="button" value="Remove" class="remove" />
         </fieldset>
         }
     }

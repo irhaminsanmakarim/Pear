@@ -22,12 +22,14 @@ namespace DSLNG.PEAR.Web.App_Start
                         "~/Scripts/highcharts.js",
                         "~/Scripts/highcharts-more.js",
                         "~/Scripts/exporting.js",
+                        "~/Content/colpick/js/colpick.js",
                         "~/Scripts/main.js"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap/css/bootstrap.css",
                 "~/Content/font-awesome/css/font-awesome.css",
                 //"~/Content/datepicker/css/datepicker.css",
                   "~/Content/bootstrap-datetimepicker.css",
                   "~/Content/select2/dist/css/select2.css",
+                  "~/Content/colpick/css/colpick.css",
                 "~/Content/style.css"));
         }
     }

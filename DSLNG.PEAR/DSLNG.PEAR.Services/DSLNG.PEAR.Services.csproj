@@ -68,6 +68,9 @@
     <Compile Include="Interfaces\IPeriodeService.cs" />
     <Compile Include="KpiTargetService.cs" />
     <Compile Include="PeriodeService.cs" />
+    <Compile Include="Requests\Artifact\CreateArtifactRequest.cs" />
+    <Compile Include="Requests\Artifact\GetArtifactRequest.cs" />
+    <Compile Include="Requests\Artifact\GetArtifactsRequest.cs" />
     <Compile Include="Requests\Conversion\CreateConversionRequest.cs" />
     <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
     <Compile Include="Requests\Group\CreateGroupRequest.cs" />
@@ -77,12 +80,16 @@
     <Compile Include="Requests\KpiTarget\GetPmsConfigsRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\PeriodeType.cs" />
+    <Compile Include="Requests\Menu\Menu.cs" />
     <Compile Include="Requests\Method\CreateMethodRequest.cs" />
     <Compile Include="Requests\Method\UpdateMethodRequest.cs" />
     <Compile Include="Requests\Periode\PeriodeRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsConfigRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsSummaryRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigRequest.cs" />
+    <Compile Include="Responses\Artifact\CreateArtifactResponse.cs" />
+    <Compile Include="Responses\Artifact\GetArtifactResponse.cs" />
+    <Compile Include="Responses\Artifact\GetArtifactsResponse.cs" />
     <Compile Include="Responses\Conversion\CreateConversionResponse.cs" />
     <Compile Include="Responses\Conversion\DeleteConversionResponse.cs" />
     <Compile Include="Responses\Conversion\Measurement.cs" />

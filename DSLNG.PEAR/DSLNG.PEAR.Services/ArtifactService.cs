@@ -1,5 +1,6 @@
 ﻿
 
+using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
@@ -8,6 +9,8 @@ using DSLNG.PEAR.Services.Responses.Artifact;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DSLNG.PEAR.Common.Extensions;
+using System.Data.Entity;
 
 namespace DSLNG.PEAR.Services
 {
@@ -200,10 +203,13 @@ namespace DSLNG.PEAR.Services
                 {
                     seriesType = "multi-stacks-grouped";
                 }
+                else if (request.RangeFilter == RangeFilter.YTD) {
+                    seriesType = "multi-stack";
+                }
             }
             else
             {
-                if (request.SeriesList.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null)
+                if (request.SeriesList.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null || RangeFilter.YTD == request.RangeFilter)
                 {
                     seriesType = "multi-stack";
                 }
@@ -211,7 +217,7 @@ namespace DSLNG.PEAR.Services
             switch (request.ValueAxis)
             {
                 case ValueAxis.KpiTarget:
-                    seriesResponse = this._getKpiTargetSeries(request.SeriesList, request.PeriodeType, dateTimePeriodes, seriesType);
+                    seriesResponse = this._getKpiTargetSeries(request.SeriesList, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter);
                     break;
                 case ValueAxis.KpiActual:
                     seriesResponse = this._getKpiActualSeries(request.SeriesList, request.PeriodeType, dateTimePeriodes, seriesType);
@@ -251,7 +257,7 @@ namespace DSLNG.PEAR.Services
                         default:
                             while (Start.Value <= End.Value)
                             {
-                                periodes.Add(End.Value.ToString(hourlyFormat));
+                                periodes.Add(Start.Value.ToString(hourlyFormat));
                                 dateTimePeriodes.Add(Start.Value);
                                 Start = Start.Value.AddHours(1);
                             }
@@ -280,7 +286,7 @@ namespace DSLNG.PEAR.Services
                         default:
                             while (Start.Value <= End.Value)
                             {
-                                periodes.Add(End.Value.ToString(dailyFormat));
+                                periodes.Add(Start.Value.ToString(dailyFormat));
                                 dateTimePeriodes.Add(Start.Value);
                                 Start = Start.Value.AddDays(1);
                             }
@@ -293,26 +299,42 @@ namespace DSLNG.PEAR.Services
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentMonth:
-                            var currentMonth = DateTime.Now.Date;
-                            dateTimePeriodes.Add(currentMonth);
-                            periodes.Add(currentMonth.ToString(monthlyFormat));
+                            {
+                                var currentMonth = DateTime.Now.Date;
+                                dateTimePeriodes.Add(currentMonth);
+                                periodes.Add(currentMonth.ToString(monthlyFormat));
+                            }
                             break;
                         case RangeFilter.CurrentYear:
-                            var currentYear = DateTime.Now.Year;
-                            var startMonth = new DateTime(DateTime.Now.Year, 1, 1);
-
-                            while (currentYear == startMonth.Year)
                             {
-                                periodes.Add(startMonth.ToString(monthlyFormat));
-                                dateTimePeriodes.Add(startMonth);
-                                startMonth = startMonth.AddMonths(1);
+                                var currentYear = DateTime.Now.Year;
+                                var startMonth = new DateTime(DateTime.Now.Year, 1, 1);
+
+                                while (currentYear == startMonth.Year)
+                                {
+                                    periodes.Add(startMonth.ToString(monthlyFormat));
+                                    dateTimePeriodes.Add(startMonth);
+                                    startMonth = startMonth.AddMonths(1);
+                                }
+                            }
+                            break;
+                        case RangeFilter.YTD:
+                            {
+                                var currentYear = DateTime.Now.Year;
+                                var startMonth = new DateTime(DateTime.Now.Year, 1, 1);
+                                var currentMont = DateTime.Now.Month;
+                                while (startMonth.Month <= currentMont) {
+                                    periodes.Add(startMonth.ToString(monthlyFormat));
+                                    dateTimePeriodes.Add(startMonth);
+                                    startMonth = startMonth.AddMonths(1);
+                                }
                             }
                             break;
                         default:
                             while (Start.Value <= End.Value)
                             {
                                 dateTimePeriodes.Add(Start.Value);
-                                periodes.Add(End.Value.ToString(monthlyFormat));
+                                periodes.Add(Start.Value.ToString(monthlyFormat));
                                 Start = Start.Value.AddMonths(1);
                             }
                             break;
@@ -329,7 +351,7 @@ namespace DSLNG.PEAR.Services
                         default:
                             while (Start.Value <= End.Value)
                             {
-                                periodes.Add(End.Value.ToString(yearlyFormat));
+                                periodes.Add(Start.Value.ToString(yearlyFormat));
                                 dateTimePeriodes.Add(Start.Value);
                                 Start = Start.Value.AddYears(1);
                             }
@@ -341,7 +363,7 @@ namespace DSLNG.PEAR.Services
             return periodes.ToArray();
         }
 
-        private IList<GetChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetChartDataRequest.Series> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType)
+        private IList<GetChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetChartDataRequest.Series> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter)
         {
             var seriesResponse = new List<GetChartDataResponse.SeriesResponse>();
             var start = dateTimePeriodes[0];
@@ -354,6 +376,7 @@ namespace DSLNG.PEAR.Services
                     var kpiTargets = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
                       x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId)
                       .OrderBy(x => x.Periode).ToList();
+                    
                     var aSeries = new GetChartDataResponse.SeriesResponse
                     {
                         name = series.Label
@@ -371,6 +394,21 @@ namespace DSLNG.PEAR.Services
                         }
                     }
                     seriesResponse.Add(aSeries);
+                    if (rangeFilter == RangeFilter.YTD) {
+                        var previousSeries = new GetChartDataResponse.SeriesResponse
+                        {
+                            name = "Previous"
+                        };
+                        for (var i = 0; i < aSeries.data.Count; i++) {
+                            double data = 0;
+                            for (var j = 0; j < i; j++) {
+                                data += aSeries.data[j];
+                            }
+                            previousSeries.data.Add(data);
+                        }
+                        seriesResponse.Add(previousSeries);
+                    }
+                    
                 }
                 else
                 {
@@ -509,6 +547,69 @@ namespace DSLNG.PEAR.Services
                 }
             }
             return seriesResponse;
+        }
+
+
+        public CreateArtifactResponse Create(CreateArtifactRequest request)
+        {
+            var artifact = request.MapTo<Artifact>();
+            var measurement = new Measurement { Id = request.MeasurementId };
+            DataContext.Measurements.Attach(measurement);
+            artifact.Measurement = measurement;
+
+            foreach (var seriesReq in request.Series) {
+                var series = seriesReq.MapTo<ArtifactSerie>();
+                var kpi = new Kpi { Id = seriesReq.KpiId };
+                if (DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault() == null)
+                {
+                    DataContext.Kpis.Attach(kpi);                
+                }
+                series.Kpi = kpi;
+                foreach(var stackReq in seriesReq.Stacks){
+                    var stack = stackReq.MapTo<ArtifactStack>();
+                    var kpiInStack = new Kpi { Id = stackReq.KpiId };
+                    if (DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault() == null) {
+                        DataContext.Kpis.Attach(kpiInStack);
+                    }
+                    stack.Kpi = kpiInStack;
+                    series.Stacks.Add(stack);
+                }
+                artifact.Series.Add(series);
+            }
+            foreach (var plotReq in request.Plots) {
+                var plot = plotReq.MapTo<ArtifactPlot>();
+                artifact.Plots.Add(plot);
+            }
+            DataContext.Artifacts.Add(artifact);
+            DataContext.SaveChanges();
+            return new CreateArtifactResponse();
+        }
+
+
+        public GetArtifactsResponse GetArtifacts(GetArtifactsRequest request)
+        {
+            if (request.OnlyCount)
+            {
+                return new GetArtifactsResponse { Count = DataContext.Artifacts.Count() };
+            }
+            else
+            {
+                return new GetArtifactsResponse
+                {
+                    Artifacts = DataContext.Artifacts.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take)
+                                    .ToList().MapTo<GetArtifactsResponse.Artifact>()
+                };
+            }
+        }
+
+        public GetArtifactResponse GetArtifact(GetArtifactRequest request) {
+            return DataContext.Artifacts.Include(x => x.Measurement)
+                .Include(x => x.Series)
+                .Include(x => x.Series.Select(y => y.Kpi))
+                .Include(x => x.Series.Select(y => y.Stacks))
+                .Include(x => x.Series.Select(y => y.Stacks.Select(z => z.Kpi)))
+                .Include(x => x.Plots)
+                .FirstOrDefault(x => x.Id == request.Id).MapTo<GetArtifactResponse>();
         }
     }
 }

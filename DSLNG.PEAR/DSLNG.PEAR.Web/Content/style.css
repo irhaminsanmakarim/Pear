@@ -177,8 +177,8 @@ aside.left-content > * {
         height: 100%;
     }
 
-.series-template.original, .stack-template.original, .series-details-holder, .value-axis, .stacks-holder, #range-holder,#hidden-fields-holder {
-    display: none;
+.series-template.original, .stack-template.original, .series-details-holder, .value-axis, .stacks-holder, #range-holder, #hidden-fields-holder {
+    display: none !important;
 }
 
 .series-template,
@@ -190,20 +190,20 @@ aside.left-content > * {
     .series-template .remove,
     .stack-template .remove,
     .plot-band-template .remove {
-        position:absolute;
-        top:0;
-        right:0;
+        position: absolute;
+        top: 0;
+        right: 0;
     }
 
 
 
     .series-template.singlestack .series-details-holder,
     .series-template.multistacks .stacks-holder,
-    .series-template.singlestack.custom .value-axis,
+    .series-template.singlestack.Custom .value-axis,
     .series-template.singlestack,
     .series-template.multistacks,
     #range-holder.interval {
-        display: block;
+        display: block !important;
     }
 
 .title_page {
@@ -449,29 +449,100 @@ th {
 }
 
 
-.btn-darkblue
- {
-     background-color: #004071;
-     color:white;
-     padding:4px;
-
- }
-
-.btn-large
-{
-    width:30%;
-    padding:15px!important;
-    margin-top:20px;
-    margin:10px;
-
+.colorpicker .input-group-addon i {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: text-top;
+    cursor: pointer;
 }
 
-a:hover.btn-darkblue{background-color:#febe10;color:white;}
-a:hover.btn-lightblue{background-color:#febe10;color:white;}
+.btn-darkblue {
+    background-color: #004071;
+    color: white;
+    padding: 4px;
+}
 
-.btn-lightblue
-{
+.btn-large {
+    width: 30%;
+    padding: 15px!important;
+    margin-top: 20px;
+    margin: 10px;
+}
+
+a:hover.btn-darkblue {
+    background-color: #febe10;
+    color: white;
+}
+
+a:hover.btn-lightblue {
+    background-color: #febe10;
+    color: white;
+}
+
+.btn-lightblue {
     background-color: #9bd4f4;
-    color:white;
-    padding:4px;
+    color: white;
+    padding: 4px;
 }
+
+.whitebox {
+    background-color: white;
+    padding: 20px;
+    margin: 15px 0 0;
+}
+
+.form-list {
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+label {
+    color: #3f454f;
+    font-weight: normal;
+    padding-right: 10px;
+    width: 200px;
+}
+
+.form-control {
+    background-color: #FAFAFA;
+    border-radius: 0px;
+    padding: 0px 5px;
+    height: 24px;
+}
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.artifact-designer-btns {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    margin-top: 40px;
+}
+
+    .artifact-designer-btns .btn {
+        margin: 0 10px;
+    }
+
+.btn-primary {
+    background-color: #004071;
+    border-radius: 0;
+    border: none;
+}
+
+.btn-lightblue {
+    background-color: #9bd4f4;
+    color: white;
+    padding: 4px;
+    border-radius: 0;
+    border: 0;
+}
+
+    .btn-lightblue:hover {
+        background-color: #febe10;
+        color: white;
+    }

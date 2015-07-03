@@ -29,6 +29,8 @@ using DSLNG.PEAR.Services.Requests.Method;
 using DSLNG.PEAR.Services.Responses.Method;
 using DSLNG.PEAR.Services.Requests.Periode;
 using DSLNG.PEAR.Services.Responses.Periode;
+using DSLNG.PEAR.Services.Requests.Artifact;
+using DSLNG.PEAR.Services.Responses.Artifact;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Services.Requests.Conversion;
 using DSLNG.PEAR.Services.Responses.KpiTarget;
@@ -64,13 +66,14 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(m => m.Menus, o => o.MapFrom(m => m.Menus.MapTo<GetMenusResponse.Menu>()));
             Mapper.CreateMap<CreateMenuRequest, Data.Entities.Menu>();
             Mapper.CreateMap<Data.Entities.Menu, GetMenusResponse.Menu>();
-            Mapper.CreateMap<Data.Entities.Menu, GetMenuResponse>();
+            Mapper.CreateMap<Data.Entities.Menu, GetMenuResponse>()
+                .ForMember(x => x.RoleGroups, o => o.MapFrom(k => k.RoleGroups));
+
             Mapper.CreateMap<UpdateMenuRequest, Data.Entities.Menu>();
             //Mapper.CreateMap<Data.Entities.RoleGroup, GetMenusResponse.RoleGroup>();
             //Mapper.CreateMap<Data.Entities.Level, GetMenusResponse.Level>();
             Mapper.CreateMap<Data.Entities.Level, Responses.Menu.Level>();
-            Mapper.CreateMap<Data.Entities.RoleGroup, Responses.Menu.RoleGroup>()
-                .ForMember(m => m.Level, o => o.MapFrom(m => m.Level.MapTo<Responses.Menu.Level>()));
+            Mapper.CreateMap<Data.Entities.RoleGroup, Responses.Menu.RoleGroup>();
             Mapper.CreateMap<Data.Entities.Group, GetGroupResponse>();
             Mapper.CreateMap<Data.Entities.Group, GetGroupsResponse.Group>();
             Mapper.CreateMap<CreateGroupRequest, Data.Entities.Group>();
@@ -154,6 +157,24 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreatePeriodeRequest, Data.Entities.Periode>();
             Mapper.CreateMap<UpdatePeriodeRequest, Data.Entities.Periode>();
 
+            Mapper.CreateMap<CreateArtifactRequest, Data.Entities.Artifact>()
+                .ForMember(x => x.Series, o => o.Ignore())
+                .ForMember(x => x.Plots, o => o.Ignore());
+            Mapper.CreateMap<CreateArtifactRequest.SeriesRequest, Data.Entities.ArtifactSerie>();
+            Mapper.CreateMap<CreateArtifactRequest.PlotRequest, Data.Entities.ArtifactPlot>();
+            Mapper.CreateMap<CreateArtifactRequest.StackRequest, Data.Entities.ArtifactStack>();
+
+            Mapper.CreateMap<Artifact, GetArtifactsResponse.Artifact>();
+            Mapper.CreateMap<Artifact, GetArtifactResponse>()
+                .ForMember(x => x.PlotBands, o => o.MapFrom(s => s.Plots.MapTo<GetArtifactResponse.PlotResponse>()))
+                .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<GetArtifactResponse.SeriesResponse>()))
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
+            Mapper.CreateMap<ArtifactPlot, GetArtifactResponse.PlotResponse>();
+            Mapper.CreateMap<ArtifactSerie, GetArtifactResponse.SeriesResponse>()
+                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetArtifactResponse.StackResponse>()))
+                .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id));
+            Mapper.CreateMap<ArtifactStack, GetArtifactResponse.StackResponse>()
+                .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id));
             Mapper.CreateMap<CreateConversionRequest, Data.Entities.Conversion>();
             Mapper.CreateMap<Data.Entities.Conversion, GetConversionsResponse.Conversion>()
                 .ForMember(f => f.FromName, o => o.MapFrom(k => k.From.Name))

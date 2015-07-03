@@ -1,71 +1,112 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
 
 @{
-    ViewBag.Title = "Artifact Designer - Create";
+    ViewBag.Title = "Artifact - Designer";
 }
+<div class="row">
+    @using (Html.BeginForm("Create", "Artifact"))
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+            <div class="title">Artifact Designer</div>
+            <div class="description_year">New</div>
+            <div>@Html.ValidationSummary(true)</div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-inline whitebox">
+                        <h2>Graphic Type</h2>
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.GraphicType)
+                            @Html.DropDownListFor(model => model.GraphicType, Model.GraphicTypes, new { @class = "form-control", id = "graphic-type", data_graph_url = Url.Action("GraphSettings", "Artifact") })
+                            @Html.ValidationMessageFor(model => model.GraphicType)
+                        </div>
 
-@using (Html.BeginForm("Create", "Artifact"))
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Artifact Designer</h4>
-        <hr />
-        @Html.ValidationSummary(true)
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.GraphicName)
+                            @Html.TextBoxFor(model => model.GraphicName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.GraphicName)
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.GraphicType, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.GraphicType, Model.GraphicTypes, new { id = "graphic-type", data_graph_url = Url.Action("GraphSettings", "Artifact") })
-                @Html.ValidationMessageFor(model => model.GraphicType)
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.HeaderTitle)
+                            @Html.TextBoxFor(model => model.HeaderTitle, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.HeaderTitle)
+                        </div>
+
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.MeasurementId)
+                            @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MeasurementId)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-inline whitebox">
+                        <h2>Graphic Settings</h2>
+
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.PeriodeType)
+                            @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PeriodeType)
+                        </div>
+
+                        <div id="range-filter-holder">
+                            <div class="form-group form-list">
+                                @Html.LabelFor(model => model.RangeFilter)
+                                @Html.DropDownListFor(model => model.RangeFilter, Model.RangeFilters, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.RangeFilter)
+                            </div>
+                        </div>
+
+                        <div id="range-holder">
+                            <div class="form-group form-list">
+                                @Html.LabelFor(model => model.StartInDisplay)
+                                @Html.TextBoxFor(model => model.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                                @Html.ValidationMessageFor(model => model.StartInDisplay)
+                            </div>
+
+                            <div class="form-group form-list">
+                                @Html.LabelFor(model => model.EndInDisplay)
+                                @Html.TextBoxFor(model => model.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                                @Html.ValidationMessageFor(model => model.EndInDisplay)
+                            </div>
+                        </div>
+
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.ValueAxis)
+                            @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ValueAxis)
+                        </div>
+                        <div id="graphic-settings"></div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GraphicName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GraphicName)
-                @Html.ValidationMessageFor(model => model.GraphicName)
+        <div class="col-md-12">
+            <div id="series-holder" class="form-inline graphic-properties">
+            </div>
+            <div id="plot-bands-holder" class="form-inline graphic-properties">
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HeaderTitle, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HeaderTitle)
-                @Html.ValidationMessageFor(model => model.HeaderTitle)
-            </div>
+        <div class="col-md-12 artifact-designer-btns">
+            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+            <button data-preview-url="@Url.Action("Preview", "Artifact")"  id="graphic-preview-btn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-eye"></span>View</button>
+            <button type="button" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</button>
+            <button type="button" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</button>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MeasurementId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements)
-                @Html.ValidationMessageFor(model => model.MeasurementId)
-            </div>
-        </div>
-
-        <fieldset>
-            <legend>Graphic Settings</legend>
-            <div id="graphic-settings"></div>
-        </fieldset>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input data-preview-url="@Url.Action("Preview","Artifact")" type="button" value="Preview" class="btn btn-default" id="graphic-preview-btn" />
-            </div>
-        </div>
-    </div>
-}
+    }
+</div>
 <div id="hidden-fields-holder"></div>
 <!-- Modal -->
 <div class="modal fade" id="graphic-preview" tabindex="-1" role="dialog" aria-labelledby="graphicPreview" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-          <h4 class="modal-title" id="myLargeModalLabel">Artifact Preview</h4>
-        </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myLargeModalLabel">Artifact Preview</h4>
+            </div>
             <div class="modal-body">
                 <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
             </div>

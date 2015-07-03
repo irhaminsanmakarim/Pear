@@ -8,7 +8,7 @@ namespace DSLNG.PEAR.Services.Responses.Kpi
         public IList<Kpi> KpiList { get; set; }
 
         public class Kpi{
-            public int Id {get;set;}
+            public int id {get;set;}
             public string Name {get;set;}
         }
     }

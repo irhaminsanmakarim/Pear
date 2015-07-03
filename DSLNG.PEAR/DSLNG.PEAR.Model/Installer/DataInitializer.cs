@@ -41,27 +41,29 @@ namespace DSLNG.PEAR.Data.Installer
             var pillarsInstaller = new PillarsInstaller(context);
             pillarsInstaller.Installer();
 
-            var kpisInstaller = new KpisInstaller(context);
-            kpisInstaller.Install();
+            //var kpisInstaller = new KpisInstaller(context);
+            //kpisInstaller.Install();
 
-            var kpiTargetsInstaller = new KpiTargetsInstaller(context);
-            kpiTargetsInstaller.Install();
+            //var kpiTargetsInstaller = new KpiTargetsInstaller(context);
+            //kpiTargetsInstaller.Install();
 
-            var kpiAchievementsInstaller = new KpiAchievementsInstaller(context);
-            kpiAchievementsInstaller.Install();
+            //var kpiAchievementsInstaller = new KpiAchievementsInstaller(context);
+            //kpiAchievementsInstaller.Install();
 
-            var pmsSummariesInstaller = new PmsSummariesInstaller(context);
-            pmsSummariesInstaller.Install();
+            //var pmsSummariesInstaller = new PmsSummariesInstaller(context);
+            //pmsSummariesInstaller.Install();
 
-            var pmsConfigsInstaller = new PmsConfigsInstaller(context);
-            pmsConfigsInstaller.Install();
+            //var pmsConfigsInstaller = new PmsConfigsInstaller(context);
+            //pmsConfigsInstaller.Install();
 
-            var pmsConfigDetailsInstaller = new PmsConfigDetailsInstaller(context);
-            pmsConfigDetailsInstaller.Install();
+            //var pmsConfigDetailsInstaller = new PmsConfigDetailsInstaller(context);
+            //pmsConfigDetailsInstaller.Install();
 
             //var kpiWithRelationModel = new KpiWithRelationModelInstaller(context);
             //kpiWithRelationModel.Install();
 
+            var menuInstaller = new MenuInstaller(context);
+            menuInstaller.Install();
 
 
             //var menu1 = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };
