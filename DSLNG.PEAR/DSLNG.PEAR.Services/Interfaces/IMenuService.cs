@@ -5,6 +5,7 @@ namespace DSLNG.PEAR.Services.Interfaces
 {
     public interface IMenuService
     {
+        GetSiteMenusResponse GetSiteMenus(GetSiteMenusRequest request);
         GetMenuResponse GetMenu(GetMenuRequest request);
         GetMenusResponse GetMenus(GetMenusRequest request);
         CreateMenuResponse Create(CreateMenuRequest request);

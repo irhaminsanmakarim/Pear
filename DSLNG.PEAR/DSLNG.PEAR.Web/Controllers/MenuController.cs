@@ -84,6 +84,14 @@ namespace DSLNG.PEAR.Web.Controllers
             }).Menus;
         }
 
+        public ActionResult SiteMap()
+        {
+            //var menus = _menuService.GetMenus(new GetMenusRequest());
+            var menus = _menuService.GetSiteMenus(new GetSiteMenusRequest() { IncludeChildren = true});
+
+            return PartialView("_SiteMap", menus);
+        }
+
         public CreateMenuViewModel CreateViewModel(CreateMenuViewModel viewModel){
             viewModel.RoleGroupOptions = _roleService.GetRoleGroups(
                 new Services.Requests.RoleGroup.GetRoleGroupsRequest { Skip = 0, Take = 0 }).RoleGroups.Select(x => new SelectListItem
@@ -98,7 +106,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     Text = x.Name,
                     Value = x.Id.ToString()
                 }).ToList();
-            menuList.Insert(0, new SelectListItem { Text = "This is Root", Value = "0", Selected = true });
+            //menuList.Insert(0, new SelectListItem { Text = "This is Root", Value = "0", Selected = true });
             viewModel.MenuOptions = menuList;
 
             return viewModel;
@@ -141,7 +149,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     Text = x.Name,
                     Value = x.Id.ToString()
                 }).ToList();
-            menuList.Insert(0, new SelectListItem { Text = "This is Root", Value = "0" });
+            //menuList.Insert(0, new SelectListItem { Text = "This is Root", Value = "0" });
             viewModel.MenuOptions = menuList;
 
             return viewModel;

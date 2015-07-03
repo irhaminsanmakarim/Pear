@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Responses.Menu
 {
-    public class GetMenusResponse : BaseResponse
+    public class GetSiteMenusResponse : BaseResponse
     {
         public IList<Menu> Menus { get; set; }
 
@@ -15,12 +15,11 @@ namespace DSLNG.PEAR.Services.Responses.Menu
             public int Id { get; set; }
 
             public string Name { get; set; }
-            public Menu Parent { get; set; }
             public int ParentId { get; set; }
             public IList<Menu> Menus { get; set; }
             public int Order { get; set; }
             public bool IsRoot { get; set; }
-            public ICollection<RoleGroup> RoleGroups { get; set; }
+            //public ICollection<RoleGroup> RoleGroups { get; set; }
             public string Remark { get; set; }
             public string Module { get; set; }
 
@@ -28,6 +27,5 @@ namespace DSLNG.PEAR.Services.Responses.Menu
             public string Icon { get; set; }
             public string Url { get; set; }
         }
-
     }
 }
