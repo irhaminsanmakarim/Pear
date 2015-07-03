@@ -525,6 +525,7 @@
     <Content Include="Views\Periode\Update.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\PillarSelectList.cshtml" />
     <Content Include="Views\SpiderwebChart\_Create.cshtml" />
+    <Content Include="Views\Menu\_SiteMap.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

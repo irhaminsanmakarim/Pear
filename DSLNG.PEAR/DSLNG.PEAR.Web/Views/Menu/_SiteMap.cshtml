@@ -2,20 +2,33 @@
 @{
     Layout = null;
 }
-@helper  ExtractMenu(IEnumerable<DSLNG.PEAR.Services.Responses.Menu.GetSiteMenusResponse.Menu> Menus, int ParentId=0) { 
-    foreach (var menu in Menus.Where(x => x.ParentId==ParentId).ToList())
+@helper  ExtractMenu(IEnumerable<DSLNG.PEAR.Services.Responses.Menu.GetSiteMenusResponse.Menu> Menus) { 
+    foreach (var menu in Menus.ToList())
     {
         <li>
             <a href="@menu.Url" class="">
-                @Html.Raw(menu.Icon) <span>@menu.Name</span>
-            </a><br />
+            @if (menu.Icon != null){
+                @Html.Raw(menu.Icon)<span>@menu.Name</span>
+            }
+            else
+            {
+               @menu.Name
+            }
+            </a>
+
+            @if (menu.Menus.Count > 0)
+            {
+                <ul class="sub-nav">
+                    @ExtractMenu(menu.Menus)
+                </ul>
+            }
         </li>
     }
 }
 
 
 <ul class="main-nav">
-    @ExtractMenu(Model.Menus,0)
+    @ExtractMenu(Model.Menus)
     @*<li class="active">
         <a href="#" class="menu_dashboard"><i class="fa fa-dashboard"></i><span>DASH BOARD</span></a>
         <ul class="sub-nav">
