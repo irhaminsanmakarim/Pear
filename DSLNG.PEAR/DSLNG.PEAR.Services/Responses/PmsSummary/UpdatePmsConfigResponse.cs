@@ -8,5 +8,6 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
 {
     public class UpdatePmsConfigResponse : BaseResponse
     {
+        public int PmsSummaryId { get; set; }
     }
 }

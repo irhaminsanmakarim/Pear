@@ -64,17 +64,17 @@ namespace DSLNG.PEAR.Web.Controllers
             return PartialView("_IndexGridPartial", viewModel);
         }
 
-        public ActionResult Details(int id, int month)
+        public ActionResult ReportDetails(int id, int month)
         {
             var response = _pmsSummaryService.GetPmsDetails(new GetPmsDetailsRequest() { Id = id, Month = month });
-            var viewModel = response.MapTo<PmsDetailsViewModel>();
+            var viewModel = response.MapTo<PmsReportDetailsViewModel>();
             var operationDate = new DateTime(response.Year, month, 1);
             viewModel.Title = response.Title;
             viewModel.Year = response.Year;
             viewModel.Month = operationDate.ToString("MMM");
-            viewModel.KpiAchievmentMonthly = response.KpiAchievmentMonthly.MapTo<PmsDetailsViewModel.KpiAchievment>();
-            viewModel.KpiRelations = response.KpiRelations.MapTo<PmsDetailsViewModel.KpiRelation>();
-            return PartialView("_Details", viewModel);
+            viewModel.KpiAchievmentMonthly = response.KpiAchievmentMonthly.MapTo<PmsReportDetailsViewModel.KpiAchievment>();
+            viewModel.KpiRelations = response.KpiRelations.MapTo<PmsReportDetailsViewModel.KpiRelation>();
+            return PartialView("_ReportDetails", viewModel);
         }
 
         public ActionResult Configuration()
@@ -82,9 +82,22 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _pmsSummaryService.GetPmsSummaryList(new GetPmsSummaryListRequest());
             if (response.IsSuccess)
             {
-                var viewModel = new ConfigurationPmsSummaryViewModel();
+                var viewModel = new PmsSummaryConfigurationViewModel();
                 viewModel.CorporatePortofolios =
-                    response.PmsSummaryList.MapTo<ConfigurationPmsSummaryViewModel.CorporatePortofolio>();
+                    response.PmsSummaryList.MapTo<PmsSummaryConfigurationViewModel.CorporatePortofolio>();
+                return View(viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var response = _pmsSummaryService.GetPmsSummaryConfiguration(new GetPmsSummaryConfigurationRequest { Id = id });
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<PmsSummaryDetailsViewModel>();
+                viewModel.PmsSummaryId = id;
                 return View(viewModel);
             }
 

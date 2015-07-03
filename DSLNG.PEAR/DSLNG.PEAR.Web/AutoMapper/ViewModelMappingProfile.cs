@@ -22,6 +22,7 @@ using DSLNG.PEAR.Web.ViewModels.Menu;
 using DSLNG.PEAR.Services.Requests.Level;
 using DSLNG.PEAR.Services.Requests.User;
 using DSLNG.PEAR.Services.Responses.User;
+using DSLNG.PEAR.Web.ViewModels.PmsConfig;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.User;
 using DSLNG.PEAR.Web.ViewModels.RoleGroup;
@@ -183,15 +184,15 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
         private void ConfigureCorporatePortofolio()
         {
-            Mapper.CreateMap<GetPmsSummaryListResponse.PmsSummary, ConfigurationPmsSummaryViewModel.CorporatePortofolio>();
-            Mapper.CreateMap<GetPmsSummaryConfigurationResponse.PmsConfig, PmsSummaryConfigurationViewModel.PmsConfig>();
-            Mapper.CreateMap<GetPmsSummaryConfigurationResponse.PmsConfigDetails, PmsSummaryConfigurationViewModel.PmsConfigDetails>()
+            Mapper.CreateMap<GetPmsSummaryListResponse.PmsSummary, PmsSummaryConfigurationViewModel.CorporatePortofolio>();
+            Mapper.CreateMap<GetPmsSummaryConfigurationResponse.PmsConfig, PmsSummaryDetailsViewModel.PmsConfig>();
+            Mapper.CreateMap<GetPmsSummaryConfigurationResponse.PmsConfigDetails, PmsSummaryDetailsViewModel.PmsConfigDetails>()
                 .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
                 .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name))
                 .ForMember(x => x.KpiMeasurement, y => y.MapFrom(z => z.Kpi.Measurement))
                 .ForMember(x => x.ScoringType, y => y.MapFrom(z => z.ScoringType.ToString()));
 
-            Mapper.CreateMap<GetPmsSummaryConfigurationResponse, PmsSummaryConfigurationViewModel>()
+            Mapper.CreateMap<GetPmsSummaryConfigurationResponse, PmsSummaryDetailsViewModel>()
                   .ForMember(x => x.Kpis, y => y.MapFrom(z => z.Kpis.Select(a => new SelectListItem
                       {
                           Text = a.Name,
@@ -243,10 +244,18 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<UpdatePmsSummaryViewModel, UpdatePmsSummaryRequest>();
 
             Mapper.CreateMap<GetPmsSummaryReportResponse.KpiData, PmsSummaryViewModel>();
-            Mapper.CreateMap<GetPmsDetailsResponse, PmsDetailsViewModel>();
-            Mapper.CreateMap<GetPmsDetailsResponse.KpiAchievment, PmsDetailsViewModel.KpiAchievment>();
-            Mapper.CreateMap<GetPmsDetailsResponse.KpiRelation, PmsDetailsViewModel.KpiRelation>();
+            Mapper.CreateMap<GetPmsDetailsResponse, PmsReportDetailsViewModel>();
+            Mapper.CreateMap<GetPmsDetailsResponse.KpiAchievment, PmsReportDetailsViewModel.KpiAchievment>();
+            Mapper.CreateMap<GetPmsDetailsResponse.KpiRelation, PmsReportDetailsViewModel.KpiRelation>();
             Mapper.CreateMap<CreatePmsConfigViewModel, CreatePmsConfigRequest>();
+
+            ConfigurePmsConfig();
+        }
+
+        private void ConfigurePmsConfig()
+        {
+            Mapper.CreateMap<GetPmsConfigResponse, UpdatePmsConfigViewModel>();
+            Mapper.CreateMap<UpdatePmsConfigViewModel, UpdatePmsConfigRequest>();
         }
 
         private void ConfigureKpiTarget()

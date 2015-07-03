@@ -202,6 +202,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof(ScoringType), z.ScoringType)));
 
             Mapper.CreateMap<CreatePmsSummaryRequest, PmsSummary>();
+            ConfigurePmsConfig();
         }
         
         private void ConfigureKpi()
@@ -219,6 +220,14 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Pillar, GetPmsConfigsResponse.Pillar>();
             Mapper.CreateMap<Data.Entities.PmsSummary, GetPmsConfigsResponse.PmsSummary>();
             Mapper.CreateMap<Data.Entities.PmsConfig, GetPmsConfigsResponse.PmsConfig>();
+        }
+
+        private void ConfigurePmsConfig()
+        {
+            Mapper.CreateMap<CreatePmsConfigRequest, PmsConfig>();
+            Mapper.CreateMap<PmsConfig, GetPmsConfigResponse>()
+                .ForMember(x => x.PillarName, y => y.MapFrom(z => z.Pillar.Name));
+            Mapper.CreateMap<UpdatePmsConfigRequest, PmsConfig>();
         }
     }
 }

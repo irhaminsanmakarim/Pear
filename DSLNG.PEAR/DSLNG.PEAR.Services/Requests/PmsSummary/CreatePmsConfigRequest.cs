@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSLNG.PEAR.Services.Common.PmsSummary;
 
 namespace DSLNG.PEAR.Services.Requests.PmsSummary
 {
@@ -12,5 +13,6 @@ namespace DSLNG.PEAR.Services.Requests.PmsSummary
         public int PillarId { get; set; }
         public int PmsSummaryId { get; set; }
         public double Weight { get; set; }
+        public IEnumerable<ScoreIndicator> ScoreIndicators { get; set; }
     }
 }

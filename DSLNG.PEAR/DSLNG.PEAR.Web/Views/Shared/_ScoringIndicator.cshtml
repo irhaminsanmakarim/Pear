@@ -59,7 +59,7 @@
             clone.find('.si-id').attr('name', 'ScoreIndicators[' + i + '].Id').attr('value', 0);
             clone.find('.si-expression').attr('name', 'ScoreIndicators[' + i + '].Expression').val('');
             clone.find('.si-color').attr('name', 'ScoreIndicators[' + i + '].Color').val('');
-            clone.appendTo('.score-indicator-wrapper').removeClass('hidden-scoring-indicator').show();
+            clone.appendTo('.score-indicator-wrapper').show();
             if (i > 0) {
                 $('.remove-score-indicator').show();
             }

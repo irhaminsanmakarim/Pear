@@ -1,0 +1,61 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Web.ViewModels.CorporatePortofolio;
+using DSLNG.PEAR.Web.ViewModels.PmsSummary;
+
+namespace DSLNG.PEAR.Web.Controllers
+{
+    public class PmsConfigDetailsController : BaseController
+    {
+        private readonly IPmsSummaryService _pmsSummaryService;
+        private readonly IDropdownService _dropdownService;
+
+        public PmsConfigDetailsController(IPmsSummaryService pmsSummaryService, IDropdownService dropdownService)
+        {
+            _pmsSummaryService = pmsSummaryService;
+            _dropdownService = dropdownService;
+        }
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Create(int id)
+        {
+            var viewModel = new CreatePmsConfigDetailsViewModel();
+            viewModel.Kpis = _dropdownService.GetKpis(id).MapTo<SelectListItem>();
+            viewModel.ScoringTypes = _dropdownService.GetScoringTypes().MapTo<SelectListItem>();
+            return PartialView("_Create", viewModel);
+        }
+
+        public ActionResult Update(int id)
+        {
+            var response = _pmsSummaryService.GetPmsConfigDetails(id);
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<DialogPmsConfigDetailViewModel>();
+                return PartialView("_Update", viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
+        }
+
+        public ActionResult ScoreIndicatorDetails(int id)
+        {
+            var response = _pmsSummaryService.GetScoreIndicators(id);
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<DialogScoreIndicatorViewModel>();
+                return PartialView("_ScoreIndicatorDetails", viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
+        }
+	}
+}

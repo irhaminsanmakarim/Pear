@@ -464,7 +464,7 @@
     <Content Include="Views\BarChart\_Create.cshtml" />
     <Content Include="Views\Artifact\Preview.cshtml" />
     <Content Include="Views\BarChart\_Display.cshtml" />
-    <Content Include="Views\PmsSummary\_Details.cshtml" />
+    <Content Include="Views\PmsSummary\_ReportDetails.cshtml" />
     <Content Include="Views\Level\Update.cshtml" />
     <Content Include="Views\Level\Create.cshtml" />
     <Content Include="Views\RoleGroup\_GridViewPartial.cshtml" />
@@ -483,7 +483,7 @@
     <Content Include="Views\Kpi\Create.cshtml" />
     <Content Include="Views\Kpi\Update.cshtml" />
     <Content Include="Views\PmsSummary\Configuration.cshtml" />
-    <Content Include="Views\CorporatePortofolio\PmsSummaryConfiguration.cshtml" />
+    <Content Include="Views\PmsSummary\Details.cshtml" />
     <Content Include="Views\LineChart\_Create.cshtml" />
     <Content Include="Views\Level\_GridViewPartial.cshtml" />
     <Content Include="Views\Group\_GridViewPartial.cshtml" />
@@ -491,7 +491,7 @@
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Group\Update.cshtml" />
     <Content Include="Views\CorporatePortofolio\_DialogScoreIndicator.cshtml" />
-    <Content Include="Views\CorporatePortofolio\_DialogPmsConfigDetails.cshtml" />
+    <Content Include="Views\PmsConfigDetails\_Update.cshtml" />
     <Content Include="Views\KpiTarget\Create.cshtml" />
     <Content Include="Views\Conversion\_GridViewPartial.cshtml" />
     <Content Include="Views\Conversion\Create.cshtml" />
@@ -499,8 +499,8 @@
     <Content Include="Views\Conversion\Update.cshtml" />
     <Content Include="Views\KpiTarget\Index.cshtml" />
     <Content Include="Views\KpiTarget\_GridViewPartial.cshtml" />
-    <Content Include="Views\CorporatePortofolio\_CreatePmsConfig.cshtml" />
-    <Content Include="Views\CorporatePortofolio\_CreatePmsConfigDetails.cshtml" />
+    <Content Include="Views\PmsConfig\_Create.cshtml" />
+    <Content Include="Views\PmsConfigDetails\_Create.cshtml" />
     <Content Include="Views\PmsSummary\_Create.cshtml" />
     <Content Include="Views\Shared\_ScoringIndicator.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
@@ -521,6 +521,7 @@
     <Content Include="Views\Shared\EditorTemplates\PillarSelectList.cshtml" />
     <Content Include="Views\Shared\_Modal.cshtml" />
     <Content Include="Views\PmsSummary\_Update.cshtml" />
+    <Content Include="Views\PmsConfig\_Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -583,6 +584,8 @@
     <Compile Include="Controllers\MethodController.cs" />
     <Compile Include="Controllers\PeriodeController.cs" />
     <Compile Include="Controllers\PillarController.cs" />
+    <Compile Include="Controllers\PmsConfigController.cs" />
+    <Compile Include="Controllers\PmsConfigDetailsController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
     <Compile Include="Controllers\RoleGroupController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -609,10 +612,11 @@
     <Compile Include="ViewModels\Conversion\Measurement.cs" />
     <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
     <Compile Include="ViewModels\CorporatePortofolio\CreatePmsConfigDetailsViewModel.cs" />
-    <Compile Include="ViewModels\CorporatePortofolio\CreatePmsConfigViewModel.cs" />
+    <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />
+    <Compile Include="ViewModels\PmsConfig\CreatePmsConfigViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\CreatePmsSummaryViewModel.cs" />
-    <Compile Include="ViewModels\PmsSummary\ConfigurationPmsSummaryViewModel.cs" />
-    <Compile Include="ViewModels\CorporatePortofolio\PmsSummaryConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\PmsSummaryConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\PmsSummaryDetailsViewModel.cs" />
     <Compile Include="ViewModels\Artifact\LineChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\LineChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\SpeedometerChartDataViewModel.cs" />
@@ -649,7 +653,7 @@
     <Compile Include="ViewModels\Common\PmsSummary\ScoreIndicatorViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\DialogPmsConfigDetailViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\DialogScoreIndicatorViewModel.cs" />
-    <Compile Include="ViewModels\PmsSummary\PmsConfigDetailsViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\PmsReportDetailsViewModel.cs" />
     <Compile Include="ViewModels\Pillar\UpdatePillarViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryIndexViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryViewModel.cs" />

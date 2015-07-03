@@ -1,4 +1,4 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.PmsSummary.ConfigurationPmsSummaryViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryConfigurationViewModel
 @{
     ViewBag.Title = "Index";
 }
@@ -34,7 +34,7 @@
                 <td>@i</td>
                 <td>@item.Year</td>
                 <td>@item.Title</td>
-                <td>@Html.ActionLink("Details", "PmsSummaryConfiguration", "CorporatePortofolio", new { id = item.Id }, null)</td>
+                <td>@Html.ActionLink("Details", "Details", "PmsSummary", new { id = item.Id }, null)</td>
                 <td>@Html.ActionLink("Details", "Create", "KpiTarget")</td>
                 <td>@*@Html.ActionLink("Details", "Details", "CorporatePortofolio", new { id = item.Id })*@ Details</td>
                 <td>@*@Html.ActionLink("Details", "Details", "CorporatePortofolio", new { id = item.Id })*@ Details</td>

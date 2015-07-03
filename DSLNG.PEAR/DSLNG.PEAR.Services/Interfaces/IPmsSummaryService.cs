@@ -20,8 +20,14 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetPmsDetailsResponse GetPmsDetails(GetPmsDetailsRequest request);
         GetPmsConfigDetailsResponse GetPmsConfigDetails(int id);
         GetKpisByPillarIdResponse GetKpis(int pillarId);
-        UpdatePmsConfigResponse UpdatePmsConfig(UpdatePmsConfigRequest request);
+
+        #region PMS Config
         CreatePmsConfigResponse CreatePmsConfig(CreatePmsConfigRequest request);
-        
+        UpdatePmsConfigResponse UpdatePmsConfig(UpdatePmsConfigRequest request);
+        GetPmsConfigResponse GetPmsConfig(int id);
+
+        #endregion
+
+
     }
 }

@@ -9,7 +9,7 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#myModal').on('hidden.bs.modal', function(e) {
+        $('#modalDialog').on('hidden.bs.modal', function(e) {
             $(this).removeData('bs.modal');
         });
         
@@ -22,14 +22,12 @@
     });
     
     function OnCellClick(visibleIndex, fieldName) {
+        var id = fieldName;
         var month = $("#month").val();
-        $('#myModal').modal({
-            remote: '@Url.Action("Details", "PmsSummary")' + '/' + fieldName + '?month=' + month
+        $('#modalDialog').modal({
+            remote: '@Url.Action("ReportDetails", "PmsSummary")' + '/' + id + '?month=' + month
         });
     }
-
-    
-    
 </script>
 <section>
     <div class="title_page">
@@ -43,13 +41,6 @@
                 <div style="margin: 5px 40px 0px 25px; padding-right: 30px; border-right: solid 1px #3f454f;" class="form-group">
                     <label>Year Illustration :</label>
                     @Html.DropDownListFor(x => x.Year, Model.YearList, new {@class="form-control", id="year"})
-                    @*<select class="form-control" name="year" id="year">
-                        <option>2015</option>
-                        <option>2014</option>
-                        <option>2013</option>
-                        <option>2012</option>
-                        <option>2011</option>
-                    </select>*@
                 </div>
                 <div style="margin-top: 5px;" class="form-group">
                     <label>Month :</label>
@@ -73,24 +64,7 @@
     </div>
 </section>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            
-            <div class="modal-body">
-                
-                    Please wait. <br/>
-                    it still loading ..
-                
-            </div>
-            
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+@Html.Partial("_Modal")
 
 
 
