@@ -524,6 +524,7 @@
     <Content Include="Views\Periode\Index.cshtml" />
     <Content Include="Views\Periode\Update.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\PillarSelectList.cshtml" />
+    <Content Include="Views\SpiderwebChart\_Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -607,6 +608,8 @@
     <Compile Include="ViewModels\Artifact\ArtifactPreviewViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\ChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\SpiderwebChartViewModel.cs" />
     <Compile Include="ViewModels\Conversion\CreateConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\Measurement.cs" />

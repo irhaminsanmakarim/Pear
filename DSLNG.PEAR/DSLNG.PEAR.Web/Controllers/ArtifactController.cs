@@ -88,6 +88,10 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
+            this.SetPeriodeTypes(viewModel.PeriodeTypes);
+            this.SetRangeFilters(viewModel.RangeFilters);
+            this.SetValueAxes(viewModel.ValueAxes);
+            this.SetKpiList(viewModel.KpiList);
             return View(viewModel);
         }
 
@@ -98,12 +102,10 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "bar":
                     {
                         var viewModel = new BarChartViewModel();
-                        this.SetPeriodeTypes(viewModel.PeriodeTypes);
-                        this.SetRangeFilters(viewModel.RangeFilters);
-                        this.SetValueAxes(viewModel.ValueAxes);
+                       
                         viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
                         viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
-                        this.SetKpiList(viewModel.KpiList);
+                        
                         var series = new BarChartViewModel.Series();
                         series.Stacks.Add(new BarChartViewModel.Stack());
                         viewModel.SeriesList.Add(series);

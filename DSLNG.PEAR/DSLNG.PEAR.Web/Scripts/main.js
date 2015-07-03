@@ -53,13 +53,94 @@ String.prototype.isNullOrEmpty = function () {
                     var $hiddenFields = $('#hidden-fields');
                     $('#hidden-fields-holder').html($hiddenFields.html());
                     $hiddenFields.remove();
+                    $('.graphic-properties').each(function (i, val) {
+                        $(val).html('');
+                    });
                     if (callback.hasOwnProperty(type)) {
                         callback[type]();
                     }
                 }
             });
         };
+        var rangeDatePicker = function () {
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY hh:00 A"
+            });
+            $('.datepicker').change(function (e) {
+                console.log(this);
+            });
+            $('#PeriodeType').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var clearValue = $('.datepicker').each(function (i, val) {
+                    $(val).val('');
+                    $(val).data("DateTimePicker").destroy();
+                });
+                switch ($this.val().toLowerCase().trim()) {
+                    case 'hourly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY hh:00 A"
+                        });
+                        break;
+                    case 'daily':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY"
+                        });
+                        break;
+                    case 'weekly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY",
+                            daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                        });
+                        break;
+                    case 'monthly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/YYYY"
+                        });
+                        break;
+                    case 'yearly':
+                        $('.datepicker').datetimepicker({
+                            format: "YYYY"
+                        });
+                        break;
+                    default:
 
+                }
+            });
+        };
+        var rangeControl = function () {
+            $('#RangeFilter').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $('#range-holder').prop('class', $this.val().toLowerCase().trim());
+            });
+            var original = $('#RangeFilter').clone(true);
+            var rangeFilterSetup = function (periodeType) {
+                var toRemove = {};
+                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
+                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
+                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
+                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
+                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
+                var originalClone = original.clone(true);
+                originalClone.find('option').each(function (i, val) {
+                    if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
+                        originalClone.find(val).remove();
+                    }
+                });
+                $('#RangeFilter').replaceWith(originalClone);
+            };
+
+            rangeFilterSetup($('#PeriodeType').val().toLowerCase().trim());
+            $('#PeriodeType').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                rangeFilterSetup($this.val().toLowerCase().trim());
+                $('#range-holder').removeAttr('class');
+            });
+
+        };
+      
         $('#graphic-type').change(function (e) {
             e.preventDefault();
             var $this = $(this);
@@ -68,6 +149,8 @@ String.prototype.isNullOrEmpty = function () {
 
         var initialGraphicType = $('#graphic-type');
         loadGraph(initialGraphicType.data('graph-url'), initialGraphicType.val());
+        rangeControl();
+        rangeDatePicker();
     };
     artifactDesigner._setupCallbacks = {};
 
@@ -104,7 +187,11 @@ String.prototype.isNullOrEmpty = function () {
             $('.series-template .remove, .stack-template .remove').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
-                $this.closest('fieldset').remove();
+                if ($this.closest('.series-template').length) {
+                    $this.closest('.series-template').remove();
+                } else {
+                    $this.closest('.stack-template').remove();
+                }
             });
         }
         var addSeries = function () {
@@ -145,86 +232,7 @@ String.prototype.isNullOrEmpty = function () {
                 $this.closest('.stacks-holder').append(stackTemplate);
             });
         };
-        var rangeDatePicker = function () {
-            $('.datepicker').datetimepicker({
-                format: "MM/DD/YYYY hh:00 A"
-            });
-            $('.datepicker').change(function (e) {
-                console.log(this);
-            });
-            $('#BarChart_PeriodeType').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                var clearValue = $('.datepicker').each(function (i, val) {
-                    $(val).val('');
-                    $(val).data("DateTimePicker").destroy();
-                });
-                switch ($this.val().toLowerCase().trim()) {
-                    case 'hourly':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY hh:00 A"
-                        });
-                        break;
-                    case 'daily':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY"
-                        });
-                        break;
-                    case 'weekly':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY",
-                            daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
-                        });
-                        break;
-                    case 'monthly':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/YYYY"
-                        });
-                        break;
-                    case 'yearly':
-                        $('.datepicker').datetimepicker({
-                            format: "YYYY"
-                        });
-                        break;
-                    default:
-
-                }
-            });
-        };
-        var rangeControl = function () {
-            $('#BarChart_RangeFilter').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                $('#range-holder').prop('class', $this.val().toLowerCase().trim());
-            });
-            var original = $('#BarChart_RangeFilter').clone(true);
-            var rangeFilterSetup = function (periodeType) {
-                var toRemove = {};
-                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
-                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
-                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
-                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
-                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
-                var originalClone = original.clone(true);
-                originalClone.find('option').each(function (i, val) {
-                    if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
-                        originalClone.find(val).remove();
-                    }
-                });
-                $('#BarChart_RangeFilter').replaceWith(originalClone);
-            };
-
-            rangeFilterSetup($('#BarChart_PeriodeType').val().toLowerCase().trim());
-            $('#BarChart_PeriodeType').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                rangeFilterSetup($this.val().toLowerCase().trim());
-                $('#range-holder').removeAttr('class');
-            });
-
-        };
-        rangeControl();
-        rangeDatePicker();
+       
         removeSeriesOrStack();
         addSeries();
         addStack();
@@ -370,7 +378,7 @@ String.prototype.isNullOrEmpty = function () {
     //line chart
     artifactDesigner._setupCallbacks.line = function () {
         var removeSeriesOrStack = function () {
-            $('.series-template .remove, .stack-template .remove').click(function (e) {
+            $('.series-template .remove').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 $this.closest('fieldset').remove();
@@ -396,87 +404,6 @@ String.prototype.isNullOrEmpty = function () {
                 seriesCount++;
             });
         };
-
-        var rangeDatePicker = function () {
-            $('.datepicker').datetimepicker({
-                format: "MM/DD/YYYY hh:00 A"
-            });
-            $('.datepicker').change(function (e) {
-                console.log(this);
-            });
-            $('#LineChart_PeriodeType').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                var clearValue = $('.datepicker').each(function (i, val) {
-                    $(val).val('');
-                    $(val).data("DateTimePicker").destroy();
-                });
-                switch ($this.val().toLowerCase().trim()) {
-                    case 'hourly':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY hh:00 A"
-                        });
-                        break;
-                    case 'daily':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY"
-                        });
-                        break;
-                    case 'weekly':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY",
-                            daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
-                        });
-                        break;
-                    case 'monthly':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/YYYY"
-                        });
-                        break;
-                    case 'yearly':
-                        $('.datepicker').datetimepicker({
-                            format: "YYYY"
-                        });
-                        break;
-                    default:
-
-                }
-            });
-        };
-        var rangeControl = function () {
-            $('#LineChart_RangeFilter').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                $('#range-holder').prop('class', $this.val().toLowerCase().trim());
-            });
-            var original = $('#LineChart_RangeFilter').clone(true);
-            var rangeFilterSetup = function (periodeType) {
-                var toRemove = {};
-                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
-                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
-                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
-                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
-                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
-                var originalClone = original.clone(true);
-                originalClone.find('option').each(function (i, val) {
-                    if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
-                        originalClone.find(val).remove();
-                    }
-                });
-                $('#LineChart_RangeFilter').replaceWith(originalClone);
-            };
-
-            rangeFilterSetup($('#LineChart_PeriodeType').val().toLowerCase().trim());
-            $('#LineChart_PeriodeType').change(function (e) {
-                e.preventDefault();
-                var $this = $(this);
-                rangeFilterSetup($this.val().toLowerCase().trim());
-                $('#range-holder').removeAttr('class');
-            });
-
-        };
-        rangeControl();
-        rangeDatePicker();
         removeSeriesOrStack();
         addSeries();
     }
