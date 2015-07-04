@@ -20,17 +20,21 @@ namespace DSLNG.PEAR.Data.Installer
 
         public void Install()
         {
+            var roleGroup1 = _dataContext.RoleGroups.Local.Where(x => x.Id == 1).First();
+            var roleGroup2 = _dataContext.RoleGroups.Local.Where(x => x.Id == 2).First();
+            var list = new List<RoleGroup>()
+                {
+                    roleGroup1,
+                    roleGroup2
+                };
+
             var mainmenu1 = new Menu { 
                 Id = 1, 
                 IsRoot = true, 
                 IsActive = true, 
                 Name = "Dashboard", 
                 Module = "Dashboard",
-                RoleGroups = new List<RoleGroup>
-                {
-                    _dataContext.RoleGroups.Local.Where(x => x.Id == 1).First(),
-                    _dataContext.RoleGroups.Local.Where(x => x.Id == 2).First()
-                },
+                RoleGroups = list,
                 Icon = "<i class='fa fa-dashboard'></i>"
             };
             _dataContext.Menus.AddOrUpdate(mainmenu1);

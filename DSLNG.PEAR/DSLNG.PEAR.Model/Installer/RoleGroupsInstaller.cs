@@ -23,77 +23,77 @@ namespace DSLNG.PEAR.Data.Installer
             };
             var groupOperationDirectorate = new RoleGroup
             {
-                Id = 1,
+                Id = 2,
                 Name = "Operation Directorate",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
             var groupFinanceDirectorate = new RoleGroup
             {
-                Id = 1,
+                Id = 3,
                 Name = "Finance Directorate",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
             var groupTechnicalDirectorate = new RoleGroup
             {
-                Id = 1,
+                Id = 4,
                 Name = "Technical Directorate",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
             var groupCommercialDirectorate = new RoleGroup
             {
-                Id = 1,
+                Id = 5,
                 Name = "Commercial Directorate",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
             var groupCAffairDirectorate = new RoleGroup
             {
-                Id = 1,
+                Id = 6,
                 Name = "Corporate Affair Directorate",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
             var groupPresdir = new RoleGroup
             {
-                Id = 1,
+                Id = 7,
                 Name = "President Director Office",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
             var groupHCMDirectorate = new RoleGroup
             {
-                Id = 1,
+                Id = 8,
                 Name = "Human Capital Management",
                 Level = _context.Levels.Local.Where(x => x.Id == 2).FirstOrDefault(),
                 IsActive = true
             };
             var groupProcurement = new RoleGroup
             {
-                Id = 1,
+                Id = 9,
                 Name = "Procurement",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).FirstOrDefault(),
                 IsActive = true
             };
             var groupQHSE = new RoleGroup
             {
-                Id = 1,
+                Id = 10,
                 Name = "QHSE",
                 Level = _context.Levels.Local.Where(x => x.Id == 2).FirstOrDefault(),
                 IsActive = true
             };
             var groupIT = new RoleGroup
             {
-                Id = 1,
+                Id = 11,
                 Name = "Information Communication & Tech",
                 Level = _context.Levels.Local.Where(x => x.Id == 2).FirstOrDefault(),
                 IsActive = true
             };
             var groupCSR = new RoleGroup
             {
-                Id = 1,
+                Id = 12,
                 Name = "Community Support & Relation",
                 Level = _context.Levels.Local.Where(x => x.Id == 2).FirstOrDefault(),
                 IsActive = true

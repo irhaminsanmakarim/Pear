@@ -530,6 +530,7 @@
     <Content Include="Views\PmsSummary\_Update.cshtml" />
     <Content Include="Views\PmsConfig\_Update.cshtml" />
     <Content Include="Views\SpiderwebChart\_Create.cshtml" />
+    <Content Include="Views\Menu\_SiteMap.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -726,7 +727,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:10359/</IISUrl>
+          <IISUrl>http://localhost:53995/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
