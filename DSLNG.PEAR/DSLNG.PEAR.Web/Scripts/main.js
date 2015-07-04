@@ -16,6 +16,7 @@ String.prototype.isNullOrEmpty = function () {
 
     var artifactDesigner = Pear.Artifact.Designer;
 
+    //helper
     artifactDesigner._formatKpi = function (kpi) {
         //console.log(kpi);
         if (kpi.loading) return kpi.text;
@@ -23,6 +24,40 @@ String.prototype.isNullOrEmpty = function () {
     };
     artifactDesigner._formatKpiSelection = function (kpi) {
         return kpi.Name || kpi.text;
+    };
+    artifactDesigner._kpiAutoComplete = function (context) {
+        context.find('.kpi-list').select2({
+            ajax: {
+                url: $('#hidden-fields-holder').data('kpi-url'),
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        term: params.term, // search term
+                        measurementId: $('#MeasurementId').val()
+                    };
+                },
+                processResults: function (data, page) {
+                    return data;
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+            minimumInputLength: 1,
+            templateResult: Pear.Artifact.Designer._formatKpi, // omitted for brevity, see the source of this page
+            templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
+        });
+    };
+    artifactDesigner._colorPicker = function (context) {
+        context.find('.colorpicker input').colpick({
+            submit: 0,
+            onChange: function (hsb, hex, rgb, el, bySetColor) {
+                $(el).closest('.colorpicker').find('i').css('background-color', '#' + hex);
+                if (!bySetColor) $(el).val('#' + hex);
+            }
+        }).keyup(function () {
+            $(this).colpickSetColor(this.value.replace('#', ''));
+        });
     };
 
     artifactDesigner.ListSetup = function () {
@@ -193,14 +228,15 @@ String.prototype.isNullOrEmpty = function () {
     //bar chart
     artifactDesigner._setupCallbacks.bar = function () {
         var removeSeriesOrStack = function () {
-            $('.series-template .remove, .stack-template .remove').click(function (e) {
+            $('.series-template .remove').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
-                if ($this.closest('.series-template').length) {
-                    $this.closest('.series-template').remove();
-                } else {
-                    $this.closest('.stack-template').remove();
-                }
+                $this.closest('.series-template').remove();
+            });
+            $('.stack-template .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.stack-template').remove();
             });
         }
         var addSeries = function () {
@@ -208,34 +244,21 @@ String.prototype.isNullOrEmpty = function () {
             $('#add-series').click(function (e) {
                 e.preventDefault();
                 var seriesTemplate = $('.series-template.original').clone(true);
-                seriesTemplate.find('.kpi-list').select2({
-                    ajax: {
-                        url: seriesTemplate.data('kpi-url'),
-                        dataType: 'json',
-                        delay: 250,
-                        data: function (params) {
-                            return {
-                                term: params.term, // search term
-                                measurementId: $('#MeasurementId').val()
-                            };
-                        },
-                        processResults: function (data, page) {
-                            return data;
-                        },
-                        cache: true
-                    },
-                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-                    minimumInputLength: 1,
-                    templateResult: Pear.Artifact.Designer._formatKpi, // omitted for brevity, see the source of this page
-                    templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
-                });
+                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate);
+                Pear.Artifact.Designer._colorPicker(seriesTemplate);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'BarChart.Series.Index',
+                    value: seriesCount
+                }).appendTo(seriesTemplate);
                 seriesTemplate.removeClass('original');
                 seriesTemplate.attr('data-series-pos', seriesCount);
                 if (seriesCount !== 0) {
-                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Aggregation'];
+                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
                     for (var i in fields) {
                         var field = fields[i];
-                        seriesTemplate.find('#BarChart_SeriesList_0__' + field).attr('name', 'BarChart.SeriesList[' + seriesCount + '].' + field);
+                        seriesTemplate.find('#BarChart_Series_0__' + field).attr('name', 'BarChart.Series[' + seriesCount + '].' + field);
                     }
                 }
                 seriesTemplate.addClass($('#seriesType').val().toLowerCase());
@@ -245,20 +268,28 @@ String.prototype.isNullOrEmpty = function () {
             });
         };
         var addStack = function () {
+            var stackCount = 0;
             $('.add-stack').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 var stackTemplate = $('.stack-template.original').clone(true);
+                Pear.Artifact.Designer._kpiAutoComplete(stackTemplate);
+                Pear.Artifact.Designer._colorPicker(stackTemplate);
                 stackTemplate.removeClass('original');
-                stackTemplate.find('.kpi-list').select2();
-                var stackPos = $this.closest('.stacks-holder').children('fieldset').length;
                 var seriesPos = $this.closest('.series-template').data('series-pos');
-                var fields = ['Label', 'KpiId', 'ValueAxis', 'Aggregation'];
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'BarChart.Series['+seriesPos+'].Stacks.Index',
+                    value: stackCount
+                }).appendTo(stackTemplate);
+                var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
                 for (var i in fields) {
                     var field = fields[i];
-                    stackTemplate.find('#BarChart_SeriesList_0__Stacks_0__' + field).attr('name', 'BarChart.SeriesList[' + seriesPos + '].Stacks[' + stackPos + '].' + field);
+                    stackTemplate.find('#BarChart_Series_0__Stacks_0__' + field).attr('name', 'BarChart.Series[' + seriesPos + '].Stacks[' + stackCount + '].' + field);
                 }
                 $this.closest('.stacks-holder').append(stackTemplate);
+                stackCount++;
             });
         };
 
@@ -414,21 +445,30 @@ String.prototype.isNullOrEmpty = function () {
             });
         }
         var addSeries = function () {
+            console.log('add-series');
             var seriesCount = 0;
             $('#add-series').click(function (e) {
+                console.log('series-click');
                 e.preventDefault();
                 var seriesTemplate = $('.series-template.original').clone(true);
-                seriesTemplate.find('.kpi-list').select2();
+
+                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate);
+                Pear.Artifact.Designer._colorPicker(seriesTemplate);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'LineChart.Series.Index',
+                    value: seriesCount
+                }).appendTo(seriesTemplate);
                 seriesTemplate.removeClass('original');
                 seriesTemplate.attr('data-series-pos', seriesCount);
                 if (seriesCount !== 0) {
-                    var fields = ['Label', 'KpiId'];
+                    var fields = ['Label', 'KpiId', 'Color'];
                     for (var i in fields) {
                         var field = fields[i];
-                        seriesTemplate.find('#LineChart_SeriesList_0__' + field).attr('name', 'LineChart.SeriesList[' + seriesCount + '].' + field);
+                        seriesTemplate.find('#LineChart_Series_0__' + field).attr('name', 'LineChart.Series[' + seriesCount + '].' + field);
                     }
                 }
-                seriesTemplate.addClass('singlestack');
                 $('#series-holder').append(seriesTemplate);
                 seriesCount++;
             });
@@ -506,16 +546,7 @@ String.prototype.isNullOrEmpty = function () {
                 var field = fields[i];
                 plotBandTemplate.find('#SpeedometerChart_PlotBands_0__' + field).attr('name', 'SpeedometerChart.PlotBands[' + plotPos + '].' + field).attr('id', 'plot-bands-' + i);
             }
-            plotBandTemplate.find('.colorpicker input').colpick({
-                submit: 0,
-                onChange: function (hsb, hex, rgb, el, bySetColor) {
-                    $(el).closest('.colorpicker').find('i').css('background-color', '#' + hex);
-                    // Fill the text box just if the color was set using the picker, and not the colpickSetColor function.
-                    if (!bySetColor) $(el).val('#' + hex);
-                }
-            }).keyup(function () {
-                $(this).colpickSetColor(this.value.replace('#', ''));
-            });
+            Pear.Artifact.Designer._colorPicker(plotBandTemplate);
             $('#plot-bands-holder').append(plotBandTemplate);
         });
 

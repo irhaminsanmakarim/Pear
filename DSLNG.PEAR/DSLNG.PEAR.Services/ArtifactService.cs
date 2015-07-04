@@ -190,16 +190,16 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public GetChartDataResponse GetChartData(GetChartDataRequest request)
+        public GetCartesianChartDataResponse GetChartData(GetCartesianChartDataRequest request)
         {
-            var response = new GetChartDataResponse();
+            var response = new GetCartesianChartDataResponse();
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
             response.Periodes = this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes);
-            IList<GetChartDataResponse.SeriesResponse> seriesResponse = new List<GetChartDataResponse.SeriesResponse>();
+            IList<GetCartesianChartDataResponse.SeriesResponse> seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
             var seriesType = "single-stack";
-            if (request.SeriesList.Count > 1)
+            if (request.Series.Count > 1)
             {
-                if (request.SeriesList.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null)
+                if (request.Series.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null)
                 {
                     seriesType = "multi-stacks-grouped";
                 }
@@ -209,7 +209,7 @@ namespace DSLNG.PEAR.Services
             }
             else
             {
-                if (request.SeriesList.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null || RangeFilter.YTD == request.RangeFilter)
+                if (request.Series.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null || RangeFilter.YTD == request.RangeFilter)
                 {
                     seriesType = "multi-stack";
                 }
@@ -217,10 +217,10 @@ namespace DSLNG.PEAR.Services
             switch (request.ValueAxis)
             {
                 case ValueAxis.KpiTarget:
-                    seriesResponse = this._getKpiTargetSeries(request.SeriesList, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter);
+                    seriesResponse = this._getKpiTargetSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter);
                     break;
                 case ValueAxis.KpiActual:
-                    seriesResponse = this._getKpiActualSeries(request.SeriesList, request.PeriodeType, dateTimePeriodes, seriesType);
+                    seriesResponse = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType);
                     break;
             }
             response.SeriesType = seriesType;
@@ -363,9 +363,9 @@ namespace DSLNG.PEAR.Services
             return periodes.ToArray();
         }
 
-        private IList<GetChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetChartDataRequest.Series> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter)
+        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter)
         {
-            var seriesResponse = new List<GetChartDataResponse.SeriesResponse>();
+            var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
             var start = dateTimePeriodes[0];
             var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
             foreach (var series in configSeries)
@@ -377,34 +377,35 @@ namespace DSLNG.PEAR.Services
                       x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId)
                       .OrderBy(x => x.Periode).ToList();
                     
-                    var aSeries = new GetChartDataResponse.SeriesResponse
+                    var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                     {
-                        name = series.Label
+                        Name = series.Label,
+                        Color = series.Color
                     };
                     foreach (var periode in dateTimePeriodes)
                     {
                         var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
                         if (target == null || !target.Value.HasValue)
                         {
-                            aSeries.data.Add(0);
+                            aSeries.Data.Add(0);
                         }
                         else
                         {
-                            aSeries.data.Add(target.Value.Value);
+                            aSeries.Data.Add(target.Value.Value);
                         }
                     }
                     seriesResponse.Add(aSeries);
                     if (rangeFilter == RangeFilter.YTD) {
-                        var previousSeries = new GetChartDataResponse.SeriesResponse
+                        var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
-                            name = "Previous"
+                            Name = "Previous"
                         };
-                        for (var i = 0; i < aSeries.data.Count; i++) {
+                        for (var i = 0; i < aSeries.Data.Count; i++) {
                             double data = 0;
                             for (var j = 0; j < i; j++) {
-                                data += aSeries.data[j];
+                                data += aSeries.Data[j];
                             }
-                            previousSeries.data.Add(data);
+                            previousSeries.Data.Add(data);
                         }
                         seriesResponse.Add(previousSeries);
                     }
@@ -419,21 +420,22 @@ namespace DSLNG.PEAR.Services
                         .OrderBy(x => x.Periode).ToList();
                         if (seriesType == "multi-stacks-grouped")
                         {
-                            var aSeries = new GetChartDataResponse.SeriesResponse
+                            var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                name = stack.Label,
-                                stack = series.Label
+                                Name = stack.Label,
+                                Stack = series.Label,
+                                Color = stack.Color
                             };
                             foreach (var periode in dateTimePeriodes)
                             {
                                 var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
                                 if (target == null || !target.Value.HasValue)
                                 {
-                                    aSeries.data.Add(0);
+                                    aSeries.Data.Add(0);
                                 }
                                 else
                                 {
-                                    aSeries.data.Add(target.Value.Value);
+                                    aSeries.Data.Add(target.Value.Value);
                                 }
                             }
                             seriesResponse.Add(aSeries);
@@ -441,20 +443,21 @@ namespace DSLNG.PEAR.Services
                         else
                         {
 
-                            var aSeries = new GetChartDataResponse.SeriesResponse
+                            var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                name = series.Label
+                                Name = series.Label,
+                                Color= stack.Color
                             };
                             foreach (var periode in dateTimePeriodes)
                             {
                                 var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
                                 if (target == null || !target.Value.HasValue)
                                 {
-                                    aSeries.data.Add(0);
+                                    aSeries.Data.Add(0);
                                 }
                                 else
                                 {
-                                    aSeries.data.Add(target.Value.Value);
+                                    aSeries.Data.Add(target.Value.Value);
                                 }
                             }
                             seriesResponse.Add(aSeries);
@@ -465,9 +468,9 @@ namespace DSLNG.PEAR.Services
             return seriesResponse;
         }
 
-        private IList<GetChartDataResponse.SeriesResponse> _getKpiActualSeries(IList<GetChartDataRequest.Series> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType)
+        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiActualSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType)
         {
-            var seriesResponse = new List<GetChartDataResponse.SeriesResponse>();
+            var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
             foreach (var series in configSeries)
             {
 
@@ -476,20 +479,20 @@ namespace DSLNG.PEAR.Services
                     var kpiTargets = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
                       x.Periode >= dateTimePeriodes[0] && x.Periode <= dateTimePeriodes[dateTimePeriodes.Count - 1] && x.Kpi.Id == series.KpiId)
                       .OrderBy(x => x.Periode).ToList();
-                    var aSeries = new GetChartDataResponse.SeriesResponse
+                    var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                     {
-                        name = series.Label
+                        Name = series.Label
                     };
                     foreach (var periode in dateTimePeriodes)
                     {
                         var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
                         if (target == null || !target.Value.HasValue)
                         {
-                            aSeries.data.Add(0);
+                            aSeries.Data.Add(0);
                         }
                         else
                         {
-                            aSeries.data.Add(target.Value.Value);
+                            aSeries.Data.Add(target.Value.Value);
                         }
                     }
                     seriesResponse.Add(aSeries);
@@ -503,21 +506,21 @@ namespace DSLNG.PEAR.Services
                         .OrderBy(x => x.Periode).ToList();
                         if (seriesType == "multi-stacks-grouped")
                         {
-                            var aSeries = new GetChartDataResponse.SeriesResponse
+                            var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                name = stack.Label,
-                                stack = series.Label
+                                Name = stack.Label,
+                                Stack = series.Label
                             };
                             foreach (var periode in dateTimePeriodes)
                             {
                                 var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
                                 if (target == null || !target.Value.HasValue)
                                 {
-                                    aSeries.data.Add(0);
+                                    aSeries.Data.Add(0);
                                 }
                                 else
                                 {
-                                    aSeries.data.Add(target.Value.Value);
+                                    aSeries.Data.Add(target.Value.Value);
                                 }
                             }
                             seriesResponse.Add(aSeries);
@@ -525,20 +528,20 @@ namespace DSLNG.PEAR.Services
                         else
                         {
 
-                            var aSeries = new GetChartDataResponse.SeriesResponse
+                            var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                name = series.Label
+                                Name = series.Label
                             };
                             foreach (var periode in dateTimePeriodes)
                             {
                                 var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
                                 if (target == null || !target.Value.HasValue)
                                 {
-                                    aSeries.data.Add(0);
+                                    aSeries.Data.Add(0);
                                 }
                                 else
                                 {
-                                    aSeries.data.Add(target.Value.Value);
+                                    aSeries.Data.Add(target.Value.Value);
                                 }
                             }
                             seriesResponse.Add(aSeries);

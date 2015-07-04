@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         {
             public string name { get; set; }
             public IList<double> data { get; set; }
+            public string color { get; set; }
         }
     }
 }

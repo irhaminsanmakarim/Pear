@@ -119,34 +119,36 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetMethodResponse, UpdateMethodViewModel>();
             Mapper.CreateMap<UpdateMethodViewModel, UpdateMethodRequest>();
 
-            Mapper.CreateMap<BarChartViewModel, GetChartDataRequest>()
+            //cartesian preview
+            Mapper.CreateMap<ArtifactDesignerViewModel, GetCartesianChartDataRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
                 .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
-                .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)))
-                .ForMember(x => x.SeriesList, o => o.MapFrom(s => s.SeriesList.MapTo<GetChartDataRequest.Series>()));
+                .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)));
+            
+            //bar chart mapping
+            Mapper.CreateMap<BarChartViewModel, GetCartesianChartDataRequest>();
+            Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetCartesianChartDataRequest.SeriesRequest>();
+            Mapper.CreateMap<BarChartViewModel.StackViewModel, GetCartesianChartDataRequest.StackRequest>();
+            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, BarChartDataViewModel.SeriesViewModel>();
+            
+            //line chart mapping
+            Mapper.CreateMap<LineChartViewModel, GetCartesianChartDataRequest>();
+            Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetCartesianChartDataRequest.SeriesRequest>();
+            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, LineChartDataViewModel.SeriesViewModel>();
 
-            Mapper.CreateMap<BarChartViewModel.Series, GetSeriesRequest.Series>()
+            Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetSeriesRequest.Series>()
                 .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetSeriesRequest.Stack>()));
-            Mapper.CreateMap<BarChartViewModel.Stack, GetSeriesRequest.Stack>();
+            Mapper.CreateMap<BarChartViewModel.StackViewModel, GetSeriesRequest.Stack>();
             Mapper.CreateMap<GetSeriesResponse.SeriesResponse, BarChartDataViewModel.SeriesViewModel>();
 
             Mapper.CreateMap<GetGroupResponse, DSLNG.PEAR.Web.ViewModels.Kpi.Group>();
 
             Mapper.CreateMap<GetMethodResponse, DSLNG.PEAR.Web.ViewModels.Kpi.Method>();
 
-            Mapper.CreateMap<BarChartViewModel.Series, GetChartDataRequest.Series>()
-                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetChartDataRequest.Stack>()));
-            Mapper.CreateMap<BarChartViewModel.Stack, GetChartDataRequest.Stack>();
-            Mapper.CreateMap<GetChartDataResponse.SeriesResponse, BarChartDataViewModel.SeriesViewModel>();
-
-            Mapper.CreateMap<LineChartViewModel, GetChartDataRequest>()
-                .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
-                .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
-                .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)))
-                .ForMember(x => x.SeriesList, o => o.MapFrom(s => s.SeriesList.MapTo<GetChartDataRequest.Series>()));
-
-            Mapper.CreateMap<LineChartViewModel.Series, GetChartDataRequest.Series>();
-            Mapper.CreateMap<GetChartDataResponse.SeriesResponse, LineChartDataViewModel.SeriesViewModel>();
+            Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetCartesianChartDataRequest.SeriesRequest>()
+                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetCartesianChartDataRequest.StackRequest>()));
+            Mapper.CreateMap<BarChartViewModel.StackViewModel, GetCartesianChartDataRequest.StackRequest>();
+            
 
             Mapper.CreateMap<SpeedometerChartViewModel, GetSpeedometerChartDataRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
@@ -168,33 +170,37 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPeriodeResponse, UpdatePeriodeViewModel>();
             Mapper.CreateMap<UpdatePeriodeViewModel, UpdatePeriodeRequest>();
 
-            Mapper.CreateMap<ArtifactDesignerViewModel, CreateArtifactRequest>();
+            Mapper.CreateMap<ArtifactDesignerViewModel, CreateArtifactRequest>()
+                .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
+                .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
+                .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)));
+
             Mapper.CreateMap<BarChartViewModel, CreateArtifactRequest>()
-                .ForMember(x => x.Series, o => o.MapFrom(s => s.SeriesList.MapTo<CreateArtifactRequest.SeriesRequest>()));
+                .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<CreateArtifactRequest.SeriesRequest>()));
             Mapper.CreateMap<LineChartViewModel, CreateArtifactRequest>()
-                .ForMember(x => x.Series, o => o.MapFrom(s => s.SeriesList.MapTo<CreateArtifactRequest.SeriesRequest>()));
+                .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<CreateArtifactRequest.SeriesRequest>()));
             Mapper.CreateMap<SpeedometerChartViewModel, CreateArtifactRequest>()
                 .ForMember(x => x.Series, o => o.MapFrom(s => new List<CreateArtifactRequest.SeriesRequest> { s.Series.MapTo<CreateArtifactRequest.SeriesRequest>() }))
                 .ForMember(x => x.Plots, o => o.MapFrom(s => s.PlotBands.MapTo<CreateArtifactRequest.PlotRequest>()));
 
-            Mapper.CreateMap<BarChartViewModel.Series, CreateArtifactRequest.SeriesRequest>()
+            Mapper.CreateMap<BarChartViewModel.SeriesViewModel, CreateArtifactRequest.SeriesRequest>()
                 .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<CreateArtifactRequest.StackRequest>()));
-            Mapper.CreateMap<BarChartViewModel.Stack, CreateArtifactRequest.StackRequest>();
-            Mapper.CreateMap<LineChartViewModel.Series, CreateArtifactRequest.SeriesRequest>();
+            Mapper.CreateMap<BarChartViewModel.StackViewModel, CreateArtifactRequest.StackRequest>();
+            Mapper.CreateMap<LineChartViewModel.SeriesViewModel, CreateArtifactRequest.SeriesRequest>();
             Mapper.CreateMap<SpeedometerChartViewModel.SeriesViewModel, CreateArtifactRequest.SeriesRequest>();
             Mapper.CreateMap<SpeedometerChartViewModel.PlotBand, CreateArtifactRequest.PlotRequest>();
 
-            Mapper.CreateMap<GetArtifactResponse, GetChartDataRequest>()
-                .ForMember(x => x.SeriesList, o => o.MapFrom(s => s.Series.MapTo<GetChartDataRequest.Series>()));
-            Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetChartDataRequest.Series>()
-                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetChartDataRequest.Stack>()));
-            Mapper.CreateMap<GetArtifactResponse.StackResponse, GetChartDataRequest.Stack>();
+            Mapper.CreateMap<GetArtifactResponse, GetCartesianChartDataRequest>()
+                .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<GetCartesianChartDataRequest.SeriesRequest>()));
+            Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetCartesianChartDataRequest.SeriesRequest>()
+                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetCartesianChartDataRequest.StackRequest>()));
+            Mapper.CreateMap<GetArtifactResponse.StackResponse, GetCartesianChartDataRequest.StackRequest>();
 
             Mapper.CreateMap<GetArtifactResponse, GetSpeedometerChartDataRequest>()
              .ForMember(x => x.PlotBands, o => o.MapFrom(s => s.PlotBands.MapTo<GetSpeedometerChartDataRequest.PlotBandRequest>()))
              .ForMember(x => x.Series, o => o.MapFrom(s => s.Series[0]));
-               Mapper.CreateMap<GetArtifactResponse.PlotResponse, GetSpeedometerChartDataRequest.PlotBandRequest>();
-               Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetSpeedometerChartDataRequest.SeriesRequest>();
+            Mapper.CreateMap<GetArtifactResponse.PlotResponse, GetSpeedometerChartDataRequest.PlotBandRequest>();
+            Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetSpeedometerChartDataRequest.SeriesRequest>();
 
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.KpiTarget.KpiTarget, CreateKpiTargetRequest.KpiTarget>();
 
