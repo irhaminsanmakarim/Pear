@@ -22,6 +22,29 @@ namespace DSLNG.PEAR.Services
 
         }
 
+        public GetSiteMenusResponse GetSiteMenus(GetSiteMenusRequest request)
+        {
+            var response = new GetSiteMenusResponse();
+            var menus = new List<Data.Entities.Menu>();
+            if (request.ParentId != null)
+            {
+                if (request.IncludeChildren)
+                    menus = DataContext.Menus.Include("Menus").Where(x => x.ParentId == request.ParentId).ToList();
+                else
+                    menus = DataContext.Menus.Where(x => x.ParentId == request.ParentId).ToList();
+            }
+            else
+            {
+                if (request.IncludeChildren)
+                    menus = DataContext.Menus.Include("Menus").Where(x => x.ParentId == null || x.ParentId == 0).ToList();
+                else
+                    menus = DataContext.Menus.Where(x => x.ParentId == null || x.ParentId == 0).ToList();
+            }
+            response.Menus = menus.MapTo<GetSiteMenusResponse.Menu>();
+            
+            return response;
+        }
+
         public GetMenusResponse GetMenus(GetMenusRequest request)
         {
             var menus = DataContext.Menus.ToList();
@@ -58,17 +81,24 @@ namespace DSLNG.PEAR.Services
                 var menu = request.MapTo<Data.Entities.Menu>();
                 //set IsRoot if no menu as parent
                 menu.IsRoot = request.ParentId <= 0;
+                menu.ParentId = menu.IsRoot ? null : menu.ParentId;
 
                 //check if has role group
                 if (request.RoleGroupIds.Count > 0)
                 {
+                    menu.RoleGroups = new HashSet<Data.Entities.RoleGroup>();
+
                     foreach (int roleGroupId in request.RoleGroupIds)
                     {
-                        var roleGroup = DataContext.RoleGroups.FirstOrDefault(r => r.Id == roleGroupId);
+                        var roleGroup = DataContext.RoleGroups.Where(r => r.Id == roleGroupId).First();
                         
                         //add selected role group to menu
-                        menu.RoleGroups.Add(roleGroup);
+                        menu.RoleGroups.Add(roleGroup);  
                     }
+                }
+                else
+                {
+                    menu.RoleGroups = null;
                 }
                 
                 DataContext.Menus.Add(menu);
@@ -90,27 +120,34 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var menu = request.MapTo<Data.Entities.Menu>();
+                var item = DataContext.Entry(menu);
+
+                item.State = EntityState.Modified;
+                //Load RoleGroups Collection
+                item.Collection("RoleGroups").Load();
+
                 //set IsRoot if no menu as parent
                 menu.IsRoot = request.ParentId <= 0;
+                menu.ParentId = menu.IsRoot ? null : menu.ParentId;
+                //clear RoleGroups collection first
+                menu.RoleGroups.Clear();
 
-                //check if has role group
                 if (request.RoleGroupIds.Count > 0)
                 {
+                    //menu.RoleGroups = new HashSet<Data.Entities.RoleGroup>();
+
                     foreach (int roleGroupId in request.RoleGroupIds)
                     {
-                        var roleGroup = DataContext.RoleGroups.FirstOrDefault(r => r.Id == roleGroupId);
+                        var roleGroup = DataContext.RoleGroups.Find(roleGroupId);
 
                         //add selected role group to menu
                         menu.RoleGroups.Add(roleGroup);
                     }
                 }
-                else
-                {
-                    menu.RoleGroups = null;
-                }
 
-                DataContext.Menus.Attach(menu);
-                DataContext.Entry(menu).State = EntityState.Modified;
+                
+                //DataContext.Menus.Attach(menu);
+                //DataContext.Entry(menu).State = EntityState.Modified;
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "Menu item has been updated successfully";

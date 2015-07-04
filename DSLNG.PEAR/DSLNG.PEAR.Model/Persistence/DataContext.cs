@@ -43,7 +43,24 @@ namespace DSLNG.PEAR.Data.Persistence
             modelBuilder.Entity<Kpi>()
                         .HasMany(x => x.RelationModels)
                         .WithRequired(x => x.KpiParent);
-            
+
+            //modelBuilder.Entity<Menu>()
+            //    .HasKey(x => x.Id)
+            //    .HasOptional(x => x.Parent)
+            //    .WithMany()
+            //    .HasForeignKey(x => x.ParentId);
+
+            //modelBuilder.Entity<RoleGroup>()
+            //    .HasMany(x => x.Menus)
+            //    .WithMany(x=>x.RoleGroups)
+            //    .Map( x =>
+            //        {
+            //            x.ToTable("MenusRoleGroups");
+            //            x.MapLeftKey("MenuId");
+            //            x.MapRightKey("ParentId");
+            //        }
+            //    );
+
             base.OnModelCreating(modelBuilder);
         }
         //public DbEntries 

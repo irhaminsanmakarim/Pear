@@ -8,7 +8,7 @@ using Type = DSLNG.PEAR.Data.Entities.Type;
 
 namespace DSLNG.PEAR.Data.Installer
 {
-    public class DataInitializer : DropCreateDatabaseIfModelChanges<DataContext>
+    public class DataInitializer : DropCreateDatabaseIfModelChanges<DataContext>//DropCreateDatabaseAlways<DataContext>
     {
         protected override void Seed(DataContext context)
         {
@@ -65,27 +65,6 @@ namespace DSLNG.PEAR.Data.Installer
             var menuInstaller = new MenuInstaller(context);
             menuInstaller.Install();
 
-
-            //var menu1 = new Menu { Id = 1, IsRoot = true, Module = "Home", Order = 0, Name = "Home", IsActive = true, Menus = null, RoleGroups = null };
-            //var menu2 = new Menu { Id = 2, IsRoot = true, Module = "PMS", Order = 1, Name = "PMS", IsActive = true, Menus = null, RoleGroups = null };
-            //var menu3 = new Menu { Id = 3, IsRoot = true, Module = "Level", Order = 0, Name = "Level", IsActive = true, Menus = null, RoleGroups = null };
-            //context.Menus.AddOrUpdate(menu1);
-            //context.Menus.AddOrUpdate(menu2);
-            //context.Menus.AddOrUpdate(menu3);
-            //context.Users.AddOrUpdate(admin);
-
-            //AddUser(context);
-            //AddPilar(context);
-            //AddPmsData(context);
-            //AddGroup(context);
-            //AddMeasurement(context);
-            //AddConversion(context);
-            //AddMethod(context);
-            //AddPeriode(context);
-            //AddKpi(context);
-            //AddKpiTargets(context);
-            //AddKpiAchievements(context);
-            //AddPmsSummary(context);
             context.SaveChanges();
         }
 
