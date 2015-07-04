@@ -29,11 +29,11 @@ namespace DSLNG.PEAR.Services
 
             if (request.ParentId != null)
             {
-                menus = DataContext.Menus.Where(x => x.ParentId == request.ParentId).ToList();
+                menus = DataContext.Menus.Where(x => x.ParentId == request.ParentId).OrderBy(x => x.Order).ToList();
             }
             else
             {
-                menus = DataContext.Menus.Where(x => x.ParentId == null || x.ParentId == 0).ToList();
+                menus = DataContext.Menus.Where(x => x.ParentId == null || x.ParentId == 0).OrderBy(x => x.Order).ToList();
             }
 
             if (request.IncludeChildren)
@@ -54,7 +54,7 @@ namespace DSLNG.PEAR.Services
         {
             var Menus = new List<Data.Entities.Menu>();
 
-            Menus = DataContext.Menus.Where(x => x.ParentId == ParentId).ToList();
+            Menus = DataContext.Menus.Where(x => x.ParentId == ParentId).OrderBy(x => x.Order).ToList();
 
             if (Menus != null){
                 foreach (var menu in Menus)
