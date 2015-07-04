@@ -103,5 +103,88 @@ namespace DSLNG.PEAR.Services
                 Text = x.ToString()
             });
         }
+
+
+        public IEnumerable<Dropdown> GetLevels()
+        {
+            return DataContext.Levels.Select(x => new Dropdown
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+        }
+
+
+        public IEnumerable<Dropdown> GetRoleGroups()
+        {
+            return DataContext.RoleGroups.Select(x => new Dropdown
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+        }
+
+
+        public IEnumerable<Dropdown> GetTypes()
+        {
+            return DataContext.Types.Select(x => new Dropdown
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+        }
+
+
+        public IEnumerable<Dropdown> GetGroups()
+        {
+            return DataContext.Groups.Select(x => new Dropdown
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+        }
+
+
+        public IEnumerable<Dropdown> GetMethods()
+        {
+            return DataContext.Methods.Select(x => new Dropdown
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+        }
+
+        public IEnumerable<Dropdown> GetMeasurement()
+        {
+            return DataContext.Measurements.Select(x => new Dropdown
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+        }
+
+
+        public IEnumerable<Dropdown> GetYtdFormulas()
+        {
+            var ytd = Enum.GetValues(typeof(DSLNG.PEAR.Data.Enums.YtdFormula)).Cast<DSLNG.PEAR.Data.Enums.YtdFormula>();
+            return ytd.Select(x => new Dropdown { Text = x.ToString(), Value = x.ToString() }).ToList();
+        }
+
+        public IEnumerable<Dropdown> GetPeriodeTypes()
+        {
+            var periode = Enum.GetValues(typeof(DSLNG.PEAR.Data.Enums.PeriodeType)).Cast<DSLNG.PEAR.Data.Enums.PeriodeType>();
+            var ytd = Enum.GetValues(typeof(DSLNG.PEAR.Data.Enums.YtdFormula)).Cast<DSLNG.PEAR.Data.Enums.YtdFormula>();
+            return periode.Select(x => new Dropdown { Text = x.ToString(), Value = x.ToString() }).ToList();
+        }
+
+
+        public IEnumerable<Dropdown> GetKpis()
+        {
+            return DataContext.Kpis.Select(x => new Dropdown
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+        }
     }
 }

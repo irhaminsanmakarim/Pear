@@ -44,7 +44,16 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var kpi = DataContext.Kpis.First(x => x.Id == request.Id);
+                var kpi = DataContext.Kpis
+                    .Include(x=>x.Pillar)
+                    .Include(x=>x.Level)
+                    .Include(x=>x.RoleGroup)
+                    .Include(x=>x.Group)
+                    .Include(x=>x.Type)
+                    .Include(x=>x.Measurement)
+                    .Include(x=>x.Method)
+                    .Include(x=>x.RelationModels)
+                    .Include("RelationModels.Kpi").First(x => x.Id == request.Id);
                 var response = kpi.MapTo<GetKpiResponse>(); 
 
                 return response;
@@ -112,12 +121,15 @@ namespace DSLNG.PEAR.Services
                     var relation = new List<DSLNG.PEAR.Data.Entities.KpiRelationModel>();
                     foreach (var item in request.RelationModels)
                     {
-                        var kpiRelation = DataContext.Kpis.FirstOrDefault(x=>x.Id == item.Id);
-                        relation.Add(new DSLNG.PEAR.Data.Entities.KpiRelationModel
+                        if (item.KpiId != 0)
                         {
-                            Kpi = kpiRelation,
-                            Method = item.Method
-                        });
+                            var kpiRelation = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
+                            relation.Add(new DSLNG.PEAR.Data.Entities.KpiRelationModel
+                            {
+                                Kpi = kpiRelation,
+                                Method = item.Method
+                            });
+                        }
                     }
                     kpi.RelationModels = relation;
                 }
@@ -140,9 +152,37 @@ namespace DSLNG.PEAR.Services
             var response = new UpdateKpiResponse();
             try
             {
-                var kpi = request.MapTo<Kpi>();
-                DataContext.Kpis.Attach(kpi);
-                DataContext.Entry(kpi).State = EntityState.Modified;
+                var updateKpi = request.MapTo<Kpi>();
+                var existedkpi = DataContext.Kpis
+                    .Where(x => x.Id == request.Id)
+                    .Include(x => x.RelationModels)
+                    .Single();
+
+                var existedKpiEntry = DataContext.Entry(existedkpi);
+                existedKpiEntry.CurrentValues.SetValues(updateKpi);
+
+                foreach (var relationModel in updateKpi.RelationModels)
+                {
+                    var existedrelationModel = existedkpi.RelationModels.SingleOrDefault(x => x.Id == relationModel.Id && x.Id != 0);
+                    if (existedrelationModel != null)
+                    {
+                        var relationModelEntry = DataContext.Entry(existedrelationModel);
+                        relationModelEntry.CurrentValues.SetValues(relationModelEntry);
+                    }
+                    else
+                    {
+                        relationModel.Id = 0;
+                        existedkpi.RelationModels.Add(relationModel);
+                    }
+                }
+
+                foreach (var item in existedkpi.RelationModels.Where(x => x.Id != 0).ToList())
+                {
+                    if (updateKpi.RelationModels.All(x => x.Id != item.Id))
+                    {
+                        existedkpi.RelationModels.Remove(item);
+                    }
+                }
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "KPI item has been updated successfully";

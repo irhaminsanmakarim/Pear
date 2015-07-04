@@ -102,6 +102,7 @@
     <Compile Include="Responses\KpiTarget\CreateKpiTargetResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetKpiTargetsResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetPmsConfigsResponse.cs" />
+    <Compile Include="Responses\Kpi\KpiResponse\KpiRelationModel.cs" />
     <Compile Include="Responses\Menu\GetSiteMenusResponse.cs" />
     <Compile Include="Responses\Menu\Menu.cs" />
     <Compile Include="Responses\Method\CreateMethodResponse.cs" />

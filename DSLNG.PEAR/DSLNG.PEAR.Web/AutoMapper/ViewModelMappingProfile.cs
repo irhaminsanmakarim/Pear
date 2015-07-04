@@ -74,6 +74,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<CreateKpiViewModel, CreateKpiRequest>();
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.KpiRelationModel, DSLNG.PEAR.Services.Requests.Kpi.KpiRelationModel>();
             Mapper.CreateMap<GetKpiResponse, UpdateKpiViewModel>();
+            Mapper.CreateMap<DSLNG.PEAR.Services.Responses.Kpi.KpiRelationModel, DSLNG.PEAR.Web.ViewModels.Kpi.KpiRelationModel>();
             Mapper.CreateMap<UpdateKpiViewModel, UpdateKpiRequest>();
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.Level, DSLNG.PEAR.Services.Requests.Kpi.Level>();
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.RoleGroup, DSLNG.PEAR.Services.Requests.Kpi.RoleGroup>();
