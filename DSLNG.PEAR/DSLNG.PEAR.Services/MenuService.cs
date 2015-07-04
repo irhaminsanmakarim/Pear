@@ -26,23 +26,45 @@ namespace DSLNG.PEAR.Services
         {
             var response = new GetSiteMenusResponse();
             var menus = new List<Data.Entities.Menu>();
+
             if (request.ParentId != null)
             {
-                if (request.IncludeChildren)
-                    menus = DataContext.Menus.Include("Menus").Where(x => x.ParentId == request.ParentId).ToList();
-                else
-                    menus = DataContext.Menus.Where(x => x.ParentId == request.ParentId).ToList();
+                menus = DataContext.Menus.Where(x => x.ParentId == request.ParentId).ToList();
             }
             else
             {
-                if (request.IncludeChildren)
-                    menus = DataContext.Menus.Include("Menus").Where(x => x.ParentId == null || x.ParentId == 0).ToList();
-                else
-                    menus = DataContext.Menus.Where(x => x.ParentId == null || x.ParentId == 0).ToList();
+                menus = DataContext.Menus.Where(x => x.ParentId == null || x.ParentId == 0).ToList();
             }
+
+            if (request.IncludeChildren)
+            {
+                //looping to get the children, we dont use Include because only include 1st level child menus
+                foreach (var menu in menus)
+                {
+                    menu.Menus = this._GetMenuChildren(menu.Id);
+                }
+            }
+
             response.Menus = menus.MapTo<GetSiteMenusResponse.Menu>();
             
             return response;
+        }
+
+        private ICollection<Data.Entities.Menu> _GetMenuChildren(int ParentId)
+        {
+            var Menus = new List<Data.Entities.Menu>();
+
+            Menus = DataContext.Menus.Where(x => x.ParentId == ParentId).ToList();
+
+            if (Menus != null){
+                foreach (var menu in Menus)
+                {
+                    menu.Menus = this._GetMenuChildren(menu.Id);
+                }
+            }
+            
+
+            return Menus;
         }
 
         public GetMenusResponse GetMenus(GetMenusRequest request)

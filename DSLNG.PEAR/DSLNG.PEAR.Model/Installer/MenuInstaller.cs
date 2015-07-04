@@ -75,7 +75,8 @@ namespace DSLNG.PEAR.Data.Installer
                 IsRoot = true,
                 IsActive = true,
                 Name = "Assess",
-                Module = "Assess"
+                Module = "Assess",
+                Icon = "<i class='fa fa-edit'></i>"
             };
             _dataContext.Menus.AddOrUpdate(mainmenu4);
 
@@ -85,7 +86,8 @@ namespace DSLNG.PEAR.Data.Installer
                 IsRoot = true,
                 IsActive = true,
                 Name = "Report",
-                Module = "Report"
+                Module = "Report",
+                Icon = "<i class='fa fa-bar-chart-o'></i>"
             };
             _dataContext.Menus.AddOrUpdate(mainmenu5);
 
@@ -95,7 +97,8 @@ namespace DSLNG.PEAR.Data.Installer
                 IsRoot = true,
                 IsActive = true,
                 Name = "Setting",
-                Module = "Setting"
+                Module = "Setting",
+                Icon = "<i class='fa fa-cog'></i>"
             };
             _dataContext.Menus.AddOrUpdate(mainmenu6);
 
@@ -114,6 +117,66 @@ namespace DSLNG.PEAR.Data.Installer
                 Parent = _dataContext.Menus.Local.Where(x => x.Id==1).First()
             };
             _dataContext.Menus.AddOrUpdate(submenu1_1);
+
+            var subsubmenu1_1_1 = new Menu
+            {
+                Id = 9,
+                IsRoot = false,
+                IsActive = true,
+                Name = "Productivity & Efficiency",
+                Module = "Dashboard",
+                RoleGroups = new List<RoleGroup>(){
+                    _dataContext.RoleGroups.Local.Where(x=>x.Id==1).First(),
+                    _dataContext.RoleGroups.Local.Where(x=>x.Id==2).First()
+                },
+                Parent = _dataContext.Menus.Local.Where(x => x.Id == 7).First()
+            };
+            _dataContext.Menus.AddOrUpdate(subsubmenu1_1_1);
+
+            var subsubmenu1_1_2 = new Menu
+            {
+                Id = 10,
+                IsRoot = false,
+                IsActive = true,
+                Name = "Financial Strength",
+                Module = "Dashboard",
+                RoleGroups = new List<RoleGroup>(){
+                    _dataContext.RoleGroups.Local.Where(x=>x.Id==1).First(),
+                    _dataContext.RoleGroups.Local.Where(x=>x.Id==2).First()
+                },
+                Parent = _dataContext.Menus.Local.Where(x => x.Id == 7).First()
+            };
+            _dataContext.Menus.AddOrUpdate(subsubmenu1_1_2);
+
+            var subsubmenu1_1_3 = new Menu
+            {
+                Id = 11,
+                IsRoot = false,
+                IsActive = true,
+                Name = "Stakeholder Responsible",
+                Module = "Dashboard",
+                RoleGroups = new List<RoleGroup>(){
+                    _dataContext.RoleGroups.Local.Where(x=>x.Id==1).First(),
+                    _dataContext.RoleGroups.Local.Where(x=>x.Id==2).First()
+                },
+                Parent = _dataContext.Menus.Local.Where(x => x.Id == 7).First()
+            };
+            _dataContext.Menus.AddOrUpdate(subsubmenu1_1_3);
+
+            var subsubmenu1_1_4 = new Menu
+            {
+                Id = 12,
+                IsRoot = false,
+                IsActive = true,
+                Name = "Safety",
+                Module = "Dashboard",
+                RoleGroups = new List<RoleGroup>(){
+                    _dataContext.RoleGroups.Local.Where(x=>x.Id==1).First(),
+                    _dataContext.RoleGroups.Local.Where(x=>x.Id==2).First()
+                },
+                Parent = _dataContext.Menus.Local.Where(x => x.Id == 7).First()
+            };
+            _dataContext.Menus.AddOrUpdate(subsubmenu1_1_4);
 
             var submenu1_2 = new Menu
             {
