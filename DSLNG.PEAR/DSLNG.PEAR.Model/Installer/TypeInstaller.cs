@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Data.Installer
         {
             var type1 = new Type { 
                 Id = 1, 
+                Code = "CP",
                 Name = "Corporate Portfolio",
                 IsActive = true,
                 Remark = "-"
@@ -21,6 +22,7 @@ namespace DSLNG.PEAR.Data.Installer
             var type2 = new Type
             {
                 Id = 2,
+                Code = "PI",
                 Name = "Performance Indicator",
                 IsActive = true,
                 Remark = "-"
@@ -28,6 +30,7 @@ namespace DSLNG.PEAR.Data.Installer
             var type3 = new Type
             {
                 Id = 3,
+                Code = "I",
                 Name = "Indicator",
                 IsActive = true,
                 Remark = "-"

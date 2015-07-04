@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
-using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
-using DSLNG.PEAR.Services.Responses.Kpi;
-using DSLNG.PEAR.Services.Responses.Pillar;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
 using System.Data.Entity;
 using NCalc;
@@ -24,9 +22,57 @@ namespace DSLNG.PEAR.Services
         {
         }
 
-        public GetPmsSummaryResponse GetPmsSummary(GetPmsSummaryRequest request)
+        public UpdatePmsSummaryResponse UpdatePmsSummary(UpdatePmsSummaryRequest request)
         {
-            var response = new GetPmsSummaryResponse();
+            var response = new UpdatePmsSummaryResponse();
+            try
+            {
+                var updatedPmsSummary = request.MapTo<PmsSummary>();
+                var existedPmsSummary = DataContext.PmsSummaries
+                    .Where(x => x.Id == request.Id)
+                    .Include(x => x.ScoreIndicators)
+                    .Single();
+                var existedPmsSummaryEntry = DataContext.Entry(existedPmsSummary);
+                existedPmsSummaryEntry.CurrentValues.SetValues(updatedPmsSummary);
+
+                foreach (var scoreIndicator in updatedPmsSummary.ScoreIndicators)
+                {
+                    var existedScoreIndicator = existedPmsSummary.ScoreIndicators.SingleOrDefault(x => x.Id == scoreIndicator.Id && x.Id != 0);
+                    if (existedScoreIndicator != null)
+                    {
+                        var scoreIndicatorEntry = DataContext.Entry(existedScoreIndicator);
+                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicatorEntry);
+                    }
+                    else
+                    {
+                        scoreIndicator.Id = 0;
+                        existedPmsSummary.ScoreIndicators.Add(scoreIndicator);
+                    }
+                }
+
+                foreach (var item in existedPmsSummary.ScoreIndicators.Where(x => x.Id != 0).ToList())
+                {
+                    if (updatedPmsSummary.ScoreIndicators.All(x => x.Id != item.Id))
+                    {
+                        DataContext.ScoreIndicators.Remove(item);
+                    }
+                }
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Pms Summary has been updated";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public GetPmsSummaryReportResponse GetPmsSummaryReport(GetPmsSummaryReportRequest request)
+        {
+            var response = new GetPmsSummaryReportResponse();
             try
             {
                 //var xxx = DataContext.PmsSummaries.Include(x => x.PmsSummaryScoringIndicators.Select(a => a.)).ToList();
@@ -37,139 +83,140 @@ namespace DSLNG.PEAR.Services
                                             .Include("PmsConfigs.PmsConfigDetailsList.Kpi.Measurement")
                                             .Include("PmsConfigs.PmsConfigDetailsList.Kpi.KpiAchievements")
                                             .Include("PmsConfigs.PmsConfigDetailsList.Kpi.KpiTargets")
+                                            .Include("PmsConfigs.PmsConfigDetailsList.Kpi.Pillar")
                                             .Include("PmsConfigs.PmsConfigDetailsList.ScoreIndicators")
-                                            .First(x => x.IsActive && x.Year == request.Year);
-
-                var totalScoreScoringIndicators =
-                    pmsSummary.ScoreIndicators;
-
-                foreach (var pmsConfig in pmsSummary.PmsConfigs)
+                                            .FirstOrDefault(x => x.IsActive && x.Year == request.Year);
+                if (pmsSummary != null)
                 {
-                    foreach (var pmsConfigDetails in pmsConfig.PmsConfigDetailsList)
+                    foreach (var pmsConfig in pmsSummary.PmsConfigs)
                     {
-                        var kpiData = new GetPmsSummaryResponse.KpiData();
-                        kpiData.Id = pmsConfigDetails.Id;
-                        kpiData.Pillar = pmsConfig.Pillar.Name;
-                        kpiData.PillarId = pmsConfig.Pillar.Id;
-                        kpiData.Kpi = pmsConfigDetails.Kpi.Name;
-                        kpiData.Unit = pmsConfigDetails.Kpi.Measurement.Name;
-                        kpiData.Weight = pmsConfigDetails.Weight;
-                        kpiData.PillarOrder = pmsConfigDetails.Kpi.Pillar.Order;
-                        kpiData.KpiOrder = pmsConfigDetails.Kpi.Order;
-                        kpiData.PillarWeight = pmsConfig.Weight;
-
-                        #region KPI Achievement
-
-                        var kpiAchievementYearly =
-                            pmsConfigDetails.Kpi.KpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly);
-                        if (kpiAchievementYearly != null && kpiAchievementYearly.Value != null)
-                            kpiData.ActualYearly = kpiAchievementYearly.Value.Value;
-
-
-                        var kpiAchievementMonthly =
-                            pmsConfigDetails.Kpi.KpiAchievements.FirstOrDefault(
-                                x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month);
-                        if (kpiAchievementMonthly != null && kpiAchievementMonthly.Value.HasValue)
-                            kpiData.ActualMonthly = kpiAchievementMonthly.Value.Value;
-
-
-                        var kpiAchievementYtd = pmsConfigDetails.Kpi.KpiAchievements.Where(
-                            x =>
-                            x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue &&
-                            (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
-                        if (kpiAchievementYtd.Count > 0) kpiData.ActualYtd = 0;
-                        foreach (var achievementYtd in kpiAchievementYtd)
+                        foreach (var pmsConfigDetails in pmsConfig.PmsConfigDetailsList)
                         {
-                            if (achievementYtd.Value.HasValue)
-                                kpiData.ActualYtd += achievementYtd.Value;
-                        }
+                            var kpiData = new GetPmsSummaryReportResponse.KpiData();
+                            kpiData.Id = pmsConfigDetails.Id;
+                            kpiData.Pillar = pmsConfig.Pillar.Name;
+                            kpiData.PillarId = pmsConfig.Pillar.Id;
+                            kpiData.Kpi = pmsConfigDetails.Kpi.Name;
+                            kpiData.Unit = pmsConfigDetails.Kpi.Measurement.Name;
+                            kpiData.Weight = pmsConfigDetails.Weight;
+                            kpiData.PillarOrder = pmsConfigDetails.Kpi.Pillar.Order;
+                            kpiData.KpiOrder = pmsConfigDetails.Kpi.Order;
+                            kpiData.PillarWeight = pmsConfig.Weight;
 
-                        #endregion
+                            #region KPI Achievement
 
-                        #region KPI Target
-
-                        var kpiTargetYearly =
-                            pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly);
-                        if (kpiTargetYearly != null && kpiTargetYearly.Value != null)
-                            kpiData.TargetYearly = kpiTargetYearly.Value.Value;
-
-
-                        var kpiTargetMonthly =
-                            pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(
-                                x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month);
-                        if (kpiTargetMonthly != null && kpiTargetMonthly.Value.HasValue)
-                            kpiData.TargetMonthly = kpiTargetMonthly.Value.Value;
+                            var kpiAchievementYearly =
+                                pmsConfigDetails.Kpi.KpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly);
+                            if (kpiAchievementYearly != null && kpiAchievementYearly.Value != null)
+                                kpiData.ActualYearly = kpiAchievementYearly.Value.Value;
 
 
-                        var kpiTargetYtd = pmsConfigDetails.Kpi.KpiTargets.Where(
-                            x =>
-                            x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue &&
-                            (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
-                        if (kpiTargetYtd.Count > 0) kpiData.TargetYtd = 0;
-                        foreach (var targetYtd in kpiTargetYtd)
-                        {
-                            if (targetYtd.Value.HasValue)
-                                kpiData.TargetYtd += targetYtd.Value;
-                        }
+                            var kpiAchievementMonthly =
+                                pmsConfigDetails.Kpi.KpiAchievements.FirstOrDefault(
+                                    x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month);
+                            if (kpiAchievementMonthly != null && kpiAchievementMonthly.Value.HasValue)
+                                kpiData.ActualMonthly = kpiAchievementMonthly.Value.Value;
 
-                        #endregion
 
-                        #region Score
-
-                        if (kpiData.ActualYtd.HasValue && kpiData.TargetYtd.HasValue)
-                        {
-                            var indexYtd = (kpiData.ActualYtd.Value/kpiData.TargetYtd.Value);
-
-                            switch (pmsConfigDetails.ScoringType)
+                            var kpiAchievementYtd = pmsConfigDetails.Kpi.KpiAchievements.Where(
+                                x =>
+                                x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue &&
+                                (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
+                            if (kpiAchievementYtd.Count > 0) kpiData.ActualYtd = 0;
+                            foreach (var achievementYtd in kpiAchievementYtd)
                             {
-                                case ScoringType.Positive:
-                                    kpiData.Score = pmsConfigDetails.Weight*indexYtd;
-                                    break;
-                                case ScoringType.Negative:
-                                    if (indexYtd == 0)
-                                    {
-                                        response.IsSuccess = false;
-                                        response.Message =
-                                            string.Format(
-                                                @"KPI {0} memiliki nilai index YTD 0 dengan Nilai Scoring Type negative yang mengakibatkan terjadinya nilai infinity",
-                                                pmsConfigDetails.Kpi.Name);
-                                        return response;
-                                    }
-                                    kpiData.Score = pmsConfigDetails.Weight/indexYtd;
-                                    break;
-                                case ScoringType.Boolean:
-                                    bool isMoreThanZero = false;
-                                    var kpiAchievement =
-                                        pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue).ToList();
-                                    bool isNull = kpiAchievement.Count == 0;
-                                    foreach (var achievement in kpiAchievement)
-                                    {
-                                        if (achievement.Value > 0)
-                                            isMoreThanZero = true;
-                                    }
-
-                                    if (!isNull)
-                                    {
-                                        kpiData.Score = isMoreThanZero ? 0 : Double.Parse(kpiData.Weight.ToString());
-                                    }
-
-                                    break;
+                                if (achievementYtd.Value.HasValue)
+                                    kpiData.ActualYtd += achievementYtd.Value;
                             }
 
+                            #endregion
+
+                            #region KPI Target
+
+                            var kpiTargetYearly =
+                                pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly);
+                            if (kpiTargetYearly != null && kpiTargetYearly.Value != null)
+                                kpiData.TargetYearly = kpiTargetYearly.Value.Value;
+
+
+                            var kpiTargetMonthly =
+                                pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(
+                                    x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month);
+                            if (kpiTargetMonthly != null && kpiTargetMonthly.Value.HasValue)
+                                kpiData.TargetMonthly = kpiTargetMonthly.Value.Value;
+
+
+                            var kpiTargetYtd = pmsConfigDetails.Kpi.KpiTargets.Where(
+                                x =>
+                                x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue &&
+                                (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
+                            if (kpiTargetYtd.Count > 0) kpiData.TargetYtd = 0;
+                            foreach (var targetYtd in kpiTargetYtd)
+                            {
+                                if (targetYtd.Value.HasValue)
+                                    kpiData.TargetYtd += targetYtd.Value;
+                            }
+
+                            #endregion
+
+                            #region Score
+
+                            if (kpiData.ActualYtd.HasValue && kpiData.TargetYtd.HasValue)
+                            {
+                                var indexYtd = (kpiData.ActualYtd.Value / kpiData.TargetYtd.Value);
+
+                                switch (pmsConfigDetails.ScoringType)
+                                {
+                                    case ScoringType.Positive:
+                                        kpiData.Score = pmsConfigDetails.Weight * indexYtd;
+                                        break;
+                                    case ScoringType.Negative:
+                                        if (indexYtd == 0)
+                                        {
+                                            response.IsSuccess = false;
+                                            response.Message =
+                                                string.Format(
+                                                    @"KPI {0} memiliki nilai index YTD 0 dengan Nilai Scoring Type negative yang mengakibatkan terjadinya nilai infinity",
+                                                    pmsConfigDetails.Kpi.Name);
+                                            return response;
+                                        }
+                                        kpiData.Score = pmsConfigDetails.Weight / indexYtd;
+                                        break;
+                                    case ScoringType.Boolean:
+                                        bool isMoreThanZero = false;
+                                        var kpiAchievement =
+                                            pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue).ToList();
+                                        bool isNull = kpiAchievement.Count == 0;
+                                        foreach (var achievement in kpiAchievement)
+                                        {
+                                            if (achievement.Value > 0)
+                                                isMoreThanZero = true;
+                                        }
+
+                                        if (!isNull)
+                                        {
+                                            kpiData.Score = isMoreThanZero ? 0 : Double.Parse(kpiData.Weight.ToString());
+                                        }
+
+                                        break;
+                                }
+
+                            }
+
+                            #endregion
+
+                            kpiData.KpiColor = GetScoreColor(kpiData.Score, pmsConfigDetails.ScoreIndicators);
+
+                            response.KpiDatas.Add(kpiData);
                         }
 
-                        #endregion
-
-                        kpiData.KpiColor = GetScoreColor(kpiData.Score, pmsConfigDetails.ScoreIndicators);
-
-                        response.KpiDatas.Add(kpiData);
+                        response.KpiDatas = SetPmsConfigColor(response.KpiDatas, pmsConfig.ScoreIndicators,
+                                                              pmsConfig.Pillar.Id);
                     }
 
-                    response.KpiDatas = SetPmsConfigColor(response.KpiDatas, pmsConfig.ScoreIndicators,
-                                                          pmsConfig.Pillar.Id);
+                    response.KpiDatas = SetPmsSummaryColor(response.KpiDatas, pmsSummary.ScoreIndicators);
                 }
 
-                response.KpiDatas = SetPmsSummaryColor(response.KpiDatas, pmsSummary.ScoreIndicators);
                 response.IsSuccess = true;
             }
             catch (InvalidOperationException invalidOperationException)
@@ -184,7 +231,7 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        private IList<GetPmsSummaryResponse.KpiData> SetPmsConfigColor(IList<GetPmsSummaryResponse.KpiData> kpiDatas, ICollection<ScoreIndicator> scoreIndicators, int pillarId)
+        private IList<GetPmsSummaryReportResponse.KpiData> SetPmsConfigColor(IList<GetPmsSummaryReportResponse.KpiData> kpiDatas, ICollection<ScoreIndicator> scoreIndicators, int pillarId)
         {
             var data = kpiDatas.Where(x => x.PillarId == pillarId && x.Score.HasValue).ToList();
             double? totalScore = null;
@@ -207,7 +254,7 @@ namespace DSLNG.PEAR.Services
             return kpiDatas;
         }
 
-        private IList<GetPmsSummaryResponse.KpiData> SetPmsSummaryColor(IList<GetPmsSummaryResponse.KpiData> kpiDatas, ICollection<ScoreIndicator> scoreIndicators)
+        private IList<GetPmsSummaryReportResponse.KpiData> SetPmsSummaryColor(IList<GetPmsSummaryReportResponse.KpiData> kpiDatas, ICollection<ScoreIndicator> scoreIndicators)
         {
             var groupedPillars = kpiDatas.GroupBy(x => x.Pillar);
             double? totalScore = null;
@@ -221,7 +268,7 @@ namespace DSLNG.PEAR.Services
                 {
                     if (item.Score.HasValue)
                     {
-                        totalScore += item.Score.Value/100 * item.PillarWeight;
+                        totalScore += item.Score.Value / 100 * item.PillarWeight;
                     }
                 }
             }
@@ -286,7 +333,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.ScoreIndicators)
                     .First(x => x.Id == pmsConfigDetailId);
                 response.ScoreIndicators =
-                    pmsConfigDetails.ScoreIndicators.MapTo<GetScoreIndicatorsResponse.ScoreIndicator>();
+                    pmsConfigDetails.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
                 response.IsSuccess = true;
             }
             catch (ArgumentNullException argumentNullException)
@@ -329,7 +376,7 @@ namespace DSLNG.PEAR.Services
                     response.KpiUnit = config.Kpi.Measurement != null ? config.Kpi.Measurement.Name : "";
                     response.KpiPeriod = config.Kpi.Period.ToString();
                     response.ScoreIndicators =
-                        config.ScoreIndicators.MapTo<GetPmsDetailsResponse.ScoreIndicator>();
+                        config.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
                     response.Weight = config.Weight;
                     response.ScoringType = config.ScoringType.ToString();
                     var kpiActualYearly =
@@ -436,6 +483,182 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public UpdatePmsConfigResponse UpdatePmsConfig(UpdatePmsConfigRequest request)
+        {
+            var response = new UpdatePmsConfigResponse();
+            try
+            {
+                var updatedPmsConfig = request.MapTo<PmsConfig>();
+                var existedPmsConfig = DataContext.PmsConfigs
+                    .Where(x => x.Id == request.Id)
+                    .Include(x => x.PmsSummary)
+                    .Include(x => x.ScoreIndicators)
+                    .Single();
+                var existedPmsConfigEntry = DataContext.Entry(existedPmsConfig);
+                existedPmsConfigEntry.CurrentValues.SetValues(updatedPmsConfig);
+
+                foreach (var scoreIndicator in updatedPmsConfig.ScoreIndicators)
+                {
+                    var existedScoreIndicator = existedPmsConfig.ScoreIndicators.SingleOrDefault(x => x.Id == scoreIndicator.Id && x.Id != 0);
+                    if (existedScoreIndicator != null)
+                    {
+                        var scoreIndicatorEntry = DataContext.Entry(existedScoreIndicator);
+                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicatorEntry);
+                    }
+                    else
+                    {
+                        scoreIndicator.Id = 0;
+                        existedPmsConfig.ScoreIndicators.Add(scoreIndicator);
+                    }
+                }
+
+                foreach (var item in existedPmsConfig.ScoreIndicators.Where(x => x.Id != 0).ToList())
+                {
+                    if (updatedPmsConfig.ScoreIndicators.All(x => x.Id != item.Id))
+                    {
+                        DataContext.ScoreIndicators.Remove(item);
+                    }
+                }
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.PmsSummaryId = existedPmsConfig.PmsSummary.Id;
+                response.Message = "Pms Config has been updated";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public GetPmsConfigResponse GetPmsConfig(int id)
+        {
+            var response = new GetPmsConfigResponse();
+            try
+            {
+                var pmsConfig = DataContext.PmsConfigs
+                    .Include(x => x.ScoreIndicators)
+                    .Include(x => x.Pillar)
+                    .Single(x => x.Id == id);
+
+                response = pmsConfig.MapTo<GetPmsConfigResponse>();
+                response.IsSuccess = true;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+            return response;
+        }
+
+        public CreatePmsConfigDetailsResponse CreatePmsConfigDetails(CreatePmsConfigDetailsRequest request)
+        {
+            var response = new CreatePmsConfigDetailsResponse();
+            try
+            {
+                var pmsConfigDetails = request.MapTo<PmsConfigDetails>();
+                pmsConfigDetails.PmsConfig = DataContext.PmsConfigs
+                    .Include(x => x.PmsSummary)
+                    .Single(x => x.Id == request.PmsConfigId);
+                pmsConfigDetails.Kpi = DataContext.Kpis.Single(x => x.Id == request.KpiId);
+                pmsConfigDetails.IsActive = true;
+                DataContext.PmsConfigDetails.Add(pmsConfigDetails);
+                DataContext.SaveChanges();
+                response.PmsSummaryId = pmsConfigDetails.PmsConfig.PmsSummary.Id;
+                response.IsSuccess = true;
+                response.Message = "KPI has been added successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+
+            return response;
+        }
+
+        public CreatePmsConfigResponse CreatePmsConfig(CreatePmsConfigRequest request)
+        {
+            var response = new CreatePmsConfigResponse();
+
+            try
+            {
+                var pmsConfig = request.MapTo<PmsConfig>();
+                pmsConfig.Pillar = DataContext.Pillars.First(x => x.Id == request.PillarId);
+                pmsConfig.PmsSummary = DataContext.PmsSummaries.First(x => x.Id == request.PmsSummaryId);
+                pmsConfig.IsActive = true;
+                DataContext.PmsConfigs.Add(pmsConfig);
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "New Pillar has been addeed succefully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
+
+        public CreatePmsSummaryResponse CreatePmsSummary(CreatePmsSummaryRequest request)
+        {
+            var response = new CreatePmsSummaryResponse();
+            try
+            {
+                var pmsSummary = request.MapTo<PmsSummary>();
+                DataContext.PmsSummaries.Add(pmsSummary);
+                DataContext.SaveChanges();
+                response.Message = "Configuration has been added successfully";
+                response.IsSuccess = true;
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public GetPmsSummaryResponse GetPmsSummary(int id)
+        {
+            var response = new GetPmsSummaryResponse();
+            try
+            {
+                var pmsSummary = DataContext.PmsSummaries
+                                            .Include(x => x.ScoreIndicators)
+                                            .First(x => x.Id == id);
+                response = pmsSummary.MapTo<GetPmsSummaryResponse>();
+                response.IsSuccess = true;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
+
         private string GetScoreColor(double? score, IEnumerable<ScoreIndicator> scoreIndicators)
         {
             if (score.HasValue)
@@ -454,7 +677,7 @@ namespace DSLNG.PEAR.Services
             return "grey";
         }
 
-        private IList<GetPmsSummaryResponse.KpiData> SetPillarAndTotalScoreColor(IList<GetPmsSummaryResponse.KpiData> kpiDatas, PmsSummaryScoringIndicator pillarScoringIndicators, PmsSummaryScoringIndicator totalScoreScoringIndicators)
+        private IList<GetPmsSummaryReportResponse.KpiData> SetPillarAndTotalScoreColor(IList<GetPmsSummaryReportResponse.KpiData> kpiDatas, PmsSummaryScoringIndicator pillarScoringIndicators, PmsSummaryScoringIndicator totalScoreScoringIndicators)
         {
             IDictionary<string, double?[]> totalPillar = new Dictionary<string, double?[]>();
             var groupedPillars = kpiDatas.GroupBy(x => x.Pillar);
@@ -494,10 +717,10 @@ namespace DSLNG.PEAR.Services
             }
 
             return kpiDatas.Select(x =>
-                {
-                    x.TotalScoreColor = GetScoreColor(allTotalScore, totalScoreScoringIndicators.ScoreIndicators);
-                    return x;
-                }).ToList();
+            {
+                x.TotalScoreColor = GetScoreColor(allTotalScore, totalScoreScoringIndicators.ScoreIndicators);
+                return x;
+            }).ToList();
         }
     }
 }

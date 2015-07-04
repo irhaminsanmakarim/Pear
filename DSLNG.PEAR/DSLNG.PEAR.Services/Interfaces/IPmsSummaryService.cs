@@ -10,12 +10,31 @@ namespace DSLNG.PEAR.Services.Interfaces
 {
     public interface IPmsSummaryService
     {
-        GetPmsSummaryResponse GetPmsSummary(GetPmsSummaryRequest request);
+        CreatePmsSummaryResponse CreatePmsSummary(CreatePmsSummaryRequest request);
+        UpdatePmsSummaryResponse UpdatePmsSummary(UpdatePmsSummaryRequest request);
+        GetPmsSummaryReportResponse GetPmsSummaryReport(GetPmsSummaryReportRequest request);
+        GetPmsSummaryResponse GetPmsSummary(int id);
         GetPmsSummaryListResponse GetPmsSummaryList(GetPmsSummaryListRequest request);
         GetPmsSummaryConfigurationResponse GetPmsSummaryConfiguration(GetPmsSummaryConfigurationRequest request);
         GetScoreIndicatorsResponse GetScoreIndicators(int pmsConfigDetailId);
         GetPmsDetailsResponse GetPmsDetails(GetPmsDetailsRequest request);
         GetPmsConfigDetailsResponse GetPmsConfigDetails(int id);
         GetKpisByPillarIdResponse GetKpis(int pillarId);
+
+        #region PMS Config
+
+        CreatePmsConfigResponse CreatePmsConfig(CreatePmsConfigRequest request);
+        UpdatePmsConfigResponse UpdatePmsConfig(UpdatePmsConfigRequest request);
+        GetPmsConfigResponse GetPmsConfig(int id);
+
+        #endregion
+
+        #region PmsConfigDetails
+
+        CreatePmsConfigDetailsResponse CreatePmsConfigDetails(CreatePmsConfigDetailsRequest request);
+
+        #endregion
+
+
     }
 }

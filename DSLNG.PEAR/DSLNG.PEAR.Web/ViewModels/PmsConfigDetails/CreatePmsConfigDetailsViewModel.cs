@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using DSLNG.PEAR.Web.ViewModels.PmsSummary;
+using DSLNG.PEAR.Web.ViewModels.Common.PmsSummary;
 
-namespace DSLNG.PEAR.Web.ViewModels.CorporatePortofolio
+namespace DSLNG.PEAR.Web.ViewModels.PmsConfigDetails
 {
     public class CreatePmsConfigDetailsViewModel
     {
@@ -17,10 +15,14 @@ namespace DSLNG.PEAR.Web.ViewModels.CorporatePortofolio
                 };
         }
 
+        public int PmsConfigId { get; set; }
         public string PillarName { get; set; }
         public IEnumerable<SelectListItem> Kpis { get; set; }
+        [Required]
         public int KpiId { get; set; }
+        [Required]
         public double Weight { get; set; }
+        [Required]
         public string ScoringType { get; set; }
         public IEnumerable<SelectListItem> ScoringTypes { get; set; }
         public IList<ScoreIndicatorViewModel> ScoreIndicators { get; set; }

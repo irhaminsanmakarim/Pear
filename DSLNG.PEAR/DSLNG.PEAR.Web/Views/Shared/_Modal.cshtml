@@ -1,0 +1,28 @@
+﻿<!-- Modal -->
+<div class="modal fade" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                Please wait.
+                <br />
+                it still loading ..
+                
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#modalDialog').on('hidden.bs.modal', function (e) {
+            $(this).removeData('bs.modal');
+        });
+    });
+</script>
+

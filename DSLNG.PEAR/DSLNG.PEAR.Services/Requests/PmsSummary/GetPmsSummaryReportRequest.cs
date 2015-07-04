@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.PmsSummary
 {
-    public class GetPmsSummaryRequest
+    public class GetPmsSummaryReportRequest
     {
         public int Year { get; set; }
         public int Month { get; set; }

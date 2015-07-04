@@ -20,11 +20,36 @@ namespace DSLNG.PEAR.Data.Installer
 
         public void Install()
         {
-            var periode = new Periode();
-            periode.Id = 1;
-            periode.Name = PeriodeType.Monthly;
-            periode.Remark = "Test";
-            _dataContext.Periodes.AddOrUpdate(periode);
+            var hourly = new Periode { 
+                Id = 1,
+                Name = PeriodeType.Hourly
+            };
+            var daily = new Periode
+            {
+                Id = 1,
+                Name = PeriodeType.Daily
+            };
+            var weekly = new Periode
+            {
+                Id = 1,
+                Name = PeriodeType.Weekly
+            };
+            var monthly = new Periode
+            {
+                Id = 1,
+                Name = PeriodeType.Monthly
+            };
+            var yearly = new Periode
+            {
+                Id = 1,
+                Name = PeriodeType.Yearly
+            };
+            _dataContext.Periodes.AddOrUpdate(hourly);
+            _dataContext.Periodes.AddOrUpdate(daily);
+            _dataContext.Periodes.AddOrUpdate(weekly);
+            _dataContext.Periodes.AddOrUpdate(monthly);
+            _dataContext.Periodes.AddOrUpdate(yearly);
+
         }
     }
 }

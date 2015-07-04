@@ -1,6 +1,7 @@
 ﻿
 
 using System.Collections.Generic;
+using DSLNG.PEAR.Services.Common.PmsSummary;
 
 namespace DSLNG.PEAR.Services.Responses.PmsSummary
 {
@@ -37,12 +38,6 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
             public string Method { get; set; }
             public double? ActualYearly { get; set; }
             public double? ActualMonthly { get; set; }
-        }
-
-        public class ScoreIndicator
-        {
-            public string Expression { get; set; }
-            public string Color { get; set; }
         }
     }
 

@@ -13,15 +13,127 @@ namespace DSLNG.PEAR.Data.Installer
         }
         public void Install()
         {
-            var caseMeasurement = new Measurement
+            var meas1 = new Measurement {
+                Id = 1,
+                Name = "tbtu",
+                IsActive = true
+            };
+            var meas2 = new Measurement
             {
                 Id = 1,
-                IsActive = true,
-                Name = "Case",
-                Remark = "Cases"
+                Name = "MMSCF",
+                IsActive = true
             };
+            
+            var meas3 = new Measurement
+            {
+                Id = 1,
+                Name = "MT",
+                IsActive = true
+            };
+            var meas4 = new Measurement
+            {
+                Id = 1,
+                Name = "%",
+                IsActive = true
+            };
+            var meas5 = new Measurement
+            {
+                Id = 1,
+                Name = "days",
+                IsActive = true
+            };
+            var meas6 = new Measurement
+            {
+                Id = 1,
+                Name = "Case",
+                IsActive = true
+            };
+            var meas7 = new Measurement
+            {
+                Id = 1,
+                Name = "Cargo",
+                IsActive = true
+            };
+            var meas8 = new Measurement
+            {
+                Id = 1,
+                Name = "USD(Mio)",
+                IsActive = true
+            };
+            var meas9 = new Measurement
+            {
+                Id = 1,
+                Name = "Times",
+                IsActive = true
+            };
+            var meas10 = new Measurement
+            {
+                Id = 1,
+                Name = "USD/mmbtu",
+                IsActive = true
+            };
+            var meas11 = new Measurement
+            {
+                Id = 1,
+                Name = "Number",
+                IsActive = true
+            };
+            var meas12 = new Measurement
+            {
+                Id = 1,
+                Name = "USD/pax",
+                IsActive = true
+            };
+            var meas13 = new Measurement
+            {
+                Id = 1,
+                Name = "USD",
+                IsActive = true
+            };
+            var meas14 = new Measurement
+            {
+                Id = 1,
+                Name = "hour",
+                IsActive = true
+            };
+            var meas15 = new Measurement
+            {
+                Id = 1,
+                Name = "MMSCFD",
+                IsActive = true
+            };
+            var meas16 = new Measurement
+            {
+                Id = 1,
+                Name = "MMBBL",
+                IsActive = true
+            };
+            var meas17 = new Measurement
+            {
+                Id = 1,
+                Name = "USD/bbl",
+                IsActive = true
+            };
+            
+            _context.Measurements.Add(meas1);
+            _context.Measurements.Add(meas2);
+            _context.Measurements.Add(meas3);
+            _context.Measurements.Add(meas4);
+            _context.Measurements.Add(meas5);
+            _context.Measurements.Add(meas6);
+            _context.Measurements.Add(meas7);
+            _context.Measurements.Add(meas8);
+            _context.Measurements.Add(meas9);
+            _context.Measurements.Add(meas10);
+            _context.Measurements.Add(meas11);
+            _context.Measurements.Add(meas12);
+            _context.Measurements.Add(meas13);
+            _context.Measurements.Add(meas14);
+            _context.Measurements.Add(meas15);
+            _context.Measurements.Add(meas16);
+            _context.Measurements.Add(meas17);
 
-            _context.Measurements.Add(caseMeasurement);
         }
     }
 }

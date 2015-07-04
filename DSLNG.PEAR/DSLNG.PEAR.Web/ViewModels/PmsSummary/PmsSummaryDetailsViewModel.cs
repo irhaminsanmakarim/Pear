@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Web.ViewModels.Common.PmsSummary;
 
-namespace DSLNG.PEAR.Web.ViewModels.CorporatePortofolio
+namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 {
-    public class PmsSummaryConfigurationViewModel
+    public class PmsSummaryDetailsViewModel
     {
         public IList<SelectListItem> Pillars { get; set; }
         //public PillarSelectList PillarSelect { get;set;}
         public IList<SelectListItem> Kpis { get; set; }
         public IList<PmsConfig> PmsConfigs { get; set; }
-        public int[] PillarIds { get; set; } 
+        public int[] PillarIds { get; set; }
+        public int PmsSummaryId { get; set; }
         /*public class Pillar
         {
             public int Id { get; set; }
@@ -52,13 +51,9 @@ namespace DSLNG.PEAR.Web.ViewModels.CorporatePortofolio
             public string KpiMeasurement { get; set; }
             public string ScoringType { get; set; }
             //public bool KpiAsGraphic { get; set; }
-            public IList<ScoreIndicator> ScoreIndicators { get; set; }
+            public IList<ScoreIndicatorViewModel> ScoreIndicators { get; set; }
         }
 
-        public class ScoreIndicator
-        {
-            public string Color { get; set; }
-            public string Expression { get; set; }
-        }
+       
     }
 }

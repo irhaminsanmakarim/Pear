@@ -716,9 +716,9 @@ String.prototype.isNullOrEmpty = function () {
     }
 
     $(document).ready(function () {
-        Pear.Artifact.Designer.GraphicSettingSetup();
+        /*Pear.Artifact.Designer.GraphicSettingSetup();
         Pear.Artifact.Designer.Preview();
-        Pear.Artifact.Designer.ListSetup();
+        Pear.Artifact.Designer.ListSetup();*/
     });
     window.Pear = Pear;
 }(window, jQuery, undefined));

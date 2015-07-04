@@ -12,6 +12,7 @@ namespace DSLNG.PEAR.Data.Entities
         [MaxLength(100)]
         [Index(IsUnique = true)]
         public string Username { get; set; }
+        public string Password { get; set; }
 
         [MaxLength(100)]
         [Index(IsUnique = true)]
@@ -22,6 +23,7 @@ namespace DSLNG.PEAR.Data.Entities
 
         public bool IsActive { get; set; }
 
-        //public string ChangeModel { get; set; }
+        //public bool IsActive2 { get; set; }
+        public string ChangeModel { get; set; }
     }
 }

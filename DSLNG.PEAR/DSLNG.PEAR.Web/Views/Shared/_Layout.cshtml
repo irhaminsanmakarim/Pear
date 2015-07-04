@@ -45,7 +45,8 @@
                     <img src="@Url.Content("~/Content/img/logo_blue.png")" />
                 </div>
             </div>
-            <ul class="main-nav">
+
+            @*<ul class="main-nav">
                 <li class="active"><a href="#" class="menu_dashboard"><i class="fa fa-dashboard"></i><span>DASH BOARD</span></a>
                     <ul class="sub-nav">
                         <li>
@@ -115,7 +116,7 @@
                             <ul class="sublevel">
                                 <li><a href="#">Scenario List</a></li>
                                 <li><a href="#">EM Summary</a></li>
-                                <li><a href="@Url.Action("Index", "CorporatePortofolio")">Configuration</a></li>
+                                <li><a href="@Url.Action("Configuration", "PmsSummary")">Configuration</a></li>
                                 <li><a href="#">Master</a></li>
                             </ul>
                         </li>
@@ -132,7 +133,10 @@
                         <li><a href="#">Master</a></li>
                     </ul>
                 </li>
-            </ul>
+            </ul>*@
+
+            @Html.Action("SiteMap", "Menu")
+
             <div class="left-content-toggle">
                 <i class="fa fa-caret-left"></i>
                 <i style="display: none" class="fa fa-caret-right"></i>
