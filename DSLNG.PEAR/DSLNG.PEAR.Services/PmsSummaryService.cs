@@ -445,12 +445,6 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Kpi.Pillar)
                     .First(x => x.Id == id);
                 response = pmsConfigDetails.MapTo<GetPmsConfigDetailsResponse>();
-                response.Pillars = DataContext.Pillars.ToList().MapTo<GetPmsConfigDetailsResponse.Pillar>();
-                response.Kpis = DataContext.Kpis
-                    .Include(x => x.Level)
-                    .Include(x => x.Pillar)
-                    .Where(x => x.Level.Code == "COR").ToList()
-                    .MapTo<GetPmsConfigDetailsResponse.Kpi>();
                 response.IsSuccess = true;
             }
             catch (ArgumentNullException argumentNullException)
@@ -585,6 +579,56 @@ namespace DSLNG.PEAR.Services
             catch (ArgumentNullException argumentNullException)
             {
                 response.Message = argumentNullException.Message;
+            }
+
+            return response;
+        }
+
+        public UpdatePmsConfigDetailsResponse UpdatePmsConfigDetails(UpdatePmsConfigDetailsRequest request)
+        {
+            var response = new UpdatePmsConfigDetailsResponse();
+            try
+            {
+                var updatedPmsConfigDetails = request.MapTo<PmsConfigDetails>();
+                var existedPmsConfigDetails = DataContext.PmsConfigDetails
+                    .Where(x => x.Id == request.Id)
+                    .Include(x => x.PmsConfig.PmsSummary)
+                    .Include(x => x.ScoreIndicators)
+                    .Single();
+                var existedPmsConfigDetailsEntry = DataContext.Entry(existedPmsConfigDetails);
+                existedPmsConfigDetailsEntry.CurrentValues.SetValues(updatedPmsConfigDetails);
+
+                foreach (var scoreIndicator in updatedPmsConfigDetails.ScoreIndicators)
+                {
+                    var existedScoreIndicator = existedPmsConfigDetails.ScoreIndicators.SingleOrDefault(x => x.Id == scoreIndicator.Id && x.Id != 0);
+                    if (existedScoreIndicator != null)
+                    {
+                        var scoreIndicatorEntry = DataContext.Entry(existedScoreIndicator);
+                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicatorEntry);
+                    }
+                    else
+                    {
+                        scoreIndicator.Id = 0;
+                        existedPmsConfigDetails.ScoreIndicators.Add(scoreIndicator);
+                    }
+                }
+
+                foreach (var item in existedPmsConfigDetails.ScoreIndicators.Where(x => x.Id != 0).ToList())
+                {
+                    if (updatedPmsConfigDetails.ScoreIndicators.All(x => x.Id != item.Id))
+                    {
+                        DataContext.ScoreIndicators.Remove(item);
+                    }
+                }
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.PmsSummaryId = existedPmsConfigDetails.PmsConfig.PmsSummary.Id;
+                response.Message = "KPI has been updated successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
             }
 
             return response;

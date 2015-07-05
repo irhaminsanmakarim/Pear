@@ -37,6 +37,8 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="DevExpress.Data.v14.2, Version=14.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpo.v14.2, Version=14.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -88,6 +90,7 @@
     <Compile Include="Requests\PmsSummary\CreatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsConfigRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsSummaryRequest.cs" />
+    <Compile Include="Requests\PmsSummary\UpdatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigRequest.cs" />
     <Compile Include="Responses\Artifact\CreateArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactResponse.cs" />
@@ -230,6 +233,7 @@
     <Compile Include="Responses\PmsSummary\GetPmsSummaryResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetScoreIndicatorsResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsConfigDetailsResponse.cs" />
+    <Compile Include="Responses\PmsSummary\UpdatePmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\PmsSummary\UpdatePmsConfigResponse.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsSummaryRequest.cs" />
     <Compile Include="Responses\PmsSummary\UpdatePmsSummaryResponse.cs" />

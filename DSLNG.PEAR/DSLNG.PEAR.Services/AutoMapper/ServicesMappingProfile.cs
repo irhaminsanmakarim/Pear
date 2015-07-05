@@ -216,13 +216,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.PmsConfigDetailsList, y => y.MapFrom(z => z.PmsConfigDetailsList));
             Mapper.CreateMap<PmsConfigDetails, GetPmsSummaryConfigurationResponse.PmsConfigDetails>();
 
-            Mapper.CreateMap<PmsConfigDetails, GetPmsConfigDetailsResponse>()
-                  .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
-                  .ForMember(x => x.PillarId, y => y.MapFrom(z => z.Kpi.Pillar.Id));
-
-            Mapper.CreateMap<Kpi, GetPmsConfigDetailsResponse.Kpi>()
-                  .ForMember(x => x.PillarId, y => y.MapFrom(z => z.Pillar.Id));
-            Mapper.CreateMap<Data.Entities.Pillar, GetPmsConfigDetailsResponse.Pillar>();
+            
             
             Mapper.CreateMap<CreateKpiTargetRequest.KpiTarget, KpiTarget>();
             Mapper.CreateMap<Kpi, GetKpisByPillarIdResponse.Kpi>();
@@ -262,6 +256,15 @@ namespace DSLNG.PEAR.Services.AutoMapper
         {
             Mapper.CreateMap<CreatePmsConfigDetailsRequest, PmsConfigDetails>()
                   .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof (ScoringType), z.ScoringType)));
+
+            Mapper.CreateMap<PmsConfigDetails, GetPmsConfigDetailsResponse>()
+                  .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))
+                  .ForMember(x => x.PillarId, y => y.MapFrom(z => z.Kpi.Pillar.Id))
+                  .ForMember(x => x.KpiName, y => y.MapFrom(z => z.Kpi.Name))
+                  .ForMember(x => x.PillarName, y => y.MapFrom(z => z.Kpi.Pillar.Name));
+
+            Mapper.CreateMap<UpdatePmsConfigDetailsRequest, PmsConfigDetails>()
+                .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof(ScoringType), z.ScoringType)));
         }
     }
 }

@@ -663,7 +663,7 @@
     <Compile Include="ViewModels\Pillar\CreatePillarViewModel.cs" />
     <Compile Include="ViewModels\Pillar\PillarViewModel.cs" />
     <Compile Include="ViewModels\Common\PmsSummary\ScoreIndicatorViewModel.cs" />
-    <Compile Include="ViewModels\PmsSummary\DialogPmsConfigDetailViewModel.cs" />
+    <Compile Include="ViewModels\PmsConfigDetails\UpdatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\ScoreIndicatorDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsReportDetailsViewModel.cs" />
     <Compile Include="ViewModels\Pillar\UpdatePillarViewModel.cs" />

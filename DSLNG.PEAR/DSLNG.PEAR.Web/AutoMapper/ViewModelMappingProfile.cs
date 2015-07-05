@@ -245,24 +245,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
             Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
 
-            Mapper.CreateMap<GetPmsConfigDetailsResponse, DialogPmsConfigDetailViewModel>()
-                .ForMember(x => x.ScoringTypes, y => y.MapFrom(z => new List<SelectListItem>
-                      {
-                          new SelectListItem {Text = ScoringType.Positive.ToString(), Value = ScoringType.Positive.ToString()},
-                          new SelectListItem {Text = ScoringType.Negative.ToString(), Value = ScoringType.Negative.ToString()},
-                          new SelectListItem {Text = ScoringType.Boolean.ToString(), Value = ScoringType.Boolean.ToString()}
-                      }))
-                  .ForMember(x => x.Pillars, y => y.MapFrom(z => z.Pillars.Select(x => new SelectListItem
-                      {
-                          Value = x.Id.ToString(),
-                          Text = x.Name.ToString()
-                      })))
-                      .ForMember(x => x.Kpis, y => y.MapFrom(z => z.Kpis.Where(a => a.PillarId == z.PillarId)
-                          .Select(x => new SelectListItem
-                      {
-                          Value = x.Id.ToString(),
-                          Text = x.Name.ToString()
-                      })));
+            
+                  
+                  
             Mapper.CreateMap<ScoreIndicatorViewModel, ScoreIndicator>();
             Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
             
@@ -295,6 +280,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
         private void ConfigurePmsConfigDetails()
         {
             Mapper.CreateMap<CreatePmsConfigDetailsViewModel, CreatePmsConfigDetailsRequest>();
+            Mapper.CreateMap<GetPmsConfigDetailsResponse, UpdatePmsConfigDetailsViewModel>();
+            Mapper.CreateMap<UpdatePmsConfigDetailsViewModel, UpdatePmsConfigDetailsRequest>();
         }
 
         private void ConfigureKpiTarget()
