@@ -86,7 +86,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<Kpi, GetKpiToSeriesResponse.Kpi>();
             Mapper.CreateMap<Kpi, GetKpisResponse.Kpi>();
-            Mapper.CreateMap<CreateKpiRequest, Kpi>();
+            Mapper.CreateMap<CreateKpiRequest, Kpi>()
+                .ForMember(k => k.Period, o => o.MapFrom(k => k.Periode));
             Mapper.CreateMap<CreateKpiRequest, Data.Entities.Type>();
             Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.KpiRelationModel, DSLNG.PEAR.Data.Entities.KpiRelationModel>();
             //Mapper.CreateMap<DSLNG.PEAR.Services.Requests.Kpi.Level, Data.Entities.Level>();
@@ -102,7 +103,18 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.RoleGroup, GetKpisResponse.RoleGroup>();
             Mapper.CreateMap<Data.Entities.Type, GetKpisResponse.Type>();
             Mapper.CreateMap<Data.Entities.Pillar, GetKpisResponse.Pillar>();
-            Mapper.CreateMap<Kpi, GetKpiResponse>();
+            Mapper.CreateMap<Kpi, GetKpiResponse>()
+                .ForMember(k => k.LevelId, o => o.MapFrom(x => x.Level.Id))
+                .ForMember(k => k.GroupId, o => o.MapFrom(x => x.Group.Id))
+                .ForMember(k => k.RoleGroupId, o => o.MapFrom(x => x.RoleGroup.Id))
+                .ForMember(k => k.MeasurementId, o => o.MapFrom(x => x.Measurement.Id))
+                .ForMember(k => k.MethodId, o => o.MapFrom(x => x.Method.Id))
+                .ForMember(k => k.TypeId, o => o.MapFrom(x => x.Type.Id))
+                .ForMember(k => k.YtdFormulaValue, o => o.MapFrom(x => x.YtdFormula.ToString()))
+                .ForMember(k => k.PeriodeValue, o => o.MapFrom(x => x.Period.ToString()))                
+                .ForMember(k => k.RelationModels, o => o.MapFrom(x => x.RelationModels));
+            Mapper.CreateMap<DSLNG.PEAR.Data.Entities.KpiRelationModel, DSLNG.PEAR.Services.Responses.Kpi.KpiRelationModel>()
+                .ForMember(k => k.KpiId, o => o.MapFrom(k => k.Kpi.Id));
             Mapper.CreateMap<UpdateKpiRequest, Kpi>();
 
             Mapper.CreateMap<Data.Entities.Measurement, GetMeasurementsResponse>();

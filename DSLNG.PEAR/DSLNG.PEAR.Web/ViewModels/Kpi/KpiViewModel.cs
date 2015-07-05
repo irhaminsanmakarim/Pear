@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.ViewModels.Kpi
 {
@@ -146,8 +147,15 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
 
         public class KpiRelationModel
         {
-            public int Id { get; set; }
+            public KpiRelationModel()
+            {
+                Methods = new List<SelectListItem>();
+                Methods.Add(new SelectListItem { Text = "Quantitative", Value = "Quantitative" });
+                Methods.Add(new SelectListItem { Text = "Qualitative", Value = "Qualitative" });
+            }
+            public int KpiId { get; set; }
             public string Method { get; set; }
+            public List<SelectListItem> Methods { get; set; }
         }
 
         public class KpiTarget
