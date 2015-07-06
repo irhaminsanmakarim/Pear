@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace DSLNG.PEAR.Services.Responses.Artifact
 {
-    public class GetChartDataResponse
+    public class GetCartesianChartDataResponse
     {
-        public GetChartDataResponse()
+        public GetCartesianChartDataResponse()
         {
             Series = new List<SeriesResponse>();
         }
@@ -16,11 +16,12 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public class SeriesResponse
         {
             public SeriesResponse() {
-                data = new List<double>();
+                Data = new List<double>();
             }
-            public string name { get; set; }
-            public IList<double> data { get; set; }
-            public string stack { get; set; }
+            public string Name { get; set; }
+            public IList<double> Data { get; set; }
+            public string Stack { get; set; }
+            public string Color { get; set; }
         }
     }
 }

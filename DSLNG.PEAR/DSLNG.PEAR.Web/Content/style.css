@@ -177,7 +177,13 @@ aside.left-content > * {
         height: 100%;
     }
 
-.series-template.original, .stack-template.original, .series-details-holder, .value-axis, .stacks-holder, #range-holder, #hidden-fields-holder {
+.series-template.original, 
+.stack-template.original, 
+.series-details-holder .form-group, 
+.value-axis, 
+.stacks-holder, 
+#range-holder, 
+#hidden-fields-holder {
     display: none !important;
 }
 
@@ -185,6 +191,10 @@ aside.left-content > * {
 .stack-template,
 .plot-band-template {
     position: relative;
+}
+
+.stack-template {
+    margin:25px 0 0 204px;
 }
 
     .series-template .remove,
@@ -197,9 +207,10 @@ aside.left-content > * {
 
 
 
-    .series-template.singlestack .series-details-holder,
+    .series-template.singlestack .series-details-holder .form-group:not(.value-axis),
     .series-template.multistacks .stacks-holder,
     .series-template.singlestack.Custom .value-axis,
+    .series-template.multistacks.Custom .value-axis,
     .series-template.singlestack,
     .series-template.multistacks,
     #range-holder.interval {
@@ -448,11 +459,13 @@ th {
     font-weight: normal;
 }
 
-
+.colorpicker .input-group-addon {
+    padding:3px 4px;
+}
 .colorpicker .input-group-addon i {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
     vertical-align: text-top;
     cursor: pointer;
 }
@@ -501,7 +514,7 @@ label {
     color: #3f454f;
     font-weight: normal;
     padding-right: 10px;
-    width: 200px;
+    width: 180px;
 }
 
 .form-control {

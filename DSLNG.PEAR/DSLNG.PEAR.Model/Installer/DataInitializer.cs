@@ -41,14 +41,14 @@ namespace DSLNG.PEAR.Data.Installer
             var pillarsInstaller = new PillarsInstaller(context);
             pillarsInstaller.Installer();
 
-            //var kpisInstaller = new KpisInstaller(context);
-            //kpisInstaller.Install();
+            var kpisInstaller = new KpisInstaller(context);
+            kpisInstaller.Install();
 
-            //var kpiTargetsInstaller = new KpiTargetsInstaller(context);
-            //kpiTargetsInstaller.Install();
+            var kpiTargetsInstaller = new KpiTargetsInstaller(context);
+            kpiTargetsInstaller.Install();
 
-            //var kpiAchievementsInstaller = new KpiAchievementsInstaller(context);
-            //kpiAchievementsInstaller.Install();
+            var kpiAchievementsInstaller = new KpiAchievementsInstaller(context);
+            kpiAchievementsInstaller.Install();
 
             //var pmsSummariesInstaller = new PmsSummariesInstaller(context);
             //pmsSummariesInstaller.Install();
