@@ -93,6 +93,8 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var viewModel = new ArtifactDesignerViewModel();
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "bar", Text = "Bar" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "baraccumulative", Text = "Bar Accumulative" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "barachievement", Text = "Bar Achievement" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
 
@@ -115,6 +117,30 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new BarChartViewModel();
                         viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
                         viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new BarChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new BarChartViewModel.StackViewModel());
+                        viewModel.Series.Add(series);
+                        var artifactViewModel = new ArtifactDesignerViewModel();
+                        artifactViewModel.BarChart = viewModel;
+                        return PartialView("~/Views/BarChart/_Create.cshtml", artifactViewModel);
+                    }
+                case "baraccumulative":
+                    {
+                        var viewModel = new BarChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new BarChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new BarChartViewModel.StackViewModel());
+                        viewModel.Series.Add(series);
+                        var artifactViewModel = new ArtifactDesignerViewModel();
+                        artifactViewModel.BarChart = viewModel;
+                        return PartialView("~/Views/BarChart/_Create.cshtml", artifactViewModel);
+                    }
+                case "barachievement":
+                    {
+                        var viewModel = new BarChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
                         this.SetValueAxes(viewModel.ValueAxes, false);
                         var series = new BarChartViewModel.SeriesViewModel();
                         series.Stacks.Add(new BarChartViewModel.StackViewModel());

@@ -197,19 +197,20 @@ namespace DSLNG.PEAR.Services
             response.Periodes = this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes);
             IList<GetCartesianChartDataResponse.SeriesResponse> seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
             var seriesType = "single-stack";
-            if (request.Series.Count > 1)
+            if (request.Series.Count == 1 && (request.GraphicType == "baraccumulative" || request.GraphicType == "barachievement"))
             {
-                if (request.Series.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null)
+                seriesType = "multi-stacks";
+            }
+            else if (request.Series.Count > 1)
+            {
+                if (request.Series.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null || request.GraphicType == "baraccumulative" || request.GraphicType == "barachievement")
                 {
                     seriesType = "multi-stacks-grouped";
-                }
-                else if (request.RangeFilter == RangeFilter.YTD) {
-                    seriesType = "multi-stack";
                 }
             }
             else
             {
-                if (request.Series.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null || RangeFilter.YTD == request.RangeFilter)
+                if (request.Series.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null || request.GraphicType == "baraccumulative")
                 {
                     seriesType = "multi-stack";
                 }
@@ -217,10 +218,10 @@ namespace DSLNG.PEAR.Services
             switch (request.ValueAxis)
             {
                 case ValueAxis.KpiTarget:
-                    seriesResponse = this._getKpiTargetSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter);
+                    seriesResponse = this._getKpiTargetSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType);
                     break;
                 case ValueAxis.KpiActual:
-                    seriesResponse = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType);
+                    seriesResponse = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType);
                     break;
             }
             response.SeriesType = seriesType;
@@ -323,7 +324,8 @@ namespace DSLNG.PEAR.Services
                                 var currentYear = DateTime.Now.Year;
                                 var startMonth = new DateTime(DateTime.Now.Year, 1, 1);
                                 var currentMont = DateTime.Now.Month;
-                                while (startMonth.Month <= currentMont) {
+                                while (startMonth.Month <= currentMont)
+                                {
                                     periodes.Add(startMonth.ToString(monthlyFormat));
                                     dateTimePeriodes.Add(startMonth);
                                     startMonth = startMonth.AddMonths(1);
@@ -363,7 +365,7 @@ namespace DSLNG.PEAR.Services
             return periodes.ToArray();
         }
 
-        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter)
+        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType)
         {
             var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
             var start = dateTimePeriodes[0];
@@ -376,40 +378,88 @@ namespace DSLNG.PEAR.Services
                     var kpiTargets = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
                       x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId)
                       .OrderBy(x => x.Periode).ToList();
-                    
-                    var aSeries = new GetCartesianChartDataResponse.SeriesResponse
+
+                    if (seriesType == "multi-stacks-grouped")
                     {
-                        Name = series.Label,
-                        Color = series.Color
-                    };
-                    foreach (var periode in dateTimePeriodes)
-                    {
-                        var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
-                        if (target == null || !target.Value.HasValue)
+                        var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
-                            aSeries.Data.Add(0);
-                        }
-                        else
-                        {
-                            aSeries.Data.Add(target.Value.Value);
-                        }
-                    }
-                    seriesResponse.Add(aSeries);
-                    if (rangeFilter == RangeFilter.YTD) {
-                        var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
-                        {
-                            Name = "Previous"
+                            Name = series.Label,
+                            Stack = series.Label,
+                            Color = series.Color
                         };
-                        for (var i = 0; i < aSeries.Data.Count; i++) {
-                            double data = 0;
-                            for (var j = 0; j < i; j++) {
-                                data += aSeries.Data[j];
+                        foreach (var periode in dateTimePeriodes)
+                        {
+                            var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
+                            if (target == null || !target.Value.HasValue)
+                            {
+                                aSeries.Data.Add(0);
                             }
-                            previousSeries.Data.Add(data);
+                            else
+                            {
+                                aSeries.Data.Add(target.Value.Value);
+                            }
                         }
-                        seriesResponse.Add(previousSeries);
+                        seriesResponse.Add(aSeries);
+                        if (graphicType == "baraccumulative")
+                        {
+                            var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
+                            {
+                                Name = "Previous",
+                                Color = "#004071",
+                                Stack = series.Label
+                            };
+                            for (var i = 0; i < aSeries.Data.Count; i++)
+                            {
+                                double data = 0;
+                                for (var j = 0; j < i; j++)
+                                {
+                                    data += aSeries.Data[j];
+                                }
+                                previousSeries.Data.Add(data);
+                            }
+                            seriesResponse.Add(previousSeries);
+                        }
                     }
-                    
+                    else
+                    {
+                        var aSeries = new GetCartesianChartDataResponse.SeriesResponse
+                        {
+                            Name = series.Label,
+                            Color = series.Color
+                        };
+                        foreach (var periode in dateTimePeriodes)
+                        {
+                            var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
+                            if (target == null || !target.Value.HasValue)
+                            {
+                                aSeries.Data.Add(0);
+                            }
+                            else
+                            {
+                                aSeries.Data.Add(target.Value.Value);
+                            }
+                        }
+                        seriesResponse.Add(aSeries);
+                        if (graphicType == "baraccumulative")
+                        {
+                            var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
+                            {
+                                Name = "Previous",
+                                Color = "#004071"
+                            };
+                            for (var i = 0; i < aSeries.Data.Count; i++)
+                            {
+                                double data = 0;
+                                for (var j = 0; j < i; j++)
+                                {
+                                    data += aSeries.Data[j];
+                                }
+                                previousSeries.Data.Add(data);
+                            }
+                            seriesResponse.Add(previousSeries);
+                        }
+                    }
+
                 }
                 else
                 {
@@ -446,7 +496,7 @@ namespace DSLNG.PEAR.Services
                             var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
                                 Name = series.Label,
-                                Color= stack.Color
+                                Color = stack.Color
                             };
                             foreach (var periode in dateTimePeriodes)
                             {
@@ -468,41 +518,167 @@ namespace DSLNG.PEAR.Services
             return seriesResponse;
         }
 
-        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiActualSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType)
+        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiActualSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType)
         {
             var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
+            var start = dateTimePeriodes[0];
+            var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
             foreach (var series in configSeries)
             {
 
                 if (series.Stacks.Count == 0)
                 {
-                    var kpiTargets = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
-                      x.Periode >= dateTimePeriodes[0] && x.Periode <= dateTimePeriodes[dateTimePeriodes.Count - 1] && x.Kpi.Id == series.KpiId)
+                    var kpiActuals = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
+                      x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId)
                       .OrderBy(x => x.Periode).ToList();
-                    var aSeries = new GetCartesianChartDataResponse.SeriesResponse
+                    if (seriesType == "multi-stacks-grouped" && graphicType == "baraccumulative")
                     {
-                        Name = series.Label
-                    };
-                    foreach (var periode in dateTimePeriodes)
-                    {
-                        var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
-                        if (target == null || !target.Value.HasValue)
+                        var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
-                            aSeries.Data.Add(0);
-                        }
-                        else
+                            Name = series.Label,
+                            Stack = series.Label,
+                            Color = series.Color
+                        };
+                        foreach (var periode in dateTimePeriodes)
                         {
-                            aSeries.Data.Add(target.Value.Value);
+                            var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
+                            if (target == null || !target.Value.HasValue)
+                            {
+                                aSeries.Data.Add(0);
+                            }
+                            else
+                            {
+                                aSeries.Data.Add(target.Value.Value);
+                            }
                         }
+                        seriesResponse.Add(aSeries);
+
+                        var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
+                        {
+                            Name = "Previous",
+                            Color = "#004071",
+                            Stack = series.Label
+                        };
+                        for (var i = 0; i < aSeries.Data.Count; i++)
+                        {
+                            double data = 0;
+                            for (var j = 0; j < i; j++)
+                            {
+                                data += aSeries.Data[j];
+                            }
+                            previousSeries.Data.Add(data);
+                        }
+                        seriesResponse.Add(previousSeries);
                     }
-                    seriesResponse.Add(aSeries);
+                    else if (seriesType == "multi-stacks" && graphicType == "baraccumulative")
+                    {
+                        var aSeries = new GetCartesianChartDataResponse.SeriesResponse
+                        {
+                            Name = series.Label,
+                            Color = series.Color
+                        };
+                        foreach (var periode in dateTimePeriodes)
+                        {
+                            var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
+                            if (target == null || !target.Value.HasValue)
+                            {
+                                aSeries.Data.Add(0);
+                            }
+                            else
+                            {
+                                aSeries.Data.Add(target.Value.Value);
+                            }
+                        }
+                        seriesResponse.Add(aSeries);
+                        var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
+                        {
+                            Name = "Previous",
+                            Color = "#004071"
+                        };
+                        for (var i = 0; i < aSeries.Data.Count; i++)
+                        {
+                            double data = 0;
+                            for (var j = 0; j < i; j++)
+                            {
+                                data += aSeries.Data[j];
+                            }
+                            previousSeries.Data.Add(data);
+                        }
+                        seriesResponse.Add(previousSeries);
+                    }
+                    else if (seriesType == "multi-stacks" && graphicType == "barachievement")
+                    {
+                        var kpiTargets = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
+                            x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId)
+                            .OrderBy(x => x.Periode).ToList();
+                        var aSeries = new GetCartesianChartDataResponse.SeriesResponse
+                        {
+                            Name = series.Label,
+                            Color = string.IsNullOrEmpty(series.Color) ? "green" : series.Color
+                        };
+                        var remainSeries = new GetCartesianChartDataResponse.SeriesResponse
+                        {
+                            Name = "Remain",
+                            Color = "red"
+                        };
+                        var exceedSeries = new GetCartesianChartDataResponse.SeriesResponse
+                        {
+                            Name = "Exceed",
+                            Color = "blue"
+                        };
+                        foreach (var periode in dateTimePeriodes)
+                        {
+                            var actual = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
+                            var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
+                            if (actual == null || !actual.Value.HasValue)
+                            {
+                                if (target == null || !target.Value.HasValue)
+                                {
+                                    exceedSeries.Data.Add(0);
+                                    remainSeries.Data.Add(0);
+                                    aSeries.Data.Add(0);
+                                }
+                                else {
+                                    aSeries.Data.Add(0);
+                                    remainSeries.Data.Add(target.Value.Value);
+                                    exceedSeries.Data.Add(0);
+                                }
+                            }
+                            else
+                            {
+                                if (target == null || !target.Value.HasValue)
+                                {
+                                    aSeries.Data.Add(actual.Value.Value);
+                                    remainSeries.Data.Add(0);
+                                    exceedSeries.Data.Add(actual.Value.Value);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(actual.Value.Value);
+                                    var remain = target.Value.Value - actual.Value.Value;
+                                    if (remain > 0)
+                                    {
+                                        remainSeries.Data.Add(remain);
+                                        exceedSeries.Data.Add(0);
+                                    }
+                                    else {
+                                        exceedSeries.Data.Add(-remain);
+                                        remainSeries.Data.Add(0);
+                                    }
+                                }
+                            }
+                        }
+                        seriesResponse.Add(remainSeries);
+                        seriesResponse.Add(exceedSeries);
+                        seriesResponse.Add(aSeries);
+                    }
                 }
                 else
                 {
                     foreach (var stack in series.Stacks)
                     {
                         var kpiTargets = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
-                        x.Periode >= dateTimePeriodes[0] && x.Periode <= dateTimePeriodes[dateTimePeriodes.Count - 1] && x.Kpi.Id == stack.KpiId)
+                        x.Periode >= start && x.Periode <= end && x.Kpi.Id == stack.KpiId)
                         .OrderBy(x => x.Periode).ToList();
                         if (seriesType == "multi-stacks-grouped")
                         {
@@ -560,18 +736,21 @@ namespace DSLNG.PEAR.Services
             DataContext.Measurements.Attach(measurement);
             artifact.Measurement = measurement;
 
-            foreach (var seriesReq in request.Series) {
+            foreach (var seriesReq in request.Series)
+            {
                 var series = seriesReq.MapTo<ArtifactSerie>();
                 var kpi = new Kpi { Id = seriesReq.KpiId };
                 if (DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault() == null)
                 {
-                    DataContext.Kpis.Attach(kpi);                
+                    DataContext.Kpis.Attach(kpi);
                 }
                 series.Kpi = kpi;
-                foreach(var stackReq in seriesReq.Stacks){
+                foreach (var stackReq in seriesReq.Stacks)
+                {
                     var stack = stackReq.MapTo<ArtifactStack>();
                     var kpiInStack = new Kpi { Id = stackReq.KpiId };
-                    if (DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault() == null) {
+                    if (DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault() == null)
+                    {
                         DataContext.Kpis.Attach(kpiInStack);
                     }
                     stack.Kpi = kpiInStack;
@@ -579,7 +758,8 @@ namespace DSLNG.PEAR.Services
                 }
                 artifact.Series.Add(series);
             }
-            foreach (var plotReq in request.Plots) {
+            foreach (var plotReq in request.Plots)
+            {
                 var plot = plotReq.MapTo<ArtifactPlot>();
                 artifact.Plots.Add(plot);
             }
@@ -605,7 +785,8 @@ namespace DSLNG.PEAR.Services
             }
         }
 
-        public GetArtifactResponse GetArtifact(GetArtifactRequest request) {
+        public GetArtifactResponse GetArtifact(GetArtifactRequest request)
+        {
             return DataContext.Artifacts.Include(x => x.Measurement)
                 .Include(x => x.Series)
                 .Include(x => x.Series.Select(y => y.Kpi))

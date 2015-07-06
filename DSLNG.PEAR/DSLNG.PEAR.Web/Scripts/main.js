@@ -100,6 +100,7 @@ String.prototype.isNullOrEmpty = function () {
                     $('.graphic-properties').each(function (i, val) {
                         $(val).html('');
                     });
+                    $('#graphic-settings').prev('.form-group').css('display', 'block');
                     if (callback.hasOwnProperty(type)) {
                         callback[type]();
                     }
@@ -366,17 +367,17 @@ String.prototype.isNullOrEmpty = function () {
                     }
                 }
             },
-            legend: {
-                align: 'right',
-                x: -30,
-                verticalAlign: 'top',
-                y: 25,
-                floating: true,
-                backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
-                borderColor: '#CCC',
-                borderWidth: 1,
-                shadow: false
-            },
+            //legend: {
+            //    align: 'right',
+            //    x: -30,
+            //    verticalAlign: 'top',
+            //    y: 25,
+            //    floating: true,
+            //    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+            //    borderColor: '#CCC',
+            //    borderWidth: 1,
+            //    shadow: false
+            //},
             tooltip: {
                 formatter: function () {
                     return '<b>' + this.x + '</b><br/>' +
@@ -434,7 +435,20 @@ String.prototype.isNullOrEmpty = function () {
             series: data.BarChart.Series
         });
     }
-
+    artifactDesigner._setupCallbacks.baraccumulative = function () {
+        Pear.Artifact.Designer._setupCallbacks.bar();
+    };
+    artifactDesigner._previewCallbacks.baraccumulative = function (data) {
+        Pear.Artifact.Designer._previewCallbacks.bar(data);
+    };
+    artifactDesigner._setupCallbacks.barachievement = function () {
+        $('#bar-value-axis').val('KpiActual');
+        $('#graphic-settings').prev('.form-group').css('display', 'none');
+        Pear.Artifact.Designer._setupCallbacks.bar();
+    };
+    artifactDesigner._previewCallbacks.barachievement = function (data) {
+        Pear.Artifact.Designer._previewCallbacks.bar(data);
+    };
     //line chart
     artifactDesigner._setupCallbacks.line = function () {
         var removeSeriesOrStack = function () {
@@ -716,9 +730,9 @@ String.prototype.isNullOrEmpty = function () {
     }
 
     $(document).ready(function () {
-        /*Pear.Artifact.Designer.GraphicSettingSetup();
+        Pear.Artifact.Designer.GraphicSettingSetup();
         Pear.Artifact.Designer.Preview();
-        Pear.Artifact.Designer.ListSetup();*/
+        Pear.Artifact.Designer.ListSetup();
     });
     window.Pear = Pear;
 }(window, jQuery, undefined));
