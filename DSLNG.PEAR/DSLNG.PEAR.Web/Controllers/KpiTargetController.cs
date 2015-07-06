@@ -29,10 +29,21 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _kpiTargetService.GetTarget(request);
             if (response.IsSuccess)
             {
-                var viewModel = response.MapTo<GetTargetResponse>();
+                var viewModel = response.MapTo<UpdateKpiTargetViewModel>();
                 return View("Update", viewModel);
             }
-            return Content("as");
+            return base.ErrorPage(response.Message);
+        }
+
+        [HttpPost]
+        public ActionResult Update(UpdateKpiTargetViewModel viewModel)
+        {
+            var request = viewModel.MapTo<UpdateKpiTargetRequest>();
+            request.PeriodeType = PeriodeType.Monthly.ToString();
+            var response = _kpiTargetService.UpdateKpiTarget(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Update", new {id = 1});
         }
         
         public ActionResult Index()

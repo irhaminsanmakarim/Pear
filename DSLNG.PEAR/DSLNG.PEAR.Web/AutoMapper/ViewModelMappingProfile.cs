@@ -293,10 +293,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
         {
             Mapper.CreateMap<GetPmsConfigsResponse.Kpi, Kpi>()
                 .ForMember(k => k.Unit, o => o.MapFrom(k => k.Measurement.Name));
+            
             Mapper.CreateMap<GetTargetResponse, UpdateKpiTargetViewModel>();
             Mapper.CreateMap<GetTargetResponse.Kpi, UpdateKpiTargetViewModel.Kpi>();
             Mapper.CreateMap<GetTargetResponse.KpiTarget, UpdateKpiTargetViewModel.KpiTarget>();
             Mapper.CreateMap<GetTargetResponse.Pillar, UpdateKpiTargetViewModel.Pillar>();
+
+            Mapper.CreateMap<UpdateKpiTargetViewModel, UpdateKpiTargetRequest>();
+            Mapper.CreateMap<UpdateKpiTargetViewModel.Kpi, UpdateKpiTargetRequest.Kpi>();
+            Mapper.CreateMap<UpdateKpiTargetViewModel.KpiTarget, UpdateKpiTargetRequest.KpiTarget>();
+            Mapper.CreateMap<UpdateKpiTargetViewModel.Pillar, UpdateKpiTargetRequest.Pillar>();
         }
     }
 }

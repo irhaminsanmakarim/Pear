@@ -34,12 +34,13 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
             public int Id { get; set; }
             public string Name { get; set; }
             public string Measurement { get; set; }
-
+            public string Remark { get; set; }
             public IList<KpiTarget> KpiTargets { get; set; }
         }
 
         public class KpiTarget
         {
+            public int Id { get; set; }
             public DateTime Periode { get; set; }
             public double? Value { get; set; }
         }
