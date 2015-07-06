@@ -14,7 +14,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             Measurements = new List<SelectListItem>();
             PeriodeTypes = new List<SelectListItem>();
             ValueAxes = new List<SelectListItem>();
-            KpiList = new List<SelectListItem>();
             RangeFilters = new List<SelectListItem>();
         }
         [Display(Name= "Graphic Type")]
@@ -91,7 +90,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         [Required]
         public string ValueAxis { get; set; }
         public IList<SelectListItem> ValueAxes { get; set; }
-        public IList<SelectListItem> KpiList { get; set; }
 
         //chart
         public BarChartViewModel BarChart { get; set; }
