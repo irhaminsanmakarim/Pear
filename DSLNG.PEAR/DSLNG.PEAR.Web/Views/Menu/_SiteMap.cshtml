@@ -2,7 +2,7 @@
 @{
     Layout = null;
 }
-@helper  ExtractMenu(IEnumerable<DSLNG.PEAR.Services.Responses.Menu.GetSiteMenusResponse.Menu> Menus) { 
+@helper  ExtractMenu(IEnumerable<DSLNG.PEAR.Services.Responses.Menu.GetSiteMenusResponse.Menu> Menus, int SubLevelHeper=0) { 
     foreach (var menu in Menus.ToList())
     {
         <li>
@@ -18,8 +18,15 @@
 
             @if (menu.Menus.Count > 0)
             {
-                <ul class="sub-nav">
-                    @ExtractMenu(menu.Menus)
+                if (SubLevelHeper == 0){
+                    ViewBag.MenuSubClass = "sub-nav";
+                }
+                else{
+                    ViewBag.MenuSubClass = "sublevel";
+                }
+
+                <ul class="@ViewBag.MenuSubClass">
+                    @ExtractMenu(menu.Menus, ++SubLevelHeper)
                 </ul>
             }
         </li>

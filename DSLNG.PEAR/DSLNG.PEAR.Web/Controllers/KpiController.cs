@@ -23,6 +23,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IMethodService _methodService;
         private readonly IMeasurementService _measurementService;
         private readonly IPillarService _pillarService;
+        private readonly IDropdownService _dropdownService;
 
         public KpiController(IKpiService service,
             ILevelService levelService,
@@ -31,7 +32,8 @@ namespace DSLNG.PEAR.Web.Controllers
             IRoleGroupService roleGroupService,
             IMethodService methodServie,
             IMeasurementService measurementService,
-            IPillarService pillarService)
+            IPillarService pillarService,
+            IDropdownService dropdownService)
         {
             _kpiService = service;
             _levelService = levelService;
@@ -41,6 +43,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _methodService = methodServie;
             _measurementService = measurementService;
             _pillarService = pillarService;
+            _dropdownService = dropdownService;
         }
 
 
@@ -106,53 +109,16 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public CreateKpiViewModel CreateViewModel(CreateKpiViewModel viewModel)
         {
-            viewModel.PillarList = _pillarService.GetPillars(
-                new Services.Requests.Pillar.GetPillarsRequest { Skip = 0, Take = 0 }).Pillars.Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
-            viewModel.LevelList = _levelService.GetLevels(
-                new Services.Requests.Level.GetLevelsRequest()).Levels.Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
-            viewModel.TypeList = _typeService.GetTypes(
-                new Services.Requests.Type.GetTypesRequest()).Types.Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
-            viewModel.GroupList = _groupService.GetGroups(
-                new Services.Requests.Group.GetGroupsRequest()).Groups.Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
-            viewModel.RoleGroupList = _roleGroupService.GetRoleGroups(
-                new Services.Requests.RoleGroup.GetRoleGroupsRequest { Skip = 0, Take = 0 }).RoleGroups.Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
-            viewModel.MethodList = _methodService.GetMethods(
-                new Services.Requests.Method.GetMethodsRequest()).Methods.Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
-            viewModel.MeasurementList = _measurementService.GetMeasurements(
-                new Services.Requests.Measurement.GetMeasurementsRequest { Skip = 0, Take = 0 }).Measurements.Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }).ToList();
-            viewModel.KpiList = _kpiService.GetKpis(new GetKpisRequest { Skip = 0, Take = 0 }).Kpis.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }).ToList();
+            viewModel.LevelList = _dropdownService.GetLevels().MapTo<SelectListItem>();
+            viewModel.PillarList = _dropdownService.GetPillars().MapTo<SelectListItem>();
+            viewModel.RoleGroupList = _dropdownService.GetRoleGroups().MapTo<SelectListItem>();
+            viewModel.TypeList = _dropdownService.GetTypes().MapTo<SelectListItem>();
+            viewModel.GroupList = _dropdownService.GetGroups().MapTo<SelectListItem>();
+            viewModel.YtdFormulaList = _dropdownService.GetYtdFormulas().MapTo<SelectListItem>();
+            viewModel.PeriodeList = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>();
+            viewModel.MethodList = _dropdownService.GetMethods().MapTo<SelectListItem>();
+            viewModel.MeasurementList = _dropdownService.GetMeasurement().MapTo<SelectListItem>();
+            viewModel.KpiList = _dropdownService.GetKpis().MapTo<SelectListItem>();
             var ytd = Enum.GetValues(typeof(DSLNG.PEAR.Data.Enums.YtdFormula)).Cast<DSLNG.PEAR.Data.Enums.YtdFormula>();
             var periode = Enum.GetValues(typeof(DSLNG.PEAR.Data.Enums.PeriodeType)).Cast<DSLNG.PEAR.Data.Enums.PeriodeType>();
             viewModel.YtdFormulaList = ytd.Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() }).ToList();
@@ -172,7 +138,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                viewModel.Code = viewModel.CodeFromPillar + viewModel.CodeFromLevel + viewModel.Code;
+                viewModel.Code = string.Format("{0}{1}{2}", viewModel.CodeFromPillar, viewModel.CodeFromLevel, viewModel.Code);
                 viewModel.YtdFormula = (DSLNG.PEAR.Web.ViewModels.Kpi.YtdFormula)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.YtdFormula), viewModel.YtdFormulaValue);
                 viewModel.Periode = (DSLNG.PEAR.Web.ViewModels.Kpi.PeriodeType)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.PeriodeType), viewModel.PeriodeValue);
                 var request = viewModel.MapTo<CreateKpiRequest>();
@@ -192,12 +158,30 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var response = _kpiService.GetKpi(new GetKpiRequest { Id = id });
             var viewModel = response.MapTo<UpdateKpiViewModel>();
+            viewModel.LevelList = _dropdownService.GetLevels().MapTo<SelectListItem>();
+            viewModel.PillarList = _dropdownService.GetPillars().MapTo<SelectListItem>();
+            viewModel.RoleGroupList = _dropdownService.GetRoleGroups().MapTo<SelectListItem>();
+            viewModel.TypeList = _dropdownService.GetTypes().MapTo<SelectListItem>();
+            viewModel.GroupList = _dropdownService.GetGroups().MapTo<SelectListItem>();
+            viewModel.YtdFormulaList = _dropdownService.GetYtdFormulas().MapTo<SelectListItem>();
+            viewModel.PeriodeList = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>();
+            viewModel.MethodList = _dropdownService.GetMethods().MapTo<SelectListItem>();
+            viewModel.MeasurementList = _dropdownService.GetMeasurement().MapTo<SelectListItem>();
+            viewModel.KpiList = _dropdownService.GetKpis().MapTo<SelectListItem>();
+            viewModel.YtdFormulaList = _dropdownService.GetYtdFormulas().MapTo<SelectListItem>();
+            viewModel.PeriodeList = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>();
+            if (viewModel.RelationModels.Count == 0)
+            {
+                viewModel.RelationModels.Add(new ViewModels.Kpi.KpiRelationModel { KpiId = 0, Method = "" });
+            }
             return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult Update(UpdateKpiViewModel viewModel)
         {
+            viewModel.YtdFormula = (DSLNG.PEAR.Web.ViewModels.Kpi.YtdFormula)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.YtdFormula), viewModel.YtdFormulaValue);
+            viewModel.Periode = (DSLNG.PEAR.Web.ViewModels.Kpi.PeriodeType)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.PeriodeType), viewModel.PeriodeValue);
             var request = viewModel.MapTo<UpdateKpiRequest>();
             var response = _kpiService.Update(request);
             TempData["IsSuccess"] = response.IsSuccess;
