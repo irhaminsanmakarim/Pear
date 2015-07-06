@@ -17,31 +17,19 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         private readonly IKpiService _kpiService;
         private readonly ILevelService _levelService;
-        private readonly ITypeService _typeService;
-        private readonly IGroupService _groupService;
         private readonly IRoleGroupService _roleGroupService;
-        private readonly IMethodService _methodService;
-        private readonly IMeasurementService _measurementService;
         private readonly IPillarService _pillarService;
         private readonly IDropdownService _dropdownService;
 
         public KpiController(IKpiService service,
             ILevelService levelService,
-            ITypeService typeService,
-            IGroupService groupService,
             IRoleGroupService roleGroupService,
-            IMethodService methodServie,
-            IMeasurementService measurementService,
             IPillarService pillarService,
             IDropdownService dropdownService)
         {
             _kpiService = service;
             _levelService = levelService;
-            _typeService = typeService;
-            _groupService = groupService;
             _roleGroupService = roleGroupService;
-            _methodService = methodServie;
-            _measurementService = measurementService;
             _pillarService = pillarService;
             _dropdownService = dropdownService;
         }
@@ -138,7 +126,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                viewModel.Code = string.Format("{0}{1}{2}", viewModel.CodeFromPillar, viewModel.CodeFromLevel, viewModel.Code);
+                viewModel.Code = string.Format("{0}{1}{2}{3}", viewModel.CodeFromPillar, viewModel.CodeFromLevel, viewModel.Code, viewModel.CodeFromRoleGroup);
                 viewModel.YtdFormula = (DSLNG.PEAR.Web.ViewModels.Kpi.YtdFormula)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.YtdFormula), viewModel.YtdFormulaValue);
                 viewModel.Periode = (DSLNG.PEAR.Web.ViewModels.Kpi.PeriodeType)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.PeriodeType), viewModel.PeriodeValue);
                 var request = viewModel.MapTo<CreateKpiRequest>();
@@ -170,6 +158,18 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.KpiList = _dropdownService.GetKpis().MapTo<SelectListItem>();
             viewModel.YtdFormulaList = _dropdownService.GetYtdFormulas().MapTo<SelectListItem>();
             viewModel.PeriodeList = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>();
+            var code = 3;
+            if (viewModel.PillarId.HasValue)
+            {
+                viewModel.CodeFromPillar = GetPillarCode(viewModel.PillarId.Value);
+                code += 2;
+            }
+            viewModel.CodeFromLevel = GetLevelCode(viewModel.LevelId);
+            if (viewModel.RoleGroupId.HasValue)
+            {
+                viewModel.CodeFromRoleGroup = GetRoleGroupCode(viewModel.RoleGroupId.Value);                
+            }
+            viewModel.Code = response.Code.Substring(code, 3);
             if (viewModel.RelationModels.Count == 0)
             {
                 viewModel.RelationModels.Add(new ViewModels.Kpi.KpiRelationModel { KpiId = 0, Method = "" });
@@ -182,6 +182,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             viewModel.YtdFormula = (DSLNG.PEAR.Web.ViewModels.Kpi.YtdFormula)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.YtdFormula), viewModel.YtdFormulaValue);
             viewModel.Periode = (DSLNG.PEAR.Web.ViewModels.Kpi.PeriodeType)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.PeriodeType), viewModel.PeriodeValue);
+            viewModel.Code = string.Format("{0}{1}{2}{3}", viewModel.CodeFromPillar, viewModel.CodeFromLevel, viewModel.Code, viewModel.CodeFromRoleGroup);
             var request = viewModel.MapTo<UpdateKpiRequest>();
             var response = _kpiService.Update(request);
             TempData["IsSuccess"] = response.IsSuccess;
@@ -190,7 +191,22 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 return RedirectToAction("Index");
             }
-
+            viewModel.LevelList = _dropdownService.GetLevels().MapTo<SelectListItem>();
+            viewModel.PillarList = _dropdownService.GetPillars().MapTo<SelectListItem>();
+            viewModel.RoleGroupList = _dropdownService.GetRoleGroups().MapTo<SelectListItem>();
+            viewModel.TypeList = _dropdownService.GetTypes().MapTo<SelectListItem>();
+            viewModel.GroupList = _dropdownService.GetGroups().MapTo<SelectListItem>();
+            viewModel.YtdFormulaList = _dropdownService.GetYtdFormulas().MapTo<SelectListItem>();
+            viewModel.PeriodeList = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>();
+            viewModel.MethodList = _dropdownService.GetMethods().MapTo<SelectListItem>();
+            viewModel.MeasurementList = _dropdownService.GetMeasurement().MapTo<SelectListItem>();
+            viewModel.KpiList = _dropdownService.GetKpis().MapTo<SelectListItem>();
+            viewModel.YtdFormulaList = _dropdownService.GetYtdFormulas().MapTo<SelectListItem>();
+            viewModel.PeriodeList = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>();
+            if (viewModel.RelationModels.Count == 0)
+            {
+                viewModel.RelationModels.Add(new ViewModels.Kpi.KpiRelationModel { KpiId = 0, Method = "" });
+            }
             return View("Update", viewModel);
         }
 
@@ -212,6 +228,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public string GetPillarCode(int id)
         {
             var pillar = _pillarService.GetPillar(new Services.Requests.Pillar.GetPillarRequest { Id = id }).Code;
+            return pillar;
+        }
+
+        public string GetRoleGroupCode(int id)
+        {
+            var pillar = _roleGroupService.GetRoleGroup(new Services.Requests.RoleGroup.GetRoleGroupRequest { Id = id }).Code;
             return pillar;
         }
     }

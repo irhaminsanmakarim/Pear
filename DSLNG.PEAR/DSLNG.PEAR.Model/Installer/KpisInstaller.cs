@@ -17,91 +17,79 @@ namespace DSLNG.PEAR.Data.Installer
         }
         public void Install()
         {
-            //var kpi1 = new Kpi { Id = 1, Name = "Fatality/Strap disability", Measurement= _context.Measurements.Local.First(x => x.Id == 6), PillarId = 1
-            //, Group = _context.Groups.Local.First(x=> x.Id==1), Order=1, YtdFormula = Enums.YtdFormula.Sum, IsEconomic= true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.Parse("14/02/2014"), UpdatedDate = DateTime.Now
-            //, Method = _context.Methods.Local.First(x=> x.Id==3), Level = _context.Levels.Local.First(x=>x.Id==3), RoleGroup= _context.RoleGroups.Local.First(x=>x.Id==10)};
-            var fatality = new Kpi
-            {
-                Id = 1,
-                Name = "Fatality/Strap Disability",
-                Measurement = _context.Measurements.Local.First(x => x.Id == 6),
-                Pillar = _context.Pillars.Local.First(x => x.Id == 1),
-                Group = _context.Groups.Local.First(x => x.Id == 1),
-                Order = 1,
-                YtdFormula = Enums.YtdFormula.Sum,
-                IsEconomic = true,
-                FormatInput = FormatInput.Numeric,
-                IsActive = true,
-                CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now,
-                Method = _context.Methods.Local.First(x => x.Id == 1),
-                Level = _context.Levels.Local.First(x => x.Code == "COR")
-            };
-            var securityIncident = new Kpi
-            {
-                Id = 2,
-                Name = "QHSE Training Attend",
-                Measurement = _context.Measurements.Local.First(x => x.Id == 6),
-                Pillar = _context.Pillars.Local.First(x => x.Id == 1),
-                Group = _context.Groups.Local.First(x => x.Id == 1),
-                Order = 2,
-                YtdFormula = Enums.YtdFormula.Sum,
-                IsEconomic = true,
-                FormatInput = FormatInput.Numeric,
-                IsActive = true,
-                CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now,
-                Level = _context.Levels.Local.First(x => x.Code == "COR")
-            };
-            var rif = new Kpi
-            {
-                Id = 3,
-                Name = "RIF",
-                Measurement = _context.Measurements.Local.First(x => x.Id == 6),
-                Pillar = _context.Pillars.Local.First(x => x.Id == 1),
-                Group = _context.Groups.Local.First(x => x.Id == 1),
-                Order = 3,
-                YtdFormula = Enums.YtdFormula.Sum,
-                IsEconomic = true,
-                FormatInput = FormatInput.Numeric,
-                IsActive = true,
-                CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now,
-                Level = _context.Levels.Local.First(x => x.Code == "COR")
-            };
+            var kpi1 = new Kpi { Id = 1, Code = "SECOR001QHSE", Name = "Fatality/Strap disability", Measurement = _context.Measurements.Local.First(x => x.Id == 6), Pillar = _context.Pillars.Local.First(x => x.Id == 1), Group = _context.Groups.Local.First(x => x.Id == 1), Order = 1, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493865394), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 10), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi2 = new Kpi { Id = 2, Code = "SECOR002QHSE", Name = "DAFWC", Measurement = _context.Measurements.Local.First(x => x.Id == 6), Pillar = _context.Pillars.Local.First(x => x.Id == 1), Group = _context.Groups.Local.First(x => x.Id == 2), Order = 2, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493872685), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 10), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi3 = new Kpi { Id = 3, Code = "SECOR003QHSE", Name = "LOPC", Measurement = _context.Measurements.Local.First(x => x.Id == 6), Pillar = _context.Pillars.Local.First(x => x.Id == 1), Group = _context.Groups.Local.First(x => x.Id == 3), Order = 3, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.349387963), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 10), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi4 = new Kpi { Id = 4, Code = "SECOR004QHSE", Name = "Security Incident", Measurement = _context.Measurements.Local.First(x => x.Id == 6), Pillar = _context.Pillars.Local.First(x => x.Id == 1), Group = _context.Groups.Local.First(x => x.Id == 4), Order = 4, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493887731), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 10), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi5 = new Kpi { Id = 5, Code = "PECOR005", Name = "Total LNG Production(MT)", Measurement = _context.Measurements.Local.First(x => x.Id == 3), Pillar = _context.Pillars.Local.First(x => x.Id == 2), Group = _context.Groups.Local.First(x => x.Id == 5), Order = 5, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493894676), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 2), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi6 = new Kpi { Id = 6, Code = "PECOR001", Name = "Total LNG Production(tbtu)", Measurement = _context.Measurements.Local.First(x => x.Id == 1), Pillar = _context.Pillars.Local.First(x => x.Id == 2), Group = _context.Groups.Local.First(x => x.Id == 5), Order = 6, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.349390162), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 2), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi7 = new Kpi { Id = 7, Code = "PECOR007COO ", Name = "Flared Gas(%)", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 2), Group = _context.Groups.Local.First(x => x.Id == 6), Order = 7, YtdFormula = Enums.YtdFormula.Average, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493908565), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 2), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi8 = new Kpi { Id = 8, Code = "PECOR007", Name = "Flared Gas(MMBTU)", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 2), Group = _context.Groups.Local.First(x => x.Id == 6), Order = 8, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493915162), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 4), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi9 = new Kpi { Id = 9, Code = "PECOR009COO ", Name = "Thermal Efficiency", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 2), Group = _context.Groups.Local.First(x => x.Id == 7), Order = 9, YtdFormula = Enums.YtdFormula.Average, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493922106), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 2), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi10 = new Kpi { Id = 10, Code = "PECOR010CTD ", Name = "Plant Availability(%)", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 2), Group = _context.Groups.Local.First(x => x.Id == 8), Order = 10, YtdFormula = Enums.YtdFormula.Average, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493928587), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 4), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi11 = new Kpi { Id = 11, Code = "PECOR010CTD ", Name = "Plant Availability(days)", Measurement = _context.Measurements.Local.First(x => x.Id == 5), Pillar = _context.Pillars.Local.First(x => x.Id == 2), Group = _context.Groups.Local.First(x => x.Id == 8), Order = 11, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493935185), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 4), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi12 = new Kpi { Id = 12, Code = "PECOR012CTD ", Name = "Plant Reliability(%)", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 2), Group = _context.Groups.Local.First(x => x.Id == 9), Order = 12, YtdFormula = Enums.YtdFormula.Average, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.349394213), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 4), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi13 = new Kpi { Id = 13, Code = "PECOR013", Name = "Plant Reliability(days)", Measurement = _context.Measurements.Local.First(x => x.Id == 5), Pillar = _context.Pillars.Local.First(x => x.Id == 2), Group = _context.Groups.Local.First(x => x.Id == 9), Order = 13, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493949074), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 4), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi14 = new Kpi { Id = 14, Code = "PECOR014CCD ", Name = "Cargo Commitment(Cargo)", Measurement = _context.Measurements.Local.First(x => x.Id == 7), Pillar = _context.Pillars.Local.First(x => x.Id == 2), Group = _context.Groups.Local.First(x => x.Id == 10), Order = 14, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493955671), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 5), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi15 = new Kpi { Id = 15, Code = "PECOR015", Name = "Cargo Commitment(tbtu)", Measurement = _context.Measurements.Local.First(x => x.Id == 1), Pillar = _context.Pillars.Local.First(x => x.Id == 2), Group = _context.Groups.Local.First(x => x.Id == 10), Order = 15, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493962616), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 5), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi16 = new Kpi { Id = 16, Code = "FSCOR016CFD ", Name = "Dividend Payout Ratio", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 3), Group = _context.Groups.Local.First(x => x.Id == 11), Order = 16, YtdFormula = Enums.YtdFormula.Average, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493969097), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 3), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi17 = new Kpi { Id = 17, Code = "FSCOR017CFD ", Name = "Debt Service Coverage Ratio", Measurement = _context.Measurements.Local.First(x => x.Id == 9), Pillar = _context.Pillars.Local.First(x => x.Id == 3), Group = _context.Groups.Local.First(x => x.Id == 12), Order = 17, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493976042), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 3), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi18 = new Kpi { Id = 18, Code = "FSCOR018CFD ", Name = "EBITDA", Measurement = _context.Measurements.Local.First(x => x.Id == 8), Pillar = _context.Pillars.Local.First(x => x.Id == 3), Group = _context.Groups.Local.First(x => x.Id == 13), Order = 18, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493981482), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 3), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi19 = new Kpi { Id = 19, Code = "FSCOR019CFD ", Name = "Budget Utilization(%)", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 3), Group = _context.Groups.Local.First(x => x.Id == 14), Order = 19, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493988426), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 3), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi20 = new Kpi { Id = 20, Code = "FSCOR005", Name = "Budget Utilization(USD Mio)", Measurement = _context.Measurements.Local.First(x => x.Id == 8), Pillar = _context.Pillars.Local.First(x => x.Id == 3), Group = _context.Groups.Local.First(x => x.Id == 14), Order = 20, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Money, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3493996181), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 3), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi21 = new Kpi { Id = 21, Code = "FSCOR021CFD ", Name = "Total Operating Cost", Measurement = _context.Measurements.Local.First(x => x.Id == 10), Pillar = _context.Pillars.Local.First(x => x.Id == 3), Group = _context.Groups.Local.First(x => x.Id == 15), Order = 21, YtdFormula = Enums.YtdFormula.Average, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494004282), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 3), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi22 = new Kpi { Id = 22, Code = "FSCOR022CFD ", Name = "Production Cost", Measurement = _context.Measurements.Local.First(x => x.Id == 10), Pillar = _context.Pillars.Local.First(x => x.Id == 3), Group = _context.Groups.Local.First(x => x.Id == 16), Order = 22, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494010764), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 3), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi23 = new Kpi { Id = 23, Code = "SRCOR023CSR ", Name = "Positive Tone", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 4), Group = _context.Groups.Local.First(x => x.Id == 17), Order = 23, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494017708), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 12), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi24 = new Kpi { Id = 24, Code = "SRCOR024CSR ", Name = "Program recognized by Gov &amp; Institution", Measurement = _context.Measurements.Local.First(x => x.Id == 11), Pillar = _context.Pillars.Local.First(x => x.Id == 4), Group = _context.Groups.Local.First(x => x.Id == 18), Order = 24, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494024653), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 12), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi25 = new Kpi { Id = 25, Code = "SRCOR025CSR ", Name = "Community acceptance through CSR program &amp; CR", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 4), Group = _context.Groups.Local.First(x => x.Id == 19), Order = 25, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494031597), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 12), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi26 = new Kpi { Id = 26, Code = "SRCOR026CSR ", Name = "Social ROI", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 4), Group = _context.Groups.Local.First(x => x.Id == 20), Order = 26, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494038542), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 12), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi27 = new Kpi { Id = 27, Code = "SRCOR027HCM ", Name = "EBITDA/Employee", Measurement = _context.Measurements.Local.First(x => x.Id == 13), Pillar = _context.Pillars.Local.First(x => x.Id == 4), Group = _context.Groups.Local.First(x => x.Id == 21), Order = 27, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494045486), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 8), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi28 = new Kpi { Id = 28, Code = "SRCOR028CAD ", Name = "Cost/POB (USD/pax)", Measurement = _context.Measurements.Local.First(x => x.Id == 12), Pillar = _context.Pillars.Local.First(x => x.Id == 4), Group = _context.Groups.Local.First(x => x.Id == 22), Order = 28, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494052431), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 6), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi29 = new Kpi { Id = 29, Code = "SRCOR029HCM ", Name = "Employee Retention (%)", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 4), Group = _context.Groups.Local.First(x => x.Id == 23), Order = 29, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494059028), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 8), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi30 = new Kpi { Id = 30, Code = "SRCOR030HCM ", Name = "Employee Retention (#)", Measurement = _context.Measurements.Local.First(x => x.Id == 11), Pillar = _context.Pillars.Local.First(x => x.Id == 4), Group = _context.Groups.Local.First(x => x.Id == 23), Order = 30, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494065972), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 8), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi31 = new Kpi { Id = 31, Code = "SRCOR031HRD ", Name = "Employee Turn over (%)", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 4), Group = _context.Groups.Local.First(x => x.Id == 24), Order = 31, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494072917), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 8), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi32 = new Kpi { Id = 32, Code = "SRCOR032HCM ", Name = "Employee Turn over (#)", Measurement = _context.Measurements.Local.First(x => x.Id == 11), Pillar = _context.Pillars.Local.First(x => x.Id == 4), Group = _context.Groups.Local.First(x => x.Id == 24), Order = 32, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494079861), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 8), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi33 = new Kpi { Id = 33, Code = "SRCOR033ICT ", Name = "ICT service availability", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 4), Group = _context.Groups.Local.First(x => x.Id == 25), Order = 33, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494086806), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 11), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi34 = new Kpi { Id = 34, Code = "SECOR034QHS ", Name = "QHSE training attend(%)", Measurement = _context.Measurements.Local.First(x => x.Id == 4), Pillar = _context.Pillars.Local.First(x => x.Id == 1), Group = _context.Groups.Local.First(x => x.Id == 26), Order = 34, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41986.3494094907), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 10), Type = _context.Types.Local.First(x => x.Id == 1) };
+            var kpi35 = new Kpi { Id = 35, Code = "SECOR040QHS ", Name = "RIF", Measurement = _context.Measurements.Local.First(x => x.Id == 11), Pillar = _context.Pillars.Local.First(x => x.Id == 1), Group = _context.Groups.Local.First(x => x.Id == 41), Order = 40, YtdFormula = Enums.YtdFormula.Sum, IsEconomic = true, FormatInput = FormatInput.Numeric, IsActive = true, CreatedDate = DateTime.FromOADate(41988.8212714931), UpdatedDate = DateTime.Now, Method = _context.Methods.Local.First(x => x.Id == 3), Level = _context.Levels.Local.First(x => x.Id == 3), RoleGroup = _context.RoleGroups.Local.First(x => x.Id == 10), Type = _context.Types.Local.First(x => x.Id == 1) };
 
-            var dafwc = new Kpi
-            {
-                Id = 4,
-                Name = "DAFWC",
-                Measurement = _context.Measurements.Local.First(x => x.Id == 6),
-                Pillar = _context.Pillars.Local.First(x => x.Id == 1),
-                Group = _context.Groups.Local.First(x => x.Id == 1),
-                Order = 4,
-                YtdFormula = Enums.YtdFormula.Sum,
-                IsEconomic = true,
-                FormatInput = FormatInput.Numeric,
-                IsActive = true,
-                CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now,
-                Level = _context.Levels.Local.First(x => x.Code == "COR")
-            };
 
-            var plantAvailability = new Kpi
-            {
-                Id = 5,
-                Name = "Plant Availability",
-                Measurement = _context.Measurements.Local.First(x => x.Id == 6),
-                Pillar = _context.Pillars.Local.First(x => x.Id == 2),
-                Order = 3,
-                Level = _context.Levels.Local.First(x => x.Code == "COR")
-            };
+            _context.Kpis.Add(kpi1);
+            _context.Kpis.Add(kpi2);
+            _context.Kpis.Add(kpi3);
+            _context.Kpis.Add(kpi4);
+            _context.Kpis.Add(kpi5);
+            _context.Kpis.Add(kpi6);
+            _context.Kpis.Add(kpi7);
+            _context.Kpis.Add(kpi8);
+            _context.Kpis.Add(kpi9);
+            _context.Kpis.Add(kpi10);
+            _context.Kpis.Add(kpi11);
+            _context.Kpis.Add(kpi12);
+            _context.Kpis.Add(kpi13);
+            _context.Kpis.Add(kpi14);
+            _context.Kpis.Add(kpi15);
+            _context.Kpis.Add(kpi16);
+            _context.Kpis.Add(kpi17);
+            _context.Kpis.Add(kpi18);
+            _context.Kpis.Add(kpi19);
+            _context.Kpis.Add(kpi20);
+            _context.Kpis.Add(kpi21);
+            _context.Kpis.Add(kpi22);
+            _context.Kpis.Add(kpi23);
+            _context.Kpis.Add(kpi24);
+            _context.Kpis.Add(kpi25);
+            _context.Kpis.Add(kpi26);
+            _context.Kpis.Add(kpi27);
+            _context.Kpis.Add(kpi28);
+            _context.Kpis.Add(kpi29);
+            _context.Kpis.Add(kpi30);
+            _context.Kpis.Add(kpi31);
+            _context.Kpis.Add(kpi32);
+            _context.Kpis.Add(kpi33);
+            _context.Kpis.Add(kpi34);
+            _context.Kpis.Add(kpi35);
 
-            _context.Kpis.Add(fatality);
-            _context.Kpis.Add(securityIncident);
-            _context.Kpis.Add(dafwc);
-            _context.Kpis.Add(rif);
-            _context.Kpis.Add(plantAvailability);
         }
     }
 }
