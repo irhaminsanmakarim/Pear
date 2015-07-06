@@ -169,6 +169,7 @@ namespace DSLNG.PEAR.Services
 
                     response.Pillars.Add(pillar);
                 }
+                response.IsSuccess = true;
             }
             catch (ArgumentNullException argumentNullException)
             {

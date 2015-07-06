@@ -1,0 +1,191 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.KpiTarget.UpdateKpiTargetViewModel
+@{
+    foreach (var pillar in Model.Pillars)
+    {
+    <div class="whitebox-full">
+        <h5>@pillar.Name</h5>
+        <hr>
+        <table class="no-border tablekpitarget">
+            <thead>
+                <tr>
+                    <th style="width: 250px;"></th>
+                    <th style="width: 100px;"></th>
+                    <th style="width: 200px;"></th>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>Apr</th>
+                    <th>May</th>
+                    <th>Jun</th>
+                    <th>Jul</th>
+                    <th>Aug</th>
+                    <th>Sep</th>
+                    <th>Okt</th>
+                    <th>Nov</th>
+                    <th>Des</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var kpi in pillar.Kpis)
+                {
+            
+                
+                
+                    <tr>
+                        <td>
+                            @*<h6>@kpi.Name</h6>*@
+                            <h6>Fatality / Strap Disability</h6>
+                        </td>
+                        <td>
+                            <h6>@kpi.Measurement</h6>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="Remark"></td>
+                        <td>
+                        @for (int i = 1; i <= 12; i++)
+                        {
+                            <td>
+                                <input type="text" class="form-control-small"></td>
+                        }
+                    </tr>
+                
+            
+                }
+            </tbody>
+        </table>
+
+    </div>        
+    }
+}
+<div class="whitebox-full">
+    <h5>Safety</h5>
+    <hr>
+    <table class="no-border tablekpitarget">
+        <thead>
+            <tr>
+                <th style="width: 250px;"></th>
+                <th style="width: 100px;"></th>
+                <th style="width: 200px;"></th>
+                <th>Jan</th>
+                <th>Feb</th>
+                <th>Mar</th>
+                <th>Apr</th>
+                <th>May</th>
+                <th>Jun</th>
+                <th>Jul</th>
+                <th>Aug</th>
+                <th>Sep</th>
+                <th>Okt</th>
+                <th>Nov</th>
+                <th>Des</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    <h6>Fatality / Strap Disability</h6>
+                </td>
+                <td>
+                    <h6>Case</h6>
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="Remark"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+
+            </tr>
+            <tr>
+                <td>
+                    <h6>QHSE Training Attend</h6>
+                </td>
+                <td>
+                    <h6>%</h6>
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="Remark"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+            </tr>
+            <tr>
+                <td>
+                    <h6>RIF</h6>
+                </td>
+                <td>
+                    <h6>Number</h6>
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="Remark"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+                <td>
+                    <input type="text" class="form-control-small"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

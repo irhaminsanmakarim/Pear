@@ -29,7 +29,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _kpiTargetService.GetTarget(request);
             if (response.IsSuccess)
             {
-                var viewModel = response.MapTo<GetTargetResponse>();
+                var viewModel = response.MapTo<UpdateKpiTargetViewModel>();
                 return View("Update", viewModel);
             }
             return Content("as");
