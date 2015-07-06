@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DSLNG.PEAR.Data.Enums;
 
-namespace DSLNG.PEAR.Services.Responses.KpiTarget
+namespace DSLNG.PEAR.Services.Requests.KpiTarget
 {
-    public class GetTargetResponse : BaseResponse
+    public class UpdateKpiTargetRequest
     {
-        public GetTargetResponse()
+        public UpdateKpiTargetRequest()
         {
             Pillars = new List<Pillar>();
         }
@@ -47,5 +46,7 @@ namespace DSLNG.PEAR.Services.Responses.KpiTarget
             public DateTime Periode { get; set; }
             public double? Value { get; set; }
         }
+
+        public string PeriodeType { get; set; }
     }
 }

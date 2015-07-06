@@ -125,11 +125,13 @@ namespace DSLNG.PEAR.Services
                                     var kpiTargetMonthly = new GetTargetResponse.KpiTarget();
                                     if (kpiTargetsMonthly == null)
                                     {
+                                        kpiTargetMonthly.Id = 0;
                                         kpiTargetMonthly.Periode = new DateTime(pmsSummary.Year, i, 1);
                                         kpiTargetMonthly.Value = null;
                                     }
                                     else
                                     {
+                                        kpiTargetMonthly.Id = kpiTargetsMonthly.Id;
                                         kpiTargetMonthly.Periode = kpiTargetsMonthly.Periode;
                                         kpiTargetMonthly.Value = kpiTargetsMonthly.Value;
                                     }
@@ -174,6 +176,60 @@ namespace DSLNG.PEAR.Services
             catch (ArgumentNullException argumentNullException)
             {
                 response.Message = argumentNullException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
+
+        public UpdateKpiTargetResponse UpdateKpiTarget(UpdateKpiTargetRequest request)
+        {
+            PeriodeType periodeType = (PeriodeType) Enum.Parse(typeof (PeriodeType), request.PeriodeType);
+            var response = new UpdateKpiTargetResponse();
+            try
+            {
+                foreach (var pillar in request.Pillars)
+                {
+                    foreach (var kpi in pillar.Kpis)
+                    {
+                        foreach (var kpiTarget in kpi.KpiTargets)
+                        {
+                            if (kpiTarget.Id == 0)
+                            {
+                                var kpiTargetNew = new KpiTarget();
+                                kpiTargetNew.Value = kpiTarget.Value;
+                                kpiTargetNew.Kpi = DataContext.Kpis.Single(x => x.Id == kpi.Id);
+                                kpiTargetNew.PeriodeType = periodeType;
+                                kpiTargetNew.Periode = kpiTarget.Periode;
+                                kpiTargetNew.IsActive = true;
+                                kpiTargetNew.Remark = kpi.Remark;
+                                kpiTargetNew.CreatedDate = DateTime.Now;
+                                kpiTargetNew.UpdatedDate = DateTime.Now;
+                                DataContext.KpiTargets.Add(kpiTargetNew);
+                            }
+                            else
+                            {
+                                var kpiTargetNew = new KpiTarget();
+                                kpiTargetNew.Id = kpiTarget.Id;
+                                kpiTargetNew.Value = kpiTarget.Value;
+                                kpiTargetNew.Kpi = DataContext.Kpis.Single(x => x.Id == kpi.Id);
+                                kpiTargetNew.PeriodeType = periodeType;
+                                kpiTargetNew.Periode = kpiTarget.Periode;
+                                kpiTargetNew.IsActive = true;
+                                kpiTargetNew.Remark = kpi.Remark;
+                                kpiTargetNew.UpdatedDate = DateTime.Now;
+                                DataContext.KpiTargets.Attach(kpiTargetNew);
+                                DataContext.Entry(kpiTargetNew).State = EntityState.Modified;
+                            }
+                        }
+                    }
+                }
+                response.IsSuccess = true;
+                response.Message = "KPI Target has been updated successfully";
+                DataContext.SaveChanges();
             }
             catch (InvalidOperationException invalidOperationException)
             {

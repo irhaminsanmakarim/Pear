@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Create Kpi Target";
 }
-
+@Html.Partial("_MessageResponse")
 <section>
     <div class="row">
         <div class="title_page" style="border: none!important;">
@@ -26,7 +26,7 @@
 
 </section>
 
-@Html.Partial("_MessageResponse")
+
 
 <form action="@Url.Action("Update")" method="POST">
     @Html.Partial("_Yearly", Model)
