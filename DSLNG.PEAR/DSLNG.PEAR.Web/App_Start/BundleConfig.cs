@@ -31,6 +31,13 @@ namespace DSLNG.PEAR.Web.App_Start
                   "~/Content/select2/dist/css/select2.css",
                   "~/Content/colpick/css/colpick.css",
                 "~/Content/style.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js_login").Include(
+                         "~/Scripts/moment.js",
+                        "~/Content/bootstrap/js/bootstrap.js"));
+            bundles.Add(new StyleBundle("~/Content/css_login").Include("~/Content/bootstrap/css/bootstrap.css",
+                "~/Content/font-awesome/css/font-awesome.css",
+                "~/Content/login.css"));
         }
     }
 }
