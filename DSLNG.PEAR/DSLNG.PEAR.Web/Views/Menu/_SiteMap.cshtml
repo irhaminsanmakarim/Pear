@@ -1,12 +1,32 @@
 ﻿@model DSLNG.PEAR.Services.Responses.Menu.GetSiteMenusResponse
 @{
     Layout = null;
+    //ViewBag.SiteMenuActive = ViewBag.SiteMenuActive == null ? "Dashboard" : ViewBag.SiteMenuActive;
 }
 @helper  ExtractMenu(IEnumerable<DSLNG.PEAR.Services.Responses.Menu.GetSiteMenusResponse.Menu> Menus, int SubLevelHeper=0) { 
     foreach (var menu in Menus.ToList())
     {
-        <li>
-            <a href="@menu.Url" class="">
+        var url = menu.Url!=null ? menu.Url.Split('/') : null;
+        var url_href = "";
+        if (url!=null)
+        {
+            if (url.Length > 0)
+            {
+                url_href = Url.Action(url[1], url[0]);
+            }
+            else
+            {
+                url_href = Url.Action("Index", url[0]);
+            }
+        }
+        else
+        {
+            url_href = "#";
+        }
+        //var mainclass = menu.ParentId==0 && ViewBag.SiteMenuActive==menu.Module?"active":"";
+        var mainclass = menu.Id == Model.MenuIdActive ? "active" : "";
+        <li class="@mainclass">
+            <a href="@url_href" class="">
             @if (menu.Icon != null){
                 @Html.Raw(menu.Icon)<span>@menu.Name</span>
             }

@@ -9,6 +9,7 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Web.ViewModels.Menu;
 using DSLNG.PEAR.Data.Entities;
 using DevExpress.Web.Mvc;
+using DSLNG.PEAR.Web.Attributes;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -84,10 +85,16 @@ namespace DSLNG.PEAR.Web.Controllers
             }).Menus;
         }
 
+        [PearMenu]
         public ActionResult SiteMap()
         {
-            //var menus = _menuService.GetMenus(new GetMenusRequest());
+            //get menu active by url request
+            var rootMenuActive = TempData["RootMenuActive"].MapTo<Data.Entities.Menu>();
+            //ViewBag.RootMenuActive = rootMenuActive;
+
             var menus = _menuService.GetSiteMenus(new GetSiteMenusRequest() { IncludeChildren = true});
+            menus.MenuIdActive = rootMenuActive.Id;
+            
 
             return PartialView("_SiteMap", menus);
         }

@@ -15,13 +15,18 @@
                 @Html.ValidationMessageFor(model => model.Username)
             </div>
             <div class="form-group">
+                @Html.LabelFor(model => model.Password, new { @class = "control-label" })
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(model => model.Email, new { @class = "control-label" })
                 @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Email)
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.RoleId, new { @class = "control-label" })
-                @Html.DropDownListFor(model => model.RoleId, Model.RoleGroupList, "", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.RoleId, Model.RoleGroupList, "---Select RoleGroup---", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RoleId)
             </div>
             <div class="form-group">

@@ -1,0 +1,31 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.User.UserLoginViewModel
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="login-form">
+    <div class="head">
+        <img src="/Content/img/logo_login.png" alt="">
+    </div>
+    @Html.Partial("_MessageResponse")
+    <form action="@Url.Action("Login")" method="POST">
+        <ul>
+            <li>
+                @Html.TextBoxFor(model => model.Username, new { @placeholder = "Username" })
+                <a href="#" class=" icon user"></a>
+            </li>
+            <li>
+                @Html.TextBoxFor(model => model.Password, new { @placeholder = "Password" })
+                <a href="#" class=" icon lock"></a>
+            </li>
+        </ul>
+        <div class="p-container">
+            <label class="checkbox">
+                @Html.EditorFor(model => model.RememberMe, new { @class = "form-control" })
+                <i></i>Remember Me
+            </label>
+            <input type="submit" value="Sign In">
+            <div class="clear"> </div>
+        </div>
+    </form>
+</div>

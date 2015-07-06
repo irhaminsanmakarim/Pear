@@ -281,6 +281,7 @@
     <Content Include="Content\img\tick.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\login.css" />
     <Content Include="Content\select2\dist\css\select2.css" />
     <Content Include="Content\select2\dist\css\select2.min.css" />
     <Content Include="Content\select2\dist\js\i18n\az.js" />
@@ -532,6 +533,8 @@
     <Content Include="Views\PmsConfig\_Update.cshtml" />
     <Content Include="Views\SpiderwebChart\_Create.cshtml" />
     <Content Include="Views\Menu\_SiteMap.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -577,6 +580,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Attributes\AjaxOnlyAttribute.cs" />
+    <Compile Include="Attributes\PearMenuAttribute.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\ViewModelMappingProfile.cs" />
     <Compile Include="Controllers\Api\ApiUserController.cs" />
@@ -683,6 +687,7 @@
     <Compile Include="ViewModels\User\CreateUserViewModel.cs" />
     <Compile Include="ViewModels\User\UpdateUserViewModel.cs" />
     <Compile Include="ViewModels\User\UserIndexViewModel.cs" />
+    <Compile Include="ViewModels\User\UserLoginViewModel.cs" />
     <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
