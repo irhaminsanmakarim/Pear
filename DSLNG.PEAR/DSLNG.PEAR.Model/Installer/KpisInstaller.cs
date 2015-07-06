@@ -37,43 +37,61 @@ namespace DSLNG.PEAR.Data.Installer
                 Method = _context.Methods.Local.First(x => x.Id == 1),
                 Level = _context.Levels.Local.First(x => x.Code == "COR")
             };
-            var securityIncident = new Kpi
-            {
-                Id = 2,
-                Name = "QHSE Training Attend",
+            //};
+            //var fatality = new Kpi
+            //{
+            //    Id = 1,
+            //    Name = "Fatality/Strap Disability",
+            //    Measurement = _context.Measurements.Local.First(x => x.Id == 1),
+            //    Pillar = _context.Pillars.Local.First(x => x.Id == 1),
+            //    Group = _context.Groups.Local.First(x => x.Id == 1),
+            //    Order = 1,
+            //    YtdFormula = Enums.YtdFormula.Sum,
+            //    IsEconomic = true,
+            //    FormatInput = FormatInput.Numeric,
+            //    IsActive = true,
+            //    CreatedDate = DateTime.Now,
+            //    UpdatedDate = DateTime.Now,
+            //    Method = _context.Methods.Local.First(x => x.Id == 1),
+            //    Level = _context.Levels.Local.First(x => x.Code == "COR")
+            //};
+            //var securityIncident = new Kpi
+            //{
+            //    Id = 2,
+            //    Name = "QHSE Training Attend",
                 Measurement = _context.Measurements.Local.First(x => x.Id == 6),
-                Pillar = _context.Pillars.Local.First(x => x.Id == 1),
-                Group = _context.Groups.Local.First(x => x.Id == 1),
-                Order = 2,
-                YtdFormula = Enums.YtdFormula.Sum,
-                IsEconomic = true,
-                FormatInput = FormatInput.Numeric,
-                IsActive = true,
-                CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now,
-                Level = _context.Levels.Local.First(x => x.Code == "COR")
-            };
-            var rif = new Kpi
-            {
-                Id = 3,
-                Name = "RIF",
+            //    Pillar = _context.Pillars.Local.First(x => x.Id == 1),
+            //    Group = _context.Groups.Local.First(x => x.Id == 1),
+            //    Order = 2,
+            //    YtdFormula = Enums.YtdFormula.Sum,
+            //    IsEconomic = true,
+            //    FormatInput = FormatInput.Numeric,
+            //    IsActive = true,
+            //    CreatedDate = DateTime.Now,
+            //    UpdatedDate = DateTime.Now,
+            //    Level = _context.Levels.Local.First(x => x.Code == "COR")
+            //};
+            //var rif = new Kpi
+            //{
+            //    Id = 3,
+            //    Name = "RIF",
                 Measurement = _context.Measurements.Local.First(x => x.Id == 6),
-                Pillar = _context.Pillars.Local.First(x => x.Id == 1),
-                Group = _context.Groups.Local.First(x => x.Id == 1),
-                Order = 3,
-                YtdFormula = Enums.YtdFormula.Sum,
-                IsEconomic = true,
-                FormatInput = FormatInput.Numeric,
-                IsActive = true,
-                CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now,
-                Level = _context.Levels.Local.First(x => x.Code == "COR")
-            };
+            //    Pillar = _context.Pillars.Local.First(x => x.Id == 1),
+            //    Group = _context.Groups.Local.First(x => x.Id == 1),
+            //    Order = 3,
+            //    YtdFormula = Enums.YtdFormula.Sum,
+            //    IsEconomic = true,
+            //    FormatInput = FormatInput.Numeric,
+            //    IsActive = true,
+            //    CreatedDate = DateTime.Now,
+            //    UpdatedDate = DateTime.Now,
+            //    Level = _context.Levels.Local.First(x => x.Code == "COR")
+            //};
 
-            var dafwc = new Kpi
-            {
-                Id = 4,
-                Name = "DAFWC",
+            //var dafwc = new Kpi
+            //{
+            //    Id = 4,
+            //    Name = "DAFWC",
                 Measurement = _context.Measurements.Local.First(x => x.Id == 6),
                 Pillar = _context.Pillars.Local.First(x => x.Id == 1),
                 Group = _context.Groups.Local.First(x => x.Id == 1),
@@ -98,10 +116,41 @@ namespace DSLNG.PEAR.Data.Installer
             };
 
             _context.Kpis.Add(fatality);
-            _context.Kpis.Add(securityIncident);
-            _context.Kpis.Add(dafwc);
-            _context.Kpis.Add(rif);
-            _context.Kpis.Add(plantAvailability);
+            _context.Kpis.Add(kpi2);
+            _context.Kpis.Add(kpi3);
+            _context.Kpis.Add(kpi4);
+            _context.Kpis.Add(kpi5);
+            _context.Kpis.Add(kpi6);
+            _context.Kpis.Add(kpi7);
+            _context.Kpis.Add(kpi8);
+            _context.Kpis.Add(kpi9);
+            _context.Kpis.Add(kpi10);
+            _context.Kpis.Add(kpi11);
+            _context.Kpis.Add(kpi12);
+            _context.Kpis.Add(kpi13);
+            _context.Kpis.Add(kpi14);
+            _context.Kpis.Add(kpi15);
+            _context.Kpis.Add(kpi16);
+            _context.Kpis.Add(kpi17);
+            _context.Kpis.Add(kpi18);
+            _context.Kpis.Add(kpi19);
+            _context.Kpis.Add(kpi20);
+            _context.Kpis.Add(kpi21);
+            _context.Kpis.Add(kpi22);
+            _context.Kpis.Add(kpi23);
+            _context.Kpis.Add(kpi24);
+            _context.Kpis.Add(kpi25);
+            _context.Kpis.Add(kpi26);
+            _context.Kpis.Add(kpi27);
+            _context.Kpis.Add(kpi28);
+            _context.Kpis.Add(kpi29);
+            _context.Kpis.Add(kpi30);
+            _context.Kpis.Add(kpi31);
+            _context.Kpis.Add(kpi32);
+            _context.Kpis.Add(kpi33);
+            _context.Kpis.Add(kpi34);
+            _context.Kpis.Add(kpi35);
+
         }
     }
 }
