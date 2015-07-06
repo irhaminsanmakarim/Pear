@@ -73,14 +73,18 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiToSeriesResponse, KpiToSeriesViewModel>();
             Mapper.CreateMap<CreateKpiViewModel, CreateKpiRequest>();
             Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.KpiRelationModel, DSLNG.PEAR.Services.Requests.Kpi.KpiRelationModel>();
-            Mapper.CreateMap<GetKpiResponse, UpdateKpiViewModel>();
+            Mapper.CreateMap<GetKpiResponse, UpdateKpiViewModel>()
+               .ForMember(k => k.LevelId, o => o.MapFrom(x => x.Level.Id))
+               .ForMember(k => k.GroupId, o => o.MapFrom(x => x.Group.Id))
+               .ForMember(k => k.RoleGroupId, o => o.MapFrom(x => x.RoleGroup.Id))
+               .ForMember(k => k.MeasurementId, o => o.MapFrom(x => x.Measurement.Id))
+               .ForMember(k => k.MethodId, o => o.MapFrom(x => x.Method.Id))
+               .ForMember(k => k.TypeId, o => o.MapFrom(x => x.Type.Id))
+               .ForMember(k => k.YtdFormulaValue, o => o.MapFrom(x => x.YtdFormula.ToString()))
+               .ForMember(k => k.PeriodeValue, o => o.MapFrom(x => x.Periode.ToString()))
+               .ForMember(k => k.RelationModels, o => o.MapFrom(x => x.RelationModels));
             Mapper.CreateMap<DSLNG.PEAR.Services.Responses.Kpi.KpiRelationModel, DSLNG.PEAR.Web.ViewModels.Kpi.KpiRelationModel>();
             Mapper.CreateMap<UpdateKpiViewModel, UpdateKpiRequest>();
-            Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.Level, DSLNG.PEAR.Services.Requests.Kpi.Level>();
-            Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.RoleGroup, DSLNG.PEAR.Services.Requests.Kpi.RoleGroup>();
-            Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.Group, DSLNG.PEAR.Services.Requests.Kpi.Group>();
-            Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.Measurement, DSLNG.PEAR.Services.Requests.Kpi.Measurement>();
-            Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.Kpi.Type, DSLNG.PEAR.Services.Requests.Kpi.Type>();
 
             //Mapper.CreateMap<GetMenusResponse.Menu, MenuViewModel>();
             Mapper.CreateMap<CreateMenuViewModel, CreateMenuRequest>();
