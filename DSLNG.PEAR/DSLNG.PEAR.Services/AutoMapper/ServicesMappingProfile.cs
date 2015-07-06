@@ -73,6 +73,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Level, Responses.Menu.Level>();
             Mapper.CreateMap<Data.Entities.RoleGroup, Responses.Menu.RoleGroup>();
 
+            Mapper.CreateMap<Data.Entities.Menu, GetSiteMenuActiveResponse>();
+            Mapper.CreateMap<GetSiteMenuActiveResponse, Data.Entities.Menu>();
+
             Mapper.CreateMap<Data.Entities.Group, GetGroupResponse>();
             Mapper.CreateMap<Data.Entities.Group, GetGroupsResponse.Group>();
             Mapper.CreateMap<CreateGroupRequest, Data.Entities.Group>();

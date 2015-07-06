@@ -579,6 +579,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Attributes\AjaxOnlyAttribute.cs" />
+    <Compile Include="Attributes\PearMenuAttribute.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\ViewModelMappingProfile.cs" />
     <Compile Include="Controllers\Api\ApiUserController.cs" />

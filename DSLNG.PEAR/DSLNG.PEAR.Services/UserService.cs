@@ -140,7 +140,7 @@ namespace DSLNG.PEAR.Services
             {
                 
                 response.IsSuccess = false;
-                response.Message = "Failed login using username <" + request.Username + "> and password <" + request.Password + ">";
+                response.Message = "Failed login using username <" + request.Username + "> and password <" + request.Password + "> " +x.Message;
             }
 
             return response;
