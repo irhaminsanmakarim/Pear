@@ -510,6 +510,7 @@
     <Content Include="Views\PmsConfigDetails\_Create.cshtml" />
     <Content Include="Views\PmsSummary\_Create.cshtml" />
     <Content Include="Views\Shared\_ScoringIndicator.cshtml" />
+    <Content Include="Views\KpiTarget\Update.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
@@ -576,6 +577,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Attributes\AjaxOnlyAttribute.cs" />
+    <Compile Include="Attributes\PearMenuAttribute.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\ViewModelMappingProfile.cs" />
     <Compile Include="Controllers\Api\ApiUserController.cs" />
@@ -623,6 +625,7 @@
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\Measurement.cs" />
     <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\CreatePmsConfigViewModel.cs" />

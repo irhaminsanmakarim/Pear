@@ -80,6 +80,7 @@
     <Compile Include="Requests\KpiTarget\CreateKpiTargetRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetKpiTargetsRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetPmsConfigsRequest.cs" />
+    <Compile Include="Requests\KpiTarget\GetTargetRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\PeriodeType.cs" />
     <Compile Include="Requests\Menu\GetSiteMenusRequest.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Responses\KpiTarget\CreateKpiTargetResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetKpiTargetsResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetPmsConfigsResponse.cs" />
+    <Compile Include="Responses\KpiTarget\GetTargetResponse.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\KpiRelationModel.cs" />
     <Compile Include="Responses\Menu\GetSiteMenusResponse.cs" />
     <Compile Include="Responses\Menu\Menu.cs" />

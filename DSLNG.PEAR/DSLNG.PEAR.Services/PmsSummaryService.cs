@@ -22,53 +22,7 @@ namespace DSLNG.PEAR.Services
         {
         }
 
-        public UpdatePmsSummaryResponse UpdatePmsSummary(UpdatePmsSummaryRequest request)
-        {
-            var response = new UpdatePmsSummaryResponse();
-            try
-            {
-                var updatedPmsSummary = request.MapTo<PmsSummary>();
-                var existedPmsSummary = DataContext.PmsSummaries
-                    .Where(x => x.Id == request.Id)
-                    .Include(x => x.ScoreIndicators)
-                    .Single();
-                var existedPmsSummaryEntry = DataContext.Entry(existedPmsSummary);
-                existedPmsSummaryEntry.CurrentValues.SetValues(updatedPmsSummary);
-
-                foreach (var scoreIndicator in updatedPmsSummary.ScoreIndicators)
-                {
-                    var existedScoreIndicator = existedPmsSummary.ScoreIndicators.SingleOrDefault(x => x.Id == scoreIndicator.Id && x.Id != 0);
-                    if (existedScoreIndicator != null)
-                    {
-                        var scoreIndicatorEntry = DataContext.Entry(existedScoreIndicator);
-                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicatorEntry);
-                    }
-                    else
-                    {
-                        scoreIndicator.Id = 0;
-                        existedPmsSummary.ScoreIndicators.Add(scoreIndicator);
-                    }
-                }
-
-                foreach (var item in existedPmsSummary.ScoreIndicators.Where(x => x.Id != 0).ToList())
-                {
-                    if (updatedPmsSummary.ScoreIndicators.All(x => x.Id != item.Id))
-                    {
-                        DataContext.ScoreIndicators.Remove(item);
-                    }
-                }
-
-                DataContext.SaveChanges();
-                response.IsSuccess = true;
-                response.Message = "Pms Summary has been updated";
-            }
-            catch (DbUpdateException dbUpdateException)
-            {
-                response.Message = dbUpdateException.Message;
-            }
-
-            return response;
-        }
+        #region PMS summary report
 
         public GetPmsSummaryReportResponse GetPmsSummaryReport(GetPmsSummaryReportRequest request)
         {
@@ -231,123 +185,6 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        private IList<GetPmsSummaryReportResponse.KpiData> SetPmsConfigColor(IList<GetPmsSummaryReportResponse.KpiData> kpiDatas, ICollection<ScoreIndicator> scoreIndicators, int pillarId)
-        {
-            var data = kpiDatas.Where(x => x.PillarId == pillarId && x.Score.HasValue).ToList();
-            double? totalScore = null;
-            if (data.Count > 0)
-            {
-                totalScore = 0;
-                foreach (var datum in data)
-                {
-                    //totalScore += datum.Score/100 * datum.PillarWeight;
-                    totalScore += datum.Score;
-                }
-            }
-
-            var groupedPillar = kpiDatas.Where(x => x.PillarId == pillarId).ToList();
-            foreach (var item in groupedPillar)
-            {
-                item.PillarColor = GetScoreColor(totalScore, scoreIndicators);
-            }
-
-            return kpiDatas;
-        }
-
-        private IList<GetPmsSummaryReportResponse.KpiData> SetPmsSummaryColor(IList<GetPmsSummaryReportResponse.KpiData> kpiDatas, ICollection<ScoreIndicator> scoreIndicators)
-        {
-            var groupedPillars = kpiDatas.GroupBy(x => x.Pillar);
-            double? totalScore = null;
-            foreach (var groupedPillar in groupedPillars)
-            {
-                var notNullPillar = groupedPillar.Where(x => x.Score.HasValue).ToList();
-                if (notNullPillar.Count > 0)
-                    totalScore = totalScore.HasValue ? totalScore.Value : 0;
-
-                foreach (var item in notNullPillar)
-                {
-                    if (item.Score.HasValue)
-                    {
-                        totalScore += item.Score.Value / 100 * item.PillarWeight;
-                    }
-                }
-            }
-
-            return kpiDatas.Select(x =>
-            {
-                x.TotalScoreColor = GetScoreColor(totalScore, scoreIndicators);
-                return x;
-            }).ToList();
-        }
-
-        public GetPmsSummaryListResponse GetPmsSummaryList(GetPmsSummaryListRequest request)
-        {
-            var response = new GetPmsSummaryListResponse();
-            try
-            {
-                var summaries = DataContext.PmsSummaries.ToList();
-                response.PmsSummaryList = summaries.MapTo<GetPmsSummaryListResponse.PmsSummary>();
-                response.IsSuccess = true;
-            }
-            catch (ArgumentNullException exception)
-            {
-                response.Message = exception.Message;
-            }
-
-            return response;
-        }
-
-        public GetPmsSummaryConfigurationResponse GetPmsSummaryConfiguration(GetPmsSummaryConfigurationRequest request)
-        {
-            var response = new GetPmsSummaryConfigurationResponse();
-            try
-            {
-                var pmsSummary = DataContext.PmsSummaries
-                    .Include(x => x.PmsConfigs.Select(y => y.PmsConfigDetailsList.Select(z => z.ScoreIndicators)))
-                    .First(x => x.Id == request.Id);
-
-                response.Pillars = DataContext.Pillars.ToList().MapTo<GetPmsSummaryConfigurationResponse.Pillar>();
-                response.Kpis = DataContext.Kpis.Include(x => x.Measurement).ToList().MapTo<GetPmsSummaryConfigurationResponse.Kpi>();
-                response.PmsConfigs = pmsSummary.PmsConfigs.MapTo<GetPmsSummaryConfigurationResponse.PmsConfig>();
-
-                response.IsSuccess = true;
-            }
-            catch (ArgumentNullException argumentNullException)
-            {
-                response.Message = argumentNullException.Message;
-            }
-            catch (InvalidOperationException invalidOperationException)
-            {
-                response.Message = invalidOperationException.Message;
-            }
-
-            return response;
-        }
-
-        public GetScoreIndicatorsResponse GetScoreIndicators(int pmsConfigDetailId)
-        {
-            var response = new GetScoreIndicatorsResponse();
-            try
-            {
-                var pmsConfigDetails = DataContext.PmsConfigDetails
-                    .Include(x => x.ScoreIndicators)
-                    .First(x => x.Id == pmsConfigDetailId);
-                response.ScoreIndicators =
-                    pmsConfigDetails.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
-                response.IsSuccess = true;
-            }
-            catch (ArgumentNullException argumentNullException)
-            {
-                response.Message = argumentNullException.Message;
-            }
-            catch (InvalidOperationException invalidOperationException)
-            {
-                response.Message = invalidOperationException.Message;
-            }
-
-            return response;
-        }
-
         public GetPmsDetailsResponse GetPmsDetails(GetPmsDetailsRequest request)
         {
             var response = new GetPmsDetailsResponse();
@@ -434,17 +271,38 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public GetPmsConfigDetailsResponse GetPmsConfigDetails(int id)
+        #endregion
+
+        #region PMS summary
+
+        public CreatePmsSummaryResponse CreatePmsSummary(CreatePmsSummaryRequest request)
         {
-            var response = new GetPmsConfigDetailsResponse();
+            var response = new CreatePmsSummaryResponse();
             try
             {
-                var pmsConfigDetails =
-                    DataContext.PmsConfigDetails
-                    .Include(x => x.ScoreIndicators)
-                    .Include(x => x.Kpi.Pillar)
-                    .First(x => x.Id == id);
-                response = pmsConfigDetails.MapTo<GetPmsConfigDetailsResponse>();
+                var pmsSummary = request.MapTo<PmsSummary>();
+                DataContext.PmsSummaries.Add(pmsSummary);
+                DataContext.SaveChanges();
+                response.Message = "Configuration has been added successfully";
+                response.IsSuccess = true;
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public GetPmsSummaryResponse GetPmsSummary(int id)
+        {
+            var response = new GetPmsSummaryResponse();
+            try
+            {
+                var pmsSummary = DataContext.PmsSummaries
+                                            .Include(x => x.ScoreIndicators)
+                                            .First(x => x.Id == id);
+                response = pmsSummary.MapTo<GetPmsSummaryResponse>();
                 response.IsSuccess = true;
             }
             catch (ArgumentNullException argumentNullException)
@@ -459,24 +317,153 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public GetKpisByPillarIdResponse GetKpis(int pillarId)
+        public GetPmsSummaryListResponse GetPmsSummaryList(GetPmsSummaryListRequest request)
         {
-            var response = new GetKpisByPillarIdResponse();
+            var response = new GetPmsSummaryListResponse();
             try
             {
-                var kpis = DataContext.Kpis.Include(x => x.Pillar).Where(x => x.Pillar.Id == pillarId).ToList();
-                response.Kpis = kpis.MapTo<GetKpisByPillarIdResponse.Kpi>();
+                var summaries = DataContext.PmsSummaries.ToList();
+                response.PmsSummaryList = summaries.MapTo<GetPmsSummaryListResponse.PmsSummary>();
                 response.IsSuccess = true;
-                return response;
             }
-            catch (ArgumentNullException argumentNullException)
+            catch (ArgumentNullException exception)
             {
-                response.Message = argumentNullException.Message;
+                response.Message = exception.Message;
             }
 
             return response;
         }
 
+        public UpdatePmsSummaryResponse UpdatePmsSummary(UpdatePmsSummaryRequest request)
+        {
+            var response = new UpdatePmsSummaryResponse();
+            try
+            {
+                var updatedPmsSummary = request.MapTo<PmsSummary>();
+                var existedPmsSummary = DataContext.PmsSummaries
+                    .Where(x => x.Id == request.Id)
+                    .Include(x => x.ScoreIndicators)
+                    .Single();
+                var existedPmsSummaryEntry = DataContext.Entry(existedPmsSummary);
+                existedPmsSummaryEntry.CurrentValues.SetValues(updatedPmsSummary);
+
+                foreach (var scoreIndicator in updatedPmsSummary.ScoreIndicators)
+                {
+                    var existedScoreIndicator = existedPmsSummary.ScoreIndicators.SingleOrDefault(x => x.Id == scoreIndicator.Id && x.Id != 0);
+                    if (existedScoreIndicator != null)
+                    {
+                        var scoreIndicatorEntry = DataContext.Entry(existedScoreIndicator);
+                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicatorEntry);
+                    }
+                    else
+                    {
+                        scoreIndicator.Id = 0;
+                        existedPmsSummary.ScoreIndicators.Add(scoreIndicator);
+                    }
+                }
+
+                foreach (var item in existedPmsSummary.ScoreIndicators.Where(x => x.Id != 0).ToList())
+                {
+                    if (updatedPmsSummary.ScoreIndicators.All(x => x.Id != item.Id))
+                    {
+                        DataContext.ScoreIndicators.Remove(item);
+                    }
+                }
+
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Pms Summary has been updated";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public GetPmsSummaryConfigurationResponse GetPmsSummaryConfiguration(GetPmsSummaryConfigurationRequest request)
+        {
+            var response = new GetPmsSummaryConfigurationResponse();
+            try
+            {
+                var pmsSummary = DataContext.PmsSummaries
+                    .Include(x => x.PmsConfigs.Select(y => y.PmsConfigDetailsList.Select(z => z.ScoreIndicators)))
+                    .First(x => x.Id == request.Id);
+
+                response.Pillars = DataContext.Pillars.ToList().MapTo<GetPmsSummaryConfigurationResponse.Pillar>();
+                response.Kpis = DataContext.Kpis.Include(x => x.Measurement).ToList().MapTo<GetPmsSummaryConfigurationResponse.Kpi>();
+                response.PmsConfigs = pmsSummary.PmsConfigs.MapTo<GetPmsSummaryConfigurationResponse.PmsConfig>();
+
+                response.IsSuccess = true;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
+
+        public GetScoreIndicatorsResponse GetScoreIndicators(int pmsConfigDetailId)
+        {
+            var response = new GetScoreIndicatorsResponse();
+            try
+            {
+                var pmsConfigDetails = DataContext.PmsConfigDetails
+                    .Include(x => x.ScoreIndicators)
+                    .First(x => x.Id == pmsConfigDetailId);
+                response.ScoreIndicators =
+                    pmsConfigDetails.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
+                response.IsSuccess = true;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
+
+        #endregion
+
+        #region PMS Config
+
+        public CreatePmsConfigResponse CreatePmsConfig(CreatePmsConfigRequest request)
+        {
+            var response = new CreatePmsConfigResponse();
+
+            try
+            {
+                var pmsConfig = request.MapTo<PmsConfig>();
+                pmsConfig.Pillar = DataContext.Pillars.First(x => x.Id == request.PillarId);
+                pmsConfig.PmsSummary = DataContext.PmsSummaries.First(x => x.Id == request.PmsSummaryId);
+                pmsConfig.IsActive = true;
+                DataContext.PmsConfigs.Add(pmsConfig);
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "New Pillar has been addeed succefully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
+        
         public UpdatePmsConfigResponse UpdatePmsConfig(UpdatePmsConfigRequest request)
         {
             var response = new UpdatePmsConfigResponse();
@@ -526,7 +513,7 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
-
+        
         public GetPmsConfigResponse GetPmsConfig(int id)
         {
             var response = new GetPmsConfigResponse();
@@ -551,6 +538,35 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        #endregion
+
+        #region PMS Config Details
+
+        public GetPmsConfigDetailsResponse GetPmsConfigDetails(int id)
+        {
+            var response = new GetPmsConfigDetailsResponse();
+            try
+            {
+                var pmsConfigDetails =
+                    DataContext.PmsConfigDetails
+                    .Include(x => x.ScoreIndicators)
+                    .Include(x => x.Kpi.Pillar)
+                    .First(x => x.Id == id);
+                response = pmsConfigDetails.MapTo<GetPmsConfigDetailsResponse>();
+                response.IsSuccess = true;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
+        
         public CreatePmsConfigDetailsResponse CreatePmsConfigDetails(CreatePmsConfigDetailsRequest request)
         {
             var response = new CreatePmsConfigDetailsResponse();
@@ -583,7 +599,7 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
-
+        
         public UpdatePmsConfigDetailsResponse UpdatePmsConfigDetails(UpdatePmsConfigDetailsRequest request)
         {
             var response = new UpdatePmsConfigDetailsResponse();
@@ -634,75 +650,75 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public CreatePmsConfigResponse CreatePmsConfig(CreatePmsConfigRequest request)
-        {
-            var response = new CreatePmsConfigResponse();
+        #endregion  
 
+        public GetKpisByPillarIdResponse GetKpis(int pillarId)
+        {
+            var response = new GetKpisByPillarIdResponse();
             try
             {
-                var pmsConfig = request.MapTo<PmsConfig>();
-                pmsConfig.Pillar = DataContext.Pillars.First(x => x.Id == request.PillarId);
-                pmsConfig.PmsSummary = DataContext.PmsSummaries.First(x => x.Id == request.PmsSummaryId);
-                pmsConfig.IsActive = true;
-                DataContext.PmsConfigs.Add(pmsConfig);
-                DataContext.SaveChanges();
+                var kpis = DataContext.Kpis.Include(x => x.Pillar).Where(x => x.Pillar.Id == pillarId).ToList();
+                response.Kpis = kpis.MapTo<GetKpisByPillarIdResponse.Kpi>();
                 response.IsSuccess = true;
-                response.Message = "New Pillar has been addeed succefully";
-            }
-            catch (DbUpdateException dbUpdateException)
-            {
-                response.Message = dbUpdateException.Message;
-            }
-            catch (InvalidOperationException invalidOperationException)
-            {
-                response.Message = invalidOperationException.Message;
-            }
-
-            return response;
-        }
-
-        public CreatePmsSummaryResponse CreatePmsSummary(CreatePmsSummaryRequest request)
-        {
-            var response = new CreatePmsSummaryResponse();
-            try
-            {
-                var pmsSummary = request.MapTo<PmsSummary>();
-                DataContext.PmsSummaries.Add(pmsSummary);
-                DataContext.SaveChanges();
-                response.Message = "Configuration has been added successfully";
-                response.IsSuccess = true;
-            }
-            catch (DbUpdateException dbUpdateException)
-            {
-                response.Message = dbUpdateException.Message;
-            }
-
-            return response;
-        }
-
-        public GetPmsSummaryResponse GetPmsSummary(int id)
-        {
-            var response = new GetPmsSummaryResponse();
-            try
-            {
-                var pmsSummary = DataContext.PmsSummaries
-                                            .Include(x => x.ScoreIndicators)
-                                            .First(x => x.Id == id);
-                response = pmsSummary.MapTo<GetPmsSummaryResponse>();
-                response.IsSuccess = true;
+                return response;
             }
             catch (ArgumentNullException argumentNullException)
             {
                 response.Message = argumentNullException.Message;
             }
-            catch (InvalidOperationException invalidOperationException)
-            {
-                response.Message = invalidOperationException.Message;
-            }
 
             return response;
         }
 
+        private IList<GetPmsSummaryReportResponse.KpiData> SetPmsConfigColor(IList<GetPmsSummaryReportResponse.KpiData> kpiDatas, ICollection<ScoreIndicator> scoreIndicators, int pillarId)
+        {
+            var data = kpiDatas.Where(x => x.PillarId == pillarId && x.Score.HasValue).ToList();
+            double? totalScore = null;
+            if (data.Count > 0)
+            {
+                totalScore = 0;
+                foreach (var datum in data)
+                {
+                    //totalScore += datum.Score/100 * datum.PillarWeight;
+                    totalScore += datum.Score;
+                }
+            }
+
+            var groupedPillar = kpiDatas.Where(x => x.PillarId == pillarId).ToList();
+            foreach (var item in groupedPillar)
+            {
+                item.PillarColor = GetScoreColor(totalScore, scoreIndicators);
+            }
+
+            return kpiDatas;
+        }
+
+        private IList<GetPmsSummaryReportResponse.KpiData> SetPmsSummaryColor(IList<GetPmsSummaryReportResponse.KpiData> kpiDatas, ICollection<ScoreIndicator> scoreIndicators)
+        {
+            var groupedPillars = kpiDatas.GroupBy(x => x.Pillar);
+            double? totalScore = null;
+            foreach (var groupedPillar in groupedPillars)
+            {
+                var notNullPillar = groupedPillar.Where(x => x.Score.HasValue).ToList();
+                if (notNullPillar.Count > 0)
+                    totalScore = totalScore.HasValue ? totalScore.Value : 0;
+
+                foreach (var item in notNullPillar)
+                {
+                    if (item.Score.HasValue)
+                    {
+                        totalScore += item.Score.Value / 100 * item.PillarWeight;
+                    }
+                }
+            }
+
+            return kpiDatas.Select(x =>
+            {
+                x.TotalScoreColor = GetScoreColor(totalScore, scoreIndicators);
+                return x;
+            }).ToList();
+        }
+        
         private string GetScoreColor(double? score, IEnumerable<ScoreIndicator> scoreIndicators)
         {
             if (score.HasValue)

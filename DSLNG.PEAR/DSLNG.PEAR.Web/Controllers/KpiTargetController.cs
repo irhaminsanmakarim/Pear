@@ -1,4 +1,6 @@
-﻿using DSLNG.PEAR.Services.Interfaces;
+﻿using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Responses.KpiTarget;
 using DSLNG.PEAR.Web.ViewModels.KpiTarget;
 using System;
 using System.Collections.Generic;
@@ -19,7 +21,20 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             _kpiTargetService = kpiTargetService;
         }
-        // GET: KpiTarget
+
+        public ActionResult Update(int id)
+        {
+            int pmsSummaryId = id;
+            var request = new GetTargetRequest {PeriodeType = PeriodeType.Yearly, PmsSummaryId = id};
+            var response = _kpiTargetService.GetTarget(request);
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<GetTargetResponse>();
+                return View("Update", viewModel);
+            }
+            return Content("as");
+        }
+        
         public ActionResult Index()
         {
             return View();

@@ -30,7 +30,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View("Details");
         }
 
-        public ActionResult GetKpis(int id)
+        /*public ActionResult GetKpis(int id)
         {
             int pillarId = id;
             var response = _pmsSummaryService.GetKpis(pillarId);
@@ -46,7 +46,7 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             return Json("error when load data kpi with pillar id = " + 1, JsonRequestBehavior.AllowGet);
-        }
+        }*/
 
         [HttpPost]
         public ActionResult UpdatePmsConfigDetails(UpdatePmsConfigDetailsViewModel viewModel)

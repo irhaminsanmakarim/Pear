@@ -8,5 +8,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         CreateKpiTargetResponse Create(CreateKpiTargetRequest request);
         GetPmsConfigsResponse GetPmsConfigs(GetPmsConfigsRequest request);
         GetKpiTargetsResponse GetKpiTargets(GetKpiTargetsRequest request);
+        GetTargetResponse GetTarget(GetTargetRequest request);
     }
 }
