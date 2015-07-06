@@ -60,14 +60,14 @@ namespace DSLNG.PEAR.Services
                             #region KPI Achievement
 
                             var kpiAchievementYearly =
-                                pmsConfigDetails.Kpi.KpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly);
+                                pmsConfigDetails.Kpi.KpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Year);
                             if (kpiAchievementYearly != null && kpiAchievementYearly.Value != null)
                                 kpiData.ActualYearly = kpiAchievementYearly.Value.Value;
 
 
                             var kpiAchievementMonthly =
                                 pmsConfigDetails.Kpi.KpiAchievements.FirstOrDefault(
-                                    x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month);
+                                    x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month && x.Periode.Year == request.Year);
                             if (kpiAchievementMonthly != null && kpiAchievementMonthly.Value.HasValue)
                                 kpiData.ActualMonthly = kpiAchievementMonthly.Value.Value;
 
@@ -75,7 +75,7 @@ namespace DSLNG.PEAR.Services
                             var kpiAchievementYtd = pmsConfigDetails.Kpi.KpiAchievements.Where(
                                 x =>
                                 x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue &&
-                                (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
+                                (x.Periode.Month >= 1 && x.Periode.Month <= request.Month && x.Periode.Year == request.Year)).ToList();
                             if (kpiAchievementYtd.Count > 0) kpiData.ActualYtd = 0;
                             foreach (var achievementYtd in kpiAchievementYtd)
                             {
@@ -88,14 +88,14 @@ namespace DSLNG.PEAR.Services
                             #region KPI Target
 
                             var kpiTargetYearly =
-                                pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly);
+                                pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Year);
                             if (kpiTargetYearly != null && kpiTargetYearly.Value != null)
                                 kpiData.TargetYearly = kpiTargetYearly.Value.Value;
 
 
                             var kpiTargetMonthly =
                                 pmsConfigDetails.Kpi.KpiTargets.FirstOrDefault(
-                                    x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month);
+                                    x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month && x.Periode.Year == request.Year);
                             if (kpiTargetMonthly != null && kpiTargetMonthly.Value.HasValue)
                                 kpiData.TargetMonthly = kpiTargetMonthly.Value.Value;
 
@@ -103,7 +103,7 @@ namespace DSLNG.PEAR.Services
                             var kpiTargetYtd = pmsConfigDetails.Kpi.KpiTargets.Where(
                                 x =>
                                 x.PeriodeType == PeriodeType.Monthly && x.Value.HasValue &&
-                                (x.Periode.Month >= 1 && x.Periode.Month <= request.Month)).ToList();
+                                (x.Periode.Month >= 1 && x.Periode.Month <= request.Month && x.Periode.Year == request.Year)).ToList();
                             if (kpiTargetYtd.Count > 0) kpiData.TargetYtd = 0;
                             foreach (var targetYtd in kpiTargetYtd)
                             {
@@ -139,12 +139,16 @@ namespace DSLNG.PEAR.Services
                                     case ScoringType.Boolean:
                                         bool isMoreThanZero = false;
                                         var kpiAchievement =
-                                            pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue).ToList();
+                                            pmsConfigDetails.Kpi.KpiAchievements.Where(x => x.Value.HasValue && x.Periode.Year == request.Year).ToList();
                                         bool isNull = kpiAchievement.Count == 0;
                                         foreach (var achievement in kpiAchievement)
                                         {
                                             if (achievement.Value > 0)
+                                            {
                                                 isMoreThanZero = true;
+                                                break;
+                                            }
+                                                
                                         }
 
                                         if (!isNull)
