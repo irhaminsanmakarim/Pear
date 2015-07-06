@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.Menu
 {
-    public class GetSiteMenusRequest
+    public class GetSiteMenuActiveRequest
     {
-        public int? MenuId { get; set; }
-        public int? ParentId { get; set; }
-        public bool IncludeChildren { get; set; }
+        public string Controller { get; set; }
+        public string Action { get; set; }
     }
 }

@@ -10,7 +10,7 @@
             settings.SettingsBehavior.AllowFixedGroups = true;
             settings.Settings.ShowFooter = true;
             settings.Width = Unit.Percentage(100);
-
+            settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
             var pillarColumn = new MVCxGridViewColumn("PillarNameWithColor", "OSP");
             pillarColumn.PropertiesEdit.EncodeHtml = false;
             pillarColumn.GroupIndex = 0;

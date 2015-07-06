@@ -18,11 +18,12 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         [MaxLength(100)]
         [Index(IsUnique = true)]
         public string Username { get; set; }
+        [Required]
+        public string Password { get; set; }
         [MaxLength(100)]
         [Index(IsUnique = true)]
         public string Email { get; set; }
-        //public RoleGroup Role { get; set; }
-        //public string ChangeModel { get; set; }
+        public string ChangeModel { get; set; }
         public bool IsActive { get; set; }
         public int RoleId { get; set; }
         public List<SelectListItem> RoleGroupList { get; set; }

@@ -10,15 +10,15 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
     public class GetPmsConfigDetailsResponse : BaseResponse
     {
         public int Id { get; set; }
-        public IList<Pillar> Pillars { get; set; }
-        public IList<Kpi> Kpis { get; set; }
-        public IList<ScoreIndicator> ScoreIndicators { get; set; }
         public double Weight { get; set; }
         public string ScoringType { get; set; }
         public int PillarId { get; set; }
+        public string PillarName { get; set; }
         public int KpiId { get; set; }
+        public string KpiName { get; set; }
+        public IList<ScoreIndicator> ScoreIndicators { get; set; }
 
-        public class Pillar
+        /*public class Pillar
         {
             public string Name { get; set; }
             public int Id { get; set; }
@@ -29,7 +29,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
             public string Name { get; set; }
             public int Id { get; set; }
             public int PillarId { get; set; }
-        }
+        }*/
         
     }
 }

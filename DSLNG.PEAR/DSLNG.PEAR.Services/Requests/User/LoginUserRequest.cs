@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.User
 {
-    public class UpdateUserRequest
+    public class LoginUserRequest
     {
-        public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public bool ChangePassword { get; set; }
-        public string Email { get; set; }
-        public int RoleId { get; set; }
-        public bool IsActive { get; set; }
     }
 }
