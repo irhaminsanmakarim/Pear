@@ -46,6 +46,15 @@ namespace DSLNG.PEAR.Services
             }
 
             response.Menus = menus.MapTo<GetSiteMenusResponse.Menu>();
+            //set root menu active / selected
+            if (request.MenuId == null || request.MenuId == 0)
+            {
+                response.MenuIdActive = DataContext.Menus.Where(x => x.ParentId == null || x.ParentId == 0).Select(x => x.Id).First();
+            }
+            else
+            {
+
+            }
             
             return response;
         }

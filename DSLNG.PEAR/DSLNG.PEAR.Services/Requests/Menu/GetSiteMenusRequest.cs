@@ -8,6 +8,7 @@ namespace DSLNG.PEAR.Services.Requests.Menu
 {
     public class GetSiteMenusRequest
     {
+        public int? MenuId { get; set; }
         public int? ParentId { get; set; }
         public bool IncludeChildren { get; set; }
     }
