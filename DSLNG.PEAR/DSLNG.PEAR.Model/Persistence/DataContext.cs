@@ -37,6 +37,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<ScoreIndicator> ScoreIndicators { get; set; }
         public IDbSet<Type> Types { get; set; }
         public IDbSet<User> Users { get; set; }
+        public IDbSet<KpiRelationModel> KpiRelationModels { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         }
         public string CodeFromLevel { get; set; }
         public string CodeFromPillar { get; set; }
+        public string CodeFromRoleGroup { get; set; }
 
         [Required]
         public int Id { get; set; }
@@ -32,25 +33,30 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
 
         [Display(Name="Pillar")]
         public int? PillarId { get; set; } //to make this nullable we need to include it
+        //public Pillar Pillar { get; set; }
         public IEnumerable<SelectListItem> PillarList { get; set; }
 
         [Required]
         [Display(Name = "Level")]
         public int LevelId { get; set; }
         public IEnumerable<SelectListItem> LevelList { get; set; }
+        //public Level Level { get; set; }
 
         [Display(Name = "Accountability")]
         public int? RoleGroupId { get; set; }
         public IEnumerable<SelectListItem> RoleGroupList { get; set; }
+        //public RoleGroup RoleGroup { get; set; } 
 
         [Required]
         [Display(Name = "Type")]
         public int TypeId { get; set; }
         public IEnumerable<SelectListItem> TypeList { get; set; }
+        //public Type Type { get; set; }
 
         [Display(Name = "Group")]
         public int? GroupId { get; set; }
         public IEnumerable<SelectListItem> GroupList { get; set; }
+        //public Group Group { get; set; }
 
         [Display(Name = "Is Economic Model")]
         public bool IsEconomic { get; set; }
@@ -67,11 +73,13 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         [Display(Name="Measurement")]
         public int? MeasurementId { get; set; }
         public IEnumerable<SelectListItem> MeasurementList { get; set; }
+        //public Measurement Measurement { get; set; }
 
         [Required]
         [Display(Name = "Method Value")]
         public int MethodId { get; set; }
         public IEnumerable<SelectListItem> MethodList { get; set; }
+        //public Method Method { get; set; }
 
         public int? ConversionId { get; set; }
         public Conversion Conversion { get; set; }
@@ -81,8 +89,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
 
         [Display(Name = "Period Input")]
         public string PeriodeValue { get; set; }
-        public PeriodeType Periode { get; set; }
         public IEnumerable<SelectListItem> PeriodeList { get; set; }
+        public PeriodeType Periode { get; set; }
 
         public string Remark { get; set; }
 

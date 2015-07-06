@@ -32,6 +32,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<ScoreIndicator> ScoreIndicators { get; set; }
         IDbSet<Type> Types { get; set; }
         IDbSet<User> Users { get; set; }
+        IDbSet<KpiRelationModel> KpiRelationModels { get; set; }
 
         Database Database { get; }
         int SaveChanges();

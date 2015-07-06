@@ -8,6 +8,7 @@ namespace DSLNG.PEAR.Services.Responses.Kpi
 {
     public class KpiRelationModel
     {
+        public int Id { get; set; }
         public int KpiId { get; set; }
         public string Method { get; set; }
     }

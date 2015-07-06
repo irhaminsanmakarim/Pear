@@ -153,6 +153,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
                 Methods.Add(new SelectListItem { Text = "Quantitative", Value = "Quantitative" });
                 Methods.Add(new SelectListItem { Text = "Qualitative", Value = "Qualitative" });
             }
+            public int Id { get; set; }
             public int KpiId { get; set; }
             public string Method { get; set; }
             public List<SelectListItem> Methods { get; set; }

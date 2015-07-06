@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         }
         public string CodeFromLevel { get; set; }
         public string CodeFromPillar { get; set; }
+        public string CodeFromRoleGroup { get; set; }
 
         [Required]
         [Display(Name = "KPI Code")]
