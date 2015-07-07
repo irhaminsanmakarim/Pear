@@ -264,6 +264,7 @@
     <Content Include="Content\img\active.png" />
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\ajax-loader1.gif" />
+    <Content Include="Content\img\ajax-loader2.gif" />
     <Content Include="Content\img\bg.jpg" />
     <Content Include="Content\img\graphic1.jpg" />
     <Content Include="Content\img\graphic2.png" />
