@@ -3,11 +3,10 @@ body, html {
     background: #f0f3f4;
 }
 
-.main-content{
+.main-content {
     padding-left: 250px;
     min-height: 100%;
     overflow: hidden;
-
 }
 
 /* Utility */
@@ -24,27 +23,37 @@ h6,
 .h4,
 .h5,
 .h6 {
-  /*font-family: 'Source Sans Pro', sans-serif;*/
-  font-family: sans-serif;
+    /*font-family: 'Source Sans Pro', sans-serif;*/
+    font-family: sans-serif;
 }
-h5{font-size: 28px;}
-h4, h3{float:left;margin-top:0px;margin-right:20px;}
 
-h6{  color: #3f454f;
-    font-size:16px;
-line-height: 30px;
-float:left;}
+h5 {
+    font-size: 28px;
+}
 
-    .main-content > aside {
-        /*float:left;*/
-    }
+h4, h3 {
+    float: left;
+    margin-top: 0px;
+    margin-right: 20px;
+}
+
+h6 {
+    color: #3f454f;
+    font-size: 16px;
+    line-height: 30px;
+    float: left;
+}
+
+.main-content > aside {
+    /*float:left;*/
+}
 
 aside.right-content {
     padding: 20px 20px 20px 0;
     padding-bottom: 500em;
     margin-bottom: -500em;
-    float:left;
-    width:100%;
+    float: left;
+    width: 100%;
 }
 
 aside.left-content {
@@ -202,12 +211,12 @@ aside.left-content > * {
         height: 100%;
     }
 
-.series-template.original, 
-.stack-template.original, 
-.series-details-holder .form-group, 
-.value-axis, 
-.stacks-holder, 
-#range-holder, 
+.series-template.original,
+.stack-template.original,
+.series-details-holder .form-group,
+.value-axis,
+.stacks-holder,
+#range-holder,
 #hidden-fields-holder {
     display: none !important;
 }
@@ -219,7 +228,7 @@ aside.left-content > * {
 }
 
 .stack-template {
-    margin:25px 0 0 204px;
+    margin: 25px 0 0 204px;
 }
 
     .series-template .remove,
@@ -232,15 +241,15 @@ aside.left-content > * {
 
 
 
-    .series-template.singlestack .series-details-holder .form-group:not(.value-axis),
-    .series-template.multistacks .stacks-holder,
-    .series-template.singlestack.Custom .value-axis,
-    .series-template.multistacks.Custom .value-axis,
-    .series-template.singlestack,
-    .series-template.multistacks,
-    #range-holder.interval {
-        display: block !important;
-    }
+.series-template.singlestack .series-details-holder .form-group:not(.value-axis),
+.series-template.multistacks .stacks-holder,
+.series-template.singlestack.Custom .value-axis,
+.series-template.multistacks.Custom .value-axis,
+.series-template.singlestack,
+.series-template.multistacks,
+#range-holder.interval {
+    display: block !important;
+}
 
 .title_page {
     border-right: 1px solid grey;
@@ -259,11 +268,32 @@ aside.left-content > * {
     text-align: right;
     width: 40%;
 }
-.tablekpitarget{text-align: center;}
-.tablekpitarget .form-control {width:90%;}
-.tablekpitarget .form-control-small{width:50px;margin-left:4px; background-color: #FAFAFA;border: 1px solid #ccc;}
-.tablekpitarget thead {background: none;color:#3f454f;font-weight: bold;}
-.tablekpitarget thead th{color:#3f454f;font-weight: bold;}
+
+.tablekpitarget {
+    text-align: center;
+}
+
+    .tablekpitarget .form-control {
+        width: 90%;
+    }
+
+    .tablekpitarget .form-control-small {
+        width: 50px;
+        margin-left: 4px;
+        background-color: #FAFAFA;
+        border: 1px solid #ccc;
+    }
+
+    .tablekpitarget thead {
+        background: none;
+        color: #3f454f;
+        font-weight: bold;
+    }
+
+        .tablekpitarget thead th {
+            color: #3f454f;
+            font-weight: bold;
+        }
 
 .trafficlight, .title, .description_year {
     float: left;
@@ -381,7 +411,7 @@ aside.left-content > * {
                 }
 
         .nav-tabs-custom > .nav-tabs.pull-right {
-            float: none!important;
+            float: none !important;
         }
 
             .nav-tabs-custom > .nav-tabs.pull-right > li {
@@ -490,15 +520,16 @@ th {
 }
 
 .colorpicker .input-group-addon {
-    padding:3px 4px;
+    padding: 3px 4px;
 }
-.colorpicker .input-group-addon i {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    vertical-align: text-top;
-    cursor: pointer;
-}
+
+    .colorpicker .input-group-addon i {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        vertical-align: text-top;
+        cursor: pointer;
+    }
 
 .btn-darkblue {
     background-color: #004071;
@@ -506,12 +537,67 @@ th {
     padding: 4px;
 }
 
+a:hover.btn-darkblue {
+    background-color: #febe10;
+    color: white;
+}
+
+a:hover.btn-lightblue {
+    background-color: #febe10;
+    color: white;
+}
+
 .btn-large {
     width: 30%;
-    padding: 15px!important;
+    padding: 15px !important;
     margin-top: 20px;
     margin: 10px;
 }
+
+/*
+    Component: Buttons
+-------------------------
+*/
+
+
+.btn {
+    font-weight: 500;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border: 1px solid transparent;
+}
+
+    .btn.btn-default {
+        background-color: #fafafa;
+        color: #666;
+        border-color: #ddd;
+        border-bottom-color: #ddd;
+        -webkit-transition: all .3s ease;
+        -moz-transition: all .3s ease;
+        -ms-transition: all .3s ease;
+        -o-transition: all .3s ease;
+        transition: all .3s ease;
+    }
+
+        .btn.btn-default:hover,
+        .btn.btn-default:active,
+        .btn.btn-default.hover {
+            background-color: #f4f4f4 !important;
+            -webkit-transition: all .3s ease;
+            -moz-transition: all .3s ease;
+            -ms-transition: all .3s ease;
+            -o-transition: all .3s ease;
+            transition: all .3s ease;
+        }
+
+        .btn.btn-default.btn-flat {
+            border-bottom-color: #d9dadc;
+            -webkit-transition: all .3s ease;
+            -moz-transition: all .3s ease;
+            -ms-transition: all .3s ease;
+            -o-transition: all .3s ease;
+            transition: all .3s ease;
+        }
 
 a:hover.btn-darkblue {
     background-color: #febe10;
@@ -535,12 +621,12 @@ a:hover.btn-lightblue {
     margin: 15px 0 0;
 }
 
-.whitebox-full
-{   float:left;
+.whitebox-full {
+    float: left;
     background-color: white;
-    padding:20px;
-    width:97.5%;
-    margin:15px 20px 20px 0;
+    padding: 20px;
+    width: 97.5%;
+    margin: 15px 20px 20px 0;
 }
 
 .form-list {
@@ -597,3 +683,159 @@ h2 {
         background-color: #febe10;
         color: white;
     }
+
+.text-grey {
+    color: #777;
+    float: left;
+    line-height: 30px;
+    margin-right: 20px;
+}
+
+.text-med {
+    font-size: 16px;
+}
+
+.text-med {
+    font-size: 16px;
+}
+
+.heading
+{
+    width:180px;float:left;
+}
+
+hr {
+    border-top: 1px solid #ccc;
+}
+
+.row-full {
+    margin: 0;
+    padding: 0;
+    display: table;
+}
+
+a.text-button {
+    color: #717173;
+    text-decoration: underline;
+    float: left;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+a:hover.text-button {
+    color: #004071;
+}
+
+td.text-button a {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    color: #72afd2;
+    text-decoration: underline;
+    float: left;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+    td.text-button a:hover {
+        color: #004071;
+    }
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #febe10;
+    color: white;
+}
+
+a {
+    color: white;
+}
+
+    a:hover,
+    a:active,
+    a:focus {
+        outline: none;
+        text-decoration: none;
+        color: #72afd2;
+    }
+
+    a .fa {
+        margin-right: 5px;
+    }
+
+.table-striped > tbody > tr > td, .table-striped > tbody > tr > th {
+    color: #777;
+}
+/* Change the color of the striped tables */
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: #f3f4f5;
+}
+
+.table.no-border,
+.table.no-border td,
+.table.no-border th {
+    border: 0;
+}
+
+/* .text-center in tables */
+table.text-center,
+table.text-center td,
+table.text-center th {
+    text-align: center;
+}
+
+.table.align th {
+    text-align: left;
+}
+
+.table.align td {
+    text-align: right;
+}
+
+.text-bold,
+.text-bold.table td,
+.text-bold.table th {
+    font-weight: 700;
+}
+
+.border-radius-none {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #febe10;
+    color: white;
+}
+
+.modal-lg {
+    width: 80vw;
+}
+
+.modal-sm {
+    width: 40vw;
+}
+
+.modal-content {
+    padding: 20px;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+
+.modal-body .nav-tabs > li > a {
+    text-align: center;
+    color: #3f454f;
+}
+
+.centering {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.margin {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}

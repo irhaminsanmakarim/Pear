@@ -1,10 +1,12 @@
 ﻿@using System.Linq;
 @model DSLNG.PEAR.Web.ViewModels.PmsConfigDetails.UpdatePmsConfigDetailsViewModel
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span
-        aria-hidden="true">&times;</span></button>
-<div class="whitebox">
-    <h4>Update Pms Config Detail</h4>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h5>Update Pms Config Detail</h5>
+</div>
+<div class="modal-body">
     <form class="form-group" action="@Url.Action("Update")" method="POST">
         @Html.EditorFor(x => x.Id)
         <div class="form-group form-list">
@@ -27,12 +29,13 @@
             @Html.ValidationMessageFor(x => x.Weight)
         </div>
 
-       @Html.Partial("_ScoringIndicator", Model.ScoreIndicators)
-        <div class="form-group form-list">
-            <button type="submit" class="btn btn-default btn-darkblue">Submit</button>
-            <button type="button" class="btn btn-default btn-darkblue" data-dismiss="modal" aria-label="Close">Cancel</button>
+        @Html.Partial("_ScoringIndicator", Model.ScoreIndicators)
+        <div class="centering margin">
+            <hr style="margin-bottom:60px;">
+            <a href="#" onclick="$(this).closest('form').submit()" class="btn-darkblue btn-large"><span class="fa fa-floppy-o"></span>Save</a>
+            @*<a href="#" class="btn-darkblue btn-large"><span class="fa fa-repeat"></span>Clear</a>*@
+            <a data-dismiss="modal" aria-label="Close" class="btn-darkblue btn-large"><span class="fa fa-times"></span>Cancel</a>
         </div>
 
     </form>
 </div>
-
