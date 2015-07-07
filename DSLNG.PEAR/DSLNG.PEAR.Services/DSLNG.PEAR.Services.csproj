@@ -72,11 +72,13 @@
     <Compile Include="Interfaces\IDropdownService.cs" />
     <Compile Include="Interfaces\IKpiTargetService.cs" />
     <Compile Include="Interfaces\IPeriodeService.cs" />
+    <Compile Include="Interfaces\ITemplateService.cs" />
     <Compile Include="KpiTargetService.cs" />
     <Compile Include="PeriodeService.cs" />
     <Compile Include="Requests\Artifact\CreateArtifactRequest.cs" />
     <Compile Include="Requests\Artifact\GetArtifactRequest.cs" />
     <Compile Include="Requests\Artifact\GetArtifactsRequest.cs" />
+    <Compile Include="Requests\Artifact\GetArtifactsToSelectRequest.cs" />
     <Compile Include="Requests\Conversion\CreateConversionRequest.cs" />
     <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
     <Compile Include="Requests\Group\CreateGroupRequest.cs" />
@@ -99,10 +101,12 @@
     <Compile Include="Requests\PmsSummary\CreatePmsSummaryRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigRequest.cs" />
+    <Compile Include="Requests\Template\CreateTemplateRequest.cs" />
     <Compile Include="Requests\User\LoginUserRequest.cs" />
     <Compile Include="Responses\Artifact\CreateArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactsResponse.cs" />
+    <Compile Include="Responses\Artifact\GetArtifactsToSelectResponse.cs" />
     <Compile Include="Responses\Conversion\CreateConversionResponse.cs" />
     <Compile Include="Responses\Conversion\DeleteConversionResponse.cs" />
     <Compile Include="Responses\Conversion\Measurement.cs" />
@@ -252,6 +256,7 @@
     <Compile Include="Responses\RoleGroup\DeleteRoleGroupResponse.cs" />
     <Compile Include="Responses\RoleGroup\Level.cs" />
     <Compile Include="Responses\RoleGroup\UpdateRoleGroupResponse.cs" />
+    <Compile Include="Responses\Template\CreateTemplateResponse.cs" />
     <Compile Include="Responses\Type\CreateTypeResponse.cs" />
     <Compile Include="Responses\Type\DeleteTypeResponse.cs" />
     <Compile Include="Responses\Type\GetTypeResponse.cs" />
@@ -275,6 +280,7 @@
     <Compile Include="Responses\User\UserResponse.cs" />
     <Compile Include="Responses\Pillar\GetPillarResponse.cs" />
     <Compile Include="RoleGroupService.cs" />
+    <Compile Include="TemplateService.cs" />
     <Compile Include="TypeService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />

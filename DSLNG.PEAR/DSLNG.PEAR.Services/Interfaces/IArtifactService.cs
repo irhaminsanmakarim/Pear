@@ -13,5 +13,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         CreateArtifactResponse Create(CreateArtifactRequest request);
         GetArtifactsResponse GetArtifacts(GetArtifactsRequest request);
         GetArtifactResponse GetArtifact(GetArtifactRequest request);
+        GetArtifactsToSelectResponse GetArtifactsToSelect(GetArtifactsToSelectRequest request);
     }
 }

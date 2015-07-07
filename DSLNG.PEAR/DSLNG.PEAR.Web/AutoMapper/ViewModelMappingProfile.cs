@@ -57,6 +57,8 @@ using DSLNG.PEAR.Services.Requests.Conversion;
 using DSLNG.PEAR.Services.Responses.Conversion;
 using DSLNG.PEAR.Web.ViewModels.Conversion;
 using DSLNG.PEAR.Services.Responses.KpiTarget;
+using DSLNG.PEAR.Web.ViewModels.Template;
+using DSLNG.PEAR.Services.Requests.Template;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -151,6 +153,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, LineChartDataViewModel.SeriesViewModel>();
 
             //speedometer chart mapping
+            Mapper.CreateMap<ArtifactDesignerViewModel, GetSpeedometerChartDataRequest>();
             Mapper.CreateMap<SpeedometerChartViewModel, GetSpeedometerChartDataRequest>();
             Mapper.CreateMap<SpeedometerChartViewModel.SeriesViewModel, GetSpeedometerChartDataRequest.SeriesRequest>();
             Mapper.CreateMap<SpeedometerChartViewModel.PlotBand, GetSpeedometerChartDataRequest.PlotBandRequest>();
@@ -217,6 +220,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.MeasurementFrom, o => o.MapFrom(k => k.From.Id))
                 .ForMember(x => x.MeasurementTo, o => o.MapFrom(k => k.To.Id));
             Mapper.CreateMap<UpdateConversionViewModel, UpdateConversionRequest>();
+
+            Mapper.CreateMap<TemplateViewModel, CreateTemplateRequest>();
+            Mapper.CreateMap<TemplateViewModel.RowViewModel, CreateTemplateRequest.RowRequest>();
+            Mapper.CreateMap<TemplateViewModel.ColumnViewModel, CreateTemplateRequest.ColumnRequest>();
             base.Configure();
         }
 

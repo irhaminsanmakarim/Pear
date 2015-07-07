@@ -182,7 +182,7 @@ namespace DSLNG.PEAR.Services
             {
                 response.PlotBands.Add(new GetSpeedometerChartDataResponse.PlotBandResponse
                 {
-                    form = plot.From,
+                    from = plot.From,
                     to = plot.To,
                     color = plot.Color
                 });
@@ -794,6 +794,15 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Series.Select(y => y.Stacks.Select(z => z.Kpi)))
                 .Include(x => x.Plots)
                 .FirstOrDefault(x => x.Id == request.Id).MapTo<GetArtifactResponse>();
+        }
+
+        public GetArtifactsToSelectResponse GetArtifactsToSelect(GetArtifactsToSelectRequest request)
+        {
+            return new GetArtifactsToSelectResponse
+            {
+                Artifacts = DataContext.Artifacts.Where(x => x.GraphicName.Contains(request.Term)).Take(20).ToList()
+                .MapTo<GetArtifactsToSelectResponse.ArtifactResponse>()
+            };
         }
     }
 }

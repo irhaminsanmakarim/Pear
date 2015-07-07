@@ -13,6 +13,8 @@ String.prototype.isNullOrEmpty = function () {
     var Pear = {};
     Pear.Artifact = {};
     Pear.Artifact.Designer = {};
+    Pear.Template = {};
+    Pear.Template.Editor = {};
 
     var artifactDesigner = Pear.Artifact.Designer;
 
@@ -528,41 +530,42 @@ String.prototype.isNullOrEmpty = function () {
 
     //speedometer
     artifactDesigner._setupCallbacks.speedometer = function () {
-        $('.plot-band-template .remove').click(function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            $this.closest('.plot-band-template').remove();
-            //var plots = $('#plot-bands-holder').children('fieldset');
-            //for (var i = 0; i < plots.length; i++) {
-            //    $(plots[i]).find('input[type="text"]').each(function (j, input) {
-            //        var $input = $(input);
-            //        console.log(i);
-            //        if ($input.attr('name').endsWith('From')) {
-            //            $input.attr('name', 'SpeedometerChart.PlotBands[' + i + '].From');
-            //        } else if ($input.attr('name').endsWith('To')) {
-            //            $input.attr('name', 'SpeedometerChart.PlotBands[' + i + '].To');
-            //        } else if ($input.attr('name').endsWith('Color')) {
-            //            $input.attr('name', 'SpeedometerChart.PlotBands[' + i + '].Color');
-            //        }
-            //    });
+        var removePlot = function () {
+            $('.plot-band-template .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.plot-band-template').remove();
+            });
+        };
 
-            //}
+        var addPlot = function () {
+            var plotPos = 0;
+            $('#add-plot').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var plotBandTemplate = $('.plot-band-template.original').clone(true);
+                plotBandTemplate.removeClass('original');
+                Pear.Artifact.Designer._kpiAutoComplete(plotBandTemplate);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'SpeedometerChart.PlotBands.Index',
+                    value: plotPos
+                }).appendTo(plotBandTemplate);
+                if (plotPos !== 0) {
+                    var fields = ['From', 'To', 'Color'];
+                    for (var i in fields) {
+                        var field = fields[i];
+                        plotBandTemplate.find('#SpeedometerChart_PlotBands_0__' + field).attr('name', 'SpeedometerChart.PlotBands[' + plotPos + '].' + field).attr('id', 'plot-bands-' + i);
+                    }
+                }
+                Pear.Artifact.Designer._colorPicker(plotBandTemplate);
+                $('#plot-bands-holder').append(plotBandTemplate);
+                plotPos++;
+            });
+        };
 
-        });
-        $('#add-plot').click(function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            var plotBandTemplate = $('.plot-band-template.original').clone(true);
-            plotBandTemplate.removeClass('original');
-            var plotPos = $('#plot-bands-holder').children('fieldset').length;
-            var fields = ['From', 'To', 'Color'];
-            for (var i in fields) {
-                var field = fields[i];
-                plotBandTemplate.find('#SpeedometerChart_PlotBands_0__' + field).attr('name', 'SpeedometerChart.PlotBands[' + plotPos + '].' + field).attr('id', 'plot-bands-' + i);
-            }
-            Pear.Artifact.Designer._colorPicker(plotBandTemplate);
-            $('#plot-bands-holder').append(plotBandTemplate);
-        });
+        
 
         var rangeDatePicker = function () {
             $('.datepicker').datetimepicker({
@@ -642,6 +645,10 @@ String.prototype.isNullOrEmpty = function () {
             });
 
         };
+
+        Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'));
+        removePlot();
+        addPlot();
         rangeControl();
         rangeDatePicker();
     };
@@ -729,10 +736,134 @@ String.prototype.isNullOrEmpty = function () {
         });
     }
 
+    var templateEditor = Pear.Template.Editor;
+
+    templateEditor._artifactSelectField = function (context) {
+        context.find('.artifact-list').select2({
+            ajax: {
+                url: $('#hidden-fields-holder').data('artifact-url'),
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        term: params.term
+                    };
+                },
+                processResults: function (data, page) {
+                    return data;
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+            minimumInputLength: 1,
+            templateResult: Pear.Artifact.Designer._formatKpi, // omitted for brevity, see the source of this page
+            templateSelection: Pear.Artifact.Designer._formatKpiSelection // omitted for brevity, see the source of this page
+        });
+    };
+    templateEditor.LayoutSetup = function () {
+        $('.column-width').change(function () {
+            var colWidth = $(this).val();
+            var $column = $(this).closest('.layout-column');
+            var $row = $(this).closest('.layout-row');
+            var $currentCols =  $row.children('.layout-column');
+            $column.css('width', colWidth + '%');
+            var colIndex = $row.find('.layout-column').index($column);
+            var remainWidth = 100;
+            var remainLength = $currentCols.length - colIndex - 1;
+            $currentCols.each(function (i, val) {
+                if (i <= colIndex) {
+                    remainWidth -= parseFloat($(val)[0].style.width.replace('%',''));
+                }else{
+                    $(val).css('width', (remainWidth/remainLength) + '%');
+                }
+            });
+        });
+        var addColumn = function () {
+            var columnCount = 2;
+            $('.add-column').click(function () {
+                var $this = $(this);
+                var $row = $(this).parent().find('.layout-row');
+                var currentCols = $row.children('.layout-column').length;
+                var newWidth = 100 / (currentCols + 1);
+                $row.children('.layout-column').each(function (i, val) {
+                    $(val).css('width', newWidth + '%');
+                });
+                var newColumn = $('.layout-column.original').clone(true);
+                newColumn.removeClass('original');
+                newColumn.css('width', newWidth + '%');
+                Pear.Template.Editor._artifactSelectField(newColumn);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns.Index',
+                    value: columnCount
+                }).prependTo(newColumn);
+                newColumn.find('.column-width').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].Width');
+                newColumn.find('.artifact-list').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ArtifactId');
+                $row.append(newColumn);
+                columnCount++;
+            });
+        };
+       
+        var addRow = function () {
+            var rowCount = 1;
+            $('.add-row').click(function () {
+                var row = $('.layout-row-wrapper.original').clone(true);
+                row.removeClass('original');
+                row.find('.layout-column.original').removeClass('original');
+                row.find('.layout-row').attr('data-row-pos', rowCount);
+                Pear.Template.Editor._artifactSelectField(row);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'LayoutRows.Index',
+                    value: rowCount
+                }).prependTo(row.find('.layout-row'));
+
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'LayoutRows['+rowCount+'].LayoutColumns.Index',
+                    value: 1
+                }).prependTo(row.find('.layout-column'));
+
+                    row.find('.column-width').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].Width');
+                    row.find('.artifact-list').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ArtifactId');
+                $('#rows-holder').append(row);
+                rowCount++;
+            });
+
+        };
+        $('.remove-row').click(function () {
+            $(this).closest('.layout-row-wrapper').remove();
+        });
+        $('.remove-column').click(function () {
+            var $this = $(this);
+            var $column = $(this).closest('.layout-column');
+            var $row = $(this).closest('.layout-row');
+            var currentCols = $row.children('.layout-column').length;
+            var newWidth = 100 / (currentCols - 1);
+            $column.remove();
+            $row.children('.layout-column').each(function (i, val) {
+                $(val).css('width', newWidth + '%');
+            });
+        });
+        addRow();
+        addColumn();
+    };
+
     $(document).ready(function () {
-        Pear.Artifact.Designer.GraphicSettingSetup();
-        Pear.Artifact.Designer.Preview();
-        Pear.Artifact.Designer.ListSetup();
+        if ($('.artifact-designer').length) {
+            Pear.Artifact.Designer.GraphicSettingSetup();
+            Pear.Artifact.Designer.Preview();
+        }
+        if ($('.artifact-list').length) {
+            Pear.Artifact.Designer.ListSetup();
+        }
+        if ($('.template-editor').length) {
+            Pear.Template.Editor.LayoutSetup();
+        }
+        
     });
     window.Pear = Pear;
 }(window, jQuery, undefined));

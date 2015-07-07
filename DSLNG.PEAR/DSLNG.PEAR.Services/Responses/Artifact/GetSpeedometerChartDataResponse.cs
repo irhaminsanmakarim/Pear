@@ -16,7 +16,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public double data { get; set; }
         }
         public class PlotBandResponse {
-            public double form { get; set; }
+            public double from { get; set; }
             public double to { get; set; }
             public string color { get; set; }
         }

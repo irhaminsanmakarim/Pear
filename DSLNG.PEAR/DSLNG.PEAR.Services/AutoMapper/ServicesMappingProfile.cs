@@ -34,6 +34,7 @@ using DSLNG.PEAR.Services.Responses.Artifact;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Services.Requests.Conversion;
 using DSLNG.PEAR.Services.Responses.KpiTarget;
+using DSLNG.PEAR.Services.Requests.Template;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -188,6 +189,14 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiTarget, GetKpiTargetsResponse.KpiTarget>()
                .ForMember(k => k.KpiName, o => o.MapFrom(k => k.Kpi.Name))
                .ForMember(k => k.PeriodeType, o => o.MapFrom(k => k.PeriodeType.ToString()));
+
+            Mapper.CreateMap<Artifact, GetArtifactsToSelectResponse.ArtifactResponse>()
+                .ForMember(d => d.Name, o => o.MapFrom(s => s.GraphicName));
+            Mapper.CreateMap<CreateTemplateRequest, DashboardTemplate>()
+                .ForMember(d => d.LayoutRows, o => o.Ignore());
+            //Mapper.CreateMap<CreateTemplateRequest.RowRequest, LayoutRow>();
+            //Mapper.CreateMap<CreateTemplateRequest.ColumnRequest, LayoutColumn>();
+
 
             base.Configure();
         }

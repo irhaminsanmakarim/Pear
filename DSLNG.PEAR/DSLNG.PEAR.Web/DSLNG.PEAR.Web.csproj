@@ -536,6 +536,7 @@
     <Content Include="Views\Menu\_SiteMap.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Template\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -603,6 +604,7 @@
     <Compile Include="Controllers\PmsConfigDetailsController.cs" />
     <Compile Include="Controllers\PmsSummaryController.cs" />
     <Compile Include="Controllers\RoleGroupController.cs" />
+    <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -681,6 +683,7 @@
     <Compile Include="ViewModels\RoleGroup\IndexRoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\RoleGroupViewModel.cs" />
     <Compile Include="ViewModels\RoleGroup\UpdateRoleGroupViewModel.cs" />
+    <Compile Include="ViewModels\Template\TemplateViewModel.cs" />
     <Compile Include="ViewModels\Type\CreateTypeViewModel.cs" />
     <Compile Include="ViewModels\Type\IndexTypeViewModel.cs" />
     <Compile Include="ViewModels\Type\TypeViewModel.cs" />

@@ -269,7 +269,9 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
                 case "speedometer":
                     {
-                        var chartData = _artifactServie.GetSpeedometerChartData(viewModel.SpeedometerChart.MapTo<GetSpeedometerChartDataRequest>());
+                        var request = viewModel.MapTo<GetSpeedometerChartDataRequest>();
+                        viewModel.SpeedometerChart.MapPropertiesToInstance<GetSpeedometerChartDataRequest>(request);
+                        var chartData = _artifactServie.GetSpeedometerChartData(request);
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.SpeedometerChart = new SpeedometerChartDataViewModel();
                         previewViewModel.SpeedometerChart.Title = viewModel.HeaderTitle;
