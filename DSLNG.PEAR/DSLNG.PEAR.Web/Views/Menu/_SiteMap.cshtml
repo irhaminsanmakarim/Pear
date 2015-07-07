@@ -45,8 +45,8 @@
                     ViewBag.MenuSubClass = "sublevel";
                 }
 
-                <ul class="@ViewBag.MenuSubClass">
-                    @ExtractMenu(menu.Menus, ++SubLevelHeper)
+                <ul class="@ViewBag.MenuSubClass @SubLevelHeper.ToString()">
+                    @ExtractMenu(menu.Menus, menu.ParentId!=null || menu.ParentId>0 ? 1  : 0)
                 </ul>
             }
         </li>
