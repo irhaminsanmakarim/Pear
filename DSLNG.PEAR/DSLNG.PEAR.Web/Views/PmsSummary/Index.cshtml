@@ -34,16 +34,16 @@
         <div class="row">
             <div class="trafficlight red"></div>
             <div class="title">Corporate Performance</div>
-            <div class="description_year">1st Operation year</div>
+            <div class="description_year">@Model.Title</div>
         </div>
         <div class="row">
             <form class="form-inline">
                 <div style="margin: 5px 40px 0px 25px; padding-right: 30px; border-right: solid 1px #3f454f;" class="form-group">
-                    <label>Year Illustration :</label>
+                    <label class="labletop">Year :</label>
                     @Html.DropDownListFor(x => x.Year, Model.YearList, new {@class="form-control", id="year"})
                 </div>
                 <div style="margin-top: 5px;" class="form-group">
-                    <label>Month :</label>
+                    <label class="labletop">Month :</label>
                     @Html.DropDownListFor(x => x.Month, Model.MonthList, new {@class="form-control", id="month"})
                     
                 </div>
@@ -53,10 +53,7 @@
     <div class="description">
         <div class="title_small">Description</div>
         <p>
-            Description
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum,
-            sem vitae iaculis lobortis, massa eros imperdiet lacus, id porttitor odio
-            ante non augue.
+            @Model.Title
         </p>
     </div>
     <div class="col-md-12">

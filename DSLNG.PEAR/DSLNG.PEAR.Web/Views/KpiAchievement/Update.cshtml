@@ -31,8 +31,13 @@
         <div class="update-content">
             @Html.Partial(Model.ViewName, Model)
         </div>
-        <a href="#" onclick="$(this).closest('form').submit()" class="btn-darkblue btn-large"><span class="fa fa-floppy-o"></span>Save</a>
-        <a href="@Url.Action("Index")" class="btn-darkblue btn-large"><span class="fa fa-times"></span>Cancel</a>
+        <div class="col-md-12">
+            <div class="centering margin">
+                <hr style="margin-bottom: 60px;">
+                <a href="javascript:;" onclick="$(this).closest('form').submit()" class="btn-darkblue btn-large"><span class="fa fa-floppy-o"></span>Save</a>
+                <a href="@Url.Action("Configuration", "PmsSummary", new {id = Model.PmsSummaryId})" data-dismiss="modal" aria-label="Close" class="btn-darkblue btn-large"><span class="fa fa-times"></span>Cancel</a>
+            </div>
+        </div>
     </form>
 </div>
 

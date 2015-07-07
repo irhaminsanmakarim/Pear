@@ -77,6 +77,15 @@ namespace DSLNG.PEAR.Services
                 }).ToList();
         }
 
+        public IEnumerable<Dropdown> GetYearsForPmsSummary()
+        {
+            return DataContext.PmsSummaries.Select(x => new Dropdown
+                {
+                    Text = x.Year.ToString(),
+                    Value = x.Year.ToString()
+                }).ToList();
+        }
+
         public IEnumerable<Dropdown> GetMonths()
         {
             return DateTimeFormatInfo

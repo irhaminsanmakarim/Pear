@@ -42,6 +42,7 @@ namespace DSLNG.PEAR.Services
                                             .FirstOrDefault(x => x.IsActive && x.Year == request.Year);
                 if (pmsSummary != null)
                 {
+                    response.Title = pmsSummary.Title;
                     foreach (var pmsConfig in pmsSummary.PmsConfigs)
                     {
                         foreach (var pmsConfigDetails in pmsConfig.PmsConfigDetailsList)
