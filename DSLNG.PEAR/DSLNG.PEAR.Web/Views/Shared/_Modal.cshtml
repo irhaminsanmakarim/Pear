@@ -3,11 +3,8 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
-            <div class="modal-body">
-                Please wait.
-                <br />
-                it still loading ..
-                
+            <div class="modal-body modal-loading">
+                <img src="@Url.Content("~/content/img/ajax-loader2.gif")" class="ajax-loading-dialog"></img>
             </div>
 
         </div>
@@ -20,9 +17,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var modalLoadingHtml = $('.modal-loading').html();
         $('#modalDialog').on('hidden.bs.modal', function (e) {
             $(this).removeData('bs.modal');
+            $('#modalDialog').find('.modal-content').html(modalLoadingHtml);
         });
+
+        
     });
 </script>
 

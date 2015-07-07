@@ -6,7 +6,7 @@
 <div class="whitebox">
     <h4>Update Pms Config Detail</h4>
     <form class="form-group" action="@Url.Action("Update")" method="POST">
-        @Html.EditorFor(x => x.Id)
+        @Html.HiddenFor(x => x.Id)
         <div class="form-group form-list">
             <label>Pillar : </label> @Model.PillarName
         </div>

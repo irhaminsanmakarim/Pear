@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
@@ -32,6 +33,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.PmsSummaryId = id;
             viewModel.Pillars = _dropdownService.GetPillars(id).MapTo<SelectListItem>();
             viewModel.ScoringTypes = _dropdownService.GetScoringTypes().MapTo<SelectListItem>();
+            Thread.Sleep(2000);
             return PartialView("_Create", viewModel);
         }
 
@@ -52,6 +54,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 var viewModel = response.MapTo<UpdatePmsConfigViewModel>();
                 viewModel.ScoringTypes = _dropdownService.GetScoringTypes().MapTo<SelectListItem>();
+                Thread.Sleep(2000);
                 return PartialView("_Update", viewModel);    
             }
 
