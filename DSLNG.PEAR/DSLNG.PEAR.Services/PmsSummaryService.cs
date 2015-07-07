@@ -360,7 +360,7 @@ namespace DSLNG.PEAR.Services
                     if (existedScoreIndicator != null)
                     {
                         var scoreIndicatorEntry = DataContext.Entry(existedScoreIndicator);
-                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicatorEntry);
+                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicator);
                     }
                     else
                     {
@@ -491,7 +491,7 @@ namespace DSLNG.PEAR.Services
                     if (existedScoreIndicator != null)
                     {
                         var scoreIndicatorEntry = DataContext.Entry(existedScoreIndicator);
-                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicatorEntry);
+                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicator);
                     }
                     else
                     {
@@ -627,7 +627,7 @@ namespace DSLNG.PEAR.Services
                     if (existedScoreIndicator != null)
                     {
                         var scoreIndicatorEntry = DataContext.Entry(existedScoreIndicator);
-                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicatorEntry);
+                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicator);
                     }
                     else
                     {
