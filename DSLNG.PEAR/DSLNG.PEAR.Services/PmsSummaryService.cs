@@ -416,16 +416,28 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public GetScoreIndicatorsResponse GetScoreIndicators(int pmsConfigDetailId)
+        public GetScoreIndicatorsResponse GetScoreIndicators(GetScoreIndicatorRequest request)
         {
             var response = new GetScoreIndicatorsResponse();
             try
             {
-                var pmsConfigDetails = DataContext.PmsConfigDetails
-                    .Include(x => x.ScoreIndicators)
-                    .First(x => x.Id == pmsConfigDetailId);
-                response.ScoreIndicators =
-                    pmsConfigDetails.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
+                if (request.PmsConfigDetailId > 0)
+                {
+                    var pmsConfigDetails = DataContext.PmsConfigDetails
+                                                      .Include(x => x.ScoreIndicators)
+                                                      .Single(x => x.Id == request.PmsConfigDetailId);
+                    response.ScoreIndicators =
+                        pmsConfigDetails.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
+                }
+                else
+                {
+                    var pmsSummary = DataContext.PmsSummaries
+                                                      .Include(x => x.ScoreIndicators)
+                                                      .Single(x => x.Id == request.PmsSummaryId);
+                    response.ScoreIndicators =
+                        pmsSummary.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
+                }
+                
                 response.IsSuccess = true;
             }
             catch (ArgumentNullException argumentNullException)

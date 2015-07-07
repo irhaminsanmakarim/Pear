@@ -73,7 +73,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult ScoreIndicatorDetails(int id)
         {
             int pmsConfigDetailsId = id;
-            var response = _pmsSummaryService.GetScoreIndicators(pmsConfigDetailsId);
+            var response = _pmsSummaryService.GetScoreIndicators(new GetScoreIndicatorRequest { PmsConfigDetailId = pmsConfigDetailsId });
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<ScoreIndicatorDetailsViewModel>();
@@ -82,5 +82,5 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return base.ErrorPage(response.Message);
         }
-	}
+    }
 }

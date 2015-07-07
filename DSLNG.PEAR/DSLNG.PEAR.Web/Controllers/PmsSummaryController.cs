@@ -9,6 +9,7 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Artifact;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
+using DSLNG.PEAR.Web.ViewModels.PmsConfigDetails;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -255,6 +256,19 @@ namespace DSLNG.PEAR.Web.Controllers
             previewViewModel.BarChart.Periodes = chartData.Periodes;
             previewViewModel.BarChart.SeriesType = chartData.SeriesType;
             return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ScoreIndicatorDetails(int id)
+        {
+            int pmsSummaryId = id;
+            var response = _pmsSummaryService.GetScoreIndicators(new GetScoreIndicatorRequest{PmsSummaryId = pmsSummaryId});
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<ScoreIndicatorDetailsViewModel>();
+                return PartialView("_ScoreIndicatorDetails", viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
         }
 
         

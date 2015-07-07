@@ -103,6 +103,7 @@
     <Compile Include="Requests\PmsSummary\CreatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsConfigRequest.cs" />
     <Compile Include="Requests\PmsSummary\CreatePmsSummaryRequest.cs" />
+    <Compile Include="Requests\PmsSummary\GetScoreIndicatorRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigRequest.cs" />
     <Compile Include="Requests\Template\CreateTemplateRequest.cs" />
