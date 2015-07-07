@@ -19,6 +19,7 @@ namespace DSLNG.PEAR.Data.Entities
         public string Icon { get; set; }
         public string Remark { get; set; }
         public bool IsActive { get; set; }
+        public string Code { get; set; }
         public ICollection<Menu> Menus { get; set; }
     }
 }

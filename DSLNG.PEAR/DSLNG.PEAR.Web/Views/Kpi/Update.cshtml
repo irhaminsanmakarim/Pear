@@ -22,12 +22,12 @@
             </div>
             <div class="form-group pillar" style="display:none">
                 @Html.LabelFor(model => model.PillarId, new { @class = "control-label" })
-                @Html.DropDownListFor(model => model.PillarId, Model.PillarList, "", new { @class = "form-control", @onChange = "pillarOnChange(this)" })
+                @Html.DropDownListFor(model => model.PillarId, Model.PillarList, "", new { @class =  "form-control", @onChange = "pillarOnChange(this)" })
                 @Html.ValidationMessageFor(model => model.PillarId)
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.RoleGroupId, new { @class = "control-label" })
-                @Html.DropDownListFor(model => model.RoleGroupId, Model.RoleGroupList, "", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.RoleGroupId, Model.RoleGroupList, "", new { @class = "form-control", @onChange = "roleGroupOnChange(this)" })
                 @Html.ValidationMessageFor(model => model.RoleGroupId)
             </div>
             <div class="form-group">
@@ -42,14 +42,17 @@
             </div>
             @Html.LabelFor(model => model.Code, new { @class = "control-label" })
             <div class="form-group">
-                <div class="col-lg-4">
-                    <input type="text" name="CodeFromPillar" readonly="readonly" class="form-control" />
+                <div class="col-lg-3">
+                    @Html.TextBoxFor(model => model.CodeFromPillar, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-                <div class="col-lg-4">
-                    <input type="text" name="CodeFromLevel" readonly="readonly" class="form-control" />
+                <div class="col-lg-3">
+                    @Html.TextBoxFor(model => model.CodeFromLevel, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
+                </div>
+                <div class="col-lg-3">
+                    @Html.TextBoxFor(model => model.CodeFromRoleGroup, new { @class = "form-control", @readonly = "readonly" })
                 </div>
                 @Html.ValidationMessageFor(model => model.Code)
             </div>
@@ -82,6 +85,7 @@
                 {
                     <div class="form-group relation-model-list">
                         <input type="hidden" name="RelationModels.Index" value="@i" />
+                        <input type="hidden" name="RelationModels[@i].Id" value="@rm.Id" class="rm-id"/>
                         <div class="col-lg-5">
                             <select name="RelationModels[@i].KpiId" class="form-control rm-kpi">
                                 <option value="0">-</option>
@@ -147,6 +151,7 @@
         $('.add-relation-model').click(function () {
             var clone = $('.relation-model-list:last').clone(true);
             clone.find('input[name="RelationModels.Index"]').val(i);
+            clone.find('.rm-id').attr('name', 'RelationModels[' + i + '].Id').attr('value', 0);;
             clone.find('.rm-kpi').attr('name', 'RelationModels[' + i + '].KpiId');
             clone.find('.rm-method').attr('name', 'RelationModels[' + i + '].Method');
             clone.appendTo('.relation-model-wrapper').show();
@@ -196,6 +201,18 @@
             type: 'GET',
             success: function (data) {
                 $("input[name=CodeFromPillar]").val(data);
+            }
+        });
+    }
+
+    function roleGroupOnChange(val) {
+        var roleId = $(val).val();
+        $.ajax({
+            url: '@Url.Action("GetRoleGroupCode")',
+            data: { id: roleId },
+            type: 'GET',
+            success: function (data) {
+                $("input[name=CodeFromRoleGroup]").val(data);
             }
         });
     }

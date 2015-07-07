@@ -103,15 +103,15 @@ namespace DSLNG.PEAR.Services
                 }
                 if (request.GroupId.HasValue)
                 {
-                    kpi.Group = DataContext.Groups.FirstOrDefault(x => x.Id == request.GroupId);                
+                    kpi.Group = DataContext.Groups.FirstOrDefault(x => x.Id == request.GroupId);
                 }
                 if (request.RoleGroupId.HasValue)
                 {
-                    kpi.RoleGroup = DataContext.RoleGroups.FirstOrDefault(x => x.Id == request.RoleGroupId.Value);                    
+                    kpi.RoleGroup = DataContext.RoleGroups.FirstOrDefault(x => x.Id == request.RoleGroupId.Value);
                 }
                 if (request.MeasurementId.HasValue)
                 {
-                    kpi.Measurement = DataContext.Measurements.FirstOrDefault(x => x.Id == request.MeasurementId);                    
+                    kpi.Measurement = DataContext.Measurements.FirstOrDefault(x => x.Id == request.MeasurementId);
                 }
                 kpi.Level = DataContext.Levels.FirstOrDefault(x => x.Id == request.LevelId);
                 kpi.Type = DataContext.Types.FirstOrDefault(x => x.Id == request.TypeId);
@@ -133,7 +133,7 @@ namespace DSLNG.PEAR.Services
                     }
                     kpi.RelationModels = relation;
                 }
-                
+
                 DataContext.Kpis.Add(kpi);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
@@ -153,6 +153,38 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var updateKpi = request.MapTo<Kpi>();
+                var relation = new List<DSLNG.PEAR.Data.Entities.KpiRelationModel>();
+                foreach (var kpiRelation in request.RelationModels)
+                {
+                    relation.Add(new Data.Entities.KpiRelationModel
+                    {
+                        Id = kpiRelation.Id,
+                        Kpi = DataContext.Kpis.SingleOrDefault(x => x.Id == kpiRelation.KpiId),
+                        KpiParent = DataContext.Kpis.SingleOrDefault(x => x.Id == request.Id),
+                        Method = kpiRelation.Method
+                    });
+                }
+                updateKpi.RelationModels = relation;
+                if (request.PillarId.HasValue)
+                {
+                    updateKpi.Pillar = DataContext.Pillars.FirstOrDefault(x => x.Id == request.PillarId);
+                }
+                if (request.GroupId.HasValue)
+                {
+                    updateKpi.Group = DataContext.Groups.FirstOrDefault(x => x.Id == request.GroupId);
+                }
+                if (request.RoleGroupId.HasValue)
+                {
+                    updateKpi.RoleGroup = DataContext.RoleGroups.FirstOrDefault(x => x.Id == request.RoleGroupId.Value);
+                }
+                if (request.MeasurementId.HasValue)
+                {
+                    updateKpi.Measurement = DataContext.Measurements.FirstOrDefault(x => x.Id == request.MeasurementId);
+                }
+                updateKpi.Level = DataContext.Levels.FirstOrDefault(x => x.Id == request.LevelId);
+                updateKpi.Type = DataContext.Types.FirstOrDefault(x => x.Id == request.TypeId);
+                updateKpi.Method = DataContext.Methods.FirstOrDefault(x => x.Id == request.MethodId);
+                
                 var existedkpi = DataContext.Kpis
                     .Where(x => x.Id == request.Id)
                     .Include(x => x.RelationModels)
@@ -180,7 +212,7 @@ namespace DSLNG.PEAR.Services
                 {
                     if (updateKpi.RelationModels.All(x => x.Id != item.Id))
                     {
-                        existedkpi.RelationModels.Remove(item);
+                        DataContext.KpiRelationModels.Remove(item);
                     }
                 }
                 DataContext.SaveChanges();

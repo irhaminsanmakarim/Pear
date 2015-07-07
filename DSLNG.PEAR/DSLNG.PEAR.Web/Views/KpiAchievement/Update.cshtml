@@ -1,0 +1,66 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.KpiAchievement.UpdateKpiAchievementsViewModel
+
+@{
+    ViewBag.Title = "Update Kpi Achievements";
+    
+}
+@Html.Partial("_MessageResponse")
+<section>
+    <div class="row">
+        <div class="title_page" style="border: none!important;">
+            <div class="title">@ViewBag.Title</div>
+        </div>
+    </div>
+    <div class="row">
+        <form class="form-inline">
+            <div class="form-group"
+                style="margin: 5px 40px 0px 25px; padding-right: 30px;">
+                <label>Period :</label>
+                @Html.DropDownListFor(x => x.PeriodeType, Model.PeriodeTypes, new {@class="form-control", id="periodeType"})
+                <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none"></img>
+            </div>
+        </form>
+
+    </div>
+
+</section>
+
+
+<div class="content-wrapper">
+    <form action="@Url.Action("Update")" method="POST">
+        <div class="update-content">
+            @Html.Partial(Model.ViewName, Model)
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+        <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+    </form>
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#periodeType').change(function () {
+            var val = $(this).val();
+            $.ajax({
+                url: '@Url.Action("UpdatePartial")',
+                    type: 'GET',
+                    data: { id: '@Model.PmsSummaryId', periodeType: val },
+                    beforeSend: function () {
+                        $('.ajax-loader2').show();
+                        $('.content-wrapper').hide();
+                    }
+                })
+                .done(function (data) {
+                    $('.ajax-loader2').hide();
+                    $('.update-content').html(data);
+                    $('.content-wrapper').show();
+                });
+            });
+        })
+</script>
+
+
+

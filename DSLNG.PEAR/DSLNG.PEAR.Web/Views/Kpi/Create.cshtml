@@ -26,7 +26,7 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.RoleGroupId, new { @class = "control-label" })
-                @Html.DropDownListFor(model => model.RoleGroupId, Model.RoleGroupList, "", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.RoleGroupId, Model.RoleGroupList, "", new { @class = "form-control", @onChange = "roleGroupOnChange(this)" })
                 @Html.ValidationMessageFor(model => model.RoleGroupId)
             </div>
             <div class="form-group">
@@ -41,14 +41,17 @@
             </div>
             @Html.LabelFor(model => model.Code, new { @class = "control-label" })
             <div class="form-group">
-                <div class="col-lg-4">
-                    <input type="text" name="CodeFromPillar" readonly="readonly" class="form-control" />
+                <div class="col-lg-3">
+                    @Html.TextBoxFor(model => model.CodeFromPillar, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-                <div class="col-lg-4">
-                    <input type="text" name="CodeFromLevel" readonly="readonly" class="form-control" />
+                <div class="col-lg-3">
+                    @Html.TextBoxFor(model => model.CodeFromLevel, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
+                </div>
+                <div class="col-lg-3">
+                    @Html.TextBoxFor(model => model.CodeFromRoleGroup, new { @class = "form-control", @readonly = "readonly" })
                 </div>
                 @Html.ValidationMessageFor(model => model.Code)
             </div>
@@ -190,6 +193,18 @@
             type: 'GET',
             success: function (data) {
                 $("input[name=CodeFromPillar]").val(data);
+            }
+        });
+    }
+
+    function roleGroupOnChange(val) {
+        var roleId = $(val).val();
+        $.ajax({
+            url: '@Url.Action("GetRoleGroupCode")',
+            data: { id: roleId },
+            type: 'GET',
+            success: function (data) {
+                $("input[name=CodeFromRoleGroup]").val(data);
             }
         });
     }

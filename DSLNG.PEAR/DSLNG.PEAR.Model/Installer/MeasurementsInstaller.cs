@@ -20,98 +20,98 @@ namespace DSLNG.PEAR.Data.Installer
             };
             var meas2 = new Measurement
             {
-                Id = 1,
+                Id = 2,
                 Name = "MMSCF",
                 IsActive = true
             };
             
             var meas3 = new Measurement
             {
-                Id = 1,
+                Id = 3,
                 Name = "MT",
                 IsActive = true
             };
             var meas4 = new Measurement
             {
-                Id = 1,
+                Id = 4,
                 Name = "%",
                 IsActive = true
             };
             var meas5 = new Measurement
             {
-                Id = 1,
+                Id = 5,
                 Name = "days",
                 IsActive = true
             };
             var meas6 = new Measurement
             {
-                Id = 1,
+                Id = 6,
                 Name = "Case",
                 IsActive = true
             };
             var meas7 = new Measurement
             {
-                Id = 1,
+                Id = 7,
                 Name = "Cargo",
                 IsActive = true
             };
             var meas8 = new Measurement
             {
-                Id = 1,
+                Id = 8,
                 Name = "USD(Mio)",
                 IsActive = true
             };
             var meas9 = new Measurement
             {
-                Id = 1,
+                Id = 9,
                 Name = "Times",
                 IsActive = true
             };
             var meas10 = new Measurement
             {
-                Id = 1,
+                Id = 10,
                 Name = "USD/mmbtu",
                 IsActive = true
             };
             var meas11 = new Measurement
             {
-                Id = 1,
+                Id = 11,
                 Name = "Number",
                 IsActive = true
             };
             var meas12 = new Measurement
             {
-                Id = 1,
+                Id = 12,
                 Name = "USD/pax",
                 IsActive = true
             };
             var meas13 = new Measurement
             {
-                Id = 1,
+                Id = 13,
                 Name = "USD",
                 IsActive = true
             };
             var meas14 = new Measurement
             {
-                Id = 1,
+                Id = 14,
                 Name = "hour",
                 IsActive = true
             };
             var meas15 = new Measurement
             {
-                Id = 1,
+                Id = 15,
                 Name = "MMSCFD",
                 IsActive = true
             };
             var meas16 = new Measurement
             {
-                Id = 1,
+                Id = 16,
                 Name = "MMBBL",
                 IsActive = true
             };
             var meas17 = new Measurement
             {
-                Id = 1,
+                Id = 17,
                 Name = "USD/bbl",
                 IsActive = true
             };
