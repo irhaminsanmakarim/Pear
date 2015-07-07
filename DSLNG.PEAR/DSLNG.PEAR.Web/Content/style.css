@@ -627,9 +627,8 @@ th
     padding: 4px;
 }
 
-.btn-large
-{
-/*a:hover.btn-darkblue {*/
+
+a:hover.btn-darkblue {
     background-color: #febe10;
     color: white;
 }
@@ -690,19 +689,6 @@ a:hover.btn-lightblue {
             -o-transition: all .3s ease;
             transition: all .3s ease;
         }
-
-a:hover.btn-darkblue {
-/*a:hover.btn-darkblue
-{*/
-    background-color: #febe10;
-    color: white;
-}
-
-a:hover.btn-lightblue
-{
-    background-color: #febe10;
-    color: white;
-}
 
 .btn-lightblue
 {
