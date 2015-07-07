@@ -17,7 +17,7 @@ h2,
 h3,
 h4,
 h5,
-h6,
+h6,ajax-
 .h1,
 .h2,
 .h3,
@@ -596,4 +596,12 @@ h2 {
     .btn-lightblue:hover {
         background-color: #febe10;
         color: white;
+    }
+
+    .ajax-loader2 {
+        background-size: 25px 25px;
+        background-repeat: no-repeat;
+        width: 25px;
+        height: 25px;
+        border: none;
     }

@@ -16,9 +16,10 @@
                 style="margin: 5px 40px 0px 25px; padding-right: 30px;">
                 <label>Period :</label>
                 <select id="periodeType" class="form-control">
-                    <option value="yearly">Yearly</option>
-                    <option value="monthly">Monthly</option>
+                    <option value="Yearly">Yearly</option>
+                    <option value="Monthly">Monthly</option>
                 </select>
+                <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none"></img>
             </div>
         </form>
 
@@ -27,34 +28,42 @@
 </section>
 
 
+<div class="content-wrapper">
+    <form action="@Url.Action("Update")" method="POST">
+        <div class="update-content">
+            @Html.Partial("_Yearly", Model)
+        </div>
 
-<form action="@Url.Action("Update")" method="POST">
-    @Html.Partial("_Yearly", Model)
-    <button type="submit" class="btn btn-default">Submit</button>
-    <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
-</form>
+        <button type="submit" class="btn btn-default">Submit</button>
+        <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+    </form>
+</div>
 
 
-@section Scripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.yearly-content').show();
-            $('.monthly-content').hide();
 
-            $('#periodeType').change(function () {
-                //alert('asas');
-                var val = $(this).val();
-                if (val === 'yearly') {
-                    $('.yearly-content').show();
-                    $('.monthly-content').hide();
-                } else {
-                    $('.yearly-content').hide();
-                    $('.monthly-content').show();
-                }
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#periodeType').change(function () {
+            var val = $(this).val();
+            console.log('sini' + val);
+            $.ajax({
+                url: '@Url.Action("UpdatePartial")',
+                    type: 'GET',
+                    data: { id: '@Model.PmsSummaryId', type: val },
+                    beforeSend: function () {
+                        $('.ajax-loader2').show();
+                        $('.content-wrapper').hide();
+                    }
+                })
+                .done(function (data) {
+                    $('.ajax-loader2').hide();
+                    $('.update-content').html(data);
+                    $('.content-wrapper').show();
+                });
             });
         })
-    </script>
+</script>
 
-}
+
 

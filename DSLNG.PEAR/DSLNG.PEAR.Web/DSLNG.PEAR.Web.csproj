@@ -513,6 +513,7 @@
     <Content Include="Views\Shared\_ScoringIndicator.cshtml" />
     <Content Include="Views\KpiTarget\Update.cshtml" />
     <Content Include="Views\KpiTarget\_Yearly.cshtml" />
+    <Content Include="Views\KpiTarget\_Monthly.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />

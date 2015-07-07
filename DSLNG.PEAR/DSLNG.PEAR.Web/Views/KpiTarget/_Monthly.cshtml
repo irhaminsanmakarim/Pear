@@ -13,7 +13,18 @@
                     <th style="width: 250px;"></th>
                     <th style="width: 100px;"></th>
                     <th style="width: 200px;"></th>
-                    <th>Year</th>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>Apr</th>
+                    <th>May</th>
+                    <th>Jun</th>
+                    <th>Jul</th>
+                    <th>Aug</th>
+                    <th>Sep</th>
+                    <th>Okt</th>
+                    <th>Nov</th>
+                    <th>Des</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,8 +45,8 @@
                         @foreach (var kpiTarget in kpi.KpiTargets)
                         {
                             <td>
-                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Id, new {@class="form-control-small"})
-                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Periode, new {@class="form-control-small"})
+                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Id, new {@class="form-control-small"})
+                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Periode, new {@class="form-control-small"})
                                 @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Value, new {@class="form-control-small"})
                             </td>
                             c++;

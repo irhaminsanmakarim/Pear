@@ -25,11 +25,13 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Update(int id)
         {
             int pmsSummaryId = id;
-            var request = new GetTargetRequest {PeriodeType = PeriodeType.Yearly, PmsSummaryId = id};
+            var request = new GetTargetRequest { PeriodeType = PeriodeType.Yearly, PmsSummaryId = pmsSummaryId };
             var response = _kpiTargetService.GetTarget(request);
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<UpdateKpiTargetViewModel>();
+                viewModel.PmsSummaryId = pmsSummaryId;
+                viewModel.PeriodeType = PeriodeType.Yearly.ToString();
                 return View("Update", viewModel);
             }
             return base.ErrorPage(response.Message);
@@ -39,11 +41,29 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Update(UpdateKpiTargetViewModel viewModel)
         {
             var request = viewModel.MapTo<UpdateKpiTargetRequest>();
-            request.PeriodeType = PeriodeType.Monthly.ToString();
             var response = _kpiTargetService.UpdateKpiTarget(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Update", new {id = 1});
+        }
+
+        public ActionResult UpdatePartial(int id, string type)
+        {
+            int pmsSummaryId = id;
+            PeriodeType periodeType = (PeriodeType)Enum.Parse(typeof (PeriodeType), type);
+
+            var request = new GetTargetRequest { PeriodeType = periodeType, PmsSummaryId = pmsSummaryId };
+            var response = _kpiTargetService.GetTarget(request);
+            string view = periodeType == PeriodeType.Yearly ? "_yearly" : "_monthly";
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<UpdateKpiTargetViewModel>();
+                viewModel.PeriodeType = periodeType.ToString();
+                viewModel.PmsSummaryId = pmsSummaryId;
+                return PartialView(view, viewModel);
+            }
+
+            return Content(response.Message);
         }
         
         public ActionResult Index()

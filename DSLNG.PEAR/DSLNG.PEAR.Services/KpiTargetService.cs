@@ -87,7 +87,6 @@ namespace DSLNG.PEAR.Services
 
         public GetTargetResponse GetTarget(GetTargetRequest request)
         {
-            request = new GetTargetRequest { PeriodeType = PeriodeType.Monthly, PmsSummaryId = 1 };
             var response = new GetTargetResponse();
             try
             {
@@ -146,14 +145,17 @@ namespace DSLNG.PEAR.Services
                                 var kpiTargetYearly = new GetTargetResponse.KpiTarget();
                                 if (kpiTargetsYearly == null)
                                 {
+                                    kpiTargetYearly.Id = 0;
                                     kpiTargetYearly.Periode = new DateTime(pmsSummary.Year, 1, 1);
                                     kpiTargetYearly.Value = null;
                                 }
                                 else
                                 {
+                                    kpiTargetYearly.Id = kpiTargetsYearly.Id;
                                     kpiTargetYearly.Periode = kpiTargetsYearly.Periode;
                                     kpiTargetYearly.Value = kpiTargetsYearly.Value;
                                 }
+                                targets.Add(kpiTargetYearly);
 
                                 break;
                         }
