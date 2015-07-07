@@ -7,7 +7,7 @@ using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Services.Requests.KpiTarget
 {
-    public class GetTargetRequest
+    public class GetKpiTargetRequest
     {
         public int PmsSummaryId { get; set; }
         public PeriodeType PeriodeType { get; set; }

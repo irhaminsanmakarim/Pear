@@ -159,17 +159,20 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.YtdFormulaList = _dropdownService.GetYtdFormulas().MapTo<SelectListItem>();
             viewModel.PeriodeList = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>();
             var code = 3;
+            var takeCode = viewModel.Code.Length - 3;
             if (viewModel.PillarId.HasValue)
             {
                 viewModel.CodeFromPillar = GetPillarCode(viewModel.PillarId.Value);
                 code += 2;
+                takeCode -= viewModel.CodeFromPillar.Length;
             }
             viewModel.CodeFromLevel = GetLevelCode(viewModel.LevelId);
             if (viewModel.RoleGroupId.HasValue)
             {
-                viewModel.CodeFromRoleGroup = GetRoleGroupCode(viewModel.RoleGroupId.Value);                
+                viewModel.CodeFromRoleGroup = GetRoleGroupCode(viewModel.RoleGroupId.Value);
+                takeCode -= viewModel.CodeFromRoleGroup.Length;
             }
-            viewModel.Code = response.Code.Substring(code, 3);
+            viewModel.Code = response.Code.Substring(code, takeCode);
             if (viewModel.RelationModels.Count == 0)
             {
                 viewModel.RelationModels.Add(new ViewModels.Kpi.KpiRelationModel { KpiId = 0, Method = "" });

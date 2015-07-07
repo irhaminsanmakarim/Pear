@@ -3,10 +3,11 @@
     int i = 0;
 }
 
-<div class="form-group form-list">
+<div class="form-group form-list form-inline">
     <label>Scoring Indicator</label>
     <button type="button" class="btn btn-default form-inline add-score-indicator"><i class="glyphicon glyphicon-plus"></i></button>
 </div>
+
 <div class="score-indicator-wrapper">
     @foreach (var item in Model)
     {
@@ -25,9 +26,9 @@
                     </select>
                     <input type="text" value="" class="form-control" style="width: 55px;"/>*@
                 <input type="hidden" name="ScoreIndicators.Index" value="@i" />
-                <input class="form-control si-id" type="text" name="ScoreIndicators[@i].Id" value="@item.Id" />
-                <input class="form-control si-expression" name="ScoreIndicators[@i].Expression" placeholder="Expression, e.g : x > 20" type="text" value="@item.Expression">
-                <input class="form-control si-color" name="ScoreIndicators[@i].Color" placeholder="Color" type="text" value="@item.Color">
+                <input class="form-control si-id" type="text" name="ScoreIndicators[@i].Id" value="@item.Id" style="width:50px;" />
+                <input class="form-control si-expression" name="ScoreIndicators[@i].Expression" placeholder="Expression, e.g : x > 20" type="text" value="@item.Expression" style="width:200px;">
+                <input class="form-control si-color" name="ScoreIndicators[@i].Color" placeholder="Color" type="text" value="@item.Color" style="width:150px;">
                 @*@Html.TextBoxFor(x => Model[i].Expression, new { @class = "form-control", placeholder = "Expression" })
                 @Html.TextBoxFor(x => Model[i].Color, new { @class = "form-control", placeholder = "Color" })*@
                 <button type="button" class="btn btn-default form-control remove-score-indicator" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
@@ -69,7 +70,6 @@
         if (i <= 1) {
             $('.remove-score-indicator').hide();
         }
-
         $('.remove-score-indicator').click(function () {
             i--;
             $(this).parent().parent().remove();

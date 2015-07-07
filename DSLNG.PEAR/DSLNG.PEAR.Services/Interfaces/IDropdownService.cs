@@ -25,6 +25,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         IEnumerable<Dropdown> GetYtdFormulas();
         IEnumerable<Dropdown> GetPeriodeTypes();
         IEnumerable<Dropdown> GetKpis();
+        IEnumerable<Dropdown> GetPeriodeTypesForKpiTargetAndAchievement();
     }
 
     public class Dropdown

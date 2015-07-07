@@ -863,7 +863,6 @@ String.prototype.isNullOrEmpty = function () {
         if ($('.template-editor').length) {
             Pear.Template.Editor.LayoutSetup();
         }
-        
     });
     window.Pear = Pear;
 }(window, jQuery, undefined));

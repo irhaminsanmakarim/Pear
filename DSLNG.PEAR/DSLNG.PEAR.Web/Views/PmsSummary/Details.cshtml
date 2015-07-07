@@ -5,48 +5,63 @@
 
 @Html.Partial("_MessageResponse")
 
-<h3>@ViewBag.Title </h3>
-<hr />
-<h4>Pillar & Key Performance Indicator</h4>
-@Html.ActionLink("Add Pillar", "Create", "PmsConfig", new { id = Model.PmsSummaryId }, new { @class = "btn btn-default btn-darkblue", data_toggle = "modal", data_target = "#modalDialog" })
-
-<p>Total Score For All Pillar : <span id="totalScoreAllPillar"></span></p>
+<div class="title_page" style="border:none!important;">
+    <div class="row">
+        <div class="title">@ViewBag.Title</div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="row-full">
+        <h3>Pilar & Key Performance Indicator</h3>
+        @Html.ActionLink("Add Pillar", "Create", "PmsConfig", new { id = Model.PmsSummaryId }, new { @class = "btn-lightblue", data_toggle = "modal", data_target = "#modalDialog" })
+    </div>
+    <div class="row-full">
+        <div class="text-grey text-med">
+            <div class="heading">
+                Total Score For All Pillar
+            </div>: <span id="totalScoreAllPillar"></span>
+        </div>
+    </div>
+</div>
 @{
     for (int i = 0; i < Model.PmsConfigs.Count; i++)
     {
         int i1 = i;
-        <h4 style="display: inline">Pillar Name : @Model.PmsConfigs[i1].PillarName</h4>
-        @Html.ActionLink("Edit Pillar", "Update", "PmsConfig", new { id = Model.PmsConfigs[i].Id}, new { @class = "btn btn-default btn-darkblue", data_toggle = "modal", data_target = "#modalDialog" })
-    <a href="@Url.Action("Create", "PmsConfigDetails", new { id = Model.PmsConfigs[i1].Id })" class="btn btn-default btn-darkblue pull-right" data-toggle="modal" data-target="#modalDialog" style="margin-bottom: 8px;">Add Pms Config Detail</a>
-    //Html.DropDownListFor(x => x.PmsConfigs[i1].PillarId, new SelectList(Model.Pillars, "Value", "Text", Model.PmsConfigs[i1].PillarId))
+        <div class="whitebox-full" style="width:100%;">
+            <h3 style="text-transform:capitalize">@Model.PmsConfigs[i1].PillarName.ToLower()</h3>
+            <a href="@Url.Action("Create", "PmsConfigDetails", new { id = Model.PmsConfigs[i1].Id })" class="text-button pull-right" data-toggle="modal" data-target="#modalDialog">
+                <span class="fa fa-plus-circle"></span>Add PMS Config Detail
+            </a>
+            <a href="@Url.Action("Update", "PmsConfig", new { id = Model.PmsConfigs[i].Id })" data-toggle="modal" data-target="#modalDialog" class="text-button pull-right">
+                <span class="fa fa-pencil-square-o"></span>Edit Pilar
+            </a>
+            <table class="table table-striped table-bordered table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Kpi Name</th>
+                        <th rowspan="2">Measurement</th>
+                        <th rowspan="2">Weight</th>
+                        <th rowspan="2">Scoring Type</th>
+                        <th rowspan="2">Scoring Indicator</th>
+                        <th rowspan="2">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-    <table class="table table-striped table-bordered table-responsive">
-        <thead>
-            <tr>
-                <th rowspan="2">Kpi Name</th>
-                <th rowspan="2">Measurement</th>
-                <th rowspan="2">Weight</th>
-                <th rowspan="2">Scoring Type</th>
-                <th rowspan="2">Scoring Indicator</th>
-                <th rowspan="2">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach (var pmsConfigDetails in Model.PmsConfigs[i1].PmsConfigDetailsList)
-            {
-                <tr>
-                    <td>@pmsConfigDetails.KpiName</td>
-                    <td>@pmsConfigDetails.KpiMeasurement</td>
-                    <td>@pmsConfigDetails.Weight</td>
-                    <td>@pmsConfigDetails.ScoringType</td>
-                    <td>@Html.ActionLink("View Scoring Indicator", "ScoreIndicatorDetails", "PmsConfigDetails", new { id = pmsConfigDetails.Id }, new { data_toggle = "modal", data_target = "#modalDialog" })</td>
-                    <td>@Html.ActionLink("Edit", "Update", "PmsConfigDetails", new { id = pmsConfigDetails.Id }, new { data_toggle = "modal", data_target = "#modalDialog" })</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-        
+                    @foreach (var pmsConfigDetails in Model.PmsConfigs[i1].PmsConfigDetailsList)
+                    {
+                        <tr>
+                            <td>@pmsConfigDetails.KpiName</td>
+                            <td>@pmsConfigDetails.KpiMeasurement</td>
+                            <td>@pmsConfigDetails.Weight</td>
+                            <td>@pmsConfigDetails.ScoringType</td>
+                            <td class="text-button"><a data-target="#modalDialog" data-toggle="modal" href="@Url.Action("ScoreIndicatorDetails", "PmsConfigDetails", new { id = pmsConfigDetails.Id })"><span class="fa fa-table"></span>View Scoring Indicator</a></td>
+                            <td class="text-button"><a data-target="#modalDialog" data-toggle="modal" href="@Url.Action("Update", "PmsConfigDetails", new { id = pmsConfigDetails.Id })"><span class="fa fa-pencil-square-o"></span>Edit</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
 }
 

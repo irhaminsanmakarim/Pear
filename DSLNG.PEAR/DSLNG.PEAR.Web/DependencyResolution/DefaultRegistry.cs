@@ -54,6 +54,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IConversionService>().Use<ConversionService>();
             For<IDropdownService>().Use<DropdownService>();
             For<ITemplateService>().Use<TemplateService>();
+            For<IKpiAchievementService>().Use<KpiAchievementService>();
         }
 
         #endregion
