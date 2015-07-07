@@ -10,5 +10,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         CreateUserResponse Create(CreateUserRequest request);
         UpdateUserResponse Update(UpdateUserRequest request);
         DeleteUserResponse Delete(int id);
+        LoginUserResponse Login(LoginUserRequest request);
     }
 }

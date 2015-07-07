@@ -46,6 +46,15 @@ namespace DSLNG.PEAR.Services
             }
 
             response.Menus = menus.MapTo<GetSiteMenusResponse.Menu>();
+            //set root menu active / selected
+            if (request.MenuId == null || request.MenuId == 0)
+            {
+                response.MenuIdActive = DataContext.Menus.Where(x => x.ParentId == null || x.ParentId == 0).Select(x => x.Id).First();
+            }
+            else
+            {
+
+            }
             
             return response;
         }
@@ -65,6 +74,37 @@ namespace DSLNG.PEAR.Services
             
 
             return Menus;
+        }
+
+        public GetSiteMenuActiveResponse GetSiteMenuActive(GetSiteMenuActiveRequest request)
+        {
+            var response = new GetSiteMenuActiveResponse();
+            //get the menu from url request
+            var url_request = new StringBuilder(request.Controller).Append("/").Append(request.Action).ToString();
+            try{
+                var menu = DataContext.Menus.Where(x => x.Url.ToLower() == url_request).First();
+                menu = this._GetActiveMenu(menu);
+                response = menu.MapTo<GetSiteMenuActiveResponse>();
+
+                return response;
+            }
+            catch (System.InvalidOperationException x)
+            {
+                var menu = DataContext.Menus.First(m => m.Id == 1);
+                response = menu.MapTo<GetSiteMenuActiveResponse>();
+                response.Message = x.Message;
+                return response;
+            }
+        }
+
+        private Data.Entities.Menu _GetActiveMenu(Data.Entities.Menu menu)
+        {
+            if (!menu.IsRoot)
+            {
+                menu = DataContext.Menus.Where(x => x.Id == menu.ParentId).First();
+                this._GetActiveMenu(menu);
+            }
+            return menu;
         }
 
         public GetMenusResponse GetMenus(GetMenusRequest request)

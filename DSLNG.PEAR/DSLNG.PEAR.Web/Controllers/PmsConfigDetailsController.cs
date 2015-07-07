@@ -52,11 +52,22 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _pmsSummaryService.GetPmsConfigDetails(id);
             if (response.IsSuccess)
             {
-                var viewModel = response.MapTo<DialogPmsConfigDetailViewModel>();
+                var viewModel = response.MapTo<UpdatePmsConfigDetailsViewModel>();
+                viewModel.ScoringTypes = _dropdownService.GetScoringTypes().MapTo<SelectListItem>();
                 return PartialView("_Update", viewModel);
             }
 
             return base.ErrorPage(response.Message);
+        }
+
+        [HttpPost]
+        public ActionResult Update(UpdatePmsConfigDetailsViewModel viewModel)
+        {
+            var request = viewModel.MapTo<UpdatePmsConfigDetailsRequest>();
+            var response = _pmsSummaryService.UpdatePmsConfigDetails(request);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Details", "PmsSummary", new { id = response.PmsSummaryId });
         }
 
         public ActionResult ScoreIndicatorDetails(int id)

@@ -9,6 +9,7 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Kpi;
 using DSLNG.PEAR.Services.Requests.Pillar;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
+using DSLNG.PEAR.Web.ViewModels.PmsConfigDetails;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
 
 namespace DSLNG.PEAR.Web.Controllers
@@ -29,7 +30,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View("Details");
         }
 
-        public ActionResult GetKpis(int id)
+        /*public ActionResult GetKpis(int id)
         {
             int pillarId = id;
             var response = _pmsSummaryService.GetKpis(pillarId);
@@ -45,10 +46,10 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             return Json("error when load data kpi with pillar id = " + 1, JsonRequestBehavior.AllowGet);
-        }
+        }*/
 
         [HttpPost]
-        public ActionResult UpdatePmsConfigDetails(DialogPmsConfigDetailViewModel viewModel)
+        public ActionResult UpdatePmsConfigDetails(UpdatePmsConfigDetailsViewModel viewModel)
         {
             return Content("in progress");
         }

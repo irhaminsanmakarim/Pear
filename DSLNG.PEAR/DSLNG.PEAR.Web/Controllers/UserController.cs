@@ -20,6 +20,29 @@ namespace DSLNG.PEAR.Web.Controllers
             _roleGroupService = roleGroupService;
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(UserLoginViewModel viewModel)
+        {
+            var request = viewModel.MapTo<LoginUserRequest>();
+            var response = _userService.Login(request);
+
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+
+            if (response.IsSuccess){
+                //save user id and rolegroup to session
+
+                return RedirectToAction("Index");
+            }
+
+            return View("Login", viewModel);
+        }
+
         public ActionResult Index()
         {
             return View();

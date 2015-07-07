@@ -19,6 +19,8 @@ namespace DSLNG.PEAR.Web.ViewModels.User
         [MaxLength(100)]
         [Index(IsUnique = true)]
         public string Username { get; set; }
+        public string Password { get; set; }
+        public bool ChangePassword { get; set; }
         [MaxLength(100)]
         [Index(IsUnique = true)]
         public string Email { get; set; }

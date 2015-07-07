@@ -32,6 +32,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         #region PmsConfigDetails
 
         CreatePmsConfigDetailsResponse CreatePmsConfigDetails(CreatePmsConfigDetailsRequest request);
+        UpdatePmsConfigDetailsResponse UpdatePmsConfigDetails(UpdatePmsConfigDetailsRequest request);
 
         #endregion
 
