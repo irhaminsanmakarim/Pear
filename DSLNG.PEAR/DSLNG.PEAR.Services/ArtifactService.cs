@@ -760,7 +760,7 @@ namespace DSLNG.PEAR.Services
                         var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
                             Name = series.Label,
-                            Color = string.IsNullOrEmpty(series.Color) ? "green" : series.Color
+                            Color = string.IsNullOrEmpty(series.Color) ? "blue" : series.Color
                         };
                         if (comparison)
                         {
@@ -778,7 +778,7 @@ namespace DSLNG.PEAR.Services
                         var exceedSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
                             Name = "Exceed",
-                            Color = "blue"
+                            Color = "green"
                         };
                         if (comparison)
                         {
@@ -814,13 +814,13 @@ namespace DSLNG.PEAR.Services
                                 {
                                     if (!target.HasValue)
                                     {
-                                        aSeries.Data.Add(actual.Value);
+                                        aSeries.Data.Add(target.Value);
                                         remainSeries.Data.Add(0);
                                         exceedSeries.Data.Add(actual.Value);
                                     }
                                     else
                                     {
-                                        aSeries.Data.Add(actual.Value);
+                                        aSeries.Data.Add(target.Value);
                                         var remain = target.Value - actual.Value;
                                         if (remain > 0)
                                         {
@@ -858,13 +858,13 @@ namespace DSLNG.PEAR.Services
                                 {
                                     if (target == null || !target.Value.HasValue)
                                     {
-                                        aSeries.Data.Add(actual.Value.Value);
+                                        aSeries.Data.Add(target.Value.Value);
                                         remainSeries.Data.Add(0);
                                         exceedSeries.Data.Add(actual.Value.Value);
                                     }
                                     else
                                     {
-                                        aSeries.Data.Add(actual.Value.Value);
+                                        aSeries.Data.Add(target.Value.Value);
                                         var remain = target.Value.Value - actual.Value.Value;
                                         if (remain > 0)
                                         {
