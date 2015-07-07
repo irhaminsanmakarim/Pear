@@ -35,6 +35,7 @@ using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Services.Requests.Conversion;
 using DSLNG.PEAR.Services.Responses.KpiTarget;
 using DSLNG.PEAR.Services.Requests.Template;
+using DSLNG.PEAR.Services.Responses.Template;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -196,6 +197,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(d => d.LayoutRows, o => o.Ignore());
             //Mapper.CreateMap<CreateTemplateRequest.RowRequest, LayoutRow>();
             //Mapper.CreateMap<CreateTemplateRequest.ColumnRequest, LayoutColumn>();
+            Mapper.CreateMap<DashboardTemplate, GetTemplatesResponse.TemplateResponse>();
+            Mapper.CreateMap<DashboardTemplate, GetTemplateResponse>();
+            Mapper.CreateMap<LayoutRow, GetTemplateResponse.RowResponse>();
+            Mapper.CreateMap<LayoutColumn, GetTemplateResponse.ColumnResponse>()
+                .ForMember(d => d.ArtifactId, o => o.MapFrom(s => s.Artifact.Id));
 
 
             base.Configure();

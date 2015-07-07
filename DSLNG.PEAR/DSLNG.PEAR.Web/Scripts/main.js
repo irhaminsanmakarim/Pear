@@ -72,7 +72,7 @@ String.prototype.isNullOrEmpty = function () {
                 method: 'GET',
                 success: function (data) {
                     if (callback.hasOwnProperty(data.GraphicType)) {
-                        callback[data.GraphicType](data);
+                        callback[data.GraphicType](data, $('#container'));
                     }
                     $('#graphic-preview').modal('show');
                 }
@@ -212,7 +212,7 @@ String.prototype.isNullOrEmpty = function () {
                 method: 'POST',
                 success: function (data) {
                     if (callback.hasOwnProperty(data.GraphicType)) {
-                        callback[data.GraphicType](data);
+                        callback[data.GraphicType](data, $('#container'));
                     }
                     $('#graphic-preview').modal('show');
                 }
@@ -300,17 +300,17 @@ String.prototype.isNullOrEmpty = function () {
         addSeries();
         addStack();
     };
-    artifactDesigner._previewCallbacks.bar = function (data) {
+    artifactDesigner._previewCallbacks.bar = function (data, container) {
         if (data.BarChart.SeriesType == "single-stack") {
-            Pear.Artifact.Designer._displayBasicBarChart(data);
+            Pear.Artifact.Designer._displayBasicBarChart(data, container);
         } else if (data.BarChart.SeriesType == "multi-stack") {
-            Pear.Artifact.Designer._displayMultistacksBarChart(data);
+            Pear.Artifact.Designer._displayMultistacksBarChart(data, container);
         } else {
-            Pear.Artifact.Designer._displayMultistacksGroupedBarChart(data);
+            Pear.Artifact.Designer._displayMultistacksGroupedBarChart(data, container);
         }
     };
-    artifactDesigner._displayBasicBarChart = function (data) {
-        $('#container').highcharts({
+    artifactDesigner._displayBasicBarChart = function (data, container) {
+        container.highcharts({
             chart: {
                 type: 'column'
             },
@@ -344,8 +344,8 @@ String.prototype.isNullOrEmpty = function () {
             series: data.BarChart.Series
         });
     };
-    artifactDesigner._displayMultistacksBarChart = function (data) {
-        $('#container').highcharts({
+    artifactDesigner._displayMultistacksBarChart = function (data, container) {
+        container.highcharts({
             chart: {
                 type: 'column'
             },
@@ -402,8 +402,8 @@ String.prototype.isNullOrEmpty = function () {
             series: data.BarChart.Series
         });
     };
-    artifactDesigner._displayMultistacksGroupedBarChart = function (data) {
-        $('#container').highcharts({
+    artifactDesigner._displayMultistacksGroupedBarChart = function (data, container) {
+        container.highcharts({
             chart: {
                 type: 'column'
             },
@@ -440,16 +440,16 @@ String.prototype.isNullOrEmpty = function () {
     artifactDesigner._setupCallbacks.baraccumulative = function () {
         Pear.Artifact.Designer._setupCallbacks.bar();
     };
-    artifactDesigner._previewCallbacks.baraccumulative = function (data) {
-        Pear.Artifact.Designer._previewCallbacks.bar(data);
+    artifactDesigner._previewCallbacks.baraccumulative = function (data, container) {
+        Pear.Artifact.Designer._previewCallbacks.bar(data, container);
     };
     artifactDesigner._setupCallbacks.barachievement = function () {
         $('#bar-value-axis').val('KpiActual');
         $('#graphic-settings').prev('.form-group').css('display', 'none');
         Pear.Artifact.Designer._setupCallbacks.bar();
     };
-    artifactDesigner._previewCallbacks.barachievement = function (data) {
-        Pear.Artifact.Designer._previewCallbacks.bar(data);
+    artifactDesigner._previewCallbacks.barachievement = function (data, container) {
+        Pear.Artifact.Designer._previewCallbacks.bar(data, container);
     };
     //line chart
     artifactDesigner._setupCallbacks.line = function () {
@@ -492,8 +492,8 @@ String.prototype.isNullOrEmpty = function () {
         removeSeriesOrStack();
         addSeries();
     }
-    artifactDesigner._previewCallbacks.line = function (data) {
-        $('#container').highcharts({
+    artifactDesigner._previewCallbacks.line = function (data, container) {
+        container.highcharts({
             title: {
                 text: data.LineChart.Title,
                 x: -20 //center
@@ -652,8 +652,8 @@ String.prototype.isNullOrEmpty = function () {
         rangeControl();
         rangeDatePicker();
     };
-    artifactDesigner._previewCallbacks.speedometer = function (data) {
-        $('#container').highcharts({
+    artifactDesigner._previewCallbacks.speedometer = function (data, container) {
+        container.highcharts({
             chart: {
                 type: 'gauge',
                 plotBackgroundColor: null,
@@ -851,6 +851,22 @@ String.prototype.isNullOrEmpty = function () {
         addRow();
         addColumn();
     };
+    templateEditor.ViewSetup = function () {
+        $('.artifact-holder').each(function (i, val) {
+            var $holder = $(val);
+            var url = $holder.data('artifact-url');
+            var callback = Pear.Artifact.Designer._previewCallbacks;
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function (data) {
+                    if (callback.hasOwnProperty(data.GraphicType)) {
+                        callback[data.GraphicType](data, $holder);
+                    }
+                }
+            });
+        });
+    };
 
     $(document).ready(function () {
         if ($('.artifact-designer').length) {
@@ -862,6 +878,9 @@ String.prototype.isNullOrEmpty = function () {
         }
         if ($('.template-editor').length) {
             Pear.Template.Editor.LayoutSetup();
+        }
+        if ($('.template-view').length) {
+            Pear.Template.Editor.ViewSetup();
         }
     });
     window.Pear = Pear;

@@ -106,6 +106,8 @@
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigDetailsRequest.cs" />
     <Compile Include="Requests\PmsSummary\UpdatePmsConfigRequest.cs" />
     <Compile Include="Requests\Template\CreateTemplateRequest.cs" />
+    <Compile Include="Requests\Template\GetTemplateRequest.cs" />
+    <Compile Include="Requests\Template\GetTemplatesRequest.cs" />
     <Compile Include="Requests\User\LoginUserRequest.cs" />
     <Compile Include="Responses\Artifact\CreateArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactResponse.cs" />
@@ -263,6 +265,8 @@
     <Compile Include="Responses\RoleGroup\Level.cs" />
     <Compile Include="Responses\RoleGroup\UpdateRoleGroupResponse.cs" />
     <Compile Include="Responses\Template\CreateTemplateResponse.cs" />
+    <Compile Include="Responses\Template\GetTemplateResponse.cs" />
+    <Compile Include="Responses\Template\GetTemplatesResponse.cs" />
     <Compile Include="Responses\Type\CreateTypeResponse.cs" />
     <Compile Include="Responses\Type\DeleteTypeResponse.cs" />
     <Compile Include="Responses\Type\GetTypeResponse.cs" />

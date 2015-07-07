@@ -1,0 +1,32 @@
+﻿@Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "gridTemplateIndex";
+        settings.CallbackRouteValues = new { Controller = "Template", Action = "IndexPartial" };
+        settings.CustomBindingRouteValuesCollection.Add(
+            GridViewOperationType.Paging,
+            new { Controller = "Template", Action = "PagingAction" }
+        );
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.Width = Unit.Percentage(60);
+        settings.KeyFieldName = "Id";
+        
+        
+        settings.Columns.Add("Id").Visible = false;
+        settings.Columns.Add("Name","Name");
+        settings.Columns.Add("Remark", "Remark");
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Action";
+            column.SetDataItemTemplateContent(c =>
+                                              ViewContext.Writer.Write(
+                                                  Html.ActionLink("View", "View", new { Id = DataBinder.Eval(c.DataItem, "Id") }, new { @class = "artifact-view" })
+                                                  )
+
+
+                );
+        });
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+    }).BindToCustomData(Model).GetHtml()
+
