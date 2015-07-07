@@ -223,6 +223,12 @@ namespace DSLNG.PEAR.Services
                 case ValueAxis.KpiActual:
                     seriesResponse = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType);
                     break;
+                case ValueAxis.Custom:
+                    var series1 = this._getKpiTargetSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, true);
+                    var series2 = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, true);
+                    seriesResponse = series1.Concat(series2).ToList();
+                    seriesType = "multi-stacks-grouped";
+                    break;  
             }
             response.SeriesType = seriesType;
             response.Series = seriesResponse;
@@ -365,7 +371,7 @@ namespace DSLNG.PEAR.Services
             return periodes.ToArray();
         }
 
-        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType)
+        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, bool comparison = false)
         {
             var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
             var start = dateTimePeriodes[0];
@@ -387,18 +393,39 @@ namespace DSLNG.PEAR.Services
                             Stack = series.Label,
                             Color = series.Color
                         };
-                        foreach (var periode in dateTimePeriodes)
+                        if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                         {
-                            var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
-                            if (target == null || !target.Value.HasValue)
+
+                            foreach (var periode in dateTimePeriodes)
                             {
-                                aSeries.Data.Add(0);
-                            }
-                            else
-                            {
-                                aSeries.Data.Add(target.Value.Value);
+                                var targetValue = kpiTargets.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                    .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                if (targetValue == null || !targetValue.HasValue)
+                                {
+                                    aSeries.Data.Add(0);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(targetValue.Value);
+                                }
                             }
                         }
+                        else
+                        {
+                            foreach (var periode in dateTimePeriodes)
+                            {
+                                var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
+                                if (target == null || !target.Value.HasValue)
+                                {
+                                    aSeries.Data.Add(0);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(target.Value.Value);
+                                }
+                            }
+                        }
+
                         seriesResponse.Add(aSeries);
                         if (graphicType == "baraccumulative")
                         {
@@ -427,16 +454,39 @@ namespace DSLNG.PEAR.Services
                             Name = series.Label,
                             Color = series.Color
                         };
-                        foreach (var periode in dateTimePeriodes)
+                        if(comparison){
+                            aSeries.Stack = "KpiTarget";
+                        }
+                        if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                         {
-                            var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
-                            if (target == null || !target.Value.HasValue)
+
+                            foreach (var periode in dateTimePeriodes)
                             {
-                                aSeries.Data.Add(0);
+                                var targetValue = kpiTargets.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                    .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                if (targetValue == null || !targetValue.HasValue)
+                                {
+                                    aSeries.Data.Add(0);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(targetValue.Value);
+                                }
                             }
-                            else
+                        }
+                        else
+                        {
+                            foreach (var periode in dateTimePeriodes)
                             {
-                                aSeries.Data.Add(target.Value.Value);
+                                var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
+                                if (target == null || !target.Value.HasValue)
+                                {
+                                    aSeries.Data.Add(0);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(target.Value.Value);
+                                }
                             }
                         }
                         seriesResponse.Add(aSeries);
@@ -447,6 +497,10 @@ namespace DSLNG.PEAR.Services
                                 Name = "Previous",
                                 Color = "#004071"
                             };
+                            if (comparison)
+                            {
+                                previousSeries.Stack = "KpiTarget";
+                            }
                             for (var i = 0; i < aSeries.Data.Count; i++)
                             {
                                 double data = 0;
@@ -476,16 +530,36 @@ namespace DSLNG.PEAR.Services
                                 Stack = series.Label,
                                 Color = stack.Color
                             };
-                            foreach (var periode in dateTimePeriodes)
+                            if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                             {
-                                var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
-                                if (target == null || !target.Value.HasValue)
+
+                                foreach (var periode in dateTimePeriodes)
                                 {
-                                    aSeries.Data.Add(0);
+                                    var targetValue = kpiTargets.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                        .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                    if (targetValue == null || !targetValue.HasValue)
+                                    {
+                                        aSeries.Data.Add(0);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(targetValue.Value);
+                                    }
                                 }
-                                else
+                            }
+                            else
+                            {
+                                foreach (var periode in dateTimePeriodes)
                                 {
-                                    aSeries.Data.Add(target.Value.Value);
+                                    var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
+                                    if (target == null || !target.Value.HasValue)
+                                    {
+                                        aSeries.Data.Add(0);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(target.Value.Value);
+                                    }
                                 }
                             }
                             seriesResponse.Add(aSeries);
@@ -495,19 +569,43 @@ namespace DSLNG.PEAR.Services
 
                             var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                Name = series.Label,
+                                Name = stack.Label,
                                 Color = stack.Color
                             };
-                            foreach (var periode in dateTimePeriodes)
+                            if (comparison)
                             {
-                                var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
-                                if (target == null || !target.Value.HasValue)
+                                aSeries.Stack = "KpiTarget";
+                            }
+                            if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
+                            {
+
+                                foreach (var periode in dateTimePeriodes)
                                 {
-                                    aSeries.Data.Add(0);
+                                    var targetValue = kpiTargets.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                        .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                    if (targetValue == null || !targetValue.HasValue)
+                                    {
+                                        aSeries.Data.Add(0);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(targetValue.Value);
+                                    }
                                 }
-                                else
+                            }
+                            else
+                            {
+                                foreach (var periode in dateTimePeriodes)
                                 {
-                                    aSeries.Data.Add(target.Value.Value);
+                                    var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
+                                    if (target == null || !target.Value.HasValue)
+                                    {
+                                        aSeries.Data.Add(0);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(target.Value.Value);
+                                    }
                                 }
                             }
                             seriesResponse.Add(aSeries);
@@ -518,7 +616,7 @@ namespace DSLNG.PEAR.Services
             return seriesResponse;
         }
 
-        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiActualSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType)
+        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiActualSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, bool comparison = false)
         {
             var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
             var start = dateTimePeriodes[0];
@@ -539,16 +637,36 @@ namespace DSLNG.PEAR.Services
                             Stack = series.Label,
                             Color = series.Color
                         };
-                        foreach (var periode in dateTimePeriodes)
+                        if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                         {
-                            var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
-                            if (target == null || !target.Value.HasValue)
+
+                            foreach (var periode in dateTimePeriodes)
                             {
-                                aSeries.Data.Add(0);
+                                var targetValue = kpiActuals.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                    .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                if (targetValue == null || !targetValue.HasValue)
+                                {
+                                    aSeries.Data.Add(0);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(targetValue.Value);
+                                }
                             }
-                            else
+                        }
+                        else
+                        {
+                            foreach (var periode in dateTimePeriodes)
                             {
-                                aSeries.Data.Add(target.Value.Value);
+                                var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
+                                if (target == null || !target.Value.HasValue)
+                                {
+                                    aSeries.Data.Add(0);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(target.Value.Value);
+                                }
                             }
                         }
                         seriesResponse.Add(aSeries);
@@ -577,16 +695,40 @@ namespace DSLNG.PEAR.Services
                             Name = series.Label,
                             Color = series.Color
                         };
-                        foreach (var periode in dateTimePeriodes)
+                        if (comparison)
                         {
-                            var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
-                            if (target == null || !target.Value.HasValue)
+                            aSeries.Stack = "KpiActual";
+                        }
+                        if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
+                        {
+
+                            foreach (var periode in dateTimePeriodes)
                             {
-                                aSeries.Data.Add(0);
+                                var targetValue = kpiActuals.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                    .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                if (targetValue == null || !targetValue.HasValue)
+                                {
+                                    aSeries.Data.Add(0);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(targetValue.Value);
+                                }
                             }
-                            else
+                        }
+                        else
+                        {
+                            foreach (var periode in dateTimePeriodes)
                             {
-                                aSeries.Data.Add(target.Value.Value);
+                                var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
+                                if (target == null || !target.Value.HasValue)
+                                {
+                                    aSeries.Data.Add(0);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(target.Value.Value);
+                                }
                             }
                         }
                         seriesResponse.Add(aSeries);
@@ -595,6 +737,10 @@ namespace DSLNG.PEAR.Services
                             Name = "Previous",
                             Color = "#004071"
                         };
+                        if (comparison)
+                        {
+                            previousSeries.Stack = "KpiActual";
+                        }
                         for (var i = 0; i < aSeries.Data.Count; i++)
                         {
                             double data = 0;
@@ -616,61 +762,199 @@ namespace DSLNG.PEAR.Services
                             Name = series.Label,
                             Color = string.IsNullOrEmpty(series.Color) ? "green" : series.Color
                         };
+                        if (comparison)
+                        {
+                            aSeries.Stack = "KpiActual";
+                        }
                         var remainSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
                             Name = "Remain",
                             Color = "red"
                         };
+                        if (comparison)
+                        {
+                            remainSeries.Stack = "KpiActual";
+                        }
                         var exceedSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
                             Name = "Exceed",
                             Color = "blue"
                         };
+                        if (comparison)
+                        {
+                            exceedSeries.Stack = "KpiActual";
+                        }
                         foreach (var periode in dateTimePeriodes)
                         {
-                            var actual = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
-                            var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
-                            if (actual == null || !actual.Value.HasValue)
+                            if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
                             {
-                                if (target == null || !target.Value.HasValue)
+                                var actual = kpiActuals.Where(x => x.Periode <= periode)
+                                    .GroupBy(x => x.Kpi)
+                                    .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                var target = kpiTargets.Where(x => x.Periode <= periode)
+                                    .GroupBy(x => x.Kpi)
+                                    .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+
+                                if (!actual.HasValue)
                                 {
-                                    exceedSeries.Data.Add(0);
-                                    remainSeries.Data.Add(0);
-                                    aSeries.Data.Add(0);
+                                    if (!target.HasValue)
+                                    {
+                                        exceedSeries.Data.Add(0);
+                                        remainSeries.Data.Add(0);
+                                        aSeries.Data.Add(0);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(0);
+                                        remainSeries.Data.Add(target.Value);
+                                        exceedSeries.Data.Add(0);
+                                    }
                                 }
-                                else {
-                                    aSeries.Data.Add(0);
-                                    remainSeries.Data.Add(target.Value.Value);
-                                    exceedSeries.Data.Add(0);
+                                else
+                                {
+                                    if (!target.HasValue)
+                                    {
+                                        aSeries.Data.Add(actual.Value);
+                                        remainSeries.Data.Add(0);
+                                        exceedSeries.Data.Add(actual.Value);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(actual.Value);
+                                        var remain = target.Value - actual.Value;
+                                        if (remain > 0)
+                                        {
+                                            remainSeries.Data.Add(remain);
+                                            exceedSeries.Data.Add(0);
+                                        }
+                                        else
+                                        {
+                                            exceedSeries.Data.Add(-remain);
+                                            remainSeries.Data.Add(0);
+                                        }
+                                    }
                                 }
                             }
                             else
                             {
-                                if (target == null || !target.Value.HasValue)
+                                var actual = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
+                                var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
+                                if (actual == null || !actual.Value.HasValue)
                                 {
-                                    aSeries.Data.Add(actual.Value.Value);
-                                    remainSeries.Data.Add(0);
-                                    exceedSeries.Data.Add(actual.Value.Value);
+                                    if (target == null || !target.Value.HasValue)
+                                    {
+                                        exceedSeries.Data.Add(0);
+                                        remainSeries.Data.Add(0);
+                                        aSeries.Data.Add(0);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(0);
+                                        remainSeries.Data.Add(target.Value.Value);
+                                        exceedSeries.Data.Add(0);
+                                    }
                                 }
                                 else
                                 {
-                                    aSeries.Data.Add(actual.Value.Value);
-                                    var remain = target.Value.Value - actual.Value.Value;
-                                    if (remain > 0)
+                                    if (target == null || !target.Value.HasValue)
                                     {
-                                        remainSeries.Data.Add(remain);
-                                        exceedSeries.Data.Add(0);
-                                    }
-                                    else {
-                                        exceedSeries.Data.Add(-remain);
+                                        aSeries.Data.Add(actual.Value.Value);
                                         remainSeries.Data.Add(0);
+                                        exceedSeries.Data.Add(actual.Value.Value);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(actual.Value.Value);
+                                        var remain = target.Value.Value - actual.Value.Value;
+                                        if (remain > 0)
+                                        {
+                                            remainSeries.Data.Add(remain);
+                                            exceedSeries.Data.Add(0);
+                                        }
+                                        else
+                                        {
+                                            exceedSeries.Data.Add(-remain);
+                                            remainSeries.Data.Add(0);
+                                        }
                                     }
                                 }
                             }
+
+
                         }
                         seriesResponse.Add(remainSeries);
                         seriesResponse.Add(exceedSeries);
                         seriesResponse.Add(aSeries);
+                    }
+                    else
+                    {
+                        var kpiTargets = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
+                             x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId)
+                             .OrderBy(x => x.Periode).ToList();
+                        var aSeries = new GetCartesianChartDataResponse.SeriesResponse
+                        {
+                            Name = series.Label,
+                            Color = series.Color
+                        };
+                        if (comparison)
+                        {
+                            aSeries.Stack = "KpiActual";
+                        }
+                        if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
+                        {
+
+                            foreach (var periode in dateTimePeriodes)
+                            {
+                                var targetValue = kpiActuals.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                    .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                if (targetValue == null || !targetValue.HasValue)
+                                {
+                                    aSeries.Data.Add(0);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(targetValue.Value);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var periode in dateTimePeriodes)
+                            {
+                                var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
+                                if (target == null || !target.Value.HasValue)
+                                {
+                                    aSeries.Data.Add(0);
+                                }
+                                else
+                                {
+                                    aSeries.Data.Add(target.Value.Value);
+                                }
+                            }
+                        }
+                        seriesResponse.Add(aSeries);
+                        if (graphicType == "baraccumulative")
+                        {
+                            var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
+                            {
+                                Name = "Previous",
+                                Color = "#004071"
+                            };
+                            if (comparison)
+                            {
+                                previousSeries.Stack = "KpiActual";
+                            }
+                            for (var i = 0; i < aSeries.Data.Count; i++)
+                            {
+                                double data = 0;
+                                for (var j = 0; j < i; j++)
+                                {
+                                    data += aSeries.Data[j];
+                                }
+                                previousSeries.Data.Add(data);
+                            }
+                            seriesResponse.Add(previousSeries);
+                        }
                     }
                 }
                 else
@@ -685,18 +969,43 @@ namespace DSLNG.PEAR.Services
                             var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
                                 Name = stack.Label,
-                                Stack = series.Label
+                                Stack = series.Label,
+                                Color = stack.Color
                             };
-                            foreach (var periode in dateTimePeriodes)
+                            if (comparison)
                             {
-                                var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
-                                if (target == null || !target.Value.HasValue)
+                                aSeries.Stack = "KpiActual";
+                            }
+                            if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
+                            {
+
+                                foreach (var periode in dateTimePeriodes)
                                 {
-                                    aSeries.Data.Add(0);
+                                    var targetValue = kpiTargets.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                        .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                    if (targetValue == null || !targetValue.HasValue)
+                                    {
+                                        aSeries.Data.Add(0);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(targetValue.Value);
+                                    }
                                 }
-                                else
+                            }
+                            else
+                            {
+                                foreach (var periode in dateTimePeriodes)
                                 {
-                                    aSeries.Data.Add(target.Value.Value);
+                                    var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
+                                    if (target == null || !target.Value.HasValue)
+                                    {
+                                        aSeries.Data.Add(0);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(target.Value.Value);
+                                    }
                                 }
                             }
                             seriesResponse.Add(aSeries);
@@ -706,18 +1015,43 @@ namespace DSLNG.PEAR.Services
 
                             var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                Name = series.Label
+                                Name = stack.Label,
+                                Color = stack.Color
                             };
-                            foreach (var periode in dateTimePeriodes)
+                            if (comparison)
                             {
-                                var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
-                                if (target == null || !target.Value.HasValue)
+                                aSeries.Stack = "KpiActual";
+                            }
+                            if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
+                            {
+
+                                foreach (var periode in dateTimePeriodes)
                                 {
-                                    aSeries.Data.Add(0);
+                                    var targetValue = kpiTargets.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                        .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
+                                    if (targetValue == null || !targetValue.HasValue)
+                                    {
+                                        aSeries.Data.Add(0);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(targetValue.Value);
+                                    }
                                 }
-                                else
+                            }
+                            else
+                            {
+                                foreach (var periode in dateTimePeriodes)
                                 {
-                                    aSeries.Data.Add(target.Value.Value);
+                                    var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
+                                    if (target == null || !target.Value.HasValue)
+                                    {
+                                        aSeries.Data.Add(0);
+                                    }
+                                    else
+                                    {
+                                        aSeries.Data.Add(target.Value.Value);
+                                    }
                                 }
                             }
                             seriesResponse.Add(aSeries);
@@ -739,21 +1073,35 @@ namespace DSLNG.PEAR.Services
             foreach (var seriesReq in request.Series)
             {
                 var series = seriesReq.MapTo<ArtifactSerie>();
-                var kpi = new Kpi { Id = seriesReq.KpiId };
-                if (DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault() == null)
+                if (seriesReq.KpiId != 0)
                 {
-                    DataContext.Kpis.Attach(kpi);
+                    var kpi = new Kpi { Id = seriesReq.KpiId };
+                    if (DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault() == null)
+                    {
+                        DataContext.Kpis.Attach(kpi);
+                    }
+                    else
+                    {
+                        kpi = DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault();
+                    }
+                    series.Kpi = kpi;
                 }
-                series.Kpi = kpi;
                 foreach (var stackReq in seriesReq.Stacks)
                 {
                     var stack = stackReq.MapTo<ArtifactStack>();
-                    var kpiInStack = new Kpi { Id = stackReq.KpiId };
-                    if (DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault() == null)
+                    if (stackReq.KpiId != 0)
                     {
-                        DataContext.Kpis.Attach(kpiInStack);
+                        var kpiInStack = new Kpi { Id = stackReq.KpiId };
+                        if (DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault() == null)
+                        {
+                            DataContext.Kpis.Attach(kpiInStack);
+                        }
+                        else
+                        {
+                            kpiInStack = DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault();
+                        }
+                        stack.Kpi = kpiInStack;
                     }
-                    stack.Kpi = kpiInStack;
                     series.Stacks.Add(stack);
                 }
                 artifact.Series.Add(series);

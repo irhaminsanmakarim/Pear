@@ -33,6 +33,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             {
                 Stacks = new List<StackResponse>();
             }
+            public string Color { get; set; }
             public int KpiId { get; set; }
             public string Label { get; set; }
             public ValueAxis ValueAxis { get; set; }
@@ -40,6 +41,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         }
         public class StackResponse
         {
+            public string Color { get; set; }
             public int KpiId { get; set; }
             public string Label { get; set; }
         }
