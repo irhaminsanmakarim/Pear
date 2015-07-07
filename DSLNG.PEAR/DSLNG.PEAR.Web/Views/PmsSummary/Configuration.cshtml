@@ -4,12 +4,23 @@
 }
 
 @Html.Partial("_MessageResponse")
-<h3 style="display: inline">Pms Summary Configuration</h3>
-<a href="@Url.Action("Create")" class="btn btn-default btn-darkblue pull-right" data-toggle="modal" data-target="#modalDialog" style="margin-bottom: 8px;">Add Pms Summary</a>
-<hr/>
 
+<div class="title_page" style="border:none!important;">
+    <div class="row">
 
-<table class="table table-striped table-bordered table-responsive">
+        <div class="title">PMS Summary Configuration</div>
+
+    </div>
+    <div class="row">
+
+        <a href="@Url.Action("Create")" class="text-button" data-toggle="modal" data-target="#modalDialog">
+            <span class="fa fa-plus-circle"></span>
+            Add PMS Summary
+        </a>
+    </div>
+</div>
+
+<table class="table table-striped table-bordered table-responsive table-hover">
     <thead>
         <tr>
             <th rowspan="2">No</th>
@@ -25,7 +36,7 @@
     </thead>
     <tbody>
         @{
-            int i = 0;   
+            int i = 0;
         }
         @foreach (var item in Model.CorporatePortofolios)
         {
@@ -34,12 +45,20 @@
                 <td>@i</td>
                 <td>@item.Year</td>
                 <td>@item.Title</td>
-                <td>@Html.ActionLink("Details", "Details", "PmsSummary", new { id = item.Id }, null)</td>
-                <td>@Html.ActionLink("Details", "Update", "KpiTarget", new {id = item.Id}, null)</td>
-                <td>@Html.ActionLink("Details", "Update", "KpiAchievement", new { id = item.Id }, null)</td>
+                <td class="text-button">
+                    <a href="@Url.Action("Details", "PmsSummary", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
+                </td>
+                <td class="text-button">
+                    <a href="@Url.Action("Update", "KpiTarget", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
+                </td>
+                <td class="text-button">
+                    <a href="@Url.Action("Update", "KpiAchievement", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
+                </td>
                 <td>@*@Html.ActionLink("Details", "Details", "CorporatePortofolio", new { id = item.Id })*@ Details</td>
                 <td>@item.IsActive</td>
-                <td>@Html.ActionLink("Edit", "Update", "PmsSummary", new {id = item.Id}, new {data_toggle="modal", data_target="#modalDialog"})</td>
+                <td class="text-button">
+                    <a href="@Url.Action("Update", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-pencil-square-o"></span>Edit</a>
+                </td>
             </tr>
         }
     </tbody>
