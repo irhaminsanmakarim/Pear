@@ -40,6 +40,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.PmsSummaries = response.KpiDatas.MapTo<PmsSummaryViewModel>();
                 viewModel.Year = request.Year;
                 viewModel.Month = request.Month;
+                viewModel.Title = response.Title;
+                viewModel.YearList = _dropdownService.GetYearsForPmsSummary().MapTo<SelectListItem>();
                 return View(viewModel);    
             }
 

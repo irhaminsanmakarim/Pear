@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
         }
 
         public IList<KpiData> KpiDatas { get; set; }
+        public string Title { get; set; }
 
         public class KpiData
         {

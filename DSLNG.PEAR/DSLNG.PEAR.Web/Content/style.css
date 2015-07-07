@@ -627,9 +627,8 @@ th
     padding: 4px;
 }
 
-.btn-large
-{
-/*a:hover.btn-darkblue {*/
+
+a:hover.btn-darkblue {
     background-color: #febe10;
     color: white;
 }
@@ -690,19 +689,6 @@ a:hover.btn-lightblue {
             -o-transition: all .3s ease;
             transition: all .3s ease;
         }
-
-a:hover.btn-darkblue {
-/*a:hover.btn-darkblue
-{*/
-    background-color: #febe10;
-    color: white;
-}
-
-a:hover.btn-lightblue
-{
-    background-color: #febe10;
-    color: white;
-}
 
 .btn-lightblue
 {
@@ -824,6 +810,24 @@ h2
 hr {
     border-top: 1px solid #ccc;
 }
+
+.labletop {width:auto!important;}
+
+.blue-box
+{
+
+   margin:20px;
+    width:30%;
+    float:left;
+    height:150px;
+    background-color: white;
+    padding:14px;
+
+}
+.closeblue
+{opacity:1;color:#004071;  text-shadow: 0 1px 0 black;}
+
+.padding-top{padding-top:9%;}
 
 .row-full {
     margin: 0;

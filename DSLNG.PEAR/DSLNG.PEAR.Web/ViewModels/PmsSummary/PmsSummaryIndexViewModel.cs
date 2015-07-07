@@ -9,6 +9,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 {
     public class PmsSummaryIndexViewModel
     {
+        public string Title { get; set; }
         public int Year { get; set; }
         public int Month { get; set; }
         public IEnumerable<PmsSummaryViewModel> PmsSummaries { get; set; }
@@ -27,21 +28,6 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
                    });
             }
         }
-        public IEnumerable<SelectListItem> YearList
-        {
-            get
-            {
-                var years = new List<int>();
-                for (int i = 0; i <= 5; i++)
-                {
-                    years.Add(DateTime.Now.AddYears(-i).Year);
-                }
-                return years.Select(x => new SelectListItem
-                    {
-                        Value = x.ToString(),
-                        Text = x.ToString()
-                    });
-            }
-        }
+        public IEnumerable<SelectListItem> YearList { get; set; }
     }
 }

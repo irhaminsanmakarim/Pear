@@ -15,7 +15,7 @@
             <div class="form-group"
                 style="margin: 5px 40px 0px 25px; padding-right: 30px;">
                 <label>Period :</label>
-                @Html.DropDownListFor(x => x.PeriodeType, Model.PeriodeTypes, new {@class="form-control", id="periodeType"})
+                @Html.DropDownListFor(x => x.PeriodeType, Model.PeriodeTypes, new { @class = "form-control", id = "periodeType" })
                 <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none"></img>
             </div>
         </form>
@@ -30,9 +30,13 @@
         <div class="update-content">
             @Html.Partial(Model.ViewName, Model)
         </div>
-
-        <button type="submit" class="btn btn-default">Submit</button>
-        <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+        <div class="col-md-12">
+            <div class="centering margin">
+                <hr style="margin-bottom: 60px;">
+                <a href="javascript:;" onclick="$(this).closest('form').submit()" class="btn-darkblue btn-large"><span class="fa fa-floppy-o"></span>Save</a>
+                <a href="@Url.Action("Configuration", "PmsSummary", new {id = Model.PmsSummaryId})" data-dismiss="modal" aria-label="Close" class="btn-darkblue btn-large"><span class="fa fa-times"></span>Cancel</a>
+            </div>
+        </div>
     </form>
 </div>
 
@@ -46,20 +50,20 @@
             console.log('sini' + val);
             $.ajax({
                 url: '@Url.Action("UpdatePartial")',
-                    type: 'GET',
-                    data: { id: '@Model.PmsSummaryId', periodeType: val },
+                type: 'GET',
+                data: { id: '@Model.PmsSummaryId', periodeType: val },
                     beforeSend: function () {
                         $('.ajax-loader2').show();
                         $('.content-wrapper').hide();
                     }
-                })
+            })
                 .done(function (data) {
                     $('.ajax-loader2').hide();
                     $('.update-content').html(data);
                     $('.content-wrapper').show();
                 });
-            });
-        })
+        });
+    })
 </script>
 
 
