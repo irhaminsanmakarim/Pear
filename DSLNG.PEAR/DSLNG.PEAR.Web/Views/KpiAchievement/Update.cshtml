@@ -1,7 +1,8 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.KpiTarget.UpdateKpiTargetViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.KpiAchievement.UpdateKpiAchievementsViewModel
 
 @{
-    ViewBag.Title = "Update Kpi Targets";
+    ViewBag.Title = "Update Kpi Achievements";
+    
 }
 @Html.Partial("_MessageResponse")
 <section>
@@ -43,7 +44,6 @@
     $(document).ready(function () {
         $('#periodeType').change(function () {
             var val = $(this).val();
-            console.log('sini' + val);
             $.ajax({
                 url: '@Url.Action("UpdatePartial")',
                     type: 'GET',

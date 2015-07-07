@@ -264,6 +264,7 @@
     <Content Include="Content\img\active.png" />
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\ajax-loader1.gif" />
+    <Content Include="Content\img\ajax-loader2.gif" />
     <Content Include="Content\img\bg.jpg" />
     <Content Include="Content\img\graphic1.jpg" />
     <Content Include="Content\img\graphic2.png" />
@@ -513,6 +514,10 @@
     <Content Include="Views\Shared\_ScoringIndicator.cshtml" />
     <Content Include="Views\KpiTarget\Update.cshtml" />
     <Content Include="Views\KpiTarget\_Yearly.cshtml" />
+    <Content Include="Views\KpiTarget\_Monthly.cshtml" />
+    <Content Include="Views\KpiAchievement\_Monthly.cshtml" />
+    <Content Include="Views\KpiAchievement\_Yearly.cshtml" />
+    <Content Include="Views\KpiAchievement\Update.cshtml" />
     <None Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
@@ -591,6 +596,7 @@
     <Compile Include="Controllers\CorporatePortofolioController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KpiAchievementController.cs" />
     <Compile Include="Controllers\KpiTargetController.cs" />
     <Compile Include="Controllers\LevelController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
@@ -629,6 +635,8 @@
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\Measurement.cs" />
     <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\KpiAchievementsViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\UpdateKpiAchievementsViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />

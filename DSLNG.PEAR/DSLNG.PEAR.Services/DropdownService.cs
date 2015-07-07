@@ -186,5 +186,14 @@ namespace DSLNG.PEAR.Services
                 Value = x.Id.ToString()
             }).ToList();
         }
+
+        public IEnumerable<Dropdown> GetPeriodeTypesForKpiTargetAndAchievement()
+        {
+            return new List<Dropdown>()
+                {
+                    new Dropdown {Text = PeriodeType.Monthly.ToString(), Value = PeriodeType.Monthly.ToString()},
+                    new Dropdown {Text = PeriodeType.Yearly.ToString(), Value = PeriodeType.Yearly.ToString()}
+                };
+        }
     }
 }

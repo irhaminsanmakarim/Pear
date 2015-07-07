@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DSLNG.PEAR.Data.Enums;
 
-namespace DSLNG.PEAR.Services.Responses.KpiTarget
+namespace DSLNG.PEAR.Services.Responses.KpiAchievement
 {
-    public class GetTargetResponse : BaseResponse
+    public class GetKpiAchievementsResponse : BaseResponse
     {
-        public GetTargetResponse()
+        public GetKpiAchievementsResponse()
         {
             Pillars = new List<Pillar>();
         }
@@ -31,17 +27,17 @@ namespace DSLNG.PEAR.Services.Responses.KpiTarget
         {
             public Kpi()
             {
-                KpiTargets = new List<KpiTarget>();
+                KpiAchievements = new List<KpiAchievement>();
             }
             public int Id { get; set; }
             public string Name { get; set; }
             public string Measurement { get; set; }
             public string Remark { get; set; }
 
-            public IList<KpiTarget> KpiTargets { get; set; }
+            public IList<KpiAchievement> KpiAchievements { get; set; }
         }
 
-        public class KpiTarget
+        public class KpiAchievement
         {
             public int Id { get; set; }
             public DateTime Periode { get; set; }

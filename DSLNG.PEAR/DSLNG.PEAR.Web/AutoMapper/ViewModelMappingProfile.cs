@@ -3,8 +3,10 @@ using System.Web.Mvc;
 using AutoMapper;
 using DSLNG.PEAR.Services.Common.PmsSummary;
 using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
+using DSLNG.PEAR.Services.Responses.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Measurement;
 using DSLNG.PEAR.Services.Responses.PmsSummary;
@@ -15,6 +17,7 @@ using DSLNG.PEAR.Web.ViewModels.Common.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.Kpi;
 using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Services.Requests.Menu;
+using DSLNG.PEAR.Web.ViewModels.KpiAchievement;
 using DSLNG.PEAR.Web.ViewModels.Level;
 using DSLNG.PEAR.Web.ViewModels.Measurement;
 using DSLNG.PEAR.Web.ViewModels.Menu;
@@ -57,6 +60,7 @@ using DSLNG.PEAR.Services.Requests.Conversion;
 using DSLNG.PEAR.Services.Responses.Conversion;
 using DSLNG.PEAR.Web.ViewModels.Conversion;
 using DSLNG.PEAR.Services.Responses.KpiTarget;
+using Kpi = DSLNG.PEAR.Web.ViewModels.KpiTarget.Kpi;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -67,6 +71,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureCorporatePortofolio();
             ConfigurePmsSummary();
             ConfigureKpiTarget();
+            ConfigureKpiAchievement();
 
             Mapper.CreateMap<Dropdown, SelectListItem>();
             Mapper.CreateMap<SearchKpiViewModel, GetKpiToSeriesRequest>();
@@ -294,15 +299,28 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPmsConfigsResponse.Kpi, Kpi>()
                 .ForMember(k => k.Unit, o => o.MapFrom(k => k.Measurement.Name));
             
-            Mapper.CreateMap<GetTargetResponse, UpdateKpiTargetViewModel>();
-            Mapper.CreateMap<GetTargetResponse.Kpi, UpdateKpiTargetViewModel.Kpi>();
-            Mapper.CreateMap<GetTargetResponse.KpiTarget, UpdateKpiTargetViewModel.KpiTarget>();
-            Mapper.CreateMap<GetTargetResponse.Pillar, UpdateKpiTargetViewModel.Pillar>();
+            Mapper.CreateMap<GetKpiTargetResponse, UpdateKpiTargetViewModel>();
+            Mapper.CreateMap<GetKpiTargetResponse.Kpi, UpdateKpiTargetViewModel.Kpi>();
+            Mapper.CreateMap<GetKpiTargetResponse.KpiTarget, UpdateKpiTargetViewModel.KpiTarget>();
+            Mapper.CreateMap<GetKpiTargetResponse.Pillar, UpdateKpiTargetViewModel.Pillar>();
 
             Mapper.CreateMap<UpdateKpiTargetViewModel, UpdateKpiTargetRequest>();
             Mapper.CreateMap<UpdateKpiTargetViewModel.Kpi, UpdateKpiTargetRequest.Kpi>();
             Mapper.CreateMap<UpdateKpiTargetViewModel.KpiTarget, UpdateKpiTargetRequest.KpiTarget>();
             Mapper.CreateMap<UpdateKpiTargetViewModel.Pillar, UpdateKpiTargetRequest.Pillar>();
+        }
+
+        private void ConfigureKpiAchievement()
+        {
+            Mapper.CreateMap<GetKpiAchievementsResponse, UpdateKpiAchievementsViewModel>();
+            Mapper.CreateMap<GetKpiAchievementsResponse.Kpi, UpdateKpiAchievementsViewModel.Kpi>();
+            Mapper.CreateMap<GetKpiAchievementsResponse.KpiAchievement, UpdateKpiAchievementsViewModel.KpiAchievement>();
+            Mapper.CreateMap<GetKpiAchievementsResponse.Pillar, UpdateKpiAchievementsViewModel.Pillar>();
+
+            Mapper.CreateMap<UpdateKpiAchievementsViewModel, UpdateKpiAchievementsRequest>();
+            Mapper.CreateMap<UpdateKpiAchievementsViewModel.Kpi, UpdateKpiAchievementsRequest.Kpi>();
+            Mapper.CreateMap<UpdateKpiAchievementsViewModel.KpiAchievement, UpdateKpiAchievementsRequest.KpiAchievement>();
+            Mapper.CreateMap<UpdateKpiAchievementsViewModel.Pillar, UpdateKpiAchievementsRequest.Pillar>();
         }
     }
 }
