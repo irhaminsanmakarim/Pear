@@ -546,6 +546,7 @@
     <Content Include="Views\Template\_IndexGridPartial.cshtml" />
     <Content Include="Views\Template\Index.cshtml" />
     <Content Include="Views\Template\View.cshtml" />
+    <Content Include="Views\PmsSummary\_ScoreIndicatorDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
