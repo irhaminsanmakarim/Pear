@@ -13,11 +13,13 @@ namespace DSLNG.PEAR.Web.ViewModels.Template
         public IList<RowViewModel> LayoutRows { get; set; }
 
         public class RowViewModel {
+            public int Id { get; set; }
             public int Index { get; set; }
             public IList<ColumnViewModel> LayoutColumns {get;set;}
         }
 
         public class ColumnViewModel {
+            public int Id { get; set; }
             public int Index { get; set; }
             public float Width { get; set; }
             public float Height { get; set; }

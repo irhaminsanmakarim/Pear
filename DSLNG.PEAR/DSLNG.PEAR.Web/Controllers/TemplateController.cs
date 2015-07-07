@@ -5,6 +5,7 @@ using DSLNG.PEAR.Services.Requests.Template;
 using DSLNG.PEAR.Web.ViewModels.Template;
 using DSLNG.PEAR.Common.Extensions;
 using System.Web.Mvc;
+using DevExpress.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -28,12 +29,64 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             return View();
         }
+        public ActionResult IndexPartial()
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridTemplateIndex");
+            if (viewModel == null)
+                viewModel = CreateGridViewModel();
+            return BindingCore(viewModel);
+        }
+
+        PartialViewResult BindingCore(GridViewModel gridViewModel)
+        {
+            gridViewModel.ProcessCustomBinding(
+                GetDataRowCount,
+                GetData
+            );
+            return PartialView("_IndexGridPartial", gridViewModel);
+        }
+
+        static GridViewModel CreateGridViewModel()
+        {
+            var viewModel = new GridViewModel();
+            viewModel.KeyFieldName = "Id";
+            viewModel.Columns.Add("Name");
+            viewModel.Columns.Add("Remark");
+            viewModel.Pager.PageSize = 10;
+            return viewModel;
+        }
+
+        public ActionResult PagingAction(GridViewPagerState pager)
+        {
+            var viewModel = GridViewExtension.GetViewModel("gridTemplateIndex");
+            viewModel.ApplyPagingState(pager);
+            return BindingCore(viewModel);
+        }
+
+        public void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e)
+        {
+
+            e.DataRowCount = _templateService.GetTemplates(new GetTemplatesRequest { OnlyCount = true }).Count;
+        }
+
+        public void GetData(GridViewCustomBindingGetDataArgs e)
+        {
+            e.Data = _templateService.GetTemplates(new GetTemplatesRequest
+            {
+                Skip = e.StartDataRowIndex,
+                Take = e.DataRowCount
+            }).Artifacts;
+        }
+
 
         //
         // GET: /Template/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+        public ActionResult View(int id)
+        { 
+            //var template = _templateService
+            var template = _templateService.GetTemplate(new GetTemplateRequest{Id = id});
+            var viewModel = template.MapTo<TemplateViewModel>();
+            return View(viewModel);
         }
 
         //

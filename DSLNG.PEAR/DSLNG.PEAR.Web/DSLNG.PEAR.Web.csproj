@@ -543,6 +543,9 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Template\Create.cshtml" />
     <Content Include="Views\PmsSummary\_Graph.cshtml" />
+    <Content Include="Views\Template\_IndexGridPartial.cshtml" />
+    <Content Include="Views\Template\Index.cshtml" />
+    <Content Include="Views\Template\View.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

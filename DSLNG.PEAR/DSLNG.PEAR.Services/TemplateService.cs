@@ -32,7 +32,8 @@ namespace DSLNG.PEAR.Services
                     if (col.ArtifactId != 0) {
                         if (DataContext.Artifacts.Local.Where(x => x.Id == col.ArtifactId).FirstOrDefault() == null)
                         {
-                            var artifact = new Artifact { Id = col.ArtifactId };
+                            var artifact = new Artifact { Id = col.ArtifactId,GraphicType="Unchanged",GraphicName="Unchanged", HeaderTitle="Unchanged"};
+                            //DataContext.Entry(artifact).State = EntityState.Unchanged;
                             DataContext.Artifacts.Attach(artifact);
                             LayoutColumn.Artifact = artifact;
                         }
@@ -50,6 +51,32 @@ namespace DSLNG.PEAR.Services
             DataContext.DashboardTemplates.Add(template);
             DataContext.SaveChanges();
             return new CreateTemplateResponse();
+        }
+
+        public GetTemplatesResponse GetTemplates(GetTemplatesRequest request) {
+
+            if (request.OnlyCount)
+            {
+                return new GetTemplatesResponse { Count = DataContext.DashboardTemplates.Count() };
+            }
+            else
+            {
+                return new GetTemplatesResponse
+                {
+                    Artifacts = DataContext.DashboardTemplates.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take)
+                                    .ToList().MapTo<GetTemplatesResponse.TemplateResponse>()
+                };
+            }
+        }
+
+
+
+        public GetTemplateResponse GetTemplate(GetTemplateRequest request)
+        {
+            return DataContext.DashboardTemplates.Include(x => x.LayoutRows)
+                .Include(x => x.LayoutRows.Select(y => y.LayoutColumns))
+                .Include(x => x.LayoutRows.Select(y => y.LayoutColumns.Select(z => z.Artifact)))
+                .FirstOrDefault(x => x.Id == request.Id).MapTo<GetTemplateResponse>();
         }
     }
 }

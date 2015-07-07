@@ -161,21 +161,18 @@ namespace DSLNG.PEAR.Web.Controllers
             var previewViewModel = new ArtifactPreviewViewModel();
             artifactDesignerViewModel.BarChart.Series.Add(new BarChartViewModel.SeriesViewModel
             {
-                Color = "green",
                 KpiId = viewModel.Id,
                 Label = "Achievement",
                 ValueAxis = ValueAxis.KpiActual.ToString()
             });
 
              var request = new GetCartesianChartDataRequest();
-            request.GraphicName = "Test";
+            request.GraphicName = "Yearly";
             request.GraphicType = "barachievement";
-            request.HeaderTitle = "test lala";
+            request.HeaderTitle = "Yearly";
             request.MeasurementId = viewModel.MeasurementId;
             request.PeriodeType = PeriodeType.Yearly;
             request.RangeFilter = RangeFilter.CurrentYear;
-            //request.Start = new DateTime(viewModel.Year, 1, 1);
-            //request.End = new DateTime(viewModel.Year, viewModel.Month, 1);
             request.ValueAxis = ValueAxis.KpiActual;
 
             artifactDesignerViewModel.BarChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(request);
@@ -187,44 +184,80 @@ namespace DSLNG.PEAR.Web.Controllers
             previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
             previewViewModel.BarChart.Periodes = chartData.Periodes;
             previewViewModel.BarChart.SeriesType = chartData.SeriesType;
-            return Json(previewViewModel);
+            return Json(previewViewModel, JsonRequestBehavior.AllowGet);
         }
 
-        //public ActionResult ChartMonthly(ViewModels.PmsSummary.ChartViewModel viewModel)
-        //{
-        //    var previewViewModel = new ArtifactPreviewViewModel();
-        //    var artifactDesignerViewModel = new ArtifactDesignerViewModel();
-        //    artifactDesignerViewModel.BarChart.Series.Add(new BarChartViewModel.SeriesViewModel
-        //        {
-        //            Color = "green",
-        //            KpiId = viewModel.Id,
-        //            Label = "Achievement",
-        //            ValueAxis = ValueAxis.KpiActual.ToString()
-        //        });
+        public ActionResult ChartMonthly(ViewModels.PmsSummary.ChartViewModel viewModel)
+        {
+            var artifactDesignerViewModel = new ArtifactDesignerViewModel();
+            artifactDesignerViewModel.BarChart = new BarChartViewModel();
+            var previewViewModel = new ArtifactPreviewViewModel();
+            artifactDesignerViewModel.BarChart.Series.Add(new BarChartViewModel.SeriesViewModel
+            {
+                KpiId = viewModel.Id,
+                Label = "Achievement",
+                ValueAxis = ValueAxis.KpiActual.ToString()
+            });
 
-           
-        //    request.Series.Add(new GetCartesianChartDataRequest.SeriesRequest()
-        //        {
-                    
-        //        });
+            var request = new GetCartesianChartDataRequest();
+            request.GraphicName = "Monthly";
+            request.GraphicType = "barachievement";
+            request.HeaderTitle = "Monthly";
+            request.MeasurementId = viewModel.MeasurementId;
+            request.PeriodeType = PeriodeType.Monthly;
+            request.RangeFilter = RangeFilter.Interval;
+            request.Start = new DateTime(viewModel.Year, 1, 1);
+            request.End = new DateTime(viewModel.Year, 12, 1);
+            request.ValueAxis = ValueAxis.KpiActual;
 
-        //    return Content("asass");
+            artifactDesignerViewModel.BarChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(request);
+            var chartData = _artifactService.GetChartData(request);
+            previewViewModel.GraphicType = "barachievement";
+            previewViewModel.BarChart = new BarChartDataViewModel();
+            previewViewModel.BarChart.Title = "Monthly";
+            previewViewModel.BarChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+            previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
+            previewViewModel.BarChart.Periodes = chartData.Periodes;
+            previewViewModel.BarChart.SeriesType = chartData.SeriesType;
+            return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+        }
 
+        public ActionResult ChartYtd(ViewModels.PmsSummary.ChartViewModel viewModel)
+        {
+            var artifactDesignerViewModel = new ArtifactDesignerViewModel();
+            artifactDesignerViewModel.BarChart = new BarChartViewModel();
+            var previewViewModel = new ArtifactPreviewViewModel();
+            artifactDesignerViewModel.BarChart.Series.Add(new BarChartViewModel.SeriesViewModel
+            {
+                KpiId = viewModel.Id,
+                Label = "Achievement",
+                ValueAxis = ValueAxis.KpiActual.ToString()
+            });
 
+            var request = new GetCartesianChartDataRequest();
+            request.GraphicName = "Year To Date";
+            request.GraphicType = "barachievement";
+            request.HeaderTitle = "Year To Date";
+            request.MeasurementId = viewModel.MeasurementId;
+            request.PeriodeType = PeriodeType.Monthly;
+            request.RangeFilter = RangeFilter.YTD;
+            request.Start = new DateTime(viewModel.Year, 1, 1);
+            request.End = new DateTime(viewModel.Year, 12, 1);
+            request.ValueAxis = ValueAxis.KpiActual;
 
-        //    //var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
-        //    //            viewModel.BarChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(cartesianRequest);
-        //    //            var chartData = _artifactServie.GetChartData(cartesianRequest);
-        //    //            previewViewModel.GraphicType = viewModel.GraphicType;
-        //    //            previewViewModel.BarChart = new BarChartDataViewModel();
-        //    //            previewViewModel.BarChart.Title = viewModel.HeaderTitle;
-        //    //            previewViewModel.BarChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
-        //    //            previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
-        //    //            previewViewModel.BarChart.Periodes = chartData.Periodes;
-        //    //            previewViewModel.BarChart.SeriesType = chartData.SeriesType;
-        //    //        }
-        //}
+            artifactDesignerViewModel.BarChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(request);
+            var chartData = _artifactService.GetChartData(request);
+            previewViewModel.GraphicType = "barachievement";
+            previewViewModel.BarChart = new BarChartDataViewModel();
+            previewViewModel.BarChart.Title = "Year To Date";
+            previewViewModel.BarChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+            previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
+            previewViewModel.BarChart.Periodes = chartData.Periodes;
+            previewViewModel.BarChart.SeriesType = chartData.SeriesType;
+            return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+        }
 
+        
         private IEnumerable<PmsSummaryViewModel> AddFakePmsSummaryData()
         {
             IList<PmsSummaryViewModel> list = new List<PmsSummaryViewModel>();

@@ -117,6 +117,16 @@
                 }
             </div>
             <div role="tabpanel" class="tab-pane" id="graphchart">
+                <div class="layout-column" style="width:100%;">
+                    <div class="whitebox artifact-holder" style="height:300px;" data-artifact-url="@Url.Action("ChartYearly", "PmsSummary", new { id=Model.KpiId, measurementId= Model.MeasurementId, year= Model.Year, month= Model.MonthInt })">
+                    </div>
+                    
+                    <div class="whitebox artifact-holder" style="height:300px;" data-artifact-url="@Url.Action("ChartMonthly", "PmsSummary", new { id=Model.KpiId, measurementId= Model.MeasurementId, year= Model.Year, month= Model.MonthInt })">
+                    </div>
+                    
+                    <div class="whitebox artifact-holder" style="height:300px;" data-artifact-url="@Url.Action("ChartYtd", "PmsSummary", new { id=Model.KpiId, measurementId= Model.MeasurementId, year= Model.Year, month= Model.MonthInt })">
+                    </div>
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="remark">
 
@@ -164,12 +174,19 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#chart').click(function () {
-            $.ajax({
-                url: "@Url.Action("ChartYearly")",
-                data: {id: "@Model.KpiId", measurementId: "@Model.MeasurementId", year: "@Model.Year", month: "@Model.MonthInt"}
-            })
-            .done(function () {
-
+            $('.artifact-holder').each(function (i, val) {
+                var $holder = $(val);
+                var url = $holder.data('artifact-url');
+                var callback = Pear.Artifact.Designer._previewCallbacks;
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    success: function (data) {
+                        if (callback.hasOwnProperty(data.GraphicType)) {
+                            callback[data.GraphicType](data, $holder);
+                        }
+                    }
+                });
             });
         });
     });

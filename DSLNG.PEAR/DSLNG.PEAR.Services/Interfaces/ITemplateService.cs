@@ -7,5 +7,7 @@ namespace DSLNG.PEAR.Services.Interfaces
     public interface ITemplateService
     {
         CreateTemplateResponse CreateTemplate(CreateTemplateRequest request);
+        GetTemplatesResponse GetTemplates(GetTemplatesRequest request);
+        GetTemplateResponse GetTemplate(GetTemplateRequest request);
     }
 }
