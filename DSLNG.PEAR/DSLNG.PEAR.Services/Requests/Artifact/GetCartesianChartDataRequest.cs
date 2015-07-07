@@ -10,7 +10,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public string GraphicType { get; set; }
         public string GraphicName { get; set; }
         public string HeaderTitle { get; set; }
-        public string MeasurementId { get; set; }
+        public int MeasurementId { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public PeriodeType PeriodeType { get; set; }

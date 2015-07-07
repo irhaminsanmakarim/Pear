@@ -542,6 +542,7 @@
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Template\Create.cshtml" />
+    <Content Include="Views\PmsSummary\_Graph.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -643,6 +644,7 @@
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\CreatePmsConfigViewModel.cs" />
+    <Compile Include="ViewModels\PmsSummary\ChartViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\CreatePmsSummaryViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryConfigurationViewModel.cs" />
     <Compile Include="ViewModels\PmsSummary\PmsSummaryDetailsViewModel.cs" />

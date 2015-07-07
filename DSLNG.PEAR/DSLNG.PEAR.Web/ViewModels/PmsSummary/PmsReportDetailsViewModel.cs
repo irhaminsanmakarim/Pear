@@ -10,10 +10,13 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         public string Title { get; set; }
         public int Year { get; set; }
         public string Month { get; set; }
+        public int MonthInt { get; set; }
         public string KpiTypeYearly { get; set; }
         public string KpiPeriodYearly { get; set; }
         public string KpiRemarkYearly { get; set; }
         public string KpiGroup { get; set; }
+        public int KpiId { get; set; }
+        public int MeasurementId { get; set; }
         public string KpiName { get; set; }
         public string KpiUnit { get; set; }
         public string KpiPeriod { get; set; }

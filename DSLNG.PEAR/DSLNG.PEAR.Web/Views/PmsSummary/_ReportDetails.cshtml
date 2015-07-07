@@ -29,7 +29,7 @@
                 </a>
             </li>
             <li role="presentation">
-                <a href="#graphchart" aria-controls="home" role="tab" data-toggle="tab">
+                <a href="#graphchart" aria-controls="home" role="tab" data-toggle="tab" id="chart">
                     <div class="fa fa-bar-chart-o"></div>
                     <div>Graph Chart</div>
                 </a>
@@ -80,110 +80,43 @@
             </div>
 
             <div role="tabpanel" class="tab-pane" id="clausalmodel">
-               @if (Model.KpiRelations.Count > 0)
-               {
-                <table class="table table-striped table-bordered table-responsive">
-                    <thead>
-                        <tr>
-                            <th rowspan="2">Performance Indicator</th>
-                            <th rowspan="2">Unit</th>
+                @if (Model.KpiRelations.Count > 0)
+                {
+                    <table class="table table-striped table-bordered table-responsive">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Performance Indicator</th>
+                                <th rowspan="2">Unit</th>
 
-                            <th rowspan="2">Relation Model</th>
+                                <th rowspan="2">Relation Model</th>
 
-                            <th colspan="2">Actual</th>
-                        </tr>
-                        <tr>
-                            <th class="index">Yearly</th>
-                            <th class="index">Monthly</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.KpiRelations)
-                        {
-                            <tr data-toggle="modal" data-target="#ModalFatality">
-                                <td>@item.Name</td>
-                                <td>@item.Unit</td>
-                                <td>@item.Method</td>
-                                <td>@item.ActualYearly</td>
-                                <td>@item.ActualMonthly</td>
+                                <th colspan="2">Actual</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-               }
-               else
-               {
+                            <tr>
+                                <th class="index">Yearly</th>
+                                <th class="index">Monthly</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.KpiRelations)
+                            {
+                                <tr data-toggle="modal" data-target="#ModalFatality">
+                                    <td>@item.Name</td>
+                                    <td>@item.Unit</td>
+                                    <td>@item.Method</td>
+                                    <td>@item.ActualYearly</td>
+                                    <td>@item.ActualMonthly</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
                     <span>No Kpi Relation.</span>
-               }
+                }
             </div>
             <div role="tabpanel" class="tab-pane" id="graphchart">
-
-                <div class="btn-group btn-more">
-                    <button type="button" class="dropdown-toggle icon_more" data-toggle="dropdown"
-                            aria-expanded="false">
-                        <span class="fa fa-bars"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#"><span class="fa fa-print"></span>Print Chart</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#"><span class="fa fa-bar-chart-o"></span>View Tabular</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#"><span class="fa fa-file-image-o"></span>Download PNG Image</a></li>
-                        <li><a href="#"><span class="fa fa-file-image-o"></span>Download JPEG Image</a></li>
-                        <li><a href="#"><span class="fa fa-file-pdf-o"></span>Download PDF Document</a></li>
-                        <li><a href="#"><span class="fa fa-file-text-o"></span>Download SVG Vector Image</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="description_year">Yearly</div>
-                <div class="content_tab">
-                    <img src="@Url.Content("~/Content/img/graphic8.PNG")" />
-                </div>
-                <hr>
-
-                <div class="btn-group btn-more">
-                    <button type="button" class="dropdown-toggle icon_more" data-toggle="dropdown"
-                            aria-expanded="false">
-                        <span class="fa fa-bars"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#"><span class="fa fa-print"></span>Print Chart</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#"><span class="fa fa-bar-chart-o"></span>View Tabular</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#"><span class="fa fa-file-image-o"></span>Download PNG Image</a></li>
-                        <li><a href="#"><span class="fa fa-file-image-o"></span>Download JPEG Image</a></li>
-                        <li><a href="#"><span class="fa fa-file-pdf-o"></span>Download PDF Document</a></li>
-                        <li><a href="#"><span class="fa fa-file-text-o"></span>Download SVG Vector Image</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="description_year">Monthly</div>
-                <div class="content_tab">
-                    <img src="@Url.Content("~/Content/img/graphic9.PNG")" />
-                </div>
-                <hr>
-                <div class="btn-group btn-more">
-                    <button type="button" class="dropdown-toggle icon_more" data-toggle="dropdown"
-                            aria-expanded="false">
-                        <span class="fa fa-bars"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#"><span class="fa fa-print"></span>Print Chart</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#"><span class="fa fa-bar-chart-o"></span>View Tabular</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#"><span class="fa fa-file-image-o"></span>Download PNG Image</a></li>
-                        <li><a href="#"><span class="fa fa-file-image-o"></span>Download JPEG Image</a></li>
-                        <li><a href="#"><span class="fa fa-file-pdf-o"></span>Download PDF Document</a></li>
-                        <li><a href="#"><span class="fa fa-file-text-o"></span>Download SVG Vector Image</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="description_year">Monthly Commulative</div>
-                <div class="content_tab">
-                    <img src="@Url.Content("~/Content/img/graphic9.PNG")" />
-                </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="remark">
 
@@ -224,6 +157,20 @@
     </div>
 </div>
 <div class="modal-footer">
-                @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>*@
-            </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#chart').click(function () {
+            $.ajax({
+                url: "@Url.Action("ChartYearly")",
+                data: {id: "@Model.KpiId", measurementId: "@Model.MeasurementId", year: "@Model.Year", month: "@Model.MonthInt"}
+            })
+            .done(function () {
+
+            });
+        });
+    });
+</script>

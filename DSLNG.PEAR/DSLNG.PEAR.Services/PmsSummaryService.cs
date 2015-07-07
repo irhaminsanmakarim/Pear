@@ -215,10 +215,12 @@ namespace DSLNG.PEAR.Services
                     response.Year = config.PmsConfig.PmsSummary.Year;
                     response.KpiGroup = config.Kpi.Group != null ? config.Kpi.Group.Name : "";
                     response.KpiName = config.Kpi.Name;
+                    response.KpiId = config.Kpi.Id;
+                    response.MeasurementId = config.Kpi.Measurement != null ? config.Kpi.Measurement.Id : 0;
                     response.KpiUnit = config.Kpi.Measurement != null ? config.Kpi.Measurement.Name : "";
                     response.KpiPeriod = config.Kpi.Period.ToString();
-                    response.ScoreIndicators =
-                        config.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
+                    
+                    response.ScoreIndicators = config.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
                     response.Weight = config.Weight;
                     response.ScoringType = config.ScoringType.ToString();
                     var kpiActualYearly =
