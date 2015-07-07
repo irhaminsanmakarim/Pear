@@ -161,10 +161,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "speedometer":
                     {
                         var viewModel = new SpeedometerChartViewModel();
-                        this.SetPeriodeTypes(viewModel.PeriodeTypes);
-                        this.SetRangeFilters(viewModel.RangeFilters);
-                        this.SetValueAxes(viewModel.ValueAxes);
-                        //this.SetKpiList(viewModel.KpiList);
+                        var plot = new SpeedometerChartViewModel.PlotBand();
+                        viewModel.PlotBands.Add(plot);
                         var artifactViewModel = new ArtifactDesignerViewModel();
                         artifactViewModel.SpeedometerChart = viewModel;
                         return PartialView("~/Views/SpeedometerChart/_Create.cshtml", artifactViewModel);

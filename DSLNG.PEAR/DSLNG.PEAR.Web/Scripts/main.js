@@ -531,22 +531,22 @@ String.prototype.isNullOrEmpty = function () {
         $('.plot-band-template .remove').click(function (e) {
             e.preventDefault();
             var $this = $(this);
-            $this.closest('fieldset').remove();
-            var plots = $('#plot-bands-holder').children('fieldset');
-            for (var i = 0; i < plots.length; i++) {
-                $(plots[i]).find('input[type="text"]').each(function (j, input) {
-                    var $input = $(input);
-                    console.log(i);
-                    if ($input.attr('name').endsWith('From')) {
-                        $input.attr('name', 'SpeedometerChart.PlotBands[' + i + '].From');
-                    } else if ($input.attr('name').endsWith('To')) {
-                        $input.attr('name', 'SpeedometerChart.PlotBands[' + i + '].To');
-                    } else if ($input.attr('name').endsWith('Color')) {
-                        $input.attr('name', 'SpeedometerChart.PlotBands[' + i + '].Color');
-                    }
-                });
+            $this.closest('.plot-band-template').remove();
+            //var plots = $('#plot-bands-holder').children('fieldset');
+            //for (var i = 0; i < plots.length; i++) {
+            //    $(plots[i]).find('input[type="text"]').each(function (j, input) {
+            //        var $input = $(input);
+            //        console.log(i);
+            //        if ($input.attr('name').endsWith('From')) {
+            //            $input.attr('name', 'SpeedometerChart.PlotBands[' + i + '].From');
+            //        } else if ($input.attr('name').endsWith('To')) {
+            //            $input.attr('name', 'SpeedometerChart.PlotBands[' + i + '].To');
+            //        } else if ($input.attr('name').endsWith('Color')) {
+            //            $input.attr('name', 'SpeedometerChart.PlotBands[' + i + '].Color');
+            //        }
+            //    });
 
-            }
+            //}
 
         });
         $('#add-plot').click(function (e) {
