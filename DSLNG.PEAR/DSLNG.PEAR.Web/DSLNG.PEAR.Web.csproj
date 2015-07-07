@@ -511,7 +511,7 @@
     <Content Include="Views\PmsConfigDetails\_Create.cshtml" />
     <Content Include="Views\PmsSummary\_Create.cshtml" />
     <Content Include="Views\Shared\_ScoringIndicator.cshtml" />
-    <None Include="Views\Menu\Create.cshtml" />
+    <Content Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Update.cshtml" />
     <Content Include="Views\Pillar\_GridViewPartial.cshtml" />
     <Content Include="Views\Pillar\Index.cshtml" />
@@ -732,7 +732,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1176/</IISUrl>
+          <IISUrl>http://localhost:1060/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
