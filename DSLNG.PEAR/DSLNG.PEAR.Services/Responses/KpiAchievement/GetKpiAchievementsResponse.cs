@@ -1,23 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
-namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
+namespace DSLNG.PEAR.Services.Responses.KpiAchievement
 {
-    public class UpdateKpiTargetViewModel 
+    public class GetKpiAchievementsResponse : BaseResponse
     {
-        public UpdateKpiTargetViewModel()
+        public GetKpiAchievementsResponse()
         {
             Pillars = new List<Pillar>();
         }
 
-        public int PmsSummaryId { get; set; }
-        public string PeriodeType { get; set; }
         public IList<Pillar> Pillars { get; set; }
-        public string ViewName { get { return PeriodeType.ToLowerInvariant() == "yearly" ? "_Yearly" : "_Monthly"; } }
-        public IList<SelectListItem> PeriodeTypes { get; set; }
 
         public class Pillar
         {
@@ -34,16 +27,17 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
         {
             public Kpi()
             {
-                KpiTargets = new List<KpiTarget>();
+                KpiAchievements = new List<KpiAchievement>();
             }
             public int Id { get; set; }
             public string Name { get; set; }
             public string Measurement { get; set; }
             public string Remark { get; set; }
-            public IList<KpiTarget> KpiTargets { get; set; }
+
+            public IList<KpiAchievement> KpiAchievements { get; set; }
         }
 
-        public class KpiTarget
+        public class KpiAchievement
         {
             public int Id { get; set; }
             public DateTime Periode { get; set; }

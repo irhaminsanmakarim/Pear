@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
 
@@ -85,9 +83,9 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public GetTargetResponse GetTarget(GetTargetRequest request)
+        public GetKpiTargetResponse GetKpiTarget(GetKpiTargetRequest request)
         {
-            var response = new GetTargetResponse();
+            var response = new GetKpiTargetResponse();
             try
             {
                 var pmsSummary = DataContext.PmsSummaries.Single(x => x.Id == request.PmsSummaryId);
@@ -107,13 +105,13 @@ namespace DSLNG.PEAR.Services
 
                 foreach (var item in pillarsAndKpis)
                 {
-                    var pillar = new GetTargetResponse.Pillar();
+                    var pillar = new GetKpiTargetResponse.Pillar();
                     pillar.Id = item.Key.Id;
                     pillar.Name = item.Key.Name;
 
                     foreach (var val in item.Value)
                     {
-                        var targets = new List<GetTargetResponse.KpiTarget>();
+                        var targets = new List<GetKpiTargetResponse.KpiTarget>();
                         switch (request.PeriodeType)
                         {
                             case PeriodeType.Monthly:
@@ -121,7 +119,7 @@ namespace DSLNG.PEAR.Services
                                 {
                                     var kpiTargetsMonthly = val.Kpi.KpiTargets.FirstOrDefault(x => x.PeriodeType == PeriodeType.Monthly
                                                     && x.Periode.Month == i && x.Periode.Year == pmsSummary.Year);
-                                    var kpiTargetMonthly = new GetTargetResponse.KpiTarget();
+                                    var kpiTargetMonthly = new GetKpiTargetResponse.KpiTarget();
                                     if (kpiTargetsMonthly == null)
                                     {
                                         kpiTargetMonthly.Id = 0;
@@ -142,7 +140,7 @@ namespace DSLNG.PEAR.Services
                                 var kpiTargetsYearly =
                                     val.Kpi.KpiTargets.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly
                                                                            && x.Periode.Year == pmsSummary.Year);
-                                var kpiTargetYearly = new GetTargetResponse.KpiTarget();
+                                var kpiTargetYearly = new GetKpiTargetResponse.KpiTarget();
                                 if (kpiTargetsYearly == null)
                                 {
                                     kpiTargetYearly.Id = 0;
@@ -160,7 +158,7 @@ namespace DSLNG.PEAR.Services
                                 break;
                         }
 
-                        var kpi = new GetTargetResponse.Kpi
+                        var kpi = new GetKpiTargetResponse.Kpi
                             {
                                 Id = val.Kpi.Id,
                                 Measurement = val.Kpi.Measurement.Name,
@@ -191,6 +189,7 @@ namespace DSLNG.PEAR.Services
         {
             PeriodeType periodeType = (PeriodeType) Enum.Parse(typeof (PeriodeType), request.PeriodeType);
             var response = new UpdateKpiTargetResponse();
+            response.PeriodeType = periodeType;
             try
             {
                 foreach (var pillar in request.Pillars)

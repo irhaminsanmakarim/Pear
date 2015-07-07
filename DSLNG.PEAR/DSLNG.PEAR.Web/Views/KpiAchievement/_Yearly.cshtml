@@ -1,4 +1,4 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.KpiTarget.UpdateKpiTargetViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.KpiAchievement.UpdateKpiAchievementsViewModel
 @{
     @Html.HiddenFor(x => x.PeriodeType)
     @Html.HiddenFor(x => x.PmsSummaryId)
@@ -14,25 +14,14 @@
                     <th style="width: 250px;"></th>
                     <th style="width: 100px;"></th>
                     <th style="width: 200px;"></th>
-                    <th>Jan</th>
-                    <th>Feb</th>
-                    <th>Mar</th>
-                    <th>Apr</th>
-                    <th>May</th>
-                    <th>Jun</th>
-                    <th>Jul</th>
-                    <th>Aug</th>
-                    <th>Sep</th>
-                    <th>Okt</th>
-                    <th>Nov</th>
-                    <th>Des</th>
+                    <th>Value</th>
                 </tr>
             </thead>
             <tbody>
                 @{ int b = 0;}
                 @foreach (var kpi in pillar.Kpis)
                 {
-                    @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].Id, new {@class="form-control-small"})
+                    @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].Id, new {@class="form-control"})
                     <tr>
                         <td>
                             <h6>@kpi.Name</h6>
@@ -43,12 +32,12 @@
                         <td>
                             <input type="text" class="form-control" placeholder="Remark"></td>
                         @{ int c = 0;}
-                        @foreach (var kpiTarget in kpi.KpiTargets)
+                        @foreach (var kpiTarget in kpi.KpiAchievements)
                         {
                             <td>
-                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Id, new {@class="form-control-small"})
-                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Periode, new {@class="form-control-small"})
-                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Value, new {@class="form-control-small"})
+                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiAchievements[c].Id, new {@class="form-control-small"})
+                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiAchievements[c].Periode, new {@class="form-control-small"})
+                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiAchievements[c].Value, new {@class="form-control"})
                             </td>
                             c++;
                             @*<td>

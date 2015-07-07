@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Text;
+using System.Threading.Tasks;
+using DSLNG.PEAR.Data.Enums;
 
-namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
+namespace DSLNG.PEAR.Services.Responses.KpiTarget
 {
-    public class UpdateKpiTargetViewModel 
+    public class GetKpiTargetResponse : BaseResponse
     {
-        public UpdateKpiTargetViewModel()
+        public GetKpiTargetResponse()
         {
             Pillars = new List<Pillar>();
         }
 
-        public int PmsSummaryId { get; set; }
-        public string PeriodeType { get; set; }
         public IList<Pillar> Pillars { get; set; }
-        public string ViewName { get { return PeriodeType.ToLowerInvariant() == "yearly" ? "_Yearly" : "_Monthly"; } }
-        public IList<SelectListItem> PeriodeTypes { get; set; }
 
         public class Pillar
         {
@@ -40,6 +37,7 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
             public string Name { get; set; }
             public string Measurement { get; set; }
             public string Remark { get; set; }
+
             public IList<KpiTarget> KpiTargets { get; set; }
         }
 

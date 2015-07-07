@@ -16,22 +16,28 @@ namespace DSLNG.PEAR.Web.Controllers
     public class KpiTargetController : BaseController
     {
         private readonly IKpiTargetService _kpiTargetService;
+        private readonly IDropdownService _dropdownService;
 
-        public KpiTargetController(IKpiTargetService kpiTargetService)
+        public KpiTargetController(IKpiTargetService kpiTargetService, IDropdownService dropdownService)
         {
             _kpiTargetService = kpiTargetService;
+            _dropdownService = dropdownService;
         }
 
-        public ActionResult Update(int id)
+        public ActionResult Update(int id, string periodeType)
         {
             int pmsSummaryId = id;
-            var request = new GetTargetRequest { PeriodeType = PeriodeType.Yearly, PmsSummaryId = pmsSummaryId };
-            var response = _kpiTargetService.GetTarget(request);
+            PeriodeType pType = string.IsNullOrEmpty(periodeType)
+                            ? PeriodeType.Yearly
+                            : (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
+            var request = new GetKpiTargetRequest { PeriodeType = pType, PmsSummaryId = pmsSummaryId };
+            var response = _kpiTargetService.GetKpiTarget(request);
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<UpdateKpiTargetViewModel>();
                 viewModel.PmsSummaryId = pmsSummaryId;
-                viewModel.PeriodeType = PeriodeType.Yearly.ToString();
+                viewModel.PeriodeType = pType.ToString();
+                viewModel.PeriodeTypes = _dropdownService.GetPeriodeTypesForKpiTargetAndAchievement().MapTo<SelectListItem>();
                 return View("Update", viewModel);
             }
             return base.ErrorPage(response.Message);
@@ -44,21 +50,21 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _kpiTargetService.UpdateKpiTarget(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
-            return RedirectToAction("Update", new {id = 1});
+            return RedirectToAction("Update", new { id = viewModel.PmsSummaryId, periodeType = response.PeriodeType.ToString() });
         }
 
-        public ActionResult UpdatePartial(int id, string type)
+        public ActionResult UpdatePartial(int id, string periodeType)
         {
             int pmsSummaryId = id;
-            PeriodeType periodeType = (PeriodeType)Enum.Parse(typeof (PeriodeType), type);
+            PeriodeType pType = (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
 
-            var request = new GetTargetRequest { PeriodeType = periodeType, PmsSummaryId = pmsSummaryId };
-            var response = _kpiTargetService.GetTarget(request);
-            string view = periodeType == PeriodeType.Yearly ? "_yearly" : "_monthly";
+            var request = new GetKpiTargetRequest { PeriodeType = pType, PmsSummaryId = pmsSummaryId };
+            var response = _kpiTargetService.GetKpiTarget(request);
+            string view = pType == PeriodeType.Yearly ? "_yearly" : "_monthly";
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<UpdateKpiTargetViewModel>();
-                viewModel.PeriodeType = periodeType.ToString();
+                viewModel.PeriodeType = pType.ToString();
                 viewModel.PmsSummaryId = pmsSummaryId;
                 return PartialView(view, viewModel);
             }

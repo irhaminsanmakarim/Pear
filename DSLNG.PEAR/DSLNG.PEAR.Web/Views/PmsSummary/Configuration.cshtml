@@ -36,7 +36,7 @@
                 <td>@item.Title</td>
                 <td>@Html.ActionLink("Details", "Details", "PmsSummary", new { id = item.Id }, null)</td>
                 <td>@Html.ActionLink("Details", "Update", "KpiTarget", new {id = item.Id}, null)</td>
-                <td>@*@Html.ActionLink("Details", "Details", "CorporatePortofolio", new { id = item.Id })*@ Details</td>
+                <td>@Html.ActionLink("Details", "Update", "KpiAchievement", new { id = item.Id }, null)</td>
                 <td>@*@Html.ActionLink("Details", "Details", "CorporatePortofolio", new { id = item.Id })*@ Details</td>
                 <td>@item.IsActive</td>
                 <td>@Html.ActionLink("Edit", "Update", "PmsSummary", new {id = item.Id}, new {data_toggle="modal", data_target="#modalDialog"})</td>

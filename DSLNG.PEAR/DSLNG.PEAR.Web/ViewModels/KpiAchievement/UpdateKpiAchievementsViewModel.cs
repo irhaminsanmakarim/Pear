@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
-namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
+namespace DSLNG.PEAR.Web.ViewModels.KpiAchievement
 {
-    public class UpdateKpiTargetViewModel 
+    public class UpdateKpiAchievementsViewModel 
     {
-        public UpdateKpiTargetViewModel()
+        public UpdateKpiAchievementsViewModel()
         {
             Pillars = new List<Pillar>();
         }
@@ -34,16 +32,16 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
         {
             public Kpi()
             {
-                KpiTargets = new List<KpiTarget>();
+                KpiAchievements = new List<KpiAchievement>();
             }
             public int Id { get; set; }
             public string Name { get; set; }
             public string Measurement { get; set; }
             public string Remark { get; set; }
-            public IList<KpiTarget> KpiTargets { get; set; }
+            public IList<KpiAchievement> KpiAchievements { get; set; }
         }
 
-        public class KpiTarget
+        public class KpiAchievement
         {
             public int Id { get; set; }
             public DateTime Periode { get; set; }
