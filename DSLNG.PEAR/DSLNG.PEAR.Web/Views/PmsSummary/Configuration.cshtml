@@ -54,7 +54,9 @@
                 <td class="text-button">
                     <a href="@Url.Action("Update", "KpiAchievement", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
                 </td>
-                <td>@*@Html.ActionLink("Details", "Details", "CorporatePortofolio", new { id = item.Id })*@ Details</td>
+                <td class="text-button">
+                    <a href="@Url.Action("ScoreIndicatorDetails", "PmsSummary", new { id = item.Id }, null)"  data-toggle="modal" data-target="#modalDialog"><span class="fa fa-table"></span>Details</a>
+                </td>
                 <td>@item.IsActive</td>
                 <td class="text-button">
                     <a href="@Url.Action("Update", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-pencil-square-o"></span>Edit</a>

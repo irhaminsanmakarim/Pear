@@ -215,10 +215,12 @@ namespace DSLNG.PEAR.Services
                     response.Year = config.PmsConfig.PmsSummary.Year;
                     response.KpiGroup = config.Kpi.Group != null ? config.Kpi.Group.Name : "";
                     response.KpiName = config.Kpi.Name;
+                    response.KpiId = config.Kpi.Id;
+                    response.MeasurementId = config.Kpi.Measurement != null ? config.Kpi.Measurement.Id : 0;
                     response.KpiUnit = config.Kpi.Measurement != null ? config.Kpi.Measurement.Name : "";
                     response.KpiPeriod = config.Kpi.Period.ToString();
-                    response.ScoreIndicators =
-                        config.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
+                    
+                    response.ScoreIndicators = config.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
                     response.Weight = config.Weight;
                     response.ScoringType = config.ScoringType.ToString();
                     var kpiActualYearly =
@@ -358,7 +360,7 @@ namespace DSLNG.PEAR.Services
                     if (existedScoreIndicator != null)
                     {
                         var scoreIndicatorEntry = DataContext.Entry(existedScoreIndicator);
-                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicatorEntry);
+                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicator);
                     }
                     else
                     {
@@ -414,16 +416,28 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public GetScoreIndicatorsResponse GetScoreIndicators(int pmsConfigDetailId)
+        public GetScoreIndicatorsResponse GetScoreIndicators(GetScoreIndicatorRequest request)
         {
             var response = new GetScoreIndicatorsResponse();
             try
             {
-                var pmsConfigDetails = DataContext.PmsConfigDetails
-                    .Include(x => x.ScoreIndicators)
-                    .First(x => x.Id == pmsConfigDetailId);
-                response.ScoreIndicators =
-                    pmsConfigDetails.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
+                if (request.PmsConfigDetailId > 0)
+                {
+                    var pmsConfigDetails = DataContext.PmsConfigDetails
+                                                      .Include(x => x.ScoreIndicators)
+                                                      .Single(x => x.Id == request.PmsConfigDetailId);
+                    response.ScoreIndicators =
+                        pmsConfigDetails.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
+                }
+                else
+                {
+                    var pmsSummary = DataContext.PmsSummaries
+                                                      .Include(x => x.ScoreIndicators)
+                                                      .Single(x => x.Id == request.PmsSummaryId);
+                    response.ScoreIndicators =
+                        pmsSummary.ScoreIndicators.MapTo<Common.PmsSummary.ScoreIndicator>();
+                }
+                
                 response.IsSuccess = true;
             }
             catch (ArgumentNullException argumentNullException)
@@ -489,7 +503,7 @@ namespace DSLNG.PEAR.Services
                     if (existedScoreIndicator != null)
                     {
                         var scoreIndicatorEntry = DataContext.Entry(existedScoreIndicator);
-                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicatorEntry);
+                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicator);
                     }
                     else
                     {
@@ -625,7 +639,7 @@ namespace DSLNG.PEAR.Services
                     if (existedScoreIndicator != null)
                     {
                         var scoreIndicatorEntry = DataContext.Entry(existedScoreIndicator);
-                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicatorEntry);
+                        scoreIndicatorEntry.CurrentValues.SetValues(scoreIndicator);
                     }
                     else
                     {

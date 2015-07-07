@@ -4,7 +4,7 @@
     <span
         aria-hidden="true">&times;</span></button>
 <div class="whitebox">
-    <h4>Create Pms Summary</h4><br/>
+    <h5>Create Pms Summary</h5><br/>
     <form class="form-group" action="@Url.Action("Create")" method="POST">
         <div class="form-group form-list">
             @Html.LabelFor(x => x.Year)
@@ -18,7 +18,7 @@
             @Html.ValidationMessageFor(x => x.Title)
         </div>
 
-        <div class="form-group form-list">
+        <div class="form-group form-list form-inline">
             @Html.LabelFor(x => x.IsActive)
             @Html.CheckBoxFor(x => x.IsActive, new { @class = "form-control" })
             @Html.ValidationMessageFor(x => x.IsActive)
