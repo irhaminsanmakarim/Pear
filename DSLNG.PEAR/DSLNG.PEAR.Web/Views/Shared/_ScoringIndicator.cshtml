@@ -105,7 +105,7 @@
             $(val).find('.si-color').colpick({
                 submit: 0,
                 onChange: function (hsb, hex, rgb, el, bySetColor) {
-                    $(val).find('.si-color').closest('.colorpicker').find('i').css('background-color', '#' + hex);
+                    $(val).closest('.colorpicker').find('i').css('background-color', '#' + hex);
                     if (!bySetColor) $(el).val('#' + hex);
                 }
             }).keyup(function () {
