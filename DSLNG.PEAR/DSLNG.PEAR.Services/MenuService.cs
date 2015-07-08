@@ -102,7 +102,7 @@ namespace DSLNG.PEAR.Services
             if (!menu.IsRoot)
             {
                 menu = DataContext.Menus.Where(x => x.Id == menu.ParentId).First();
-                this._GetActiveMenu(menu);
+                return this._GetActiveMenu(menu);
             }
             return menu;
         }
@@ -112,7 +112,7 @@ namespace DSLNG.PEAR.Services
             IQueryable<Data.Entities.Menu> menus;
             if (request.Take != 0)
             {
-                menus = DataContext.Menus.OrderBy(x => x.ParentId).Skip(request.Skip).Take(request.Take);
+                menus = DataContext.Menus.OrderBy(x => x.Order).Skip(request.Skip).Take(request.Take);
             }
             else
             {
