@@ -29,9 +29,20 @@ namespace DSLNG.PEAR.Web.ViewModels.Menu
         public List<int> RoleGroupIds { get; set; }
         [Display(Name = "Parent Menu")]
         public int? ParentId { get; set; }
+        [Display(Name = "Select Role Groups")]
         public List<SelectListItem> RoleGroupOptions { get; set; }
+        [Display(Name = "Parent Menu")]
         public List<SelectListItem> MenuOptions { get; set; }
+        [Display(Name = "Select Icon")]
         public string Icon { get; set; }
+        [Display(Name = "Url Action")]
         public string Url { get; set; }
+        public String[] IconList
+        {
+            get
+            {
+                return new String[6] { "fa-dashboard", "fa-calendar", "fa-gavel", "fa-edit", "fa-bar-chart-o", "fa-cog" };
+            }
+        }
     }
 }

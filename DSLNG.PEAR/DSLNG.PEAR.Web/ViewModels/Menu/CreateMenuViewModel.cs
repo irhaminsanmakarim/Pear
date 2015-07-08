@@ -20,7 +20,9 @@ namespace DSLNG.PEAR.Web.ViewModels.Menu
         //public ICollection<RoleGroup> RoleGroups { get; set; }
         public string Remark { get; set; }
         public string Module { get; set; }
+        [Display(Name="Select Icon")]
         public string Icon { get; set; }
+        [Display(Name="Url Action")]
         public string Url { get; set; }
         [Required]
         public bool IsActive { get; set; }
@@ -30,5 +32,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Menu
         public int? ParentId { get; set; }
         public List<SelectListItem> RoleGroupOptions { get; set; }
         public List<SelectListItem> MenuOptions { get; set; }
+        public String[] IconList { 
+            get { 
+                return new String[6]  { "fa-dashboard", "fa-calendar", "fa-gavel", "fa-edit", "fa-bar-chart-o", "fa-cog" };
+            }
+        }
     }
 }
