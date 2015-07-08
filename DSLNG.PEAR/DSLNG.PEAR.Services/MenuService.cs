@@ -109,7 +109,16 @@ namespace DSLNG.PEAR.Services
 
         public GetMenusResponse GetMenus(GetMenusRequest request)
         {
-            var menus = DataContext.Menus.ToList();
+            IQueryable<Data.Entities.Menu> menus;
+            if (request.Take != 0)
+            {
+                menus = DataContext.Menus.OrderBy(x => x.ParentId).Skip(request.Skip).Take(request.Take);
+            }
+            else
+            {
+                menus = DataContext.Menus;
+            }
+
             var response = new GetMenusResponse();
             response.Menus = menus.MapTo<GetMenusResponse.Menu>();
 
