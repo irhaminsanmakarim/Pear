@@ -649,8 +649,8 @@ String.prototype.isNullOrEmpty = function () {
         Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'));
         removePlot();
         addPlot();
-        rangeControl();
-        rangeDatePicker();
+        //rangeControl();
+        //rangeDatePicker();
     };
     artifactDesigner._previewCallbacks.speedometer = function (data, container) {
         container.highcharts({
