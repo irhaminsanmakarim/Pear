@@ -24,9 +24,10 @@
     
     function OnCellClick(visibleIndex, fieldName) {
         var id = fieldName;
-        var month = $("#month").val();
+        var month = $('#month').val();
+        var year = $('#year').val();
         $('#modalDialog').modal({
-            remote: '@Url.Action("ReportDetails", "PmsSummary")' + '/' + id + '?month=' + month
+            remote: '@Url.Action("ReportDetails", "PmsSummary")' + '/' + id + '?month=' + month + '&year=' + year
         });
     }
 </script>

@@ -8,6 +8,7 @@ using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
 using DSLNG.PEAR.Web.ViewModels.PmsConfigDetails;
 using DSLNG.PEAR.Web.ViewModels.PmsSummary;
+using DSLNG.PEAR.Web.ViewModels.Common.PmsSummary;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -53,6 +54,12 @@ namespace DSLNG.PEAR.Web.Controllers
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<UpdatePmsConfigDetailsViewModel>();
+                if (response.ScoreIndicators.Count() == 0)
+                {
+                    var scoreIndicator = new List<ScoreIndicatorViewModel>();
+                    scoreIndicator.Add(new ScoreIndicatorViewModel { Id = 0 });
+                    viewModel.ScoreIndicators = scoreIndicator;
+                }
                 viewModel.ScoringTypes = _dropdownService.GetScoringTypes().MapTo<SelectListItem>();
                 return PartialView("_Update", viewModel);
             }

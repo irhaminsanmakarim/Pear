@@ -233,7 +233,7 @@ namespace DSLNG.PEAR.Services
                         response.KpiRemarkYearly = kpiActualYearly.Remark;
                     }
                     var kpiActualMonthly =
-                        config.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly).ToList();
+                        config.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly && x.Periode.Year == request.Year).ToList();
                     response.KpiAchievmentMonthly = new List<GetPmsDetailsResponse.KpiAchievment>();
                     if (kpiActualMonthly.Count > 0)
                     {

@@ -146,13 +146,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
                 .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
                 .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)));
-            
+
             //bar chart mapping
             Mapper.CreateMap<BarChartViewModel, GetCartesianChartDataRequest>();
             Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetCartesianChartDataRequest.SeriesRequest>();
             Mapper.CreateMap<BarChartViewModel.StackViewModel, GetCartesianChartDataRequest.StackRequest>();
             Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, BarChartDataViewModel.SeriesViewModel>();
-            
+
             //line chart mapping
             Mapper.CreateMap<LineChartViewModel, GetCartesianChartDataRequest>();
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetCartesianChartDataRequest.SeriesRequest>();
@@ -265,36 +265,32 @@ namespace DSLNG.PEAR.Web.AutoMapper
                           Text = a.Name,
                           Value = a.Id.ToString()
                       })));
-                      
 
-            Mapper
-                .CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
+
 
             Mapper.CreateMap<GetScoreIndicatorsResponse, ScoreIndicatorDetailsViewModel>();
             Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
-            Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
 
-            
-                  
-                  
             Mapper.CreateMap<ScoreIndicatorViewModel, ScoreIndicator>();
             Mapper.CreateMap<ScoreIndicator, ScoreIndicatorViewModel>();
-            
 
 
         }
 
         private void ConfigurePmsSummary()
         {
-            Mapper.CreateMap<CreatePmsSummaryViewModel, CreatePmsSummaryRequest>();
+            Mapper.CreateMap<CreatePmsSummaryViewModel, CreatePmsSummaryRequest>()
+                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
             Mapper.CreateMap<GetPmsSummaryResponse, UpdatePmsSummaryViewModel>();
-            Mapper.CreateMap<UpdatePmsSummaryViewModel, UpdatePmsSummaryRequest>();
+            Mapper.CreateMap<UpdatePmsSummaryViewModel, UpdatePmsSummaryRequest>()
+                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
 
             Mapper.CreateMap<GetPmsSummaryReportResponse.KpiData, PmsSummaryViewModel>();
             Mapper.CreateMap<GetPmsDetailsResponse, PmsReportDetailsViewModel>();
             Mapper.CreateMap<GetPmsDetailsResponse.KpiAchievment, PmsReportDetailsViewModel.KpiAchievment>();
             Mapper.CreateMap<GetPmsDetailsResponse.KpiRelation, PmsReportDetailsViewModel.KpiRelation>();
-            Mapper.CreateMap<CreatePmsConfigViewModel, CreatePmsConfigRequest>();
+            Mapper.CreateMap<CreatePmsConfigViewModel, CreatePmsConfigRequest>()
+                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
 
             ConfigurePmsConfig();
             ConfigurePmsConfigDetails();
@@ -303,21 +299,24 @@ namespace DSLNG.PEAR.Web.AutoMapper
         private void ConfigurePmsConfig()
         {
             Mapper.CreateMap<GetPmsConfigResponse, UpdatePmsConfigViewModel>();
-            Mapper.CreateMap<UpdatePmsConfigViewModel, UpdatePmsConfigRequest>();
+            Mapper.CreateMap<UpdatePmsConfigViewModel, UpdatePmsConfigRequest>()
+                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
         }
 
         private void ConfigurePmsConfigDetails()
         {
-            Mapper.CreateMap<CreatePmsConfigDetailsViewModel, CreatePmsConfigDetailsRequest>();
+            Mapper.CreateMap<CreatePmsConfigDetailsViewModel, CreatePmsConfigDetailsRequest>()
+                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
             Mapper.CreateMap<GetPmsConfigDetailsResponse, UpdatePmsConfigDetailsViewModel>();
-            Mapper.CreateMap<UpdatePmsConfigDetailsViewModel, UpdatePmsConfigDetailsRequest>();
+            Mapper.CreateMap<UpdatePmsConfigDetailsViewModel, UpdatePmsConfigDetailsRequest>()
+                .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
         }
 
         private void ConfigureKpiTarget()
         {
             Mapper.CreateMap<GetPmsConfigsResponse.Kpi, Kpi>()
                 .ForMember(k => k.Unit, o => o.MapFrom(k => k.Measurement.Name));
-            
+
             Mapper.CreateMap<GetKpiTargetResponse, UpdateKpiTargetViewModel>();
             Mapper.CreateMap<GetKpiTargetResponse.Kpi, UpdateKpiTargetViewModel.Kpi>();
             Mapper.CreateMap<GetKpiTargetResponse.KpiTarget, UpdateKpiTargetViewModel.KpiTarget>();
