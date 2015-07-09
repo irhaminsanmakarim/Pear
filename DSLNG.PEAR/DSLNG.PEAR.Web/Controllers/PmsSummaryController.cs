@@ -137,6 +137,15 @@ namespace DSLNG.PEAR.Web.Controllers
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<UpdatePmsSummaryViewModel>();
+                if (response.ScoreIndicators.Count() == 0)
+                {
+                    viewModel.ScoreIndicators.Add(new ViewModels.Common.PmsSummary.ScoreIndicatorViewModel
+                    {
+                        Id = 0,
+                        Color = null,
+                        Expression = null
+                    });
+                }
                 viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
                 return PartialView("_Update", viewModel);
             }
