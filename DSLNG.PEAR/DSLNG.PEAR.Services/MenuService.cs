@@ -102,14 +102,23 @@ namespace DSLNG.PEAR.Services
             if (!menu.IsRoot)
             {
                 menu = DataContext.Menus.Where(x => x.Id == menu.ParentId).First();
-                this._GetActiveMenu(menu);
+                return this._GetActiveMenu(menu);
             }
             return menu;
         }
 
         public GetMenusResponse GetMenus(GetMenusRequest request)
         {
-            var menus = DataContext.Menus.ToList();
+            IQueryable<Data.Entities.Menu> menus;
+            if (request.Take != 0)
+            {
+                menus = DataContext.Menus.OrderBy(x => x.Order).Skip(request.Skip).Take(request.Take);
+            }
+            else
+            {
+                menus = DataContext.Menus;
+            }
+
             var response = new GetMenusResponse();
             response.Menus = menus.MapTo<GetMenusResponse.Menu>();
 

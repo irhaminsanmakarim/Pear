@@ -2,7 +2,11 @@
 @{
     int i = 0;
 }
-
+<style>
+    .colpick {
+  z-index: 9999;
+}
+</style>
 <div class="form-group form-list form-inline">
     <label>Scoring Indicator</label>
     <button type="button" class="btn btn-default form-inline add-score-indicator"><i class="glyphicon glyphicon-plus"></i></button>
@@ -28,7 +32,10 @@
                 <input type="hidden" name="ScoreIndicators.Index" value="@i" />
                 <input class="form-control si-id" type="hidden" name="ScoreIndicators[@i].Id" value="@item.Id" style="width:50px;" />
                 <input class="form-control si-expression" name="ScoreIndicators[@i].Expression" placeholder="Expression, e.g : x > 20" type="text" value="@item.Expression" style="width:200px;">
-                <input class="form-control si-color" name="ScoreIndicators[@i].Color" placeholder="Color" type="text" value="@item.Color" style="width:150px;">
+                <div class="input-group colorpicker">
+                    <input class="form-control si-color" name="ScoreIndicators[@i].Color" placeholder="Color" type="text" value="@item.Color" style="width:150px;">
+                    <span class="input-group-addon"><i></i></span>
+                </div>
                 @*@Html.TextBoxFor(x => Model[i].Expression, new { @class = "form-control", placeholder = "Expression" })
                 @Html.TextBoxFor(x => Model[i].Color, new { @class = "form-control", placeholder = "Color" })*@
                 <button type="button" class="btn btn-default form-control remove-score-indicator" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
@@ -61,6 +68,22 @@
             clone.find('.si-expression').attr('name', 'ScoreIndicators[' + i + '].Expression').val('');
             clone.find('.si-color').attr('name', 'ScoreIndicators[' + i + '].Color').val('');
             clone.appendTo('.score-indicator-wrapper').show();
+            clone.find(".colorpicker").each(function (i, val) {
+                var $input = $(val).find('input').clone();
+                $input.removeClass('valid');
+                $(val).find('input').replaceWith($input);
+                $(val).find('i').removeAttr('style');
+                $(val).find('input').colpick({
+                    submit: 0,
+                    onChange: function (hsb, hex, rgb, el, bySetColor) {
+                        $(val).closest('.colorpicker').find('i').css('background-color', '#' + hex);
+                        if (!bySetColor) $(el).val('#' + hex);
+                    }
+                }).keyup(function () {
+                    $(this).colpickSetColor(this.value.replace('#', ''));
+                });
+            });
+            
             if (i > 0) {
                 $('.remove-score-indicator').show();
             }
@@ -76,6 +99,18 @@
             if (i == 1) {
                 $('.remove-score-indicator').hide();
             }
+        });
+
+        $('.colorpicker').each(function (i, val) {
+            $(val).find('.si-color').colpick({
+                submit: 0,
+                onChange: function (hsb, hex, rgb, el, bySetColor) {
+                    $(val).closest('.colorpicker').find('i').css('background-color', '#' + hex);
+                    if (!bySetColor) $(el).val('#' + hex);
+                }
+            }).keyup(function () {
+                $(this).colpickSetColor(this.value.replace('#', ''));
+            });
         });
     })
 </script>

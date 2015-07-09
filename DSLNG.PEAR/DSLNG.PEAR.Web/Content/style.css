@@ -82,6 +82,7 @@ aside.left-content
     top: 300px;
     right: -10px;
     cursor: pointer;
+    z-index:99;
 }
 
 aside.left-content > *
@@ -795,6 +796,10 @@ h2
     float: left;
     padding: 15px;
     text-align: center;
+}
+
+.template-view .layout-column {
+    border:none;
 }
 
 .column-properties

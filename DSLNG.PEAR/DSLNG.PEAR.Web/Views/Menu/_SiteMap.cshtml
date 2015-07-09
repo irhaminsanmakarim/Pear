@@ -28,7 +28,7 @@
         <li class="@mainclass">
             <a href="@url_href" class="">
             @if (menu.Icon != null){
-                @Html.Raw(menu.Icon)<span>@menu.Name</span>
+                <i class="fa @menu.Icon"></i><span>@menu.Name</span>
             }
             else
             {

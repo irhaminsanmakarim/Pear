@@ -45,13 +45,19 @@
                 <div class="col-md-5">
                     <div class="form-group">
                         @Html.LabelFor(model => model.RoleGroupIds, new { @class = "control-label" })
-                        @Html.ListBoxFor(model => model.RoleGroupIds, Model.RoleGroupOptions,new { @class = "form-control", @size = "5" })
+                        @Html.ListBoxFor(model => model.RoleGroupIds, Model.RoleGroupOptions,new { @class = "form-control", @size = "7" })
                         @Html.ValidationMessageFor(model => model.RoleGroupIds)
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Icon, new { @class = "control-label" })
-                        @Html.TextBoxFor(model => model.Icon, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Icon)
+                        @Html.HiddenFor(model => model.Icon)
+                        <div class="well well-sm">
+                            @for (int i = 0; i < Model.IconList.Length; i++)
+                            {
+                                var class_success = Model.Icon == Model.IconList[i] ? "btn-success":"";
+                                <button type="button" class="btn btn-default btn-sm btn-icon @class_success"><i class="fa @Model.IconList[i]" icon-name="@Model.IconList[i]"></i></button>
+                            }
+                        </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Url, new { @class = "control-label" })
@@ -67,3 +73,18 @@
         </form>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("button.btn-icon").on("click", function () {
+            $('.btn-icon').each(function () {
+                $(this).removeClass("btn-success");
+            });
+
+            $(this).addClass("btn-success");
+            //set icon class name as value for input[Icon]
+            var $Icon = $(this).find('i');
+            $("input#Icon").val($Icon.attr("icon-name"));
+        });
+    })
+</script>
