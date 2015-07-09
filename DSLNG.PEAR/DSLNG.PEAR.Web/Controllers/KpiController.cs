@@ -158,21 +158,26 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.KpiList = _dropdownService.GetKpis().MapTo<SelectListItem>();
             viewModel.YtdFormulaList = _dropdownService.GetYtdFormulas().MapTo<SelectListItem>();
             viewModel.PeriodeList = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>();
-            var code = 3;
-            var takeCode = viewModel.Code.Length - 3;
-            if (viewModel.PillarId.HasValue)
+
+            if (!string.IsNullOrEmpty(viewModel.Code))
             {
-                viewModel.CodeFromPillar = GetPillarCode(viewModel.PillarId.Value);
-                code += 2;
-                takeCode -= viewModel.CodeFromPillar.Length;
+                var code = 3;
+                var takeCode = viewModel.Code.Length - 3;
+                if (viewModel.PillarId.HasValue)
+                {
+                    viewModel.CodeFromPillar = GetPillarCode(viewModel.PillarId.Value);
+                    code += 2;
+                    takeCode -= viewModel.CodeFromPillar.Length;
+                }
+                viewModel.CodeFromLevel = GetLevelCode(viewModel.LevelId);
+                if (viewModel.RoleGroupId.HasValue)
+                {
+                    viewModel.CodeFromRoleGroup = !string.IsNullOrEmpty(GetRoleGroupCode(viewModel.RoleGroupId.Value)) ? GetRoleGroupCode(viewModel.RoleGroupId.Value) : "";
+                    takeCode -= viewModel.CodeFromRoleGroup.Length;
+                }
+                viewModel.Code = response.Code.Substring(code, takeCode);
             }
-            viewModel.CodeFromLevel = GetLevelCode(viewModel.LevelId);
-            if (viewModel.RoleGroupId.HasValue)
-            {
-                viewModel.CodeFromRoleGroup = GetRoleGroupCode(viewModel.RoleGroupId.Value);
-                takeCode -= viewModel.CodeFromRoleGroup.Length;
-            }
-            viewModel.Code = response.Code.Substring(code, takeCode);
+            
             if (viewModel.RelationModels.Count == 0)
             {
                 viewModel.RelationModels.Add(new ViewModels.Kpi.KpiRelationModel { KpiId = 0, Method = "" });
@@ -236,8 +241,8 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public string GetRoleGroupCode(int id)
         {
-            var pillar = _roleGroupService.GetRoleGroup(new Services.Requests.RoleGroup.GetRoleGroupRequest { Id = id }).Code;
-            return pillar;
+            var roleGroup = _roleGroupService.GetRoleGroup(new Services.Requests.RoleGroup.GetRoleGroupRequest { Id = id }).Code;
+            return roleGroup;
         }
     }
 }
