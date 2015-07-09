@@ -96,6 +96,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "baraccumulative", Text = "Bar Accumulative" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "barachievement", Text = "Bar Achievement" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
 
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
@@ -157,6 +158,15 @@ namespace DSLNG.PEAR.Web.Controllers
                         var artifactViewModel = new ArtifactDesignerViewModel();
                         artifactViewModel.LineChart = viewModel;
                         return PartialView("~/Views/LineChart/_Create.cshtml", artifactViewModel);
+                    }
+                case "area":
+                    {
+                        var viewModel = new AreaChartViewModel();
+                        var series = new AreaChartViewModel.SeriesViewModel();
+                        viewModel.Series.Add(series);
+                        var artifactViewModel = new ArtifactDesignerViewModel();
+                        artifactViewModel.AreaChart = viewModel;
+                        return PartialView("~/Views/AreaChart/_Create.cshtml", artifactViewModel);
                     }
                 case "speedometer":
                     {
@@ -221,6 +231,17 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.LineChart.Periodes = chartData.Periodes;
                     }
                     break;
+                case "area":
+                    {
+                        var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.AreaChart = new AreaChartDataViewModel();
+                        previewViewModel.AreaChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.AreaChart.ValueAxisTitle = artifactResp.Measurement;
+                        previewViewModel.AreaChart.Series = chartData.Series.MapTo<AreaChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.AreaChart.Periodes = chartData.Periodes;
+                    }
+                    break;
                 case "speedometer":
                     {
                         var chartData = _artifactServie.GetSpeedometerChartData(artifactResp.MapTo<GetSpeedometerChartDataRequest>());
@@ -267,6 +288,19 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.LineChart.Periodes = chartData.Periodes;
                     }
                     break;
+                case "area":
+                    {
+                        var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
+                        viewModel.AreaChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(cartesianRequest);
+                        var chartData = _artifactServie.GetChartData(cartesianRequest);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.AreaChart = new AreaChartDataViewModel();
+                        previewViewModel.AreaChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.AreaChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+                        previewViewModel.AreaChart.Series = chartData.Series.MapTo<AreaChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.AreaChart.Periodes = chartData.Periodes;
+                    }
+                    break;
                 case "speedometer":
                     {
                         var request = viewModel.MapTo<GetSpeedometerChartDataRequest>();
@@ -307,6 +341,14 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
                         viewModel.LineChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
+                        _artifactServie.Create(request);
+                    }
+                    break;
+
+                case "area":
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        viewModel.AreaChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
                     }
                     break;

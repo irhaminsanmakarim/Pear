@@ -451,6 +451,7 @@ String.prototype.isNullOrEmpty = function () {
     artifactDesigner._previewCallbacks.barachievement = function (data, container) {
         Pear.Artifact.Designer._previewCallbacks.bar(data, container);
     };
+
     //line chart
     artifactDesigner._setupCallbacks.line = function () {
         var removeSeriesOrStack = function () {
@@ -528,6 +529,99 @@ String.prototype.isNullOrEmpty = function () {
         });
     }
 
+    //area chart
+    artifactDesigner._setupCallbacks.area = function () {
+        var removeSeriesOrStack = function () {
+            $('.series-template .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('fieldset').remove();
+            });
+        }
+        var addSeries = function () {
+            console.log('add-series');
+            var seriesCount = 0;
+            $('#add-series').click(function (e) {
+                console.log('series-click');
+                e.preventDefault();
+                var seriesTemplate = $('.series-template.original').clone(true);
+
+                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate);
+                Pear.Artifact.Designer._colorPicker(seriesTemplate);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'AreaChart.Series.Index',
+                    value: seriesCount
+                }).appendTo(seriesTemplate);
+                seriesTemplate.removeClass('original');
+                seriesTemplate.attr('data-series-pos', seriesCount);
+                if (seriesCount !== 0) {
+                    var fields = ['Label', 'KpiId', 'Color'];
+                    for (var i in fields) {
+                        var field = fields[i];
+                        seriesTemplate.find('#AreaChart_Series_0__' + field).attr('name', 'AreaChart.Series[' + seriesCount + '].' + field);
+                    }
+                }
+                $('#series-holder').append(seriesTemplate);
+                seriesCount++;
+            });
+        };
+        removeSeriesOrStack();
+        addSeries();
+    }
+    artifactDesigner._previewCallbacks.area = function (data, container) {
+        container.highcharts({
+            chart: {
+                type: 'area'
+            },
+            title: {
+                text: data.AreaChart.Title
+            },
+            //subtitle: {
+            //    text: 'Source: <a href="http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf">' +
+            //        'thebulletin.metapress.com</a>'
+            //},
+            xAxis: {
+                allowDecimals: false,
+                labels: {
+                    formatter: function () {
+                        return this.value; // clean, unformatted number for year
+                    }
+                },
+                categories: data.AreaChart.Periodes
+            },
+            yAxis: {
+                title: {
+                    text: data.AreaChart.ValueAxisTitle
+                },
+                labels: {
+                    formatter: function () {
+                        return this.value;
+                    }
+                }
+            },
+            tooltip: {
+                pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+            },
+            plotOptions: {
+                //area: {
+                //    pointStart: data.AreaChart.Periodes[0],
+                //    marker: {
+                //        enabled: false,
+                //        symbol: 'circle',
+                //        radius: 2,
+                //        states: {
+                //            hover: {
+                //                enabled: true
+                //            }
+                //        }
+                //    }
+                //}
+            },
+            series: data.AreaChart.Series
+        });
+    }
     //speedometer
     artifactDesigner._setupCallbacks.speedometer = function () {
         var removePlot = function () {

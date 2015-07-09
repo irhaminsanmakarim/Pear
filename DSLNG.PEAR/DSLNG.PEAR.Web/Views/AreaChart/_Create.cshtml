@@ -1,0 +1,46 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+
+<div class="form-group form-list">
+    <label>Series</label>
+    <input type="button" value="Add Series" class="btn btn-lightblue" id="add-series" />
+</div>
+
+<div id="hidden-fields">
+    @for (var i = 0; i < Model.AreaChart.Series.Count; i++)
+    { 
+        <div class="series-template original whitebox">
+            <h2>Series</h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.AreaChart.Series[i].Label)
+                        @Html.TextBoxFor(model => model.AreaChart.Series[i].Label, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.AreaChart.Series[i].Label)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.AreaChart.Series[i].Color)
+                        <div class="input-group colorpicker">
+                            @Html.TextBoxFor(model => model.AreaChart.Series[i].Color, new { @class = "form-control" })
+                            <span class="input-group-addon"><i></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.AreaChart.Series[i].Color)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.AreaChart.Series[i].KpiId)
+                        @Html.DropDownListFor(model => model.AreaChart.Series[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                        @Html.ValidationMessageFor(model => model.AreaChart.Series[i].KpiId)
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="Remove" class="remove" />
+        </div>
+    }
+
+</div>
+
+
+

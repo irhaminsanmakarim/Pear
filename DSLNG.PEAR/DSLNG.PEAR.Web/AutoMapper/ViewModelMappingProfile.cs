@@ -158,6 +158,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetCartesianChartDataRequest.SeriesRequest>();
             Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, LineChartDataViewModel.SeriesViewModel>();
 
+            //area chart mapping
+            Mapper.CreateMap<AreaChartViewModel, GetCartesianChartDataRequest>();
+            Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, GetCartesianChartDataRequest.SeriesRequest>();
+            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, AreaChartDataViewModel.SeriesViewModel>();
+            Mapper.CreateMap<AreaChartViewModel, CreateArtifactRequest>();
+            Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, CreateArtifactRequest.SeriesRequest>();
+
             //speedometer chart mapping
             Mapper.CreateMap<ArtifactDesignerViewModel, GetSpeedometerChartDataRequest>();
             Mapper.CreateMap<SpeedometerChartViewModel, GetSpeedometerChartDataRequest>();
