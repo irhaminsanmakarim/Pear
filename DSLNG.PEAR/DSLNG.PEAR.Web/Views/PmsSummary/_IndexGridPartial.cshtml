@@ -3,7 +3,7 @@
 @model DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryIndexViewModel
 
 @Html.DevExpress().GridView(settings =>
-        {
+    {
             settings.Name = "gridPmsSummaryIndex";
             settings.KeyFieldName = "Id";
             settings.CallbackRouteValues = new { Controller = "PmsSummary", Action = "IndexGridPartial", year = Model.Year, month = Model.Month };
@@ -11,7 +11,8 @@
             settings.Settings.ShowFooter = true;
             settings.Width = Unit.Percentage(100);
             settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
-            var pillarColumn = new MVCxGridViewColumn("PillarNameWithColor", "OSP");
+            settings.Settings.GroupFormat = "{1} {2}";    
+            var pillarColumn = new MVCxGridViewColumn("PillarNameWithColor", " ");
             pillarColumn.PropertiesEdit.EncodeHtml = false;
             pillarColumn.GroupIndex = 0;
             pillarColumn.Settings.SortMode = ColumnSortMode.Custom;

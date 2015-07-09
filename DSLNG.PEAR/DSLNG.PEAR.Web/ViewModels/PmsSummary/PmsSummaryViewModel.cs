@@ -101,7 +101,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 
         public string PillarNameWithColor
         {
-            get { return string.Format(@"<span class='trafficlight' style='background-color:{0}'></span>{1} ({2})", PillarColor, Pillar, PillarWeight.ToString("0.00")); }
+            get { return string.Format(@"<span class='trafficlight' style='background-color:{0}'></span>{1}", PillarColor, string.Format(@"{0} ({1})", Pillar, PillarWeight.ToString("0.00"))); }
         }
 
         public string TotalScoreColor { get; set; }
