@@ -12,7 +12,12 @@
         {
             if (url.Length > 0)
             {
-                url_href = Url.Action(url[1], url[0]);
+                if (url.Length >= 3){
+                    url_href = Url.Action(url[1], url[0], new { id = url[2] });
+                }
+                else{
+                    url_href = Url.Action(url[1], url[0]);
+                }
             }
             else
             {

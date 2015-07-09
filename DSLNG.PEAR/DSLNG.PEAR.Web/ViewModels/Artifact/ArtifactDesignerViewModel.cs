@@ -93,6 +93,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
 
         //chart
         public BarChartViewModel BarChart { get; set; }
+        public AreaChartViewModel AreaChart { get; set; }   
         public LineChartViewModel LineChart { get; set; }
         public SpeedometerChartViewModel SpeedometerChart { get; set; }
         public SpiderwebChartViewModel SpiderwebChart { get; set; }
