@@ -7,5 +7,6 @@ namespace DSLNG.PEAR.Services.Requests.PmsSummary
     {
         public int Id { get; set; }
         public int Month { get; set; }
+        public int Year { get; set; }
     }
 }

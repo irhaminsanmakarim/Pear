@@ -73,9 +73,9 @@ namespace DSLNG.PEAR.Web.Controllers
             return PartialView("_IndexGridPartial", viewModel);
         }
 
-        public ActionResult ReportDetails(int id, int month)
+        public ActionResult ReportDetails(int id, int month, int year)
         {
-            var response = _pmsSummaryService.GetPmsDetails(new GetPmsDetailsRequest() { Id = id, Month = month });
+            var response = _pmsSummaryService.GetPmsDetails(new GetPmsDetailsRequest() { Id = id, Month = month, Year = year });
             var viewModel = response.MapTo<PmsReportDetailsViewModel>();
             var operationDate = new DateTime(response.Year, month, 1);
             viewModel.Title = response.Title;
