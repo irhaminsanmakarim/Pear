@@ -174,6 +174,7 @@
     <Compile Include="Responses\PmsSummary\CreatePmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsSummaryResponse.cs" />
+    <Compile Include="Responses\PmsSummary\DeletePmsResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetKpisByPillarIdResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsConfigResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsSummaryConfigurationResponse.cs" />
