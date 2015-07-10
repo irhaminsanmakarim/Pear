@@ -93,7 +93,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Measurement, GetMeasurementsResponse.Measurement>();
 
             Mapper.CreateMap<Kpi, GetKpiToSeriesResponse.Kpi>();
-            Mapper.CreateMap<Kpi, GetKpisResponse.Kpi>();
+            Mapper.CreateMap<Kpi, GetKpisResponse.Kpi>()
+                .ForMember(k => k.PillarName, o => o.MapFrom(k => k.Pillar.Name));
             Mapper.CreateMap<CreateKpiRequest, Kpi>()
                 .ForMember(k => k.Period, o => o.MapFrom(k => k.Periode));
             Mapper.CreateMap<CreateKpiRequest, Data.Entities.Type>();

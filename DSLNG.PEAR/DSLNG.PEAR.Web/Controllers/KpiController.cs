@@ -64,7 +64,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.KeyFieldName = "Id";
             viewModel.Columns.Add("Code");
             viewModel.Columns.Add("Name");
-            viewModel.Columns.Add("PillarId");
+            viewModel.Columns.Add("PillarName");
             viewModel.Columns.Add("Order");
             viewModel.Columns.Add("IsEconomic");
             viewModel.Columns.Add("Remark");

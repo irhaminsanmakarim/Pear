@@ -73,11 +73,11 @@ namespace DSLNG.PEAR.Services
             //var kpis = new Queryable<Kpi>();
             if (request.Take != 0)
             {
-                kpis = DataContext.Kpis.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take);
+                kpis = DataContext.Kpis.Include(x=>x.Pillar).OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take);
             }
             else
             {
-                kpis = DataContext.Kpis;
+                kpis = DataContext.Kpis.Include(x => x.Pillar);
             }
 
             if (request.PillarId > 0)
