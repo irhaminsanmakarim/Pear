@@ -20,12 +20,14 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetPmsDetailsResponse GetPmsDetails(GetPmsDetailsRequest request);
         GetPmsConfigDetailsResponse GetPmsConfigDetails(int id);
         GetKpisByPillarIdResponse GetKpis(int pillarId);
+        DeletePmsResponse DeletePmsSummary(int id);
 
         #region PMS Config
 
         CreatePmsConfigResponse CreatePmsConfig(CreatePmsConfigRequest request);
         UpdatePmsConfigResponse UpdatePmsConfig(UpdatePmsConfigRequest request);
         GetPmsConfigResponse GetPmsConfig(int id);
+        DeletePmsResponse DeletePmsConfig(int id);
 
         #endregion
 
@@ -33,6 +35,7 @@ namespace DSLNG.PEAR.Services.Interfaces
 
         CreatePmsConfigDetailsResponse CreatePmsConfigDetails(CreatePmsConfigDetailsRequest request);
         UpdatePmsConfigDetailsResponse UpdatePmsConfigDetails(UpdatePmsConfigDetailsRequest request);
+        DeletePmsResponse DeletePmsConfigDetails(int id);
 
         #endregion
 

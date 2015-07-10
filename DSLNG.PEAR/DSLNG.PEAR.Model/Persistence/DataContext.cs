@@ -45,6 +45,16 @@ namespace DSLNG.PEAR.Data.Persistence
                         .HasMany(x => x.RelationModels)
                         .WithRequired(x => x.KpiParent);
 
+            modelBuilder.Entity<PmsConfig>()
+                .HasMany(x => x.PmsConfigDetailsList)
+                .WithOptional(x => x.PmsConfig)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<PmsSummary>()
+                .HasMany(x => x.PmsConfigs)
+                .WithOptional(x => x.PmsSummary)
+                .WillCascadeOnDelete();
+
             //modelBuilder.Entity<Menu>()
             //    .HasKey(x => x.Id)
             //    .HasOptional(x => x.Parent)

@@ -801,5 +801,66 @@ namespace DSLNG.PEAR.Services
                 return x;
             }).ToList();
         }
+
+        public DeletePmsResponse DeletePmsConfig(int id)
+        {
+            var response = new DeletePmsResponse();
+            try
+            {
+                var pmsConfig = new PmsConfig { Id = id };
+                DataContext.PmsConfigs.Attach(pmsConfig);
+                DataContext.Entry(pmsConfig).State = EntityState.Deleted;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Pms Config item has been deleted successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+
+        public DeletePmsResponse DeletePmsSummary(int id)
+        {
+            var response = new DeletePmsResponse();
+            try
+            {
+                var pmsSummary = new PmsSummary { Id = id };
+                DataContext.PmsSummaries.Attach(pmsSummary);
+                DataContext.Entry(pmsSummary).State = EntityState.Deleted;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Pms Summary item has been deleted successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public DeletePmsResponse DeletePmsConfigDetails(int id)
+        {
+            var response = new DeletePmsResponse();
+            try
+            {
+                var pmsConfigDetails = new PmsConfigDetails { Id = id };
+                DataContext.PmsConfigDetails.Attach(pmsConfigDetails);
+                DataContext.Entry(pmsConfigDetails).State = EntityState.Deleted;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Pms Config Detail item has been deleted successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
     }
 }

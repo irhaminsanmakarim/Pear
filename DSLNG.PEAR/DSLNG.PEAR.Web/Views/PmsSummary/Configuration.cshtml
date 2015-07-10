@@ -55,11 +55,12 @@
                     <a href="@Url.Action("Update", "KpiAchievement", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
                 </td>
                 <td class="text-button">
-                    <a href="@Url.Action("ScoreIndicatorDetails", "PmsSummary", new { id = item.Id }, null)"  data-toggle="modal" data-target="#modalDialog"><span class="fa fa-table"></span>Details</a>
+                    <a href="@Url.Action("ScoreIndicatorDetails", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-table"></span>Details</a>
                 </td>
                 <td>@item.IsActive</td>
                 <td class="text-button">
                     <a href="@Url.Action("Update", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-pencil-square-o"></span>Edit</a>
+                    <a href='javascript:;' onclick='confirmDelete(@item.Id)'><span class="fa fa-trash-o"></span>Delete</a>
                 </td>
             </tr>
         }
@@ -67,4 +68,18 @@
 </table>
 
 @Html.Partial("_Modal")
+
+@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function (id, controller) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "PmsSummary")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+    </script>
+}
+
 

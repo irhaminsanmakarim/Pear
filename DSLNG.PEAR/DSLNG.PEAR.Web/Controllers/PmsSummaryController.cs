@@ -344,5 +344,14 @@ namespace DSLNG.PEAR.Web.Controllers
             return list;
 
         }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var response = _pmsSummaryService.DeletePmsSummary(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Configuration");
+        }
     }
 }
