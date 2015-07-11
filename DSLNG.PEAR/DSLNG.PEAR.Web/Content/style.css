@@ -1038,3 +1038,7 @@ table.text-center th
     display: table-cell;
     vertical-align: middle;
 }
+
+.popover-title{
+    width:100%;
+}

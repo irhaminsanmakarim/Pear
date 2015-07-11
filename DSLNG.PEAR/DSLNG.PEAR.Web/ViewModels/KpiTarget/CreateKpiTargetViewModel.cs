@@ -23,12 +23,23 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
         public KpiTarget()
         {
             KpiList = new List<SelectListItem>();
+            KpiTargetItems = new List<KpiTargetItem>();
         }
         public List<SelectListItem> KpiList {get; set;}
         public Kpi Kpi { get; set; }
 
         public int KpiId { get; set; }
         public List<double?> ValueList { get; set; }
+        public List<KpiTargetItem> KpiTargetItems { get; set; }
+        //public double? Value { get; set; }
+        public DateTime Periode { get; set; }
+        public PeriodeType PeriodeType { get; set; }
+        //public string Remark { get; set; }
+        //public bool IsActive { get; set; }
+    }
+
+    public class KpiTargetItem
+    {
         public double? Value { get; set; }
         public DateTime Periode { get; set; }
         public PeriodeType PeriodeType { get; set; }
