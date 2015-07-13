@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Responses.KpiTarget
 {
-    public class CreateKpiTargetResponse : BaseResponse
+    public class UpdateKpiTargetItemResponse : BaseResponse
     {
         public int Id { get; set; }
     }

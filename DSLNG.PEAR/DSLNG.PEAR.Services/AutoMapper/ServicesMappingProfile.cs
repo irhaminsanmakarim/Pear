@@ -228,9 +228,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.PmsConfigDetailsList, y => y.MapFrom(z => z.PmsConfigDetailsList));
             Mapper.CreateMap<PmsConfigDetails, GetPmsSummaryConfigurationResponse.PmsConfigDetails>();
 
-            
-            
-            Mapper.CreateMap<CreateKpiTargetRequest.KpiTarget, KpiTarget>();
+
+
+            Mapper.CreateMap<CreateKpiTargetsRequest.KpiTarget, KpiTarget>();
+            Mapper.CreateMap<CreateKpiTargetRequest, KpiTarget>();
+            Mapper.CreateMap<UpdateKpiTargetItemRequest, KpiTarget>();
             Mapper.CreateMap<Kpi, GetKpisByPillarIdResponse.Kpi>();
             Mapper.CreateMap<CreatePmsConfigRequest, PmsConfig>()
                 .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof(ScoringType), z.ScoringType)));

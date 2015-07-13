@@ -88,9 +88,11 @@
     <Compile Include="Requests\KpiAchievement\GetKpiAchievementsRequest.cs" />
     <Compile Include="Requests\KpiAchievement\UpdateKpiAchievementsRequest.cs" />
     <Compile Include="Requests\KpiTarget\CreateKpiTargetRequest.cs" />
+    <Compile Include="Requests\KpiTarget\CreateKpiTargetsRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetKpiTargetsRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetPmsConfigsRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetKpiTargetRequest.cs" />
+    <Compile Include="Requests\KpiTarget\UpdateKpiTargetItemRequest.cs" />
     <Compile Include="Requests\KpiTarget\UpdateKpiTargetRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\PeriodeType.cs" />
@@ -124,9 +126,11 @@
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementsResponse.cs" />
     <Compile Include="Responses\KpiAchievement\UpdateKpiAchievementsResponse.cs" />
     <Compile Include="Responses\KpiTarget\CreateKpiTargetResponse.cs" />
+    <Compile Include="Responses\KpiTarget\CreateKpiTargetsResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetKpiTargetsResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetPmsConfigsResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetKpiTargetResponse.cs" />
+    <Compile Include="Responses\KpiTarget\UpdateKpiTargetItemResponse.cs" />
     <Compile Include="Responses\KpiTarget\UpdateKpiTargetResponse.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\KpiRelationModel.cs" />
     <Compile Include="Responses\Menu\GetSiteMenuActiveResponse.cs" />

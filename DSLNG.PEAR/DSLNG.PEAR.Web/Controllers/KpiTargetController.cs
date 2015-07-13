@@ -71,7 +71,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return Content(response.Message);
         }
-        
+
         public ActionResult Index()
         {
             return View();
@@ -153,10 +153,12 @@ namespace DSLNG.PEAR.Web.Controllers
                             var kpiSelectListItem = new List<SelectListItem>();
                             kpiSelectListItem.Add(new SelectListItem { Text = pmsConfigDetail.Kpi.Name, Value = pmsConfigDetail.Kpi.Id.ToString() });
                             var kpi = pmsConfigDetail.Kpi.MapTo<Kpi>();
-                            kpiTargetList.Add(new KpiTarget { 
-                                Kpi = kpi, 
-                                KpiList = kpiSelectListItem, 
+                            kpiTargetList.Add(new KpiTarget
+                            {
+                                Kpi = kpi,
+                                KpiList = kpiSelectListItem,
                                 Periode = new DateTime(pmsConfig.PmsSummary.Year, 1, 1),
+                                KpiId = pmsConfigDetail.Kpi.Id
                                 //IsActive = pmsConfig.IsActive 
                             });
                         }
@@ -176,26 +178,23 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             if (viewModel.PillarKpiTarget.Count > 0)
             {
-                var request = new CreateKpiTargetRequest();
-                request.KpiTargets = new List<CreateKpiTargetRequest.KpiTarget>();
+                var request = new CreateKpiTargetsRequest();
+                request.KpiTargets = new List<CreateKpiTargetsRequest.KpiTarget>();
                 foreach (var item in viewModel.PillarKpiTarget)
                 {
                     if (item.KpiTargetList.Count > 0)
                     {
                         foreach (var kpi in item.KpiTargetList)
                         {
-                            foreach (var kpiTargetItem in kpi.KpiTargetItems)
+                            request.KpiTargets.Add(new CreateKpiTargetsRequest.KpiTarget
                             {
-                                request.KpiTargets.Add(new CreateKpiTargetRequest.KpiTarget
-                                {
-                                    IsActive = true,
-                                    KpiId = kpi.KpiId,
-                                    Periode = kpiTargetItem.Periode,
-                                    PeriodeType = (DSLNG.PEAR.Data.Enums.PeriodeType)kpiTargetItem.PeriodeType,
-                                    Remark = kpiTargetItem.Remark,
-                                    Value = kpiTargetItem.Value
-                                });
-                            }
+                                IsActive = true,
+                                KpiId = kpi.KpiId,
+                                Periode = kpi.Periode,
+                                PeriodeType = (DSLNG.PEAR.Data.Enums.PeriodeType)kpi.PeriodeType,
+                                Remark = kpi.Remark,
+                                Value = kpi.Value
+                            });
                         }
                     }
                 }
@@ -230,7 +229,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 //        }
                 //    }
                 //}
-                var response = _kpiTargetService.Create(request);
+                var response = _kpiTargetService.Creates(request);
                 TempData["IsSuccess"] = response.IsSuccess;
                 TempData["Message"] = response.Message;
                 if (response.IsSuccess)
@@ -291,6 +290,23 @@ namespace DSLNG.PEAR.Web.Controllers
                 }
             }
             return data;
+        }
+
+        [HttpPost]
+        public JsonResult KpiTargetMonthly(KpiTargetItem kpiTarget)
+        {
+            if (kpiTarget.Id > 0)
+            {
+                var request = kpiTarget.MapTo<UpdateKpiTargetItemRequest>();
+                var response = _kpiTargetService.UpdateKpiTargetItem(request);
+                return Json(new { Id = response.Id, Message = response.Message });
+            }
+            else
+            {
+                var request = kpiTarget.MapTo<CreateKpiTargetRequest>();
+                var response = _kpiTargetService.Create(request);
+                return Json(new { Id = response.Id, Message = response.Message });
+            }
         }
     }
 }

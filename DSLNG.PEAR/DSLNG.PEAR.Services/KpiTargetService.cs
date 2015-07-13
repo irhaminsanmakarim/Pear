@@ -19,9 +19,9 @@ namespace DSLNG.PEAR.Services
             : base(dataContext)
         {
         }
-        public CreateKpiTargetResponse Create(CreateKpiTargetRequest request)
+        public CreateKpiTargetsResponse Creates(CreateKpiTargetsRequest request)
         {
-            var response = new CreateKpiTargetResponse();
+            var response = new CreateKpiTargetsResponse();
             try
             {
                 if (request.KpiTargets.Count > 0)
@@ -187,7 +187,7 @@ namespace DSLNG.PEAR.Services
 
         public UpdateKpiTargetResponse UpdateKpiTarget(UpdateKpiTargetRequest request)
         {
-            PeriodeType periodeType = (PeriodeType) Enum.Parse(typeof (PeriodeType), request.PeriodeType);
+            PeriodeType periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), request.PeriodeType);
             var response = new UpdateKpiTargetResponse();
             response.PeriodeType = periodeType;
             try
@@ -235,6 +235,50 @@ namespace DSLNG.PEAR.Services
             catch (InvalidOperationException invalidOperationException)
             {
                 response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
+
+        public CreateKpiTargetResponse Create(CreateKpiTargetRequest request)
+        {
+            var response = new CreateKpiTargetResponse();
+            try
+            {
+
+                var data = request.MapTo<KpiTarget>();
+                data.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
+                DataContext.KpiTargets.Add(data);
+                DataContext.SaveChanges();
+
+                response.IsSuccess = true;
+                response.Message = "KPI Target has been added successfully";
+                response.Id = data.Id;
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+            return response;
+        }
+
+
+        public UpdateKpiTargetItemResponse UpdateKpiTargetItem(UpdateKpiTargetItemRequest request)
+        {
+            var response = new UpdateKpiTargetItemResponse();
+            try
+            {
+                var kpiTarget = request.MapTo<KpiTarget>();
+                DataContext.KpiTargets.Attach(kpiTarget);
+                DataContext.Entry(kpiTarget).State = EntityState.Modified;
+                DataContext.SaveChanges();
+                response.Id = request.Id;
+                response.IsSuccess = true;
+                response.Message = "KPI Target item has been updated successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
             }
 
             return response;

@@ -226,7 +226,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetArtifactResponse.PlotResponse, GetSpeedometerChartDataRequest.PlotBandRequest>();
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetSpeedometerChartDataRequest.SeriesRequest>();
 
-            Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.KpiTarget.KpiTarget, CreateKpiTargetRequest.KpiTarget>();
+            Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.KpiTarget.KpiTargetItem, CreateKpiTargetRequest>();
+            Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.KpiTarget.KpiTargetItem, UpdateKpiTargetItemRequest>()
+                .ForMember(x => x.PeriodeType, o => o.MapFrom(x => (DSLNG.PEAR.Data.Enums.PeriodeType)x.PeriodeType));
 
             Mapper.CreateMap<CreateConversionViewModel, CreateConversionRequest>();
             Mapper.CreateMap<GetConversionResponse, UpdateConversionViewModel>()

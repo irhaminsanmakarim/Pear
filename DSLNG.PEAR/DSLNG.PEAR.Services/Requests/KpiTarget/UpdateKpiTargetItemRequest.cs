@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.KpiTarget
 {
-    public class CreateKpiTargetRequest
+    public class UpdateKpiTargetItemRequest
     {
         public int Id { get; set; }
         public int KpiId { get; set; }
