@@ -18,6 +18,7 @@ using DSLNG.PEAR.Web.ViewModels.Artifact;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
+    [Authorize]
     public class PmsSummaryController : BaseController
     {
         private readonly IPmsSummaryService _pmsSummaryService;

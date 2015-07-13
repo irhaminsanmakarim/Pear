@@ -549,6 +549,8 @@
     <Content Include="Views\Template\View.cshtml" />
     <Content Include="Views\PmsSummary\_ScoreIndicatorDetails.cshtml" />
     <Content Include="Views\AreaChart\_Create.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\UnAuthorized\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -597,6 +599,7 @@
     <Compile Include="Attributes\PearMenuAttribute.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\ViewModelMappingProfile.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\ApiUserController.cs" />
     <Compile Include="Controllers\ArtifactController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -620,6 +623,7 @@
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
+    <Compile Include="Controllers\UnAuthorizedController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
@@ -633,6 +637,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Account\AccountViewModels.cs" />
     <Compile Include="ViewModels\Artifact\AreaChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\AreaChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\ArtifactDesignerViewModel.cs" />
@@ -717,6 +722,7 @@
     <Folder Include="ViewModels\CorporatePortofolio\" />
     <Folder Include="Views\CorporatePortofolio\" />
     <Folder Include="Views\Test\" />
+    <Folder Include="Views\UnAuthorize\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DSLNG.PEAR.Common\DSLNG.PEAR.Common.csproj">
