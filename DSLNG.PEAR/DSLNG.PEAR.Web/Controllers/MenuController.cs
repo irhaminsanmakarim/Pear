@@ -92,7 +92,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var rootMenuActive = TempData["RootMenuActive"].MapTo<Data.Entities.Menu>();
             //ViewBag.RootMenuActive = rootMenuActive;
 
-            var menus = _menuService.GetSiteMenus(new GetSiteMenusRequest() { IncludeChildren = true});
+            var menus = _menuService.GetSiteMenus(new GetSiteMenusRequest() { IncludeChildren = true, RoleId = 1});
             menus.MenuIdActive = rootMenuActive.Id;
             
 

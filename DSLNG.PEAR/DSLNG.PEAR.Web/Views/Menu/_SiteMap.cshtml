@@ -31,7 +31,7 @@
         //var mainclass = menu.ParentId==0 && ViewBag.SiteMenuActive==menu.Module?"active":"";
         var mainclass = menu.Id == Model.MenuIdActive ? "active" : "";
         <li class="@mainclass">
-            <a href="@url_href" class="">
+            <a href="@menu.Url" class="">
             @if (menu.Icon != null){
                 <i class="fa @menu.Icon"></i><span>@menu.Name</span>
             }

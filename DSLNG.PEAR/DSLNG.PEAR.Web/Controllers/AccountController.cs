@@ -16,7 +16,8 @@ namespace DSLNG.PEAR.Web.Controllers
     {
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult Login() {
+        public ActionResult Login(string message) {
+            ViewBag.message = message;
             return View();
         }
 
@@ -45,6 +46,9 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var userService = ObjectFactory.Container.GetInstance<IUserService>();
             var user = userService.Login(new LoginUserRequest { Username = username, Password = password });
+            if (user != null) {
+                return user.IsSuccess;
+            }
             return false;
         }
         public ActionResult Register() {
