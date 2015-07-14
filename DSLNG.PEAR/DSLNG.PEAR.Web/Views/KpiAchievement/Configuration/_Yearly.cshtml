@@ -1,7 +1,9 @@
-﻿<table class="table table-hover table-striped table-bordered">
+﻿@model DSLNG.PEAR.Web.ViewModels.KpiAchievement.ConfigurationKpiAchievementsViewModel
+
+
+<table class="table table-hover table-striped table-bordered">
     <thead>
         <tr>
-
             <th style="width: 30%;">KPI Name</th>
             <th>Measurement</th>
             <th style="width: 50px;">2015</th>
@@ -23,45 +25,24 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
+        @foreach (var kpi in Model.Kpis)
+        {
+            <tr>
+                <td>@kpi.Name @kpi.KpiAchievements.Count</td>
+                <td>@kpi.Measurement</td>
 
-
-            <td>Plant Production</td>
-            <td>MMBTU</td>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th class="remark_sign">
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-            <th>
-                <input type="text" class="form-control-small" placeholder="Value"></th>
-        </tr>
-
+                @foreach (var kpiAchievement in kpi.KpiAchievements)
+                {
+                    <th>
+                        <input type="text" class="form-control-small" placeholder="@kpiAchievement.Value">
+                        <input type="hidden" class="form-control-small" placeholder="@kpiAchievement.Id">
+                        <input type="hidden" class="form-control-small" placeholder="@kpiAchievement.Remark">
+                        <input type="hidden" class="form-control-small" placeholder="@kpiAchievement.Periode">
+                    </th>
+            
+                }
+            </tr>
+        }
     </tbody>
 </table>
 

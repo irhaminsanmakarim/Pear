@@ -92,19 +92,19 @@
         });
     }
 
-    $(document).ready(function () {
+    var popOverElem;
+    $(document).ready(function() {
         checkRemark();
-
         $('.kpi-popover').popover({
             html: true,
-            title: function () {
+            title: function() {
                 return $(this).parent().find('.header-popover').val();
             },
-            content: function () {
+            content: function() {
                 return $('.popover-content').html();
             }
         });
-    })
+    });
 
     $(document).on('click', '.kpi-popover', function () {
         //$(this).popover({
@@ -116,8 +116,15 @@
         //        return $('.popover-content').html();
         //    }
         //});
-
+        //alert('masuk sini');
         //$('.kpi-popover').not(this).popover('hide');
+        /*console.log(idOpened);
+        if (idOpened > -1) {
+            $('#' + idOpened).popover('hide');
+        }*/
+        if (popOverElem !== undefined) {
+            popOverElem.popover('hide');
+        }
         var value = $(this).parent().find('.valueMonthly').val();
         var remark = $(this).parent().find('.remarkMonthly').val();
         var id = $(this).parent().find('.idMonthly').val();
@@ -130,6 +137,7 @@
         $('.popover').find('input[name="KpiId"]').attr('value', kpiId);
         $('.popover').find('input[name="Periode"]').attr('value', periode);
         $('.popover').find('input[name="PeriodeType"]').attr('value', periodeType);
+        popOverElem = $(this);
     });
 
     $(document).on('click', '.cancel-popover', function () {

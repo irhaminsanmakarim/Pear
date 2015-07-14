@@ -82,14 +82,25 @@ namespace DSLNG.PEAR.Web.Controllers
             return Content(response.Message);
         }
 
-        public ActionResult Configuration(string periodeType)
+        public ActionResult Configuration(int id, string periodeType)
         {
+            int roleGroupId = id;
             PeriodeType pType = string.IsNullOrEmpty(periodeType)
                                     ? PeriodeType.Yearly
                                     : (PeriodeType) Enum.Parse(typeof (PeriodeType), periodeType);
-            //var response 
-            var viewModel = new ConfigurationKpiAchievementsViewModel();
-            return View(viewModel);
+
+            var request = new GetKpiAchievementsConfigurationRequest();
+            request.PeriodeType = pType.ToString();
+            request.RoleGroupId = roleGroupId;
+            var response = _kpiAchievementService.GetKpiAchievementsConfiguration(request);
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<ConfigurationKpiAchievementsViewModel>();
+                return View(viewModel);    
+            }
+
+            return base.ErrorPage(response.Message);
+
         }
 
 	}

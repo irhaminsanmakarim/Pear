@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Web.ViewModels.KpiAchievement
+namespace DSLNG.PEAR.Services.Responses.KpiAchievement
 {
-    public class ConfigurationKpiAchievementsViewModel
+    public class GetKpiAchievementsConfigurationResponse : BaseResponse
     {
-        public ConfigurationKpiAchievementsViewModel()
+        public GetKpiAchievementsConfigurationResponse()
         {
             Kpis = new List<Kpi>();
-        }
+        } 
+
         public IList<Kpi> Kpis { get; set; }
         public string RoleGroupName { get; set; }
         public int RoleGroupId { get; set; }
@@ -26,9 +28,9 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiAchievement
             public string Name { get; set; }
             public string PeriodeType { get; set; }
             public string Measurement { get; set; }
-            public IList<KpiAchievement> KpiAchievements { get; set; }
+            public IList<KpiAchievement> KpiAchievements { get; set; }    
         }
-        
+
         public class KpiAchievement
         {
             public int Id { get; set; }

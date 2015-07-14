@@ -345,6 +345,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<AllKpiAchievementsResponse, IndexKpiAchievementViewModel>();
             Mapper.CreateMap<AllKpiAchievementsResponse.Kpi, IndexKpiAchievementViewModel.Kpi>();
             Mapper.CreateMap<AllKpiAchievementsResponse.RoleGroup, IndexKpiAchievementViewModel.RoleGroup>();
+
+            Mapper.CreateMap<GetKpiAchievementsConfigurationResponse, ConfigurationKpiAchievementsViewModel>();
+            Mapper.CreateMap<GetKpiAchievementsConfigurationResponse.Kpi, ConfigurationKpiAchievementsViewModel.Kpi>();
+            Mapper.CreateMap<GetKpiAchievementsConfigurationResponse.KpiAchievement, ConfigurationKpiAchievementsViewModel.KpiAchievement>();
         }
     }
 }

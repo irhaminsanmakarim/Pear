@@ -303,6 +303,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Kpi, AllKpiAchievementsResponse.Kpi>()
                   .ForMember(x => x.Type, y => y.MapFrom(z => z.RoleGroup.Name))
                   .ForMember(x => x.Measurement, y => y.MapFrom(z => z.Measurement.Name));
+
+            Mapper.CreateMap<Kpi, GetKpiAchievementsConfigurationResponse.Kpi>()
+                .ForMember(x => x.KpiAchievements, y => y.Ignore())
+                .ForMember(x => x.Measurement, y => y.MapFrom(z => z.Measurement.Name));
+
+            Mapper.CreateMap<KpiAchievement, GetKpiAchievementsConfigurationResponse.KpiAchievement>();
         }
     }
 }

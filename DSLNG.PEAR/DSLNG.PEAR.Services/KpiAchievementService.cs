@@ -126,7 +126,7 @@ namespace DSLNG.PEAR.Services
             PeriodeType periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), request.PeriodeType);
             var response = new UpdateKpiAchievementsResponse();
             response.PeriodeType = periodeType;
-            
+
             try
             {
                 foreach (var pillar in request.Pillars)
@@ -213,6 +213,70 @@ namespace DSLNG.PEAR.Services
             catch (InvalidOperationException invalidOperationException)
             {
                 response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
+
+        public GetKpiAchievementsConfigurationResponse GetKpiAchievementsConfiguration(GetKpiAchievementsConfigurationRequest request)
+        {
+            var response = new GetKpiAchievementsConfigurationResponse();
+            try
+            {
+                var periodeType = string.IsNullOrEmpty(request.PeriodeType)
+                                      ? PeriodeType.Yearly
+                                      : (PeriodeType)Enum.Parse(typeof(PeriodeType), request.PeriodeType);
+
+                var kpis = DataContext.Kpis
+                    .Include(x => x.RoleGroup)
+                    .Include(x => x.Measurement)
+                    .Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
+
+                var kpiAchievements = DataContext.KpiAchievements
+                    .Include(x => x.Kpi)
+                    .Where(x => x.PeriodeType == PeriodeType.Yearly).ToList();
+
+                switch (periodeType)
+                {
+                    case PeriodeType.Yearly:
+                        foreach (var kpi in kpis)
+                        {
+                            var kpiDto = kpi.MapTo<GetKpiAchievementsConfigurationResponse.Kpi>();
+                            foreach (var number in YearlyNumbers)
+                            {
+                                var achievement = kpiAchievements.SingleOrDefault(x => x.Kpi.Id == kpi.Id && x.Periode.Year == number);
+                                if (achievement != null)
+                                {
+                                    var achievementDto =
+                                        achievement.MapTo<GetKpiAchievementsConfigurationResponse.KpiAchievement>();
+                                    kpiDto.KpiAchievements.Add(achievementDto);
+                                }
+                                else
+                                {
+                                    var achievementDto = new GetKpiAchievementsConfigurationResponse.KpiAchievement();
+                                    achievementDto.Periode = new DateTime(number, 1, 1);
+                                    kpiDto.KpiAchievements.Add(achievementDto);
+                                }
+                            }
+
+
+                            response.Kpis.Add(kpiDto);
+                        }
+                        break;
+                }
+
+                var roleGroup = DataContext.RoleGroups.Single(x => x.Id == request.RoleGroupId);
+                response.RoleGroupName = roleGroup.Name;
+                response.RoleGroupId = roleGroup.Id;
+                response.IsSuccess = true;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
             }
 
             return response;

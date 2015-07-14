@@ -8,24 +8,25 @@
 <section>
     <div class="row">
         <div class="title_page" style="border: none!important;">
-            <div class="title">KPI Achievement</div>
-            <div class="description_year">@Model.KpiName</div>
+            <div class="title" style="margin-right: 25px;">KPI Achievement</div>
+            <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none;width: 30px;height: 30px;"></img>
+            <div class="description_year"></div>
         </div>
     </div>
 
     <ul class="nav nav-tabs">
         <li role="presentation" class="active">
-            <a href="#yearly" aria-controls="home" role="tab" data-toggle="tab">
+            <a href="#yearly" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="yearly">
                 <div>Yearly</div>
             </a>
         </li>
         <li role="presentation">
-            <a href="#monthly" aria-controls="home" role="tab" data-toggle="tab">
+            <a href="#monthly" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="monthly">
                 <div>Monthly</div>
             </a>
         </li>
         <li role="presentation">
-            <a href="#daily" aria-controls="home" role="tab" data-toggle="tab">
+            <a href="#daily" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="daily">
                 <div>Daily</div>
             </a>
         </li>
@@ -33,7 +34,7 @@
 
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="yearly">
-            @Html.Partial("Configuration/_Yearly")
+            @Html.Partial("Configuration/_Yearly", Model)
         </div>
         <div role="tabpanel" class="tab-pane" id="monthly">
             monthly
@@ -44,5 +45,44 @@
     </div>
 </section>
 
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle=tab]').click(function () {
+                var that = $(this);
+                var periodeType = that.attr('data-periodeType');
+                $.ajax({
+                    url: '@Url.Action("ConfigurationPartial")',
+                    type: 'GET',
+                    data: { id: '@Model.RoleGroupId', periodeType: periodeType },
+                    beforeSend: function () {
+                        $('.ajax-loader2').show();
+                        //$('.content-wrapper').hide();
+                    }
+                })
+                .done(function (data) {
+                    $('.ajax-loader2').hide();
+                    $('.update-content').html(data);
+                    $('.content-wrapper').show();
+                });
+                @*var val = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("UpdatePartial")',
+                    type: 'GET',
+                    data: { id: '@Model.PmsSummaryId', periodeType: val },
+                beforeSend: function () {
+                    $('.ajax-loader2').show();
+                    $('.content-wrapper').hide();
+                }
+                })
+                .done(function (data) {
+                    $('.ajax-loader2').hide();
+                    $('.update-content').html(data);
+                    $('.content-wrapper').show();
+                });*@
+            });
+        });
 
-
+    </script>
+}
