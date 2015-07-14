@@ -59,6 +59,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.RoleGroup, GetUsersResponse.RoleGroup>();
             Mapper.CreateMap<Data.Entities.User, GetUserResponse>();
             Mapper.CreateMap<Data.Entities.User, LoginUserResponse>();
+            Mapper.CreateMap<Data.Entities.RoleGroup, LoginUserResponse.RoleGroup>();
             //Mapper.CreateMap<
 
             /*Level*/

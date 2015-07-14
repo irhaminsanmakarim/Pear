@@ -82,8 +82,12 @@ namespace DSLNG.PEAR.Web.Controllers
             return Content(response.Message);
         }
 
-        public ActionResult Configuration()
+        public ActionResult Configuration(string periodeType)
         {
+            PeriodeType pType = string.IsNullOrEmpty(periodeType)
+                                    ? PeriodeType.Yearly
+                                    : (PeriodeType) Enum.Parse(typeof (PeriodeType), periodeType);
+            //var response 
             var viewModel = new ConfigurationKpiAchievementsViewModel();
             return View(viewModel);
         }

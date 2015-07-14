@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using System.Linq;
 using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
@@ -9,16 +7,18 @@ using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
-using Microsoft.AspNet.Identity;
+//using Microsoft.AspNet.Identity;
 
 
 namespace DSLNG.PEAR.Services
 {
-    public class UserService : BaseService, IUserService 
+    public class UserService : BaseService, IUserService
     {
-        private PasswordHasher _pass = new PasswordHasher();
+        //private PasswordHasher _pass = new PasswordHasher();
+        private SimpleCrypto.PBKDF2 crypto = new SimpleCrypto.PBKDF2();
 
-        public UserService(IDataContext dataContext) : base(dataContext)
+        public UserService(IDataContext dataContext)
+            : base(dataContext)
         {
         }
 
@@ -26,7 +26,7 @@ namespace DSLNG.PEAR.Services
         {
             var users = DataContext.Users.Include(u => u.Role).ToList();
             var response = new GetUsersResponse();
-            
+
             response.Users = users.MapTo<GetUsersResponse.User>();
 
             return response;
@@ -36,7 +36,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var user = DataContext.Users.First(x => x.Id == request.Id);
+                var user = DataContext.Users.Include(u => u.Role).First(x => x.Id == request.Id);
                 var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
                 //response.RoleName = DataContext.RoleGroups.FirstOrDefault(x => x.Id == user.RoleId).Name.ToString();
 
@@ -59,7 +59,8 @@ namespace DSLNG.PEAR.Services
             {
                 var user = request.MapTo<User>();
                 user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
-                user.Password = _pass.HashPassword(request.Password);
+                user.Password = crypto.Compute(request.Password, request.Password);
+                //user.Password = _pass.HashPassword(request.Password);
                 DataContext.Users.Add(user);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
@@ -82,7 +83,8 @@ namespace DSLNG.PEAR.Services
                 user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
                 if (request.ChangePassword && request.Password != null)
                 {
-                    user.Password = _pass.HashPassword(request.Password);
+                    user.Password = crypto.Compute(request.Password);
+                    user.PasswordSalt = crypto.Salt;
                 }
                 DataContext.Users.Attach(user);
                 DataContext.Entry(user).State = EntityState.Modified;
@@ -123,24 +125,25 @@ namespace DSLNG.PEAR.Services
             var response = new LoginUserResponse();
 
             try
-            {   
-                var user = DataContext.Users.Where(x => x.Username == request.Username).Include(x=>x.Role).First();
-                if (_pass.VerifyHashedPassword(user.Password, request.Password).Equals(1))
+            {
+                var user = DataContext.Users.Where(x => x.Username == request.Username).Include(x => x.Role).First();
+                if (user != null && user.Password == crypto.Compute(request.Password, user.PasswordSalt))
                 {
+                    //Include(x => x.Role).
                     response = user.MapTo<LoginUserResponse>();
                     response.IsSuccess = true;
                 }
                 else
                 {
                     response.IsSuccess = false;
-                    response.Message = "Failed login using username <"+request.Username+"> and password <"+request.Password+">";
+                    response.Message = string.Format("Failed login using username <{0}> and password <{1}>", request.Username, request.Password);
                 }
             }
             catch (System.InvalidOperationException x)
             {
-                
+
                 response.IsSuccess = false;
-                response.Message = "Failed login using username <" + request.Username + "> and password <" + request.Password + "> " +x.Message;
+                response.Message = string.Format("Failed login using username <{0}> and password <{1}> {2}", request.Username, request.Password, x.Message);
             }
 
             return response;

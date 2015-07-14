@@ -82,7 +82,7 @@ aside.left-content
     top: 300px;
     right: -10px;
     cursor: pointer;
-    z-index:99;
+    z-index: 99;
 }
 
 aside.left-content > *
@@ -798,8 +798,9 @@ h2
     text-align: center;
 }
 
-.template-view .layout-column {
-    border:none;
+.template-view .layout-column
+{
+    border: none;
 }
 
 .column-properties
@@ -1039,6 +1040,31 @@ table.text-center th
     vertical-align: middle;
 }
 
-.popover-title{
-    width:100%;
+.popover-title
+{
+    width: 100%;
+}
+
+.remark_sign
+{
+    z-index: 9;
+    background-image: url("img/remark_sign.png");
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    /*float: left;*/
+}
+
+
+.form-control-small
+{
+    width: 37px;
+    margin-left: 4px;
+    background-color: #FAFAFA;
+    border: 1px solid #ccc;
+}
+
+.nav-tabs > li > a
+{
+    text-align: center;
+    color: #3f454f;
 }

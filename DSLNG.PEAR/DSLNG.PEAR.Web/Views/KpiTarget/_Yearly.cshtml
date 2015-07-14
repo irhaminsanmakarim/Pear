@@ -29,15 +29,18 @@
                         <td>
                             <h6>@kpi.Measurement</h6>
                         </td>
-                        <td>
-                            <input type="text" class="form-control" placeholder="Remark"></td>
+                        @*<td>
+                            <input type="text" class="form-control" placeholder="Remark"></td>*@
                         @{ int c = 0;}
                         @foreach (var kpiTarget in kpi.KpiTargets)
                         {
                             <td>
+                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Remark, new { @class = "form-control", @placeholder = "Remark"})
+                            </td>
+                            <td>
                                 @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Id, new {@class="form-control-small"})
                                 @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Periode, new {@class="form-control-small"})
-                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Value, new {@class="form-control"})
+                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Value, new { @class = "form-control" })
                             </td>
                             c++;
                             @*<td>

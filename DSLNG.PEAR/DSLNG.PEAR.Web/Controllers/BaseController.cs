@@ -1,16 +1,57 @@
-﻿using System;
+﻿using DSLNG.PEAR.Services.Interfaces;
+using DSLNG.PEAR.Web.DependencyResolution;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebMatrix.WebData;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
+    //[Authorize]
     public class BaseController : Controller
     {
         public ContentResult ErrorPage(string message)
         {
             return Content(message);
+        }
+
+        protected override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            //if(Request.IsAuthenticated){
+            //    var testId = WebSecurity.CurrentUserId;
+            //}
+            //var userService = ObjectFactory.Container.GetInstance<IUserService>();
+            //var userRole = userService.GetUser(new Services.Requests.User.GetUserRequest { Id = 1, Email = "" });
+            //var roles = userRole.Role;
+            var user = HttpContext.User.Identity.Name;
+            if (Request.IsAuthenticated)
+            {
+                var currentUrl = filterContext.HttpContext.Request.RawUrl;
+            }
+            else {
+                //throw new UnauthorizedAccessException("You don't have authorization to view this page, please contact system administrator if you have authorization to this page");
+                //RedirectToAction("Login", "Account");
+               
+            }
+            //var menuService = ObjectFactory.Container.GetInstance<IMenuService>();
+            //var menu = menuService.GetMenuByRole(new Services.Requests.Menu.GetMenuRequestByRoleId { RoleId = roles.Id });
+            //bool authorized = true;
+            //jika gagal login
+            //throw new UnauthorizedAccessException("message");
+            
+            base.OnAuthorization(filterContext);
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            if(filterContext.Exception.GetType() == typeof (UnauthorizedAccessException)){
+                //Redirect user to error page
+                filterContext.ExceptionHandled = true;
+                filterContext.Result = RedirectToAction("Error", "UnAuthorized");
+            }
+            base.OnException(filterContext);
         }
     }
 }

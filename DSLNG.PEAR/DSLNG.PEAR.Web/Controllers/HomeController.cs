@@ -6,7 +6,8 @@ using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
-    public class HomeController : Controller
+    [Authorize]
+    public class HomeController : BaseController
     {
         //
         // GET: /Home/
@@ -63,6 +64,7 @@ namespace DSLNG.PEAR.Web.Controllers
         // POST: /Home/Edit/5
 
         [HttpPost]
+        [Authorize]
         public ActionResult Edit(int id, FormCollection collection)
         {
             try
