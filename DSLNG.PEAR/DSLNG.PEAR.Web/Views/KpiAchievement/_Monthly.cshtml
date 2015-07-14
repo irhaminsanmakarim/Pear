@@ -76,29 +76,3 @@
         a++;
     }
 }
-
-<div class="popover-content" style="display:none">
-    <label class="control-label">Value</label>
-    <input type="text" name="Value" class="form-control" />
-    <label class="control-label">Remark</label>
-    <input type="text" name="Remark" class="form-control" />
-    <input type="hidden" name="Id" />
-    <input type="hidden" name="KpiId" />
-    <input type="hidden" name="Periode" />
-    <input type="hidden" name="PeriodeType" />
-    <button type="button" class="btn btn-primary submit-popover">Ok</button>
-    <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
-</div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.kpi-popover').popover({
-            html: true,
-            title: function () {
-                return $(this).parent().find('.header-popover').val();
-            },
-            content: function () {
-                return $('.popover-content').html();
-            }
-        });
-    });
-</script>
