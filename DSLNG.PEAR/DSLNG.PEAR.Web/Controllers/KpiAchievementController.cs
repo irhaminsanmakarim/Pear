@@ -83,16 +83,18 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
 
-        public ActionResult Configuration(int id, string periodeType)
+        public ActionResult Configuration(ConfigurationParamViewModel paramViewModel)
         {
-            int roleGroupId = id;
-            PeriodeType pType = string.IsNullOrEmpty(periodeType)
+            int roleGroupId = paramViewModel.Id;
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
                                     ? PeriodeType.Yearly
-                                    : (PeriodeType) Enum.Parse(typeof (PeriodeType), periodeType);
+                                    : (PeriodeType) Enum.Parse(typeof (PeriodeType), paramViewModel.PeriodeType);
 
             var request = new GetKpiAchievementsConfigurationRequest();
             request.PeriodeType = pType.ToString();
             request.RoleGroupId = roleGroupId;
+            request.Year = paramViewModel.Year;
+            request.Month = paramViewModel.Month;
             var response = _kpiAchievementService.GetKpiAchievementsConfiguration(request);
             if (response.IsSuccess)
             {
@@ -102,6 +104,28 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return base.ErrorPage(response.Message);
 
+        }
+
+        public ActionResult ConfigurationPartial(ConfigurationParamViewModel paramViewModel)
+        {
+            int roleGroupId = paramViewModel.Id;
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
+                                    ? PeriodeType.Yearly
+                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
+
+            var request = new GetKpiAchievementsConfigurationRequest();
+            request.PeriodeType = pType.ToString();
+            request.RoleGroupId = roleGroupId;
+            request.Year = paramViewModel.Year;
+            request.Month = paramViewModel.Month;
+            var response = _kpiAchievementService.GetKpiAchievementsConfiguration(request);
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<ConfigurationKpiAchievementsViewModel>();
+                return PartialView("Configuration/_" + pType.ToString(), viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
         }
 
         [HttpPost]

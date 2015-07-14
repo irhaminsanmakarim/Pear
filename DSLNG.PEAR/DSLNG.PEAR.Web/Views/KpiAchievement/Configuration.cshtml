@@ -16,12 +16,12 @@
 
     <ul class="nav nav-tabs">
         <li role="presentation" class="active">
-            <a href="#yearly" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="yearly">
+            <a href="#yearly" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="Yearly">
                 <div>Yearly</div>
             </a>
         </li>
         <li role="presentation">
-            <a href="#monthly" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="monthly">
+            <a href="#monthly" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="Monthly">
                 <div>Monthly</div>
             </a>
         </li>
@@ -33,10 +33,10 @@
     </ul>
 
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="yearly">
+        <div role="tabpanel" class="tab-pane active" id="Yearly">
             @Html.Partial("Configuration/_Yearly", Model)
         </div>
-        <div role="tabpanel" class="tab-pane" id="monthly">
+        <div role="tabpanel" class="tab-pane" id="Monthly">
             monthly
         </div>
         <div role="tabpanel" class="tab-pane" id="daily">
@@ -48,25 +48,31 @@
 @section Scripts
 {
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('[data-toggle=tab]').click(function () {
+        $(document).ready(function() {
+            $('[data-toggle=tab]').click(function() {
                 var that = $(this);
                 var periodeType = that.attr('data-periodeType');
+                var data = {};
+                data.id = '@Model.RoleGroupId';
+                data.periodeType = periodeType;
+                if (periodeType === 'Monthly') {
+                    data.year = 2015;
+                }
                 $.ajax({
                     url: '@Url.Action("ConfigurationPartial")',
                     type: 'GET',
-                    data: { id: '@Model.RoleGroupId', periodeType: periodeType },
-                    beforeSend: function () {
+                    data: data,
+                    beforeSend: function() {
                         $('.ajax-loader2').show();
                         //$('.content-wrapper').hide();
                     }
                 })
-                .done(function (data) {
+                .done(function (result) {
                     $('.ajax-loader2').hide();
-                    $('.update-content').html(data);
-                    $('.content-wrapper').show();
+                    $('#' + periodeType).html(result);
+                    //$('.content-wrapper').show();
                 });
-                @*var val = $(this).val();
+                                @*var val = $(this).val();
                 $.ajax({
                     url: '@Url.Action("UpdatePartial")',
                     type: 'GET',

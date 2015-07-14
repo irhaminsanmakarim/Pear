@@ -10,5 +10,7 @@ namespace DSLNG.PEAR.Services.Requests.KpiAchievement
     {
         public string PeriodeType { get; set; }
         public int RoleGroupId { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
     }
 }

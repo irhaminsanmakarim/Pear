@@ -555,6 +555,7 @@
     <Content Include="Views\KpiAchievement\Configuration\_Yearly.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\UnAuthorized\Error.cshtml" />
+    <Content Include="Views\KpiAchievement\Configuration\_Monthly.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -655,6 +656,7 @@
     <Compile Include="ViewModels\Conversion\Measurement.cs" />
     <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\ConfigurationKpiAchievementsViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\ConfigurationParamViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\IndexKpiAchievementViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\KpiAchievementsViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\UpdateKpiAchievementsViewModel.cs" />

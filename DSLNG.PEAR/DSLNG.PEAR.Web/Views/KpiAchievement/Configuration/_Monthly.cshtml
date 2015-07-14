@@ -1,0 +1,48 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.KpiAchievement.ConfigurationKpiAchievementsViewModel
+
+haha ini monthly
+<table class="table table-hover table-striped table-bordered">
+    <thead>
+        <tr>
+            <th style="width: 30%;">KPI Name</th>
+            <th>Measurement</th>
+            <th style="width: 50px;">2015</th>
+            <th style="width: 50px;">2016</th>
+            <th style="width: 50px;">2017</th>
+            <th style="width: 50px;">2018</th>
+            <th style="width: 50px;">2019</th>
+            <th style="width: 50px;">2020</th>
+            <th style="width: 50px;">2021</th>
+            <th style="width: 50px;">2022</th>
+            <th style="width: 50px;">2023</th>
+            <th style="width: 50px;">2024</th>
+            <th style="width: 50px;">2025</th>
+            <th style="width: 50px;">2026</th>
+            <th style="width: 50px;">2027</th>
+            <th style="width: 50px;">2028</th>
+            <th style="width: 50px;">2029</th>
+            <th style="width: 50px;">2030</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var kpi in Model.Kpis)
+        {
+            <tr>
+                <td>@kpi.Name @kpi.KpiAchievements.Count</td>
+                <td>@kpi.Measurement</td>
+
+                @foreach (var kpiAchievement in kpi.KpiAchievements)
+                {
+                    <th>
+                        <input type="text" class="form-control-small" placeholder="@kpiAchievement.Value">
+                        <input type="hidden" class="form-control-small" placeholder="@kpiAchievement.Id">
+                        <input type="hidden" class="form-control-small" placeholder="@kpiAchievement.Remark">
+                        <input type="hidden" class="form-control-small" placeholder="@kpiAchievement.Periode">
+                    </th>
+            
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+

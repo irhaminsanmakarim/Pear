@@ -239,8 +239,8 @@ namespace DSLNG.PEAR.Services
                                       .Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
 
                 var kpiAchievements = DataContext.KpiAchievements
-                                                 .Include(x => x.Kpi)
-                                                 .Where(x => x.PeriodeType == PeriodeType.Yearly).ToList();
+                                        .Include(x => x.Kpi)
+                                        .Where(x => x.PeriodeType == periodeType);
 
                 switch (periodeType)
                 {
@@ -250,8 +250,7 @@ namespace DSLNG.PEAR.Services
                             var kpiDto = kpi.MapTo<GetKpiAchievementsConfigurationResponse.Kpi>();
                             foreach (var number in YearlyNumbers)
                             {
-                                var achievement =
-                                    kpiAchievements.SingleOrDefault(x => x.Kpi.Id == kpi.Id && x.Periode.Year == number);
+                                var achievement = kpiAchievements.SingleOrDefault(x => x.Kpi.Id == kpi.Id && x.Periode.Year == number);
                                 if (achievement != null)
                                 {
                                     var achievementDto =
@@ -267,6 +266,32 @@ namespace DSLNG.PEAR.Services
                             }
 
 
+                            response.Kpis.Add(kpiDto);
+                        }
+                        break;
+
+                    case PeriodeType.Monthly:
+                        foreach (var kpi in kpis)
+                        {
+                            var kpiDto = kpi.MapTo<GetKpiAchievementsConfigurationResponse.Kpi>();
+                            var achievements = kpiAchievements.Where(x => x.Periode.Year == request.Year).ToList();
+
+                            for (int i = 1; i <= 12; i++)
+                            {
+                                var achievement = achievements.FirstOrDefault(x => x.Periode.Month == i);
+                                if (achievement != null)
+                                {
+                                    var achievementDto =
+                                        achievement.MapTo<GetKpiAchievementsConfigurationResponse.KpiAchievement>();
+                                    kpiDto.KpiAchievements.Add(achievementDto);
+                                }
+                                else
+                                {
+                                    var achievementDto = new GetKpiAchievementsConfigurationResponse.KpiAchievement();
+                                    achievementDto.Periode = new DateTime(request.Year, i , 1);
+                                    kpiDto.KpiAchievements.Add(achievementDto);
+                                }
+                            }
                             response.Kpis.Add(kpiDto);
                         }
                         break;
