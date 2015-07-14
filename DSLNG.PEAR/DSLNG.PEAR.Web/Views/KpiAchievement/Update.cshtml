@@ -131,7 +131,11 @@
                 if (remark.length > 0) {
                     $('.popover').parent().find('.value').addClass('remark_sign');
                 }
-                alert(data.Message);
+                var message = '<div class="alert alert-success" role="alert">' + data.Message + '</div>';
+                var parentTable = $('.popover').closest('tr').parent().parent().parent();
+                $(parentTable).find('.kpi-message .alert').remove();
+                $(parentTable).find('.kpi-message').show();
+                $(parentTable).find('.kpi-message').append(message).delay(3000).fadeOut();
                 $('.popover').popover('hide');
             },
         });
