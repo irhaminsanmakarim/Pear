@@ -37,6 +37,7 @@ using DSLNG.PEAR.Services.Requests.Conversion;
 using DSLNG.PEAR.Services.Responses.KpiTarget;
 using DSLNG.PEAR.Services.Requests.Template;
 using DSLNG.PEAR.Services.Responses.Template;
+using DSLNG.PEAR.Services.Requests.KpiAchievement;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -142,7 +143,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiAchievement, GetPmsDetailsResponse.KpiAchievment>()
                 .ForMember(k => k.Period, o => o.MapFrom(k => k.Periode.ToString("MMM")))
                 .ForMember(k => k.Type, o => o.MapFrom(k => k.PeriodeType.ToString()));
-
+            Mapper.CreateMap<UpdateKpiAchievementItemRequest, KpiAchievement>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse.Pillar>();

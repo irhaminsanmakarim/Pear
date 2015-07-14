@@ -39,7 +39,7 @@ namespace DSLNG.PEAR.Web.Controllers
             int pmsSummaryId = id;
             PeriodeType pType = string.IsNullOrEmpty(periodeType)
                             ? PeriodeType.Yearly
-                            : (PeriodeType)Enum.Parse(typeof (PeriodeType), periodeType);
+                            : (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
             var request = new GetKpiAchievementsRequest { PeriodeType = pType, PmsSummaryId = pmsSummaryId };
             var response = _kpiAchievementService.GetKpiAchievements(request);
             if (response.IsSuccess)
@@ -82,6 +82,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return Content(response.Message);
         }
 
+
         public ActionResult Configuration(int id, string periodeType)
         {
             int roleGroupId = id;
@@ -103,5 +104,14 @@ namespace DSLNG.PEAR.Web.Controllers
 
         }
 
-	}
+        [HttpPost]
+        public JsonResult KpiAchievementItem(UpdateKpiAchievementsViewModel.KpiAchievementItem kpiAchievement)
+        {
+            var request = kpiAchievement.MapTo<UpdateKpiAchievementItemRequest>();
+            var response = _kpiAchievementService.UpdateKpiAchievementItem(request);
+            return Json(new { Id = response.Id, Message = response.Message });
+        }
+
+    }
+
 }

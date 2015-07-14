@@ -50,8 +50,8 @@
             var val = $(this).val();
             $.ajax({
                 url: '@Url.Action("UpdatePartial")',
-                    type: 'GET',
-                    data: { id: '@Model.PmsSummaryId', periodeType: val },
+                type: 'GET',
+                data: { id: '@Model.PmsSummaryId', periodeType: val },
                     beforeSend: function () {
                         $('.ajax-loader2').show();
                         $('.content-wrapper').hide();
@@ -63,7 +63,60 @@
                     $('.content-wrapper').show();
                 });
             });
-        })
+    })
+
+    var popOverElem;
+    $(document).on('click', '.kpi-popover', function () {
+        if (popOverElem !== undefined) {
+            popOverElem.popover('hide');
+        }
+        var value = $(this).parent().find('.value').val();
+        var remark = $(this).parent().find('.remark').val();
+        var id = $(this).parent().find('.id').val();
+        var kpiId = $(this).parent().find('.kpiId').val();
+        var periode = $(this).parent().find('.periode').val();
+        var periodeType = $(this).parent().find('.periodeType').val();
+        $('.popover').find('input[name="Value"]').attr('value', value);
+        $('.popover').find('input[name="Remark"]').attr('value', remark);
+        $('.popover').find('input[name="Id"]').attr('value', id);
+        $('.popover').find('input[name="KpiId"]').attr('value', kpiId);
+        $('.popover').find('input[name="Periode"]').attr('value', periode);
+        $('.popover').find('input[name="PeriodeType"]').attr('value', periodeType);
+        popOverElem = $(this);
+    });
+
+    $(document).on('click', '.submit-popover', function () {
+        var value = $(this).parent().find('input[name="Value"]').val();
+        var remark = $(this).parent().find('input[name="Remark"]').val();
+        var kpiTarget = $('.popover').parent();
+        $(kpiTarget).find('.value').attr('value', value);
+        $(kpiTarget).find('.remark').attr('value', remark);
+        var formData = {
+            'id': $(this).parent().find('input[name=Id]').val(),
+            'kpiId': $(this).parent().find('input[name=KpiId]').val(),
+            'value': $(this).parent().find('input[name=Value]').val(),
+            'remark': $(this).parent().find('input[name=Remark]').val(),
+            'periode': $(this).parent().find('input[name=Periode]').val(),
+            'periodeType': $(this).parent().find('input[name=PeriodeType]').val()
+        };
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("KpiAchievementItem")',
+            data: formData,
+            success: function (data) {
+                $(this).closest('td').find('.id').attr('value', data.Id);
+                if (remark.length > 0) {
+                    $('.popover').parent().find('.value').addClass('remark_sign');
+                }
+                alert(data.Message);
+                $('.popover').popover('hide');
+            },
+        });
+    });
+
+    $(document).on('click', '.cancel-popover', function () {
+        $('.popover').popover('hide');
+    });
 </script>
 
 

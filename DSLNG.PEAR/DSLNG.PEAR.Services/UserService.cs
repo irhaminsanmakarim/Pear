@@ -148,5 +148,26 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
+
+
+        public GetUserResponse GetUserByName(GetUserByNameRequest request)
+        {
+            try
+            {
+                var user = DataContext.Users.Include(u => u.Role).First(x => x.Username == request.Name);
+                var response = user.MapTo<GetUserResponse>(); //Mapper.Map<GetUserResponse>(user);
+                //response.RoleName = DataContext.RoleGroups.FirstOrDefault(x => x.Id == user.RoleId).Name.ToString();
+
+                return response;
+            }
+            catch (System.InvalidOperationException x)
+            {
+                return new GetUserResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
+            }
+        }
     }
 }

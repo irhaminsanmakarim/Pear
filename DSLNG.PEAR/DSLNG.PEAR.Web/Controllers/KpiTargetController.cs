@@ -293,7 +293,7 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult KpiTargetMonthly(KpiTargetItem kpiTarget)
+        public JsonResult KpiTargetItem(KpiTargetItem kpiTarget)
         {
             if (kpiTarget.Id > 0)
             {
