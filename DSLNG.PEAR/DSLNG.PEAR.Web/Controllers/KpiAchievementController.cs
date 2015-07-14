@@ -32,7 +32,7 @@ namespace DSLNG.PEAR.Web.Controllers
             int pmsSummaryId = id;
             PeriodeType pType = string.IsNullOrEmpty(periodeType)
                             ? PeriodeType.Yearly
-                            : (PeriodeType)Enum.Parse(typeof (PeriodeType), periodeType);
+                            : (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
             var request = new GetKpiAchievementsRequest { PeriodeType = pType, PmsSummaryId = pmsSummaryId };
             var response = _kpiAchievementService.GetKpiAchievements(request);
             if (response.IsSuccess)
@@ -75,5 +75,13 @@ namespace DSLNG.PEAR.Web.Controllers
             return Content(response.Message);
         }
 
-	}
+        [HttpPost]
+        public JsonResult KpiAchievementItem(DSLNG.PEAR.Web.ViewModels.KpiAchievement.UpdateKpiAchievementsViewModel.KpiAchievementItem kpiAchievement)
+        {
+            var request = kpiAchievement.MapTo<UpdateKpiAchievementItemRequest>();
+            var response = _kpiAchievementService.UpdateKpiAchievementItem(request);
+            return Json(new { Id = response.Id, Message = response.Message });
+        }
+
+    }
 }

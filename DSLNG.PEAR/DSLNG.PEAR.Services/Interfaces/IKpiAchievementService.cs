@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Services.Interfaces
     {
         GetKpiAchievementsResponse GetKpiAchievements(GetKpiAchievementsRequest request);
         UpdateKpiAchievementsResponse UpdateKpiAchievements(UpdateKpiAchievementsRequest request);
+        UpdateKpiAchievementItemResponse UpdateKpiAchievementItem(UpdateKpiAchievementItemRequest request);
     }
 }
