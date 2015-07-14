@@ -25,23 +25,34 @@
         </tr>
     </thead>
     <tbody>
+        @{ var a = 0;}
         @foreach (var kpi in Model.Kpis)
         {
             <tr>
                 <td>@kpi.Name @kpi.KpiAchievements.Count</td>
                 <td>@kpi.Measurement</td>
-
+                @{ var b = 0;}
                 @foreach (var kpiAchievement in kpi.KpiAchievements)
                 {
+                    var remarkSign = "";
+                    if (!string.IsNullOrEmpty(kpiAchievement.Remark))
+                    {
+                        remarkSign = "remark_sign";
+                    }
+                    var idValue = "Kpis_" + a + "__KpiAchievements_"+b+"__Value";
                     <th>
-                        <input type="text" class="form-control-small" placeholder="@kpiAchievement.Value">
-                        <input type="hidden" class="form-control-small" placeholder="@kpiAchievement.Id">
-                        <input type="hidden" class="form-control-small" placeholder="@kpiAchievement.Remark">
-                        <input type="hidden" class="form-control-small" placeholder="@kpiAchievement.Periode">
+                        <input type="hidden" name="KpiId" class="kpiId" value="@kpi.Id" />
+                        <input type="hidden" name="HeaderPopover" class="header-popover" value="" />
+                        <input type="hidden" name="PeriodeType" class="periodeType" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Yearly" />
+                        <input type="text" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@kpiAchievement.Value">
+                        <input type="hidden" class="form-control-small id" value="@kpiAchievement.Id">
+                        <input type="hidden" class="form-control-small remark" value="@kpiAchievement.Remark">
+                        <input type="hidden" class="form-control-small periode" value="@kpiAchievement.Periode">
                     </th>
-            
+                    b++;
                 }
             </tr>
+            a++;
         }
     </tbody>
 </table>
