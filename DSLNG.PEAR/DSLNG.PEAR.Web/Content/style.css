@@ -907,6 +907,11 @@ td.text-button a
     color: white;
 }
 
+.table-hover tbody tr:hover td input, .table-hover tbody tr:hover th input
+{
+    color: black;
+}
+
 a
 {
     color: white;
