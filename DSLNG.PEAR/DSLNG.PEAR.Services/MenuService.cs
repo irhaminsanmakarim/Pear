@@ -46,12 +46,15 @@ namespace DSLNG.PEAR.Services
                     Url = "/Account/Logoff",
                     Parent = menus.First(x => x.Id == 6)
                 };
-                menus.Add(logout);
+                //menus.Add(logout);
 
                 //looping to get the children, we dont use Include because only include 1st level child menus
                 foreach (var menu in menus)
                 {
                     menu.Menus = this._GetMenuChildren(menu.Id, request.RoleId);
+                    if (menu.Name == "Setting" && menu.IsRoot == true) {
+                        menu.Menus.Add(logout);
+                    }
                 }
             }
 
