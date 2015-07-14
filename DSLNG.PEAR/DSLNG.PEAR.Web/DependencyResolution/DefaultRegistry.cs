@@ -21,6 +21,7 @@ using DSLNG.PEAR.Services.Interfaces;
 using StructureMap.Web.Pipeline;
 
 namespace DSLNG.PEAR.Web.DependencyResolution {
+    using DSLNG.PEAR.Web.Controllers;
     using StructureMap.Configuration.DSL;
     using StructureMap.Graph;
 	
@@ -55,6 +56,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IDropdownService>().Use<DropdownService>();
             For<ITemplateService>().Use<TemplateService>();
             For<IKpiAchievementService>().Use<KpiAchievementService>();
+            For<AccountController>().Use(ctx=> new AccountController());
         }
 
         #endregion
