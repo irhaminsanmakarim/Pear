@@ -193,7 +193,7 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.RoleGroup)
                     .AsEnumerable()
                     .OrderBy(x => x.Order)
-                    .GroupBy(x => x.RoleGroup.Name).ToDictionary(x => x.Key);
+                    .GroupBy(x => x.RoleGroup).ToDictionary(x => x.Key);
 
                 foreach (var item in kpiAchievements)
                 {
@@ -205,7 +205,8 @@ namespace DSLNG.PEAR.Services
 
                     response.RoleGroups.Add(new AllKpiAchievementsResponse.RoleGroup
                     {
-                        Name = item.Key,
+                        Id = item.Key.Id,
+                        Name = item.Key.Name,
                         Kpis = kpis
                     });
                 }

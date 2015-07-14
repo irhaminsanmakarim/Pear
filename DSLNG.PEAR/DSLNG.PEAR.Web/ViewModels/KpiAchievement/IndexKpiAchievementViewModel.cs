@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiAchievement
             }
             public string Name { get; set; }
             public IList<Kpi> Kpis { get; set; }
+            public int Id { get; set; }
         }
 
         public class Kpi

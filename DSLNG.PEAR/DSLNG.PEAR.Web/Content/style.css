@@ -1096,6 +1096,34 @@ table.text-center th
     border: 1px solid #ccc;
 }
 
-.popover-content button {
+.popover-content button
+{
     margin-top: 18px;
 }
+
+.grey_text
+{
+    font-size: 21px;
+}
+
+/*.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th
+{
+    background-color: #f3f4f5;
+}*/
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td
+{
+    vertical-align: middle;
+    padding: 5px;
+    text-align: center;
+}
+
+/*.table-striped > tbody > tr > td, .table-striped > tbody > tr > th
+{
+    color: #777;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th
+{
+    background-color: #f3f4f5;
+}*/

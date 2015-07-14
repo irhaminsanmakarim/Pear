@@ -557,6 +557,10 @@
     <Content Include="Views\UnAuthorized\Error.cshtml" />
     <Content Include="Views\KpiAchievement\Configuration\_Monthly.cshtml" />
     <Content Include="Views\KpiAchievement\Configuration\_Daily.cshtml" />
+    <Content Include="Views\KpiTarget\Configuration\_Daily.cshtml" />
+    <Content Include="Views\KpiTarget\Configuration\_Monthly.cshtml" />
+    <Content Include="Views\KpiTarget\Configuration\_Yearly.cshtml" />
+    <Content Include="Views\KpiTarget\Configuration.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -661,6 +665,9 @@
     <Compile Include="ViewModels\KpiAchievement\IndexKpiAchievementViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\KpiAchievementsViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\UpdateKpiAchievementsViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\ConfigurationKpiTargetsViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\ConfigurationParamViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\IndexKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />

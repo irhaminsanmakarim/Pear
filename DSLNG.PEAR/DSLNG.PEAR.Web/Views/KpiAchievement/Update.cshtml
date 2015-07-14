@@ -31,13 +31,13 @@
         <div class="update-content">
             @Html.Partial(Model.ViewName, Model)
         </div>
-        <div class="col-md-12">
+        @*<div class="col-md-12">
             <div class="centering margin">
                 <hr style="margin-bottom: 60px;">
                 <a href="javascript:;" onclick="$(this).closest('form').submit()" class="btn-darkblue btn-large"><span class="fa fa-floppy-o"></span>Save</a>
                 <a href="@Url.Action("Configuration", "PmsSummary", new {id = Model.PmsSummaryId})" data-dismiss="modal" aria-label="Close" class="btn-darkblue btn-large"><span class="fa fa-times"></span>Cancel</a>
             </div>
-        </div>
+        </div>*@
     </form>
 </div>
 
@@ -55,19 +55,19 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#periodeType').change(function () {
+    $(document).ready(function() {
+        $('#periodeType').change(function() {
             var val = $(this).val();
             $.ajax({
                 url: '@Url.Action("UpdatePartial")',
                 type: 'GET',
                 data: { id: '@Model.PmsSummaryId', periodeType: val },
-                    beforeSend: function () {
-                        $('.ajax-loader2').show();
-                        $('.content-wrapper').hide();
-                    }
-                })
-                .done(function (data) {
+                beforeSend: function() {
+                    $('.ajax-loader2').show();
+                    $('.content-wrapper').hide();
+                }
+            })
+                .done(function(data) {
                     $('.ajax-loader2').hide();
                     $('.update-content').html(data);
                     $('.content-wrapper').show();
@@ -76,14 +76,14 @@
         $('body').popover({
             selector: '.kpi-popover',
             html: true,
-            title: function () {
+            title: function() {
                 return $(this).parent().find('.header-popover').val();
             },
-            content: function () {
+            content: function() {
                 return $('.popover-content').html();
             }
         });
-    })
+    });
 
     var popOverElem;
     $(document).on('click', '.kpi-popover', function () {

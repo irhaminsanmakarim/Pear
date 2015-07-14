@@ -29,7 +29,7 @@
                         <td colspan="4" style="text-align: left;" class="grey_text">@roleGroup.Name
                         </td>
                         <td class="text-button" style="margin: auto;">
-                            <a href="kpitarget.html"><span class="fa fa-pencil-square-o"></span>Edit</a>
+                            <a href="@Url.Action("Configuration", "KpiAchievement", new {id = roleGroup.Id})"><span class="fa fa-pencil-square-o"></span>Manage</a>
                         </td>
                     </tr>
 

@@ -226,10 +226,6 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetArtifactResponse.PlotResponse, GetSpeedometerChartDataRequest.PlotBandRequest>();
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetSpeedometerChartDataRequest.SeriesRequest>();
 
-            Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.KpiTarget.KpiTargetItem, CreateKpiTargetRequest>();
-            Mapper.CreateMap<DSLNG.PEAR.Web.ViewModels.KpiTarget.KpiTargetItem, UpdateKpiTargetItemRequest>()
-                .ForMember(x => x.PeriodeType, o => o.MapFrom(x => (DSLNG.PEAR.Data.Enums.PeriodeType)x.PeriodeType));
-
             Mapper.CreateMap<CreateConversionViewModel, CreateConversionRequest>();
             Mapper.CreateMap<GetConversionResponse, UpdateConversionViewModel>()
                 .ForMember(x => x.MeasurementFrom, o => o.MapFrom(k => k.From.Id))
@@ -328,6 +324,18 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<UpdateKpiTargetViewModel.Kpi, UpdateKpiTargetRequest.Kpi>();
             Mapper.CreateMap<UpdateKpiTargetViewModel.KpiTarget, UpdateKpiTargetRequest.KpiTarget>();
             Mapper.CreateMap<UpdateKpiTargetViewModel.Pillar, UpdateKpiTargetRequest.Pillar>();
+
+            Mapper.CreateMap<AllKpiTargetsResponse, IndexKpiTargetViewModel>();
+            Mapper.CreateMap<AllKpiTargetsResponse.Kpi, IndexKpiTargetViewModel.Kpi>();
+            Mapper.CreateMap<AllKpiTargetsResponse.RoleGroup, IndexKpiTargetViewModel.RoleGroup>();
+
+            Mapper.CreateMap<GetKpiTargetsConfigurationResponse, ConfigurationKpiTargetsViewModel>();
+            Mapper.CreateMap<GetKpiTargetsConfigurationResponse.Kpi, ConfigurationKpiTargetsViewModel.Kpi>();
+            Mapper.CreateMap<GetKpiTargetsConfigurationResponse.KpiTarget, ConfigurationKpiTargetsViewModel.KpiTarget>();
+
+            Mapper.CreateMap<KpiTargetItem, CreateKpiTargetRequest>();
+            Mapper.CreateMap<KpiTargetItem, UpdateKpiTargetItemRequest>()
+                .ForMember(x => x.PeriodeType, o => o.MapFrom(x => (DSLNG.PEAR.Data.Enums.PeriodeType)x.PeriodeType));
         }
 
         private void ConfigureKpiAchievement()

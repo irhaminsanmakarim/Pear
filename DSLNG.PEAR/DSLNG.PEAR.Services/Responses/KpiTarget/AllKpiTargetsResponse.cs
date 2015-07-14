@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DSLNG.PEAR.Services.Responses.KpiAchievement
+namespace DSLNG.PEAR.Services.Responses.KpiTarget
 {
-    public class AllKpiAchievementsResponse : BaseResponse
+    public class AllKpiTargetsResponse : BaseResponse
     {
-        public AllKpiAchievementsResponse()
+        public AllKpiTargetsResponse()
         {
             RoleGroups = new List<RoleGroup>();
         }

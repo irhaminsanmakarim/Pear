@@ -57,6 +57,7 @@ namespace DSLNG.PEAR.Services
                             kpiData.PillarOrder = pmsConfigDetails.Kpi.Pillar.Order;
                             kpiData.KpiOrder = pmsConfigDetails.Kpi.Order;
                             kpiData.PillarWeight = pmsConfig.Weight;
+                            kpiData.ScoringType = pmsConfigDetails.ScoringType;
 
                             #region KPI Achievement
 
@@ -233,7 +234,9 @@ namespace DSLNG.PEAR.Services
                         response.KpiRemarkYearly = kpiActualYearly.Remark;
                     }
                     var kpiActualMonthly =
-                        config.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly && x.Periode.Year == request.Year).ToList();
+                        config.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly && x.Periode.Year == request.Year)
+                        .OrderBy(x => x.Periode.Month)
+                        .ToList();
                     response.KpiAchievmentMonthly = new List<GetPmsDetailsResponse.KpiAchievment>();
                     if (kpiActualMonthly.Count > 0)
                     {
@@ -254,6 +257,7 @@ namespace DSLNG.PEAR.Services
                                     x => x.PeriodeType == Data.Enums.PeriodeType.Yearly);
                             var actualMonthly =
                                 item.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly)
+                                    .OrderBy(x => x.Periode.Month)
                                     .ToList();
                             response.KpiRelations.Add(new GetPmsDetailsResponse.KpiRelation
                             {

@@ -274,6 +274,16 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Pillar, GetPmsConfigsResponse.Pillar>();
             Mapper.CreateMap<Data.Entities.PmsSummary, GetPmsConfigsResponse.PmsSummary>();
             Mapper.CreateMap<Data.Entities.PmsConfig, GetPmsConfigsResponse.PmsConfig>();
+
+            Mapper.CreateMap<Kpi, AllKpiTargetsResponse.Kpi>()
+                  .ForMember(x => x.Type, y => y.MapFrom(z => z.RoleGroup.Name))
+                  .ForMember(x => x.Measurement, y => y.MapFrom(z => z.Measurement.Name));
+
+            Mapper.CreateMap<Kpi, GetKpiTargetsConfigurationResponse.Kpi>()
+                .ForMember(x => x.KpiTargets, y => y.Ignore())
+                .ForMember(x => x.Measurement, y => y.MapFrom(z => z.Measurement.Name));
+
+            Mapper.CreateMap<KpiTarget, GetKpiTargetsConfigurationResponse.KpiTarget>();
         }
 
         private void ConfigurePmsConfig()

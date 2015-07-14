@@ -72,9 +72,71 @@ namespace DSLNG.PEAR.Web.Controllers
             return Content(response.Message);
         }
 
+        public ActionResult Configuration(ConfigurationParamViewModel paramViewModel)
+        {
+            int roleGroupId = paramViewModel.Id;
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
+                                    ? PeriodeType.Yearly
+                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
+
+            var request = new GetKpiTargetsConfigurationRequest();
+            request.PeriodeType = pType.ToString();
+            request.RoleGroupId = roleGroupId;
+            request.Year = paramViewModel.Year;
+            request.Month = paramViewModel.Month;
+            var response = _kpiTargetService.GetKpiTargetsConfiguration(request);
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<ConfigurationKpiTargetsViewModel>();
+                viewModel.Year = request.Year;
+                viewModel.Month = request.Month;
+                viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+                viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
+                viewModel.PeriodeType = pType.ToString();
+                return View(viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
+
+        }
+
+        public ActionResult ConfigurationPartial(ConfigurationParamViewModel paramViewModel)
+        {
+            int roleGroupId = paramViewModel.Id;
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
+                                    ? PeriodeType.Yearly
+                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
+
+            var request = new GetKpiTargetsConfigurationRequest();
+            request.PeriodeType = pType.ToString();
+            request.RoleGroupId = roleGroupId;
+            request.Year = paramViewModel.Year;
+            request.Month = paramViewModel.Month;
+            var response = _kpiTargetService.GetKpiTargetsConfiguration(request);
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<ConfigurationKpiTargetsViewModel>();
+                viewModel.Year = request.Year;
+                viewModel.Month = request.Month;
+                viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+                viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
+                viewModel.PeriodeType = pType.ToString();
+                return PartialView("Configuration/_" + pType.ToString(), viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
+        }
+
         public ActionResult Index()
         {
-            return View();
+            var response = _kpiTargetService.GetAllKpiTargets();
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<IndexKpiTargetViewModel>();
+                return View(viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
         }
 
         public ActionResult IndexPartial()
@@ -299,13 +361,13 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 var request = kpiTarget.MapTo<UpdateKpiTargetItemRequest>();
                 var response = _kpiTargetService.UpdateKpiTargetItem(request);
-                return Json(new { Id = response.Id, Message = response.Message });
+                return Json(new { Id = response.Id, Message = response.Message, isSuccess = response.IsSuccess });
             }
             else
             {
                 var request = kpiTarget.MapTo<CreateKpiTargetRequest>();
                 var response = _kpiTargetService.Create(request);
-                return Json(new { Id = response.Id, Message = response.Message });
+                return Json(new { Id = response.Id, Message = response.Message, isSuccess = response.IsSuccess });
             }
         }
     }

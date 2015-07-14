@@ -12,5 +12,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetKpiTargetResponse GetKpiTarget(GetKpiTargetRequest request);
         UpdateKpiTargetResponse UpdateKpiTarget(UpdateKpiTargetRequest request);
         UpdateKpiTargetItemResponse UpdateKpiTargetItem(UpdateKpiTargetItemRequest request);
+        GetKpiTargetsConfigurationResponse GetKpiTargetsConfiguration(GetKpiTargetsConfigurationRequest request);
+        AllKpiTargetsResponse GetAllKpiTargets();
     }
 }

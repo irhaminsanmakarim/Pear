@@ -96,6 +96,7 @@
     <Compile Include="Requests\KpiAchievement\UpdateKpiAchievementsRequest.cs" />
     <Compile Include="Requests\KpiTarget\CreateKpiTargetRequest.cs" />
     <Compile Include="Requests\KpiTarget\CreateKpiTargetsRequest.cs" />
+    <Compile Include="Requests\KpiTarget\GetKpiTargetsConfigurationRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetKpiTargetsRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetPmsConfigsRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetKpiTargetRequest.cs" />
@@ -135,8 +136,10 @@
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementsResponse.cs" />
     <Compile Include="Responses\KpiAchievement\UpdateKpiAchievementItemResponse.cs" />
     <Compile Include="Responses\KpiAchievement\UpdateKpiAchievementsResponse.cs" />
+    <Compile Include="Responses\KpiTarget\AllKpiTargetsResponse.cs" />
     <Compile Include="Responses\KpiTarget\CreateKpiTargetResponse.cs" />
     <Compile Include="Responses\KpiTarget\CreateKpiTargetsResponse.cs" />
+    <Compile Include="Responses\KpiTarget\GetKpiTargetsConfigurationResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetKpiTargetsResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetPmsConfigsResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetKpiTargetResponse.cs" />

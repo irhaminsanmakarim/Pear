@@ -81,8 +81,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return Content(response.Message);
         }
-
-
+        
         public ActionResult Configuration(ConfigurationParamViewModel paramViewModel)
         {
             int roleGroupId = paramViewModel.Id;

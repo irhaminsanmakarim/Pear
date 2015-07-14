@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace DSLNG.PEAR.Services.Responses.KpiAchievement
+namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
 {
-    public class AllKpiAchievementsResponse : BaseResponse
+    public class IndexKpiTargetViewModel
     {
-        public AllKpiAchievementsResponse()
+        public IndexKpiTargetViewModel()
         {
             RoleGroups = new List<RoleGroup>();
         }
@@ -20,6 +16,7 @@ namespace DSLNG.PEAR.Services.Responses.KpiAchievement
             {
                 Kpis = new List<Kpi>();
             }
+
             public int Id { get; set; }
             public string Name { get; set; }
             public IList<Kpi> Kpis { get; set; }
