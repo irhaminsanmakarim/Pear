@@ -16,4 +16,9 @@ namespace DSLNG.PEAR.Services.Requests.Menu
         public int Skip { get; set; }
         public int Take { get; set; }
     }
+
+    public class GetMenuRequestByUrl {
+        public string Url { get; set; }
+        public int RoleId { get; set; }
+    }
 }
