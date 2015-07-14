@@ -47,9 +47,29 @@ namespace DSLNG.PEAR.Web.Controllers
             var userService = ObjectFactory.Container.GetInstance<IUserService>();
             var user = userService.Login(new LoginUserRequest { Username = username, Password = password });
             if (user != null) {
+                /* Try Get Current User Role
+                 */
+                //this._createRole(user.RoleName);
+                //this._userAddToRole(user.Username, user.RoleName);
                 return user.IsSuccess;
             }
             return false;
+        }
+
+        private void _userAddToRole(string Username, string RoleName)
+        {
+            if (!Roles.IsUserInRole(Username, RoleName))
+            {
+                Roles.AddUserToRole(Username, RoleName);
+            }
+        }
+
+        private void _createRole(string rolename)
+        {
+            if (!Roles.RoleExists(rolename))
+            {
+                Roles.CreateRole(rolename);
+            }
         }
         public ActionResult Register() {
             return View();
