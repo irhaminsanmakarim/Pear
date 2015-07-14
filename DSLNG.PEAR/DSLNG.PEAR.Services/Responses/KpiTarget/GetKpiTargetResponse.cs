@@ -46,6 +46,7 @@ namespace DSLNG.PEAR.Services.Responses.KpiTarget
             public int Id { get; set; }
             public DateTime Periode { get; set; }
             public double? Value { get; set; }
+            public string Remark { get; set; }
         }
     }
 }

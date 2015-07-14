@@ -48,6 +48,7 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
             public int Id { get; set; }
             public DateTime Periode { get; set; }
             public double? Value { get; set; }
+            public string Remark { get; set; }
         }
     }
 }

@@ -125,12 +125,14 @@ namespace DSLNG.PEAR.Services
                                         kpiTargetMonthly.Id = 0;
                                         kpiTargetMonthly.Periode = new DateTime(pmsSummary.Year, i, 1);
                                         kpiTargetMonthly.Value = null;
+                                        kpiTargetMonthly.Remark = null;
                                     }
                                     else
                                     {
                                         kpiTargetMonthly.Id = kpiTargetsMonthly.Id;
                                         kpiTargetMonthly.Periode = kpiTargetsMonthly.Periode;
                                         kpiTargetMonthly.Value = kpiTargetsMonthly.Value;
+                                        kpiTargetMonthly.Remark = kpiTargetsMonthly.Remark;
                                     }
 
                                     targets.Add(kpiTargetMonthly);
@@ -146,12 +148,14 @@ namespace DSLNG.PEAR.Services
                                     kpiTargetYearly.Id = 0;
                                     kpiTargetYearly.Periode = new DateTime(pmsSummary.Year, 1, 1);
                                     kpiTargetYearly.Value = null;
+                                    kpiTargetYearly.Remark = null;
                                 }
                                 else
                                 {
                                     kpiTargetYearly.Id = kpiTargetsYearly.Id;
                                     kpiTargetYearly.Periode = kpiTargetsYearly.Periode;
                                     kpiTargetYearly.Value = kpiTargetsYearly.Value;
+                                    kpiTargetYearly.Remark = kpiTargetsYearly.Remark;
                                 }
                                 targets.Add(kpiTargetYearly);
 
@@ -206,7 +210,7 @@ namespace DSLNG.PEAR.Services
                                 kpiTargetNew.PeriodeType = periodeType;
                                 kpiTargetNew.Periode = kpiTarget.Periode;
                                 kpiTargetNew.IsActive = true;
-                                kpiTargetNew.Remark = kpi.Remark;
+                                kpiTargetNew.Remark = kpiTarget.Remark;
                                 kpiTargetNew.CreatedDate = DateTime.Now;
                                 kpiTargetNew.UpdatedDate = DateTime.Now;
                                 DataContext.KpiTargets.Add(kpiTargetNew);
@@ -220,7 +224,7 @@ namespace DSLNG.PEAR.Services
                                 kpiTargetNew.PeriodeType = periodeType;
                                 kpiTargetNew.Periode = kpiTarget.Periode;
                                 kpiTargetNew.IsActive = true;
-                                kpiTargetNew.Remark = kpi.Remark;
+                                kpiTargetNew.Remark = kpiTarget.Remark;
                                 kpiTargetNew.UpdatedDate = DateTime.Now;
                                 DataContext.KpiTargets.Attach(kpiTargetNew);
                                 DataContext.Entry(kpiTargetNew).State = EntityState.Modified;

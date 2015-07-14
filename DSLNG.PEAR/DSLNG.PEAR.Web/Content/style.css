@@ -1042,3 +1042,13 @@ table.text-center th
 .popover-title{
     width:100%;
 }
+
+.remark_sign
+{
+    z-index: 9;
+    background-image: url("img/remark_sign.png");
+    background-repeat: no-repeat;
+    background-position: bottom right;
+   float:left;
+
+}

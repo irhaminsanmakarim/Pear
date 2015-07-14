@@ -13,7 +13,7 @@
                 <tr>
                     <th style="width: 250px;"></th>
                     <th style="width: 100px;"></th>
-                    <th style="width: 200px;"></th>
+                    @*<th style="width: 200px;"></th>*@
                     <th>Jan</th>
                     <th>Feb</th>
                     <th>Mar</th>
@@ -32,6 +32,7 @@
                 @{ int b = 0;}
                 @foreach (var kpi in pillar.Kpis)
                 {
+                    var month = new DateTime(2015, b + 1, 1);
                     @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].Id, new {@class="form-control-small"})
                     <tr>
                         <td>
@@ -40,15 +41,19 @@
                         <td>
                             <h6>@kpi.Measurement</h6>
                         </td>
-                        <td>
-                            <input type="text" class="form-control" placeholder="Remark"></td>
+                        @*<td>
+                            <input type="text" class="form-control" placeholder="Remark"></td>*@
                         @{ int c = 0;}
                         @foreach (var kpiTarget in kpi.KpiTargets)
                         {
                             <td>
-                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Id, new {@class="form-control-small"})
-                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Periode, new {@class="form-control-small"})
-                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Value, new {@class="form-control-small"})
+                                <input type="hidden" name="KpiId" class="kpiIdMonthly" value="@kpi.Id" />
+                                <input type="hidden" name="HeaderPopover" class="header-popover" value="@month.ToString("MMMM")" />
+                                <input type="hidden" name="PeriodeType" class="periodeTypeMonthly" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Monthly" />
+                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Id, new {@class="form-control-small idMonthly"})
+                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Periode, new { @class = "form-control-small periodeMonthly" })
+                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Remark, new { @class = "form-control-small remarkMonthly" })
+                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Value, new { @class = "form-control-small kpi-popover valueMonthly" })
                             </td>
                             c++;
                             @*<td>
@@ -66,3 +71,80 @@
         a++;
     }
 }
+<div class="popover-content" style="display:none">
+    <label class="control-label">Value</label>
+    <input type="text" name="Value" class="form-control" />
+    <label class="control-label">Remark</label>
+    <input type="text" name="Remark" class="form-control" />
+    <input type="hidden" name="Id" />
+    <input type="hidden" name="KpiId" />
+    <input type="hidden" name="Periode" />
+    <input type="hidden" name="PeriodeType" />
+    <button type="button" class="btn btn-primary" onclick="submitKpi(this)">Ok</button>
+</div>
+<script type="text/javascript">
+    function checkRemark() {
+        $('.remarkMonthly').each(function (i, val) {
+            if ($(val).val().length > 0) {
+                $(val).parent().find('.valueMonthly').addClass('remark_sign');
+            }
+        });
+    }
+    $(document).ready(function () {
+        checkRemark();
+        $('.kpi-popover').each(function (i, val) {
+            $(val).popover({
+                html: true,
+                title: function () {
+                    return $(this).parent().find('.header-popover').val();
+                },
+                content: function () {
+                    return $('.popover-content').html();
+                }
+            });
+
+            $(val).click(function () {
+                $('.kpi-popover').not(this).popover('hide');
+                var value = $(val).parent().find('.valueMonthly').val();
+                var remark = $(val).parent().find('.remarkMonthly').val();
+                var id = $(val).parent().find('.idMonthly').val();
+                var kpiId = $(val).parent().find('.kpiIdMonthly').val();
+                var periode = $(val).parent().find('.periodeMonthly').val();
+                var periodeType = $(val).parent().find('.periodeTypeMonthly').val();
+                $('.popover').find('input[name="Value"]').attr('value', value);
+                $('.popover').find('input[name="Remark"]').attr('value', remark);
+                $('.popover').find('input[name="Id"]').attr('value', id);
+                $('.popover').find('input[name="KpiId"]').attr('value', kpiId);
+                $('.popover').find('input[name="Periode"]').attr('value', periode);
+                $('.popover').find('input[name="PeriodeType"]').attr('value', periodeType);
+            })
+        });
+    })
+
+    function submitKpi(val) {
+        var value = $(val).parent().find('input[name="Value"]').val();
+        var remark = $(val).parent().find('input[name="Remark"]').val();
+        var kpiTarget = $('.popover').parent();
+        $(kpiTarget).find('.valueMonthly').attr('value', value);
+        $(kpiTarget).find('.remarkMonthly').attr('value', remark);
+        var formData = {
+            'id': $(val).parent().find('input[name=Id]').val(),
+            'kpiId': $(val).parent().find('input[name=KpiId]').val(),
+            'value': $(val).parent().find('input[name=Value]').val(),
+            'remark': $(val).parent().find('input[name=Remark]').val(),
+            'periode': $(val).parent().find('input[name=Periode]').val(),
+            'periodeType': $(val).parent().find('input[name=PeriodeType]').val()
+        };
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("KpiTargetMonthly")',
+            data: formData,
+            success: function (data) {
+                $(val).closest('.form-group').find('.kpiTargetId').attr('value', data.Id);
+                checkRemark();
+                alert(data.Message);
+                $('.popover').popover('hide');
+            },
+        });
+    }
+</script>
