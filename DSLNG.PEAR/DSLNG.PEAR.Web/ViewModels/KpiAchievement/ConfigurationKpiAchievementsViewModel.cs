@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace DSLNG.PEAR.Web.ViewModels.KpiAchievement
 {
@@ -14,6 +15,12 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiAchievement
         public IList<Kpi> Kpis { get; set; }
         public string RoleGroupName { get; set; }
         public int RoleGroupId { get; set; }
+
+        public IEnumerable<SelectListItem> Years { get; set; }
+        public IEnumerable<SelectListItem> Months { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public string PeriodeType { get; set; }
 
         public class Kpi
         {

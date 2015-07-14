@@ -238,19 +238,20 @@ namespace DSLNG.PEAR.Services
                                       .Include(x => x.Measurement)
                                       .Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
 
-                var kpiAchievements = DataContext.KpiAchievements
-                                        .Include(x => x.Kpi)
-                                        .Where(x => x.PeriodeType == periodeType);
+                
 
                 switch (periodeType)
                 {
                     case PeriodeType.Yearly:
+                        var kpiAchievementsYearly = DataContext.KpiAchievements
+                                        .Include(x => x.Kpi)
+                                        .Where(x => x.PeriodeType == periodeType).ToList();
                         foreach (var kpi in kpis)
                         {
                             var kpiDto = kpi.MapTo<GetKpiAchievementsConfigurationResponse.Kpi>();
                             foreach (var number in YearlyNumbers)
                             {
-                                var achievement = kpiAchievements.SingleOrDefault(x => x.Kpi.Id == kpi.Id && x.Periode.Year == number);
+                                var achievement = kpiAchievementsYearly.SingleOrDefault(x => x.Kpi.Id == kpi.Id && x.Periode.Year == number);
                                 if (achievement != null)
                                 {
                                     var achievementDto =
@@ -271,10 +272,13 @@ namespace DSLNG.PEAR.Services
                         break;
 
                     case PeriodeType.Monthly:
+                        var kpiAchievementsMonthly = DataContext.KpiAchievements
+                                        .Include(x => x.Kpi)
+                                        .Where(x => x.PeriodeType == periodeType && x.Periode.Year == request.Year).ToList();
                         foreach (var kpi in kpis)
                         {
                             var kpiDto = kpi.MapTo<GetKpiAchievementsConfigurationResponse.Kpi>();
-                            var achievements = kpiAchievements.Where(x => x.Periode.Year == request.Year).ToList();
+                            var achievements = kpiAchievementsMonthly.Where(x => x.Kpi.Id == kpi.Id).ToList();
 
                             for (int i = 1; i <= 12; i++)
                             {
@@ -289,6 +293,35 @@ namespace DSLNG.PEAR.Services
                                 {
                                     var achievementDto = new GetKpiAchievementsConfigurationResponse.KpiAchievement();
                                     achievementDto.Periode = new DateTime(request.Year, i , 1);
+                                    kpiDto.KpiAchievements.Add(achievementDto);
+                                }
+                            }
+                            response.Kpis.Add(kpiDto);
+                        }
+                        break;
+
+                    case PeriodeType.Daily:
+                        var kpiAchievementsDaily = DataContext.KpiAchievements
+                                        .Include(x => x.Kpi)
+                                        .Where(x => x.PeriodeType == periodeType && x.Periode.Year == request.Year 
+                                        && x.Periode.Month == request.Month).ToList();
+                        foreach (var kpi in kpis)
+                        {
+                            var kpiDto = kpi.MapTo<GetKpiAchievementsConfigurationResponse.Kpi>();
+                            var achievements = kpiAchievementsDaily.Where(x => x.Kpi.Id == kpi.Id).ToList();
+                            for (int i = 1; i <= DateTime.DaysInMonth(request.Year, request.Month); i++)
+                            {
+                                var achievement = achievements.FirstOrDefault(x => x.Periode.Day == i);
+                                if (achievement != null)
+                                {
+                                    var achievementDto =
+                                        achievement.MapTo<GetKpiAchievementsConfigurationResponse.KpiAchievement>();
+                                    kpiDto.KpiAchievements.Add(achievementDto);
+                                }
+                                else
+                                {
+                                    var achievementDto = new GetKpiAchievementsConfigurationResponse.KpiAchievement();
+                                    achievementDto.Periode = new DateTime(request.Year, request.Month, i);
                                     kpiDto.KpiAchievements.Add(achievementDto);
                                 }
                             }
@@ -336,7 +369,7 @@ namespace DSLNG.PEAR.Services
                     DataContext.KpiAchievements.Add(kpiAchievement);
                     DataContext.SaveChanges();
                 }
-                response.Id = request.Id;
+                response.Id = kpiAchievement.Id;
                 response.IsSuccess = true;
                 response.Message = "KPI Achievement item has been updated successfully";
 

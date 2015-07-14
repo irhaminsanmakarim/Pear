@@ -556,6 +556,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\UnAuthorized\Error.cshtml" />
     <Content Include="Views\KpiAchievement\Configuration\_Monthly.cshtml" />
+    <Content Include="Views\KpiAchievement\Configuration\_Daily.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

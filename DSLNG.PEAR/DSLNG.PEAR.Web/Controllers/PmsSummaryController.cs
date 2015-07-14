@@ -118,7 +118,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new CreatePmsSummaryViewModel();
-            viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+            //viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
             return PartialView("_Create", viewModel);
         }
 

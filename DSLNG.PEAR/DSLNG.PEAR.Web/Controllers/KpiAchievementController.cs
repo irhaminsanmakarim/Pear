@@ -99,6 +99,11 @@ namespace DSLNG.PEAR.Web.Controllers
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<ConfigurationKpiAchievementsViewModel>();
+                viewModel.Year = request.Year;
+                viewModel.Month = request.Month;
+                viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+                viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
+                viewModel.PeriodeType = pType.ToString();
                 return View(viewModel);    
             }
 
@@ -122,6 +127,11 @@ namespace DSLNG.PEAR.Web.Controllers
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<ConfigurationKpiAchievementsViewModel>();
+                viewModel.Year = request.Year;
+                viewModel.Month = request.Month;
+                viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+                viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
+                viewModel.PeriodeType = pType.ToString();
                 return PartialView("Configuration/_" + pType.ToString(), viewModel);
             }
 
@@ -133,7 +143,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var request = kpiAchievement.MapTo<UpdateKpiAchievementItemRequest>();
             var response = _kpiAchievementService.UpdateKpiAchievementItem(request);
-            return Json(new { Id = response.Id, Message = response.Message });
+            return Json(new { Id = response.Id, Message = response.Message, isSuccess = response.IsSuccess });
         }
 
     }
