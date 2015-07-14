@@ -84,7 +84,7 @@
     })
     var popOverElem;
     $(document).on('click', '.kpi-popover', function () {
-        if (popOverElem !== undefined) {
+        if (popOverElem !== undefined && $(this).attr('id') !== popOverElem.attr('id')) {
             popOverElem.popover('hide');
         }
         var value = $(this).parent().find('.value').val();

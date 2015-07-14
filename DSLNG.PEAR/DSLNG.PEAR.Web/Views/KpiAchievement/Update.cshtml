@@ -87,9 +87,12 @@
 
     var popOverElem;
     $(document).on('click', '.kpi-popover', function () {
-        if (popOverElem !== undefined) {
+        var popOverElemClick = $(this);
+
+        if (popOverElem !== undefined && $(this).attr('id') !== popOverElem.attr('id')) {
             popOverElem.popover('hide');
         }
+
         var value = $(this).parent().find('.value').val();
         var remark = $(this).parent().find('.remark').val();
         var id = $(this).parent().find('.id').val();
