@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Data.Persistence;
@@ -167,6 +168,47 @@ namespace DSLNG.PEAR.Services
                 response.IsSuccess = true;
                 response.Message = "KPI Achievements has been updated successfully";
                 DataContext.SaveChanges();
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
+
+        public AllKpiAchievementsResponse GetAllKpiAchievements()
+        {
+            var response = new AllKpiAchievementsResponse();
+            try
+            {
+                var kpiAchievements = DataContext.Kpis
+                    .Include(x => x.Measurement)
+                    .Include(x => x.RoleGroup)
+                    .AsEnumerable()
+                    .OrderBy(x => x.Order)
+                    .GroupBy(x => x.RoleGroup.Name).ToDictionary(x => x.Key);
+
+                foreach (var item in kpiAchievements)
+                {
+                    var kpis = new List<AllKpiAchievementsResponse.Kpi>();
+                    foreach (var val in item.Value)
+                    {
+                        kpis.Add(val.MapTo<AllKpiAchievementsResponse.Kpi>());
+                    }
+
+                    response.RoleGroups.Add(new AllKpiAchievementsResponse.RoleGroup
+                    {
+                        Name = item.Key,
+                        Kpis = kpis
+                    });
+                }
+
+                response.IsSuccess = true;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
             }
             catch (InvalidOperationException invalidOperationException)
             {

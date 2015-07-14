@@ -66,6 +66,7 @@
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="Common\PmsSummary\ScoreIndicator.cs" />
+    <Compile Include="Constants\Type.cs" />
     <Compile Include="ConversionService.cs" />
     <Compile Include="DropdownService.cs" />
     <Compile Include="GroupService.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Responses\Group\CreateGroupResponse.cs" />
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
+    <Compile Include="Responses\KpiAchievement\AllKpiAchievementsResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementsResponse.cs" />
     <Compile Include="Responses\KpiAchievement\UpdateKpiAchievementsResponse.cs" />
     <Compile Include="Responses\KpiTarget\CreateKpiTargetResponse.cs" />

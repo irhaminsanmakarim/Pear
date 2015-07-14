@@ -5,6 +5,7 @@ using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
+using DSLNG.PEAR.Services.Responses.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.Level;
 using DSLNG.PEAR.Services.Responses.Menu;
 using DSLNG.PEAR.Services.Requests.Menu;
@@ -47,6 +48,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureKpi();
             ConfigureKpiTarget();
             ConfigurePmsConfigDetails();
+            ConfigureKpiAchievements();
             
             Mapper.CreateMap<User, GetUsersResponse.User>();
                 //.ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
@@ -293,6 +295,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<UpdatePmsConfigDetailsRequest, PmsConfigDetails>()
                 .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof(ScoringType), z.ScoringType)));
+        }
+
+        private void ConfigureKpiAchievements()
+        {
+            Mapper.CreateMap<Kpi, AllKpiAchievementsResponse.Kpi>()
+                  .ForMember(x => x.Type, y => y.MapFrom(z => z.RoleGroup.Name))
+                  .ForMember(x => x.Measurement, y => y.MapFrom(z => z.Measurement.Name));
         }
     }
 }

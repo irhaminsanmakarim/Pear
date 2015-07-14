@@ -68,7 +68,7 @@ namespace DSLNG.PEAR.Services
                                        .Single(x => x.Id == pmsConfigId);
             var kpiIds = pmsConfig.PmsConfigDetailsList.Select(x => x.Kpi.Id);
 
-            return DataContext.Kpis.Where(x => x.Type.Code.ToLower() == "cp" && x.Pillar.Id == pmsConfig.Pillar.Id 
+            return DataContext.Kpis.Where(x => x.Type.Code.ToLower() == Constants.Type.Corporate && x.Pillar.Id == pmsConfig.Pillar.Id 
                 && !kpiIds.Contains(x.Id))
                 .Select(x => new Dropdown
                 {

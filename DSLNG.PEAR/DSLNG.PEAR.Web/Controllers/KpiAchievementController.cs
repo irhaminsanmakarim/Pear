@@ -24,7 +24,14 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Index()
         {
-            return RedirectToAction("Configuration", "PmsSummary");
+            var response = _kpiAchievementService.GetAllKpiAchievements();
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<IndexKpiAchievementViewModel>();
+                return View(viewModel);    
+            }
+
+            return base.ErrorPage(response.Message);
         }
 
         public ActionResult Update(int id, string periodeType)
@@ -73,6 +80,12 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             return Content(response.Message);
+        }
+
+        public ActionResult Configuration()
+        {
+            var viewModel = new ConfigurationKpiAchievementsViewModel();
+            return View(viewModel);
         }
 
 	}

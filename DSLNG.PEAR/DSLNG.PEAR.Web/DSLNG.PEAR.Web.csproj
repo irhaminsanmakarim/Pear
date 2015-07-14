@@ -549,6 +549,9 @@
     <Content Include="Views\Template\View.cshtml" />
     <Content Include="Views\PmsSummary\_ScoreIndicatorDetails.cshtml" />
     <Content Include="Views\AreaChart\_Create.cshtml" />
+    <Content Include="Views\KpiAchievement\Index.cshtml" />
+    <Content Include="Views\KpiAchievement\Configuration.cshtml" />
+    <Content Include="Views\KpiAchievement\Configuration\_Yearly.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -646,6 +649,8 @@
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\Measurement.cs" />
     <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\ConfigurationKpiAchievementsViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\IndexKpiAchievementViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\KpiAchievementsViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\UpdateKpiAchievementsViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />

@@ -1,0 +1,54 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.KpiAchievement.IndexKpiAchievementViewModel
+@{
+    
+}
+
+<section>
+    <div class="title_page" style="border: none!important;">
+        <div class="row">
+            <div class="title">KPI Achievement</div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-hover table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>KPI Name</th>
+                    <th>Measurement</th>
+                    <th>Type</th>
+                    <th style="width: 13%;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int number = 0;}
+                @foreach (var roleGroup in Model.RoleGroups)
+                {
+                    <tr>
+                        <td colspan="4" style="text-align: left;" class="grey_text">@roleGroup.Name
+                        </td>
+                        <td class="text-button" style="margin: auto;">
+                            <a href="kpitarget.html"><span class="fa fa-pencil-square-o"></span>Edit</a>
+                        </td>
+                    </tr>
+
+                    foreach (var kpi in roleGroup.Kpis)
+                    {
+                        <tr>
+
+                            <td>@(++number)</td>
+                            <td>@kpi.Name</td>
+                            <td>@kpi.Measurement</td>
+
+                            <td>@kpi.Type</td>
+                            <td class="text-button" style="margin: auto;"></td>
+
+                        </tr>        
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</section>

@@ -1,0 +1,48 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.KpiAchievement.ConfigurationKpiAchievementsViewModel
+@{
+    ViewBag.Title = "Configuration";
+}
+
+<h2>Configuration</h2>
+
+<section>
+    <div class="row">
+        <div class="title_page" style="border: none!important;">
+            <div class="title">KPI Target</div>
+            <div class="description_year">@Model.KpiName</div>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active">
+            <a href="#yearly" aria-controls="home" role="tab" data-toggle="tab">
+                <div>Yearly</div>
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#monthly" aria-controls="home" role="tab" data-toggle="tab">
+                <div>Monthly</div>
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#daily" aria-controls="home" role="tab" data-toggle="tab">
+                <div>Daily</div>
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="yearly">
+            @Html.Partial("")
+        </div>
+        <div role="tabpanel" class="tab-pane" id="monthly">
+            monthly
+        </div>
+        <div role="tabpanel" class="tab-pane" id="daily">
+            daily
+        </div>
+    </div>
+</section>
+
+
+
