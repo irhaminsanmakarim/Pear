@@ -71,7 +71,8 @@
                     $('.content-wrapper').show();
                 });
         });
-        $('.kpi-popover').popover({
+        $('body').popover({
+            selector: '.kpi-popover',
             html: true,
             title: function () {
                 return $(this).parent().find('.header-popover').val();
