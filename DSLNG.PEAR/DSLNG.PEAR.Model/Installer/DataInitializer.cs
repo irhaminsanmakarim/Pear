@@ -59,8 +59,8 @@ namespace DSLNG.PEAR.Data.Installer
             var pmsConfigDetailsInstaller = new PmsConfigDetailsInstaller(context);
             pmsConfigDetailsInstaller.Install();
 
-            //var kpiWithRelationModel = new KpiWithRelationModelInstaller(context);
-            //kpiWithRelationModel.Install();
+            var kpiWithRelationModel = new KpiWithRelationModelInstaller(context);
+            kpiWithRelationModel.Install();
 
             var menuInstaller = new MenuInstaller(context);
             menuInstaller.Install();
