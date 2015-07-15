@@ -54,6 +54,52 @@ namespace DSLNG.PEAR.Data.Installer
             };
             _dataContext.Menus.AddOrUpdate(mainmenu2);
 
+            var performanceSetting = new Menu
+            {
+                Id = 15,
+                IsRoot = false,
+                IsActive = true,
+                Name = "Performance Setting",
+                Module = "Plan",
+                RoleGroups = new List<RoleGroup>() { 
+                    _dataContext.RoleGroups.Local.Where(x=>x.Id==1).First()
+                },
+                Parent = _dataContext.Menus.Local.Where(x => x.Id == 2).First()
+            };
+            _dataContext.Menus.AddOrUpdate(performanceSetting);
+
+            var corporatePortofolio = new Menu
+            {
+                Id = 16,
+                IsRoot = false,
+                IsActive = true,
+                Name = "Corporate Portofolio",
+                Module = "Plan",
+                Url = "/pmssummary/configuration",
+                RoleGroups = new List<RoleGroup>() { 
+                    _dataContext.RoleGroups.Local.Where(x=>x.Id==1).First()
+                },
+                Parent = _dataContext.Menus.Local.Where(x => x.Id == 15).First()
+            };
+            _dataContext.Menus.AddOrUpdate(corporatePortofolio);
+
+            var kpiTarget = new Menu
+            {
+                Id = 18,
+                IsRoot = false,
+                IsActive = true,
+                Name = "KPI Target",
+                Module = "Plan",
+                Url = "/kpitarget",
+                RoleGroups = new List<RoleGroup>
+                {
+                    _dataContext.RoleGroups.Local.Where(x => x.Id == 1).First(),
+                    _dataContext.RoleGroups.Local.Where(x => x.Id == 2).First()
+                },
+                Parent = _dataContext.Menus.Local.Where(x => x.Id == 15).First()
+            };
+            _dataContext.Menus.AddOrUpdate(kpiTarget);
+
             var mainmenu3 = new Menu {
                 Id = 3,
                 IsRoot = true,
@@ -68,6 +114,25 @@ namespace DSLNG.PEAR.Data.Installer
                 Icon = "fa fa-gavel"
             };
             _dataContext.Menus.AddOrUpdate(mainmenu3);
+
+            var kpiAchievement = new Menu
+            {
+                Id = 17,
+                IsRoot = false,
+                IsActive = true,
+                Name = "KPI Achievement",
+                Module = "Execute",
+                Url = "/kpiachievement",
+                RoleGroups = new List<RoleGroup>
+                {
+                    _dataContext.RoleGroups.Local.Where(x => x.Id == 1).First(),
+                    _dataContext.RoleGroups.Local.Where(x => x.Id == 2).First()
+                },
+                Parent = _dataContext.Menus.Local.Where(x => x.Id == 3).First()
+            };
+            _dataContext.Menus.AddOrUpdate(kpiAchievement);
+
+            
 
             var mainmenu4 = new Menu
             {
@@ -116,6 +181,40 @@ namespace DSLNG.PEAR.Data.Installer
                 Parent = _dataContext.Menus.Local.Where(x=>x.Id==6).First()
             };
             _dataContext.Menus.AddOrUpdate(menuManagement);
+            var createMenu = new Menu
+            {
+                Id = 18,
+                IsRoot = false,
+                IsActive = false,
+                Name = "Create Menu",
+                Module = "Execute",
+                Url = "/Menu/Create",
+                RoleGroups = new List<RoleGroup>
+                {
+                    _dataContext.RoleGroups.Local.Where(x => x.Id == 1).First(),
+                    _dataContext.RoleGroups.Local.Where(x => x.Id == 2).First()
+                },
+                Parent = _dataContext.Menus.Local.Where(x => x.Id == 11).First()
+            };
+            _dataContext.Menus.AddOrUpdate(createMenu);
+
+            var editMenu = new Menu
+            {
+                Id = 19,
+                IsRoot = false,
+                IsActive = false,
+                Name = "Create Menu",
+                Module = "Execute",
+                Url = "/Menu/Edit",
+                RoleGroups = new List<RoleGroup>
+                {
+                    _dataContext.RoleGroups.Local.Where(x => x.Id == 1).First(),
+                    _dataContext.RoleGroups.Local.Where(x => x.Id == 2).First()
+                },
+                Parent = _dataContext.Menus.Local.Where(x => x.Id == 11).First()
+            };
+            _dataContext.Menus.AddOrUpdate(editMenu);
+
             var userManagement = new Menu
             {
                 Id = 12,
