@@ -6,18 +6,13 @@
     <title>@ViewBag.Title</title>
     @*<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>*@
     @*@Styles.Render("~/Content/login.css")*@
+    <link href="@Url.Content("~/Content/bootstrap/css/bootstrap.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/login.css")" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
     <div class="main-content">
         @RenderBody()
     </div>
-    @Scripts.Render("~/bundles/js_login")
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-        })
-    </script>
-    @RenderSection("Scripts", required: false)
 </body>
 </html>
