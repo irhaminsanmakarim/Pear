@@ -1036,13 +1036,19 @@ table.text-center th
     border: none;
 }
 
+.modal-loading {
+    position: relative;
+    min-height: 165px;
+}
+
 .ajax-loading-dialog
 {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    display: table-cell;
-    vertical-align: middle;
+    position: absolute;
+    margin: auto;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
 }
 
 .popover-title
