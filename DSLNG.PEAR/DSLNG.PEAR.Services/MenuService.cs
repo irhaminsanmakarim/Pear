@@ -30,11 +30,11 @@ namespace DSLNG.PEAR.Services
 
             if (request.ParentId != null)
             {
-                menus = DataContext.Menus.Where(x => x.ParentId == request.ParentId && x.RoleGroups.Select(y => y.Id).Contains(request.RoleId)).OrderBy(x => x.Order).ToList();
+                menus = DataContext.Menus.Where(x => x.IsActive == true && x.ParentId == request.ParentId && x.RoleGroups.Select(y => y.Id).Contains(request.RoleId)).OrderBy(x => x.Order).ToList();
             }
             else
             {
-                menus = DataContext.Menus.Where(x => x.ParentId == null || x.ParentId == 0 && x.RoleGroups.Select(y => y.Id).Contains(request.RoleId)).OrderBy(x => x.Order).ToList();
+                menus = DataContext.Menus.Where(x => x.IsActive == true && x.ParentId == null || x.ParentId == 0 && x.RoleGroups.Select(y => y.Id).Contains(request.RoleId)).OrderBy(x => x.Order).ToList();
             }
 
             if (request.IncludeChildren)
