@@ -77,7 +77,7 @@ namespace DSLNG.PEAR.Services
         {
             var Menus = new List<Data.Entities.Menu>();
 
-            Menus = DataContext.Menus.Where(x => x.ParentId == ParentId && x.RoleGroups.Select(y => y.Id).Contains(RoleId)).OrderBy(x => x.Order).ToList();
+            Menus = DataContext.Menus.Where(x => x.IsActive == true &&  x.ParentId == ParentId && x.RoleGroups.Select(y => y.Id).Contains(RoleId)).OrderBy(x => x.Order).ToList();
 
             if (Menus != null)
             {
@@ -96,10 +96,13 @@ namespace DSLNG.PEAR.Services
             var response = new GetSiteMenuActiveResponse();
             //get the menu from url request
             var url_request = new StringBuilder(request.Controller).Append("/").Append(request.Action).ToString();
+            
             try
             {
-                var menu = DataContext.Menus.Where(x => x.Url.ToLower() == url_request).First();
-                menu = this._GetActiveMenu(menu);
+                //var menu = DataContext.Menus.Where(x => x.Url.ToLower() == url_request).First();
+                var menu = DataContext.Menus.Where(x => x.Url.Contains(request.Url)).First();
+                var detail = DataContext.Menus.Where(x => x.Module.Contains(menu.Module) && x.IsRoot == true).First();
+                menu = this._GetActiveMenu(detail);
                 response = menu.MapTo<GetSiteMenuActiveResponse>();
 
                 return response;

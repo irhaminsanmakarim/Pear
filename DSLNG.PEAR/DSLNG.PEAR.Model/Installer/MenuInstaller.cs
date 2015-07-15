@@ -75,13 +75,43 @@ namespace DSLNG.PEAR.Data.Installer
                 IsActive = true,
                 Name = "Corporate Portofolio",
                 Module = "Plan",
-                Url = "/pmssummary/configuration",
+                Url = "/PmsSummary/Configuration",
                 RoleGroups = new List<RoleGroup>() { 
                     _dataContext.RoleGroups.Local.Where(x=>x.Id==1).First()
                 },
                 Parent = _dataContext.Menus.Local.Where(x => x.Id == 15).First()
             };
             _dataContext.Menus.AddOrUpdate(corporatePortofolio);
+
+            var pmsConfig = new Menu
+            {
+                Id = 20,
+                IsRoot = false,
+                IsActive = false,
+                Name = "Add Pillar",
+                Module = "Plan",
+                Url = "/PmsConfig",
+                RoleGroups = new List<RoleGroup>() { 
+                    _dataContext.RoleGroups.Local.Where(x=>x.Id==1).First()
+                },
+                Parent = _dataContext.Menus.Local.Where(x => x.Id == 16).First()
+            };
+            _dataContext.Menus.AddOrUpdate(pmsConfig);
+
+            var pmsConfigDetail = new Menu
+            {
+                Id = 21,
+                IsRoot = false,
+                IsActive = false,
+                Name = "Add KPI",
+                Module = "Plan",
+                Url = "/PmsConfigDetails",
+                RoleGroups = new List<RoleGroup>() { 
+                    _dataContext.RoleGroups.Local.Where(x=>x.Id==1).First()
+                },
+                Parent = _dataContext.Menus.Local.Where(x => x.Id == 16).First()
+            };
+            _dataContext.Menus.AddOrUpdate(pmsConfigDetail);
 
             var kpiTarget = new Menu
             {

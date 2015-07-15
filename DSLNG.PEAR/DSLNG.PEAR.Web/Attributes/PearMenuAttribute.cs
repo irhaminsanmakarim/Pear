@@ -17,9 +17,9 @@ namespace DSLNG.PEAR.Web.Attributes
         {
             var controller = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Controller"].ToString().ToLower();
             var action = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Action"].ToString().ToLower();
-
+            var url = filterContext.HttpContext.Request.RawUrl;
             var _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
-            var rootMenuActive = _menuService.GetSiteMenuActive(new GetSiteMenuActiveRequest() { Action = action, Controller = controller });
+            var rootMenuActive = _menuService.GetSiteMenuActive(new GetSiteMenuActiveRequest() { Action = action, Controller = controller, Url = url });
             filterContext.Controller.TempData.Add("RootMenuActive", rootMenuActive);
 
             base.OnActionExecuting(filterContext);
