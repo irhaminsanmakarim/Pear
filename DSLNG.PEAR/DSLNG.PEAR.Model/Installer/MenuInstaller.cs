@@ -203,7 +203,7 @@ namespace DSLNG.PEAR.Data.Installer
                 Id = 19,
                 IsRoot = false,
                 IsActive = false,
-                Name = "Create Menu",
+                Name = "Edit Menu",
                 Module = "Execute",
                 Url = "/Menu/Edit",
                 RoleGroups = new List<RoleGroup>
