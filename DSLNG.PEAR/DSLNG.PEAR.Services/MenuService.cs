@@ -274,7 +274,12 @@ namespace DSLNG.PEAR.Services
             {
                 //var role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
                 //var menu = DataContext.Menus.Include(x => x.RoleGroups).Where(x=>x.RoleGroups == role).First(x => x.Url == request.Url);
-                var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url == request.Url);
+                var url = request.Url != null ? request.Url.Split('/') : null;
+                string authorized = "/";
+                if (url[1].Length > 0) {
+                    authorized = url[1];
+                }
+                var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(authorized));
 
                 var response = menu.MapTo<GetMenuResponse>();
                 response.IsSuccess = true;
