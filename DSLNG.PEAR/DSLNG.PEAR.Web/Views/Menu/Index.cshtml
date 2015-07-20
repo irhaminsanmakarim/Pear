@@ -5,13 +5,13 @@
 
 <h2>Menu List</h2>
 @Html.Partial("_MessageResponse")
-@Html.ActionLink("Create New", "Create")
+@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 @Html.Action("IndexPartial")
 
 
 @section Scripts{
     <script type="text/javascript">
-        var confirmDelete = function(id) {
+        var confirmDelete = function (id) {
             if (confirm('Are you sure want to delete this item?')) {
                 var url = '@Url.Action("Delete", "Menu")';
                 $('<form action="' + url + '" method="POST">' +

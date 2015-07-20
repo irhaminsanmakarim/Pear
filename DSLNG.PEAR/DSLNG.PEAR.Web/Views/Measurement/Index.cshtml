@@ -1,5 +1,5 @@
-﻿@using DSLNG.PEAR.Data.Enums
-@*@model DSLNG.PEAR.Web.ViewModels.Measurement.IndexMeasurementViewModel*@
+﻿@*@using DSLNG.PEAR.Data.Enums*@
+@model DSLNG.PEAR.Web.ViewModels.Measurement.IndexMeasurementViewModel
 @{
     ViewBag.Title = "Measurement List";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,7 +7,7 @@
 
 <h2>List</h2>
 @Html.Partial("_MessageResponse")
-@Html.ActionLink("Create New", "Create")
+@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 @*@Html.Partial("_IndexGridPartial", Model.Measurements)*@
 @Html.Action("IndexPartial")
 
@@ -24,7 +24,6 @@
     </script>
     }
 
-@PeriodeType.Monthly
 
 
 
