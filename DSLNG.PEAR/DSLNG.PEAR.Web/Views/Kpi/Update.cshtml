@@ -207,6 +207,7 @@
 
     function roleGroupOnChange(val) {
         var roleId = $(val).val();
+        alert(roleId);
         $.ajax({
             url: '@Url.Action("GetRoleGroupCode")',
             data: { id: roleId },
