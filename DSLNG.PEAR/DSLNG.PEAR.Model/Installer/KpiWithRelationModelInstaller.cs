@@ -16,35 +16,35 @@ namespace DSLNG.PEAR.Data.Installer
         }
         public void Install()
         {
-            var list = new Collection<KpiRelationModel>();
+            //var list = new Collection<KpiRelationModel>();
             var fsDAFWC = new KpiRelationModel {
                 Id = 1,
                 Kpi = _context.Kpis.Local.First(x=>x.Id == 2),
                 KpiParent = _context.Kpis.Local.First(x=>x.Id == 1),
                 Method = "Qualitative"
             };
-            list.Add(fsDAFWC);
+            _context.KpiRelationModels.Add(fsDAFWC);
             var fsLOPC = new KpiRelationModel {
                 Id = 2,
                 KpiParent = _context.Kpis.Local.First(x=>x.Id ==1),
                 Kpi = _context.Kpis.Local.First(x=>x.Id==3),
                 Method = "Qualitative"
             };
-            list.Add(fsLOPC);
+            _context.KpiRelationModels.Add(fsLOPC);
             var fsSecIns = new KpiRelationModel {
                 Id = 3,
                 KpiParent = _context.Kpis.Local.First(x=>x.Id == 1),
                 Kpi = _context.Kpis.Local.First(x=>x.Id == 4),
                 Method = "Qualitative"
             };
-            list.Add(fsSecIns);
+            _context.KpiRelationModels.Add(fsSecIns);
             var fsQHSEAttend = new KpiRelationModel { 
                 Id = 4,
                 KpiParent = _context.Kpis.Local.First(x=>x.Id ==1),
                 Kpi = _context.Kpis.Local.First(x=>x.Id == 34),
                 Method = "Qualitative"
             };
-            list.Add(fsQHSEAttend);
+            _context.KpiRelationModels.Add(fsQHSEAttend);
             var QHSEAttendFS = new KpiRelationModel
             {
                 Id = 5,
@@ -52,7 +52,7 @@ namespace DSLNG.PEAR.Data.Installer
                 KpiParent = _context.Kpis.Local.First(x => x.Id == 34),
                 Method = "Qualitative"
             };
-            list.Add(QHSEAttendFS);
+            _context.KpiRelationModels.Add(QHSEAttendFS);
             var QHSEAttendLOPC = new KpiRelationModel
             {
                 Id = 6,
@@ -60,7 +60,7 @@ namespace DSLNG.PEAR.Data.Installer
                 Kpi = _context.Kpis.Local.First(x => x.Id == 3),
                 Method = "Qualitative"
             };
-            list.Add(QHSEAttendLOPC);
+            _context.KpiRelationModels.Add(QHSEAttendLOPC);
             var QHSEAttendSecIns = new KpiRelationModel
             {
                 Id = 7,
@@ -68,21 +68,21 @@ namespace DSLNG.PEAR.Data.Installer
                 Kpi = _context.Kpis.Local.First(x => x.Id == 4),
                 Method = "Qualitative"
             };
-            list.Add(QHSEAttendSecIns);
+            _context.KpiRelationModels.Add(QHSEAttendSecIns);
             var rifFS = new KpiRelationModel {
                 Id = 8,
                 KpiParent = _context.Kpis.Local.First(x=>x.Id == 35),
                 Kpi = _context.Kpis.Local.First(x=>x.Id == 1),
                 Method = "Qualitative"
             };
-            list.Add(rifFS);
+            _context.KpiRelationModels.Add(rifFS);
             var rifDAFWC = new KpiRelationModel { 
                 Id = 9,
                 KpiParent = _context.Kpis.Local.First(x => x.Id == 35),
                 Kpi = _context.Kpis.Local.First(x => x.Id == 2),
                 Method = "Qualitative"
             };
-            list.Add(rifDAFWC);
+            _context.KpiRelationModels.Add(rifDAFWC);
             var rifLOPC = new KpiRelationModel
             {
                 Id = 10,
@@ -90,7 +90,7 @@ namespace DSLNG.PEAR.Data.Installer
                 Kpi = _context.Kpis.Local.First(x => x.Id == 3),
                 Method = "Qualitative"
             };
-            list.Add(rifLOPC);
+            _context.KpiRelationModels.Add(rifLOPC);
             var rifSecIns = new KpiRelationModel
             {
                 Id = 11,
@@ -98,7 +98,7 @@ namespace DSLNG.PEAR.Data.Installer
                 Kpi = _context.Kpis.Local.First(x => x.Id == 4),
                 Method = "Qualitative"
             };
-            list.Add(rifSecIns);
+            _context.KpiRelationModels.Add(rifSecIns);
             int z = 11;
 
             z += 1;
@@ -108,7 +108,7 @@ namespace DSLNG.PEAR.Data.Installer
                 Kpi = _context.Kpis.Local.First(x=>x.Id == 1),
                 Method = "Qualitative"
             };
-            list.Add(planAvailFS);
+            _context.KpiRelationModels.Add(planAvailFS);
             z += 1;
             var planAvaiDAFWC = new KpiRelationModel
             {
@@ -117,7 +117,7 @@ namespace DSLNG.PEAR.Data.Installer
                 Kpi = _context.Kpis.Local.First(x => x.Id == 2),
                 Method = "Qualitative"
             };
-            list.Add(planAvaiDAFWC);
+            _context.KpiRelationModels.Add(planAvaiDAFWC);
 
             z += 1;
             var planAvaiSec = new KpiRelationModel
@@ -127,7 +127,7 @@ namespace DSLNG.PEAR.Data.Installer
                 Kpi = _context.Kpis.Local.First(x => x.Id == 4),
                 Method = "Qualitative"
             };
-            list.Add(planAvaiSec);
+            _context.KpiRelationModels.Add(planAvaiSec);
 
             z += 1;
             var planAvaiRel = new KpiRelationModel
@@ -137,7 +137,7 @@ namespace DSLNG.PEAR.Data.Installer
                 Kpi = _context.Kpis.Local.First(x => x.Id == 12),
                 Method = "Qualitative"
             };
-            list.Add(planAvaiRel);
+            _context.KpiRelationModels.Add(planAvaiRel);
 
             /*
              * remarked temporary due to pillar check on pms summary
@@ -147,14 +147,14 @@ namespace DSLNG.PEAR.Data.Installer
                 Kpi = _context.Kpis.Local.First(x=>x.Id == 0),
                 Method = "Qualitative"
             };
-            list.Add(fsQHSEClosure);
+            _context.KpiRelationModels.Add(fsQHSEClosure);
             */
 
             //var plantAvailability = _context.Kpis.Local.First(x => x.Id == 3);
             //var item1 = new KpiRelationModel();
             //item1.Kpi = plantAvailability;
             //item1.Method = "Quantitative";
-            //list.Add(item1);
+            //_context.KpiRelationModels.Add(item1);
             
             //var plantReliability = new Kpi
             //{
