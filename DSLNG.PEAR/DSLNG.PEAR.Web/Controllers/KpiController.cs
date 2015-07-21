@@ -161,21 +161,23 @@ namespace DSLNG.PEAR.Web.Controllers
 
             if (!string.IsNullOrEmpty(viewModel.Code))
             {
-                var code = 3;
-                var takeCode = viewModel.Code.Length - 3;
+                var numbers = String.Join("", viewModel.Code.Where(char.IsDigit));
+                //var code = 3;
+                //var takeCode = viewModel.Code.Length - 3;
                 if (viewModel.PillarId.HasValue)
                 {
                     viewModel.CodeFromPillar = GetPillarCode(viewModel.PillarId.Value);
-                    code += 2;
-                    takeCode -= viewModel.CodeFromPillar.Length;
+                    //code += 2;
+                    //takeCode -= viewModel.CodeFromPillar.Length;
                 }
                 viewModel.CodeFromLevel = GetLevelCode(viewModel.LevelId);
                 if (viewModel.RoleGroupId.HasValue)
                 {
                     viewModel.CodeFromRoleGroup = !string.IsNullOrEmpty(GetRoleGroupCode(viewModel.RoleGroupId.Value)) ? GetRoleGroupCode(viewModel.RoleGroupId.Value) : "";
-                    takeCode -= viewModel.CodeFromRoleGroup.Length;
+                    //takeCode -= viewModel.CodeFromRoleGroup.Length;
                 }
-                viewModel.Code = response.Code.Substring(code, takeCode);
+                //viewModel.Code = response.Code.Substring(code, takeCode);
+                viewModel.Code = numbers;
             }
             
             if (viewModel.RelationModels.Count == 0)

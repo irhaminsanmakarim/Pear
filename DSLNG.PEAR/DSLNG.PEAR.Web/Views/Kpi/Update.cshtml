@@ -190,6 +190,7 @@
         }
         else {
             $(".pillar").hide();
+            $(".pillar").val(null);
         }
     }
 
@@ -207,7 +208,7 @@
 
     function roleGroupOnChange(val) {
         var roleId = $(val).val();
-        alert(roleId);
+        console.log(roleId);
         $.ajax({
             url: '@Url.Action("GetRoleGroupCode")',
             data: { id: roleId },

@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Data.Installer
             {
                 Id = 1,
                 Name = "Planning Directorate",
+                Code = "CPD",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
@@ -25,6 +26,7 @@ namespace DSLNG.PEAR.Data.Installer
             {
                 Id = 2,
                 Name = "Operation Directorate",
+                Code ="COO",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
@@ -32,6 +34,7 @@ namespace DSLNG.PEAR.Data.Installer
             {
                 Id = 3,
                 Name = "Finance Directorate",
+                Code = "CFD",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
@@ -39,6 +42,7 @@ namespace DSLNG.PEAR.Data.Installer
             {
                 Id = 4,
                 Name = "Technical Directorate",
+                Code = "CTD",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
@@ -46,6 +50,7 @@ namespace DSLNG.PEAR.Data.Installer
             {
                 Id = 5,
                 Name = "Commercial Directorate",
+                Code = "CCD",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
@@ -53,6 +58,7 @@ namespace DSLNG.PEAR.Data.Installer
             {
                 Id = 6,
                 Name = "Corporate Affair Directorate",
+                Code = "CCD",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
@@ -60,6 +66,7 @@ namespace DSLNG.PEAR.Data.Installer
             {
                 Id = 7,
                 Name = "President Director Office",
+                Code = "PDO",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).First(),
                 IsActive = true
             };
@@ -67,6 +74,7 @@ namespace DSLNG.PEAR.Data.Installer
             {
                 Id = 8,
                 Name = "Human Capital Management",
+                Code = "HCM",
                 Level = _context.Levels.Local.Where(x => x.Id == 2).FirstOrDefault(),
                 IsActive = true
             };
@@ -74,6 +82,7 @@ namespace DSLNG.PEAR.Data.Installer
             {
                 Id = 9,
                 Name = "Procurement",
+                Code = "PRO",
                 Level = _context.Levels.Local.Where(x => x.Id == 1).FirstOrDefault(),
                 IsActive = true
             };
@@ -81,6 +90,7 @@ namespace DSLNG.PEAR.Data.Installer
             {
                 Id = 10,
                 Name = "QHSE",
+                Code = "QHSE",
                 Level = _context.Levels.Local.Where(x => x.Id == 2).FirstOrDefault(),
                 IsActive = true
             };
@@ -88,6 +98,7 @@ namespace DSLNG.PEAR.Data.Installer
             {
                 Id = 11,
                 Name = "Information Communication & Tech",
+                Code = "ICT",
                 Level = _context.Levels.Local.Where(x => x.Id == 2).FirstOrDefault(),
                 IsActive = true
             };
@@ -95,6 +106,7 @@ namespace DSLNG.PEAR.Data.Installer
             {
                 Id = 12,
                 Name = "Community Support & Relation",
+                Code = "CSR",
                 Level = _context.Levels.Local.Where(x => x.Id == 2).FirstOrDefault(),
                 IsActive = true
             };
