@@ -177,10 +177,12 @@ namespace DSLNG.PEAR.Services
                 {
                     updateKpi.RoleGroup = DataContext.RoleGroups.FirstOrDefault(x => x.Id == request.RoleGroupId.Value);
                 }
-                if (request.MeasurementId.HasValue)
-                {
-                    updateKpi.Measurement = DataContext.Measurements.FirstOrDefault(x => x.Id == request.MeasurementId);
-                }
+                //if (request.MeasurementId.HasValue)
+                //{
+                //    updateKpi.Measurement = DataContext.Measurements.FirstOrDefault(x => x.Id == request.MeasurementId);
+                //}
+
+                updateKpi.Measurement = DataContext.Measurements.Single(x => x.Id == request.MeasurementId);
                 updateKpi.Level = DataContext.Levels.FirstOrDefault(x => x.Id == request.LevelId);
                 updateKpi.Type = DataContext.Types.FirstOrDefault(x => x.Id == request.TypeId);
                 updateKpi.Method = DataContext.Methods.FirstOrDefault(x => x.Id == request.MethodId);
