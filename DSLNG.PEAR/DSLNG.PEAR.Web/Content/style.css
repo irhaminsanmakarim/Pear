@@ -1144,3 +1144,64 @@ table.text-center th
 {
     background-color: Lime;       
 }
+
+
+/*Tambahan dari inez*/
+
+.title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #004071;
+  margin-bottom: 7px;
+}
+
+.btn_small_darkblue
+{
+background-color:#004071;
+color:white;
+width:85px;
+border-radius:5px;
+padding:5px;
+}
+
+a:hover.btn_small_darkblue 
+{
+color:white!important;
+background-color:#00aeef;
+}
+
+.btn_small_darkblue .fa
+{border-right:1px solid white;
+padding-right:5px;
+}
+
+.btn_small_lightblue:hover
+{background-color:#0382af;
+}
+
+td .btn_small_lightblue a:hover
+{color:white!important;}
+
+.btn_small_lightblue
+{
+background-color:#00aeef;
+color:white;
+width:85px;
+border-radius:5px;
+padding:2px;
+}
+
+.btn_small_lightblue .fa
+{border-right:1px solid white;
+padding-right:5px;
+}
+
+.main-nav>li>a:hover, .main-nav>li.active, .main-nav:hover>li.active:hover>a, .main-nav:hover>li.active:hover {
+    color: #004071;
+    background: #00aeef!important;
+    width: 60px;
+    background-image: url("img/active.png");
+    background-position: right;
+    background-repeat: no-repeat;
+    text-decoration: none;
+}
