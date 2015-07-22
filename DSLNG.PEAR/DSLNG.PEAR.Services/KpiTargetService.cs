@@ -418,10 +418,10 @@ namespace DSLNG.PEAR.Services
             {
                 var kpiTargets = DataContext.Kpis
                     .Include(x => x.Measurement)
-                    .Include(x => x.RoleGroup)
+                    .Include(x => x.Type)
                     .AsEnumerable()
                     .OrderBy(x => x.Order)
-                    .GroupBy(x => x.RoleGroup).ToDictionary(x => x.Key);
+                    .GroupBy(x => x.Type).ToDictionary(x => x.Key);
 
                 foreach (var item in kpiTargets)
                 {
