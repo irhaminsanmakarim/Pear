@@ -191,7 +191,7 @@ aside.left-content > *
     .main-nav:hover > li.active:hover
     {
         color: #004071;
-        background: #febe10;
+        background: #5bafeb;
         width: 60px;
         background-image: url("img/active.png");
         background-position: right;
@@ -361,12 +361,12 @@ img
     margin-right: 5px;
 }
 
-#gridPmsSummaryIndex_DXMainTable .dxgvDataRow_DSLNG:hover
+#gridPmsSummaryIndex_DXMainTable .dxgvDataRow_DSLNG:hover, .dxgvTable_DSLNG .dxgvDataRow_DSLNG:hover,
+.dxgvTable_DSLNG .dxgvDataRow_DSLNG:hover a
 {
     background-color: #5bafeb;
     color: white;
 }
-
 
 .modal-content
 {
@@ -1134,3 +1134,6 @@ table.text-center th
     background-color: #f3f4f5;
 }*/
 
+#gridPmsSummaryIndex_DXHeadersRow0, #gridPmsSummaryIndex_DXHeadersRow1 {
+    font-size: 14px;
+}
