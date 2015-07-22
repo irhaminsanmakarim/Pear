@@ -54,7 +54,7 @@
             settings.Columns.Add(column =>
                 {
                     column.FieldName = "Score";
-                    column.PropertiesEdit.DisplayFormatString = "0.00";
+                    column.PropertiesEdit.DisplayFormatString = "0.##";
                     column.Visible = false;
                 });
 
@@ -62,7 +62,7 @@
             {
                 column.FieldName = "ScoreStr";
                 column.Caption = "Score";
-                column.PropertiesEdit.DisplayFormatString = "0.00";
+                column.PropertiesEdit.DisplayFormatString = "0.##";
             });
 
             decimal totalScore = 0;
@@ -113,14 +113,14 @@
             kpiScore.ShowInGroupFooterColumn = "KpiNameWithColor";
             kpiScore.SummaryType = SummaryItemType.Sum;
             kpiScore.FieldName = "Score";
-            kpiScore.DisplayFormat = "Score KPI in this pillar (0.00)";
+            kpiScore.DisplayFormat = "Score KPI in this pillar (0.##)";
             settings.GroupSummary.Add(kpiScore);
 
             ASPxSummaryItem percentageScore = new ASPxSummaryItem();
             percentageScore.ShowInGroupFooterColumn = "Score";
             percentageScore.Tag = "Score_1";
             percentageScore.FieldName = "Score";
-            percentageScore.DisplayFormat = "0.00";
+            percentageScore.DisplayFormat = "0.##";
             percentageScore.SummaryType = SummaryItemType.Custom;
             settings.GroupSummary.Add(percentageScore);
 
