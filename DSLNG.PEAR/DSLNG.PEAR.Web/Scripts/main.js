@@ -232,6 +232,31 @@ String.prototype.isNullOrEmpty = function () {
                 }
             });
         };
+        
+        $('#graphic-preview-btn').click(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var callback = Pear.Artifact.Designer._previewCallbacks;
+            $.ajax({
+                url: $this.data('preview-url'),
+                data: $this.closest('form').serialize(),
+                method: 'POST',
+                success: function (data) {
+                    if (callback.hasOwnProperty(data.GraphicType)) {
+                        callback[data.GraphicType](data, $('#container'));
+                    }
+                    $('#graphic-preview').modal('show');
+                }
+            });
+        });
+        $('#graphic-preview').on('show.bs.modal', function () {
+            $('#container').css('visibility', 'hidden');
+        });
+        $('#graphic-preview').on('shown.bs.modal', function () {
+            $('#container').css('visibility', 'initial');
+            $('#container').highcharts().reflow();
+        });
+        
         var rangeDatePicker = function () {
             $('.datepicker').datetimepicker({
                 format: "MM/DD/YYYY hh:00 A"
@@ -333,6 +358,21 @@ String.prototype.isNullOrEmpty = function () {
                 });
                 $hiddenFields.remove();
                 Pear.Artifact.Designer._setupCallbacks.speedometer();
+                break;
+            case 'trafficlight':
+                var $hiddenFields = $('#hidden-fields');
+                var plotTemplate = $hiddenFields.find('.plot-band-template.original');
+                var plotTemplateClone = plotTemplate.clone(true);
+                plotTemplateClone.children('input:first-child').remove();
+                $('#hidden-fields-holder').html(plotTemplateClone);
+                plotTemplate.remove();
+                $('#plot-bands-holder').append($hiddenFields.html());
+                $('#plot-bands-holder').find('.plot-band-template').each(function (i, val) {
+                    var $this = $(val);
+                    Pear.Artifact.Designer._colorPicker($this);
+                });
+                $hiddenFields.remove();
+                Pear.Artifact.Designer._setupCallbacks.trafficlight();
                 break;
             case 'line':
                 var $hiddenFields = $('#hidden-fields');
@@ -1269,7 +1309,7 @@ String.prototype.isNullOrEmpty = function () {
         };
 
         var addPlot = function () {
-            var plotPos = 0;
+            var plotPos = $('#plot-bands-holder').find('.plot-band-template').length + 1;
             $('#add-plot').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
@@ -1279,7 +1319,7 @@ String.prototype.isNullOrEmpty = function () {
                 $('<input>').attr({
                     type: 'hidden',
                     id: 'foo',
-                    name: 'SpeedometerChart.PlotBands.Index',
+                    name: 'TrafficLightChart.PlotBands.Index',
                     value: plotPos
                 }).appendTo(plotBandTemplate);
                 if (plotPos !== 0) {
@@ -1294,6 +1334,8 @@ String.prototype.isNullOrEmpty = function () {
                 plotPos++;
             });
         };
+        
+
 
         Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'));
         removePlot();

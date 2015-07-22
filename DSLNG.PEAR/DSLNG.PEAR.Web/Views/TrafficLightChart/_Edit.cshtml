@@ -1,0 +1,64 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.TrafficLightChart.Series.Label)
+    @Html.TextBoxFor(model => model.TrafficLightChart.Series.Label,new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.TrafficLightChart.Series.Label)
+</div>
+
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.TrafficLightChart.Series.KpiId)
+    @Html.DropDownListFor(model => model.TrafficLightChart.Series.KpiId, new List<SelectListItem> { new SelectListItem{Value=Model.TrafficLightChart.Series.KpiId.ToString(), Text=Model.TrafficLightChart.Series.KpiName}}, new { @class = "kpi-list form-control", style = "width:180px" })
+    @Html.ValidationMessageFor(model => model.TrafficLightChart.Series.KpiId)
+</div>
+
+<div class="form-group form-list">
+    <label>&nbsp;</label>
+    <input type="button" value="Add Plot Bands" class="btn btn-lightblue" id="add-plot" />
+</div>
+@*<div id="plot-bands-holder">
+</div>*@
+<div id="hidden-fields">
+    @for (var i = 0; i < Model.TrafficLightChart.PlotBands.Count; i++)
+    {
+        var original = i == 0 ? "original" : "";
+        <div class="plot-band-template @original whitebox">
+            <input type="hidden" name="TrafficLightChart.PlotBands.Index" value="@i" />
+            <h2>Plot Bands</h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.TrafficLightChart.PlotBands[i].From)
+                        @Html.TextBoxFor(model => model.TrafficLightChart.PlotBands[i].From, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TrafficLightChart.PlotBands[i].From)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.TrafficLightChart.PlotBands[i].To)
+                        @Html.TextBoxFor(model => model.TrafficLightChart.PlotBands[i].To,new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TrafficLightChart.PlotBands[i].To)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.TrafficLightChart.PlotBands[i].Color)
+                        <div class="input-group colorpicker">
+                            @Html.TextBoxFor(model => model.TrafficLightChart.PlotBands[i].Color, new { @class = "form-control" })
+                            <span class="input-group-addon"><i style="background-color:@Model.TrafficLightChart.PlotBands[i].Color"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.TrafficLightChart.PlotBands[i].Color)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.TrafficLightChart.PlotBands[i].Label)
+                        @Html.TextBoxFor(model => model.TrafficLightChart.PlotBands[i].Label,new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TrafficLightChart.PlotBands[i].Label)
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="Remove" class="remove" />
+        </div>
+    }
+</div>
+

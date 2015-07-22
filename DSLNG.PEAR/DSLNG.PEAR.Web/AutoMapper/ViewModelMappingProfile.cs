@@ -306,6 +306,11 @@ namespace DSLNG.PEAR.Web.AutoMapper
              .ForMember(x => x.Series, o => o.MapFrom(s => s.Series[0]));
             Mapper.CreateMap<GetArtifactResponse.PlotResponse, GetTrafficLightChartDataRequest.PlotBandRequest>();
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetTrafficLightChartDataRequest.SeriesRequest>();
+
+            Mapper.CreateMap<GetArtifactResponse, TrafficLightChartViewModel>()
+                .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.FirstOrDefault()));
+            Mapper.CreateMap<GetArtifactResponse.SeriesResponse, TrafficLightChartViewModel.SeriesViewModel>();
+            Mapper.CreateMap<GetArtifactResponse.PlotResponse, TrafficLightChartViewModel.PlotBand>();
         }
 
         private void ConfigureCorporatePortofolio()
