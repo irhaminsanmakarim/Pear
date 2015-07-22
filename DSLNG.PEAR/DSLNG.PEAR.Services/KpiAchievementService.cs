@@ -191,9 +191,10 @@ namespace DSLNG.PEAR.Services
                 var kpiAchievements = DataContext.Kpis
                     .Include(x => x.Measurement)
                     .Include(x => x.Type)
+                    .Include(x => x.RoleGroup)
                     .AsEnumerable()
                     .OrderBy(x => x.Order)
-                    .GroupBy(x => x.Type).ToDictionary(x => x.Key);
+                    .GroupBy(x => x.RoleGroup).ToDictionary(x => x.Key);
 
                 foreach (var item in kpiAchievements)
                 {
