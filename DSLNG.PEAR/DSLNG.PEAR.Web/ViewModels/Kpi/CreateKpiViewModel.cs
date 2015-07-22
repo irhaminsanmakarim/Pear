@@ -62,8 +62,9 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         [Display(Name = "Ordering")]
         public int Order { get; set; }
 
-        [Display(Name = "PMS Formula Ytd")]
         public YtdFormula YtdFormula { get; set; }
+        [Required]
+        [Display(Name = "PMS Formula Ytd")]
         public string YtdFormulaValue { get; set; }
         public IEnumerable<SelectListItem> YtdFormulaList { get; set; }
 
@@ -83,7 +84,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         public FormatInput FormatInput { get; set; }
 
         //public Periode Periode { get; set; }
-
+        [Required]
         [Display(Name = "Period Input")]
         public string PeriodeValue { get; set; }
         public IEnumerable<SelectListItem> PeriodeList { get; set; }
