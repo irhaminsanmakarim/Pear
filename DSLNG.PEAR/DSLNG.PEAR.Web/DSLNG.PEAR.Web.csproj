@@ -561,6 +561,7 @@
     <Content Include="Views\KpiTarget\Configuration\_Monthly.cshtml" />
     <Content Include="Views\KpiTarget\Configuration\_Yearly.cshtml" />
     <Content Include="Views\KpiTarget\Configuration.cshtml" />
+    <None Include="Views\Error\PageNotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -615,6 +616,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ConversionController.cs" />
     <Compile Include="Controllers\CorporatePortofolioController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KpiAchievementController.cs" />
