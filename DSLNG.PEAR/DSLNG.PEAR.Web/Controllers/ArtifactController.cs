@@ -429,7 +429,13 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
                 case "tabular":
                     {
-                        var request = viewModel.MapTo<GetSpeedometerChartDataRequest>();
+                        var request = viewModel.MapTo<GetTabularDataRequest>();
+                        viewModel.Tabular.MapPropertiesToInstance<GetTabularDataRequest>(request);
+                        var chartData = _artifactServie.GetTabularData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.Tabular = new TabularDataViewModel();
+                        chartData.MapPropertiesToInstance<TabularDataViewModel>(previewViewModel.Tabular);
+                        previewViewModel.Tabular.Title = viewModel.HeaderTitle;
                     }
                     break;
                 default:

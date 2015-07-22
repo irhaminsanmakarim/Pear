@@ -115,6 +115,57 @@ namespace DSLNG.PEAR.Services
 
         //}
 
+        public GetTabularDataResponse GetTabularData(GetTabularDataRequest request) {
+            var response = request.MapTo<GetTabularDataResponse>();
+            foreach (var row in request.Rows) {
+                var kpi = DataContext.Kpis.Where(x => x.Id == row.KpiId).First();
+                IList<DateTime> dateTimePeriodes = new List<DateTime>();
+                this._getPeriodes(row.PeriodeType, row.RangeFilter, row.Start, row.End, out dateTimePeriodes);
+                var start = dateTimePeriodes[0];
+                var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
+                var rowResponse = new GetTabularDataResponse.RowResponse();
+                rowResponse.KpiName = kpi.Name;
+                rowResponse.Measurement = kpi.Measurement.Name;
+                rowResponse.PeriodeType = row.PeriodeType.ToString();
+                if (request.Remark) {
+                    rowResponse.Remark = kpi.Remark;
+                }
+                switch (kpi.YtdFormula)
+                {
+                    case YtdFormula.Sum:
+                        if (request.Target) {
+                            rowResponse.Target = DataContext.KpiTargets.Where(x => x.PeriodeType == row.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault();
+                        }
+                        if (request.Actual) {
+                            rowResponse.Actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
+                                    .GroupBy(x => x.Kpi.Id)
+                                    .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault();
+                        }
+                        break;
+                    case YtdFormula.Average:
+                        if (request.Target) {
+                            rowResponse.Target = DataContext.KpiTargets.Where(x => x.PeriodeType == row.PeriodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
+                                    .GroupBy(x => x.Kpi.Id)
+                                    .Select(x => x.Average(y => y.Value).Value).FirstOrDefault();
+                        }
+                        if (request.Actual) {
+                            rowResponse.Actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
+                                    .GroupBy(x => x.Kpi.Id)
+                                    .Select(x => x.Average(y => y.Value).Value).FirstOrDefault();
+                        }
+                        break;
+                }
+                response.Rows.Add(rowResponse);
+            }
+            return response;
+        }
+
         public GetSpeedometerChartDataResponse GetSpeedometerChartData(GetSpeedometerChartDataRequest request)
         {
             var response = new GetSpeedometerChartDataResponse();
