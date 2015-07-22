@@ -99,8 +99,8 @@ namespace DSLNG.PEAR.Services
             
             try
             {
-                var menu = DataContext.Menus.Where(x => x.Url.ToLower() == request.Url).First();
-                //var menu = DataContext.Menus.Where(x => x.Url == request.Url))();
+                //var menu = DataContext.Menus.Where(x => x.Url.ToLower() == url_request).First();
+                var menu = DataContext.Menus.Where(x => x.Url.Contains(url_request)).First();
                 var detail = DataContext.Menus.Where(x => x.Module.Contains(menu.Module) && x.IsRoot == true).First();
                 menu = this._GetActiveMenu(detail);
                 response = menu.MapTo<GetSiteMenuActiveResponse>();
@@ -280,9 +280,10 @@ namespace DSLNG.PEAR.Services
                 var url = request.Url != null ? request.Url.Split('/') : null;
                 string authorized = "/";
                 if (url[1].Length > 0) {
-                    authorized = url[1];
+                    authorized = string.Format("/{0}/", url[1]);
+                    //authorized += url[1];
                 }
-                var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url == request.Url);
+                var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(authorized));
 
                 var response = menu.MapTo<GetMenuResponse>();
                 response.IsSuccess = true;
