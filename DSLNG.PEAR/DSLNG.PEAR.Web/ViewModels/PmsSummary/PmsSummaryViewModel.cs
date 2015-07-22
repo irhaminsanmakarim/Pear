@@ -32,7 +32,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{1} / {0}", TargetYearly.HasValue ? TargetYearly.Value.ToString("0") : "-", ActualYearly.HasValue ? ActualYearly.Value.ToString("0") : "-");
+                return string.Format(@"{1} / {0}", TargetYearly.HasValue ? TargetYearly.Value.ToString("0.##") : "-", ActualYearly.HasValue ? ActualYearly.Value.ToString("0.##") : "-");
             }
         }
 
@@ -40,7 +40,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{1} / {0}", TargetMonthly.HasValue ? TargetMonthly.Value.ToString("0") : "-", ActualMonthly.HasValue ? ActualMonthly.Value.ToString("0") : "-");
+                return string.Format(@"{1} / {0}", TargetMonthly.HasValue ? TargetMonthly.Value.ToString("0.##") : "-", ActualMonthly.HasValue ? ActualMonthly.Value.ToString("0.##") : "-");
             }
         }
 
@@ -48,7 +48,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{1} / {0}", TargetYtd.HasValue ? TargetYtd.Value.ToString("0") : "-", ActualYtd.HasValue ? ActualYtd.Value.ToString("0") : "-");
+                return string.Format(@"{1} / {0}", TargetYtd.HasValue ? TargetYtd.Value.ToString("0.##") : "-", ActualYtd.HasValue ? ActualYtd.Value.ToString("0.##") : "-");
             }
         }
 
@@ -56,7 +56,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0}", IndexYearly.HasValue ? IndexYearly.Value.ToString("0") : "-");
+                return string.Format(@"{0}", IndexYearly.HasValue ? IndexYearly.Value.ToString("0.##") : "-");
             }
         }
 
@@ -64,7 +64,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0}", IndexMonthly.HasValue ? IndexMonthly.Value.ToString("0") : "-");
+                return string.Format(@"{0}", IndexMonthly.HasValue ? IndexMonthly.Value.ToString("0.##") : "-");
             }
         }
 
@@ -72,7 +72,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0}", IndexYtd.HasValue ? IndexYtd.Value.ToString("0") : "-");
+                return string.Format(@"{0}", IndexYtd.HasValue ? IndexYtd.Value.ToString("0.##") : "-");
             }
         }
 
@@ -80,7 +80,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0}", Score.HasValue ? Score.Value.ToString("0") : "-");
+                return string.Format(@"{0}", Score.HasValue ? Score.Value.ToString("0.##") : "-");
             }
         }
 
