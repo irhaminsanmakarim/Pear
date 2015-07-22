@@ -214,6 +214,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.GraphicName));
             Mapper.CreateMap<CreateTemplateRequest, DashboardTemplate>()
                 .ForMember(d => d.LayoutRows, o => o.Ignore());
+            Mapper.CreateMap<GetTabularDataRequest, GetTabularDataResponse>()
+                .ForMember(d => d.Rows, o => o.Ignore());
             //Mapper.CreateMap<CreateTemplateRequest.RowRequest, LayoutRow>();
             //Mapper.CreateMap<CreateTemplateRequest.ColumnRequest, LayoutColumn>();
             Mapper.CreateMap<DashboardTemplate, GetTemplatesResponse.TemplateResponse>();

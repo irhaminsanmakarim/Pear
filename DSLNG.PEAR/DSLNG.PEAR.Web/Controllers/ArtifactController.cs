@@ -388,7 +388,17 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.TrafficLightChart.PlotBands = chartData.PlotBands.MapTo<TrafficLightChartDataViewModel.PlotBandViewModel>();
                     }
                     break;
-
+                case "tabular":
+                    {
+                        var chartData = _artifactServie.GetTabularData(artifactResp.MapTo<GetTabularDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.Tabular = new TabularDataViewModel();
+                        previewViewModel.Tabular.Title = artifactResp.HeaderTitle;
+                        chartData.MapPropertiesToInstance<TabularDataViewModel>(previewViewModel.Tabular);
+                        //previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
+                        //previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
                 default:
                     {
                         var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());

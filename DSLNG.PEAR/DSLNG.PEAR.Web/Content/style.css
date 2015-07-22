@@ -1176,3 +1176,20 @@ table.text-center th
     font-weight: bold;
     font-size: 30px;
 }
+table.tabular {
+    width:100%;
+}
+table.tabular th {
+    background:#004071;
+    color:#fff;
+    padding:5px;
+}
+.tabular-wrapper {
+    text-align:center;
+}
+    .tabular-wrapper h3 {
+        color: #333333;
+font-size: 18px;
+fill: #333333;
+width: 736px;
+    }

@@ -118,7 +118,7 @@ namespace DSLNG.PEAR.Services
         public GetTabularDataResponse GetTabularData(GetTabularDataRequest request) {
             var response = request.MapTo<GetTabularDataResponse>();
             foreach (var row in request.Rows) {
-                var kpi = DataContext.Kpis.Where(x => x.Id == row.KpiId).First();
+                var kpi = DataContext.Kpis.Include(x => x.Measurement).Where(x => x.Id == row.KpiId).First();
                 IList<DateTime> dateTimePeriodes = new List<DateTime>();
                 this._getPeriodes(row.PeriodeType, row.RangeFilter, row.Start, row.End, out dateTimePeriodes);
                 var start = dateTimePeriodes[0];

@@ -221,7 +221,11 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<TabularViewModel.RowViewModel, CreateArtifactRequest.RowRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
                 .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)));
-
+            Mapper.CreateMap<ArtifactDesignerViewModel, GetTabularDataRequest>();
+            Mapper.CreateMap<TabularViewModel, GetTabularDataRequest>();
+            Mapper.CreateMap<TabularViewModel.RowViewModel, GetTabularDataRequest.RowRequest>();
+            Mapper.CreateMap<GetTabularDataResponse, TabularDataViewModel>();
+            Mapper.CreateMap<GetTabularDataResponse.RowResponse, TabularDataViewModel.RowViewModel>();
             //Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetSeriesRequest.Series>()
             //    .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetSeriesRequest.Stack>()));
             //Mapper.CreateMap<BarChartViewModel.StackViewModel, GetSeriesRequest.Stack>();
@@ -263,6 +267,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
              .ForMember(x => x.Series, o => o.MapFrom(s => s.Series[0]));
             Mapper.CreateMap<GetArtifactResponse.PlotResponse, GetSpeedometerChartDataRequest.PlotBandRequest>();
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetSpeedometerChartDataRequest.SeriesRequest>();
+
+            Mapper.CreateMap<GetArtifactResponse, GetTabularDataRequest>();
+            //Mapper.CreateMap<GetArtifactResponse., GetSpeedometerChartDataRequest.PlotBandRequest>();
+            //Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetSpeedometerChartDataRequest.SeriesRequest>();
 
             Mapper.CreateMap<CreateConversionViewModel, CreateConversionRequest>();
             Mapper.CreateMap<GetConversionResponse, UpdateConversionViewModel>()

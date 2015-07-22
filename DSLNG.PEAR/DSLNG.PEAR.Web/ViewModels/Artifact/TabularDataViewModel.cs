@@ -24,6 +24,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             public double Actual { get; set; }
             public double Target { get; set; }
             public string Remark { get; set; }
+            public string Measurement { get; set; }
         }
     }
 }

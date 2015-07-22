@@ -82,11 +82,12 @@
     <Compile Include="KpiAchievementService.cs" />
     <Compile Include="KpiTargetService.cs" />
     <Compile Include="PeriodeService.cs" />
-    <Compile Include="Requests\Artifact\GetTrafficLightChartDataRequest.cs" />
     <Compile Include="Requests\Artifact\CreateArtifactRequest.cs" />
     <Compile Include="Requests\Artifact\GetArtifactRequest.cs" />
     <Compile Include="Requests\Artifact\GetArtifactsRequest.cs" />
     <Compile Include="Requests\Artifact\GetArtifactsToSelectRequest.cs" />
+    <Compile Include="Requests\Artifact\GetTabularDataRequest.cs" />
+    <Compile Include="Requests\Artifact\GetTrafficLightChartDataRequest.cs" />
     <Compile Include="Requests\Artifact\UpdateArtifactRequest.cs" />
     <Compile Include="Requests\Conversion\CreateConversionRequest.cs" />
     <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
@@ -122,11 +123,12 @@
     <Compile Include="Requests\Template\GetTemplateRequest.cs" />
     <Compile Include="Requests\Template\GetTemplatesRequest.cs" />
     <Compile Include="Requests\User\LoginUserRequest.cs" />
-    <Compile Include="Responses\Artifact\GetTrafficLightChartDataResponse.cs" />
     <Compile Include="Responses\Artifact\CreateArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactsResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactsToSelectResponse.cs" />
+    <Compile Include="Responses\Artifact\GetTabularDataResponse.cs" />
+    <Compile Include="Responses\Artifact\GetTrafficLightChartDataResponse.cs" />
     <Compile Include="Responses\Artifact\UpdateArtifactResponse.cs" />
     <Compile Include="Responses\Conversion\CreateConversionResponse.cs" />
     <Compile Include="Responses\Conversion\DeleteConversionResponse.cs" />

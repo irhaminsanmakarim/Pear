@@ -1256,7 +1256,49 @@ String.prototype.isNullOrEmpty = function () {
         $('#general-graphic-settings').css('display', 'none');
         $('.form-measurement').css('display', 'none');
     };
-
+    artifactDesigner._previewCallbacks.tabular = function (data, container) {
+        var wrapper = $('<div>');
+        wrapper.addClass('tabular-wrapper');
+        wrapper.append($('<h3>').html(data.Tabular.Title));
+        var $table = $('<table>');
+        $table.addClass('tabular');
+        $table.addClass('table-bordered');
+        var rowHeader = $('<tr>');
+        rowHeader.append($('<th>').html('Kpi Name'));
+        rowHeader.append($('<th>').html('Periode Type'));
+        rowHeader.append($('<th>').html('Periode'));
+        if (data.Tabular.Actual) {
+            rowHeader.append($('<th>').html('Actual'));
+        }
+        if (data.Tabular.Target) {
+            rowHeader.append($('<th>').html('Target'));
+        }
+        if (data.Tabular.Remark) {
+            rowHeader.append($('<th>').html('Remark'));
+        }
+        rowHeader.append($('<th>').html('Measurement'));
+        $table.append(rowHeader);
+        for (var i in data.Tabular.Rows) {
+            var dataRow = data.Tabular.Rows[i];
+            var row = $('<tr>');
+            row.append($('<td>').html(dataRow.KpiName));
+            row.append($('<td>').html(dataRow.PeriodeType));
+            row.append($('<td>').html(dataRow.Periode));
+            if (data.Tabular.Actual) {
+                row.append($('<td>').html(dataRow.Actual));
+            }
+            if (data.Tabular.Target) {
+                row.append($('<td>').html(dataRow.Target));
+            }
+            if (data.Tabular.Remark) {
+                row.append($('<td>').html(dataRow.Remark));
+            }
+            row.append($('<td>').html(dataRow.Measurement));
+            $table.append(row);
+        }
+        wrapper.append($table);
+        container.html(wrapper);
+    }
 
     //trafficlight
     artifactDesigner._setupCallbacks.trafficlight = function () {
