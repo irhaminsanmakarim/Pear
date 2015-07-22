@@ -2,6 +2,7 @@ body, html
 {
     height: 100%;
     background: #f0f3f4;
+    font-family: 'Comic sans';
 }
 
 .main-content
@@ -1133,3 +1134,13 @@ table.text-center th
 {
     background-color: #f3f4f5;
 }*/
+
+.dxgvDataRow_grid:hover
+{
+    background-color: Lime;
+}
+
+.dxgvSelectedRow_grid:hover
+{
+    background-color: Lime;       
+}
