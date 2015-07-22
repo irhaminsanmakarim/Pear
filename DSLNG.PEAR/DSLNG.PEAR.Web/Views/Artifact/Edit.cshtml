@@ -3,13 +3,14 @@
 @{
     ViewBag.Title = "Artifact - Designer";
 }
-<div class="row artifact-designer">
-    @using (Html.BeginForm("Create", "Artifact"))
+<div class="row artifact-edit">
+    @using (Html.BeginForm("Edit", "Artifact"))
     {
+        @Html.HiddenFor(model => model.Id)
         @Html.AntiForgeryToken()
         <div class="col-md-12">
             <div class="title">Artifact Designer</div>
-            <div class="description_year">New</div>
+            <div class="description_year">Edit</div>
             <div>@Html.ValidationSummary(true)</div>
         </div>
         <div class="col-md-12">
@@ -19,7 +20,7 @@
                         <h2>Graphic Type</h2>
                         <div class="form-group form-list">
                             @Html.LabelFor(model => model.GraphicType)
-                            @Html.DropDownListFor(model => model.GraphicType, Model.GraphicTypes, new { @class = "form-control", id = "graphic-type", data_graph_url = Url.Action("GraphSettings", "Artifact") })
+                            @Html.DropDownListFor(model => model.GraphicType, Model.GraphicTypes, new { @class = "form-control", @readonly="readonly", id = "graphic-type", data_graph_url = Url.Action("GraphSettings", "Artifact") })
                             @Html.ValidationMessageFor(model => model.GraphicType)
                         </div>
 
@@ -79,7 +80,19 @@
                             @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.ValueAxis)
                         </div>
-                        <div id="graphic-settings"></div>
+                        <div id="graphic-settings">
+                            @switch (Model.GraphicType) {
+                                case "line":
+                                    Html.RenderPartial("~/Views/LineChart/_Edit.cshtml", Model);
+                                    break;
+                                case "area":
+                                    Html.RenderPartial("~/Views/AreaChart/_Edit.cshtml", Model);
+                                    break;
+                                default:
+                                    Html.RenderPartial("~/Views/BarChart/_Edit.cshtml", Model);
+                                    break;
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

@@ -11,6 +11,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetCartesianChartDataResponse GetChartData(GetCartesianChartDataRequest request);
         GetSpeedometerChartDataResponse GetSpeedometerChartData(GetSpeedometerChartDataRequest request);
         CreateArtifactResponse Create(CreateArtifactRequest request);
+        UpdateArtifactResponse Update(UpdateArtifactRequest request);
         GetArtifactsResponse GetArtifacts(GetArtifactsRequest request);
         GetArtifactResponse GetArtifact(GetArtifactRequest request);
         GetArtifactsToSelectResponse GetArtifactsToSelect(GetArtifactsToSelectRequest request);

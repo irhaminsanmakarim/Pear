@@ -1116,6 +1116,77 @@ namespace DSLNG.PEAR.Services
             return new CreateArtifactResponse();
         }
 
+        public UpdateArtifactResponse Update(UpdateArtifactRequest request)
+        {
+            var artifact = DataContext.Artifacts.Include(x => x.Measurement)
+                .Include(x => x.Series)
+                .Include(x => x.Series.Select(y => y.Kpi))
+                .Include(x => x.Series.Select(y => y.Stacks))
+                .Include(x => x.Series.Select(y => y.Stacks.Select(z => z.Kpi)))
+                .Include(x => x.Plots)
+                .FirstOrDefault(x => x.Id == request.Id);
+
+            if (artifact.Measurement.Id != request.MeasurementId) {
+                var measurement = new Measurement { Id = request.MeasurementId };
+                DataContext.Measurements.Attach(measurement);
+                artifact.Measurement = measurement;
+            
+            }
+            foreach (var series in artifact.Series.ToList()) {
+                foreach (var stack in series.Stacks.ToList()) {
+                    DataContext.ArtifactStacks.Remove(stack);
+                }
+                DataContext.ArtifactSeries.Remove(series);
+            }
+            foreach (var plot in artifact.Plots) {
+                DataContext.ArtifactPlots.Remove(plot);
+            }
+
+            foreach (var seriesReq in request.Series)
+            {
+                var series = seriesReq.MapTo<ArtifactSerie>();
+                if (seriesReq.KpiId != 0)
+                {
+                    var kpi = new Kpi { Id = seriesReq.KpiId };
+                    if (DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault() == null)
+                    {
+                        DataContext.Kpis.Attach(kpi);
+                    }
+                    else
+                    {
+                        kpi = DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault();
+                    }
+                    series.Kpi = kpi;
+                }
+                foreach (var stackReq in seriesReq.Stacks)
+                {
+                    var stack = stackReq.MapTo<ArtifactStack>();
+                    if (stackReq.KpiId != 0)
+                    {
+                        var kpiInStack = new Kpi { Id = stackReq.KpiId };
+                        if (DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault() == null)
+                        {
+                            DataContext.Kpis.Attach(kpiInStack);
+                        }
+                        else
+                        {
+                            kpiInStack = DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault();
+                        }
+                        stack.Kpi = kpiInStack;
+                    }
+                    series.Stacks.Add(stack);
+                }
+                artifact.Series.Add(series);
+            }
+            foreach (var plotReq in request.Plots)
+            {
+                var plot = plotReq.MapTo<ArtifactPlot>();
+                artifact.Plots.Add(plot);
+            }
+            DataContext.SaveChanges();
+            return new UpdateArtifactResponse();
+        }
+
 
         public GetArtifactsResponse GetArtifacts(GetArtifactsRequest request)
         {

@@ -165,21 +165,33 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreateArtifactRequest, Data.Entities.Artifact>()
                 .ForMember(x => x.Series, o => o.Ignore())
                 .ForMember(x => x.Plots, o => o.Ignore());
-            Mapper.CreateMap<CreateArtifactRequest.SeriesRequest, Data.Entities.ArtifactSerie>();
+            Mapper.CreateMap<CreateArtifactRequest.SeriesRequest, Data.Entities.ArtifactSerie>()
+                .ForMember(x => x.Stacks, o => o.Ignore());
             Mapper.CreateMap<CreateArtifactRequest.PlotRequest, Data.Entities.ArtifactPlot>();
             Mapper.CreateMap<CreateArtifactRequest.StackRequest, Data.Entities.ArtifactStack>();
+
+            Mapper.CreateMap<UpdateArtifactRequest, Data.Entities.Artifact>()
+               .ForMember(x => x.Series, o => o.Ignore())
+               .ForMember(x => x.Plots, o => o.Ignore());
+            Mapper.CreateMap<UpdateArtifactRequest.SeriesRequest, Data.Entities.ArtifactSerie>()
+                .ForMember(x => x.Stacks, o => o.Ignore());
+            Mapper.CreateMap<UpdateArtifactRequest.PlotRequest, Data.Entities.ArtifactPlot>();
+            Mapper.CreateMap<UpdateArtifactRequest.StackRequest, Data.Entities.ArtifactStack>();
 
             Mapper.CreateMap<Artifact, GetArtifactsResponse.Artifact>();
             Mapper.CreateMap<Artifact, GetArtifactResponse>()
                 .ForMember(x => x.PlotBands, o => o.MapFrom(s => s.Plots.MapTo<GetArtifactResponse.PlotResponse>()))
                 .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<GetArtifactResponse.SeriesResponse>()))
-                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
+                .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name))
+                .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id));
             Mapper.CreateMap<ArtifactPlot, GetArtifactResponse.PlotResponse>();
             Mapper.CreateMap<ArtifactSerie, GetArtifactResponse.SeriesResponse>()
                 .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetArtifactResponse.StackResponse>()))
-                .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id));
+                .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id))
+                .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name));
             Mapper.CreateMap<ArtifactStack, GetArtifactResponse.StackResponse>()
-                .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id));
+                .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id))
+                .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name));
             Mapper.CreateMap<CreateConversionRequest, Data.Entities.Conversion>();
             Mapper.CreateMap<Data.Entities.Conversion, GetConversionsResponse.Conversion>()
                 .ForMember(f => f.FromName, o => o.MapFrom(k => k.From.Name))

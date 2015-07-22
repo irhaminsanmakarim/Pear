@@ -25,6 +25,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public ValueAxis ValueAxis { get; set; }
         public RangeFilter RangeFilter { get; set; }
         public string Measurement { get; set; }
+        public int MeasurementId { get; set; }
         public double FractionScale { get; set; }
         public double MaxValue { get; set; }
 
@@ -35,6 +36,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             }
             public string Color { get; set; }
             public int KpiId { get; set; }
+            public string KpiName { get; set; }
             public string Label { get; set; }
             public ValueAxis ValueAxis { get; set; }
             public IList<StackResponse> Stacks { get; set; }
@@ -43,6 +45,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         {
             public string Color { get; set; }
             public int KpiId { get; set; }
+            public string KpiName { get; set; }
             public string Label { get; set; }
         }
         public class PlotResponse {
