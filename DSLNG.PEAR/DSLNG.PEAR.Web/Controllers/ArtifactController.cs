@@ -99,6 +99,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "multiaxis", Text = "Multi Axis" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "tabular", Text = "Tabular" });
 
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
@@ -132,6 +133,14 @@ namespace DSLNG.PEAR.Web.Controllers
             artifact.MapPropertiesToInstance<ArtifactDesignerViewModel>(viewModel);
             switch (viewModel.GraphicType)
             {
+                case "speedometer":
+                    {
+                        var speedometerChart = new SpeedometerChartViewModel();
+                        viewModel.SpeedometerChart = artifact.MapPropertiesToInstance<SpeedometerChartViewModel>(speedometerChart);
+                        var plot = new SpeedometerChartViewModel.PlotBand();
+                        viewModel.SpeedometerChart.PlotBands.Insert(0, plot);
+                    }
+                    break;
                 case "line":
                     {
                         var lineChart = new LineChartViewModel();
@@ -270,6 +279,17 @@ namespace DSLNG.PEAR.Web.Controllers
                         artifactViewModel.SpeedometerChart = viewModel;
                         return PartialView("~/Views/SpeedometerChart/_Create.cshtml", artifactViewModel);
                     }
+                case "tabular":
+                    {
+                        var viewModel = new TabularViewModel();
+                        var row = new TabularViewModel.RowViewModel();
+                        this.SetPeriodeTypes(viewModel.PeriodeTypes);
+                        this.SetRangeFilters(viewModel.RangeFilters);
+                        viewModel.Rows.Add(row);
+                        var artifactViewModel = new ArtifactDesignerViewModel();
+                        artifactViewModel.Tabular = viewModel;
+                        return PartialView("~/Views/Tabular/_Create.cshtml", artifactViewModel);
+                    }
                 default:
                     return PartialView("NotImplementedChart.cshtml");
             }
@@ -407,6 +427,11 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
                     }
                     break;
+                case "tabular":
+                    {
+                        var request = viewModel.MapTo<GetSpeedometerChartDataRequest>();
+                    }
+                    break;
                 default:
                     {
                         var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
@@ -450,6 +475,13 @@ namespace DSLNG.PEAR.Web.Controllers
                         var request = viewModel.MapTo<CreateArtifactRequest>();
                         viewModel.SpeedometerChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
+                    }
+                    break;
+                case "tabular":
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        viewModel.Tabular.MapPropertiesToInstance<CreateArtifactRequest>(request);
+                        _artifactServie.Create(request); 
                     }
                     break;
                 default:

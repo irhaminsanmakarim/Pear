@@ -1,0 +1,77 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.Tabular.Actual)
+    @Html.CheckBoxFor(model => model.Tabular.Actual, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.Tabular.Actual)
+</div>
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.Tabular.Target)
+    @Html.CheckBoxFor(model => model.Tabular.Target, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.Tabular.Target)
+</div>
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.Tabular.Economic)
+    @Html.CheckBoxFor(model => model.Tabular.Economic, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.Tabular.Economic)
+</div>
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.Tabular.Fullfillment)
+    @Html.CheckBoxFor(model => model.Tabular.Fullfillment, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.Tabular.Fullfillment)
+</div>
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.Tabular.Remark)
+    @Html.CheckBoxFor(model => model.Tabular.Remark, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.Tabular.Remark)
+</div>
+<div class="form-group form-list">
+    <label>Row</label>
+    <input type="button" value="Add Row" class="btn btn-lightblue" id="add-row" />
+</div>
+
+<div id="hidden-fields">
+    @for (var i = 0; i < Model.Tabular.Rows.Count; i++)
+    {
+        <div class="row-template original whitebox">
+            <h2>Rows</h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Tabular.Rows[i].KpiId)
+                        @Html.DropDownListFor(model => model.Tabular.Rows[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                        @Html.ValidationMessageFor(model => model.Tabular.Rows[i].KpiId)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Tabular.Rows[i].PeriodeType)
+                        @Html.DropDownListFor(model => model.Tabular.Rows[i].PeriodeType, Model.Tabular.PeriodeTypes, new { @class = "form-control periode-type" })
+                        @Html.ValidationMessageFor(model => model.Tabular.Rows[i].PeriodeType)
+                    </div>
+
+                    <div id="range-filter-holder">
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.Tabular.Rows[i].RangeFilter)
+                            @Html.DropDownListFor(model => model.Tabular.Rows[i].RangeFilter, Model.Tabular.RangeFilters, new { @class = "form-control range-filter" })
+                            @Html.ValidationMessageFor(model => model.Tabular.Rows[i].RangeFilter)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div id="range-holder">
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.Tabular.Rows[i].StartInDisplay)
+                            @Html.TextBoxFor(model => model.Tabular.Rows[i].StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                            @Html.ValidationMessageFor(model => model.Tabular.Rows[i].StartInDisplay)
+                        </div>
+
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.Tabular.Rows[i].EndInDisplay)
+                            @Html.TextBoxFor(model => model.Tabular.Rows[i].EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                            @Html.ValidationMessageFor(model => model.Tabular.Rows[i].EndInDisplay)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="Remove" class="remove" />
+        </div>
+    }
+</div>

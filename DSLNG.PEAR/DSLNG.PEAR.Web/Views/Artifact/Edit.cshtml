@@ -82,6 +82,9 @@
                         </div>
                         <div id="graphic-settings">
                             @switch (Model.GraphicType) {
+                                case "speedometer":
+                                    Html.RenderPartial("~/Views/SpeedometerChart/_Edit.cshtml", Model);
+                                    break;
                                 case "line":
                                     Html.RenderPartial("~/Views/LineChart/_Edit.cshtml", Model);
                                     break;

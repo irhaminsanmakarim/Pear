@@ -27,17 +27,25 @@ String.prototype.isNullOrEmpty = function () {
     artifactDesigner._formatKpiSelection = function (kpi) {
         return kpi.Name || kpi.text;
     };
-    artifactDesigner._kpiAutoComplete = function (context) {
+    artifactDesigner._kpiAutoComplete = function (context, useMeasurement) {
+        var measurement = useMeasurement || true;
+        console.log(measurement);
         context.find('.kpi-list').select2({
             ajax: {
                 url: $('#hidden-fields-holder').data('kpi-url'),
                 dataType: 'json',
                 delay: 250,
                 data: function (params) {
-                    return {
-                        term: params.term, // search term
-                        measurementId: $('#MeasurementId').val()
-                    };
+                    if (useMeasurement) {
+                        return {
+                            term: params.term, // search term
+                            measurementId: $('#MeasurementId').val()
+                        };
+                    } else {
+                        return {
+                            term: params.term, // search term
+                        };
+                    }
                 },
                 processResults: function (data, page) {
                     return data;
@@ -103,6 +111,8 @@ String.prototype.isNullOrEmpty = function () {
                         $(val).html('');
                     });
                     $('#graphic-settings').prev('.form-group').css('display', 'block');
+                    $('#general-graphic-settings').css('display', 'block');
+                    $('.form-measurement').css('display', 'block');
                     if (callback.hasOwnProperty(type)) {
                         callback[type]();
                     }
@@ -309,6 +319,21 @@ String.prototype.isNullOrEmpty = function () {
         rangeControl();
         rangeDatePicker();
         switch ($('#graphic-type').val()) {
+            case 'speedometer':
+                var $hiddenFields = $('#hidden-fields');
+                var plotTemplate = $hiddenFields.find('.plot-band-template.original');
+                var plotTemplateClone = plotTemplate.clone(true);
+                plotTemplateClone.children('input:first-child').remove();
+                $('#hidden-fields-holder').html(plotTemplateClone);
+                plotTemplate.remove();
+                $('#plot-bands-holder').append($hiddenFields.html());
+                $('#plot-bands-holder').find('.plot-band-template').each(function (i, val) {
+                    var $this = $(val);
+                    Pear.Artifact.Designer._colorPicker($this);
+                });
+                $hiddenFields.remove();
+                Pear.Artifact.Designer._setupCallbacks.speedometer();
+                break;
             case 'line':
                 var $hiddenFields = $('#hidden-fields');
                 $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
@@ -462,7 +487,7 @@ String.prototype.isNullOrEmpty = function () {
             });
         }
         var addSeries = function () {
-            var seriesCount = $('#series-holder').find('.series-template').length;
+            var seriesCount = $('#series-holder').find('.series-template').length + 1;
             $('#add-series').click(function (e) {
                 e.preventDefault();
                 var seriesTemplate = $('.series-template.original').clone(true);
@@ -491,7 +516,7 @@ String.prototype.isNullOrEmpty = function () {
             });
         };
         var addStack = function () {
-            var stackCount = $('#series-holder').find('.stack-template').length;
+            var stackCount = $('#series-holder').find('.stack-template').length + 1;
             $('.add-stack').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
@@ -682,8 +707,8 @@ String.prototype.isNullOrEmpty = function () {
             });
         }
         var addSeries = function () {
-            console.log('add-series');
-            var seriesCount = 0;
+            //console.log('add-series');
+            var seriesCount = $('#series-holder').find('.series-template').length + 1;
             $('#add-series').click(function (e) {
                 console.log('series-click');
                 e.preventDefault();
@@ -760,7 +785,7 @@ String.prototype.isNullOrEmpty = function () {
         }
         var addSeries = function () {
             console.log('add-series');
-            var seriesCount = 0;
+            var seriesCount = $('#series-holder').find('.series-template').length + 1;
             $('#add-series').click(function (e) {
                 console.log('series-click');
                 e.preventDefault();
@@ -913,7 +938,7 @@ String.prototype.isNullOrEmpty = function () {
         };
 
         var addPlot = function () {
-            var plotPos = 0;
+            var plotPos = $('#plot-bands-holder').find('.plot-band-template').length+1;
             $('#add-plot').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
@@ -1108,6 +1133,129 @@ String.prototype.isNullOrEmpty = function () {
             }]
 
         });
+    }
+
+    //tabular
+    artifactDesigner._setupCallbacks.tabular = function () {
+        var removeRow = function () {
+            $('.row-template .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.row-template').remove();
+            });
+        };
+        var addRow = function () {
+            var rowCount = $('#rows-holder').find('.row-template').length + 1;
+            $('#add-row').click(function (e) {
+                e.preventDefault();
+                var rowTemplate = $('.row-template.original').clone(true);
+                Pear.Artifact.Designer._kpiAutoComplete(rowTemplate,false);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'Tabular.Rows.Index',
+                    value: rowCount
+                }).appendTo(rowTemplate);
+                rowTemplate.removeClass('original');
+                rowTemplate.attr('data-row-pos', rowCount);
+                //if (seriesCount !== 0) {
+                    var fields = ['PeriodeType', 'KpiId', 'RangeFilter', 'StartInDisplay', 'EndInDisplay'];
+                    for (var i in fields) {
+                        var field = fields[i];
+                        rowTemplate.find('#Tabular_Rows_0__' + field).attr('name', 'Tabular.Rows[' + rowCount + '].' + field);
+                    }
+                //}
+                //seriesTemplate.addClass($('#seriesType').val().toLowerCase());
+                //seriesTemplate.addClass($('#bar-value-axis').val());
+                    $('#rows-holder').append(rowTemplate);
+                    rangeDatePicker(rowTemplate);
+                    rangeControl(rowTemplate);
+                rowCount++;
+            });
+        };
+        var rangeDatePicker = function (context) {
+            context.find('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY hh:00 A"
+            });
+            context.find('.datepicker').change(function (e) {
+                console.log(this);
+            });
+            context.find('.periode-type').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var clearValue = context.find('.datepicker').each(function (i, val) {
+                    $(val).val('');
+                    $(val).data("DateTimePicker").destroy();
+                });
+                switch ($this.val().toLowerCase().trim()) {
+                    case 'hourly':
+                        context.find('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY hh:00 A"
+                        });
+                        break;
+                    case 'daily':
+                        context.find('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY"
+                        });
+                        break;
+                    case 'weekly':
+                        context.find('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY",
+                            daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                        });
+                        break;
+                    case 'monthly':
+                        context.find('.datepicker').datetimepicker({
+                            format: "MM/YYYY"
+                        });
+                        break;
+                    case 'yearly':
+                        context.find('.datepicker').datetimepicker({
+                            format: "YYYY"
+                        });
+                        break;
+                    default:
+
+                }
+            });
+        };
+        var rangeControl = function (context) {
+            context.find('.range-filter').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                context.find('#range-holder').prop('class', $this.val().toLowerCase().trim());
+            });
+            var original = context.find('.range-filter').clone(true);
+            var rangeFilterSetup = function (periodeType) {
+                var toRemove = {};
+                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
+                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
+                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
+                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
+                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
+                var originalClone = original.clone(true);
+                originalClone.find('option').each(function (i, val) {
+                    if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
+                        originalClone.find(val).remove();
+                    }
+                });
+                context.find('.range-filter').replaceWith(originalClone);
+            };
+
+            console.log(context.find('.periode-type').val());
+            rangeFilterSetup(context.find('.periode-type').val().toLowerCase().trim());
+            context.find('.periode-type').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                rangeFilterSetup($this.val().toLowerCase().trim());
+                context.find('#range-holder').removeAttr('class');
+            });
+
+        };
+        addRow();
+        removeRow();
+        $('#general-graphic-settings').css('display', 'none');
+        $('.form-measurement').css('display', 'none');
     }
 
     var templateEditor = Pear.Template.Editor;
