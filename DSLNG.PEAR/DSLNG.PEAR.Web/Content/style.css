@@ -1144,17 +1144,24 @@ table.text-center th
 {
     /*height: 400px;*/
     width: 200px;
-    outline: 1px solid red;
     padding-top: 20px;
     margin: 0 auto;
 }
 
+
 .trafficlight-item
 {
-    outline: 1px solid orange;
-    padding: 20px;
+    border-top: 1px solid #000;
+    padding: 20px 0;
     position: relative;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
 }
+
+    .trafficlight-item:last-child
+    {
+        border-bottom: 1px solid #000;
+    }
 
 .trafficlight-circle
 {
@@ -1165,14 +1172,19 @@ table.text-center th
     -webkit-border-radius: 50px;
     border-radius: 50px;
     margin: 0 auto;
-    opacity: 0.3;
+    opacity: 0.2;
 }
 
 .trafficlight-label
 {
-    position: absolute;
+    /*position: absolute;
     right: -150px;
     top: 32%;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 30px;*/
+    position: absolute;
+    right: -120px;
+    top: 25%;
+    font-weight: bold;
+    font-size: 25px;
 }
