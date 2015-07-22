@@ -1187,6 +1187,24 @@ namespace DSLNG.PEAR.Services
                 var plot = plotReq.MapTo<ArtifactPlot>();
                 artifact.Plots.Add(plot);
             }
+            foreach (var rowReq in request.Rows)
+            {
+                var row  = rowReq.MapTo<ArtifactRow>();
+                if (rowReq.KpiId != 0)
+                {
+                    var kpiInRow = new Kpi { Id = rowReq.KpiId };
+                    if (DataContext.Kpis.Local.Where(x => x.Id == rowReq.KpiId).FirstOrDefault() == null)
+                    {
+                        DataContext.Kpis.Attach(kpiInRow);
+                    }
+                    else
+                    {
+                        kpiInRow = DataContext.Kpis.Local.Where(x => x.Id == rowReq.KpiId).FirstOrDefault();
+                    }
+                    row.Kpi = kpiInRow;
+                }
+                artifact.Rows.Add(row);
+            }
             DataContext.Artifacts.Add(artifact);
             DataContext.SaveChanges();
             return new CreateArtifactResponse();
@@ -1214,7 +1232,7 @@ namespace DSLNG.PEAR.Services
                 }
                 DataContext.ArtifactSeries.Remove(series);
             }
-            foreach (var plot in artifact.Plots) {
+            foreach (var plot in artifact.Plots.ToList()) {
                 DataContext.ArtifactPlots.Remove(plot);
             }
 

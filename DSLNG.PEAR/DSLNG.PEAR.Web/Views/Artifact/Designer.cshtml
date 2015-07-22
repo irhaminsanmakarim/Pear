@@ -35,7 +35,7 @@
                             @Html.ValidationMessageFor(model => model.HeaderTitle)
                         </div>
 
-                        <div class="form-group form-list">
+                        <div class="form-group form-list form-measurement">
                             @Html.LabelFor(model => model.MeasurementId)
                             @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.MeasurementId)
@@ -45,39 +45,40 @@
                 <div class="col-md-6">
                     <div class="form-inline whitebox">
                         <h2>Graphic Settings</h2>
-
-                        <div class="form-group form-list">
-                            @Html.LabelFor(model => model.PeriodeType)
-                            @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.PeriodeType)
-                        </div>
-
-                        <div id="range-filter-holder">
+                        <div id="general-graphic-settings">
                             <div class="form-group form-list">
-                                @Html.LabelFor(model => model.RangeFilter)
-                                @Html.DropDownListFor(model => model.RangeFilter, Model.RangeFilters, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.RangeFilter)
-                            </div>
-                        </div>
-
-                        <div id="range-holder">
-                            <div class="form-group form-list">
-                                @Html.LabelFor(model => model.StartInDisplay)
-                                @Html.TextBoxFor(model => model.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
-                                @Html.ValidationMessageFor(model => model.StartInDisplay)
+                                @Html.LabelFor(model => model.PeriodeType)
+                                @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.PeriodeType)
                             </div>
 
-                            <div class="form-group form-list">
-                                @Html.LabelFor(model => model.EndInDisplay)
-                                @Html.TextBoxFor(model => model.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
-                                @Html.ValidationMessageFor(model => model.EndInDisplay)
+                            <div id="range-filter-holder">
+                                <div class="form-group form-list">
+                                    @Html.LabelFor(model => model.RangeFilter)
+                                    @Html.DropDownListFor(model => model.RangeFilter, Model.RangeFilters, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.RangeFilter)
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group form-list">
-                            @Html.LabelFor(model => model.ValueAxis)
-                            @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.ValueAxis)
+                            <div id="range-holder">
+                                <div class="form-group form-list">
+                                    @Html.LabelFor(model => model.StartInDisplay)
+                                    @Html.TextBoxFor(model => model.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                                    @Html.ValidationMessageFor(model => model.StartInDisplay)
+                                </div>
+
+                                <div class="form-group form-list">
+                                    @Html.LabelFor(model => model.EndInDisplay)
+                                    @Html.TextBoxFor(model => model.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                                    @Html.ValidationMessageFor(model => model.EndInDisplay)
+                                </div>
+                            </div>
+
+                            <div class="form-group form-list">
+                                @Html.LabelFor(model => model.ValueAxis)
+                                @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ValueAxis)
+                            </div>
                         </div>
                         <div id="graphic-settings"></div>
                     </div>
@@ -90,6 +91,8 @@
             <div id="plot-bands-holder" class="form-inline graphic-properties">
             </div>
             <div id="charts-holder" class="form-inline graphic-properties">
+            </div>
+            <div id="rows-holder" class="form-inline graphic-properties">
             </div>
         </div>
         <div class="col-md-12 artifact-designer-btns">

@@ -13,5 +13,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public LineChartDataViewModel LineChart { get; set; }
         public SpeedometerChartDataViewModel SpeedometerChart { get; set; }
         public TrafficLightChartDataViewModel TrafficLightChart { get; set; }
+        public TabularDataViewModel Tabular { get; set; }
     }
 }

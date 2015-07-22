@@ -100,7 +100,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "multiaxis", Text = "Multi Axis" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "trafficlight", Text = "Traffic Light" });
-
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "tabular", Text = "Tabular" });
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
@@ -134,6 +134,14 @@ namespace DSLNG.PEAR.Web.Controllers
             artifact.MapPropertiesToInstance<ArtifactDesignerViewModel>(viewModel);
             switch (viewModel.GraphicType)
             {
+                case "speedometer":
+                    {
+                        var speedometerChart = new SpeedometerChartViewModel();
+                        viewModel.SpeedometerChart = artifact.MapPropertiesToInstance<SpeedometerChartViewModel>(speedometerChart);
+                        var plot = new SpeedometerChartViewModel.PlotBand();
+                        viewModel.SpeedometerChart.PlotBands.Insert(0, plot);
+                    }
+                    break;
                 case "line":
                     {
                         var lineChart = new LineChartViewModel();
@@ -178,7 +186,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         barChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
                         barChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
                         this.SetValueAxes(barChart.ValueAxes, false);
-                        
+
                         viewModel.BarChart = artifact.MapPropertiesToInstance<BarChartViewModel>(barChart);
                         var series = new BarChartViewModel.SeriesViewModel();
                         series.Stacks.Add(new BarChartViewModel.StackViewModel());
@@ -281,7 +289,18 @@ namespace DSLNG.PEAR.Web.Controllers
                         trafficLightViewModel.TrafficLightChart = viewModel;
                         return PartialView("~/Views/TrafficLightChart/_Create.cshtml", trafficLightViewModel);
                     }
-                    
+
+                case "tabular":
+                    {
+                        var viewModel = new TabularViewModel();
+                        var row = new TabularViewModel.RowViewModel();
+                        this.SetPeriodeTypes(viewModel.PeriodeTypes);
+                        this.SetRangeFilters(viewModel.RangeFilters);
+                        viewModel.Rows.Add(row);
+                        var artifactViewModel = new ArtifactDesignerViewModel();
+                        artifactViewModel.Tabular = viewModel;
+                        return PartialView("~/Views/Tabular/_Create.cshtml", artifactViewModel);
+                    }
                 default:
                     return PartialView("NotImplementedChart.cshtml");
             }
@@ -439,9 +458,18 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.TrafficLightChart = new TrafficLightChartDataViewModel();
                         previewViewModel.TrafficLightChart.Title = viewModel.HeaderTitle;
-                        previewViewModel.TrafficLightChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
-                        previewViewModel.TrafficLightChart.Series = chartData.Series.MapTo<TrafficLightChartDataViewModel.SeriesViewModel>();
-                        previewViewModel.TrafficLightChart.PlotBands = chartData.PlotBands.MapTo<TrafficLightChartDataViewModel.PlotBandViewModel>();
+                        previewViewModel.TrafficLightChart.ValueAxisTitle =
+                            _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId })
+                                               .Name;
+                        previewViewModel.TrafficLightChart.Series =
+                            chartData.Series.MapTo<TrafficLightChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.TrafficLightChart.PlotBands =
+                            chartData.PlotBands.MapTo<TrafficLightChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
+                case "tabular":
+                    {
+                        var request = viewModel.MapTo<GetSpeedometerChartDataRequest>();
                     }
                     break;
                 default:
@@ -489,10 +517,18 @@ namespace DSLNG.PEAR.Web.Controllers
                         _artifactServie.Create(request);
                     }
                     break;
+
                 case "trafficlight":
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
                         viewModel.TrafficLightChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
+                        _artifactServie.Create(request);
+                    }
+                    break;
+                case "tabular":
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        viewModel.Tabular.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
                     }
                     break;
@@ -508,7 +544,8 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(ArtifactDesignerViewModel viewModel) {
+        public ActionResult Edit(ArtifactDesignerViewModel viewModel)
+        {
             switch (viewModel.GraphicType)
             {
                 case "line":

@@ -11,6 +11,7 @@ namespace DSLNG.PEAR.Data.Entities
         public Artifact() {
             Series = new List<ArtifactSerie>();
             Plots = new List<ArtifactPlot>();
+            Rows = new List<ArtifactRow>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -25,6 +26,7 @@ namespace DSLNG.PEAR.Data.Entities
 
         public ICollection<ArtifactSerie> Series { get; set; }
         public ICollection<ArtifactPlot> Plots { get; set; }
+        public ICollection<ArtifactRow> Rows { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public PeriodeType PeriodeType { get; set; }
@@ -35,6 +37,13 @@ namespace DSLNG.PEAR.Data.Entities
         public double MaxFractionScale { get; set; }
         public double MinValue { get; set; }
         public double MaxValue { get; set; }
+       
+        //tabular settings
+        public bool Actual { get; set; }
+        public bool Target { get; set; }
+        public bool Economic { get; set; }
+        public bool Fullfillment { get; set; }
+        public bool Remark { get; set; }
 
         public bool IsActive { get; set; }
         public User CreatedBy { get; set; }
