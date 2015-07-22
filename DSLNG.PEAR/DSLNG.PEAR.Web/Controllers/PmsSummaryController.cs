@@ -76,16 +76,24 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult ReportDetails(int id, int month, int year)
         {
-            var response = _pmsSummaryService.GetPmsDetails(new GetPmsDetailsRequest() { Id = id, Month = month, Year = year });
-            var viewModel = response.MapTo<PmsReportDetailsViewModel>();
-            var operationDate = new DateTime(response.Year, month, 1);
-            viewModel.Title = response.Title;
-            viewModel.Year = response.Year;
-            viewModel.Month = operationDate.ToString("MMM");
-            viewModel.MonthInt = month;
-            viewModel.KpiAchievmentMonthly = response.KpiAchievmentMonthly.MapTo<PmsReportDetailsViewModel.KpiAchievment>();
-            viewModel.KpiRelations = response.KpiRelations.MapTo<PmsReportDetailsViewModel.KpiRelation>();
-            return PartialView("_ReportDetails", viewModel);
+            try
+            {
+                var response = _pmsSummaryService.GetPmsDetails(new GetPmsDetailsRequest() { Id = id, Month = month, Year = year });
+                var viewModel = response.MapTo<PmsReportDetailsViewModel>();
+                var operationDate = new DateTime(response.Year, month, 1);
+                viewModel.Title = response.Title;
+                viewModel.Year = response.Year;
+                viewModel.Month = operationDate.ToString("MMM");
+                viewModel.MonthInt = month;
+                viewModel.KpiAchievmentMonthly = response.KpiAchievmentMonthly.MapTo<PmsReportDetailsViewModel.KpiAchievment>();
+                viewModel.KpiRelations = response.KpiRelations.MapTo<PmsReportDetailsViewModel.KpiRelation>();
+                return PartialView("_ReportDetails", viewModel);
+            }
+            catch (Exception)
+            {
+                return PartialView("_ReportDetails", new PmsReportDetailsViewModel());
+            }
+            
         }
 
         public ActionResult Configuration()
