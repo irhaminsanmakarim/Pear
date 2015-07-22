@@ -290,7 +290,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.PmsConfig, GetPmsConfigsResponse.PmsConfig>();
 
             Mapper.CreateMap<Kpi, AllKpiTargetsResponse.Kpi>()
-                  .ForMember(x => x.Type, y => y.MapFrom(z => z.RoleGroup.Name))
+                  .ForMember(x => x.Type, y => y.MapFrom(z => z.Type.Name))
                   .ForMember(x => x.Measurement, y => y.MapFrom(z => z.Measurement.Name));
 
             Mapper.CreateMap<Kpi, GetKpiTargetsConfigurationResponse.Kpi>()
@@ -326,7 +326,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
         private void ConfigureKpiAchievements()
         {
             Mapper.CreateMap<Kpi, AllKpiAchievementsResponse.Kpi>()
-                  .ForMember(x => x.Type, y => y.MapFrom(z => z.RoleGroup.Name))
+                  .ForMember(x => x.Type, y => y.MapFrom(z => z.Type.Name))
                   .ForMember(x => x.Measurement, y => y.MapFrom(z => z.Measurement.Name));
 
             Mapper.CreateMap<Kpi, GetKpiAchievementsConfigurationResponse.Kpi>()

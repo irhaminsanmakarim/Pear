@@ -190,6 +190,7 @@ namespace DSLNG.PEAR.Services
             {
                 var kpiAchievements = DataContext.Kpis
                     .Include(x => x.Measurement)
+                    .Include(x => x.Type)
                     .Include(x => x.RoleGroup)
                     .AsEnumerable()
                     .OrderBy(x => x.Order)

@@ -90,7 +90,7 @@ namespace DSLNG.PEAR.Services
                             {
                                 if (kpiData.ActualYtd.HasValue)
                                 {
-                                    kpiData.ActualYtd = kpiData.ActualYtd / request.Month;
+                                    kpiData.ActualYtd = kpiData.ActualYtd/kpiAchievementYtd.Count;
                                 }
                             }
 
@@ -128,7 +128,7 @@ namespace DSLNG.PEAR.Services
                             {
                                 if (kpiData.TargetYtd.HasValue)
                                 {
-                                    kpiData.TargetYtd = kpiData.TargetYtd/request.Month;
+                                    kpiData.TargetYtd = kpiData.TargetYtd/kpiTargetYtd.Count;
                                 }
                             }
 

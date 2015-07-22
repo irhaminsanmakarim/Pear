@@ -66,6 +66,17 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.Method)
                     .Include(x => x.RelationModels)
                     .Include("RelationModels.Kpi").First(x => x.Id == request.Id);
+
+                var relationModels = DataContext.KpiRelationModels.Include(x => x.Kpi).Include(x=>x.KpiParent).Where(x => x.Kpi.Id == kpi.Id);
+                foreach (var item in relationModels)
+                {
+                    kpi.RelationModels.Add(new Data.Entities.KpiRelationModel { 
+                        Id = item.Id,
+                        Kpi = item.KpiParent,
+                        KpiParent = item.Kpi,
+                        Method = item.Method
+                    });
+                }
                 var response = kpi.MapTo<GetKpiResponse>();
 
                 return response;
@@ -241,10 +252,12 @@ namespace DSLNG.PEAR.Services
 
                 DataContext.Methods.Attach(updateKpi.Method);
                 existedkpi.Method = updateKpi.Method;
-
+                var allRelationModel = new List<DSLNG.PEAR.Data.Entities.KpiRelationModel>();
+                allRelationModel = updateKpi.RelationModels.ToList();
                 foreach (var relationModel in updateKpi.RelationModels)
                 {
                     var existedrelationModel = existedkpi.RelationModels.SingleOrDefault(x => x.Id == relationModel.Id && x.Id != 0);
+                    var existedrelationModelFromContext = DataContext.KpiRelationModels.SingleOrDefault(x => x.Id == relationModel.Id && x.Id != 0);
                     if (existedrelationModel != null)
                     {
                         var relationModelEntry = DataContext.Entry(existedrelationModel);
@@ -254,14 +267,28 @@ namespace DSLNG.PEAR.Services
                     }
                     else
                     {
-                        relationModel.Id = 0;
-                        existedkpi.RelationModels.Add(relationModel);
+                        if (existedrelationModelFromContext != null)
+                        {
+                            var relationModelParent = new DSLNG.PEAR.Data.Entities.KpiRelationModel();
+                            relationModel.Id = existedrelationModelFromContext.Id;
+                            relationModel.Kpi = existedrelationModelFromContext.Kpi;
+                            relationModel.KpiParent = existedrelationModelFromContext.KpiParent;
+                            relationModel.Method = relationModel.Method;
+                            var relationModelEntry = DataContext.Entry(existedrelationModelFromContext);
+                            relationModelEntry.CurrentValues.SetValues(relationModel);
+                            allRelationModel.Remove(relationModel);
+                        }
+                        else
+                        {
+                            relationModel.Id = 0;
+                            existedkpi.RelationModels.Add(relationModel);
+                        }
                     }
                 }
 
                 foreach (var item in existedkpi.RelationModels.Where(x => x.Id != 0).ToList())
                 {
-                    if (updateKpi.RelationModels.All(x => x.Id != item.Id))
+                    if (allRelationModel.Count > 0 && allRelationModel.All(x => x.Id != item.Id))
                     {
                         DataContext.KpiRelationModels.Remove(item);
                     }

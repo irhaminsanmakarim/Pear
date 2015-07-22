@@ -3,7 +3,6 @@
     ViewBag.Title = "Configuration";
 }
 
-<h2>Configuration</h2>
 <div class="notification"></div>
 <section>
     <div class="row">
@@ -42,7 +41,7 @@
     <label class="control-label">Value</label>
     <input type="text" name="Value" class="form-control" />
     <label class="control-label">Remark</label>
-    <input type="text" name="Remark" class="form-control" />
+    <textarea name="Remark" class="form-control"></textarea>
     <input type="hidden" name="Id" />
     <input type="hidden" name="KpiId" />
     <input type="hidden" name="Periode" />
@@ -109,7 +108,7 @@
                 var periode = $(this).parent().find('.periode').val();
                 var periodeType = $(this).parent().find('.periodeType').val();
                 $('.popover').find('input[name="Value"]').attr('value', value);
-                $('.popover').find('input[name="Remark"]').attr('value', remark);
+                $('.popover').find('textarea').val(remark);
                 $('.popover').find('input[name="Id"]').attr('value', id);
                 $('.popover').find('input[name="KpiId"]').attr('value', kpiId);
                 $('.popover').find('input[name="Periode"]').attr('value', periode);
@@ -120,7 +119,7 @@
             $(document).on('click', '.submit-popover', function () {
                 var that = $(this);
                 var value = $(this).parent().find('input[name="Value"]').val();
-                var remark = $(this).parent().find('input[name="Remark"]').val();
+                var remark = $(this).parent().find('textarea').val();
                 var kpiTarget = $('.popover').parent();
 
                 $(kpiTarget).find('.value').attr('value', value);
@@ -129,7 +128,7 @@
                     'id': $(this).parent().find('input[name=Id]').val(),
                     'kpiId': $(this).parent().find('input[name=KpiId]').val(),
                     'value': $(this).parent().find('input[name=Value]').val(),
-                    'remark': $(this).parent().find('input[name=Remark]').val(),
+                    'remark': $(this).parent().find('textarea').val(),
                     'periode': $(this).parent().find('input[name=Periode]').val(),
                     'periodeType': $(this).parent().find('input[name=PeriodeType]').val()
                 };
