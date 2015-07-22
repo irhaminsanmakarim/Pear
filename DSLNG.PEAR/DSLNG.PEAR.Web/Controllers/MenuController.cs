@@ -10,6 +10,9 @@ using DSLNG.PEAR.Web.ViewModels.Menu;
 using DSLNG.PEAR.Data.Entities;
 using DevExpress.Web.Mvc;
 using DSLNG.PEAR.Web.Attributes;
+using DSLNG.PEAR.Services.Requests.User;
+using DSLNG.PEAR.Services.Responses.Menu;
+using DSLNG.PEAR.Web.DependencyResolution;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -18,6 +21,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         private readonly IMenuService _menuService;
         private readonly IRoleGroupService _roleService;
+        //private readonly IUserService _userService;
 
         public MenuController(IMenuService menuService, IRoleGroupService roleService)
         {
@@ -91,9 +95,16 @@ namespace DSLNG.PEAR.Web.Controllers
             //get menu active by url request
             var rootMenuActive = TempData["RootMenuActive"].MapTo<Data.Entities.Menu>();
             //ViewBag.RootMenuActive = rootMenuActive;
-
-            var menus = _menuService.GetSiteMenus(new GetSiteMenusRequest() { IncludeChildren = true});
-            menus.MenuIdActive = rootMenuActive.Id;
+            var userService = ObjectFactory.Container.GetInstance<IUserService>();
+            var AuthUser = userService.GetUserByName(new GetUserByNameRequest { Name = HttpContext.User.Identity.Name });
+            var menus = new GetSiteMenusResponse();
+            if (AuthUser.IsSuccess)
+            {
+                var role = AuthUser.Role;
+                menus = _menuService.GetSiteMenus(new GetSiteMenusRequest() { IncludeChildren = true, RoleId = role.Id });
+                menus.MenuIdActive = rootMenuActive.Id;
+            }
+            
             
 
             return PartialView("_SiteMap", menus);

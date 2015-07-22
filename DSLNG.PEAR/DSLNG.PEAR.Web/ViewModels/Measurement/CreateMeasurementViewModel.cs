@@ -12,7 +12,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Measurement
         public string Name { get; set; }
         [Required]
         public bool IsActive { get; set; }
-        [Required]
         public string Remark { get; set; }
     }
 }

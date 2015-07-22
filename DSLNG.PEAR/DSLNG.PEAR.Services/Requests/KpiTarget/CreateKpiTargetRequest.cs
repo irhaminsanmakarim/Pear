@@ -9,18 +9,13 @@ namespace DSLNG.PEAR.Services.Requests.KpiTarget
 {
     public class CreateKpiTargetRequest
     {
-        public List<KpiTarget> KpiTargets { get; set; }
+        public int Id { get; set; }
+        public int KpiId { get; set; }
+        public double? Value { get; set; }
+        public DateTime Periode { get; set; }
+        public PeriodeType PeriodeType { get; set; }
+        public string Remark { get; set; }
 
-        public class KpiTarget
-        {
-            public int Id { get; set; }
-            public int KpiId { get; set; }
-            public double? Value { get; set; }
-            public DateTime Periode { get; set; }
-            public PeriodeType PeriodeType { get; set; }
-            public string Remark { get; set; }
-
-            public bool IsActive { get; set; }
-        }
+        public bool IsActive { get; set; }
     }
 }

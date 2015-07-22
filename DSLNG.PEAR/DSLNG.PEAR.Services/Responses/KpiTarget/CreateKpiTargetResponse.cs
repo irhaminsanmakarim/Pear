@@ -8,5 +8,6 @@ namespace DSLNG.PEAR.Services.Responses.KpiTarget
 {
     public class CreateKpiTargetResponse : BaseResponse
     {
+        public int Id { get; set; }
     }
 }

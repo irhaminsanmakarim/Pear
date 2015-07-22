@@ -71,10 +71,72 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return Content(response.Message);
         }
-        
+
+        public ActionResult Configuration(ConfigurationParamViewModel paramViewModel)
+        {
+            int roleGroupId = paramViewModel.Id;
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
+                                    ? PeriodeType.Yearly
+                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
+
+            var request = new GetKpiTargetsConfigurationRequest();
+            request.PeriodeType = pType.ToString();
+            request.RoleGroupId = roleGroupId;
+            request.Year = paramViewModel.Year;
+            request.Month = paramViewModel.Month;
+            var response = _kpiTargetService.GetKpiTargetsConfiguration(request);
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<ConfigurationKpiTargetsViewModel>();
+                viewModel.Year = request.Year;
+                viewModel.Month = request.Month;
+                viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+                viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
+                viewModel.PeriodeType = pType.ToString();
+                return View(viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
+
+        }
+
+        public ActionResult ConfigurationPartial(ConfigurationParamViewModel paramViewModel)
+        {
+            int roleGroupId = paramViewModel.Id;
+            PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
+                                    ? PeriodeType.Yearly
+                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
+
+            var request = new GetKpiTargetsConfigurationRequest();
+            request.PeriodeType = pType.ToString();
+            request.RoleGroupId = roleGroupId;
+            request.Year = paramViewModel.Year;
+            request.Month = paramViewModel.Month;
+            var response = _kpiTargetService.GetKpiTargetsConfiguration(request);
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<ConfigurationKpiTargetsViewModel>();
+                viewModel.Year = request.Year;
+                viewModel.Month = request.Month;
+                viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+                viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
+                viewModel.PeriodeType = pType.ToString();
+                return PartialView("Configuration/_" + pType.ToString(), viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
+        }
+
         public ActionResult Index()
         {
-            return View();
+            var response = _kpiTargetService.GetAllKpiTargets();
+            if (response.IsSuccess)
+            {
+                var viewModel = response.MapTo<IndexKpiTargetViewModel>();
+                return View(viewModel);
+            }
+
+            return base.ErrorPage(response.Message);
         }
 
         public ActionResult IndexPartial()
@@ -153,11 +215,13 @@ namespace DSLNG.PEAR.Web.Controllers
                             var kpiSelectListItem = new List<SelectListItem>();
                             kpiSelectListItem.Add(new SelectListItem { Text = pmsConfigDetail.Kpi.Name, Value = pmsConfigDetail.Kpi.Id.ToString() });
                             var kpi = pmsConfigDetail.Kpi.MapTo<Kpi>();
-                            kpiTargetList.Add(new KpiTarget { 
-                                Kpi = kpi, 
-                                KpiList = kpiSelectListItem, 
+                            kpiTargetList.Add(new KpiTarget
+                            {
+                                Kpi = kpi,
+                                KpiList = kpiSelectListItem,
                                 Periode = new DateTime(pmsConfig.PmsSummary.Year, 1, 1),
-                                IsActive = pmsConfig.IsActive 
+                                KpiId = pmsConfigDetail.Kpi.Id
+                                //IsActive = pmsConfig.IsActive 
                             });
                         }
                         viewModel.PillarKpiTarget.Add(new PillarTarget
@@ -176,40 +240,58 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             if (viewModel.PillarKpiTarget.Count > 0)
             {
-                var request = new CreateKpiTargetRequest();
-                request.KpiTargets = new List<CreateKpiTargetRequest.KpiTarget>();
+                var request = new CreateKpiTargetsRequest();
+                request.KpiTargets = new List<CreateKpiTargetsRequest.KpiTarget>();
                 foreach (var item in viewModel.PillarKpiTarget)
                 {
                     if (item.KpiTargetList.Count > 0)
                     {
-                        foreach (var kpiTargetList in item.KpiTargetList)
+                        foreach (var kpi in item.KpiTargetList)
                         {
-                            if (kpiTargetList.ValueList.Count > 0)
+                            request.KpiTargets.Add(new CreateKpiTargetsRequest.KpiTarget
                             {
-                                for (int i = 0; i < kpiTargetList.ValueList.Count; i++)
-                                {
-                                    if (i == 0)
-                                    {
-                                        kpiTargetList.PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType.Yearly;
-                                        kpiTargetList.Value = kpiTargetList.ValueList[0];
-                                        var kpiTarget = kpiTargetList.MapTo<CreateKpiTargetRequest.KpiTarget>();
-                                        request.KpiTargets.Add(kpiTarget);
-                                    }
-                                    else
-                                    {
-                                        kpiTargetList.PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType.Monthly;
-                                        kpiTargetList.Periode = new DateTime(kpiTargetList.Periode.Year, i, 1);
-                                        kpiTargetList.Value = kpiTargetList.ValueList[i];
-                                        var kpiTarget = kpiTargetList.MapTo<CreateKpiTargetRequest.KpiTarget>();
-                                        request.KpiTargets.Add(kpiTarget);
-                                    }
-
-                                }
-                            }
+                                IsActive = true,
+                                KpiId = kpi.KpiId,
+                                Periode = kpi.Periode,
+                                PeriodeType = (DSLNG.PEAR.Data.Enums.PeriodeType)kpi.PeriodeType,
+                                Remark = kpi.Remark,
+                                Value = kpi.Value
+                            });
                         }
                     }
                 }
-                var response = _kpiTargetService.Create(request);
+                //foreach (var item in viewModel.PillarKpiTarget)
+                //{
+                //    if (item.KpiTargetList.Count > 0)
+                //    {
+                //        foreach (var kpiTargetList in item.KpiTargetList)
+                //        {
+                //            if (kpiTargetList.ValueList.Count > 0)
+                //            {
+                //                for (int i = 0; i < kpiTargetList.ValueList.Count; i++)
+                //                {
+                //                    if (i == 0)
+                //                    {
+                //                        kpiTargetList.PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType.Yearly;
+                //                        kpiTargetList.Value = kpiTargetList.ValueList[0];
+                //                        var kpiTarget = kpiTargetList.MapTo<CreateKpiTargetRequest.KpiTarget>();
+                //                        request.KpiTargets.Add(kpiTarget);
+                //                    }
+                //                    else
+                //                    {
+                //                        kpiTargetList.PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType.Monthly;
+                //                        kpiTargetList.Periode = new DateTime(kpiTargetList.Periode.Year, i, 1);
+                //                        kpiTargetList.Value = kpiTargetList.ValueList[i];
+                //                        var kpiTarget = kpiTargetList.MapTo<CreateKpiTargetRequest.KpiTarget>();
+                //                        request.KpiTargets.Add(kpiTarget);
+                //                    }
+
+                //                }
+                //            }
+                //        }
+                //    }
+                //}
+                var response = _kpiTargetService.Creates(request);
                 TempData["IsSuccess"] = response.IsSuccess;
                 TempData["Message"] = response.Message;
                 if (response.IsSuccess)
@@ -270,6 +352,23 @@ namespace DSLNG.PEAR.Web.Controllers
                 }
             }
             return data;
+        }
+
+        [HttpPost]
+        public JsonResult KpiTargetItem(KpiTargetItem kpiTarget)
+        {
+            if (kpiTarget.Id > 0)
+            {
+                var request = kpiTarget.MapTo<UpdateKpiTargetItemRequest>();
+                var response = _kpiTargetService.UpdateKpiTargetItem(request);
+                return Json(new { Id = response.Id, Message = response.Message, isSuccess = response.IsSuccess });
+            }
+            else
+            {
+                var request = kpiTarget.MapTo<CreateKpiTargetRequest>();
+                var response = _kpiTargetService.Create(request);
+                return Json(new { Id = response.Id, Message = response.Message, isSuccess = response.IsSuccess });
+            }
         }
     }
 }

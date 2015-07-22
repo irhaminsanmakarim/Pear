@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Services.Responses.Kpi
             public string Code { get; set; }
             public string Name { get; set; }
             public int? PilarId { get; set; } //to make this nullable we need to include it
+            public string PillarName { get; set; }
             public Pillar Pillar { get; set; }
             public Level Level { get; set; }
             public RoleGroup RoleGroup { get; set; }

@@ -68,7 +68,7 @@ namespace DSLNG.PEAR.Services
                                        .Single(x => x.Id == pmsConfigId);
             var kpiIds = pmsConfig.PmsConfigDetailsList.Select(x => x.Kpi.Id);
 
-            return DataContext.Kpis.Where(x => x.Type.Code.ToLower() == "cp" && x.Pillar.Id == pmsConfig.Pillar.Id 
+            return DataContext.Kpis.Where(x => x.Type.Code.ToLower() == Constants.Type.Corporate && x.Pillar.Id == pmsConfig.Pillar.Id 
                 && !kpiIds.Contains(x.Id))
                 .Select(x => new Dropdown
                 {
@@ -102,9 +102,9 @@ namespace DSLNG.PEAR.Services
         public IEnumerable<Dropdown> GetYears()
         {
             var years = new List<int>();
-            for (int i = 0; i <= 5; i++)
+            for (int i = 0; i <= 30; i++)
             {
-                years.Add(DateTime.Now.AddYears(-i).Year);
+                years.Add(DateTime.Now.AddYears(i).Year);
             }
             return years.Select(x => new Dropdown
             {

@@ -1,4 +1,5 @@
-﻿using DSLNG.PEAR.Data.Persistence;
+﻿using System.Collections.Generic;
+using DSLNG.PEAR.Data.Persistence;
 using StructureMap;
 
 namespace DSLNG.PEAR.Services
@@ -12,10 +13,23 @@ namespace DSLNG.PEAR.Services
             _dataContext = dataContext;
         }
 
-
         protected IDataContext DataContext
         {
             get { return _dataContext; }
+        }
+
+        protected IList<int> YearlyNumbers
+        {
+            get
+            {
+                var numbers = new List<int>();
+                for (int i = 2015; i <= 2030; i++)
+                {
+                    numbers.Add(i);
+                }
+
+                return numbers;
+            }
         }
     }
 }

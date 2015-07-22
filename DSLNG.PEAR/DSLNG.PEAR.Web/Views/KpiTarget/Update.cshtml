@@ -30,19 +30,27 @@
         <div class="update-content">
             @Html.Partial(Model.ViewName, Model)
         </div>
-        <div class="col-md-12">
+        @*<div class="col-md-12">
             <div class="centering margin">
                 <hr style="margin-bottom: 60px;">
                 <a href="javascript:;" onclick="$(this).closest('form').submit()" class="btn-darkblue btn-large"><span class="fa fa-floppy-o"></span>Save</a>
                 <a href="@Url.Action("Configuration", "PmsSummary", new {id = Model.PmsSummaryId})" data-dismiss="modal" aria-label="Close" class="btn-darkblue btn-large"><span class="fa fa-times"></span>Cancel</a>
             </div>
-        </div>
+        </div>*@
     </form>
 </div>
-
-
-
-
+<div class="popover-content" style="display:none">
+    <label class="control-label">Value</label>
+    <input type="text" name="Value" class="form-control" />
+    <label class="control-label">Remark</label>
+    <input type="text" name="Remark" class="form-control" />
+    <input type="hidden" name="Id" />
+    <input type="hidden" name="KpiId" />
+    <input type="hidden" name="Periode" />
+    <input type="hidden" name="PeriodeType" />
+    <button type="button" class="btn btn-primary submit-popover">Ok</button>
+    <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#periodeType').change(function () {
@@ -63,7 +71,74 @@
                     $('.content-wrapper').show();
                 });
         });
+        $('body').popover({
+            selector: '.kpi-popover',
+            html: true,
+            title: function () {
+                return $(this).parent().find('.header-popover').val();
+            },
+            content: function () {
+                return $('.popover-content').html();
+            }
+        });
     })
+    var popOverElem;
+    $(document).on('click', '.kpi-popover', function () {
+        if (popOverElem !== undefined && $(this).attr('id') !== popOverElem.attr('id')) {
+            popOverElem.popover('hide');
+        }
+        var value = $(this).parent().find('.value').val();
+        var remark = $(this).parent().find('.remark').val();
+        var id = $(this).parent().find('.id').val();
+        var kpiId = $(this).parent().find('.kpiId').val();
+        var periode = $(this).parent().find('.periode').val();
+        var periodeType = $(this).parent().find('.periodeType').val();
+        $('.popover').find('input[name="Value"]').attr('value', value);
+        $('.popover').find('input[name="Remark"]').attr('value', remark);
+        $('.popover').find('input[name="Id"]').attr('value', id);
+        $('.popover').find('input[name="KpiId"]').attr('value', kpiId);
+        $('.popover').find('input[name="Periode"]').attr('value', periode);
+        $('.popover').find('input[name="PeriodeType"]').attr('value', periodeType);
+        popOverElem = $(this);
+    });
+
+    $(document).on('click', '.submit-popover', function () {
+        var value = $(this).parent().find('input[name="Value"]').val();
+        var remark = $(this).parent().find('input[name="Remark"]').val();
+        var kpiTarget = $('.popover').parent();
+        $(kpiTarget).find('.value').attr('value', value);
+        $(kpiTarget).find('.remark').attr('value', remark);
+        var formData = {
+            'id': $(this).parent().find('input[name=Id]').val(),
+            'kpiId': $(this).parent().find('input[name=KpiId]').val(),
+            'value': $(this).parent().find('input[name=Value]').val(),
+            'remark': $(this).parent().find('input[name=Remark]').val(),
+            'periode': $(this).parent().find('input[name=Periode]').val(),
+            'periodeType': $(this).parent().find('input[name=PeriodeType]').val()
+        };
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("KpiTargetItem")',
+            data: formData,
+            success: function (data) {
+                $(this).closest('td').find('.id').attr('value', data.Id);
+                if (remark.length > 0) {
+                    $('.popover').parent().find('.value').addClass('remark_sign');
+                }
+                var message = '<div class="alert alert-success" role="alert">' + data.Message + '</div>';
+                var parentTable = $('.popover').closest('tr').parent().parent().parent();
+                $(parentTable).find('.kpi-message .alert').remove();
+                $(parentTable).find('.kpi-message').show();
+                $(parentTable).find('.kpi-message').append(message).delay(3000).fadeOut();
+                $('.popover').popover('hide');
+            },
+        });
+    });
+
+    $(document).on('click', '.cancel-popover', function () {
+        $('.popover').popover('hide');
+    });
+
 </script>
 
 

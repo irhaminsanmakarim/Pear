@@ -278,6 +278,7 @@
     <Content Include="Content\img\logo_blue.png" />
     <Content Include="Content\img\logo_login.png" />
     <Content Include="Content\img\pointer.png" />
+    <Content Include="Content\img\remark_sign.png" />
     <Content Include="Content\img\throbber.gif" />
     <Content Include="Content\img\tick.png" />
     <Content Include="Content\jquery-ui.css" />
@@ -554,6 +555,18 @@
     <Content Include="Views\Artifact\Edit.cshtml" />
     <Content Include="Views\BarChart\_Edit.cshtml" />
     <Content Include="Views\LineChart\_Edit.cshtml" />
+    <Content Include="Views\KpiAchievement\Index.cshtml" />
+    <Content Include="Views\KpiAchievement\Configuration.cshtml" />
+    <Content Include="Views\KpiAchievement\Configuration\_Yearly.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\UnAuthorized\Error.cshtml" />
+    <Content Include="Views\KpiAchievement\Configuration\_Monthly.cshtml" />
+    <Content Include="Views\KpiAchievement\Configuration\_Daily.cshtml" />
+    <Content Include="Views\KpiTarget\Configuration\_Daily.cshtml" />
+    <Content Include="Views\KpiTarget\Configuration\_Monthly.cshtml" />
+    <Content Include="Views\KpiTarget\Configuration\_Yearly.cshtml" />
+    <Content Include="Views\KpiTarget\Configuration.cshtml" />
+    <None Include="Views\Error\PageNotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -602,11 +615,13 @@
     <Compile Include="Attributes\PearMenuAttribute.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\ViewModelMappingProfile.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\ApiUserController.cs" />
     <Compile Include="Controllers\ArtifactController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ConversionController.cs" />
     <Compile Include="Controllers\CorporatePortofolioController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KpiAchievementController.cs" />
@@ -625,6 +640,7 @@
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
+    <Compile Include="Controllers\UnAuthorizedController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
@@ -652,8 +668,14 @@
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\Measurement.cs" />
     <Compile Include="ViewModels\Conversion\UpdateConversionViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\ConfigurationKpiAchievementsViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\ConfigurationParamViewModel.cs" />
+    <Compile Include="ViewModels\KpiAchievement\IndexKpiAchievementViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\KpiAchievementsViewModel.cs" />
     <Compile Include="ViewModels\KpiAchievement\UpdateKpiAchievementsViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\ConfigurationKpiTargetsViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\ConfigurationParamViewModel.cs" />
+    <Compile Include="ViewModels\KpiTarget\IndexKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\KpiTarget\UpdateKpiTargetViewModel.cs" />
     <Compile Include="ViewModels\PmsConfigDetails\CreatePmsConfigDetailsViewModel.cs" />
     <Compile Include="ViewModels\PmsConfig\UpdatePmsConfigViewModel.cs" />
@@ -723,6 +745,7 @@
     <Folder Include="ViewModels\CorporatePortofolio\" />
     <Folder Include="Views\CorporatePortofolio\" />
     <Folder Include="Views\Test\" />
+    <Folder Include="Views\UnAuthorize\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DSLNG.PEAR.Common\DSLNG.PEAR.Common.csproj">

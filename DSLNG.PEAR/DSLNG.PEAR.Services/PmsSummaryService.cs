@@ -57,6 +57,8 @@ namespace DSLNG.PEAR.Services
                             kpiData.PillarOrder = pmsConfigDetails.Kpi.Pillar.Order;
                             kpiData.KpiOrder = pmsConfigDetails.Kpi.Order;
                             kpiData.PillarWeight = pmsConfig.Weight;
+                            kpiData.ScoringType = pmsConfigDetails.ScoringType;
+                            kpiData.YtdFormula = pmsConfigDetails.Kpi.YtdFormula;
 
                             #region KPI Achievement
 
@@ -84,6 +86,14 @@ namespace DSLNG.PEAR.Services
                                     kpiData.ActualYtd += achievementYtd.Value;
                             }
 
+                            if (kpiData.YtdFormula == YtdFormula.Average)
+                            {
+                                if (kpiData.ActualYtd.HasValue)
+                                {
+                                    kpiData.ActualYtd = kpiData.ActualYtd / request.Month;
+                                }
+                            }
+
                             #endregion
 
                             #region KPI Target
@@ -109,7 +119,17 @@ namespace DSLNG.PEAR.Services
                             foreach (var targetYtd in kpiTargetYtd)
                             {
                                 if (targetYtd.Value.HasValue)
+                                {
                                     kpiData.TargetYtd += targetYtd.Value;
+                                }
+                            }
+
+                            if (kpiData.YtdFormula == YtdFormula.Average)
+                            {
+                                if (kpiData.TargetYtd.HasValue)
+                                {
+                                    kpiData.TargetYtd = kpiData.TargetYtd/request.Month;
+                                }
                             }
 
                             #endregion
@@ -233,7 +253,9 @@ namespace DSLNG.PEAR.Services
                         response.KpiRemarkYearly = kpiActualYearly.Remark;
                     }
                     var kpiActualMonthly =
-                        config.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly && x.Periode.Year == request.Year).ToList();
+                        config.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly && x.Periode.Year == request.Year)
+                        .OrderBy(x => x.Periode.Month)
+                        .ToList();
                     response.KpiAchievmentMonthly = new List<GetPmsDetailsResponse.KpiAchievment>();
                     if (kpiActualMonthly.Count > 0)
                     {
@@ -254,6 +276,7 @@ namespace DSLNG.PEAR.Services
                                     x => x.PeriodeType == Data.Enums.PeriodeType.Yearly);
                             var actualMonthly =
                                 item.Kpi.KpiAchievements.Where(x => x.PeriodeType == Data.Enums.PeriodeType.Monthly)
+                                    .OrderBy(x => x.Periode.Month)
                                     .ToList();
                             response.KpiRelations.Add(new GetPmsDetailsResponse.KpiRelation
                             {
@@ -800,6 +823,67 @@ namespace DSLNG.PEAR.Services
                 x.TotalScoreColor = GetScoreColor(allTotalScore, totalScoreScoringIndicators.ScoreIndicators);
                 return x;
             }).ToList();
+        }
+
+        public DeletePmsResponse DeletePmsConfig(int id)
+        {
+            var response = new DeletePmsResponse();
+            try
+            {
+                var pmsConfig = new PmsConfig { Id = id };
+                DataContext.PmsConfigs.Attach(pmsConfig);
+                DataContext.Entry(pmsConfig).State = EntityState.Deleted;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Pms Config item has been deleted successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+
+        public DeletePmsResponse DeletePmsSummary(int id)
+        {
+            var response = new DeletePmsResponse();
+            try
+            {
+                var pmsSummary = new PmsSummary { Id = id };
+                DataContext.PmsSummaries.Attach(pmsSummary);
+                DataContext.Entry(pmsSummary).State = EntityState.Deleted;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Pms Summary item has been deleted successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public DeletePmsResponse DeletePmsConfigDetails(int id)
+        {
+            var response = new DeletePmsResponse();
+            try
+            {
+                var pmsConfigDetails = new PmsConfigDetails { Id = id };
+                DataContext.PmsConfigDetails.Attach(pmsConfigDetails);
+                DataContext.Entry(pmsConfigDetails).State = EntityState.Deleted;
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                response.Message = "Pms Config Detail item has been deleted successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
         }
     }
 }

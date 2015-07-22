@@ -50,6 +50,10 @@
     <Reference Include="NCalc">
       <HintPath>..\packages\ncalc.1.3.8\lib\NCalc.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleCrypto, Version=26.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleCrypto.0.3.30.26\lib\SimpleCrypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
     </Reference>
@@ -66,6 +70,7 @@
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="Common\PmsSummary\ScoreIndicator.cs" />
+    <Compile Include="Constants\Type.cs" />
     <Compile Include="ConversionService.cs" />
     <Compile Include="DropdownService.cs" />
     <Compile Include="GroupService.cs" />
@@ -86,12 +91,17 @@
     <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
     <Compile Include="Requests\Group\CreateGroupRequest.cs" />
     <Compile Include="Requests\Group\UpdateGroupRequest.cs" />
+    <Compile Include="Requests\KpiAchievement\GetKpiAchievementsConfigurationRequest.cs" />
     <Compile Include="Requests\KpiAchievement\GetKpiAchievementsRequest.cs" />
+    <Compile Include="Requests\KpiAchievement\UpdateKpiAchievementItemRequest.cs" />
     <Compile Include="Requests\KpiAchievement\UpdateKpiAchievementsRequest.cs" />
     <Compile Include="Requests\KpiTarget\CreateKpiTargetRequest.cs" />
+    <Compile Include="Requests\KpiTarget\CreateKpiTargetsRequest.cs" />
+    <Compile Include="Requests\KpiTarget\GetKpiTargetsConfigurationRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetKpiTargetsRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetPmsConfigsRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetKpiTargetRequest.cs" />
+    <Compile Include="Requests\KpiTarget\UpdateKpiTargetItemRequest.cs" />
     <Compile Include="Requests\KpiTarget\UpdateKpiTargetRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\PeriodeType.cs" />
@@ -123,12 +133,19 @@
     <Compile Include="Responses\Group\CreateGroupResponse.cs" />
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
+    <Compile Include="Responses\KpiAchievement\AllKpiAchievementsResponse.cs" />
+    <Compile Include="Responses\KpiAchievement\GetKpiAchievementsConfigurationResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementsResponse.cs" />
+    <Compile Include="Responses\KpiAchievement\UpdateKpiAchievementItemResponse.cs" />
     <Compile Include="Responses\KpiAchievement\UpdateKpiAchievementsResponse.cs" />
+    <Compile Include="Responses\KpiTarget\AllKpiTargetsResponse.cs" />
     <Compile Include="Responses\KpiTarget\CreateKpiTargetResponse.cs" />
+    <Compile Include="Responses\KpiTarget\CreateKpiTargetsResponse.cs" />
+    <Compile Include="Responses\KpiTarget\GetKpiTargetsConfigurationResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetKpiTargetsResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetPmsConfigsResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetKpiTargetResponse.cs" />
+    <Compile Include="Responses\KpiTarget\UpdateKpiTargetItemResponse.cs" />
     <Compile Include="Responses\KpiTarget\UpdateKpiTargetResponse.cs" />
     <Compile Include="Responses\Kpi\KpiResponse\KpiRelationModel.cs" />
     <Compile Include="Responses\Menu\GetSiteMenuActiveResponse.cs" />
@@ -176,6 +193,7 @@
     <Compile Include="Responses\PmsSummary\CreatePmsConfigDetailsResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsConfigResponse.cs" />
     <Compile Include="Responses\PmsSummary\CreatePmsSummaryResponse.cs" />
+    <Compile Include="Responses\PmsSummary\DeletePmsResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetKpisByPillarIdResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsConfigResponse.cs" />
     <Compile Include="Responses\PmsSummary\GetPmsSummaryConfigurationResponse.cs" />

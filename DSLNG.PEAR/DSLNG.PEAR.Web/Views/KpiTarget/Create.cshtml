@@ -13,16 +13,26 @@
         <option value="yearly">Yearly</option>
         <option value="monthly">Monthly</option>
     </select>
-</div><br/>
-
+</div><br />
+<div class="popover-content" style="display:none">
+    <label class="control-label">Value</label>
+    <input type="text" name="Value" class="form-control" />
+    <label class="control-label">Remark</label>
+    <input type="text" name="Remark" class="form-control" />
+    <input type="hidden" name="Id" />
+    <input type="hidden" name="KpiId" />
+    <input type="hidden" name="Periode" />
+    <input type="hidden" name="PeriodeType" />
+    <button type="button" class="btn btn-primary" onclick="submitKpi(this)">Ok</button>
+</div>
 <div class="row">
     <div class="col-md-12">
         <form action="@Url.Action("Create")" method="POST">
             @*<div class="form-group">
-                @Html.LabelFor(model => model.PeriodeTypeValue, new { @class = "control-label" })
-                @Html.DropDownListFor(model => model.PeriodeTypeValue, Model.PeriodeTypeList, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PeriodeTypeValue)
-            </div>*@
+                    @Html.LabelFor(model => model.PeriodeTypeValue, new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.PeriodeTypeValue, Model.PeriodeTypeList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PeriodeTypeValue)
+                </div>*@
             @for (int i = 0; i < Model.PillarKpiTarget.Count; i++)
             {
                 <div class="form-group">
@@ -31,61 +41,58 @@
                 </div>
                 for (int k = 0; k < Model.PillarKpiTarget[i].KpiTargetList.Count; k++)
                 {
-                <div class="col-md-3">
-                    <div class="form-group">
-                        @Html.DropDownListFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].KpiId, Model.PillarKpiTarget[i].KpiTargetList[k].KpiList, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].KpiId)
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="form-group">
-                        @Html.DisplayFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Kpi.Unit)
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        @Html.TextBoxFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Remark, Model.PillarKpiTarget[i].KpiTargetList[k].Remark, new { @class = "form-control", @placeholder = "Remark" })
-                        @Html.ValidationMessageFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Remark)
-                    </div>
-                </div>
-                <div class="col-md-6 yearly-content" style="display: none">
-                    <div class="form-group">
-                        @{
-                    var idYearly = "PillarKpiTarget_" + i + "__KpiTargetList_" + k + "__ValueList_0";
-                    var nameYearly = "PillarKpiTarget[" + i + "].KpiTargetList[" + k + "].ValueList[0]";
-                        }
-                        <input type="text" name="@nameYearly" id="@idYearly" class="form-control" placeholder="Yearly">
-                        @Html.HiddenFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Periode)
-                        @Html.HiddenFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].IsActive)
-                    </div>
-
-                </div>
-@*<div class="col-md-3">
+                    var periode = Model.PillarKpiTarget[i].KpiTargetList[k].Periode;
+                    var name = "PillarKpiTarget[" + i + "].KpiTargetList[" + k + "].KpiTargetItems";
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label class="control-label">Monthly Value</label>
+                            @Html.DropDownListFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].KpiId, Model.PillarKpiTarget[i].KpiTargetList[k].KpiList, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].KpiId)
                         </div>
-                    </div>*@
-                <div class="col-md-6 monthly-content" style="display: none">
-                    @for (int v = 1; v <= 12; v++)
-                    {
-                        <div class="col-md-1">
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            @Html.DisplayFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Kpi.Unit)
+                        </div>
+                    </div>
+                    <div class="yearly-content" style="display: none">
+                        <div class="col-md-2">
                             <div class="form-group">
-                                @{
-                        var id = "PillarKpiTarget_" + i + "__KpiTargetList_" + k + "__ValueList_" + v;
-                        var name = "PillarKpiTarget[" + i + "].KpiTargetList[" + k + "].ValueList[" + v + "]";
-                        var periode = Model.PillarKpiTarget[i].KpiTargetList[k].Periode;
-                        var month = new DateTime(periode.Year, v, 1).ToString("MMM");
-                                }
-                                <input type="text" name="@name" id="@id" class="form-control">
-                                <label class="control-label">@month</label>
+                                @Html.TextBoxFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Remark, new { @class = "form-input", @placeholder="Remark" })
                             </div>
-
                         </div>
-                    }
-
-                </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.TextBoxFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Value, new { @class = "form-input", @placeholder = "Yearly" })
+                                @Html.HiddenFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].Periode, new { @value = @periode })
+                                @Html.HiddenFor(model => Model.PillarKpiTarget[i].KpiTargetList[k].PeriodeType, new { @value = @DSLNG.PEAR.Data.Enums.PeriodeType.Yearly })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 monthly-content" style="display: none">
+                        @for (int j = 1; j < 13; j++)
+                        {
+                            var month = new DateTime(periode.Year, j, 1);
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label style="display:none" class="header-popover">@month.ToString("MMMM")</label>
+                                    <a href="javascript:void(0)" class="btn btn-default kpi-popover">@month.ToString("MMM")</a>
+                                    <div class="kpiTarget-item" style="display:none">
+                                        <label class="control-label">Value</label>
+                                        <input type="text" class="kpiValue" name="Value" />
+                                        <label class="control-label">Remark</label>
+                                        <input type="text" class="kpiRemark" name="Remark" />
+                                    </div>
+                                    <input type="hidden" class="kpiPeriode" name="Periode" value="@month" />
+                                    <input type="hidden" class="kpiPeriodeType" name="PeriodeType" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Monthly" />
+                                    <input type="hidden" class="kpiId" name="KpiId" value="@Model.PillarKpiTarget[i].KpiTargetList[k].KpiId">
+                                    <input type="hidden" class="kpiTargetId" name="KpiTargetId">
+                                </div>
+                            </div>
+                        }
+                    </div>
                 }
             }
+
             <button type="submit" class="btn btn-default">Submit</button>
             <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
 
@@ -95,24 +102,76 @@
 
 @section Scripts {
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('.yearly-content').show();
-            $('.monthly-content').hide();
+    $(document).ready(function () {
+        $('.yearly-content').show();
+        $('.monthly-content').hide();
 
-            $('#periodeType').change(function () {
-                //alert('asas');
-                var val = $(this).val();
-                if (val === 'yearly') {
-                    $('.yearly-content').show();
-                    $('.monthly-content').hide();
-                } else {
-                    $('.yearly-content').hide();
-                    $('.monthly-content').show();
+        $('#periodeType').change(function () {
+            //alert('asas');
+            var val = $(this).val();
+            if (val === 'yearly') {
+                $('.yearly-content').show();
+                $('.monthly-content').hide();
+            } else {
+                $('.yearly-content').hide();
+                $('.monthly-content').show();
+            }
+
+        });
+
+        $('.kpi-popover').each(function (i, val) {
+            $(val).popover({
+                html: true,
+                title: function () {
+                    return $(this).parent().find('.header-popover').html();
+                },
+                content: function () {
+                    return $('.popover-content').html();
                 }
-
             });
-        })
-    </script>
 
+            $(val).click(function () {
+                var value = $(val).parent().find('.kpiValue').val();
+                var remark = $(val).parent().find('.kpiRemark').val();
+                var id = $(val).parent().find('.kpiTargetId').val();
+                var kpiId = $(val).parent().find('.kpiId').val();
+                var periode = $(val).parent().find('.kpiPeriode').val();
+                var periodeType = $(val).parent().find('.kpiPeriodeType').val();
+                $('.popover').find('input[name="Value"]').attr('value', value);
+                $('.popover').find('input[name="Remark"]').attr('value', remark);
+                $('.popover').find('input[name="Id"]').attr('value', id);
+                $('.popover').find('input[name="KpiId"]').attr('value', kpiId);
+                $('.popover').find('input[name="Periode"]').attr('value', periode);
+                $('.popover').find('input[name="PeriodeType"]').attr('value', periodeType);
+            })
+        });
+    })
+
+    function submitKpi(val) {
+        var value = $(val).parent().find('input[name="Value"]').val();
+        var remark = $(val).parent().find('input[name="Remark"]').val();
+        var kpiTarget = $('.popover').parent();
+        $(kpiTarget).find('.kpiValue').attr('value', value);
+        $(kpiTarget).find('.kpiRemark').attr('value', remark);
+        var formData = {
+            'id': $(val).parent().find('input[name=Id]').val(),
+            'kpiId': $(val).parent().find('input[name=KpiId]').val(),
+            'value': $(val).parent().find('input[name=Value]').val(),
+            'remark': $(val).parent().find('input[name=Remark]').val(),
+            'periode': $(val).parent().find('input[name=Periode]').val(),
+            'periodeType': $(val).parent().find('input[name=PeriodeType]').val()
+        };
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("KpiTargetMonthly")',
+            data: formData,
+            success: function (data) {
+                $(val).closest('.form-group').find('.kpiTargetId').attr('value', data.Id);
+                alert(data.Message);
+                $('.popover').popover('hide');
+            },
+        });
+    }
+    </script>
 }
 

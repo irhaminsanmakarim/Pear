@@ -2,6 +2,7 @@ body, html
 {
     height: 100%;
     background: #f0f3f4;
+    font-family: 'Comic sans';
 }
 
 .main-content
@@ -82,7 +83,7 @@ aside.left-content
     top: 300px;
     right: -10px;
     cursor: pointer;
-    z-index:99;
+    z-index: 99;
 }
 
 aside.left-content > *
@@ -193,7 +194,7 @@ aside.left-content > *
         color: #004071;
         background: #febe10;
         width: 60px;
-        background-image: url("css/img/active.png");
+        background-image: url("img/active.png");
         background-position: right;
         background-repeat: no-repeat;
         text-decoration: none;
@@ -798,8 +799,9 @@ h2
     text-align: center;
 }
 
-.template-view .layout-column {
-    border:none;
+.template-view .layout-column
+{
+    border: none;
 }
 
 .column-properties
@@ -905,6 +907,11 @@ td.text-button a
     background-color: #febe10;
     color: white;
 }
+
+    .table-hover tbody tr:hover td input, .table-hover tbody tr:hover th input
+    {
+        color: black;
+    }
 
 a
 {
@@ -1030,11 +1037,110 @@ table.text-center th
     border: none;
 }
 
+.modal-loading {
+    position: relative;
+    min-height: 165px;
+}
+
 .ajax-loading-dialog
 {
-    margin-left: auto;
-    margin-right: auto;
+    position: absolute;
+    margin: auto;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.popover-title
+{
+    width: 100%;
+}
+
+.remark_sign
+{
+    z-index: 9;
+    background-image: url("img/remark_sign.png");
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    /*float: left;*/
+}
+
+
+.form-control-small
+{
+    width: 37px;
+    margin-left: 4px;
+    background-color: #FAFAFA;
+    border: 1px solid #ccc;
+}
+
+.nav-tabs > li > a
+{
     text-align: center;
-    display: table-cell;
+    color: #3f454f;
+}
+
+.form-inline .form-group
+{
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.notification
+{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: none;
+}
+
+.form-control-small2
+{
+    width: 25px;
+    margin-left: 4px;
+    background-color: #FAFAFA;
+    border: 1px solid #ccc;
+}
+
+.popover-content button
+{
+    margin-top: 18px;
+}
+
+.grey_text
+{
+    font-size: 21px;
+}
+
+/*.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th
+{
+    background-color: #f3f4f5;
+}*/
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td
+{
     vertical-align: middle;
+    padding: 5px;
+    text-align: center;
+}
+
+/*.table-striped > tbody > tr > td, .table-striped > tbody > tr > th
+{
+    color: #777;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th
+{
+    background-color: #f3f4f5;
+}*/
+
+.dxgvDataRow_grid:hover
+{
+    background-color: Lime;
+}
+
+.dxgvSelectedRow_grid:hover
+{
+    background-color: Lime;       
 }

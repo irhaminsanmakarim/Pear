@@ -8,6 +8,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetSiteMenusResponse GetSiteMenus(GetSiteMenusRequest request);
         GetSiteMenuActiveResponse GetSiteMenuActive(GetSiteMenuActiveRequest request);
         GetMenuResponse GetMenu(GetMenuRequest request);
+        GetMenuResponse GetMenuByUrl(GetMenuRequestByUrl request);
         GetMenusResponse GetMenus(GetMenusRequest request);
         CreateMenuResponse Create(CreateMenuRequest request);
         UpdateMenuResponse Update(UpdateMenuRequest request);

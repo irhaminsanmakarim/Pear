@@ -19,7 +19,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         public string Title { get; set; }
         [Required]
         public int Year { get; set; }
-        public IEnumerable<SelectListItem> Years { get; set; }
+        //public IEnumerable<SelectListItem> Years { get; set; }
         public IList<ScoreIndicatorViewModel> ScoreIndicators { get; set; }
         public bool IsActive { get; set; }
     }

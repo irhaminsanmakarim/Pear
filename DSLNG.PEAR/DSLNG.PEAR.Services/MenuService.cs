@@ -17,7 +17,8 @@ namespace DSLNG.PEAR.Services
 {
     public class MenuService : BaseService, IMenuService
     {
-        public MenuService(IDataContext dataContext) : base(dataContext)
+        public MenuService(IDataContext dataContext)
+            : base(dataContext)
         {
 
         }
@@ -29,22 +30,35 @@ namespace DSLNG.PEAR.Services
 
             if (request.ParentId != null)
             {
-                menus = DataContext.Menus.Where(x => x.ParentId == request.ParentId).OrderBy(x => x.Order).ToList();
+                menus = DataContext.Menus.Where(x => x.IsActive == true && x.ParentId == request.ParentId && x.RoleGroups.Select(y => y.Id).Contains(request.RoleId)).OrderBy(x => x.Order).ToList();
             }
             else
             {
-                menus = DataContext.Menus.Where(x => x.ParentId == null || x.ParentId == 0).OrderBy(x => x.Order).ToList();
+                menus = DataContext.Menus.Where(x => x.IsActive == true && x.ParentId == null || x.ParentId == 0 && x.RoleGroups.Select(y => y.Id).Contains(request.RoleId)).OrderBy(x => x.Order).ToList();
             }
 
             if (request.IncludeChildren)
             {
+                var logout = new Data.Entities.Menu
+                {
+                    Name = "Logout",
+                    IsActive = true,
+                    Url = "/Account/Logoff",
+                    Parent = menus.First(x => x.Id == 6)
+                };
+                //menus.Add(logout);
+
                 //looping to get the children, we dont use Include because only include 1st level child menus
                 foreach (var menu in menus)
                 {
-                    menu.Menus = this._GetMenuChildren(menu.Id);
+                    menu.Menus = this._GetMenuChildren(menu.Id, request.RoleId);
+                    if (menu.Name == "Setting" && menu.IsRoot == true) {
+                        menu.Menus.Add(logout);
+                    }
                 }
             }
 
+            
             response.Menus = menus.MapTo<GetSiteMenusResponse.Menu>();
             //set root menu active / selected
             if (request.MenuId == null || request.MenuId == 0)
@@ -55,23 +69,24 @@ namespace DSLNG.PEAR.Services
             {
 
             }
-            
+
             return response;
         }
 
-        private ICollection<Data.Entities.Menu> _GetMenuChildren(int ParentId)
+        private ICollection<Data.Entities.Menu> _GetMenuChildren(int ParentId, int RoleId)
         {
             var Menus = new List<Data.Entities.Menu>();
 
-            Menus = DataContext.Menus.Where(x => x.ParentId == ParentId).OrderBy(x => x.Order).ToList();
+            Menus = DataContext.Menus.Where(x => x.IsActive == true &&  x.ParentId == ParentId && x.RoleGroups.Select(y => y.Id).Contains(RoleId)).OrderBy(x => x.Order).ToList();
 
-            if (Menus != null){
+            if (Menus != null)
+            {
                 foreach (var menu in Menus)
                 {
-                    menu.Menus = this._GetMenuChildren(menu.Id);
+                    menu.Menus = this._GetMenuChildren(menu.Id, RoleId);
                 }
             }
-            
+
 
             return Menus;
         }
@@ -81,9 +96,13 @@ namespace DSLNG.PEAR.Services
             var response = new GetSiteMenuActiveResponse();
             //get the menu from url request
             var url_request = new StringBuilder(request.Controller).Append("/").Append(request.Action).ToString();
-            try{
-                var menu = DataContext.Menus.Where(x => x.Url.ToLower() == url_request).First();
-                menu = this._GetActiveMenu(menu);
+            
+            try
+            {
+                //var menu = DataContext.Menus.Where(x => x.Url.ToLower() == url_request).First();
+                var menu = DataContext.Menus.Where(x => x.Url.Contains(url_request)).First();
+                var detail = DataContext.Menus.Where(x => x.Module.Contains(menu.Module) && x.IsRoot == true).First();
+                menu = this._GetActiveMenu(detail);
                 response = menu.MapTo<GetSiteMenuActiveResponse>();
 
                 return response;
@@ -119,8 +138,7 @@ namespace DSLNG.PEAR.Services
                 menus = DataContext.Menus;
             }
 
-            var response = new GetMenusResponse();
-            response.Menus = menus.MapTo<GetMenusResponse.Menu>();
+            var response = new GetMenusResponse() { Menus = menus.MapTo<GetMenusResponse.Menu>() };
 
             return response;
         }
@@ -130,7 +148,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.Id == request.Id);
-                var response = menu.MapTo<GetMenuResponse>(); 
+                var response = menu.MapTo<GetMenuResponse>();
 
                 return response;
             }
@@ -162,16 +180,16 @@ namespace DSLNG.PEAR.Services
                     foreach (int roleGroupId in request.RoleGroupIds)
                     {
                         var roleGroup = DataContext.RoleGroups.Where(r => r.Id == roleGroupId).First();
-                        
+
                         //add selected role group to menu
-                        menu.RoleGroups.Add(roleGroup);  
+                        menu.RoleGroups.Add(roleGroup);
                     }
                 }
                 else
                 {
                     menu.RoleGroups = null;
                 }
-                
+
                 DataContext.Menus.Add(menu);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
@@ -216,7 +234,7 @@ namespace DSLNG.PEAR.Services
                     }
                 }
 
-                
+
                 //DataContext.Menus.Attach(menu);
                 //DataContext.Entry(menu).State = EntityState.Modified;
                 DataContext.SaveChanges();
@@ -250,6 +268,35 @@ namespace DSLNG.PEAR.Services
             }
 
             return response;
+        }
+
+
+        public GetMenuResponse GetMenuByUrl(GetMenuRequestByUrl request)
+        {
+            try
+            {
+                //var role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
+                //var menu = DataContext.Menus.Include(x => x.RoleGroups).Where(x=>x.RoleGroups == role).First(x => x.Url == request.Url);
+                var url = request.Url != null ? request.Url.Split('/') : null;
+                string authorized = "/";
+                if (url[1].Length > 0) {
+                    authorized = string.Format("/{0}/", url[1]);
+                    //authorized += url[1];
+                }
+                var menu = DataContext.Menus.Include(x => x.RoleGroups).First(x => x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) && x.Url.Contains(authorized));
+
+                var response = menu.MapTo<GetMenuResponse>();
+                response.IsSuccess = true;
+                return response;
+            }
+            catch (System.InvalidOperationException x)
+            {
+                return new GetMenuResponse
+                {
+                    IsSuccess = false,
+                    Message = x.Message
+                };
+            }
         }
     }
 }

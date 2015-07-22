@@ -15,7 +15,7 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
         }
         public List<PillarTarget> PillarKpiTarget { get; set; }
 
-        public List<KpiTarget> KpiTargets { get; set; }
+        //public List<KpiTarget> KpiTargets { get; set; }
     }
 
     public class KpiTarget
@@ -28,7 +28,18 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiTarget
         public Kpi Kpi { get; set; }
 
         public int KpiId { get; set; }
-        public List<double?> ValueList { get; set; }
+        //public List<double?> ValueList { get; set; }
+        public double? Value { get; set; }
+        public DateTime Periode { get; set; }
+        public PeriodeType PeriodeType { get; set; }
+        public string Remark { get; set; }
+        public bool IsActive { get; set; }
+    }
+
+    public class KpiTargetItem
+    {
+        public int Id { get; set; }
+        public int KpiId { get; set; }
         public double? Value { get; set; }
         public DateTime Periode { get; set; }
         public PeriodeType PeriodeType { get; set; }

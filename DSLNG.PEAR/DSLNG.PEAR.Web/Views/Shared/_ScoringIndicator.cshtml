@@ -34,7 +34,7 @@
                 <input class="form-control si-expression" name="ScoreIndicators[@i].Expression" placeholder="Expression, e.g : x > 20" type="text" value="@item.Expression" style="width:200px;">
                 <div class="input-group colorpicker">
                     <input class="form-control si-color" name="ScoreIndicators[@i].Color" placeholder="Color" type="text" value="@item.Color" style="width:150px;">
-                    <span class="input-group-addon"><i></i></span>
+                    <span class="input-group-addon"><i style="background-color: @item.Color"></i></span>
                 </div>
                 @*@Html.TextBoxFor(x => Model[i].Expression, new { @class = "form-control", placeholder = "Expression" })
                 @Html.TextBoxFor(x => Model[i].Color, new { @class = "form-control", placeholder = "Color" })*@

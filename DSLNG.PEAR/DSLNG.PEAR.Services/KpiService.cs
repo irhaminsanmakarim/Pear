@@ -24,7 +24,8 @@ namespace DSLNG.PEAR.Services
         public GetKpiResponse GetBy(GetKpiRequest request)
         {
             var query = DataContext.Kpis;
-            if (request.Id != 0) {
+            if (request.Id != 0)
+            {
                 query.Where(x => x.Id == request.Id);
             }
             return query.FirstOrDefault().MapTo<GetKpiResponse>();
@@ -45,16 +46,16 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var kpi = DataContext.Kpis
-                    .Include(x=>x.Pillar)
-                    .Include(x=>x.Level)
-                    .Include(x=>x.RoleGroup)
-                    .Include(x=>x.Group)
-                    .Include(x=>x.Type)
-                    .Include(x=>x.Measurement)
-                    .Include(x=>x.Method)
-                    .Include(x=>x.RelationModels)
+                    .Include(x => x.Pillar)
+                    .Include(x => x.Level)
+                    .Include(x => x.RoleGroup)
+                    .Include(x => x.Group)
+                    .Include(x => x.Type)
+                    .Include(x => x.Measurement)
+                    .Include(x => x.Method)
+                    .Include(x => x.RelationModels)
                     .Include("RelationModels.Kpi").First(x => x.Id == request.Id);
-                var response = kpi.MapTo<GetKpiResponse>(); 
+                var response = kpi.MapTo<GetKpiResponse>();
 
                 return response;
             }
@@ -73,11 +74,11 @@ namespace DSLNG.PEAR.Services
             //var kpis = new Queryable<Kpi>();
             if (request.Take != 0)
             {
-                kpis = DataContext.Kpis.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take);
+                kpis = DataContext.Kpis.Include(x => x.Pillar).OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take);
             }
             else
             {
-                kpis = DataContext.Kpis;
+                kpis = DataContext.Kpis.Include(x => x.Pillar);
             }
 
             if (request.PillarId > 0)
@@ -177,21 +178,58 @@ namespace DSLNG.PEAR.Services
                 {
                     updateKpi.RoleGroup = DataContext.RoleGroups.FirstOrDefault(x => x.Id == request.RoleGroupId.Value);
                 }
-                if (request.MeasurementId.HasValue)
-                {
-                    updateKpi.Measurement = DataContext.Measurements.FirstOrDefault(x => x.Id == request.MeasurementId);
-                }
+                //if (request.MeasurementId.HasValue)
+                //{
+                //    updateKpi.Measurement = DataContext.Measurements.FirstOrDefault(x => x.Id == request.MeasurementId);
+                //}
+
+                updateKpi.Measurement = DataContext.Measurements.Single(x => x.Id == request.MeasurementId);
                 updateKpi.Level = DataContext.Levels.FirstOrDefault(x => x.Id == request.LevelId);
                 updateKpi.Type = DataContext.Types.FirstOrDefault(x => x.Id == request.TypeId);
                 updateKpi.Method = DataContext.Methods.FirstOrDefault(x => x.Id == request.MethodId);
-                
+
                 var existedkpi = DataContext.Kpis
                     .Where(x => x.Id == request.Id)
                     .Include(x => x.RelationModels)
+                    .Include(x => x.Pillar)
+                    .Include(x => x.Level)
+                    .Include(x => x.RoleGroup)
+                    .Include(x => x.Group)
+                    .Include(x => x.Type)
+                    .Include(x => x.Measurement)
+                    .Include(x => x.Method)
                     .Single();
 
-                var existedKpiEntry = DataContext.Entry(existedkpi);
-                existedKpiEntry.CurrentValues.SetValues(updateKpi);
+                DataContext.Entry(existedkpi).CurrentValues.SetValues(updateKpi);
+
+                if (updateKpi.Group != null)
+                {
+                    DataContext.Groups.Attach(updateKpi.Group);
+                    existedkpi.Group = updateKpi.Group;
+                }
+
+                if (updateKpi.RoleGroup != null)
+                {
+                    DataContext.RoleGroups.Attach(updateKpi.RoleGroup);
+                    existedkpi.RoleGroup = updateKpi.RoleGroup;
+                }
+
+                if (updateKpi.Pillar != null)
+                {
+                    DataContext.Pillars.Attach(updateKpi.Pillar);
+                    existedkpi.Pillar = updateKpi.Pillar;
+                }
+                DataContext.Measurements.Attach(updateKpi.Measurement);
+                existedkpi.Measurement = updateKpi.Measurement;
+
+                DataContext.Levels.Attach(updateKpi.Level);
+                existedkpi.Level = updateKpi.Level;
+
+                DataContext.Types.Attach(updateKpi.Type);
+                existedkpi.Type = updateKpi.Type;
+
+                DataContext.Methods.Attach(updateKpi.Method);
+                existedkpi.Method = updateKpi.Method;
 
                 foreach (var relationModel in updateKpi.RelationModels)
                 {
@@ -199,7 +237,9 @@ namespace DSLNG.PEAR.Services
                     if (existedrelationModel != null)
                     {
                         var relationModelEntry = DataContext.Entry(existedrelationModel);
-                        relationModelEntry.CurrentValues.SetValues(relationModelEntry);
+                        relationModelEntry.CurrentValues.SetValues(relationModel);
+                        DataContext.Kpis.Attach(relationModel.Kpi);
+                        existedrelationModel.Kpi = relationModel.Kpi;
                     }
                     else
                     {
@@ -215,6 +255,7 @@ namespace DSLNG.PEAR.Services
                         DataContext.KpiRelationModels.Remove(item);
                     }
                 }
+
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "KPI item has been updated successfully";

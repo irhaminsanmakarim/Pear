@@ -7,13 +7,15 @@
     {
     <div class="whitebox-full">
         <h5>@pillar.Name</h5>
+        <div class="kpi-message">
+        </div>
         <hr>
         <table class="no-border tablekpitarget">
             <thead>
                 <tr>
                     <th style="width: 250px;"></th>
                     <th style="width: 100px;"></th>
-                    <th style="width: 200px;"></th>
+                    @*<th style="width: 200px;"></th>*@
                     <th>Value</th>
                 </tr>
             </thead>
@@ -29,15 +31,24 @@
                         <td>
                             <h6>@kpi.Measurement</h6>
                         </td>
-                        <td>
-                            <input type="text" class="form-control" placeholder="Remark"></td>
+                        @*<td>
+                            <input type="text" class="form-control" placeholder="Remark"></td>*@
                         @{ int c = 0;}
                         @foreach (var kpiTarget in kpi.KpiTargets)
                         {
+                            var remarkSign = "";
+                            if (!string.IsNullOrEmpty(Model.Pillars[a].Kpis[b].KpiTargets[c].Remark))
+                            {
+                                remarkSign = "remark_sign";
+                            }
                             <td>
-                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Id, new {@class="form-control-small"})
-                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Periode, new {@class="form-control-small"})
-                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Value, new {@class="form-control"})
+                                <input type="hidden" name="KpiId" class="kpiId" value="@kpi.Id" />
+                                <input type="hidden" name="HeaderPopover" class="header-popover" value="" />
+                                <input type="hidden" name="PeriodeType" class="periodeType" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Yearly" />
+                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Id, new { @class = "id" })
+                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Periode, new { @class = "periode" })
+                                @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Remark, new { @class = "remark" })
+                                @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Value, new { @class = "form-control kpi-popover value " + remarkSign })
                             </td>
                             c++;
                             @*<td>

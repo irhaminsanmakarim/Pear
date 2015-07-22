@@ -77,5 +77,14 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["Message"] = response.Message;
             return RedirectToAction("Details", "PmsSummary", new { id = response.PmsSummaryId });
         }
+
+        [HttpPost]
+        public ActionResult Delete(int id, int pmsSummaryId)
+        {
+            var response = _pmsSummaryService.DeletePmsConfig(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Details", "PmsSummary", new { id = pmsSummaryId });
+        }
 	}
 }

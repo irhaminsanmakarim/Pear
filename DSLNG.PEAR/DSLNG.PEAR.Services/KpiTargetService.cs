@@ -19,9 +19,9 @@ namespace DSLNG.PEAR.Services
             : base(dataContext)
         {
         }
-        public CreateKpiTargetResponse Create(CreateKpiTargetRequest request)
+        public CreateKpiTargetsResponse Creates(CreateKpiTargetsRequest request)
         {
-            var response = new CreateKpiTargetResponse();
+            var response = new CreateKpiTargetsResponse();
             try
             {
                 if (request.KpiTargets.Count > 0)
@@ -125,12 +125,14 @@ namespace DSLNG.PEAR.Services
                                         kpiTargetMonthly.Id = 0;
                                         kpiTargetMonthly.Periode = new DateTime(pmsSummary.Year, i, 1);
                                         kpiTargetMonthly.Value = null;
+                                        kpiTargetMonthly.Remark = null;
                                     }
                                     else
                                     {
                                         kpiTargetMonthly.Id = kpiTargetsMonthly.Id;
                                         kpiTargetMonthly.Periode = kpiTargetsMonthly.Periode;
                                         kpiTargetMonthly.Value = kpiTargetsMonthly.Value;
+                                        kpiTargetMonthly.Remark = kpiTargetsMonthly.Remark;
                                     }
 
                                     targets.Add(kpiTargetMonthly);
@@ -146,12 +148,14 @@ namespace DSLNG.PEAR.Services
                                     kpiTargetYearly.Id = 0;
                                     kpiTargetYearly.Periode = new DateTime(pmsSummary.Year, 1, 1);
                                     kpiTargetYearly.Value = null;
+                                    kpiTargetYearly.Remark = null;
                                 }
                                 else
                                 {
                                     kpiTargetYearly.Id = kpiTargetsYearly.Id;
                                     kpiTargetYearly.Periode = kpiTargetsYearly.Periode;
                                     kpiTargetYearly.Value = kpiTargetsYearly.Value;
+                                    kpiTargetYearly.Remark = kpiTargetsYearly.Remark;
                                 }
                                 targets.Add(kpiTargetYearly);
 
@@ -187,7 +191,7 @@ namespace DSLNG.PEAR.Services
 
         public UpdateKpiTargetResponse UpdateKpiTarget(UpdateKpiTargetRequest request)
         {
-            PeriodeType periodeType = (PeriodeType) Enum.Parse(typeof (PeriodeType), request.PeriodeType);
+            PeriodeType periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), request.PeriodeType);
             var response = new UpdateKpiTargetResponse();
             response.PeriodeType = periodeType;
             try
@@ -206,7 +210,7 @@ namespace DSLNG.PEAR.Services
                                 kpiTargetNew.PeriodeType = periodeType;
                                 kpiTargetNew.Periode = kpiTarget.Periode;
                                 kpiTargetNew.IsActive = true;
-                                kpiTargetNew.Remark = kpi.Remark;
+                                kpiTargetNew.Remark = kpiTarget.Remark;
                                 kpiTargetNew.CreatedDate = DateTime.Now;
                                 kpiTargetNew.UpdatedDate = DateTime.Now;
                                 DataContext.KpiTargets.Add(kpiTargetNew);
@@ -220,7 +224,7 @@ namespace DSLNG.PEAR.Services
                                 kpiTargetNew.PeriodeType = periodeType;
                                 kpiTargetNew.Periode = kpiTarget.Periode;
                                 kpiTargetNew.IsActive = true;
-                                kpiTargetNew.Remark = kpi.Remark;
+                                kpiTargetNew.Remark = kpiTarget.Remark;
                                 kpiTargetNew.UpdatedDate = DateTime.Now;
                                 DataContext.KpiTargets.Attach(kpiTargetNew);
                                 DataContext.Entry(kpiTargetNew).State = EntityState.Modified;
@@ -231,6 +235,215 @@ namespace DSLNG.PEAR.Services
                 response.IsSuccess = true;
                 response.Message = "KPI Target has been updated successfully";
                 DataContext.SaveChanges();
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+
+            return response;
+        }
+
+        public CreateKpiTargetResponse Create(CreateKpiTargetRequest request)
+        {
+            var response = new CreateKpiTargetResponse();
+            try
+            {
+
+                var data = request.MapTo<KpiTarget>();
+                data.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
+                DataContext.KpiTargets.Add(data);
+                DataContext.SaveChanges();
+
+                response.IsSuccess = true;
+                response.Message = "KPI Target has been added successfully";
+                response.Id = data.Id;
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+            return response;
+        }
+
+
+        public UpdateKpiTargetItemResponse UpdateKpiTargetItem(UpdateKpiTargetItemRequest request)
+        {
+            var response = new UpdateKpiTargetItemResponse();
+            try
+            {
+                var kpiTarget = request.MapTo<KpiTarget>();
+                DataContext.KpiTargets.Attach(kpiTarget);
+                DataContext.Entry(kpiTarget).State = EntityState.Modified;
+                DataContext.SaveChanges();
+                response.Id = request.Id;
+                response.IsSuccess = true;
+                response.Message = "KPI Target item has been updated successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
+        }
+
+        public GetKpiTargetsConfigurationResponse GetKpiTargetsConfiguration(GetKpiTargetsConfigurationRequest request)
+        {
+            var response = new GetKpiTargetsConfigurationResponse();
+            try
+            {
+                var periodeType = string.IsNullOrEmpty(request.PeriodeType)
+                                      ? PeriodeType.Yearly
+                                      : (PeriodeType)Enum.Parse(typeof(PeriodeType), request.PeriodeType);
+
+                var kpis = DataContext.Kpis
+                                      .Include(x => x.RoleGroup)
+                                      .Include(x => x.Measurement)
+                                      .Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
+
+
+
+                switch (periodeType)
+                {
+                    case PeriodeType.Yearly:
+                        var kpiTargetsYearly = DataContext.KpiTargets
+                                        .Include(x => x.Kpi)
+                                        .Where(x => x.PeriodeType == periodeType).ToList();
+                        foreach (var kpi in kpis)
+                        {
+                            var kpiDto = kpi.MapTo<GetKpiTargetsConfigurationResponse.Kpi>();
+                            foreach (var number in YearlyNumbers)
+                            {
+                                var achievement = kpiTargetsYearly.SingleOrDefault(x => x.Kpi.Id == kpi.Id && x.Periode.Year == number);
+                                if (achievement != null)
+                                {
+                                    var targetDto =
+                                        achievement.MapTo<GetKpiTargetsConfigurationResponse.KpiTarget>();
+                                    kpiDto.KpiTargets.Add(targetDto);
+                                }
+                                else
+                                {
+                                    var targetDto = new GetKpiTargetsConfigurationResponse.KpiTarget();
+                                    targetDto.Periode = new DateTime(number, 1, 1);
+                                    kpiDto.KpiTargets.Add(targetDto);
+                                }
+                            }
+
+
+                            response.Kpis.Add(kpiDto);
+                        }
+                        break;
+
+                    case PeriodeType.Monthly:
+                        var kpiTargetsMonthly = DataContext.KpiTargets
+                                        .Include(x => x.Kpi)
+                                        .Where(x => x.PeriodeType == periodeType && x.Periode.Year == request.Year).ToList();
+                        foreach (var kpi in kpis)
+                        {
+                            var kpiDto = kpi.MapTo<GetKpiTargetsConfigurationResponse.Kpi>();
+                            var targets = kpiTargetsMonthly.Where(x => x.Kpi.Id == kpi.Id).ToList();
+
+                            for (int i = 1; i <= 12; i++)
+                            {
+                                var target = targets.FirstOrDefault(x => x.Periode.Month == i);
+                                if (target != null)
+                                {
+                                    var achievementDto =
+                                        target.MapTo<GetKpiTargetsConfigurationResponse.KpiTarget>();
+                                    kpiDto.KpiTargets.Add(achievementDto);
+                                }
+                                else
+                                {
+                                    var achievementDto = new GetKpiTargetsConfigurationResponse.KpiTarget();
+                                    achievementDto.Periode = new DateTime(request.Year, i, 1);
+                                    kpiDto.KpiTargets.Add(achievementDto);
+                                }
+                            }
+                            response.Kpis.Add(kpiDto);
+                        }
+                        break;
+
+                    case PeriodeType.Daily:
+                        var kpiTargetsDaily = DataContext.KpiTargets
+                                        .Include(x => x.Kpi)
+                                        .Where(x => x.PeriodeType == periodeType && x.Periode.Year == request.Year
+                                        && x.Periode.Month == request.Month).ToList();
+                        foreach (var kpi in kpis)
+                        {
+                            var kpiDto = kpi.MapTo<GetKpiTargetsConfigurationResponse.Kpi>();
+                            var targets = kpiTargetsDaily.Where(x => x.Kpi.Id == kpi.Id).ToList();
+                            for (int i = 1; i <= DateTime.DaysInMonth(request.Year, request.Month); i++)
+                            {
+                                var target = targets.FirstOrDefault(x => x.Periode.Day == i);
+                                if (target != null)
+                                {
+                                    var targetDto =
+                                        target.MapTo<GetKpiTargetsConfigurationResponse.KpiTarget>();
+                                    kpiDto.KpiTargets.Add(targetDto);
+                                }
+                                else
+                                {
+                                    var targetDto = new GetKpiTargetsConfigurationResponse.KpiTarget();
+                                    targetDto.Periode = new DateTime(request.Year, request.Month, i);
+                                    kpiDto.KpiTargets.Add(targetDto);
+                                }
+                            }
+                            response.Kpis.Add(kpiDto);
+                        }
+                        break;
+                }
+
+                var roleGroup = DataContext.RoleGroups.Single(x => x.Id == request.RoleGroupId);
+                response.RoleGroupName = roleGroup.Name;
+                response.RoleGroupId = roleGroup.Id;
+                response.IsSuccess = true;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
+            }
+
+            return response;
+        }
+
+        public AllKpiTargetsResponse GetAllKpiTargets()
+        {
+            var response = new AllKpiTargetsResponse();
+            try
+            {
+                var kpiTargets = DataContext.Kpis
+                    .Include(x => x.Measurement)
+                    .Include(x => x.RoleGroup)
+                    .AsEnumerable()
+                    .OrderBy(x => x.Order)
+                    .GroupBy(x => x.RoleGroup).ToDictionary(x => x.Key);
+
+                foreach (var item in kpiTargets)
+                {
+                    var kpis = new List<AllKpiTargetsResponse.Kpi>();
+                    foreach (var val in item.Value)
+                    {
+                        kpis.Add(val.MapTo<AllKpiTargetsResponse.Kpi>());
+                    }
+
+                    response.RoleGroups.Add(new AllKpiTargetsResponse.RoleGroup
+                    {
+                        Id = item.Key.Id,
+                        Name = item.Key.Name,
+                        Kpis = kpis
+                    });
+                }
+
+                response.IsSuccess = true;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
             }
             catch (InvalidOperationException invalidOperationException)
             {

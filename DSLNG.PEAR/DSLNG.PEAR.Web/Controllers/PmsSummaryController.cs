@@ -18,6 +18,7 @@ using DSLNG.PEAR.Web.ViewModels.Artifact;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
+    [Authorize]
     public class PmsSummaryController : BaseController
     {
         private readonly IPmsSummaryService _pmsSummaryService;
@@ -117,7 +118,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create()
         {
             var viewModel = new CreatePmsSummaryViewModel();
-            viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
+            //viewModel.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
             return PartialView("_Create", viewModel);
         }
 
@@ -343,6 +344,15 @@ namespace DSLNG.PEAR.Web.Controllers
             list.Add(pmsSummary3);
             return list;
 
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var response = _pmsSummaryService.DeletePmsSummary(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Configuration");
         }
     }
 }

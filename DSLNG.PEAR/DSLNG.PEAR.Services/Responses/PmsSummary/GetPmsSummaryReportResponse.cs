@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Services.Responses.PmsSummary
 {
@@ -32,6 +33,8 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
             public double? ActualYearly { get; set; }
             public double? ActualMonthly { get; set; }
             public double? ActualYtd { get; set; }
+            public ScoringType ScoringType { get; set; }
+            public YtdFormula YtdFormula { get; set; }
 
             public double? IndexYearly
             {
@@ -39,10 +42,20 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
                 {
                     if (ActualYearly.HasValue && TargetYearly.HasValue)
                     {
-                        if (Math.Abs(ActualYearly.Value) == 0 && TargetYearly.Value == 0)
-                            return 1;
+                        if (ScoringType == ScoringType.Boolean)
+                        {
+                            return ActualYearly.Value > 0 ? 0 : 1;
+                        }
+                        else
+                        {
+                            if (ActualYearly.Value.Equals(TargetYearly.Value))
+                            {
+                                return 1;
+                            }
 
-                        return ActualYearly/TargetYearly;
+                            return ActualYearly / TargetYearly;
+                        }
+                        
                     }
 
                     return null;
@@ -55,11 +68,22 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
                 {
                     if (ActualMonthly.HasValue && TargetMonthly.HasValue)
                     {
-                        if (ActualMonthly.Value == 0 && TargetMonthly.Value == 0)
-                            return 1;
+                        if (ScoringType == ScoringType.Boolean)
+                        {
+                            return ActualMonthly.Value > 0 ? 0 : 1;
+                        }
+                        else
+                        {
+                            if (ActualMonthly.Value.Equals(TargetMonthly.Value))
+                            {
+                                return 1;
+                            }
 
-                        return ActualMonthly / TargetMonthly;
+                            return ActualMonthly / TargetMonthly;
+                        }
+
                     }
+
 
                     return null;
                 }
@@ -71,10 +95,19 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
                 {
                     if (ActualYtd.HasValue && TargetYtd.HasValue)
                     {
-                        if (ActualYtd.Value == 0 && TargetYtd.Value == 0)
-                            return 1;
+                        if (ScoringType == ScoringType.Boolean)
+                        {
+                            return ActualYtd.Value > 0 ? 0 : 1;
+                        }
+                        else
+                        {
+                            if (ActualYtd.Value.Equals(TargetYtd.Value))
+                            {
+                                return 1;
+                            }
 
-                        return ActualYtd / TargetYtd;
+                            return ActualYtd / TargetYtd;
+                        }
                     }
 
                     return null;

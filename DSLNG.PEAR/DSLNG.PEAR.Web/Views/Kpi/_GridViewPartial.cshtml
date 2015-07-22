@@ -16,17 +16,18 @@
                 column.Caption = "Action";
                 column.SetDataItemTemplateContent(c =>
                                                   ViewContext.Writer.Write(
-                                                      Html.ActionLink("Edit", "Update", new { Id = DataBinder.Eval(c.DataItem, "Id") }) + " | " +
+                                                      Html.ActionLink("Edit", "Update", new { Id = DataBinder.Eval(c.DataItem, "Id") }, new { @class="btn btn-edit"}) + " | " +
                                                       "<a href='javascript:;' onclick='confirmDelete(" + DataBinder.Eval(c.DataItem, "Id") + ")'>Delete</a>"
                                                       )
 
 
                     );
+                column.Width = 150;
             });
         settings.Columns.Add("Id").Visible = false;
         settings.Columns.Add("Code");
         settings.Columns.Add("Name");
-        settings.Columns.Add("PillarId");
+        settings.Columns.Add("PillarName");
         settings.Columns.Add("Order");
         settings.Columns.Add("IsEconomic", MVCxGridViewColumnType.CheckBox);
         settings.Columns.Add("Remark");

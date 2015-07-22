@@ -1,0 +1,36 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.User.UserLoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="login-form">
+    <div class="head">
+
+        <img src="@Url.Content("~/Content/img/logo_login.png")" alt="" />
+
+    </div>
+
+    @Html.ValidationSummary(true, "Login Failed, Please check your credentials", new { @class = "alert alert-danger" })
+
+
+    <form action="@Url.Action("Login")" method="POST" autocomplete="off">
+
+        <li>
+            <input type="text" name="Username" id="Username" class="text" value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Username';}">
+            <span class=" icon user"></span>
+            @Html.ValidationMessageFor(u => u.Username)
+        </li>
+        <li>
+            <input type="password" value="Password" id="Password" name="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+            <span class=" icon lock"></span>
+            @Html.ValidationMessageFor(u => u.Password)
+        </li>
+        <div class="p-container">
+            <input type="submit" value="Sign In">
+            <div class="clear"></div>
+        </div>
+    </form>
+</div>
+
+

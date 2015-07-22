@@ -1,0 +1,65 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.KpiAchievement.ConfigurationKpiAchievementsViewModel
+@{
+    int length = DateTime.DaysInMonth(Model.Year, Model.Month);
+}
+<div style="overflow: auto">
+    <form class="form-inline" style="float: left">
+        <div class="form-group" style="padding-right: 30px; border-right: solid 1px #3f454f;">
+            <label class="labletop">Year :</label>
+            @Html.DropDownListFor(x => x.Year, Model.Years, new { @class = "form-control, ddl-year" })
+        </div>
+        <div class="form-group" style="margin-top: 5px;">
+            <label class="labletop">Month :</label>
+            @Html.DropDownListFor(x => x.Month, Model.Months, new { @class = "form-control, ddl-month" })
+        </div>
+    </form>
+
+    <table class="table table-hover table-striped table-bordered">
+        <thead>
+            <tr>
+                <th style="width: 30%;">KPI Name</th>
+                <th style="width: 10%;">Measurement</th>
+                @for (int i = 1; i <= length; i++)
+                {
+                    <th style="width: 25px;">@i</th>    
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{ var a = 0;}
+
+            @foreach (var kpi in Model.Kpis)
+            {
+                <tr>
+                    <td>@kpi.Name</td>
+                    <td>@kpi.Measurement</td>
+                    @{ var b = 0;}
+                    @foreach (var kpiAchievement in kpi.KpiAchievements)
+                    {
+                        var remarkSign = "";
+                        if (!string.IsNullOrEmpty(kpiAchievement.Remark))
+                        {
+                            remarkSign = "remark_sign";
+                        }
+                        var idValue = "Kpis_" + a + "__KpiAchievements_" + b + "__Value";
+                        <th>
+                            <input type="hidden" name="KpiId" class="kpiId" value="@kpi.Id" />
+                            <input type="hidden" name="HeaderPopover" class="header-popover" value="" />
+                            <input type="hidden" name="PeriodeType" class="periodeType" value="@DSLNG.PEAR.Data.Enums.PeriodeType.Daily" />
+                            <input type="text" class="form-control-small value kpi-popover @remarkSign" id="@idValue" value="@kpiAchievement.Value">
+                            <input type="hidden" class="form-control-small id" value="@kpiAchievement.Id">
+                            <input type="hidden" class="form-control-small remark" value="@kpiAchievement.Remark">
+                            <input type="hidden" class="form-control-small periode" value="@kpiAchievement.Periode">
+                        </th>
+                        b++;
+                    }
+                </tr>
+                a++;
+            }
+
+        </tbody>
+    </table>
+
+
+
+</div>
