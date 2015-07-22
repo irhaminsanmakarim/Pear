@@ -60,7 +60,7 @@
                                     @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Id, new { @class = "id" })
                                     @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Periode, new { @class = "periode" })
                                     @Html.HiddenFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Remark, new { @class = "remark"})
-                                    @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Value, new { @class = "form-control-small kpi-popover value " + remarkSign  })
+                                    @Html.TextBoxFor(x => Model.Pillars[a].Kpis[b].KpiTargets[c].Value, new { @class = "form-control-small kpi-popover value " + remarkSign, @readonly = "readonly"  })
                                 </td>
                                 c++;
                                 @*<td>
