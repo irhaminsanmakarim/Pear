@@ -34,6 +34,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
             public double? ActualMonthly { get; set; }
             public double? ActualYtd { get; set; }
             public ScoringType ScoringType { get; set; }
+            public YtdFormula YtdFormula { get; set; }
 
             public double? IndexYearly
             {

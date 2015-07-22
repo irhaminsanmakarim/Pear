@@ -58,6 +58,7 @@ namespace DSLNG.PEAR.Services
                             kpiData.KpiOrder = pmsConfigDetails.Kpi.Order;
                             kpiData.PillarWeight = pmsConfig.Weight;
                             kpiData.ScoringType = pmsConfigDetails.ScoringType;
+                            kpiData.YtdFormula = pmsConfigDetails.Kpi.YtdFormula;
 
                             #region KPI Achievement
 
@@ -85,6 +86,14 @@ namespace DSLNG.PEAR.Services
                                     kpiData.ActualYtd += achievementYtd.Value;
                             }
 
+                            if (kpiData.YtdFormula == YtdFormula.Average)
+                            {
+                                if (kpiData.ActualYtd.HasValue)
+                                {
+                                    kpiData.ActualYtd = kpiData.ActualYtd / request.Month;
+                                }
+                            }
+
                             #endregion
 
                             #region KPI Target
@@ -110,7 +119,17 @@ namespace DSLNG.PEAR.Services
                             foreach (var targetYtd in kpiTargetYtd)
                             {
                                 if (targetYtd.Value.HasValue)
+                                {
                                     kpiData.TargetYtd += targetYtd.Value;
+                                }
+                            }
+
+                            if (kpiData.YtdFormula == YtdFormula.Average)
+                            {
+                                if (kpiData.TargetYtd.HasValue)
+                                {
+                                    kpiData.TargetYtd = kpiData.TargetYtd/request.Month;
+                                }
                             }
 
                             #endregion

@@ -32,7 +32,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0} / {1}", TargetYearly.HasValue ? TargetYearly.Value.ToString("0") : "-", ActualYearly.HasValue ? ActualYearly.Value.ToString("0") : "-");
+                return string.Format(@"{1} / {0}", TargetYearly.HasValue ? TargetYearly.Value.ToString("0") : "-", ActualYearly.HasValue ? ActualYearly.Value.ToString("0") : "-");
             }
         }
 
@@ -40,7 +40,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0} / {1}", TargetMonthly.HasValue ? TargetMonthly.Value.ToString("0") : "-", ActualMonthly.HasValue ? ActualMonthly.Value.ToString("0") : "-");
+                return string.Format(@"{1} / {0}", TargetMonthly.HasValue ? TargetMonthly.Value.ToString("0") : "-", ActualMonthly.HasValue ? ActualMonthly.Value.ToString("0") : "-");
             }
         }
 
@@ -48,7 +48,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         {
             get
             {
-                return string.Format(@"{0} / {1}", TargetYtd.HasValue ? TargetYtd.Value.ToString("0") : "-", ActualYtd.HasValue ? ActualYtd.Value.ToString("0") : "-");
+                return string.Format(@"{1} / {0}", TargetYtd.HasValue ? TargetYtd.Value.ToString("0") : "-", ActualYtd.HasValue ? ActualYtd.Value.ToString("0") : "-");
             }
         }
 
@@ -94,8 +94,9 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
 
         public double PillarWeight { get; set; }
 
-        public string KpiName {
-            get { return string.Format(@"{0} ({1})",Kpi,Unit); }
+        public string KpiName
+        {
+            get { return string.Format(@"{0} ({1})", Kpi, Unit); }
         }
 
         public string KpiNameWithColor
@@ -109,53 +110,5 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         }
 
         public string TotalScoreColor { get; set; }
-
-        /*public int Id { get; set; }
-        public string Osp { get; set; }
-        public string PerformanceIndicator { get; set; }
-        public double OspWeight { get; set; }
-        public string Unit { get; set; }
-        public decimal Weight { get; set; }
-
-        public decimal TargetYearly { get; set; }
-        public decimal TargetMonthly { get; set; }
-        public decimal TargetYtd { get; set; }
-
-        public decimal ActualYearly { get; set; }
-        public decimal ActualMonthly { get; set; }
-        public decimal ActualYtd { get; set; }
-
-        public string IndexYearly
-        {
-            get { return (ActualYearly / TargetYearly).ToString("0"); }
-        }
-
-        public string IndexMonthly {
-            get { return (ActualMonthly / TargetMonthly).ToString("0"); }
-        }
-
-        public string IndexYtd
-        {
-            get { return (ActualYtd/TargetYtd).ToString("0"); }
-        }
-
-        public double Score { get; set; }
-
-        public string TargetActualYearly
-        {
-            get { return string.Format(@"{0} / {1}", TargetYearly.ToString("0"), ActualYearly.ToString("0")); }
-        }
-
-        public string TargetActualMonthly
-        {
-            get { return string.Format(@"{0} / {1}", TargetMonthly.ToString("0"), ActualMonthly.ToString("0")); }
-        }
-
-        public string TargetActualYtd
-        {
-            get { return string.Format(@"{0} / {1}", TargetYtd.ToString("0"), ActualYtd.ToString("0")); }
-        }
-
-        public double KpiScoreInPilar { get; set; }*/
     }
 }
