@@ -26,6 +26,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             }
             [Display(Name="Kpi")]
             public int KpiId { get; set; }
+            public string KpiName { get; set; }
             public string Label { get; set; }
             public string Color { get; set; }
             public string ValueAxis { get; set; }
@@ -36,6 +37,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         {
             [Display(Name="Kpi")]
             public int KpiId { get; set; }
+            public string KpiName { get; set; }
             public string Label { get; set; }
             public string Color { get; set; }
         }

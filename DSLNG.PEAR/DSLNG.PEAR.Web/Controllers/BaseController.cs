@@ -19,54 +19,54 @@ namespace DSLNG.PEAR.Web.Controllers
             return Content(message);
         }
 
-        protected override void OnAuthorization(AuthorizationContext filterContext)
-        {
-            bool Authorized = false;
-            //if(Request.IsAuthenticated){
-            //    var testId = WebSecurity.CurrentUserId;
-            //}
-            //var userService = ObjectFactory.Container.GetInstance<IUserService>();
-            //var userRole = userService.GetUser(new Services.Requests.User.GetUserRequest { Id = 1, Email = "" });
-            //var roles = userRole.Role;
+        //protected override void OnAuthorization(AuthorizationContext filterContext)
+        //{
+        //    bool Authorized = false;
+        //    //if(Request.IsAuthenticated){
+        //    //    var testId = WebSecurity.CurrentUserId;
+        //    //}
+        //    //var userService = ObjectFactory.Container.GetInstance<IUserService>();
+        //    //var userRole = userService.GetUser(new Services.Requests.User.GetUserRequest { Id = 1, Email = "" });
+        //    //var roles = userRole.Role;
 
-            if (Request.IsAuthenticated)
-            {
-                var userService = ObjectFactory.Container.GetInstance<IUserService>();
-                var AuthUser = userService.GetUserByName(new GetUserByNameRequest { Name = HttpContext.User.Identity.Name });
-                if (AuthUser.IsSuccess == true)
-                {
-                    var role = AuthUser.Role;
-                    var currentUrl = filterContext.HttpContext.Request.RawUrl;
-                    if (currentUrl.Length > 1)
-                    {
-                        var menuService = ObjectFactory.Container.GetInstance<IMenuService>();
-                        var menu = menuService.GetMenuByUrl(new GetMenuRequestByUrl { Url = currentUrl, RoleId = role.Id });
-                        if (menu == null || menu.IsSuccess == false)
-                        {
-                            throw new UnauthorizedAccessException("You don't have authorization to view this page, please contact system administrator if you have authorization to this page");
-                            //RedirectToAction("Error", "UnAuthorized");
-                        }
-                    }
-                }
+        //    if (Request.IsAuthenticated)
+        //    {
+        //        var userService = ObjectFactory.Container.GetInstance<IUserService>();
+        //        var AuthUser = userService.GetUserByName(new GetUserByNameRequest { Name = HttpContext.User.Identity.Name });
+        //        if (AuthUser.IsSuccess == true)
+        //        {
+        //            var role = AuthUser.Role;
+        //            var currentUrl = filterContext.HttpContext.Request.RawUrl;
+        //            if (currentUrl.Length > 1)
+        //            {
+        //                var menuService = ObjectFactory.Container.GetInstance<IMenuService>();
+        //                var menu = menuService.GetMenuByUrl(new GetMenuRequestByUrl { Url = currentUrl, RoleId = role.Id });
+        //                if (menu == null || menu.IsSuccess == false)
+        //                {
+        //                    throw new UnauthorizedAccessException("You don't have authorization to view this page, please contact system administrator if you have authorization to this page");
+        //                    //RedirectToAction("Error", "UnAuthorized");
+        //                }
+        //            }
+        //        }
 
-            }
-            else {
-                throw new UnauthorizedAccessException("You don't have authorization to view this page, please contact system administrator if you have authorization to this page");
-            }
-            //else
-            //{
-            //    //throw new UnauthorizedAccessException("You don't have authorization to view this page, please contact system administrator if you have authorization to this page");
-            //    //RedirectToAction("Login", "Account");
+        //    }
+        //    else {
+        //        throw new UnauthorizedAccessException("You don't have authorization to view this page, please contact system administrator if you have authorization to this page");
+        //    }
+        //    //else
+        //    //{
+        //    //    //throw new UnauthorizedAccessException("You don't have authorization to view this page, please contact system administrator if you have authorization to this page");
+        //    //    //RedirectToAction("Login", "Account");
 
-            //}
-            ////var menuService = ObjectFactory.Container.GetInstance<IMenuService>();
-            ////var menu = menuService.GetMenuByRole(new Services.Requests.Menu.GetMenuRequestByRoleId { RoleId = roles.Id });
-            ////bool authorized = true;
-            ////jika gagal login
-            ////throw new UnauthorizedAccessException("message");
+        //    //}
+        //    ////var menuService = ObjectFactory.Container.GetInstance<IMenuService>();
+        //    ////var menu = menuService.GetMenuByRole(new Services.Requests.Menu.GetMenuRequestByRoleId { RoleId = roles.Id });
+        //    ////bool authorized = true;
+        //    ////jika gagal login
+        //    ////throw new UnauthorizedAccessException("message");
 
-            base.OnAuthorization(filterContext);
-        }
+        //    base.OnAuthorization(filterContext);
+        //}
 
         protected override void OnException(ExceptionContext filterContext)
         {

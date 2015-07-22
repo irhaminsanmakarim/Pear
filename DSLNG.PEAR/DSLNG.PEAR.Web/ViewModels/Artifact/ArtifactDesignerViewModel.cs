@@ -16,6 +16,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             ValueAxes = new List<SelectListItem>();
             RangeFilters = new List<SelectListItem>();
         }
+        public int Id { get; set; }
         [Display(Name= "Graphic Type")]
         public string GraphicType { get; set; }
         public IList<SelectListItem> GraphicTypes { get; set; }
@@ -97,5 +98,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public LineChartViewModel LineChart { get; set; }
         public SpeedometerChartViewModel SpeedometerChart { get; set; }
         public SpiderwebChartViewModel SpiderwebChart { get; set; }
+        public MultiaxisChartViewModel MultiaxisChart { get; set; }
     }
 }

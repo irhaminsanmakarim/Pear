@@ -1,15 +1,5 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
-@*<div class="form-group form-list">
-    @Html.LabelFor(model => model.BarChart.FractionScale)
-    @Html.TextBoxFor(model => model.BarChart.FractionScale, new { @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.BarChart.FractionScale)
-</div>
 
-<div class="form-group form-list">
-    @Html.LabelFor(model => model.BarChart.MaxValue)
-    @Html.TextBoxFor(model => model.BarChart.MaxValue, new { @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.BarChart.MaxValue)
-</div>*@
 <div class="form-group form-list">
     @Html.LabelFor(model => model.BarChart.Series)
     @Html.DropDownList("seriesType", Model.BarChart.SeriesTypes, new { id = "seriesType", @class = "form-control" })

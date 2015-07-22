@@ -550,6 +550,11 @@
     <Content Include="Views\Template\View.cshtml" />
     <Content Include="Views\PmsSummary\_ScoreIndicatorDetails.cshtml" />
     <Content Include="Views\AreaChart\_Create.cshtml" />
+    <Content Include="Views\MultiaxisChart\_Create.cshtml" />
+    <Content Include="Views\MultiaxisChart\_BarChartCreate.cshtml" />
+    <Content Include="Views\Artifact\Edit.cshtml" />
+    <Content Include="Views\BarChart\_Edit.cshtml" />
+    <Content Include="Views\LineChart\_Edit.cshtml" />
     <Content Include="Views\KpiAchievement\Index.cshtml" />
     <Content Include="Views\KpiAchievement\Configuration.cshtml" />
     <Content Include="Views\KpiAchievement\Configuration\_Yearly.cshtml" />
@@ -561,6 +566,7 @@
     <Content Include="Views\KpiTarget\Configuration\_Monthly.cshtml" />
     <Content Include="Views\KpiTarget\Configuration\_Yearly.cshtml" />
     <Content Include="Views\KpiTarget\Configuration.cshtml" />
+    <None Include="Views\Error\PageNotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -615,6 +621,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ConversionController.cs" />
     <Compile Include="Controllers\CorporatePortofolioController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KpiAchievementController.cs" />
@@ -654,6 +661,7 @@
     <Compile Include="ViewModels\Artifact\BarChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\ChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\MultiaxisChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\SearchKpiViewModel.cs" />
     <Compile Include="ViewModels\Artifact\SpiderwebChartViewModel.cs" />
     <Compile Include="ViewModels\Conversion\CreateConversionViewModel.cs" />
