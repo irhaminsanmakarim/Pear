@@ -180,6 +180,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.BarChart.Series.Insert(0, series);
                     }
                     break;
+                case "trafficlight":
+                    {
+                        var trafficLightChart = new TrafficLightChartViewModel();
+                        viewModel.TrafficLightChart = artifact.MapPropertiesToInstance<TrafficLightChartViewModel>(trafficLightChart);
+                        var plot = new TrafficLightChartViewModel.PlotBand();
+                        viewModel.TrafficLightChart.PlotBands.Insert(0, plot);
+                    }
+                    break;
                 default:
                     {
                         var barChart = new BarChartViewModel();
@@ -583,6 +591,13 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
                         viewModel.SpeedometerChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
+                        _artifactServie.Update(request);
+                    }
+                    break;
+                case "trafficlight":
+                    {
+                        var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        viewModel.TrafficLightChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
                     break;
