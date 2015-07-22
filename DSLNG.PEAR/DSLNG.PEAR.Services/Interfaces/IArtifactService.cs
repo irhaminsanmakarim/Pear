@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         //GetSeriesResponse GetSeries(GetSeriesRequest request);
         GetCartesianChartDataResponse GetChartData(GetCartesianChartDataRequest request);
         GetSpeedometerChartDataResponse GetSpeedometerChartData(GetSpeedometerChartDataRequest request);
+        GetTrafficLightChartDataResponse GetTrafficLightChartData(GetTrafficLightChartDataRequest request);
         CreateArtifactResponse Create(CreateArtifactRequest request);
         UpdateArtifactResponse Update(UpdateArtifactRequest request);
         GetArtifactsResponse GetArtifacts(GetArtifactsRequest request);

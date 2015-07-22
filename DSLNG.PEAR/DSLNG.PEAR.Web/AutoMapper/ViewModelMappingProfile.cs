@@ -75,6 +75,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigurePmsSummary();
             ConfigureKpiTarget();
             ConfigureKpiAchievement();
+            ConfigureTrafficLight();
 
             Mapper.CreateMap<Dropdown, SelectListItem>();
             Mapper.CreateMap<SearchKpiViewModel, GetKpiToSeriesRequest>();
@@ -277,6 +278,34 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetTemplateResponse.RowResponse, TemplateViewModel.RowViewModel>();
             Mapper.CreateMap<GetTemplateResponse.ColumnResponse, TemplateViewModel.ColumnViewModel>();
             base.Configure();
+        }
+
+        private void ConfigureTrafficLight()
+        {
+            Mapper.CreateMap<ArtifactDesignerViewModel, GetTrafficLightChartDataRequest>();
+
+            Mapper.CreateMap<TrafficLightChartViewModel, GetTrafficLightChartDataRequest>();
+            Mapper.CreateMap<TrafficLightChartViewModel.SeriesViewModel, GetTrafficLightChartDataRequest.SeriesRequest>();
+            Mapper.CreateMap<TrafficLightChartViewModel.PlotBand, GetTrafficLightChartDataRequest.PlotBandRequest>();
+            Mapper.CreateMap<GetTrafficLightChartDataResponse.SeriesResponse, TrafficLightChartDataViewModel.SeriesViewModel>()
+                .ForMember(x => x.data, o => o.MapFrom(s => new List<double> { s.data }));
+            Mapper.CreateMap<GetTrafficLightChartDataResponse.PlotBandResponse, TrafficLightChartDataViewModel.PlotBandViewModel>();
+            Mapper.CreateMap<TrafficLightChartViewModel, CreateArtifactRequest>()
+            .ForMember(x => x.Series, o => o.MapFrom(s => new List<CreateArtifactRequest.SeriesRequest> { s.Series.MapTo<CreateArtifactRequest.SeriesRequest>() }))
+            .ForMember(x => x.Plots, o => o.MapFrom(s => s.PlotBands.MapTo<CreateArtifactRequest.PlotRequest>()));
+            Mapper.CreateMap<TrafficLightChartViewModel.SeriesViewModel, CreateArtifactRequest.SeriesRequest>();
+            Mapper.CreateMap<TrafficLightChartViewModel.PlotBand, CreateArtifactRequest.PlotRequest>();
+            Mapper.CreateMap<TrafficLightChartViewModel, UpdateArtifactRequest>()
+            .ForMember(x => x.Series, o => o.MapFrom(s => new List<UpdateArtifactRequest.SeriesRequest> { s.Series.MapTo<UpdateArtifactRequest.SeriesRequest>() }))
+            .ForMember(x => x.Plots, o => o.MapFrom(s => s.PlotBands.MapTo<UpdateArtifactRequest.PlotRequest>()));
+            Mapper.CreateMap<TrafficLightChartViewModel.SeriesViewModel, UpdateArtifactRequest.SeriesRequest>();
+            Mapper.CreateMap<TrafficLightChartViewModel.PlotBand, UpdateArtifactRequest.PlotRequest>();
+
+            Mapper.CreateMap<GetArtifactResponse, GetTrafficLightChartDataRequest>()
+             .ForMember(x => x.PlotBands, o => o.MapFrom(s => s.PlotBands.MapTo<GetTrafficLightChartDataRequest.PlotBandRequest>()))
+             .ForMember(x => x.Series, o => o.MapFrom(s => s.Series[0]));
+            Mapper.CreateMap<GetArtifactResponse.PlotResponse, GetTrafficLightChartDataRequest.PlotBandRequest>();
+            Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetTrafficLightChartDataRequest.SeriesRequest>();
         }
 
         private void ConfigureCorporatePortofolio()

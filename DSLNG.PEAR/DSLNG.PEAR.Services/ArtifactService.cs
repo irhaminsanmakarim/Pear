@@ -241,6 +241,82 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public GetTrafficLightChartDataResponse GetTrafficLightChartData(GetTrafficLightChartDataRequest request)
+        {
+            var response = new GetTrafficLightChartDataResponse();
+
+            var kpi = DataContext.Kpis.Where(x => x.Id == request.Series.KpiId).First();
+            IList<DateTime> dateTimePeriodes = new List<DateTime>();
+            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes);
+            var start = dateTimePeriodes[0];
+            var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
+
+            switch (kpi.YtdFormula)
+            {
+                case YtdFormula.Sum:
+                    switch (request.ValueAxis)
+                    {
+                        case ValueAxis.KpiTarget:
+                            response.Series = new GetTrafficLightChartDataResponse.SeriesResponse
+                            {
+                                name = request.Series.Label,
+                                data = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
+                            };
+                            break;
+                        case ValueAxis.KpiActual:
+                            response.Series = new GetTrafficLightChartDataResponse.SeriesResponse
+                            {
+                                name = request.Series.Label,
+                                data = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault()
+                            };
+                            break;
+                    }
+                    break;
+                case YtdFormula.Average:
+                    switch (request.ValueAxis)
+                    {
+                        case ValueAxis.KpiTarget:
+                            response.Series = new GetTrafficLightChartDataResponse.SeriesResponse
+                            {
+                                name = request.Series.Label,
+                                data = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
+                            };
+                            break;
+                        case ValueAxis.KpiActual:
+                            response.Series = new GetTrafficLightChartDataResponse.SeriesResponse
+                            {
+                                name = request.Series.Label,
+                                data = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == request.Series.KpiId)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Average(y => y.Value).Value).FirstOrDefault()
+                            };
+                            break;
+                    }
+                    break;
+            }
+            foreach (var plot in request.PlotBands)
+            {
+                response.PlotBands.Add(new GetTrafficLightChartDataResponse.PlotBandResponse
+                {
+                    from = plot.From,
+                    to = plot.To,
+                    color = plot.Color,
+                    label = plot.Label
+                });
+            }
+            return response;
+        }
+
         public GetCartesianChartDataResponse GetChartData(GetCartesianChartDataRequest request)
         {
             var response = new GetCartesianChartDataResponse();

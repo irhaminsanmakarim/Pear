@@ -438,6 +438,7 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\trafficlight.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
@@ -567,6 +568,7 @@
     <Content Include="Views\KpiTarget\Configuration\_Yearly.cshtml" />
     <Content Include="Views\KpiTarget\Configuration.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\TrafficLightChart\_Create.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
     <None Include="Web.Debug.config">
@@ -663,9 +665,12 @@
     <Compile Include="ViewModels\Artifact\BarChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\ChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\TabularDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\TrafficLightChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\MultiaxisChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\SearchKpiViewModel.cs" />
     <Compile Include="ViewModels\Artifact\SpiderwebChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\TrafficLightChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\TabularViewModel.cs" />
     <Compile Include="ViewModels\Conversion\CreateConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />

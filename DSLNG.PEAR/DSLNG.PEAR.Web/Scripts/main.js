@@ -338,7 +338,7 @@ String.prototype.isNullOrEmpty = function () {
                 var $hiddenFields = $('#hidden-fields');
                 $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
                     $this = $(val);
-                        $this.addClass('singlestack');
+                    $this.addClass('singlestack');
                 });
                 var seriesTemplate = $hiddenFields.find('.series-template.original');
                 var seriesTemplateClone = seriesTemplate.clone(true);
@@ -938,7 +938,7 @@ String.prototype.isNullOrEmpty = function () {
         };
 
         var addPlot = function () {
-            var plotPos = $('#plot-bands-holder').find('.plot-band-template').length+1;
+            var plotPos = $('#plot-bands-holder').find('.plot-band-template').length + 1;
             $('#add-plot').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
@@ -1149,7 +1149,7 @@ String.prototype.isNullOrEmpty = function () {
             $('#add-row').click(function (e) {
                 e.preventDefault();
                 var rowTemplate = $('.row-template.original').clone(true);
-                Pear.Artifact.Designer._kpiAutoComplete(rowTemplate,false);
+                Pear.Artifact.Designer._kpiAutoComplete(rowTemplate, false);
                 $('<input>').attr({
                     type: 'hidden',
                     id: 'foo',
@@ -1159,17 +1159,17 @@ String.prototype.isNullOrEmpty = function () {
                 rowTemplate.removeClass('original');
                 rowTemplate.attr('data-row-pos', rowCount);
                 //if (seriesCount !== 0) {
-                    var fields = ['PeriodeType', 'KpiId', 'RangeFilter', 'StartInDisplay', 'EndInDisplay'];
-                    for (var i in fields) {
-                        var field = fields[i];
-                        rowTemplate.find('#Tabular_Rows_0__' + field).attr('name', 'Tabular.Rows[' + rowCount + '].' + field);
-                    }
+                var fields = ['PeriodeType', 'KpiId', 'RangeFilter', 'StartInDisplay', 'EndInDisplay'];
+                for (var i in fields) {
+                    var field = fields[i];
+                    rowTemplate.find('#Tabular_Rows_0__' + field).attr('name', 'Tabular.Rows[' + rowCount + '].' + field);
+                }
                 //}
                 //seriesTemplate.addClass($('#seriesType').val().toLowerCase());
                 //seriesTemplate.addClass($('#bar-value-axis').val());
-                    $('#rows-holder').append(rowTemplate);
-                    rangeDatePicker(rowTemplate);
-                    rangeControl(rowTemplate);
+                $('#rows-holder').append(rowTemplate);
+                rangeDatePicker(rowTemplate);
+                rangeControl(rowTemplate);
                 rowCount++;
             });
         };
@@ -1215,7 +1215,6 @@ String.prototype.isNullOrEmpty = function () {
                         });
                         break;
                     default:
-
                 }
             });
         };
@@ -1256,7 +1255,136 @@ String.prototype.isNullOrEmpty = function () {
         removeRow();
         $('#general-graphic-settings').css('display', 'none');
         $('.form-measurement').css('display', 'none');
-    }
+    };
+
+
+    //trafficlight
+    artifactDesigner._setupCallbacks.trafficlight = function () {
+        var removePlot = function () {
+            $('.plot-band-template .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.plot-band-template').remove();
+            });
+        };
+
+        var addPlot = function () {
+            var plotPos = 0;
+            $('#add-plot').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var plotBandTemplate = $('.plot-band-template.original').clone(true);
+                plotBandTemplate.removeClass('original');
+                Pear.Artifact.Designer._kpiAutoComplete(plotBandTemplate);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'SpeedometerChart.PlotBands.Index',
+                    value: plotPos
+                }).appendTo(plotBandTemplate);
+                if (plotPos !== 0) {
+                    var fields = ['From', 'To', 'Color', 'Label'];
+                    for (var i in fields) {
+                        var field = fields[i];
+                        plotBandTemplate.find('#TrafficLightChart_PlotBands_0__' + field).attr('name', 'TrafficLightChart.PlotBands[' + plotPos + '].' + field).attr('id', 'plot-bands-' + i);
+                    }
+                }
+                Pear.Artifact.Designer._colorPicker(plotBandTemplate);
+                $('#plot-bands-holder').append(plotBandTemplate);
+                plotPos++;
+            });
+        };
+
+        Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'));
+        removePlot();
+        addPlot();
+        //rangeControl();
+        //rangeDatePicker();
+    };
+    artifactDesigner._previewCallbacks.trafficlight = function (data, container) {
+        container.trafficlight(data.TrafficLightChart);
+        //container.highcharts({
+        //    chart: {
+        //        type: 'gauge',
+        //        plotBackgroundColor: null,
+        //        plotBackgroundImage: null,
+        //        plotBorderWidth: 0,
+        //        plotShadow: false
+        //    },
+
+        //    title: {
+        //        text: data.TrafficLightChart.Title
+        //    },
+
+        //    pane: {
+        //        startAngle: -150,
+        //        endAngle: 150,
+        //        background: [{
+        //                backgroundColor: {
+        //                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+        //                    stops: [
+        //                        [0, '#FFF'],
+        //                        [1, '#333']
+        //                    ]
+        //                },
+        //                borderWidth: 0,
+        //                outerRadius: '109%'
+        //            }, {
+        //                backgroundColor: {
+        //                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+        //                    stops: [
+        //                        [0, '#333'],
+        //                        [1, '#FFF']
+        //                    ]
+        //                },
+        //                borderWidth: 1,
+        //                outerRadius: '107%'
+        //            }, {
+
+        //                // default background
+        //            }, {
+        //                backgroundColor: '#DDD',
+        //                borderWidth: 0,
+        //                outerRadius: '105%',
+        //                innerRadius: '103%'
+        //            }]
+        //    },
+
+        //    // the value axis
+        //    yAxis: {
+        //        min: 0,
+        //        max: 200,
+
+        //        minorTickInterval: 'auto',
+        //        minorTickWidth: 1,
+        //        minorTickLength: 10,
+        //        minorTickPosition: 'inside',
+        //        minorTickColor: '#666',
+
+        //        tickPixelInterval: 30,
+        //        tickWidth: 2,
+        //        tickPosition: 'inside',
+        //        tickLength: 10,
+        //        tickColor: '#666',
+        //        labels: {
+        //            step: 2,
+        //            rotation: 'auto'
+        //        },
+        //        title: {
+        //            text: data.TrafficLightChart.ValueAxisTitle
+        //        },
+        //        plotBands: data.TrafficLightChart.PlotBands
+        //    },
+
+        //    series: [{
+        //        name: data.TrafficLightChart.Series.name,
+        //        data: data.TrafficLightChart.Series.data,
+        //        tooltip: {
+        //            valueSuffix: ' ' + data.TrafficLightChart.ValueAxisTitle
+        //        }
+        //    }]
+        //});
+    };
 
     var templateEditor = Pear.Template.Editor;
 

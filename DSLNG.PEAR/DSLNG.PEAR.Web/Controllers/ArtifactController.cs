@@ -99,8 +99,8 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "multiaxis", Text = "Multi Axis" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "trafficlight", Text = "Traffic Light" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tabular", Text = "Tabular" });
-
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
@@ -123,6 +123,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "multiaxis", Text = "Multi Axis" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "trafficlight", Text = "Traffic Light" });
 
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
@@ -185,7 +186,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         barChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
                         barChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
                         this.SetValueAxes(barChart.ValueAxes, false);
-                        
+
                         viewModel.BarChart = artifact.MapPropertiesToInstance<BarChartViewModel>(barChart);
                         var series = new BarChartViewModel.SeriesViewModel();
                         series.Stacks.Add(new BarChartViewModel.StackViewModel());
@@ -279,6 +280,16 @@ namespace DSLNG.PEAR.Web.Controllers
                         artifactViewModel.SpeedometerChart = viewModel;
                         return PartialView("~/Views/SpeedometerChart/_Create.cshtml", artifactViewModel);
                     }
+                case "trafficlight":
+                    {
+                        var viewModel = new TrafficLightChartViewModel();
+                        var plot = new TrafficLightChartViewModel.PlotBand();
+                        viewModel.PlotBands.Add(plot);
+                        var trafficLightViewModel = new ArtifactDesignerViewModel();
+                        trafficLightViewModel.TrafficLightChart = viewModel;
+                        return PartialView("~/Views/TrafficLightChart/_Create.cshtml", trafficLightViewModel);
+                    }
+
                 case "tabular":
                     {
                         var viewModel = new TabularViewModel();
@@ -366,6 +377,18 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
                     }
                     break;
+                case "trafficlight":
+                    {
+                        var chartData = _artifactServie.GetTrafficLightChartData(artifactResp.MapTo<GetTrafficLightChartDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.TrafficLightChart = new TrafficLightChartDataViewModel();
+                        previewViewModel.TrafficLightChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.TrafficLightChart.ValueAxisTitle = artifactResp.Measurement;
+                        previewViewModel.TrafficLightChart.Series = chartData.Series.MapTo<TrafficLightChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.TrafficLightChart.PlotBands = chartData.PlotBands.MapTo<TrafficLightChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
+
                 default:
                     {
                         var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
@@ -427,6 +450,23 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
                     }
                     break;
+                case "trafficlight":
+                    {
+                        var request = viewModel.MapTo<GetTrafficLightChartDataRequest>();
+                        viewModel.TrafficLightChart.MapPropertiesToInstance<GetTrafficLightChartDataRequest>(request);
+                        var chartData = _artifactServie.GetTrafficLightChartData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.TrafficLightChart = new TrafficLightChartDataViewModel();
+                        previewViewModel.TrafficLightChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.TrafficLightChart.ValueAxisTitle =
+                            _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId })
+                                               .Name;
+                        previewViewModel.TrafficLightChart.Series =
+                            chartData.Series.MapTo<TrafficLightChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.TrafficLightChart.PlotBands =
+                            chartData.PlotBands.MapTo<TrafficLightChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
                 case "tabular":
                     {
                         var request = viewModel.MapTo<GetTabularDataRequest>();
@@ -483,11 +523,19 @@ namespace DSLNG.PEAR.Web.Controllers
                         _artifactServie.Create(request);
                     }
                     break;
+
+                case "trafficlight":
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        viewModel.TrafficLightChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
+                        _artifactServie.Create(request);
+                    }
+                    break;
                 case "tabular":
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
                         viewModel.Tabular.MapPropertiesToInstance<CreateArtifactRequest>(request);
-                        _artifactServie.Create(request); 
+                        _artifactServie.Create(request);
                     }
                     break;
                 default:
@@ -502,7 +550,8 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(ArtifactDesignerViewModel viewModel) {
+        public ActionResult Edit(ArtifactDesignerViewModel viewModel)
+        {
             switch (viewModel.GraphicType)
             {
                 case "line":

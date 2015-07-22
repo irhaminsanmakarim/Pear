@@ -1036,7 +1036,8 @@ table.text-center th
     border: none;
 }
 
-.modal-loading {
+.modal-loading
+{
     position: relative;
     min-height: 165px;
 }
@@ -1134,6 +1135,44 @@ table.text-center th
     background-color: #f3f4f5;
 }*/
 
-#gridPmsSummaryIndex_DXHeadersRow0, #gridPmsSummaryIndex_DXHeadersRow1 {
+#gridPmsSummaryIndex_DXHeadersRow0, #gridPmsSummaryIndex_DXHeadersRow1
+{
     font-size: 14px;
+}
+
+.trafficlight-wrapper
+{
+    /*height: 400px;*/
+    width: 200px;
+    outline: 1px solid red;
+    padding-top: 20px;
+    margin: 0 auto;
+}
+
+.trafficlight-item
+{
+    outline: 1px solid orange;
+    padding: 20px;
+    position: relative;
+}
+
+.trafficlight-circle
+{
+    width: 100px;
+    height: 100px;
+    background: blue;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    margin: 0 auto;
+    opacity: 0.5;
+}
+
+.trafficlight-label
+{
+    position: absolute;
+    right: -150px;
+    top: 32%;
+    font-weight: bold;
+    font-size: 30px;
 }
