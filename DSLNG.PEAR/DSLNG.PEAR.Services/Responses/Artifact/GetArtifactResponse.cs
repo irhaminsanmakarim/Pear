@@ -52,6 +52,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public double From { get; set; }
             public double To { get; set; }
             public string Color { get; set; }
+            public string Label { get; set; }
         }
 
     }

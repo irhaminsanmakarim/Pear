@@ -1110,6 +1110,215 @@ String.prototype.isNullOrEmpty = function () {
         });
     }
 
+    //trafficlight
+    artifactDesigner._setupCallbacks.trafficlight = function () {
+        var removePlot = function () {
+            $('.plot-band-template .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.plot-band-template').remove();
+            });
+        };
+
+        var addPlot = function () {
+            var plotPos = 0;
+            $('#add-plot').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var plotBandTemplate = $('.plot-band-template.original').clone(true);
+                plotBandTemplate.removeClass('original');
+                Pear.Artifact.Designer._kpiAutoComplete(plotBandTemplate);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'SpeedometerChart.PlotBands.Index',
+                    value: plotPos
+                }).appendTo(plotBandTemplate);
+                if (plotPos !== 0) {
+                    var fields = ['From', 'To', 'Color', 'Label'];
+                    for (var i in fields) {
+                        var field = fields[i];
+                        plotBandTemplate.find('#TrafficLightChart_PlotBands_0__' + field).attr('name', 'TrafficLightChart.PlotBands[' + plotPos + '].' + field).attr('id', 'plot-bands-' + i);
+                    }
+                }
+                Pear.Artifact.Designer._colorPicker(plotBandTemplate);
+                $('#plot-bands-holder').append(plotBandTemplate);
+                plotPos++;
+            });
+        };
+
+
+
+        var rangeDatePicker = function () {
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY hh:00 A"
+            });
+            $('.datepicker').change(function (e) {
+                console.log(this);
+            });
+            $('#TrafficLightChart_PeriodeType').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var clearValue = $('.datepicker').each(function (i, val) {
+                    $(val).val('');
+                    $(val).data("DateTimePicker").destroy();
+                });
+                switch ($this.val().toLowerCase().trim()) {
+                    case 'hourly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY hh:00 A"
+                        });
+                        break;
+                    case 'daily':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY"
+                        });
+                        break;
+                    case 'weekly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY",
+                            daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                        });
+                        break;
+                    case 'monthly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/YYYY"
+                        });
+                        break;
+                    case 'yearly':
+                        $('.datepicker').datetimepicker({
+                            format: "YYYY"
+                        });
+                        break;
+                    default:
+
+                }
+            });
+        };
+        var rangeControl = function () {
+            $('#TrafficLightChart_RangeFilter').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $('#range-holder').prop('class', $this.val().toLowerCase().trim());
+            });
+            var original = $('#TrafficLightChart_RangeFilter').clone(true);
+            var rangeFilterSetup = function (periodeType) {
+                var toRemove = {};
+                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
+                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
+                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
+                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
+                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
+                var originalClone = original.clone(true);
+                originalClone.find('option').each(function (i, val) {
+                    if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
+                        originalClone.find(val).remove();
+                    }
+                });
+                $('#TrafficLightChart_RangeFilter').replaceWith(originalClone);
+            };
+
+            rangeFilterSetup($('#TrafficLightChart_PeriodeType').val().toLowerCase().trim());
+            $('#TrafficLightChart_PeriodeType').change(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                rangeFilterSetup($this.val().toLowerCase().trim());
+                $('#range-holder').removeAttr('class');
+            });
+
+        };
+
+        Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'));
+        removePlot();
+        addPlot();
+        //rangeControl();
+        //rangeDatePicker();
+    };
+    artifactDesigner._previewCallbacks.trafficlight = function (data, container) {
+        container.trafficlight(data.TrafficLightChart);
+        //container.highcharts({
+        //    chart: {
+        //        type: 'gauge',
+        //        plotBackgroundColor: null,
+        //        plotBackgroundImage: null,
+        //        plotBorderWidth: 0,
+        //        plotShadow: false
+        //    },
+
+        //    title: {
+        //        text: data.TrafficLightChart.Title
+        //    },
+
+        //    pane: {
+        //        startAngle: -150,
+        //        endAngle: 150,
+        //        background: [{
+        //                backgroundColor: {
+        //                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+        //                    stops: [
+        //                        [0, '#FFF'],
+        //                        [1, '#333']
+        //                    ]
+        //                },
+        //                borderWidth: 0,
+        //                outerRadius: '109%'
+        //            }, {
+        //                backgroundColor: {
+        //                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+        //                    stops: [
+        //                        [0, '#333'],
+        //                        [1, '#FFF']
+        //                    ]
+        //                },
+        //                borderWidth: 1,
+        //                outerRadius: '107%'
+        //            }, {
+
+        //                // default background
+        //            }, {
+        //                backgroundColor: '#DDD',
+        //                borderWidth: 0,
+        //                outerRadius: '105%',
+        //                innerRadius: '103%'
+        //            }]
+        //    },
+
+        //    // the value axis
+        //    yAxis: {
+        //        min: 0,
+        //        max: 200,
+
+        //        minorTickInterval: 'auto',
+        //        minorTickWidth: 1,
+        //        minorTickLength: 10,
+        //        minorTickPosition: 'inside',
+        //        minorTickColor: '#666',
+
+        //        tickPixelInterval: 30,
+        //        tickWidth: 2,
+        //        tickPosition: 'inside',
+        //        tickLength: 10,
+        //        tickColor: '#666',
+        //        labels: {
+        //            step: 2,
+        //            rotation: 'auto'
+        //        },
+        //        title: {
+        //            text: data.TrafficLightChart.ValueAxisTitle
+        //        },
+        //        plotBands: data.TrafficLightChart.PlotBands
+        //    },
+
+        //    series: [{
+        //        name: data.TrafficLightChart.Series.name,
+        //        data: data.TrafficLightChart.Series.data,
+        //        tooltip: {
+        //            valueSuffix: ' ' + data.TrafficLightChart.ValueAxisTitle
+        //        }
+        //    }]
+        //});
+    };
+    
     var templateEditor = Pear.Template.Editor;
 
     templateEditor._artifactSelectField = function (context) {
