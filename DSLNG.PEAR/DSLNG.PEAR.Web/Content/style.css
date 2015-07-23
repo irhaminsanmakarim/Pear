@@ -1040,6 +1040,7 @@ table.tabular {
         font-size: 18px;
         fill: #333333;
         width: 736px;
+        float:none;
     }
 
 /*Tambahan dari inez*/
