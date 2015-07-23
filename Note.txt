@@ -1,3 +1,4 @@
 it's github repository
 test with git --mirror
 test with another user
+deployment test on donggi's server
