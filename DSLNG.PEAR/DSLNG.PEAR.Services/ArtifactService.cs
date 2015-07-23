@@ -348,7 +348,7 @@ namespace DSLNG.PEAR.Services
                     }
                     break;
                 case PeriodeType.Daily:
-                    var dailyFormat = "MM/DD/yyyy";
+                    var dailyFormat = "MM/dd/yyyy";
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentDay:

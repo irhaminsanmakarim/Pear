@@ -31,7 +31,7 @@
         $('.trafficlight-circle').height(circleHeight);
         $('.trafficlight-circle').width(circleHeight);
         */
-        this.append('<span style="font-size:16px">' + options.Title + '</span>');
+        this.append('<span style="font-size:16px;display: table;margin: 0 auto;">' + options.Title + '</span>');
         this.append(wrapper);
         return this;
     };
