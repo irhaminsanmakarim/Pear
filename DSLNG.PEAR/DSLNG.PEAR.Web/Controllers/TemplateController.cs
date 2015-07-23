@@ -11,8 +11,8 @@ namespace DSLNG.PEAR.Web.Controllers
 {
     public class TemplateController : BaseController
     {
-        public IArtifactService _artifactService;
-        public ITemplateService _templateService;
+        private readonly IArtifactService _artifactService;
+        private readonly ITemplateService _templateService;
 
         public TemplateController(IArtifactService artifactService, ITemplateService templateService) {
             _artifactService = artifactService;
@@ -29,6 +29,74 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             return View();
         }
+
+        
+        public ActionResult View(int id)
+        { 
+            var template = _templateService.GetTemplate(new GetTemplateRequest{Id = id});
+            var viewModel = template.MapTo<TemplateViewModel>();
+            return View(viewModel);
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(TemplateViewModel viewModel)
+        {
+            _templateService.CreateTemplate(viewModel.MapTo<CreateTemplateRequest>());
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Update(int id)
+        {
+            var template = _templateService.GetTemplate(new GetTemplateRequest {Id = id});
+            var viewModel = template.MapTo<TemplateViewModel>();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Update(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //
+        // GET: /Template/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        //
+        // POST: /Template/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        #region Dev Express Grid
         public ActionResult IndexPartial()
         {
             var viewModel = GridViewExtension.GetViewModel("gridTemplateIndex");
@@ -77,80 +145,6 @@ namespace DSLNG.PEAR.Web.Controllers
                 Take = e.DataRowCount
             }).Artifacts;
         }
-
-
-        //
-        // GET: /Template/Details/5
-        public ActionResult View(int id)
-        { 
-            //var template = _templateService
-            var template = _templateService.GetTemplate(new GetTemplateRequest{Id = id});
-            var viewModel = template.MapTo<TemplateViewModel>();
-            return View(viewModel);
-        }
-
-        //
-        // GET: /Template/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Template/Create
-        [HttpPost]
-        public ActionResult Create(TemplateViewModel viewModel)
-        {
-            _templateService.CreateTemplate(viewModel.MapTo<CreateTemplateRequest>());
-            return RedirectToAction("Index");
-        }
-
-        //
-        // GET: /Template/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Template/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Template/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Template/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        #endregion
     }
 }

@@ -1,0 +1,147 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Template.TemplateViewModel
+
+@{
+    ViewBag.Title = "Dashboard Template - New";
+}
+<div class="row template-edit">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+            <div class="title">Dashboard Template</div>
+            <div class="description_year">New</div>
+            <div>@Html.ValidationSummary(true)</div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="whitebox form-inline">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Name)
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.RefershTime)
+                    @Html.TextBoxFor(model => model.RefershTime, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RefershTime)
+                </div>
+
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.Remark)
+                    @Html.TextAreaFor(model => model.Remark, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Remark)
+                </div>
+
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.IsActive)
+                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IsActive)
+                </div>
+                <div class="form-group form-list">
+                    <label>&nbsp;</label>
+                    <input type="button" value="Add Row" class="add-row" />
+                </div>
+            </div>
+
+        </div>
+        <div id="rows-holder">
+        </div>
+        
+        <div class="col-md-12 layout-row-wrapper">
+            @{
+                int i = 0;
+                int j = 0;
+
+                foreach (var row in Model.LayoutRows)
+                {
+                    <div class="whitebox">
+                        <input type="button" value="Add Column" class="add-column" />
+                        <input type="button" value="Remove Row" class="remove-row" />
+                        <div class="layout-row row">
+                            @foreach (var column in row.LayoutColumns)
+                            {
+                                <div class="layout-column original" style="width: @string.Format(@"{0}%", column.Width)">
+                                    <div class="column-properties">
+                                        <div class="form-group">
+                                            <div class="input-group colorpicker">
+                                                <input name="LayoutRows[i].LayoutColumns[j].Width" type="number" placehodler="width" class="column-width form-control" value="@Model.LayoutRows[i].LayoutColumns[j].Width" />
+                                                <span class="input-group-addon">%</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.DropDownListFor(model => model.LayoutRows[i].LayoutColumns[j].ArtifactId, new List<SelectListItem> {new SelectListItem {Value = Model.LayoutRows[i].LayoutColumns[j].ArtifactId.ToString(), Text = Model.LayoutRows[i].LayoutColumns[j].ArtifactName.ToString()}}, new {@class = "artifact-list form-control", style = "width:180px"})
+                                            @*<select name="LayoutRows[i].LayoutColumns[j].ArtifactId" class="form-control artifact-list" style="width: 200px">
+                                    <option>Select Artifact</option>
+                                </select>*@
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="button" value="Remove Column" class="remove-column" />
+                                        </div>
+                                    </div>
+                                </div>
+                                j++;
+                            }
+                        </div>
+                    </div>
+                    i++;
+                }
+            }
+        </div> 
+       
+        <div class="col-md-12 artifact-designer-btns">
+            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+            <button data-preview-url="@Url.Action("Preview", "Artifact")"  id="graphic-preview-btn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-eye"></span>View</button>
+            <button type="button" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</button>
+            <button type="button" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</button>
+        </div>
+    }
+</div>
+
+<div id="hidden-fields-holder" data-artifact-url="@Url.Action("ArtifactList", "Template")">
+    @*<div class="layout-column original" style="width: 100%">
+        <div class="column-properties">
+            <div class="form-group">
+                <div class="input-group colorpicker">
+                    <input type="number" placehodler="width" class="column-width form-control" />
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <select class="form-control">
+                    <option>Select Artifact</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Remove Column" class="remove-column" />
+            </div>
+        </div>
+    </div>*@
+    <div class="col-md-12 layout-row-wrapper original">
+        <div class="whitebox">
+            <input type="button" value="Add Column" class="add-column" />
+            <input type="button" value="Remove Row" class="remove-row" />
+            <div class="layout-row row">
+                <div class="layout-column original" style="width: 100%">
+                    <div class="column-properties">
+                        <div class="form-group">
+                            <div class="input-group colorpicker">
+                                <input name="LayoutRows[0].LayoutColumns[0].Width" type="number" placehodler="width" class="column-width form-control" />
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <select name="LayoutRows[0].LayoutColumns[0].ArtifactId" class="form-control artifact-list" style="width: 200px">
+                                <option>Select Artifact</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="button" value="Remove Column" class="remove-column" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

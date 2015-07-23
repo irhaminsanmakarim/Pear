@@ -225,7 +225,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DashboardTemplate, GetTemplateResponse>();
             Mapper.CreateMap<LayoutRow, GetTemplateResponse.RowResponse>();
             Mapper.CreateMap<LayoutColumn, GetTemplateResponse.ColumnResponse>()
-                .ForMember(d => d.ArtifactId, o => o.MapFrom(s => s.Artifact.Id));
+                .ForMember(d => d.ArtifactId, o => o.MapFrom(s => s.Artifact.Id))
+                .ForMember(d => d.ArtifactName, o => o.MapFrom(s => s.Artifact.GraphicName));
 
 
             base.Configure();

@@ -9,5 +9,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         CreateTemplateResponse CreateTemplate(CreateTemplateRequest request);
         GetTemplatesResponse GetTemplates(GetTemplatesRequest request);
         GetTemplateResponse GetTemplate(GetTemplateRequest request);
+        UpdateTemplateResponse UpdateTemplate(UpdateTemplateRequest request);
     }
 }

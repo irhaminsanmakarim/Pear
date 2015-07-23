@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Services
         {
 
         }
+
         public CreateTemplateResponse CreateTemplate(CreateTemplateRequest request)
         {
             var template = request.MapTo<DashboardTemplate>();
@@ -68,15 +69,18 @@ namespace DSLNG.PEAR.Services
                 };
             }
         }
-
-
-
+        
         public GetTemplateResponse GetTemplate(GetTemplateRequest request)
         {
             return DataContext.DashboardTemplates.Include(x => x.LayoutRows)
                 .Include(x => x.LayoutRows.Select(y => y.LayoutColumns))
                 .Include(x => x.LayoutRows.Select(y => y.LayoutColumns.Select(z => z.Artifact)))
                 .FirstOrDefault(x => x.Id == request.Id).MapTo<GetTemplateResponse>();
+        }
+
+        public UpdateTemplateResponse UpdateTemplate(UpdateTemplateRequest request)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

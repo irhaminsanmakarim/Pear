@@ -12,18 +12,21 @@ namespace DSLNG.PEAR.Web.ViewModels.Template
         public bool IsActive { get; set; }
         public IList<RowViewModel> LayoutRows { get; set; }
 
-        public class RowViewModel {
+        public class RowViewModel
+        {
             public int Id { get; set; }
             public int Index { get; set; }
-            public IList<ColumnViewModel> LayoutColumns {get;set;}
+            public IList<ColumnViewModel> LayoutColumns { get; set; }
         }
 
-        public class ColumnViewModel {
+        public class ColumnViewModel
+        {
             public int Id { get; set; }
             public int Index { get; set; }
             public float Width { get; set; }
             public float Height { get; set; }
             public int ArtifactId { get; set; }
+            public string ArtifactName { get; set; }
         }
     }
 }

@@ -209,20 +209,20 @@ String.prototype.isNullOrEmpty = function () {
         rangeControl();
         rangeDatePicker();
     };
-    artifactDesigner.EditSetup = function () {
+    artifactDesigner.EditSetup = function() {
         var callback = Pear.Artifact.Designer._setupCallbacks;
-        var loadGraph = function (url, type) {
+        var loadGraph = function(url, type) {
             $.ajax({
                 url: url,
                 data: 'type=' + type,
                 cache: true,
                 method: 'GET',
-                success: function (data) {
+                success: function(data) {
                     $('#graphic-settings').html(data);
                     var $hiddenFields = $('#hidden-fields');
                     $('#hidden-fields-holder').html($hiddenFields.html());
                     $hiddenFields.remove();
-                    $('.graphic-properties').each(function (i, val) {
+                    $('.graphic-properties').each(function(i, val) {
                         $(val).html('');
                     });
                     $('#graphic-settings').prev('.form-group').css('display', 'block');
@@ -232,8 +232,8 @@ String.prototype.isNullOrEmpty = function () {
                 }
             });
         };
-        
-        $('#graphic-preview-btn').click(function (e) {
+
+        $('#graphic-preview-btn').click(function(e) {
             e.preventDefault();
             var $this = $(this);
             var callback = Pear.Artifact.Designer._previewCallbacks;
@@ -241,7 +241,7 @@ String.prototype.isNullOrEmpty = function () {
                 url: $this.data('preview-url'),
                 data: $this.closest('form').serialize(),
                 method: 'POST',
-                success: function (data) {
+                success: function(data) {
                     if (callback.hasOwnProperty(data.GraphicType)) {
                         callback[data.GraphicType](data, $('#container'));
                     }
@@ -249,68 +249,67 @@ String.prototype.isNullOrEmpty = function () {
                 }
             });
         });
-        $('#graphic-preview').on('show.bs.modal', function () {
+        $('#graphic-preview').on('show.bs.modal', function() {
             $('#container').css('visibility', 'hidden');
         });
-        $('#graphic-preview').on('shown.bs.modal', function () {
+        $('#graphic-preview').on('shown.bs.modal', function() {
             $('#container').css('visibility', 'initial');
             $('#container').highcharts().reflow();
         });
-        
-        var rangeDatePicker = function () {
+
+        var rangeDatePicker = function() {
             $('.datepicker').datetimepicker({
                 format: "MM/DD/YYYY hh:00 A"
             });
-            $('.datepicker').change(function (e) {
+            $('.datepicker').change(function(e) {
                 console.log(this);
             });
-            $('#PeriodeType').change(function (e) {
+            $('#PeriodeType').change(function(e) {
                 e.preventDefault();
                 var $this = $(this);
-                var clearValue = $('.datepicker').each(function (i, val) {
+                var clearValue = $('.datepicker').each(function(i, val) {
                     $(val).val('');
                     $(val).data("DateTimePicker").destroy();
                 });
                 switch ($this.val().toLowerCase().trim()) {
-                    case 'hourly':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY hh:00 A"
-                        });
-                        break;
-                    case 'daily':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY"
-                        });
-                        break;
-                    case 'weekly':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/DD/YYYY",
-                            daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
-                        });
-                        break;
-                    case 'monthly':
-                        $('.datepicker').datetimepicker({
-                            format: "MM/YYYY"
-                        });
-                        break;
-                    case 'yearly':
-                        $('.datepicker').datetimepicker({
-                            format: "YYYY"
-                        });
-                        break;
-                    default:
-
+                case 'hourly':
+                    $('.datepicker').datetimepicker({
+                        format: "MM/DD/YYYY hh:00 A"
+                    });
+                    break;
+                case 'daily':
+                    $('.datepicker').datetimepicker({
+                        format: "MM/DD/YYYY"
+                    });
+                    break;
+                case 'weekly':
+                    $('.datepicker').datetimepicker({
+                        format: "MM/DD/YYYY",
+                        daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                    });
+                    break;
+                case 'monthly':
+                    $('.datepicker').datetimepicker({
+                        format: "MM/YYYY"
+                    });
+                    break;
+                case 'yearly':
+                    $('.datepicker').datetimepicker({
+                        format: "YYYY"
+                    });
+                    break;
+                default:
                 }
             });
         };
-        var rangeControl = function () {
-            $('#RangeFilter').change(function (e) {
+        var rangeControl = function() {
+            $('#RangeFilter').change(function(e) {
                 e.preventDefault();
                 var $this = $(this);
                 $('#range-holder').prop('class', $this.val().toLowerCase().trim());
             });
             var original = $('#RangeFilter').clone(true);
-            var rangeFilterSetup = function (periodeType) {
+            var rangeFilterSetup = function(periodeType) {
                 var toRemove = {};
                 toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
                 toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD'];
@@ -318,7 +317,7 @@ String.prototype.isNullOrEmpty = function () {
                 toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD'];
                 toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD'];
                 var originalClone = original.clone(true);
-                originalClone.find('option').each(function (i, val) {
+                originalClone.find('option').each(function(i, val) {
                     if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
                         originalClone.find(val).remove();
                     }
@@ -327,7 +326,7 @@ String.prototype.isNullOrEmpty = function () {
             };
 
             rangeFilterSetup($('#PeriodeType').val().toLowerCase().trim());
-            $('#PeriodeType').change(function (e) {
+            $('#PeriodeType').change(function(e) {
                 e.preventDefault();
                 var $this = $(this);
                 rangeFilterSetup($this.val().toLowerCase().trim());
@@ -336,7 +335,7 @@ String.prototype.isNullOrEmpty = function () {
 
         };
 
-        $('#graphic-type').change(function (e) {
+        $('#graphic-type').change(function(e) {
             e.preventDefault();
             var $this = $(this);
             loadGraph($this.data('graph-url'), $this.val());
@@ -344,145 +343,145 @@ String.prototype.isNullOrEmpty = function () {
         rangeControl();
         rangeDatePicker();
         switch ($('#graphic-type').val()) {
-            case 'speedometer':
-                var $hiddenFields = $('#hidden-fields');
-                var plotTemplate = $hiddenFields.find('.plot-band-template.original');
-                var plotTemplateClone = plotTemplate.clone(true);
-                plotTemplateClone.children('input:first-child').remove();
-                $('#hidden-fields-holder').html(plotTemplateClone);
-                plotTemplate.remove();
-                $('#plot-bands-holder').append($hiddenFields.html());
-                $('#plot-bands-holder').find('.plot-band-template').each(function (i, val) {
-                    var $this = $(val);
-                    Pear.Artifact.Designer._colorPicker($this);
-                });
-                $hiddenFields.remove();
-                Pear.Artifact.Designer._setupCallbacks.speedometer();
-                break;
-            case 'trafficlight':
-                var $hiddenFields = $('#hidden-fields');
-                var plotTemplate = $hiddenFields.find('.plot-band-template.original');
-                var plotTemplateClone = plotTemplate.clone(true);
-                plotTemplateClone.children('input:first-child').remove();
-                $('#hidden-fields-holder').html(plotTemplateClone);
-                plotTemplate.remove();
-                $('#plot-bands-holder').append($hiddenFields.html());
-                $('#plot-bands-holder').find('.plot-band-template').each(function (i, val) {
-                    var $this = $(val);
-                    Pear.Artifact.Designer._colorPicker($this);
-                });
-                $hiddenFields.remove();
-                Pear.Artifact.Designer._setupCallbacks.trafficlight();
-                break;
-            case 'line':
-                var $hiddenFields = $('#hidden-fields');
-                $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
-                    $this = $(val);
+        case 'speedometer':
+            var $hiddenFields = $('#hidden-fields');
+            var plotTemplate = $hiddenFields.find('.plot-band-template.original');
+            var plotTemplateClone = plotTemplate.clone(true);
+            plotTemplateClone.children('input:first-child').remove();
+            $('#hidden-fields-holder').html(plotTemplateClone);
+            plotTemplate.remove();
+            $('#plot-bands-holder').append($hiddenFields.html());
+            $('#plot-bands-holder').find('.plot-band-template').each(function(i, val) {
+                var $this = $(val);
+                Pear.Artifact.Designer._colorPicker($this);
+            });
+            $hiddenFields.remove();
+            Pear.Artifact.Designer._setupCallbacks.speedometer();
+            break;
+        case 'trafficlight':
+            var $hiddenFields = $('#hidden-fields');
+            var plotTemplate = $hiddenFields.find('.plot-band-template.original');
+            var plotTemplateClone = plotTemplate.clone(true);
+            plotTemplateClone.children('input:first-child').remove();
+            $('#hidden-fields-holder').html(plotTemplateClone);
+            plotTemplate.remove();
+            $('#plot-bands-holder').append($hiddenFields.html());
+            $('#plot-bands-holder').find('.plot-band-template').each(function(i, val) {
+                var $this = $(val);
+                Pear.Artifact.Designer._colorPicker($this);
+            });
+            $hiddenFields.remove();
+            Pear.Artifact.Designer._setupCallbacks.trafficlight();
+            break;
+        case 'line':
+            var $hiddenFields = $('#hidden-fields');
+            $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
+                $this = $(val);
+                $this.addClass('singlestack');
+            });
+            var seriesTemplate = $hiddenFields.find('.series-template.original');
+            var seriesTemplateClone = seriesTemplate.clone(true);
+            seriesTemplateClone.children('input:first-child').remove();
+            $('#hidden-fields-holder').html(seriesTemplateClone);
+            seriesTemplate.remove();
+            $('#series-holder').append($hiddenFields.html());
+            $('#series-holder').find('.series-template').each(function(i, val) {
+                var $this = $(val);
+                Pear.Artifact.Designer._kpiAutoComplete($this);
+                Pear.Artifact.Designer._colorPicker($this);
+            });
+            $hiddenFields.remove();
+            Pear.Artifact.Designer._setupCallbacks.line();
+            break;
+        case 'bar':
+            var $hiddenFields = $('#hidden-fields');
+            $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
+                $this = $(val);
+                if ($this.find('.stack-template').length) {
+                    $this.addClass('multistacks');
+                } else {
                     $this.addClass('singlestack');
-                });
-                var seriesTemplate = $hiddenFields.find('.series-template.original');
-                var seriesTemplateClone = seriesTemplate.clone(true);
-                seriesTemplateClone.children('input:first-child').remove();
-                $('#hidden-fields-holder').html(seriesTemplateClone);
-                seriesTemplate.remove();
-                $('#series-holder').append($hiddenFields.html());
-                $('#series-holder').find('.series-template').each(function (i, val) {
-                    var $this = $(val);
-                    Pear.Artifact.Designer._kpiAutoComplete($this);
-                    Pear.Artifact.Designer._colorPicker($this);
-                });
-                $hiddenFields.remove();
-                Pear.Artifact.Designer._setupCallbacks.line();
-                break;
-            case 'bar':
-                var $hiddenFields = $('#hidden-fields');
-                $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
-                    $this = $(val);
-                    if ($this.find('.stack-template').length) {
-                        $this.addClass('multistacks');
-                    } else {
-                        $this.addClass('singlestack');
-                    }
-                });
-                var seriesTemplate = $hiddenFields.find('.series-template.original');
-                var seriesTemplateClone = seriesTemplate.clone(true);
-                seriesTemplateClone.children('input:first-child').remove();
-                seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
-                $('#hidden-fields-holder').html(seriesTemplateClone);
-                seriesTemplate.remove();
-                $('#series-holder').append($hiddenFields.html());
-                $('#series-holder').find('.series-template').each(function (i, val) {
-                    var $this = $(val);
-                    Pear.Artifact.Designer._kpiAutoComplete($this);
-                    Pear.Artifact.Designer._colorPicker($this);
-                });
-                $hiddenFields.remove();
-                var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
-                var stackTemplateClone = stackTemplate.clone(true);
-                stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
-                stackTemplate.remove();
-                Pear.Artifact.Designer._setupCallbacks.bar();
-                break;
-            case 'baraccumulative':
-                var $hiddenFields = $('#hidden-fields');
-                $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
-                    $this = $(val);
-                    if ($this.find('.stack-template').length) {
-                        $this.addClass('multistacks');
-                    } else {
-                        $this.addClass('singlestack');
-                    }
-                });
-                var seriesTemplate = $hiddenFields.find('.series-template.original');
-                var seriesTemplateClone = seriesTemplate.clone(true);
-                seriesTemplateClone.children('input:first-child').remove();
-                seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
-                $('#hidden-fields-holder').html(seriesTemplateClone);
-                seriesTemplate.remove();
-                $('#series-holder').append($hiddenFields.html());
-                $('#series-holder').find('.series-template').each(function (i, val) {
-                    var $this = $(val);
-                    Pear.Artifact.Designer._kpiAutoComplete($this);
-                    Pear.Artifact.Designer._colorPicker($this);
-                });
-                $hiddenFields.remove();
-                var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
-                var stackTemplateClone = stackTemplate.clone(true);
-                stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
-                stackTemplate.remove();
-                Pear.Artifact.Designer._setupCallbacks.baraccumulative();
-                break;
-            case 'barachievement':
-                var $hiddenFields = $('#hidden-fields');
-                $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
-                    $this = $(val);
-                    if ($this.find('.stack-template').length) {
-                        $this.addClass('multistacks');
-                    } else {
-                        $this.addClass('singlestack');
-                    }
-                });
-                var seriesTemplate = $hiddenFields.find('.series-template.original');
-                var seriesTemplateClone = seriesTemplate.clone(true);
-                seriesTemplateClone.children('input:first-child').remove();
-                seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
-                $('#hidden-fields-holder').html(seriesTemplateClone);
-                seriesTemplate.remove();
-                $('#series-holder').append($hiddenFields.html());
-                $('#series-holder').find('.series-template').each(function (i, val) {
-                    var $this = $(val);
-                    Pear.Artifact.Designer._kpiAutoComplete($this);
-                    Pear.Artifact.Designer._colorPicker($this);
-                });
-                $hiddenFields.remove();
-                var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
-                var stackTemplateClone = stackTemplate.clone(true);
-                stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
-                stackTemplate.remove();
-                Pear.Artifact.Designer._setupCallbacks.baraccumulative();
-                break;
+                }
+            });
+            var seriesTemplate = $hiddenFields.find('.series-template.original');
+            var seriesTemplateClone = seriesTemplate.clone(true);
+            seriesTemplateClone.children('input:first-child').remove();
+            seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
+            $('#hidden-fields-holder').html(seriesTemplateClone);
+            seriesTemplate.remove();
+            $('#series-holder').append($hiddenFields.html());
+            $('#series-holder').find('.series-template').each(function(i, val) {
+                var $this = $(val);
+                Pear.Artifact.Designer._kpiAutoComplete($this);
+                Pear.Artifact.Designer._colorPicker($this);
+            });
+            $hiddenFields.remove();
+            var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
+            var stackTemplateClone = stackTemplate.clone(true);
+            stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
+            stackTemplate.remove();
+            Pear.Artifact.Designer._setupCallbacks.bar();
+            break;
+        case 'baraccumulative':
+            var $hiddenFields = $('#hidden-fields');
+            $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
+                $this = $(val);
+                if ($this.find('.stack-template').length) {
+                    $this.addClass('multistacks');
+                } else {
+                    $this.addClass('singlestack');
+                }
+            });
+            var seriesTemplate = $hiddenFields.find('.series-template.original');
+            var seriesTemplateClone = seriesTemplate.clone(true);
+            seriesTemplateClone.children('input:first-child').remove();
+            seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
+            $('#hidden-fields-holder').html(seriesTemplateClone);
+            seriesTemplate.remove();
+            $('#series-holder').append($hiddenFields.html());
+            $('#series-holder').find('.series-template').each(function(i, val) {
+                var $this = $(val);
+                Pear.Artifact.Designer._kpiAutoComplete($this);
+                Pear.Artifact.Designer._colorPicker($this);
+            });
+            $hiddenFields.remove();
+            var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
+            var stackTemplateClone = stackTemplate.clone(true);
+            stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
+            stackTemplate.remove();
+            Pear.Artifact.Designer._setupCallbacks.baraccumulative();
+            break;
+        case 'barachievement':
+            var $hiddenFields = $('#hidden-fields');
+            $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
+                $this = $(val);
+                if ($this.find('.stack-template').length) {
+                    $this.addClass('multistacks');
+                } else {
+                    $this.addClass('singlestack');
+                }
+            });
+            var seriesTemplate = $hiddenFields.find('.series-template.original');
+            var seriesTemplateClone = seriesTemplate.clone(true);
+            seriesTemplateClone.children('input:first-child').remove();
+            seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
+            $('#hidden-fields-holder').html(seriesTemplateClone);
+            seriesTemplate.remove();
+            $('#series-holder').append($hiddenFields.html());
+            $('#series-holder').find('.series-template').each(function(i, val) {
+                var $this = $(val);
+                Pear.Artifact.Designer._kpiAutoComplete($this);
+                Pear.Artifact.Designer._colorPicker($this);
+            });
+            $hiddenFields.remove();
+            var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
+            var stackTemplateClone = stackTemplate.clone(true);
+            stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
+            stackTemplate.remove();
+            Pear.Artifact.Designer._setupCallbacks.baraccumulative();
+            break;
         }
-    }
+    };
     artifactDesigner._setupCallbacks = {};
 
     artifactDesigner.Preview = function () {
@@ -687,7 +686,7 @@ String.prototype.isNullOrEmpty = function () {
             series: data.BarChart.Series
         });
     };
-    artifactDesigner._displayMultistacksGroupedBarChart = function (data, container) {
+    artifactDesigner._displayMultistacksGroupedBarChart = function(data, container) {
         container.highcharts({
             chart: {
                 type: 'column'
@@ -707,7 +706,7 @@ String.prototype.isNullOrEmpty = function () {
             },
 
             tooltip: {
-                formatter: function () {
+                formatter: function() {
                     return '<b>' + this.x + '</b><br/>' +
                         this.series.name + ': ' + this.y + '<br/>' +
                         'Total: ' + this.point.stackTotal;
@@ -721,7 +720,7 @@ String.prototype.isNullOrEmpty = function () {
             },
             series: data.BarChart.Series
         });
-    }
+    };
     artifactDesigner._setupCallbacks.baraccumulative = function () {
         Pear.Artifact.Designer._setupCallbacks.bar();
     };
@@ -738,18 +737,18 @@ String.prototype.isNullOrEmpty = function () {
     };
 
     //line chart
-    artifactDesigner._setupCallbacks.line = function () {
-        var removeSeriesOrStack = function () {
-            $('.series-template .remove').click(function (e) {
+    artifactDesigner._setupCallbacks.line = function() {
+        var removeSeriesOrStack = function() {
+            $('.series-template .remove').click(function(e) {
                 e.preventDefault();
                 var $this = $(this);
                 $this.closest('.series-template').remove();
             });
         }
-        var addSeries = function () {
+        var addSeries = function() {
             //console.log('add-series');
             var seriesCount = $('#series-holder').find('.series-template').length + 1;
-            $('#add-series').click(function (e) {
+            $('#add-series').click(function(e) {
                 console.log('series-click');
                 e.preventDefault();
                 var seriesTemplate = $('.series-template.original').clone(true);
@@ -777,8 +776,9 @@ String.prototype.isNullOrEmpty = function () {
         };
         removeSeriesOrStack();
         addSeries();
-    }
-    artifactDesigner._previewCallbacks.line = function (data, container) {
+    };
+    
+    artifactDesigner._previewCallbacks.line = function(data, container) {
         container.highcharts({
             title: {
                 text: data.LineChart.Title,
@@ -812,21 +812,21 @@ String.prototype.isNullOrEmpty = function () {
             },
             series: data.LineChart.Series
         });
-    }
+    };
 
     //area chart
-    artifactDesigner._setupCallbacks.area = function () {
-        var removeSeriesOrStack = function () {
-            $('.series-template .remove').click(function (e) {
+    artifactDesigner._setupCallbacks.area = function() {
+        var removeSeriesOrStack = function() {
+            $('.series-template .remove').click(function(e) {
                 e.preventDefault();
                 var $this = $(this);
                 $this.closest('.series-template').remove();
             });
         }
-        var addSeries = function () {
+        var addSeries = function() {
             console.log('add-series');
             var seriesCount = $('#series-holder').find('.series-template').length + 1;
-            $('#add-series').click(function (e) {
+            $('#add-series').click(function(e) {
                 console.log('series-click');
                 e.preventDefault();
                 var seriesTemplate = $('.series-template.original').clone(true);
@@ -854,8 +854,9 @@ String.prototype.isNullOrEmpty = function () {
         };
         removeSeriesOrStack();
         addSeries();
-    }
-    artifactDesigner._previewCallbacks.area = function (data, container) {
+    };
+    
+    artifactDesigner._previewCallbacks.area = function(data, container) {
         container.highcharts({
             chart: {
                 type: 'area'
@@ -870,7 +871,7 @@ String.prototype.isNullOrEmpty = function () {
             xAxis: {
                 allowDecimals: false,
                 labels: {
-                    formatter: function () {
+                    formatter: function() {
                         return this.value; // clean, unformatted number for year
                     }
                 },
@@ -881,7 +882,7 @@ String.prototype.isNullOrEmpty = function () {
                     text: data.AreaChart.ValueAxisTitle
                 },
                 labels: {
-                    formatter: function () {
+                    formatter: function() {
                         return this.value;
                     }
                 }
@@ -890,6 +891,7 @@ String.prototype.isNullOrEmpty = function () {
                 pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
             },
             plotOptions: {
+                
                 //area: {
                 //    pointStart: data.AreaChart.Periodes[0],
                 //    marker: {
@@ -906,7 +908,7 @@ String.prototype.isNullOrEmpty = function () {
             },
             series: data.AreaChart.Series
         });
-    }
+    };
 
     //multiaxis
     artifactDesigner._setupCallbacks.multiaxis = function () {
@@ -1601,6 +1603,9 @@ String.prototype.isNullOrEmpty = function () {
             });
         });
     };
+    templateEditor.EditSetup = function () {
+        templateEditor._artifactSelectField($('.template-edit'));
+    };
 
     $(document).ready(function () {
         if ($('.artifact-designer').length) {
@@ -1618,6 +1623,9 @@ String.prototype.isNullOrEmpty = function () {
         }
         if ($('.template-view').length) {
             Pear.Template.Editor.ViewSetup();
+        }
+        if ($('.template-edit').length) {
+            Pear.Template.Editor.EditSetup();
         }
     });
     window.Pear = Pear;
