@@ -11,6 +11,7 @@ using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Data.Entities;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
+using KpiRelationModel = DSLNG.PEAR.Data.Entities.KpiRelationModel;
 
 namespace DSLNG.PEAR.Services
 {
@@ -200,10 +201,6 @@ namespace DSLNG.PEAR.Services
                 {
                     updateKpi.RoleGroup = DataContext.RoleGroups.FirstOrDefault(x => x.Id == request.RoleGroupId.Value);
                 }
-                //if (request.MeasurementId.HasValue)
-                //{
-                //    updateKpi.Measurement = DataContext.Measurements.FirstOrDefault(x => x.Id == request.MeasurementId);
-                //}
 
                 updateKpi.Measurement = DataContext.Measurements.Single(x => x.Id == request.MeasurementId);
                 updateKpi.Level = DataContext.Levels.FirstOrDefault(x => x.Id == request.LevelId);
@@ -252,8 +249,7 @@ namespace DSLNG.PEAR.Services
 
                 DataContext.Methods.Attach(updateKpi.Method);
                 existedkpi.Method = updateKpi.Method;
-                var allRelationModel = new List<DSLNG.PEAR.Data.Entities.KpiRelationModel>();
-                allRelationModel = updateKpi.RelationModels.ToList();
+                List<KpiRelationModel> allRelationModel = updateKpi.RelationModels.ToList();
                 foreach (var relationModel in updateKpi.RelationModels)
                 {
                     var existedrelationModel = existedkpi.RelationModels.SingleOrDefault(x => x.Id == relationModel.Id && x.Id != 0);

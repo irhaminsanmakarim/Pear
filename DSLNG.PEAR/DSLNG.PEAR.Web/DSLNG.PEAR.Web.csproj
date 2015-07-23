@@ -81,7 +81,8 @@
       <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DSLNGTheme">
+    <Reference Include="DSLNGTheme, Version=14.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\DSLNGTheme.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -573,6 +574,7 @@
     <Content Include="Views\TrafficLightChart\_Edit.cshtml" />
     <Content Include="Views\TrafficLightChart\_Create.cshtml" />
     <Content Include="Views\Tank\_Create.cshtml" />
+    <Content Include="Views\Template\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

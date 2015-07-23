@@ -1,32 +1,32 @@
-﻿
-
+﻿using System;
 using System.Collections.Generic;
-namespace DSLNG.PEAR.Web.ViewModels.Template
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DSLNG.PEAR.Services.Requests.Template
 {
-    public class TemplateViewModel
+    public class UpdateTemplateRequest
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int RefershTime { get; set; } //in minutes
         public string Remark { get; set; }
         public bool IsActive { get; set; }
-        public IList<RowViewModel> LayoutRows { get; set; }
+        public IList<RowRequest> LayoutRows { get; set; }
 
-        public class RowViewModel
+        public class RowRequest
         {
-            public int Id { get; set; }
             public int Index { get; set; }
-            public IList<ColumnViewModel> LayoutColumns { get; set; }
+            public IList<ColumnRequest> LayoutColumns { get; set; }
         }
 
-        public class ColumnViewModel
+        public class ColumnRequest
         {
-            public int Id { get; set; }
             public int Index { get; set; }
             public float Width { get; set; }
             public float Height { get; set; }
             public int ArtifactId { get; set; }
-            public string ArtifactName { get; set; }
         }
     }
 }

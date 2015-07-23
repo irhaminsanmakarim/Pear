@@ -123,6 +123,7 @@
     <Compile Include="Requests\Template\CreateTemplateRequest.cs" />
     <Compile Include="Requests\Template\GetTemplateRequest.cs" />
     <Compile Include="Requests\Template\GetTemplatesRequest.cs" />
+    <Compile Include="Requests\Template\UpdateTemplateRequest.cs" />
     <Compile Include="Requests\User\LoginUserRequest.cs" />
     <Compile Include="Responses\Artifact\CreateArtifactResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactResponse.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="Responses\Template\CreateTemplateResponse.cs" />
     <Compile Include="Responses\Template\GetTemplateResponse.cs" />
     <Compile Include="Responses\Template\GetTemplatesResponse.cs" />
+    <Compile Include="Responses\Template\UpdateTemplateResponse.cs" />
     <Compile Include="Responses\Type\CreateTypeResponse.cs" />
     <Compile Include="Responses\Type\DeleteTypeResponse.cs" />
     <Compile Include="Responses\Type\GetTypeResponse.cs" />

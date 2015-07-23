@@ -17,22 +17,26 @@ namespace DSLNG.PEAR.Services
         {
 
         }
+
         public CreateTemplateResponse CreateTemplate(CreateTemplateRequest request)
         {
             var template = request.MapTo<DashboardTemplate>();
             var index = 0;
-            foreach (var row in request.LayoutRows) {
+            foreach (var row in request.LayoutRows)
+            {
                 var layoutRow = new LayoutRow();
                 var colIndex = 0;
                 layoutRow.Index = index;
-                foreach (var col in row.LayoutColumns) {
+                foreach (var col in row.LayoutColumns)
+                {
                     var LayoutColumn = new LayoutColumn();
                     LayoutColumn.Index = colIndex;
                     LayoutColumn.Width = col.Width;
-                    if (col.ArtifactId != 0) {
+                    if (col.ArtifactId != 0)
+                    {
                         if (DataContext.Artifacts.Local.Where(x => x.Id == col.ArtifactId).FirstOrDefault() == null)
                         {
-                            var artifact = new Artifact { Id = col.ArtifactId,GraphicType="Unchanged",GraphicName="Unchanged", HeaderTitle="Unchanged"};
+                            var artifact = new Artifact { Id = col.ArtifactId, GraphicType = "Unchanged", GraphicName = "Unchanged", HeaderTitle = "Unchanged" };
                             //DataContext.Entry(artifact).State = EntityState.Unchanged;
                             DataContext.Artifacts.Attach(artifact);
                             LayoutColumn.Artifact = artifact;
@@ -53,7 +57,8 @@ namespace DSLNG.PEAR.Services
             return new CreateTemplateResponse();
         }
 
-        public GetTemplatesResponse GetTemplates(GetTemplatesRequest request) {
+        public GetTemplatesResponse GetTemplates(GetTemplatesRequest request)
+        {
 
             if (request.OnlyCount)
             {
@@ -69,14 +74,69 @@ namespace DSLNG.PEAR.Services
             }
         }
 
-
-
         public GetTemplateResponse GetTemplate(GetTemplateRequest request)
         {
             return DataContext.DashboardTemplates.Include(x => x.LayoutRows)
                 .Include(x => x.LayoutRows.Select(y => y.LayoutColumns))
                 .Include(x => x.LayoutRows.Select(y => y.LayoutColumns.Select(z => z.Artifact)))
                 .FirstOrDefault(x => x.Id == request.Id).MapTo<GetTemplateResponse>();
+        }
+
+        public UpdateTemplateResponse UpdateTemplate(UpdateTemplateRequest request)
+        {
+            var template = DataContext.DashboardTemplates
+                .Include(x => x.LayoutRows)
+                .Include(x => x.LayoutRows.Select(y => y.LayoutColumns))
+                .Single(x => x.Id == request.Id);
+            template.Name = request.Name;
+            template.RefershTime = request.RefershTime;
+            template.Remark = request.Remark;
+            template.IsActive = request.IsActive;
+            foreach (var row in template.LayoutRows.ToList())
+            {
+                foreach (var column in row.LayoutColumns.ToList())
+                {
+                    DataContext.LayoutColumns.Remove(column);
+                }
+                DataContext.LayoutRows.Remove(row);
+            }
+
+            var index = 0;
+            foreach (var row in request.LayoutRows)
+            {
+                var layoutRow = new LayoutRow();
+                var colIndex = 0;
+                layoutRow.Index = index;
+                foreach (var col in row.LayoutColumns)
+                {
+                    var layoutColumn = new LayoutColumn();
+                    layoutColumn.Index = colIndex;
+                    layoutColumn.Width = col.Width;
+                    if (col.ArtifactId != 0)
+                    {
+                        if (DataContext.Artifacts.Local.FirstOrDefault(x => x.Id == col.ArtifactId) == null)
+                        {
+                            var artifact = new Artifact { Id = col.ArtifactId, GraphicType = "Unchanged", GraphicName = "Unchanged", HeaderTitle = "Unchanged" };
+                            //DataContext.Entry(artifact).State = EntityState.Unchanged;
+                            DataContext.Artifacts.Attach(artifact);
+                            layoutColumn.Artifact = artifact;
+                        }
+                        else
+                        {
+                            layoutColumn.Artifact = DataContext.Artifacts.Local.FirstOrDefault(x => x.Id == col.ArtifactId);
+                        }
+                    }
+                    layoutRow.LayoutColumns.Add(layoutColumn);
+                    colIndex++;
+                }
+                template.LayoutRows.Add(layoutRow);
+                index++;
+            }
+            DataContext.DashboardTemplates.Attach(template);
+            DataContext.Entry(template).State = EntityState.Modified;
+            DataContext.SaveChanges();
+            
+            return new UpdateTemplateResponse();
         }
     }
 }

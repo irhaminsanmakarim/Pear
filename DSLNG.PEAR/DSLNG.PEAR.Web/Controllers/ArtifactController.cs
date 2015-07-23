@@ -16,9 +16,9 @@ namespace DSLNG.PEAR.Web.Controllers
 {
     public class ArtifactController : BaseController
     {
-        public IMeasurementService _measurementService;
-        public IKpiService _kpiService;
-        public IArtifactService _artifactServie;
+        private readonly IMeasurementService _measurementService;
+        private readonly IKpiService _kpiService;
+        private readonly IArtifactService _artifactServie;
 
         public ArtifactController(IMeasurementService measurementService,
             IKpiService kpiService,

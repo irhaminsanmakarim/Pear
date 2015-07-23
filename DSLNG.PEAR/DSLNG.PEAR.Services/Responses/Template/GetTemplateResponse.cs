@@ -29,6 +29,7 @@ namespace DSLNG.PEAR.Services.Responses.Template
             public int Id { get; set; }
             public int Index { get; set; }
             public double Width { get; set; }
+            public string ArtifactName { get; set; }
             public int ArtifactId { get; set; }
         }
     }
