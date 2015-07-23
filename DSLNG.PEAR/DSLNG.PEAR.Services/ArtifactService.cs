@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace DSLNG.PEAR.Services
 {
@@ -127,6 +128,7 @@ namespace DSLNG.PEAR.Services
                 rowResponse.KpiName = kpi.Name;
                 rowResponse.Measurement = kpi.Measurement.Name;
                 rowResponse.PeriodeType = row.PeriodeType.ToString();
+                rowResponse.Periode = start.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                 if (request.Remark) {
                     rowResponse.Remark = kpi.Remark;
                 }
@@ -399,7 +401,7 @@ namespace DSLNG.PEAR.Services
                     }
                     break;
                 case PeriodeType.Daily:
-                    var dailyFormat = "MM/DD/yyyy";
+                    var dailyFormat = "MM/dd/yyyy";
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentDay:
@@ -1357,6 +1359,8 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Series.Select(y => y.Stacks))
                 .Include(x => x.Series.Select(y => y.Stacks.Select(z => z.Kpi)))
                 .Include(x => x.Plots)
+                .Include(x => x.Rows)
+                .Include(x => x.Rows.Select(y => y.Kpi))
                 .FirstOrDefault(x => x.Id == request.Id).MapTo<GetArtifactResponse>();
         }
 

@@ -401,8 +401,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         var chartData = _artifactServie.GetTabularData(artifactResp.MapTo<GetTabularDataRequest>());
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.Tabular = new TabularDataViewModel();
-                        previewViewModel.Tabular.Title = artifactResp.HeaderTitle;
                         chartData.MapPropertiesToInstance<TabularDataViewModel>(previewViewModel.Tabular);
+                        previewViewModel.Tabular.Title = artifactResp.HeaderTitle;
                         //previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
                         //previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
                     }

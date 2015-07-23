@@ -199,6 +199,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<ArtifactStack, GetArtifactResponse.StackResponse>()
                 .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id))
                 .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name));
+            Mapper.CreateMap<ArtifactRow, GetArtifactResponse.RowResponse>()
+                .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id))
+                .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name));
             Mapper.CreateMap<CreateConversionRequest, Data.Entities.Conversion>();
             Mapper.CreateMap<Data.Entities.Conversion, GetConversionsResponse.Conversion>()
                 .ForMember(f => f.FromName, o => o.MapFrom(k => k.From.Name))

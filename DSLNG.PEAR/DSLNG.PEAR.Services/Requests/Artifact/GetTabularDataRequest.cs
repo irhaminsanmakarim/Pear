@@ -19,6 +19,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public class RowRequest
         {
             public int KpiId { get; set; }
+            public string KpiName { get; set; }
             public PeriodeType PeriodeType { get; set; }
             public RangeFilter RangeFilter { get; set; }
             public DateTime? Start { get; set; }

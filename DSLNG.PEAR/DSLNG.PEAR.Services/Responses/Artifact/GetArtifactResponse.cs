@@ -19,6 +19,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
 
         public IList<SeriesResponse> Series { get; set; }
         public IList<PlotResponse> PlotBands { get; set; }
+        public IList<RowResponse> Rows { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public PeriodeType PeriodeType { get; set; }
@@ -28,6 +29,12 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public int MeasurementId { get; set; }
         public double FractionScale { get; set; }
         public double MaxValue { get; set; }
+
+        public bool Actual { get; set; }
+        public bool Target { get; set; }
+        public bool Economic { get; set; }
+        public bool Fullfillment { get; set; }
+        public bool Remark { get; set; }
 
         public class SeriesResponse {
             public SeriesResponse()
@@ -53,6 +60,16 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public double To { get; set; }
             public string Color { get; set; }
             public string Label { get; set; }
+        }
+
+        public class RowResponse
+        {
+            public int KpiId { get; set; }
+            public string KpiName { get; set; }
+            public PeriodeType PeriodeType { get; set; }
+            public RangeFilter RangeFilter { get; set; }
+            public DateTime? Start { get; set; }
+            public DateTime? End { get; set; }
         }
 
     }
