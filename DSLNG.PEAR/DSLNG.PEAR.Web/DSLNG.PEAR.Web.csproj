@@ -571,6 +571,7 @@
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
     <Content Include="Views\TrafficLightChart\_Edit.cshtml" />
+    <Content Include="Views\TrafficLightChart\_Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
