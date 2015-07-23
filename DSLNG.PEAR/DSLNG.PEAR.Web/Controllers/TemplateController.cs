@@ -58,13 +58,14 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(int id, FormCollection collection)
+        public ActionResult Update(TemplateViewModel viewModel)
         {
             try
             {
-                // TODO: Add update logic here
+                var request = viewModel.MapTo<UpdateTemplateRequest>();
+                var response = _templateService.UpdateTemplate(request);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Update", new {id = viewModel.Id});
             }
             catch
             {

@@ -283,6 +283,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<TemplateViewModel.RowViewModel, CreateTemplateRequest.RowRequest>();
             Mapper.CreateMap<TemplateViewModel.ColumnViewModel, CreateTemplateRequest.ColumnRequest>();
 
+            Mapper.CreateMap<TemplateViewModel, UpdateTemplateRequest>();
+            Mapper.CreateMap<TemplateViewModel.RowViewModel, UpdateTemplateRequest.RowRequest>();
+            Mapper.CreateMap<TemplateViewModel.ColumnViewModel, UpdateTemplateRequest.ColumnRequest>();
+
             Mapper.CreateMap<GetTemplateResponse, TemplateViewModel>();
             Mapper.CreateMap<GetTemplateResponse.RowResponse, TemplateViewModel.RowViewModel>();
             Mapper.CreateMap<GetTemplateResponse.ColumnResponse, TemplateViewModel.ColumnViewModel>();

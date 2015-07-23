@@ -1519,6 +1519,7 @@ String.prototype.isNullOrEmpty = function () {
             $('.add-column').click(function () {
                 var $this = $(this);
                 var $row = $(this).parent().find('.layout-row');
+                console.log($row);
                 var currentCols = $row.children('.layout-column').length;
                 var newWidth = 100 / (currentCols + 1);
                 $row.children('.layout-column').each(function (i, val) {
@@ -1529,7 +1530,7 @@ String.prototype.isNullOrEmpty = function () {
                 newColumn.css('width', newWidth + '%');
                 Pear.Template.Editor._artifactSelectField(newColumn);
                 $('<input>').attr({
-                    type: 'hidden',
+                    type: 'text',
                     id: 'foo',
                     name: 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns.Index',
                     value: columnCount
@@ -1604,6 +1605,79 @@ String.prototype.isNullOrEmpty = function () {
         });
     };
     templateEditor.EditSetup = function () {
+        var addRow = function () {
+            var rowCount = $('.template-edit').attr('data-row-count');
+            $('.add-row').click(function () {
+                var row = $('.layout-row-wrapper.original').clone(true);
+                row.removeClass('original');
+                row.find('.layout-column.original').removeClass('original');
+                row.find('.layout-row').attr('data-row-pos', rowCount);
+                Pear.Template.Editor._artifactSelectField(row);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'LayoutRows.Index',
+                    value: rowCount
+                }).prependTo(row.find('.layout-row'));
+
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'LayoutRows[' + rowCount + '].LayoutColumns.Index',
+                    value: 1
+                }).prependTo(row.find('.layout-column'));
+
+                row.find('.column-width').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].Width');
+                row.find('.artifact-list').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ArtifactId');
+                $('#rows-holder').append(row);
+                rowCount++;
+            });
+        };
+
+        var addColumn = function() {
+            var columnCount = 2;
+            $('.add-column').click(function() {
+                var $this = $(this);
+                var $row = $(this).parent().find('.layout-row');
+                var currentCols = $row.children('.layout-column').length;
+                var newWidth = 100 / (currentCols + 1);
+                $row.children('.layout-column').each(function(i, val) {
+                    $(val).css('width', newWidth + '%');
+                });
+                var newColumn = $('.layout-column.original').clone(true);
+                newColumn.removeClass('original');
+                newColumn.css('width', newWidth + '%');
+                Pear.Template.Editor._artifactSelectField(newColumn);
+                $('<input>').attr({
+                    type: 'text',
+                    id: 'foo',
+                    name: 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns.Index',
+                    value: columnCount
+                }).prependTo(newColumn);
+                newColumn.find('.column-width').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].Width');
+                newColumn.find('.artifact-list').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ArtifactId');
+                $row.append(newColumn);
+                columnCount++;
+            });
+        };
+
+        $('.remove-row').click(function () {
+            $(this).closest('.layout-row-wrapper').remove();
+        });
+        $('.remove-column').click(function () {
+            var $this = $(this);
+            var $column = $(this).closest('.layout-column');
+            var $row = $(this).closest('.layout-row');
+            var currentCols = $row.children('.layout-column').length;
+            var newWidth = 100 / (currentCols - 1);
+            $column.remove();
+            $row.children('.layout-column').each(function (i, val) {
+                $(val).css('width', newWidth + '%');
+            });
+        });
+        
+        addRow();
+        addColumn();
         templateEditor._artifactSelectField($('.template-edit'));
     };
 

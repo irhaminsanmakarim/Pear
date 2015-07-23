@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Dashboard Template - New";
 }
-<div class="row template-edit">
+<div class="row template-edit" data-row-count="@Model.LayoutRows.Count">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -48,47 +48,50 @@
         <div id="rows-holder">
         </div>
         
-        <div class="col-md-12 layout-row-wrapper">
-            @{
-                int i = 0;
-                int j = 0;
+        
+        
+        
+        int i = 0;
 
-                foreach (var row in Model.LayoutRows)
-                {
-                    <div class="whitebox">
-                        <input type="button" value="Add Column" class="add-column" />
-                        <input type="button" value="Remove Row" class="remove-row" />
-                        <div class="layout-row row">
-                            @foreach (var column in row.LayoutColumns)
-                            {
-                                <div class="layout-column original" style="width: @string.Format(@"{0}%", column.Width)">
-                                    <div class="column-properties">
-                                        <div class="form-group">
-                                            <div class="input-group colorpicker">
-                                                <input name="LayoutRows[i].LayoutColumns[j].Width" type="number" placehodler="width" class="column-width form-control" value="@Model.LayoutRows[i].LayoutColumns[j].Width" />
-                                                <span class="input-group-addon">%</span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            @Html.DropDownListFor(model => model.LayoutRows[i].LayoutColumns[j].ArtifactId, new List<SelectListItem> {new SelectListItem {Value = Model.LayoutRows[i].LayoutColumns[j].ArtifactId.ToString(), Text = Model.LayoutRows[i].LayoutColumns[j].ArtifactName.ToString()}}, new {@class = "artifact-list form-control", style = "width:180px"})
-                                            @*<select name="LayoutRows[i].LayoutColumns[j].ArtifactId" class="form-control artifact-list" style="width: 200px">
-                                    <option>Select Artifact</option>
-                                </select>*@
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="button" value="Remove Column" class="remove-column" />
-                                        </div>
+        foreach (var row in Model.LayoutRows)
+        {
+        <div class="col-md-12 layout-row-wrapper">
+            @{ int j = 0; }
+            <div class="whitebox">
+                <input type="button" value="Add Column" class="add-column" />
+                <input type="button" value="Remove Row" class="remove-row" />
+                <div class="layout-row row" data-row-pos="@i">
+                    <input type="hidden" id="foo" name="LayoutRows.Index" value="@i">
+                    <input type="hidden" id="foo" name="LayoutRows[@i].id" value="@row.Id">
+                    @foreach (var column in row.LayoutColumns)
+                    {
+                        <div class="layout-column" style="width: @string.Format(@"{0}%", column.Width)">
+                            <input type="hidden" id="foo" name="LayoutRows[@i].LayoutColumns.Index" value="@j" class="valid">
+                            <div class="column-properties">
+                                <div class="form-group">
+                                    <div class="input-group colorpicker">
+                                        <input name="LayoutRows[@i].LayoutColumns[@j].Width" type="number" placehodler="width" class="column-width form-control" value="@Model.LayoutRows[i].LayoutColumns[j].Width" />
+                                        <span class="input-group-addon">%</span>
                                     </div>
                                 </div>
-                                j++;
-                            }
+                                <div class="form-group">
+                                    @Html.DropDownListFor(model => model.LayoutRows[i].LayoutColumns[j].ArtifactId, new List<SelectListItem> { new SelectListItem { Value = Model.LayoutRows[i].LayoutColumns[j].ArtifactId.ToString(), Text = Model.LayoutRows[i].LayoutColumns[j].ArtifactName } }, new { @class = "artifact-list form-control", style = "width:180px" })
+                                    <input type="hidden" id="foo" name="LayoutRows[@i].LayoutColumns[@j].Id" value="@column.Id">
+                                </div>
+                                <div class="form-group">
+                                    <input type="button" value="Remove Column" class="remove-column" />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    i++;
-                }
-            }
-        </div> 
-       
+                        j++;
+                    }
+                </div>
+            </div>
+            @{ i++; }
+        </div>
+        }
+
+
         <div class="col-md-12 artifact-designer-btns">
             <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
             <button data-preview-url="@Url.Action("Preview", "Artifact")"  id="graphic-preview-btn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-eye"></span>View</button>
