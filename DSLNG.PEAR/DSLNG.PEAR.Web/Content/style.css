@@ -1101,3 +1101,71 @@ td .btn_small_lightblue a:hover {
     background-repeat: no-repeat;
     text-decoration: none;
 }
+.tank-chart {
+    border:1px solid #ccc;
+    position:relative;
+}
+.tank-volume {
+    position:absolute;
+    bottom:0;
+}
+.tank-to-top {
+    position:absolute;
+    border:1px solid #ccc;
+    left:-1px;
+    border-bottom:none;
+    text-align:center;
+    padding-top:18px;
+}
+    .tank-to-top p {
+        margin-bottom:0;
+    }
+.tank-volume-meter {
+    position:absolute;
+    border-right:1px solid #ccc;
+    right:-20px;
+    width:10px;
+}
+.tank-zero-meter {
+    position:absolute;
+    bottom:-7px;
+    display:block;
+    width:150px;
+    left:267px;
+    margin:0;
+    line-height:1;
+}
+.tank-max-capacity {
+    position:absolute;
+    top:-8px;
+    display:block;
+    width:150px;
+    left:267px;
+    margin:0;
+    line-height:1;
+}
+.tank-min-capacity,
+.tank-current-volume {
+    position:absolute;
+    display:block;
+    width:150px;
+    left:267px;
+    margin:0;
+    line-height:1;
+}
+.tank-wrapper h3 {
+        color: #333333;
+        font-size: 18px;
+        fill: #333333;
+        width: 736px;
+        float:none;
+        width:100%;
+    }
+.tank-wrapper {
+    width:100%;
+    text-align:center;
+}
+.tank-chart {
+    text-align:left;
+    display:inline-block;
+}

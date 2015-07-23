@@ -101,5 +101,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public MultiaxisChartViewModel MultiaxisChart { get; set; }
         public TrafficLightChartViewModel TrafficLightChart { get; set; }
         public TabularViewModel Tabular { get; set; }
+        public TankViewModel Tank { get; set; }
     }
 }

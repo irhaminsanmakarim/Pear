@@ -101,6 +101,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "trafficlight", Text = "Traffic Light" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tabular", Text = "Tabular" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "tank", Text = "Tank" });
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
@@ -309,6 +310,13 @@ namespace DSLNG.PEAR.Web.Controllers
                         artifactViewModel.Tabular = viewModel;
                         return PartialView("~/Views/Tabular/_Create.cshtml", artifactViewModel);
                     }
+                case "tank":
+                    {
+                        var viewModel = new TankViewModel();
+                        var artifactViewModel = new ArtifactDesignerViewModel();
+                        artifactViewModel.Tank = viewModel;
+                        return PartialView("~/Views/Tank/_Create.cshtml", artifactViewModel);
+                    }
                 default:
                     return PartialView("NotImplementedChart.cshtml");
             }
@@ -407,6 +415,17 @@ namespace DSLNG.PEAR.Web.Controllers
                         //previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
                     }
                     break;
+                case "tank":
+                    {
+                        var chartData = _artifactServie.GetTankData(artifactResp.MapTo<GetTankDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.Tank = new TankDataViewModel();
+                        chartData.MapPropertiesToInstance<TankDataViewModel>(previewViewModel.Tank);
+                        previewViewModel.Tank.Title = artifactResp.HeaderTitle;
+                        //previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
+                        //previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
                 default:
                     {
                         var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
@@ -496,6 +515,17 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.Tabular.Title = viewModel.HeaderTitle;
                     }
                     break;
+                case "tank":
+                    {
+                        var request = viewModel.MapTo<GetTankDataRequest>();
+                        //viewModel.Tank.MapPropertiesToInstance<GetTankDataRequest>(request);
+                        var chartData = _artifactServie.GetTankData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.Tank = new TankDataViewModel();
+                        chartData.MapPropertiesToInstance<TankDataViewModel>(previewViewModel.Tank);
+                        previewViewModel.Tank.Title = viewModel.HeaderTitle;
+                    }
+                    break;
                 default:
                     {
                         var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
@@ -553,6 +583,13 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
                         viewModel.Tabular.MapPropertiesToInstance<CreateArtifactRequest>(request);
+                        _artifactServie.Create(request);
+                    }
+                    break;
+                case "tank":
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        //viewModel.Tank.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
                     }
                     break;

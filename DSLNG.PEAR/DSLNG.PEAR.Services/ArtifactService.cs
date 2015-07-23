@@ -22,99 +22,56 @@ namespace DSLNG.PEAR.Services
         {
         }
 
-
-        //public GetSeriesResponse GetSeries(GetSeriesRequest request)
-        //{
-        //    var seriesResponse = new List<GetSeriesResponse.SeriesResponse>();
-        //    var seriesType = "single-stack";
-        //    if (request.SeriesList.Count > 1)
-        //    {
-        //        if (request.SeriesList.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null)
-        //        {
-        //            seriesType = "multi-stacks-grouped";
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (request.SeriesList.Where(x => x.Stacks.Count > 0).FirstOrDefault() != null)
-        //        {
-        //            seriesType = "multi-stack";
-        //        }
-        //    }
-        //    switch (request.ValueAxis)
-        //    {
-        //        case ValueAxis.KpiTarget:
-        //            {
-        //                seriesResponse = this._getKpiTargetSeries(request.SeriesList, request.PeriodeType, dateTimePeriodes, seriesType);
-        //            }
-        //            break;
-        //        case ValueAxis.KpiActual:
-        //            {
-        //                foreach (var series in request.SeriesList)
-        //                {
-
-        //                    if (series.Stacks.Count == 0)
-        //                    {
-        //                        var kpiTargets = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
-        //                          x.Periode >= request.Start && x.Periode <= request.End && x.Kpi.Id == series.KpiId)
-        //                          .OrderBy(x => x.Periode);
-        //                        var aSeries = new GetSeriesResponse.SeriesResponse
-        //                        {
-        //                            name = series.Label
-        //                        };
-        //                        foreach (var target in kpiTargets)
-        //                        {
-        //                            aSeries.data.Add(target.Value.Value);
-        //                        }
-        //                        seriesResponse.Add(aSeries);
-        //                    }
-        //                    else
-        //                    {
-        //                        foreach (var stack in series.Stacks)
-        //                        {
-        //                            var kpiTargets = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
-        //                          x.Periode >= request.Start && x.Periode <= request.End && x.Kpi.Id == stack.KpiId)
-        //                          .OrderBy(x => x.Periode);
-        //                            if (seriesType == "multi-stacks-grouped")
-        //                            {
-        //                                var aSeries = new GetSeriesResponse.SeriesResponse
-        //                                {
-        //                                    name = stack.Label,
-        //                                    stack = series.Label
-        //                                };
-        //                                foreach (var target in kpiTargets)
-        //                                {
-        //                                    aSeries.data.Add(target.Value.Value);
-        //                                }
-        //                                seriesResponse.Add(aSeries);
-        //                            }
-        //                            else
-        //                            {
-        //                                var aSeries = new GetSeriesResponse.SeriesResponse
-        //                                {
-        //                                    name = series.Label
-        //                                };
-        //                                foreach (var target in kpiTargets)
-        //                                {
-        //                                    aSeries.data.Add(target.Value.Value);
-        //                                }
-        //                                seriesResponse.Add(aSeries);
-        //                            }
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //            break;
-        //        default:
-        //            break;
-        //    }
-
-        //    return new GetSeriesResponse
-        //    {
-        //        Series = seriesResponse
-        //    };
-
-        //}
+        public GetTankDataResponse GetTankData(GetTankDataRequest request) {
+            var response = request.Tank.MapTo<GetTankDataResponse>();
+            var volumeInventory = DataContext.Kpis.Include(x => x.Measurement).Where(x => x.Id == request.Tank.VolumeInventoryId).First();
+            response.VolumeInventoryUnit = volumeInventory.Measurement.Name;
+            var daysToTankTop = DataContext.Kpis.Include(x => x.Measurement).Where(x => x.Id == request.Tank.DaysToTankTopId).First();
+            response.DaysToTankTopUnit = daysToTankTop.Measurement.Name;
+            IList<DateTime> dateTimePeriodes = new List<DateTime>();
+            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes);
+            var start = dateTimePeriodes[0];
+            var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
+            switch (volumeInventory.YtdFormula)
+            {
+                case YtdFormula.Sum:
+                    {
+                        response.VolumeInventory = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == volumeInventory.Id)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault();
+                    }
+                    break;
+                case YtdFormula.Average:
+                    {
+                        response.VolumeInventory = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == volumeInventory.Id)
+                                    .GroupBy(x => x.Kpi.Id)
+                                    .Select(x => x.Average(y => y.Value).Value).FirstOrDefault();
+                    }
+                    break;
+            }
+            switch (daysToTankTop.YtdFormula)
+            {
+                case YtdFormula.Sum:
+                    {
+                        response.DaysToTankTop = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == daysToTankTop.Id)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault();
+                    }
+                    break;
+                case YtdFormula.Average:
+                    {
+                        response.DaysToTankTop = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == daysToTankTop.Id)
+                                    .GroupBy(x => x.Kpi.Id)
+                                    .Select(x => x.Average(y => y.Value).Value).FirstOrDefault();
+                    }
+                    break;
+            }
+            return response;
+        }
 
         public GetTabularDataResponse GetTabularData(GetTabularDataRequest request) {
             var response = request.MapTo<GetTabularDataResponse>();
@@ -1258,6 +1215,33 @@ namespace DSLNG.PEAR.Services
                 }
                 artifact.Rows.Add(row);
             }
+            if (request.Tank != null) {
+                var tank = new ArtifactTank();
+                var volumeInventory = new Kpi { Id = request.Tank.VolumeInventoryId };
+                if (DataContext.Kpis.Local.Where(x => x.Id == volumeInventory.Id).FirstOrDefault() == null)
+                {
+                    DataContext.Kpis.Attach(volumeInventory);
+                }
+                else
+                {
+                    volumeInventory = DataContext.Kpis.Local.Where(x => x.Id == request.Tank.VolumeInventoryId).FirstOrDefault();
+                }
+                tank.VolumeInventory = volumeInventory;
+                var daysToTankTop = new Kpi { Id = request.Tank.DaysToTankTopId };
+                if (DataContext.Kpis.Local.Where(x => x.Id == daysToTankTop.Id).FirstOrDefault() == null)
+                {
+                    DataContext.Kpis.Attach(daysToTankTop);
+                }
+                else
+                {
+                    daysToTankTop = DataContext.Kpis.Local.Where(x => x.Id == request.Tank.DaysToTankTopId).FirstOrDefault();
+                }
+                tank.DaysToTankTop = daysToTankTop;
+                tank.DaysToTankTopTitle = request.Tank.DaysToTankTopTitle;
+                tank.MinCapacity = request.Tank.MinCapacity;
+                tank.MaxCapacity = request.Tank.MaxCapacity;
+                artifact.Tank = tank;
+            }
             DataContext.Artifacts.Add(artifact);
             DataContext.SaveChanges();
             return new CreateArtifactResponse();
@@ -1361,6 +1345,9 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Plots)
                 .Include(x => x.Rows)
                 .Include(x => x.Rows.Select(y => y.Kpi))
+                .Include(x => x.Tank)
+                .Include(x => x.Tank.DaysToTankTop)
+                .Include(x => x.Tank.VolumeInventory)
                 .FirstOrDefault(x => x.Id == request.Id).MapTo<GetArtifactResponse>();
         }
 

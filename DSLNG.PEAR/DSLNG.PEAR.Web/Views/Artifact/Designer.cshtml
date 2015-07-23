@@ -74,7 +74,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group form-list">
+                            <div class="form-group form-list main-value-axis">
                                 @Html.LabelFor(model => model.ValueAxis)
                                 @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ValueAxis)
