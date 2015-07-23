@@ -333,7 +333,7 @@ img {
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-    background-color: #febe10;
+    background-color: #9bd4f4;
     color: white;
     border: none;
     text-align: center;
@@ -346,7 +346,7 @@ img {
 
 
 .dropdown-toggle.icon_more {
-    background-color: #febe10;
+    background-color: #9bd4f4;
     color: white;
     border: none;
 }
@@ -543,12 +543,12 @@ th {
 
 
 a:hover.btn-darkblue {
-    background-color: #febe10;
+    background-color: #9bd4f4;
     color: white;
 }
 
 a:hover.btn-lightblue {
-    background-color: #febe10;
+    background-color: #9bd4f4;
     color: white;
 }
 
@@ -675,7 +675,7 @@ h2 {
 }
 
     .btn-lightblue:hover {
-        background-color: #febe10;
+        background-color: #9bd4f4;
         color: white;
     }
 
@@ -774,7 +774,7 @@ td.text-button a {
     }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-    background-color: #febe10;
+    background-color: #9bd4f4;
     color: white;
 }
 
@@ -841,7 +841,7 @@ table.text-center th {
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-    background-color: #febe10;
+    background-color: #9bd4f4;
     color: white;
 }
 
