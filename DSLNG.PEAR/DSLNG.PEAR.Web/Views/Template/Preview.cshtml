@@ -1,0 +1,23 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Template.TemplateViewModel
+@{
+    Layout = null;
+}
+<div class="template-view">
+    <div class="row">
+         <div class="col-md-12">
+            <div class="title">@Model.Name</div>
+        </div>
+    </div>
+    @foreach (var row in Model.LayoutRows)
+    { 
+        <div class="row layout-row">
+            @foreach (var col in row.LayoutColumns)
+            { 
+                <div class="layout-column" style="width:@col.Width%;">
+                    <div class="whitebox artifact-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = col.ArtifactId })">
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
