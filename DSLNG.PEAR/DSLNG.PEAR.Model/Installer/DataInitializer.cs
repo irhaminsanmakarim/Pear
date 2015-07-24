@@ -126,36 +126,36 @@ namespace DSLNG.PEAR.Data.Installer
             context.Measurements.AddOrUpdate(measurement);
         }*/
 
-        private void AddConversion(DataContext context)
-        {
-            var conversion = new Conversion();
-            conversion.Id = 1;
-            conversion.From = new Measurement { Id = 1 };
-            conversion.To = new Measurement { Id = 1 };
-            conversion.IsReverse = false;
-            conversion.Name = "Conversion One";
-            conversion.Value = 200;
-            context.Conversions.AddOrUpdate(conversion);
-        }
+        //private void AddConversion(DataContext context)
+        //{
+        //    var conversion = new Conversion();
+        //    conversion.Id = 1;
+        //    conversion.From = new Measurement { Id = 1 };
+        //    conversion.To = new Measurement { Id = 1 };
+        //    conversion.IsReverse = false;
+        //    conversion.Name = "Conversion One";
+        //    conversion.Value = 200;
+        //    context.Conversions.AddOrUpdate(conversion);
+        //}
 
-        private void AddMethod(DataContext context)
-        {
-            var method = new Method();
-            method.Id = 1;
-            method.Name = "Manual Input";
-            method.IsActive = true;
-            method.Remark = "hs";
-            context.Methods.AddOrUpdate(method);
-        }
+        //private void AddMethod(DataContext context)
+        //{
+        //    var method = new Method();
+        //    method.Id = 1;
+        //    method.Name = "Manual Input";
+        //    method.IsActive = true;
+        //    method.Remark = "hs";
+        //    context.Methods.AddOrUpdate(method);
+        //}
 
-        private void AddPeriode(DataContext context)
-        {
-            var periode = new Periode();
-            periode.Id = 1;
-            periode.Name = PeriodeType.Monthly;
-            periode.Remark = "Test";
-            context.Periodes.AddOrUpdate(periode);
-        }
+        //private void AddPeriode(DataContext context)
+        //{
+        //    var periode = new Periode();
+        //    periode.Id = 1;
+        //    periode.Name = PeriodeType.Monthly;
+        //    periode.Remark = "Test";
+        //    context.Periodes.AddOrUpdate(periode);
+        //}
 
         /*private void AddKpi(DataContext context)
         {
