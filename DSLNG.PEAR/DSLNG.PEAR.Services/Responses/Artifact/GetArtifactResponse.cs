@@ -20,6 +20,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public IList<SeriesResponse> Series { get; set; }
         public IList<PlotResponse> PlotBands { get; set; }
         public IList<RowResponse> Rows { get; set; }
+        public TankResponse Tank { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public PeriodeType PeriodeType { get; set; }
@@ -70,6 +71,16 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public RangeFilter RangeFilter { get; set; }
             public DateTime? Start { get; set; }
             public DateTime? End { get; set; }
+        }
+
+        public class TankResponse {
+            public int VolumeInventoryId { get; set; }
+            public string VolumeInventory { get; set; }
+            public int DaysToTankTopId { get; set; }
+            public string DaysToTankTop { get; set; }
+            public string DaysToTankTopTitle { get; set; }
+            public double MinCapacity { get; set; }
+            public double MaxCapacity { get; set; }
         }
 
     }

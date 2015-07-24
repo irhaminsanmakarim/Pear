@@ -71,6 +71,7 @@
     <Compile Include="Entities\ArtifactRow.cs" />
     <Compile Include="Entities\ArtifactSerie.cs" />
     <Compile Include="Entities\ArtifactStack.cs" />
+    <Compile Include="Entities\ArtifactTank.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Conversion.cs" />
     <Compile Include="Entities\DashboardTemplate.cs" />

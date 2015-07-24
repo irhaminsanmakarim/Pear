@@ -170,7 +170,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreateArtifactRequest, Data.Entities.Artifact>()
                 .ForMember(x => x.Series, o => o.Ignore())
                 .ForMember(x => x.Plots, o => o.Ignore())
-                .ForMember(x => x.Rows, o => o.Ignore());
+                .ForMember(x => x.Rows, o => o.Ignore())
+                .ForMember(x => x.Tank, o => o.Ignore());
             Mapper.CreateMap<CreateArtifactRequest.SeriesRequest, Data.Entities.ArtifactSerie>()
                 .ForMember(x => x.Stacks, o => o.Ignore());
             Mapper.CreateMap<CreateArtifactRequest.PlotRequest, Data.Entities.ArtifactPlot>();
@@ -202,6 +203,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<ArtifactRow, GetArtifactResponse.RowResponse>()
                 .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id))
                 .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name));
+            Mapper.CreateMap<ArtifactTank, GetArtifactResponse.TankResponse>()
+               .ForMember(x => x.VolumeInventoryId, o => o.MapFrom(s => s.VolumeInventory.Id))
+               .ForMember(x => x.VolumeInventory, o => o.MapFrom(s => s.VolumeInventory.Name))
+               .ForMember(x => x.DaysToTankTopId, o => o.MapFrom(s => s.DaysToTankTop.Id))
+               .ForMember(x => x.DaysToTankTop, o => o.MapFrom(s => s.DaysToTankTop.Name));
             Mapper.CreateMap<CreateConversionRequest, Data.Entities.Conversion>();
             Mapper.CreateMap<Data.Entities.Conversion, GetConversionsResponse.Conversion>()
                 .ForMember(f => f.FromName, o => o.MapFrom(k => k.From.Name))
@@ -219,6 +225,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(d => d.LayoutRows, o => o.Ignore());
             Mapper.CreateMap<GetTabularDataRequest, GetTabularDataResponse>()
                 .ForMember(d => d.Rows, o => o.Ignore());
+            Mapper.CreateMap<GetTankDataRequest.TankRequest, GetTankDataResponse>()
+                .ForMember(d => d.DaysToTankTop, o => o.Ignore())
+                .ForMember(d => d.VolumeInventory, o => o.Ignore());
             //Mapper.CreateMap<CreateTemplateRequest.RowRequest, LayoutRow>();
             //Mapper.CreateMap<CreateTemplateRequest.ColumnRequest, LayoutColumn>();
             Mapper.CreateMap<DashboardTemplate, GetTemplatesResponse.TemplateResponse>();

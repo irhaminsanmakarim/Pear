@@ -65,7 +65,7 @@ namespace DSLNG.PEAR.Data.Installer
             //var menuInstaller = new MenuInstaller(context);
             //menuInstaller.Install();
 
-            context.SaveChanges();
+            //context.SaveChanges();
         }
 
         /*private void AddUser(DataContext context)

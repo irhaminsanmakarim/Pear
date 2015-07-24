@@ -573,6 +573,7 @@
     <Content Include="Views\Tabular\_Create.cshtml" />
     <Content Include="Views\TrafficLightChart\_Edit.cshtml" />
     <Content Include="Views\TrafficLightChart\_Create.cshtml" />
+    <Content Include="Views\Tank\_Create.cshtml" />
     <Content Include="Views\Template\Update.cshtml" />
     <Content Include="Views\Template\Preview.cshtml" />
     <None Include="Web.Debug.config">
@@ -674,6 +675,8 @@
     <Compile Include="ViewModels\Artifact\SpiderwebChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\TabularDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\TabularViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\TankDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\TankViewModel.cs" />
     <Compile Include="ViewModels\Artifact\TrafficLightChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\TrafficLightChartViewModel.cs" />
     <Compile Include="ViewModels\Conversion\CreateConversionViewModel.cs" />

@@ -226,6 +226,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<TabularViewModel.RowViewModel, GetTabularDataRequest.RowRequest>();
             Mapper.CreateMap<GetTabularDataResponse, TabularDataViewModel>();
             Mapper.CreateMap<GetTabularDataResponse.RowResponse, TabularDataViewModel.RowViewModel>();
+
+            //tank mapping
+            Mapper.CreateMap<TankViewModel, CreateArtifactRequest.TankRequest>();
+            Mapper.CreateMap<ArtifactDesignerViewModel, GetTankDataRequest>();
+            Mapper.CreateMap<TankViewModel, GetTankDataRequest.TankRequest>();
+            Mapper.CreateMap<GetTankDataResponse, TankDataViewModel>();
+       
             //Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetSeriesRequest.Series>()
             //    .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetSeriesRequest.Stack>()));
             //Mapper.CreateMap<BarChartViewModel.StackViewModel, GetSeriesRequest.Stack>();
@@ -270,6 +277,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<GetArtifactResponse, GetTabularDataRequest>();
             Mapper.CreateMap<GetArtifactResponse.RowResponse, GetTabularDataRequest.RowRequest>();
+            Mapper.CreateMap<GetArtifactResponse, GetTankDataRequest>();
+            Mapper.CreateMap<GetArtifactResponse.TankResponse, GetTankDataRequest.TankRequest>();
             //Mapper.CreateMap<GetArtifactResponse., GetSpeedometerChartDataRequest.PlotBandRequest>();
             //Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetSpeedometerChartDataRequest.SeriesRequest>();
 
