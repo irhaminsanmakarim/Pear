@@ -279,6 +279,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetArtifactResponse.RowResponse, GetTabularDataRequest.RowRequest>();
             Mapper.CreateMap<GetArtifactResponse, GetTankDataRequest>();
             Mapper.CreateMap<GetArtifactResponse.TankResponse, GetTankDataRequest.TankRequest>();
+            Mapper.CreateMap<GetArtifactResponse.TankResponse, TankViewModel>();
             //Mapper.CreateMap<GetArtifactResponse., GetSpeedometerChartDataRequest.PlotBandRequest>();
             //Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetSpeedometerChartDataRequest.SeriesRequest>();
 

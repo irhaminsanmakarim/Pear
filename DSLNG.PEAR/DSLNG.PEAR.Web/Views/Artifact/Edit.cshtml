@@ -94,6 +94,9 @@
                                 case "area":
                                     Html.RenderPartial("~/Views/AreaChart/_Edit.cshtml", Model);
                                     break;
+                                case "tank":
+                                    Html.RenderPartial("~/Views/Tank/_Edit.cshtml", Model);
+                                    break;
                                 default:
                                     Html.RenderPartial("~/Views/BarChart/_Edit.cshtml", Model);
                                     break;

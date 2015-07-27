@@ -125,6 +125,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "multiaxis", Text = "Multi Axis" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "trafficlight", Text = "Traffic Light" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "tank", Text = "Tank" });
 
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
@@ -187,6 +188,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.TrafficLightChart = artifact.MapPropertiesToInstance<TrafficLightChartViewModel>(trafficLightChart);
                         var plot = new TrafficLightChartViewModel.PlotBand();
                         viewModel.TrafficLightChart.PlotBands.Insert(0, plot);
+                    }
+                    break;
+                case "tank":
+                    {
+                        //var tankData = new TankViewModel();
+                        //viewModel.Tank = artifact.MapPropertiesToInstance<TankViewModel>(tankData);
                     }
                     break;
                 default:
