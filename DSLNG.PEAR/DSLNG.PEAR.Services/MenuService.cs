@@ -34,7 +34,7 @@ namespace DSLNG.PEAR.Services
             }
             else
             {
-                menus = DataContext.Menus.Where(x => x.IsActive == true && x.ParentId == null || x.ParentId == 0 && x.RoleGroups.Select(y => y.Id).Contains(request.RoleId)).OrderBy(x => x.Order).ToList();
+                menus = DataContext.Menus.Where(x => x.IsActive == true && x.ParentId == null && x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) || x.ParentId == 0 && x.RoleGroups.Select(y => y.Id).Contains(request.RoleId)).OrderBy(x => x.Order).ToList();
             }
 
             if (request.IncludeChildren)
@@ -44,17 +44,18 @@ namespace DSLNG.PEAR.Services
                     Name = "Logout",
                     IsActive = true,
                     Url = "/Account/Logoff",
-                    Parent = menus.First(x => x.Id == 6)
+                    Parent = null,
+                    Icon = "fa-sign-out"
                 };
-                //menus.Add(logout);
+                menus.Add(logout);
 
                 //looping to get the children, we dont use Include because only include 1st level child menus
                 foreach (var menu in menus)
                 {
                     menu.Menus = this._GetMenuChildren(menu.Id, request.RoleId);
-                    if (menu.Name == "Setting" && menu.IsRoot == true) {
-                        menu.Menus.Add(logout);
-                    }
+                    //if (menu.Name == "Setting" && menu.IsRoot == true) {
+                    //    menu.Menus.Add(logout);
+                    //}
                 }
             }
 
@@ -95,14 +96,15 @@ namespace DSLNG.PEAR.Services
         {
             var response = new GetSiteMenuActiveResponse();
             //get the menu from url request
-            var url_request = new StringBuilder(request.Controller).Append("/").Append(request.Action).ToString();
+            var url_request = new StringBuilder("/").Append(request.Controller).Append("/").ToString();
             
             try
             {
                 //var menu = DataContext.Menus.Where(x => x.Url.ToLower() == url_request).First();
                 var menu = DataContext.Menus.Where(x => x.Url.Contains(url_request)).First();
-                var detail = DataContext.Menus.Where(x => x.Module.Contains(menu.Module) && x.IsRoot == true).First();
-                menu = this._GetActiveMenu(detail);
+                //var detail = DataContext.Menus.Where(x => x.Module.Contains(menu.Module) && x.IsRoot == true).First();
+                //menu = this._GetActiveMenu(detail);
+                menu = this._GetActiveMenu(menu);
                 response = menu.MapTo<GetSiteMenuActiveResponse>();
 
                 return response;

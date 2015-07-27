@@ -254,10 +254,11 @@ namespace DSLNG.PEAR.Services
                 DataContext.Methods.Attach(updateKpi.Method);
                 existedkpi.Method = updateKpi.Method;
                 List<KpiRelationModel> allRelationModel = updateKpi.RelationModels.ToList();
+
                 foreach (var relationModel in updateKpi.RelationModels)
                 {
-                    var existedrelationModel = existedkpi.RelationModels.SingleOrDefault(x => x.Id == relationModel.Id && x.Id != 0);
-                    var existedrelationModelFromContext = DataContext.KpiRelationModels.SingleOrDefault(x => x.Id == relationModel.Id && x.Id != 0);
+                    var existedrelationModel = existedkpi.RelationModels.SingleOrDefault(x => x.Id == relationModel.Id && x.Id != 0 && x.Kpi != null);
+                    var existedrelationModelFromContext = DataContext.KpiRelationModels.SingleOrDefault(x => x.Id == relationModel.Id && x.Id != 0 && x.Kpi != null);
                     if (existedrelationModel != null)
                     {
                         var relationModelEntry = DataContext.Entry(existedrelationModel);
@@ -281,7 +282,10 @@ namespace DSLNG.PEAR.Services
                         else
                         {
                             relationModel.Id = 0;
-                            existedkpi.RelationModels.Add(relationModel);
+                            if (relationModel.Kpi != null) {
+                                existedkpi.RelationModels.Add(relationModel);
+                            }
+                            
                         }
                     }
                 }
