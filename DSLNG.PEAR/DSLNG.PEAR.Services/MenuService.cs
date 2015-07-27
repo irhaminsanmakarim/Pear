@@ -34,7 +34,7 @@ namespace DSLNG.PEAR.Services
             }
             else
             {
-                menus = DataContext.Menus.Where(x => x.IsActive == true && x.ParentId == null || x.ParentId == 0 && x.RoleGroups.Select(y => y.Id).Contains(request.RoleId)).OrderBy(x => x.Order).ToList();
+                menus = DataContext.Menus.Where(x => x.IsActive == true && x.ParentId == null && x.RoleGroups.Select(y => y.Id).Contains(request.RoleId) || x.ParentId == 0 && x.RoleGroups.Select(y => y.Id).Contains(request.RoleId)).OrderBy(x => x.Order).ToList();
             }
 
             if (request.IncludeChildren)
@@ -44,17 +44,17 @@ namespace DSLNG.PEAR.Services
                     Name = "Logout",
                     IsActive = true,
                     Url = "/Account/Logoff",
-                    Parent = menus.First(x => x.Id == 6)
+                    Parent = null
                 };
-                //menus.Add(logout);
+                menus.Add(logout);
 
                 //looping to get the children, we dont use Include because only include 1st level child menus
                 foreach (var menu in menus)
                 {
                     menu.Menus = this._GetMenuChildren(menu.Id, request.RoleId);
-                    if (menu.Name == "Setting" && menu.IsRoot == true) {
-                        menu.Menus.Add(logout);
-                    }
+                    //if (menu.Name == "Setting" && menu.IsRoot == true) {
+                    //    menu.Menus.Add(logout);
+                    //}
                 }
             }
 
