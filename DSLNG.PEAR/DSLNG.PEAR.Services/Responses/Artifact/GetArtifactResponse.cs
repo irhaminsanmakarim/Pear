@@ -74,6 +74,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         }
 
         public class TankResponse {
+            public int Id { get; set; }
             public int VolumeInventoryId { get; set; }
             public string VolumeInventory { get; set; }
             public int DaysToTankTopId { get; set; }

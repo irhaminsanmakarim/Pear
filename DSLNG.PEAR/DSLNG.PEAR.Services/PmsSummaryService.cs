@@ -146,7 +146,7 @@ namespace DSLNG.PEAR.Services
                                         kpiData.Score = pmsConfigDetails.Weight * indexYtd;
                                         break;
                                     case ScoringType.Negative:
-                                        if (indexYtd == 0)
+                                        if (indexYtd.Equals(0))
                                         {
                                             response.IsSuccess = false;
                                             response.Message =
@@ -184,7 +184,7 @@ namespace DSLNG.PEAR.Services
 
                             #endregion
 
-                            kpiData.KpiColor = GetScoreColor(kpiData.Score, pmsConfigDetails.ScoreIndicators);
+                            kpiData.KpiColor = GetScoreColor(kpiData.ActualYtd, pmsConfigDetails.ScoreIndicators);
 
                             response.KpiDatas.Add(kpiData);
                         }

@@ -27,6 +27,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public int MeasurementId { get; set; }
         public double FractionScale { get; set; }
         public double MaxValue { get; set; }
+        public TankRequest Tank { get; set; }
 
         public class SeriesRequest
         {
@@ -53,6 +54,17 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public ValueAxis ValueAxis { get; set; }
             public string Color { get; set; }
 
+        }
+        public class TankRequest
+        {
+            public int Id { get; set; }
+            public int VolumeInventoryId { get; set; }
+            public string VolumeInventory { get; set; }
+            public int DaysToTankTopId { get; set; }
+            public string DaysToTankTop { get; set; }
+            public string DaysToTankTopTitle { get; set; }
+            public double MinCapacity { get; set; }
+            public double MaxCapacity { get; set; }
         }
     }
 }

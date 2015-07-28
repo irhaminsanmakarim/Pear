@@ -125,6 +125,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "multiaxis", Text = "Multi Axis" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "trafficlight", Text = "Traffic Light" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "tank", Text = "Tank" });
 
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
@@ -187,6 +188,11 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.TrafficLightChart = artifact.MapPropertiesToInstance<TrafficLightChartViewModel>(trafficLightChart);
                         var plot = new TrafficLightChartViewModel.PlotBand();
                         viewModel.TrafficLightChart.PlotBands.Insert(0, plot);
+                    }
+                    break;
+                case "tank":
+                    {
+                        viewModel.Tank = artifact.Tank.MapTo<TankViewModel>();
                     }
                     break;
                 default:
@@ -641,6 +647,14 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
                         viewModel.TrafficLightChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
+                        _artifactServie.Update(request);
+                    }
+                    break;
+                case "tank" :
+                    {
+                        var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        viewModel.Tank.MapPropertiesToInstance<UpdateArtifactRequest>(request);
+                        request.Id = viewModel.Id;
                         _artifactServie.Update(request);
                     }
                     break;

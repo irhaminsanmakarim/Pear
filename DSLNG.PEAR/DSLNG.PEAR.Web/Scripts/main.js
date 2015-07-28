@@ -481,6 +481,9 @@ String.prototype.isNullOrEmpty = function () {
             stackTemplate.remove();
             Pear.Artifact.Designer._setupCallbacks.baraccumulative();
             break;
+        case 'tank':
+            Pear.Artifact.Designer._setupCallbacks.tank();
+            break;
         }
     };
     artifactDesigner._setupCallbacks = {};
@@ -1111,7 +1114,7 @@ String.prototype.isNullOrEmpty = function () {
         //rangeControl();
         //rangeDatePicker();
     };
-    artifactDesigner._previewCallbacks.speedometer = function (data, container) {
+    artifactDesigner._previewCallbacks.speedometer = function(data, container) {
         container.highcharts({
             chart: {
                 type: 'gauge',
@@ -1129,33 +1132,34 @@ String.prototype.isNullOrEmpty = function () {
                 startAngle: -150,
                 endAngle: 150,
                 background: [{
-                    backgroundColor: {
-                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                        stops: [
-                            [0, '#FFF'],
-                            [1, '#333']
-                        ]
-                    },
-                    borderWidth: 0,
-                    outerRadius: '109%'
-                }, {
-                    backgroundColor: {
-                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                        stops: [
-                            [0, '#333'],
-                            [1, '#FFF']
-                        ]
-                    },
-                    borderWidth: 1,
-                    outerRadius: '107%'
-                }, {
-                    // default background
-                }, {
-                    backgroundColor: '#DDD',
-                    borderWidth: 0,
-                    outerRadius: '105%',
-                    innerRadius: '103%'
-                }]
+                        backgroundColor: {
+                            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                            stops: [
+                                [0, '#FFF'],
+                                [1, '#333']
+                            ]
+                        },
+                        borderWidth: 0,
+                        outerRadius: '109%'
+                    }, {
+                        backgroundColor: {
+                            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                            stops: [
+                                [0, '#333'],
+                                [1, '#FFF']
+                            ]
+                        },
+                        borderWidth: 1,
+                        outerRadius: '107%'
+                    }, {
+                        
+                        // default background
+                    }, {
+                        backgroundColor: '#DDD',
+                        borderWidth: 0,
+                        outerRadius: '105%',
+                        innerRadius: '103%'
+                    }]
             },
 
             // the value axis
@@ -1191,9 +1195,8 @@ String.prototype.isNullOrEmpty = function () {
                     valueSuffix: ' ' + data.SpeedometerChart.ValueAxisTitle
                 }
             }]
-
         });
-    }
+    };
 
     //tabular
     artifactDesigner._setupCallbacks.tabular = function () {
@@ -1316,7 +1319,7 @@ String.prototype.isNullOrEmpty = function () {
         $('#general-graphic-settings').css('display', 'none');
         $('.form-measurement').css('display', 'none');
     };
-    artifactDesigner._previewCallbacks.tabular = function (data, container) {
+    artifactDesigner._previewCallbacks.tabular = function(data, container) {
         var wrapper = $('<div>');
         wrapper.addClass('tabular-wrapper');
         wrapper.append($('<h3>').html(data.Tabular.Title));
@@ -1358,7 +1361,7 @@ String.prototype.isNullOrEmpty = function () {
         }
         wrapper.append($table);
         container.html(wrapper);
-    }
+    };
 
     //trafficlight
     artifactDesigner._setupCallbacks.trafficlight = function () {
@@ -1402,102 +1405,19 @@ String.prototype.isNullOrEmpty = function () {
         Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'));
         removePlot();
         addPlot();
-        //rangeControl();
-        //rangeDatePicker();
     };
     artifactDesigner._previewCallbacks.trafficlight = function (data, container) {
         container.trafficlight(data.TrafficLightChart);
-        //container.highcharts({
-        //    chart: {
-        //        type: 'gauge',
-        //        plotBackgroundColor: null,
-        //        plotBackgroundImage: null,
-        //        plotBorderWidth: 0,
-        //        plotShadow: false
-        //    },
-
-        //    title: {
-        //        text: data.TrafficLightChart.Title
-        //    },
-
-        //    pane: {
-        //        startAngle: -150,
-        //        endAngle: 150,
-        //        background: [{
-        //                backgroundColor: {
-        //                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-        //                    stops: [
-        //                        [0, '#FFF'],
-        //                        [1, '#333']
-        //                    ]
-        //                },
-        //                borderWidth: 0,
-        //                outerRadius: '109%'
-        //            }, {
-        //                backgroundColor: {
-        //                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-        //                    stops: [
-        //                        [0, '#333'],
-        //                        [1, '#FFF']
-        //                    ]
-        //                },
-        //                borderWidth: 1,
-        //                outerRadius: '107%'
-        //            }, {
-
-        //                // default background
-        //            }, {
-        //                backgroundColor: '#DDD',
-        //                borderWidth: 0,
-        //                outerRadius: '105%',
-        //                innerRadius: '103%'
-        //            }]
-        //    },
-
-        //    // the value axis
-        //    yAxis: {
-        //        min: 0,
-        //        max: 200,
-
-        //        minorTickInterval: 'auto',
-        //        minorTickWidth: 1,
-        //        minorTickLength: 10,
-        //        minorTickPosition: 'inside',
-        //        minorTickColor: '#666',
-
-        //        tickPixelInterval: 30,
-        //        tickWidth: 2,
-        //        tickPosition: 'inside',
-        //        tickLength: 10,
-        //        tickColor: '#666',
-        //        labels: {
-        //            step: 2,
-        //            rotation: 'auto'
-        //        },
-        //        title: {
-        //            text: data.TrafficLightChart.ValueAxisTitle
-        //        },
-        //        plotBands: data.TrafficLightChart.PlotBands
-        //    },
-
-        //    series: [{
-        //        name: data.TrafficLightChart.Series.name,
-        //        data: data.TrafficLightChart.Series.data,
-        //        tooltip: {
-        //            valueSuffix: ' ' + data.TrafficLightChart.ValueAxisTitle
-        //        }
-        //    }]
-        //});
     };
 
     //tank
-    artifactDesigner._setupCallbacks.tank = function () {
+    artifactDesigner._setupCallbacks.tank = function() {
         $('.main-value-axis').css('display', 'none');
         $('.form-measurement').css('display', 'none');
-        Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'),false);
-    }
-    artifactDesigner._previewCallbacks.tank = function (data, container) {
-        var containerHeight = container.height()-50;
+        Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'), false);
+    };
+    artifactDesigner._previewCallbacks.tank = function(data, container) {
+        var containerHeight = container.height() - 50;
         var tankToTopHeight = 75;
         var tankHeight = containerHeight - tankToTopHeight;
         var volumeColor = '#00aeef';
@@ -1511,10 +1431,10 @@ String.prototype.isNullOrEmpty = function () {
         var $volume = $('<div>', { 'class': 'tank-volume' });
         var volumeHeight = data.Tank.VolumeInventory / data.Tank.MaxCapacity * tankHeight;
         $volume.height(volumeHeight);
-        $volume.width(generalWidth-2);
+        $volume.width(generalWidth - 2);
         $volume.css('background-color', volumeColor);
         var $tankToTop = $('<div>', { 'class': 'tank-to-top' });
-        $tankToTop.append('<p>' + data.Tank.DaysToTankTop + ' '+ periodeUnit +'</p>');
+        $tankToTop.append('<p>' + data.Tank.DaysToTankTop + ' ' + periodeUnit + '</p>');
         $tankToTop.append('<p>' + data.Tank.DaysToTankTopTitle + '</p>');
         $tankToTop.width(generalWidth);
         $tankToTop.height(tankToTopHeight);
@@ -1524,15 +1444,15 @@ String.prototype.isNullOrEmpty = function () {
 
         var $zeroMeter = $('<p>', { 'class': 'tank-zero-meter' });
         $zeroMeter.html('- 0 ' + volumeUnit);
-       
+
         var $minCapacity = $('<p>', { 'class': 'tank-min-capacity' });
         $minCapacity.html('- ' + data.Tank.MinCapacity + ' ' + volumeUnit + ' (Min)');
         var minCapacityPos = data.Tank.MinCapacity / data.Tank.MaxCapacity * tankHeight;
         $minCapacity.css('bottom', minCapacityPos + 'px');
-      
+
         var $maxCapacity = $('<p>', { 'class': 'tank-max-capacity' });
         $maxCapacity.html('- ' + data.Tank.MaxCapacity + ' ' + volumeUnit + ' (Max)');
-        
+
         var $currentVol = $('<p>', { 'class': 'tank-current-volume' });
         var currentVolPercent = Math.round(data.Tank.VolumeInventory / data.Tank.MaxCapacity * 100).toFixed(2);
         $currentVol.css('bottom', (volumeHeight - 6) + 'px');
@@ -1557,8 +1477,8 @@ String.prototype.isNullOrEmpty = function () {
         //    $minCapacity.css('width', $('.tank-min-capacity')[0].clientWidth + 'px');
         //    $maxCapacity.css('width', $('.tank-max-capacity')[0].clientWidth + 'px');
         //}, 100);
-        
-    }
+
+    };
 
     var templateEditor = Pear.Template.Editor;
 
