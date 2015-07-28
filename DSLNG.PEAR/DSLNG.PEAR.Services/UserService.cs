@@ -7,6 +7,7 @@ using DSLNG.PEAR.Services.Responses.User;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
+using SimpleCrypto;
 //using Microsoft.AspNet.Identity;
 
 
@@ -15,7 +16,7 @@ namespace DSLNG.PEAR.Services
     public class UserService : BaseService, IUserService
     {
         //private PasswordHasher _pass = new PasswordHasher();
-        private SimpleCrypto.PBKDF2 crypto = new SimpleCrypto.PBKDF2();
+        private PBKDF2 crypto = new PBKDF2();
 
         public UserService(IDataContext dataContext)
             : base(dataContext)
@@ -57,9 +58,11 @@ namespace DSLNG.PEAR.Services
             var response = new CreateUserResponse();
             try
             {
+
                 var user = request.MapTo<User>();
                 user.Role = DataContext.RoleGroups.First(x => x.Id == request.RoleId);
-                user.Password = crypto.Compute(request.Password, request.Password);
+                user.PasswordSalt = crypto.GenerateSalt(crypto.HashIterations,crypto.SaltSize);
+                user.Password = crypto.Compute(request.Password, user.PasswordSalt);
                 //user.Password = _pass.HashPassword(request.Password);
                 DataContext.Users.Add(user);
                 DataContext.SaveChanges();

@@ -20,7 +20,8 @@
             column.Caption = "Action";
             column.SetDataItemTemplateContent(c =>
                                               ViewContext.Writer.Write(
-                                                  Html.ActionLink("View", "View", new { Id = DataBinder.Eval(c.DataItem, "Id") }, new { @class = "artifact-view" })
+                                                  Html.ActionLink("View", "View", new { Id = DataBinder.Eval(c.DataItem, "Id") }, new { @class = "artifact-view" }) + " | " +
+                                                  Html.ActionLink("Edit", "Update", new { Id = DataBinder.Eval(c.DataItem, "Id") }, new { @class = "artifact-view" })
                                                   )
 
 

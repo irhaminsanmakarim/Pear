@@ -1601,7 +1601,7 @@ String.prototype.isNullOrEmpty = function () {
                 newColumn.css('width', newWidth + '%');
                 Pear.Template.Editor._artifactSelectField(newColumn);
                 $('<input>').attr({
-                    type: 'text',
+                    type: 'hidden',
                     id: 'foo',
                     name: 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns.Index',
                     value: columnCount
@@ -1656,6 +1656,28 @@ String.prototype.isNullOrEmpty = function () {
                 $(val).css('width', newWidth + '%');
             });
         });
+        
+        $('#graphic-preview-btn').click(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            $.ajax({
+                url: $this.data('preview-url'),
+                data: $this.closest('form').serialize(),
+                method: 'POST',
+                success: function (data) {
+                    $('#container').html(data);
+                    templateEditor.ViewSetup();
+                    $('#graphic-preview').modal('show');
+                }
+            });
+        });
+        $('#graphic-preview').on('show.bs.modal', function () {
+            $('#container').css('visibility', 'hidden');
+        });
+        $('#graphic-preview').on('shown.bs.modal', function () {
+            $('#container').css('visibility', 'initial');
+        });
+        
         addRow();
         addColumn();
     };
@@ -1745,6 +1767,27 @@ String.prototype.isNullOrEmpty = function () {
             $row.children('.layout-column').each(function (i, val) {
                 $(val).css('width', newWidth + '%');
             });
+        });
+        
+        $('#graphic-preview-btn').click(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            $.ajax({
+                url: $this.data('preview-url'),
+                data: $this.closest('form').serialize(),
+                method: 'POST',
+                success: function (data) {
+                    $('#container').html(data);
+                    templateEditor.ViewSetup();
+                    $('#graphic-preview').modal('show');
+                }
+            });
+        });
+        $('#graphic-preview').on('show.bs.modal', function () {
+            $('#container').css('visibility', 'hidden');
+        });
+        $('#graphic-preview').on('shown.bs.modal', function () {
+            $('#container').css('visibility', 'initial');
         });
         
         addRow();

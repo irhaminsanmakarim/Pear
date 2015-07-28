@@ -65,12 +65,17 @@ namespace DSLNG.PEAR.Web.Controllers
                 var request = viewModel.MapTo<UpdateTemplateRequest>();
                 var response = _templateService.UpdateTemplate(request);
 
-                return RedirectToAction("Update", new {id = viewModel.Id});
+                return RedirectToAction("Index");
             }
             catch
             {
                 return View();
             }
+        }
+
+        public ActionResult Preview(TemplateViewModel viewModel)
+        {
+            return View(viewModel);
         }
 
         //
