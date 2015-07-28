@@ -321,14 +321,14 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        private string[] _getPeriodes(PeriodeType periodeType, RangeFilter rangeFilter, DateTime? Start, DateTime? End, out IList<DateTime> dateTimePeriodes)
+        private string[] _getPeriodes(PeriodeType periodeType, RangeFilter rangeFilter, DateTime? Start, DateTime? End, out IList<DateTime> dateTimePeriodes) //, out string timeInformation
         {
             var periodes = new List<string>();
             dateTimePeriodes = new List<DateTime>();
             switch (periodeType)
             {
                 case PeriodeType.Hourly:
-                    var hourlyFormat = "MM/DD/yyyy hh:mm A";
+                    var hourlyFormat = "hh tt";
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentHour:
@@ -346,6 +346,7 @@ namespace DSLNG.PEAR.Services
                                 periodes.Add(startHour.ToString(hourlyFormat));
                                 dateTimePeriodes.Add(startHour);
                             }
+                            //timeInformation = startHour.ToString("MM/dd/yyyy");
                             break;
                         default:
                             while (Start.Value <= End.Value)
@@ -488,7 +489,7 @@ namespace DSLNG.PEAR.Services
                                     .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
                                 if (targetValue == null || !targetValue.HasValue)
                                 {
-                                    aSeries.Data.Add(0);
+                                    aSeries.Data.Add(null);
                                 }
                                 else
                                 {
@@ -503,7 +504,7 @@ namespace DSLNG.PEAR.Services
                                 var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
                                 if (target == null || !target.Value.HasValue)
                                 {
-                                    aSeries.Data.Add(0);
+                                    aSeries.Data.Add(null);
                                 }
                                 else
                                 {
@@ -526,7 +527,7 @@ namespace DSLNG.PEAR.Services
                                 double data = 0;
                                 for (var j = 0; j < i; j++)
                                 {
-                                    data += aSeries.Data[j];
+                                    data += aSeries.Data[j].HasValue? aSeries.Data[j].Value : 0;
                                 }
                                 previousSeries.Data.Add(data);
                             }
@@ -552,7 +553,7 @@ namespace DSLNG.PEAR.Services
                                     .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
                                 if (targetValue == null || !targetValue.HasValue)
                                 {
-                                    aSeries.Data.Add(0);
+                                    aSeries.Data.Add(null);
                                 }
                                 else
                                 {
@@ -567,7 +568,7 @@ namespace DSLNG.PEAR.Services
                                 var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
                                 if (target == null || !target.Value.HasValue)
                                 {
-                                    aSeries.Data.Add(0);
+                                    aSeries.Data.Add(null);
                                 }
                                 else
                                 {
@@ -592,7 +593,7 @@ namespace DSLNG.PEAR.Services
                                 double data = 0;
                                 for (var j = 0; j < i; j++)
                                 {
-                                    data += aSeries.Data[j];
+                                    data += aSeries.Data[j].HasValue ? aSeries.Data[j].Value : 0 ;
                                 }
                                 previousSeries.Data.Add(data);
                             }
@@ -625,7 +626,7 @@ namespace DSLNG.PEAR.Services
                                         .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
                                     if (targetValue == null || !targetValue.HasValue)
                                     {
-                                        aSeries.Data.Add(0);
+                                        aSeries.Data.Add(null);
                                     }
                                     else
                                     {
@@ -640,7 +641,7 @@ namespace DSLNG.PEAR.Services
                                     var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
                                     if (target == null || !target.Value.HasValue)
                                     {
-                                        aSeries.Data.Add(0);
+                                        aSeries.Data.Add(null);
                                     }
                                     else
                                     {
@@ -671,7 +672,7 @@ namespace DSLNG.PEAR.Services
                                         .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
                                     if (targetValue == null || !targetValue.HasValue)
                                     {
-                                        aSeries.Data.Add(0);
+                                        aSeries.Data.Add(null);
                                     }
                                     else
                                     {
@@ -686,7 +687,7 @@ namespace DSLNG.PEAR.Services
                                     var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
                                     if (target == null || !target.Value.HasValue)
                                     {
-                                        aSeries.Data.Add(0);
+                                        aSeries.Data.Add(null);
                                     }
                                     else
                                     {
@@ -732,7 +733,7 @@ namespace DSLNG.PEAR.Services
                                     .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
                                 if (targetValue == null || !targetValue.HasValue)
                                 {
-                                    aSeries.Data.Add(0);
+                                    aSeries.Data.Add(null);
                                 }
                                 else
                                 {
@@ -747,7 +748,7 @@ namespace DSLNG.PEAR.Services
                                 var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
                                 if (target == null || !target.Value.HasValue)
                                 {
-                                    aSeries.Data.Add(0);
+                                    aSeries.Data.Add(null);
                                 }
                                 else
                                 {
@@ -768,7 +769,7 @@ namespace DSLNG.PEAR.Services
                             double data = 0;
                             for (var j = 0; j < i; j++)
                             {
-                                data += aSeries.Data[j];
+                                data += aSeries.Data[j].HasValue ? aSeries.Data[j].Value : 0;
                             }
                             previousSeries.Data.Add(data);
                         }
@@ -794,7 +795,7 @@ namespace DSLNG.PEAR.Services
                                     .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
                                 if (targetValue == null || !targetValue.HasValue)
                                 {
-                                    aSeries.Data.Add(0);
+                                    aSeries.Data.Add(null);
                                 }
                                 else
                                 {
@@ -809,7 +810,7 @@ namespace DSLNG.PEAR.Services
                                 var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
                                 if (target == null || !target.Value.HasValue)
                                 {
-                                    aSeries.Data.Add(0);
+                                    aSeries.Data.Add(null);
                                 }
                                 else
                                 {
@@ -832,7 +833,7 @@ namespace DSLNG.PEAR.Services
                             double data = 0;
                             for (var j = 0; j < i; j++)
                             {
-                                data += aSeries.Data[j];
+                                data += aSeries.Data[j].HasValue ? aSeries.Data[j].Value : 0;
                             }
                             previousSeries.Data.Add(data);
                         }
@@ -906,15 +907,17 @@ namespace DSLNG.PEAR.Services
                                     }
                                     else
                                     {
-                                        aSeries.Data.Add(target.Value);
+                                        
                                         var remain = target.Value - actual.Value;
                                         if (remain > 0)
                                         {
+                                            aSeries.Data.Add(actual.Value);
                                             remainSeries.Data.Add(remain);
                                             exceedSeries.Data.Add(0);
                                         }
                                         else
                                         {
+                                            aSeries.Data.Add(target.Value);
                                             exceedSeries.Data.Add(-remain);
                                             remainSeries.Data.Add(0);
                                         }
@@ -950,15 +953,17 @@ namespace DSLNG.PEAR.Services
                                     }
                                     else
                                     {
-                                        aSeries.Data.Add(target.Value.Value);
+                                        
                                         var remain = target.Value.Value - actual.Value.Value;
                                         if (remain > 0)
                                         {
+                                            aSeries.Data.Add(actual.Value.Value);
                                             remainSeries.Data.Add(remain);
                                             exceedSeries.Data.Add(0);
                                         }
                                         else
                                         {
+                                            aSeries.Data.Add(target.Value.Value);
                                             exceedSeries.Data.Add(-remain);
                                             remainSeries.Data.Add(0);
                                         }
@@ -995,7 +1000,7 @@ namespace DSLNG.PEAR.Services
                                     .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
                                 if (targetValue == null || !targetValue.HasValue)
                                 {
-                                    aSeries.Data.Add(0);
+                                    aSeries.Data.Add(null);
                                 }
                                 else
                                 {
@@ -1010,7 +1015,7 @@ namespace DSLNG.PEAR.Services
                                 var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
                                 if (target == null || !target.Value.HasValue)
                                 {
-                                    aSeries.Data.Add(0);
+                                    aSeries.Data.Add(null);
                                 }
                                 else
                                 {
@@ -1035,7 +1040,7 @@ namespace DSLNG.PEAR.Services
                                 double data = 0;
                                 for (var j = 0; j < i; j++)
                                 {
-                                    data += aSeries.Data[j];
+                                    data += aSeries.Data[j].HasValue ? aSeries.Data[j].Value : 0;
                                 }
                                 previousSeries.Data.Add(data);
                             }
@@ -1071,7 +1076,7 @@ namespace DSLNG.PEAR.Services
                                         .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
                                     if (targetValue == null || !targetValue.HasValue)
                                     {
-                                        aSeries.Data.Add(0);
+                                        aSeries.Data.Add(null);
                                     }
                                     else
                                     {
@@ -1086,7 +1091,7 @@ namespace DSLNG.PEAR.Services
                                     var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
                                     if (target == null || !target.Value.HasValue)
                                     {
-                                        aSeries.Data.Add(0);
+                                        aSeries.Data.Add(null);
                                     }
                                     else
                                     {
@@ -1117,7 +1122,7 @@ namespace DSLNG.PEAR.Services
                                         .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
                                     if (targetValue == null || !targetValue.HasValue)
                                     {
-                                        aSeries.Data.Add(0);
+                                        aSeries.Data.Add(null);
                                     }
                                     else
                                     {
@@ -1132,7 +1137,7 @@ namespace DSLNG.PEAR.Services
                                     var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
                                     if (target == null || !target.Value.HasValue)
                                     {
-                                        aSeries.Data.Add(0);
+                                        aSeries.Data.Add(null);
                                     }
                                     else
                                     {

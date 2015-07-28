@@ -16,10 +16,10 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public class SeriesResponse
         {
             public SeriesResponse() {
-                Data = new List<double>();
+                Data = new List<double?>();
             }
             public string Name { get; set; }
-            public IList<double> Data { get; set; }
+            public IList<double?> Data { get; set; }
             public string Stack { get; set; }
             public string Color { get; set; }
         }
