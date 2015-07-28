@@ -366,6 +366,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.LineChart = new LineChartDataViewModel();
                         previewViewModel.LineChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.LineChart.Subtitle = chartData.Subtitle;
                         previewViewModel.LineChart.ValueAxisTitle = artifactResp.Measurement;
                         previewViewModel.LineChart.Series = chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
                         previewViewModel.LineChart.Periodes = chartData.Periodes;
@@ -377,6 +378,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.AreaChart = new AreaChartDataViewModel();
                         previewViewModel.AreaChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.AreaChart.Subtitle = chartData.Subtitle;
                         previewViewModel.AreaChart.ValueAxisTitle = artifactResp.Measurement;
                         previewViewModel.AreaChart.Series = chartData.Series.MapTo<AreaChartDataViewModel.SeriesViewModel>();
                         previewViewModel.AreaChart.Periodes = chartData.Periodes;
@@ -432,6 +434,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.BarChart = new BarChartDataViewModel();
                         previewViewModel.BarChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.BarChart.Subtitle = chartData.Subtitle;
                         previewViewModel.BarChart.ValueAxisTitle = artifactResp.Measurement; //.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
                         previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
                         previewViewModel.BarChart.Periodes = chartData.Periodes;
@@ -456,6 +459,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.LineChart = new LineChartDataViewModel();
                         previewViewModel.LineChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.LineChart.Subtitle = chartData.Subtitle;
                         previewViewModel.LineChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
                         previewViewModel.LineChart.Series = chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
                         previewViewModel.LineChart.Periodes = chartData.Periodes;
@@ -469,6 +473,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.AreaChart = new AreaChartDataViewModel();
                         previewViewModel.AreaChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.AreaChart.Subtitle = chartData.Subtitle;
                         previewViewModel.AreaChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
                         previewViewModel.AreaChart.Series = chartData.Series.MapTo<AreaChartDataViewModel.SeriesViewModel>();
                         previewViewModel.AreaChart.Periodes = chartData.Periodes;
@@ -534,6 +539,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.BarChart = new BarChartDataViewModel();
                         previewViewModel.BarChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.BarChart.Subtitle = chartData.Subtitle;
                         previewViewModel.BarChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
                         previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
                         previewViewModel.BarChart.Periodes = chartData.Periodes;

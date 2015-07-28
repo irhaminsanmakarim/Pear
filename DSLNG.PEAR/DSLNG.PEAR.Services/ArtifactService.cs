@@ -29,7 +29,8 @@ namespace DSLNG.PEAR.Services
             var daysToTankTop = DataContext.Kpis.Include(x => x.Measurement).Where(x => x.Id == request.Tank.DaysToTankTopId).First();
             response.DaysToTankTopUnit = daysToTankTop.Measurement.Name;
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
-            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes);
+            string timeInformation;
+            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
             var start = dateTimePeriodes[0];
             var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
             switch (volumeInventory.YtdFormula)
@@ -78,14 +79,15 @@ namespace DSLNG.PEAR.Services
             foreach (var row in request.Rows) {
                 var kpi = DataContext.Kpis.Include(x => x.Measurement).Where(x => x.Id == row.KpiId).First();
                 IList<DateTime> dateTimePeriodes = new List<DateTime>();
-                this._getPeriodes(row.PeriodeType, row.RangeFilter, row.Start, row.End, out dateTimePeriodes);
+                string timeInformation;
+                this._getPeriodes(row.PeriodeType, row.RangeFilter, row.Start, row.End, out dateTimePeriodes, out timeInformation);
                 var start = dateTimePeriodes[0];
                 var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
                 var rowResponse = new GetTabularDataResponse.RowResponse();
                 rowResponse.KpiName = kpi.Name;
                 rowResponse.Measurement = kpi.Measurement.Name;
                 rowResponse.PeriodeType = row.PeriodeType.ToString();
-                rowResponse.Periode = start.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                rowResponse.Periode = timeInformation;//start.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                 if (request.Remark) {
                     rowResponse.Remark = kpi.Remark;
                 }
@@ -131,7 +133,8 @@ namespace DSLNG.PEAR.Services
 
             var kpi = DataContext.Kpis.Where(x => x.Id == request.Series.KpiId).First();
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
-            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes);
+            string timeInformation;
+            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
             var start = dateTimePeriodes[0];
             var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
 
@@ -206,7 +209,8 @@ namespace DSLNG.PEAR.Services
 
             var kpi = DataContext.Kpis.Where(x => x.Id == request.Series.KpiId).First();
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
-            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes);
+            string timeInformation;
+            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
             var start = dateTimePeriodes[0];
             var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
 
@@ -280,7 +284,9 @@ namespace DSLNG.PEAR.Services
         {
             var response = new GetCartesianChartDataResponse();
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
-            response.Periodes = this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes);
+            string timeInformation;
+            response.Periodes = this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
+            response.Subtitle = timeInformation;
             IList<GetCartesianChartDataResponse.SeriesResponse> seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
             var seriesType = "single-stack";
             if (request.Series.Count == 1 && (request.GraphicType == "baraccumulative" || request.GraphicType == "barachievement"))
@@ -321,8 +327,9 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        private string[] _getPeriodes(PeriodeType periodeType, RangeFilter rangeFilter, DateTime? Start, DateTime? End, out IList<DateTime> dateTimePeriodes) //, out string timeInformation
+        private string[] _getPeriodes(PeriodeType periodeType, RangeFilter rangeFilter, DateTime? Start, DateTime? End, out IList<DateTime> dateTimePeriodes, out string timeInformation) //, out string timeInformation
         {
+            //var ci = new CultureInfo("en-GB");
             var periodes = new List<string>();
             dateTimePeriodes = new List<DateTime>();
             switch (periodeType)
@@ -332,23 +339,44 @@ namespace DSLNG.PEAR.Services
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentHour:
-                            var currentHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
-                            dateTimePeriodes.Add(currentHour);
-                            periodes.Add(currentHour.ToString(hourlyFormat));
+                            {
+                                var currentHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+                                dateTimePeriodes.Add(currentHour);
+                                periodes.Add(currentHour.ToString(hourlyFormat));
+                                timeInformation = currentHour.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                            }
                             break;
                         case RangeFilter.CurrentDay:
-                            var startHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-                            periodes.Add(startHour.ToString(hourlyFormat));
-                            dateTimePeriodes.Add(startHour);
-                            for (double i = 1; i < 24; i++)
                             {
-                                startHour = startHour.AddHours(1);
+                                var startHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                                 periodes.Add(startHour.ToString(hourlyFormat));
                                 dateTimePeriodes.Add(startHour);
+                                for (double i = 1; i < 24; i++)
+                                {
+                                    startHour = startHour.AddHours(1);
+                                    periodes.Add(startHour.ToString(hourlyFormat));
+                                    dateTimePeriodes.Add(startHour);
+                                }
+                                timeInformation = startHour.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
                             }
-                            //timeInformation = startHour.ToString("MM/dd/yyyy");
+                            break;
+                        case RangeFilter.DTD:
+                            {
+                                //var currentDay = DateTime.Now.Day;
+                                var startHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                                var currentHour = DateTime.Now.Hour;
+                                timeInformation = startHour.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                                while (startHour.Hour <= currentHour)
+                                {
+                                    periodes.Add(startHour.ToString(hourlyFormat));
+                                    dateTimePeriodes.Add(startHour);
+                                    startHour = startHour.AddHours(1);
+                                }
+                                timeInformation += " - " + startHour.AddHours(-1).ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                            }
                             break;
                         default:
+                            timeInformation = Start.Value.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
                             while (Start.Value <= End.Value)
                             {
                                 periodes.Add(Start.Value.ToString(hourlyFormat));
@@ -359,25 +387,47 @@ namespace DSLNG.PEAR.Services
                     }
                     break;
                 case PeriodeType.Daily:
-                    var dailyFormat = "MM/dd/yyyy";
+                    var dailyFormat = "dd";
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentDay:
-                            var currentDay = DateTime.Now.Date;
-                            periodes.Add(currentDay.ToString(dailyFormat));
-                            dateTimePeriodes.Add(currentDay);
+                            {
+                                var currentDay = DateTime.Now.Date;
+                                periodes.Add(currentDay.ToString(dailyFormat));
+                                dateTimePeriodes.Add(currentDay);
+                                timeInformation = currentDay.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                            }
                             break;
                         case RangeFilter.CurrentMonth:
-                            var currentMonth = DateTime.Now.Month;
-                            var startDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                            while (currentMonth == startDay.Month)
                             {
-                                periodes.Add(startDay.ToString(dailyFormat));
-                                dateTimePeriodes.Add(startDay);
-                                startDay = startDay.AddDays(1);
+                                var currentMonth = DateTime.Now.Month;
+                                var startDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                                while (currentMonth == startDay.Month)
+                                {
+                                    periodes.Add(startDay.ToString(dailyFormat));
+                                    dateTimePeriodes.Add(startDay);
+                                    startDay = startDay.AddDays(1);
+                                }
+                                timeInformation = startDay.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                            }
+                            break;
+                        case RangeFilter.MTD:
+                            {
+                                var currentMonth = DateTime.Now.Month;
+                                var startDay = new DateTime(DateTime.Now.Year, currentMonth, 1);
+                                var currentDay = DateTime.Now.Day;
+                                timeInformation = startDay.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                while (startDay.Day <= currentDay)
+                                {
+                                    periodes.Add(startDay.ToString(dailyFormat));
+                                    dateTimePeriodes.Add(startDay);
+                                    startDay = startDay.AddDays(1);
+                                }
+                                timeInformation += " - " + startDay.AddDays(-1).ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
                             }
                             break;
                         default:
+                            timeInformation = Start.Value.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
                             while (Start.Value <= End.Value)
                             {
                                 periodes.Add(Start.Value.ToString(dailyFormat));
@@ -389,21 +439,22 @@ namespace DSLNG.PEAR.Services
                     }
                     break;
                 case PeriodeType.Monthly:
-                    var monthlyFormat = "MM/yyyy";
+                    var monthlyFormat = "MMM";
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentMonth:
                             {
                                 var currentMonth = DateTime.Now.Date;
                                 dateTimePeriodes.Add(currentMonth);
-                                periodes.Add(currentMonth.ToString(monthlyFormat));
+                                periodes.Add(currentMonth.ToString(monthlyFormat, CultureInfo.InvariantCulture));
+                                timeInformation = currentMonth.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.CurrentYear:
                             {
                                 var currentYear = DateTime.Now.Year;
                                 var startMonth = new DateTime(DateTime.Now.Year, 1, 1);
-
+                                timeInformation = currentYear.ToString();
                                 while (currentYear == startMonth.Year)
                                 {
                                     periodes.Add(startMonth.ToString(monthlyFormat));
@@ -417,15 +468,18 @@ namespace DSLNG.PEAR.Services
                                 var currentYear = DateTime.Now.Year;
                                 var startMonth = new DateTime(DateTime.Now.Year, 1, 1);
                                 var currentMont = DateTime.Now.Month;
+                                timeInformation = startMonth.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
                                 while (startMonth.Month <= currentMont)
                                 {
                                     periodes.Add(startMonth.ToString(monthlyFormat));
                                     dateTimePeriodes.Add(startMonth);
                                     startMonth = startMonth.AddMonths(1);
                                 }
+                                timeInformation += " - " + startMonth.AddMonths(-1).ToString("MMM/yyyy", CultureInfo.InvariantCulture);
                             }
                             break;
                         default:
+                            timeInformation = Start.Value.ToString("MMM/yyyy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
                             while (Start.Value <= End.Value)
                             {
                                 dateTimePeriodes.Add(Start.Value);
@@ -442,8 +496,10 @@ namespace DSLNG.PEAR.Services
                         case RangeFilter.CurrentYear:
                             periodes.Add(DateTime.Now.Year.ToString());
                             dateTimePeriodes.Add(new DateTime(DateTime.Now.Year, 1, 1));
+                            timeInformation = DateTime.Now.Year.ToString();
                             break;
                         default:
+                            timeInformation = Start.Value.ToString("yyyy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("yyyy", CultureInfo.InvariantCulture);
                             while (Start.Value <= End.Value)
                             {
                                 periodes.Add(Start.Value.ToString(yearlyFormat));

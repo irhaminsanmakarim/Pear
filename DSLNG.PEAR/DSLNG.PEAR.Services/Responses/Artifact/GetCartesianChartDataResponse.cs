@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         {
             Series = new List<SeriesResponse>();
         }
+        public string Subtitle { get; set; }
         public string SeriesType { get; set; }
         public string[] Periodes { get; set; }
         public IList<SeriesResponse> Series { get; set; }

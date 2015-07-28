@@ -602,6 +602,9 @@ String.prototype.isNullOrEmpty = function () {
             title: {
                 text: data.BarChart.Title
             },
+            subtitle: {
+                text: data.BarChart.Subtitle,
+            },
             xAxis: {
                 categories: data.BarChart.Periodes,
                 crosshair: true
@@ -636,6 +639,9 @@ String.prototype.isNullOrEmpty = function () {
             },
             title: {
                 text: data.BarChart.Title
+            },
+            subtitle: {
+                text: data.BarChart.Subtitle,
             },
             xAxis: {
                 categories: data.BarChart.Periodes,
@@ -694,6 +700,9 @@ String.prototype.isNullOrEmpty = function () {
             },
             title: {
                 text: data.BarChart.Title
+            },
+            subtitle: {
+                text: data.BarChart.Subtitle,
             },
             xAxis: {
                 categories: data.BarChart.Periodes,
@@ -785,6 +794,10 @@ String.prototype.isNullOrEmpty = function () {
                 text: data.LineChart.Title,
                 x: -20 //center
             },
+            subtitle: {
+                text: data.LineChart.Subtitle,
+                x: -20
+            },
             //subtitle: {
             //    text: 'Source: WorldClimate.com',
             //    x: -20
@@ -864,6 +877,10 @@ String.prototype.isNullOrEmpty = function () {
             },
             title: {
                 text: data.AreaChart.Title
+            },
+            subtitle: {
+                text: data.AreaChart.Subtitle,
+                x: -20
             },
             //subtitle: {
             //    text: 'Source: <a href="http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf">' +
@@ -1308,7 +1325,7 @@ String.prototype.isNullOrEmpty = function () {
         $table.addClass('table-bordered');
         var rowHeader = $('<tr>');
         rowHeader.append($('<th>').html('Kpi Name'));
-        rowHeader.append($('<th>').html('Periode Type'));
+        //rowHeader.append($('<th>').html('Periode Type'));
         rowHeader.append($('<th>').html('Periode'));
         if (data.Tabular.Actual) {
             rowHeader.append($('<th>').html('Actual'));
@@ -1319,13 +1336,13 @@ String.prototype.isNullOrEmpty = function () {
         if (data.Tabular.Remark) {
             rowHeader.append($('<th>').html('Remark'));
         }
-        rowHeader.append($('<th>').html('Measurement'));
+        //rowHeader.append($('<th>').html('Measurement'));
         $table.append(rowHeader);
         for (var i in data.Tabular.Rows) {
             var dataRow = data.Tabular.Rows[i];
             var row = $('<tr>');
-            row.append($('<td>').html(dataRow.KpiName));
-            row.append($('<td>').html(dataRow.PeriodeType));
+            row.append($('<td>').html(dataRow.KpiName + ' (' + dataRow.Measurement + ')'));
+            //row.append($('<td>').html(dataRow.PeriodeType));
             row.append($('<td>').html(dataRow.Periode));
             if (data.Tabular.Actual) {
                 row.append($('<td>').html(dataRow.Actual));
@@ -1336,7 +1353,7 @@ String.prototype.isNullOrEmpty = function () {
             if (data.Tabular.Remark) {
                 row.append($('<td>').html(dataRow.Remark));
             }
-            row.append($('<td>').html(dataRow.Measurement));
+            //row.append($('<td>').html(dataRow.Measurement));
             $table.append(row);
         }
         wrapper.append($table);
