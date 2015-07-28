@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using DevExpress.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using DSLNG.PEAR.Web.Attributes;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -42,7 +43,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return View("Login", viewModel);
         }
-
+        
         public ActionResult Index()
         {
             return View();

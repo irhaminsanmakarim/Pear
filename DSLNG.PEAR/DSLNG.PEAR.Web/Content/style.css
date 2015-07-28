@@ -124,6 +124,7 @@ aside.left-content > * {
 
 .sub-nav ul {
     padding: 0;
+    padding-left: 10px;
     display: none;
     overflow: hidden;
 }
