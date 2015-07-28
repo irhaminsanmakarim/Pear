@@ -94,7 +94,6 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             //get menu active by url request
             var rootMenuActive = TempData["RootMenuActive"].MapTo<Data.Entities.Menu>();
-            //ViewBag.RootMenuActive = rootMenuActive;
             var userService = ObjectFactory.Container.GetInstance<IUserService>();
             var AuthUser = userService.GetUserByName(new GetUserByNameRequest { Name = HttpContext.User.Identity.Name });
             var menus = new GetSiteMenusResponse();
