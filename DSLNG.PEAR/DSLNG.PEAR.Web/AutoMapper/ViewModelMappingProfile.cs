@@ -232,6 +232,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<ArtifactDesignerViewModel, GetTankDataRequest>();
             Mapper.CreateMap<TankViewModel, GetTankDataRequest.TankRequest>();
             Mapper.CreateMap<GetTankDataResponse, TankDataViewModel>();
+            Mapper.CreateMap<TankViewModel, UpdateArtifactRequest>();
+            Mapper.CreateMap<TankViewModel, UpdateArtifactRequest.TankRequest>();
+            
+            
        
             //Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetSeriesRequest.Series>()
             //    .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetSeriesRequest.Stack>()));
@@ -280,6 +284,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetArtifactResponse, GetTankDataRequest>();
             Mapper.CreateMap<GetArtifactResponse.TankResponse, GetTankDataRequest.TankRequest>();
             Mapper.CreateMap<GetArtifactResponse.TankResponse, TankViewModel>();
+            Mapper.CreateMap<GetArtifactResponse, TankViewModel>();
             //Mapper.CreateMap<GetArtifactResponse., GetSpeedometerChartDataRequest.PlotBandRequest>();
             //Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetSpeedometerChartDataRequest.SeriesRequest>();
 

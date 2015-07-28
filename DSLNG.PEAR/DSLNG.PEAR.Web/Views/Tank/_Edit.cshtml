@@ -1,4 +1,5 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+@Html.HiddenFor(x=> x.Tank.Id)
 <div class="form-group form-list">
     @Html.LabelFor(model => model.Tank.MinCapacity)
     @Html.TextBoxFor(model => model.Tank.MinCapacity, new { @class = "form-control" })
@@ -16,11 +17,11 @@
 </div>
 <div class="form-group form-list">
     @Html.LabelFor(model => model.Tank.DaysToTankTopId)
-    @Html.DropDownListFor(model => model.Tank.DaysToTankTopId, new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px" })
+    @Html.DropDownListFor(model => model.Tank.DaysToTankTopId, new List<SelectListItem>(){ new SelectListItem { Value = Model.Tank.DaysToTankTopId.ToString(), Text = Model.Tank.DaysToTankTop.ToString() } }, new { @class = "kpi-list  form-control", style = "width:180px" })
     @Html.ValidationMessageFor(model => model.Tank.DaysToTankTopId)
 </div>
 <div class="form-group form-list">
     @Html.LabelFor(model => model.Tank.VolumeInventoryId)
-    @Html.DropDownListFor(model => model.Tank.VolumeInventoryId, new List<SelectListItem>(),  new { @class = "kpi-list  form-control", style = "width:180px" })
+    @Html.DropDownListFor(model => model.Tank.VolumeInventoryId, new List<SelectListItem>() { new SelectListItem { Value = Model.Tank.VolumeInventoryId.ToString(), Text = Model.Tank.VolumeInventory.ToString() } }, new { @class = "kpi-list  form-control", style = "width:180px" })
     @Html.ValidationMessageFor(model => model.Tank.VolumeInventoryId)
 </div>

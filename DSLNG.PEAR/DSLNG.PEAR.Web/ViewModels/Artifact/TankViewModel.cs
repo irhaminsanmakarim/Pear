@@ -5,6 +5,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
     public class TankViewModel
     {
         [Display(Name="Volume Inventory")]
+        public int  Id { get; set; }
         public int VolumeInventoryId { get; set; }
         public string VolumeInventory { get; set; }
         public int DaysToTankTopId { get; set; }

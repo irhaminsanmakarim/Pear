@@ -192,8 +192,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
                 case "tank":
                     {
-                        //var tankData = new TankViewModel();
-                        //viewModel.Tank = artifact.MapPropertiesToInstance<TankViewModel>(tankData);
+                        viewModel.Tank = artifact.Tank.MapTo<TankViewModel>();
                     }
                     break;
                 default:
@@ -642,6 +641,14 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
                         viewModel.TrafficLightChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
+                        _artifactServie.Update(request);
+                    }
+                    break;
+                case "tank" :
+                    {
+                        var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        viewModel.Tank.MapPropertiesToInstance<UpdateArtifactRequest>(request);
+                        request.Id = viewModel.Id;
                         _artifactServie.Update(request);
                     }
                     break;

@@ -1314,6 +1314,41 @@ namespace DSLNG.PEAR.Services
                 var plot = plotReq.MapTo<ArtifactPlot>();
                 artifact.Plots.Add(plot);
             }
+
+            if (request.Tank != null)
+            {
+                var tank = DataContext.ArtifactTanks.Single(x => x.Id == request.Tank.Id);
+                var volumeInventory = new Kpi { Id = request.Tank.VolumeInventoryId };
+                if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == volumeInventory.Id) == null)
+                {
+                    DataContext.Kpis.Attach(volumeInventory);
+                }
+                else
+                {
+                    volumeInventory = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Tank.VolumeInventoryId);
+                }
+                tank.VolumeInventory = volumeInventory;
+                var daysToTankTop = new Kpi { Id = request.Tank.DaysToTankTopId };
+                if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == daysToTankTop.Id) == null)
+                {
+                    DataContext.Kpis.Attach(daysToTankTop);
+                }
+                else
+                {
+                    daysToTankTop = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.Tank.DaysToTankTopId);
+                }
+                tank.DaysToTankTop = daysToTankTop;
+                tank.DaysToTankTopTitle = request.Tank.DaysToTankTopTitle;
+                tank.MinCapacity = request.Tank.MinCapacity;
+                tank.MaxCapacity = request.Tank.MaxCapacity;
+                //artifact.Tank = tank;
+                //artifact.Tank.MinCapacity = request.Tank.MinCapacity;
+            }
+
+            artifact.GraphicName = request.GraphicName;
+            artifact.HeaderTitle = request.HeaderTitle;
+            artifact.PeriodeType = request.PeriodeType;
+            artifact.RangeFilter = request.RangeFilter;
             DataContext.SaveChanges();
             return new UpdateArtifactResponse();
         }
