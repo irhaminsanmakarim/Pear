@@ -15,7 +15,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public class SeriesViewModel
         {
             public string name { get; set; }
-            public IList<double> data { get; set; }
+            public IList<double?> data { get; set; }
             public string stack { get; set; }
             public string color { get; set; }
         }
