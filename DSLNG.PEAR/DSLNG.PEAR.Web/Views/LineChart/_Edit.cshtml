@@ -34,9 +34,22 @@
                 <div class="col-sm-6">
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.LineChart.Series[i].KpiId)
-                        @Html.DropDownListFor(model => model.LineChart.Series[i].KpiId, new List<SelectListItem> { new SelectListItem{ Value=Model.LineChart.Series[i].KpiId.ToString(), Text = Model.LineChart.Series[i].KpiName} }, new { @class = "kpi-list form-control", style = "width:180px" })
+                        @Html.DropDownListFor(model => model.LineChart.Series[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.LineChart.Series[i].KpiId.ToString(), Text = Model.LineChart.Series[i].KpiName } }, new { @class = "kpi-list form-control", style = "width:180px" })
                         @Html.ValidationMessageFor(model => model.LineChart.Series[i].KpiId)
                     </div>
+                </div>
+                <div class="col-sm-6">
+                    @{
+                            if (i != 0)
+                            {
+                                Model.LineChart.ValueAxes.Where(x => x.Value == Model.LineChart.Series[i].ValueAxis).First().Selected = true;
+                            }
+                        <div class="form-group value-axis form-list">
+                            @Html.LabelFor(model => Model.LineChart.Series[i].ValueAxis)
+                            @Html.DropDownListFor(model => model.LineChart.Series[i].ValueAxis, Model.LineChart.ValueAxes, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.LineChart.Series[i].ValueAxis)
+                        </div>
+                    }
                 </div>
             </div>
             <input type="button" value="Remove" class="remove" />

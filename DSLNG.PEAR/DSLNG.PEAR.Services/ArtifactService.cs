@@ -316,10 +316,13 @@ namespace DSLNG.PEAR.Services
                     seriesResponse = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType);
                     break;
                 case ValueAxis.Custom:
-                    var series1 = this._getKpiTargetSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, true);
-                    var series2 = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, true);
-                    seriesResponse = series1.Concat(series2).ToList();
+                    var actualSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiActual).ToList();
+                    var targetSeries = request.Series.Where(x => x.ValueAxis == ValueAxis.KpiTarget).ToList();
                     seriesType = "multi-stacks-grouped";
+                    var series1 = this._getKpiTargetSeries(targetSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, true);
+                    var series2 = this._getKpiActualSeries(actualSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, true);
+                    seriesResponse = series1.Concat(series2).ToList();
+                    
                     break;  
             }
             response.SeriesType = seriesType;
@@ -574,8 +577,8 @@ namespace DSLNG.PEAR.Services
                         {
                             var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                Name = "Previous",
-                                Color = "#004071",
+                                Name = "Previous " + series.Label,
+                                Color = string.IsNullOrEmpty(series.PreviousColor) ?  "#004071" : series.PreviousColor,
                                 Stack = series.Label
                             };
                             for (var i = 0; i < aSeries.Data.Count; i++)
@@ -637,8 +640,8 @@ namespace DSLNG.PEAR.Services
                         {
                             var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                Name = "Previous",
-                                Color = "#004071"
+                                Name = "Previous " + series.Label,
+                                Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                             };
                             if (comparison)
                             {
@@ -816,8 +819,8 @@ namespace DSLNG.PEAR.Services
 
                         var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
-                            Name = "Previous",
-                            Color = "#004071",
+                            Name = "Previous " + series.Label,
+                            Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                             Stack = series.Label
                         };
                         for (var i = 0; i < aSeries.Data.Count; i++)
@@ -877,8 +880,8 @@ namespace DSLNG.PEAR.Services
                         seriesResponse.Add(aSeries);
                         var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
-                            Name = "Previous",
-                            Color = "#004071"
+                            Name = "Previous " + series.Label,
+                            Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                         };
                         if (comparison)
                         {
@@ -895,7 +898,7 @@ namespace DSLNG.PEAR.Services
                         }
                         seriesResponse.Add(previousSeries);
                     }
-                    else if (seriesType == "multi-stacks" && graphicType == "barachievement")
+                    else if ((seriesType == "multi-stacks" || seriesType == "multi-stacks-grouped") && graphicType == "barachievement")
                     {
                         var kpiTargets = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
                             x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId)
@@ -923,6 +926,11 @@ namespace DSLNG.PEAR.Services
                             Name = "Exceed",
                             Color = "green"
                         };
+                        if (seriesType == "multi-stacks-grouped") {
+                            aSeries.Stack = series.Label;
+                            remainSeries.Stack = series.Label;
+                            exceedSeries.Stack = series.Label;
+                        }
                         if (comparison)
                         {
                             exceedSeries.Stack = "KpiActual";
@@ -1084,8 +1092,8 @@ namespace DSLNG.PEAR.Services
                         {
                             var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                Name = "Previous",
-                                Color = "#004071"
+                                Name = "Previous " + series.Label,
+                                Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                             };
                             if (comparison)
                             {

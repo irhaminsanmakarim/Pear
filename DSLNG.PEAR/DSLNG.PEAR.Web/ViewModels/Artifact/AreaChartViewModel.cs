@@ -11,8 +11,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public AreaChartViewModel()
         {
             Series = new List<SeriesViewModel>();
+            ValueAxes = new List<SelectListItem>();
         }
         public IList<SeriesViewModel> Series { get; set; }
+        public IList<SelectListItem> ValueAxes { get; set; }
         public class SeriesViewModel
         {
             [Display(Name = "Kpi")]
@@ -20,6 +22,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             public string KpiName { get; set; }
             public string Label { get; set; }
             public string Color { get; set; }
+            public string ValueAxis { get; set; }
         }
     }
 }

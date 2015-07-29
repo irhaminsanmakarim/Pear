@@ -221,9 +221,12 @@ img {
 .value-axis,
 .stacks-holder,
 #range-holder,
-#hidden-fields-holder {
+#hidden-fields-holder,
+.previous-color {
     display: none !important;
 }
+
+
 
 .series-template,
 .stack-template,
@@ -249,9 +252,11 @@ img {
 .series-template.multistacks .stacks-holder,
 .series-template.singlestack.Custom .value-axis,
 .series-template.multistacks.Custom .value-axis,
+.series-template.Custom .value-axis,
 .series-template.singlestack,
 .series-template.multistacks,
-#range-holder.interval {
+#range-holder.interval,
+.baraccumulative .previous-color {
     display: block !important;
 }
 
@@ -1168,4 +1173,7 @@ td .btn_small_lightblue a:hover {
 .tank-chart {
     text-align:left;
     display:inline-block;
+}
+.colpick_full {
+    z-index:2;
 }

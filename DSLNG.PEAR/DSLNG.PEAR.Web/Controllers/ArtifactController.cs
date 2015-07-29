@@ -148,6 +148,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var lineChart = new LineChartViewModel();
                         viewModel.LineChart = artifact.MapPropertiesToInstance<LineChartViewModel>(lineChart);
+                        this.SetValueAxes(viewModel.LineChart.ValueAxes);
                         var series = new LineChartViewModel.SeriesViewModel();
                         viewModel.LineChart.Series.Insert(0, series);
                     }
@@ -156,6 +157,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var areaChart = new AreaChartViewModel();
                         viewModel.AreaChart = artifact.MapPropertiesToInstance<AreaChartViewModel>(areaChart);
+                        this.SetValueAxes(viewModel.AreaChart.ValueAxes);
                         var series = new AreaChartViewModel.SeriesViewModel();
                         viewModel.AreaChart.Series.Insert(0, series);
                     }
@@ -256,6 +258,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "line":
                     {
                         var viewModel = new LineChartViewModel();
+                        this.SetValueAxes(viewModel.ValueAxes, false);
                         var series = new LineChartViewModel.SeriesViewModel();
                         viewModel.Series.Add(series);
                         var artifactViewModel = new ArtifactDesignerViewModel();
@@ -265,6 +268,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "area":
                     {
                         var viewModel = new AreaChartViewModel();
+                        this.SetValueAxes(viewModel.ValueAxes, false);
                         var series = new AreaChartViewModel.SeriesViewModel();
                         viewModel.Series.Add(series);
                         var artifactViewModel = new ArtifactDesignerViewModel();

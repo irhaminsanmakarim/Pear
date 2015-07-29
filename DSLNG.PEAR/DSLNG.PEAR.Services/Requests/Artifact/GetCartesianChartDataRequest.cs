@@ -31,6 +31,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public ValueAxis ValueAxis { get; set; }
             public IList<StackRequest> Stacks { get; set; }
             public string Color { get; set; }
+            public string PreviousColor { get; set; }
         }
 
         public class StackRequest
