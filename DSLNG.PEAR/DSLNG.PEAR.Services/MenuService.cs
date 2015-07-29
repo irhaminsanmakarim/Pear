@@ -100,10 +100,9 @@ namespace DSLNG.PEAR.Services
             
             try
             {
+                //var menu = DataContext.Menus.Where(x => x.Url == request.Url).First();
                 //var menu = DataContext.Menus.Where(x => x.Url.ToLower() == url_request).First();
-                var menu = DataContext.Menus.Where(x => x.Url.Contains(url_request)).First();
-                //var detail = DataContext.Menus.Where(x => x.Module.Contains(menu.Module) && x.IsRoot == true).First();
-                //menu = this._GetActiveMenu(detail);
+                var menu = DataContext.Menus.Where(x => x.Url.Contains(request.Url)).First();
                 menu = this._GetActiveMenu(menu);
                 response = menu.MapTo<GetSiteMenuActiveResponse>();
 
@@ -192,6 +191,9 @@ namespace DSLNG.PEAR.Services
                     menu.RoleGroups = null;
                 }
 
+                //ensure url end with slash
+                menu.Url = menu.Url != null && menu.Url.Length > 0 ? _CleanUpMenuUrl(menu.Url) : menu.Url;
+
                 DataContext.Menus.Add(menu);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
@@ -236,6 +238,8 @@ namespace DSLNG.PEAR.Services
                     }
                 }
 
+                //ensure url end with slash
+                menu.Url = menu.Url != null && menu.Url.Length>0 ? _CleanUpMenuUrl(menu.Url) : menu.Url;
 
                 //DataContext.Menus.Attach(menu);
                 //DataContext.Entry(menu).State = EntityState.Modified;
@@ -298,6 +302,22 @@ namespace DSLNG.PEAR.Services
                     IsSuccess = false,
                     Message = x.Message
                 };
+            }
+        }
+
+        private String _CleanUpMenuUrl(String Url)
+        {
+
+            if (Url.IndexOf('?')>=0)
+            {
+                return Url;
+            }
+            else
+            {
+                var newUrl =  Url.TrimEnd(new Char[] { '/' }) + '/';
+                newUrl = '/' + newUrl.TrimStart(new Char[] { '/' });
+
+                return newUrl;
             }
         }
     }

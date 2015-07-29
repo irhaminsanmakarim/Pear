@@ -483,6 +483,25 @@ String.prototype.isNullOrEmpty = function () {
             break;
         case 'tank':
             Pear.Artifact.Designer._setupCallbacks.tank();
+        case 'area':
+            var $hiddenFields = $('#hidden-fields');
+            $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                $this = $(val);
+                $this.addClass('singlestack');
+            });
+            var seriesTemplate = $hiddenFields.find('.series-template.original');
+            var seriesTemplateClone = seriesTemplate.clone(true);
+            seriesTemplateClone.children('input:first-child').remove();
+            $('#hidden-fields-holder').html(seriesTemplateClone);
+            seriesTemplate.remove();
+            $('#series-holder').append($hiddenFields.html());
+            $('#series-holder').find('.series-template').each(function (i, val) {
+                var $this = $(val);
+                Pear.Artifact.Designer._kpiAutoComplete($this);
+                Pear.Artifact.Designer._colorPicker($this);
+            });
+            $hiddenFields.remove();
+            Pear.Artifact.Designer._setupCallbacks.area();
             break;
         }
     };
