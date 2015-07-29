@@ -14,58 +14,58 @@ namespace DSLNG.PEAR.Data.Installer
         {
             base.Seed(context);
 
-            var typeInstaller = new TypeInstaller(context);
-            typeInstaller.Install();
+            //var typeInstaller = new TypeInstaller(context);
+            //typeInstaller.Install();
 
-            var levelsInstaller = new LevelsInstaller(context);
-            levelsInstaller.Install();
+            //var levelsInstaller = new LevelsInstaller(context);
+            //levelsInstaller.Install();
 
-            var roleGroupsInstaller = new RoleGroupsInstaller(context);
-            roleGroupsInstaller.Install();
+            //var roleGroupsInstaller = new RoleGroupsInstaller(context);
+            //roleGroupsInstaller.Install();
 
-            var usersInstaller = new UsersInstaller(context);
-            usersInstaller.Install();
+            //var usersInstaller = new UsersInstaller(context);
+            //usersInstaller.Install();
 
-            var measurementsIntaller = new MeasurementsInstaller(context);
-            measurementsIntaller.Install();
+            //var measurementsIntaller = new MeasurementsInstaller(context);
+            //measurementsIntaller.Install();
 
-            var periodeInstaller = new PeriodeInstaller(context);
-            periodeInstaller.Install();
+            //var periodeInstaller = new PeriodeInstaller(context);
+            //periodeInstaller.Install();
 
-            var methodInstaller = new MethodInstaller(context);
-            methodInstaller.Install();
+            //var methodInstaller = new MethodInstaller(context);
+            //methodInstaller.Install();
 
-            var groupsInstaller = new GroupsInstaller(context);
-            groupsInstaller.Installer();
+            //var groupsInstaller = new GroupsInstaller(context);
+            //groupsInstaller.Installer();
 
-            var pillarsInstaller = new PillarsInstaller(context);
-            pillarsInstaller.Installer();
+            //var pillarsInstaller = new PillarsInstaller(context);
+            //pillarsInstaller.Installer();
 
-            var kpisInstaller = new KpisInstaller(context);
-            kpisInstaller.Install();
+            //var kpisInstaller = new KpisInstaller(context);
+            //kpisInstaller.Install();
 
-            var kpiTargetsInstaller = new KpiTargetsInstaller(context);
-            kpiTargetsInstaller.Install();
+            //var kpiTargetsInstaller = new KpiTargetsInstaller(context);
+            //kpiTargetsInstaller.Install();
 
-            var kpiAchievementsInstaller = new KpiAchievementsInstaller(context);
-            kpiAchievementsInstaller.Install();
+            //var kpiAchievementsInstaller = new KpiAchievementsInstaller(context);
+            //kpiAchievementsInstaller.Install();
 
-            var pmsSummariesInstaller = new PmsSummariesInstaller(context);
-            pmsSummariesInstaller.Install();
+            //var pmsSummariesInstaller = new PmsSummariesInstaller(context);
+            //pmsSummariesInstaller.Install();
 
-            var pmsConfigsInstaller = new PmsConfigsInstaller(context);
-            pmsConfigsInstaller.Install();
+            //var pmsConfigsInstaller = new PmsConfigsInstaller(context);
+            //pmsConfigsInstaller.Install();
 
-            var pmsConfigDetailsInstaller = new PmsConfigDetailsInstaller(context);
-            pmsConfigDetailsInstaller.Install();
+            //var pmsConfigDetailsInstaller = new PmsConfigDetailsInstaller(context);
+            //pmsConfigDetailsInstaller.Install();
 
-            var kpiWithRelationModel = new KpiWithRelationModelInstaller(context);
-            kpiWithRelationModel.Install();
+            //var kpiWithRelationModel = new KpiWithRelationModelInstaller(context);
+            //kpiWithRelationModel.Install();
 
-            var menuInstaller = new MenuInstaller(context);
-            menuInstaller.Install();
+            //var menuInstaller = new MenuInstaller(context);
+            //menuInstaller.Install();
 
-            context.SaveChanges();
+            //context.SaveChanges();
         }
 
         /*private void AddUser(DataContext context)
