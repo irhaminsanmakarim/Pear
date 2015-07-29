@@ -96,16 +96,16 @@ namespace DSLNG.PEAR.Services
         {
             var response = new GetSiteMenuActiveResponse();
             //get the menu from url request
-            var url_request = new StringBuilder("/").Append(request.Controller).Append("/").ToString();
+            var url_request = new StringBuilder("/").Append(request.Controller).ToString();
             if (!request.Action.ToLower().Equals("index")) {
-                url_request = new StringBuilder(url_request).Append(request.Action).Append("/").ToString();
+                url_request = new StringBuilder(url_request).Append("/").Append(request.Action).Append("/").ToString();
             }
             
             try
             {
                 //var menu = DataContext.Menus.Where(x => x.Url == request.Url).First();
                 //var menu = DataContext.Menus.Where(x => x.Url.ToLower() == url_request).First();
-                var menu = DataContext.Menus.Where(x => x.Url.ToLower().Contains(url_request)).First();
+                var menu = DataContext.Menus.Where(x => x.Url.ToLower() == url_request || x.Url.ToLower().Contains(url_request)).OrderBy(y=>y.Id).First();
                 menu = this._GetActiveMenu(menu);
                 response = menu.MapTo<GetSiteMenuActiveResponse>();
 
