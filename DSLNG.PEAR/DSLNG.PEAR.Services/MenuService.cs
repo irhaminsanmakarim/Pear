@@ -61,15 +61,15 @@ namespace DSLNG.PEAR.Services
 
             
             response.Menus = menus.MapTo<GetSiteMenusResponse.Menu>();
-            //set root menu active / selected
-            if (request.MenuId == null || request.MenuId == 0)
-            {
-                response.MenuIdActive = DataContext.Menus.Where(x => x.ParentId == null || x.ParentId == 0).Select(x => x.Id).First();
-            }
-            else
-            {
+            ////set root menu active / selected
+            //if (request.MenuId == null || request.MenuId == 0)
+            //{
+            //    response.MenuIdActive = DataContext.Menus.Where(x => x.ParentId == null || x.ParentId == 0).Select(x => x.Id).First();
+            //}
+            //else
+            //{
 
-            }
+            //}
 
             return response;
         }
@@ -102,9 +102,10 @@ namespace DSLNG.PEAR.Services
             {
                 //var menu = DataContext.Menus.Where(x => x.Url == request.Url).First();
                 //var menu = DataContext.Menus.Where(x => x.Url.ToLower() == url_request).First();
-                var menu = DataContext.Menus.Where(x => x.Url.Contains(request.Url)).First();
-                menu = this._GetActiveMenu(menu);
-                response = menu.MapTo<GetSiteMenuActiveResponse>();
+                var SelectedMenu = DataContext.Menus.Where(x => x.Url.Contains(request.Url)).First();
+                var RootMenu = this._GetActiveMenu(SelectedMenu);
+                response = RootMenu.MapTo<GetSiteMenuActiveResponse>();
+                response.SelectedMenu = SelectedMenu.MapTo<Data.Entities.Menu>();
 
                 return response;
             }
