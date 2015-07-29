@@ -226,6 +226,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<TabularViewModel.RowViewModel, GetTabularDataRequest.RowRequest>();
             Mapper.CreateMap<GetTabularDataResponse, TabularDataViewModel>();
             Mapper.CreateMap<GetTabularDataResponse.RowResponse, TabularDataViewModel.RowViewModel>();
+            Mapper.CreateMap<GetArtifactResponse, TabularViewModel>();
+            Mapper.CreateMap<GetArtifactResponse.RowResponse, TabularViewModel.RowViewModel>();
 
             //tank mapping
             Mapper.CreateMap<TankViewModel, CreateArtifactRequest.TankRequest>();
@@ -234,6 +236,8 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetTankDataResponse, TankDataViewModel>();
             Mapper.CreateMap<TankViewModel, UpdateArtifactRequest>();
             Mapper.CreateMap<TankViewModel, UpdateArtifactRequest.TankRequest>();
+            Mapper.CreateMap<TabularViewModel, UpdateArtifactRequest>();
+            Mapper.CreateMap<TabularViewModel.RowViewModel, UpdateArtifactRequest.RowRequest>();
             
             
        

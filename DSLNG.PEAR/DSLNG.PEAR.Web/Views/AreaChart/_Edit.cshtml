@@ -10,7 +10,7 @@
     { 
         var original = i == 0 ? "original" : "";
         var dataSeriesPos = original == "" ? "data-series-pos=" + i : "";
-        <div class="series-template @original whitebox" @dataSeriesPos>
+        <div class="rows-template @original whitebox" @dataSeriesPos>
             <input type="hidden" name="AreaChart.Series.Index" value="@i" />        
             <h2>Series</h2>
             <div class="row">

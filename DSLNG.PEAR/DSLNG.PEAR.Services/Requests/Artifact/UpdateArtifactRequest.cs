@@ -12,6 +12,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         {
             Series = new List<SeriesRequest>();
             Plots = new List<PlotRequest>();
+            Rows = new List<RowRequest>();
         }
         public int Id { get; set; }
         public string GraphicName { get; set; }
@@ -19,6 +20,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public string HeaderTitle { get; set; }
         public IList<SeriesRequest> Series { get; set; }
         public IList<PlotRequest> Plots { get; set; }
+        public IList<RowRequest> Rows { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public PeriodeType PeriodeType { get; set; }
@@ -65,6 +67,14 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public string DaysToTankTopTitle { get; set; }
             public double MinCapacity { get; set; }
             public double MaxCapacity { get; set; }
+        }
+        public class RowRequest
+        {
+            public int KpiId { get; set; }
+            public string PeriodeType { get; set; }
+            public string RangeFilter { get; set; }
+            public DateTime? Start { get; set; }
+            public DateTime? End { get; set; }
         }
     }
 }

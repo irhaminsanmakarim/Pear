@@ -124,8 +124,10 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "multiaxis", Text = "Multi Axis" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
-            viewModel.GraphicTypes.Add(new SelectListItem { Value = "trafficlight", Text = "Traffic Light" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "tabular", Text = "Tabular" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tank", Text = "Tank" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "trafficlight", Text = "Traffic Light" });
+            
 
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
@@ -193,6 +195,14 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "tank":
                     {
                         viewModel.Tank = artifact.Tank.MapTo<TankViewModel>();
+                    }
+                    break;
+                case "tabular":
+                    {
+                        viewModel.Tabular = artifact.MapPropertiesToInstance(new TabularViewModel());
+                        viewModel.Tabular.Rows.Insert(0, new TabularViewModel.RowViewModel());
+                        this.SetPeriodeTypes(viewModel.Tabular.PeriodeTypes);
+                        this.SetRangeFilters(viewModel.Tabular.RangeFilters);
                     }
                     break;
                 default:
@@ -655,6 +665,13 @@ namespace DSLNG.PEAR.Web.Controllers
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
                         viewModel.Tank.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         request.Id = viewModel.Id;
+                        _artifactServie.Update(request);
+                    }
+                    break;
+                case "tabular":
+                    {
+                        var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        viewModel.Tabular.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
                     break;
