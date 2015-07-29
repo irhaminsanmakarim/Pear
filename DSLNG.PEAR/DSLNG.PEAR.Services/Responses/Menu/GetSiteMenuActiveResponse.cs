@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSLNG.PEAR.Data.Entities;
 
 namespace DSLNG.PEAR.Services.Responses.Menu
 {
@@ -21,5 +22,6 @@ namespace DSLNG.PEAR.Services.Responses.Menu
         public bool IsActive { get; set; }
         public string Icon { get; set; }
         public string Url { get; set; }
+        public Data.Entities.Menu SelectedMenu { get; set; }
     }
 }

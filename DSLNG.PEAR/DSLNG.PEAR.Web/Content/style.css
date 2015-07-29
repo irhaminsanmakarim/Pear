@@ -129,6 +129,10 @@ aside.left-content > * {
     overflow: hidden;
 }
 
+.sub-nav li.active ul {
+    display: block;
+}
+
 .sub-nav > li {
     text-align: left;
     padding-bottom: 10px;

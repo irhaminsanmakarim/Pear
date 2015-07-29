@@ -93,7 +93,8 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult SiteMap()
         {
             //get menu active by url request
-            var rootMenuActive = TempData["RootMenuActive"].MapTo<Data.Entities.Menu>();
+            //var rootMenuActive = TempData["RootMenuActive"].MapTo<Data.Entities.Menu>();
+            var rootMenuActive = TempData["RootMenuActive"].MapTo<Services.Responses.Menu.GetSiteMenuActiveResponse>();
             var userService = ObjectFactory.Container.GetInstance<IUserService>();
             var AuthUser = userService.GetUserByName(new GetUserByNameRequest { Name = HttpContext.User.Identity.Name });
             var menus = new GetSiteMenusResponse();
@@ -101,7 +102,8 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 var role = AuthUser.Role;
                 menus = _menuService.GetSiteMenus(new GetSiteMenusRequest() { IncludeChildren = true, RoleId = role.Id });
-                menus.MenuIdActive = rootMenuActive.Id;
+                menus.RootMenuIdActive = rootMenuActive.Id;
+                menus.SelectedMenu = rootMenuActive.SelectedMenu.MapTo<Services.Responses.Menu.GetSiteMenusResponse.Menu>();
             }
             
             
