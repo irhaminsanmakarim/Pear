@@ -133,6 +133,12 @@ aside.left-content > * {
     display: block;
 }
 
+.sub-nav ul li.active {
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: underline;
+}
+
 .sub-nav > li {
     text-align: left;
     padding-bottom: 10px;

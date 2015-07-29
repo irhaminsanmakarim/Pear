@@ -29,7 +29,7 @@
             url_href = "#";
         }
         //var mainclass = menu.ParentId==0 && ViewBag.SiteMenuActive==menu.Module?"active":"";
-        var mainclass = menu.Id == Model.RootMenuIdActive ? "active" : Model.SelectedMenu.ParentId==menu.Id ? "active" : "";
+        var mainclass = menu.Id == Model.RootMenuIdActive ? "active" : Model.SelectedMenu.ParentId==menu.Id ? "active" : Model.SelectedMenu.Id==menu.Id ? "active" :"";
         <li class="@mainclass" menuId="@menu.Id" selectedMenuId="@Model.SelectedMenu.Id" selectedMenuParentId="@Model.SelectedMenu.ParentId">
             <a href="@menu.Url" class="">
             @if (menu.Icon != null){
