@@ -89,8 +89,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.KpiRelations = response.KpiRelations.MapTo<PmsReportDetailsViewModel.KpiRelation>();
                 return PartialView("_ReportDetails", viewModel);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                TempData["Message"] = exception.Message;
                 return PartialView("_ReportDetails", new PmsReportDetailsViewModel());
             }
             

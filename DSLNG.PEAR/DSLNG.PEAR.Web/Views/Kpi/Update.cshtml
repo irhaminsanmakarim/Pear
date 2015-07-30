@@ -88,7 +88,7 @@
                         <input type="hidden" name="RelationModels[@i].Id" value="@rm.Id" class="rm-id"/>
                         <div class="col-lg-5">
                             <select name="RelationModels[@i].KpiId" class="form-control rm-kpi">
-                                <option value="0">-</option>
+                                <option value="0">Select KPI</option>
                                 @foreach (var item in Model.KpiList)
                                 {
                                     var selected = item.Value == rm.KpiId.ToString() ? "selected = 'selected'" : "";
@@ -98,7 +98,7 @@
                         </div>
                         <div class="col-lg-5">
                             <select name="RelationModels[@i].Method" class="form-control rm-method">
-                                <option value="0">-</option>
+                                <option value="0">Select Method</option>
                                 @foreach (var method in rm.Methods)
                                 {
                                     var selected = method.Value == rm.Method.ToString() ? "selected = 'selected'" : "";
