@@ -360,7 +360,7 @@ namespace DSLNG.PEAR.Services
                                     periodes.Add(startHour.ToString(hourlyFormat));
                                     dateTimePeriodes.Add(startHour);
                                 }
-                                timeInformation = startHour.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation = startHour.AddHours(-1).ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.DTD:
@@ -411,7 +411,7 @@ namespace DSLNG.PEAR.Services
                                     dateTimePeriodes.Add(startDay);
                                     startDay = startDay.AddDays(1);
                                 }
-                                timeInformation = startDay.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation = startDay.AddDays(-1).ToString("MMM/yyyy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.MTD:
@@ -572,12 +572,12 @@ namespace DSLNG.PEAR.Services
                             }
                         }
 
-                        seriesResponse.Add(aSeries);
+                        
                         if (graphicType == "baraccumulative")
                         {
                             var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                Name = "Previous " + series.Label,
+                                Name = "Previous Accumulative " + series.Label,
                                 Color = string.IsNullOrEmpty(series.PreviousColor) ?  "#004071" : series.PreviousColor,
                                 Stack = series.Label
                             };
@@ -592,6 +592,7 @@ namespace DSLNG.PEAR.Services
                             }
                             seriesResponse.Add(previousSeries);
                         }
+                        seriesResponse.Add(aSeries);
                     }
                     else
                     {
@@ -635,12 +636,12 @@ namespace DSLNG.PEAR.Services
                                 }
                             }
                         }
-                        seriesResponse.Add(aSeries);
+                        
                         if (graphicType == "baraccumulative")
                         {
                             var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                Name = "Previous " + series.Label,
+                                Name = "Previous Accumulative " + series.Label,
                                 Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                             };
                             if (comparison)
@@ -658,6 +659,7 @@ namespace DSLNG.PEAR.Services
                             }
                             seriesResponse.Add(previousSeries);
                         }
+                        seriesResponse.Add(aSeries);
                     }
 
                 }
@@ -815,11 +817,11 @@ namespace DSLNG.PEAR.Services
                                 }
                             }
                         }
-                        seriesResponse.Add(aSeries);
+                       
 
                         var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
-                            Name = "Previous " + series.Label,
+                            Name = "Previous Accumulative " + series.Label,
                             Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                             Stack = series.Label
                         };
@@ -833,6 +835,7 @@ namespace DSLNG.PEAR.Services
                             previousSeries.Data.Add(data);
                         }
                         seriesResponse.Add(previousSeries);
+                        seriesResponse.Add(aSeries);
                     }
                     else if (seriesType == "multi-stacks" && graphicType == "baraccumulative")
                     {
@@ -877,10 +880,10 @@ namespace DSLNG.PEAR.Services
                                 }
                             }
                         }
-                        seriesResponse.Add(aSeries);
+                       
                         var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
-                            Name = "Previous " + series.Label,
+                            Name = "Previous Accumulative " + series.Label,
                             Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                         };
                         if (comparison)
@@ -897,6 +900,7 @@ namespace DSLNG.PEAR.Services
                             previousSeries.Data.Add(data);
                         }
                         seriesResponse.Add(previousSeries);
+                        seriesResponse.Add(aSeries);
                     }
                     else if ((seriesType == "multi-stacks" || seriesType == "multi-stacks-grouped") && graphicType == "barachievement")
                     {
@@ -1087,12 +1091,12 @@ namespace DSLNG.PEAR.Services
                                 }
                             }
                         }
-                        seriesResponse.Add(aSeries);
+                        
                         if (graphicType == "baraccumulative")
                         {
                             var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                Name = "Previous " + series.Label,
+                                Name = "Previous Accumulative " + series.Label,
                                 Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                             };
                             if (comparison)
@@ -1110,6 +1114,7 @@ namespace DSLNG.PEAR.Services
                             }
                             seriesResponse.Add(previousSeries);
                         }
+                        seriesResponse.Add(aSeries);
                     }
                 }
                 else
