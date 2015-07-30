@@ -511,6 +511,29 @@ String.prototype.isNullOrEmpty = function () {
             $hiddenFields.remove();
             Pear.Artifact.Designer._setupCallbacks.area();
             break;
+        case 'tabular':
+            var $hiddenFields = $('#hidden-fields');
+            $hiddenFields.find('.row-template:not(.original)').each(function (i, val) {
+                $this = $(val);
+                $this.addClass('singlestack');
+            });
+            var rowsTemplate = $hiddenFields.find('.row-template.original');
+            var rowsTemplateClone = rowsTemplate.clone(true);
+            rowsTemplateClone.children('input:first-child').remove();
+            $('#hidden-fields-holder').html(rowsTemplateClone);
+            rowsTemplate.remove();
+            $('#rows-holder').append($hiddenFields.html());
+            $('#rows-holder').find('.row-template').each(function (i, val) {
+                var $this = $(val);
+                Pear.Artifact.Designer._kpiAutoComplete($this, false);
+                Pear.Artifact.Designer._colorPicker($this);
+            });
+            $hiddenFields.remove();
+            $('#general-graphic-settings').css('display', 'none');
+            $('.form-measurement').css('display', 'none');
+            Pear.Artifact.Designer._setupCallbacks.tabular();
+            
+            break;
         }
     };
     artifactDesigner._setupCallbacks = {};

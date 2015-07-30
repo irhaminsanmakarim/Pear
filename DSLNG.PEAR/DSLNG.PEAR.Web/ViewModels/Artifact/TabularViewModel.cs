@@ -29,6 +29,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             }
             [Display(Name="Kpi")]
             public int KpiId { get; set; }
+            public string KpiName { get; set; }
             [Display(Name = "Periode Type")]
             [Required]
             public string PeriodeType { get; set; }

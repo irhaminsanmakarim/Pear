@@ -8,11 +8,13 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
 {
     public class CreateArtifactRequest
     {
-        public CreateArtifactRequest() {
+        public CreateArtifactRequest()
+        {
             Series = new List<SeriesRequest>();
             Plots = new List<PlotRequest>();
             Rows = new List<RowRequest>();
         }
+
         public int Id { get; set; }
         public string GraphicName { get; set; }
         public string GraphicType { get; set; }
@@ -35,9 +37,11 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public bool Economic { get; set; }
         public bool Fullfillment { get; set; }
         public bool Remark { get; set; }
+
         public class SeriesRequest
         {
-            public SeriesRequest() {
+            public SeriesRequest()
+            {
                 Stacks = new List<StackRequest>();
             }
             public string Label { get; set; }
@@ -46,6 +50,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public int KpiId { get; set; }
             public ValueAxis ValueAxis { get; set; }
         }
+
         public class PlotRequest
         {
             public double From { get; set; }
@@ -53,6 +58,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public string Color { get; set; }
             public string Label { get; set; }
         }
+
         public class StackRequest
         {
             public string Label { get; set; }
@@ -61,14 +67,18 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public string Color { get; set; }
 
         }
-        public class RowRequest {
+
+        public class RowRequest
+        {
             public int KpiId { get; set; }
             public string PeriodeType { get; set; }
             public string RangeFilter { get; set; }
             public DateTime? Start { get; set; }
             public DateTime? End { get; set; }
         }
-        public class TankRequest {
+
+        public class TankRequest
+        {
             public int VolumeInventoryId { get; set; }
             public string VolumeInventory { get; set; }
             public int DaysToTankTopId { get; set; }
