@@ -29,6 +29,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             public string KpiName { get; set; }
             public string Label { get; set; }
             public string Color { get; set; }
+            public string PreviousColor { get; set; }
             public string ValueAxis { get; set; }
             public IList<StackViewModel> Stacks { get; set; }
         }

@@ -35,6 +35,13 @@
                         @Html.ValidationMessageFor(model => model.LineChart.Series[i].KpiId)
                     </div>
                 </div>
+                <div class="col-sm-6">
+                        <div class="form-group value-axis form-list">
+                            @Html.LabelFor(model => Model.LineChart.Series[i].ValueAxis)
+                            @Html.DropDownListFor(model => model.LineChart.Series[i].ValueAxis, Model.LineChart.ValueAxes, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.LineChart.Series[i].ValueAxis)
+                        </div>
+                    </div>
             </div>
             <input type="button" value="Remove" class="remove" />
         </div>

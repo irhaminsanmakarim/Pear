@@ -379,6 +379,8 @@ String.prototype.isNullOrEmpty = function () {
             $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
                 $this = $(val);
                 $this.addClass('singlestack');
+                $this.addClass($('#bar-value-axis').val());
+                $this.addClass($('#graphic-type').val());
             });
             var seriesTemplate = $hiddenFields.find('.series-template.original');
             var seriesTemplateClone = seriesTemplate.clone(true);
@@ -403,6 +405,8 @@ String.prototype.isNullOrEmpty = function () {
                 } else {
                     $this.addClass('singlestack');
                 }
+                $this.addClass($('#bar-value-axis').val());
+                $this.addClass($('#graphic-type').val());
             });
             var seriesTemplate = $hiddenFields.find('.series-template.original');
             var seriesTemplateClone = seriesTemplate.clone(true);
@@ -432,6 +436,8 @@ String.prototype.isNullOrEmpty = function () {
                 } else {
                     $this.addClass('singlestack');
                 }
+                $this.addClass($('#bar-value-axis').val());
+                $this.addClass($('#graphic-type').val());
             });
             var seriesTemplate = $hiddenFields.find('.series-template.original');
             var seriesTemplateClone = seriesTemplate.clone(true);
@@ -461,6 +467,8 @@ String.prototype.isNullOrEmpty = function () {
                 } else {
                     $this.addClass('singlestack');
                 }
+                $this.addClass($('#bar-value-axis').val());
+                $this.addClass($('#graphic-type').val());
             });
             var seriesTemplate = $hiddenFields.find('.series-template.original');
             var seriesTemplateClone = seriesTemplate.clone(true);
@@ -588,7 +596,7 @@ String.prototype.isNullOrEmpty = function () {
                 seriesTemplate.removeClass('original');
                 seriesTemplate.attr('data-series-pos', seriesCount);
                 if (seriesCount !== 0) {
-                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
+                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color', 'PreviousColor'];
                     for (var i in fields) {
                         var field = fields[i];
                         seriesTemplate.find('#BarChart_Series_0__' + field).attr('name', 'BarChart.Series[' + seriesCount + '].' + field);
@@ -596,6 +604,7 @@ String.prototype.isNullOrEmpty = function () {
                 }
                 seriesTemplate.addClass($('#seriesType').val().toLowerCase());
                 seriesTemplate.addClass($('#bar-value-axis').val());
+                seriesTemplate.addClass($('#graphic-type').val());
                 $('#series-holder').append(seriesTemplate);
                 seriesCount++;
             });
@@ -784,7 +793,7 @@ String.prototype.isNullOrEmpty = function () {
     };
     artifactDesigner._setupCallbacks.barachievement = function () {
         $('#bar-value-axis').val('KpiActual');
-        $('#graphic-settings').prev('.form-group').css('display', 'none');
+        $('.main-value-axis').css('display', 'none');
         Pear.Artifact.Designer._setupCallbacks.bar();
     };
     artifactDesigner._previewCallbacks.barachievement = function (data, container) {
@@ -819,12 +828,14 @@ String.prototype.isNullOrEmpty = function () {
                 seriesTemplate.removeClass('original');
                 seriesTemplate.attr('data-series-pos', seriesCount);
                 if (seriesCount !== 0) {
-                    var fields = ['Label', 'KpiId', 'Color'];
+                    var fields = ['Label', 'KpiId', 'ValueAxis' , 'Color'];
                     for (var i in fields) {
                         var field = fields[i];
                         seriesTemplate.find('#LineChart_Series_0__' + field).attr('name', 'LineChart.Series[' + seriesCount + '].' + field);
                     }
                 }
+                seriesTemplate.addClass($('#bar-value-axis').val());
+                seriesTemplate.addClass($('#graphic-type').val());
                 $('#series-holder').append(seriesTemplate);
                 seriesCount++;
             });
@@ -863,12 +874,12 @@ String.prototype.isNullOrEmpty = function () {
             tooltip: {
                 valueSuffix: data.LineChart.ValueAxisTitle
             },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
-            },
+            //legend: {
+            //    layout: 'vertical',
+            //    align: 'right',
+            //    verticalAlign: 'middle',
+            //    borderWidth: 0
+            //},
             series: data.LineChart.Series
         });
     };
@@ -901,12 +912,14 @@ String.prototype.isNullOrEmpty = function () {
                 seriesTemplate.removeClass('original');
                 seriesTemplate.attr('data-series-pos', seriesCount);
                 if (seriesCount !== 0) {
-                    var fields = ['Label', 'KpiId', 'Color'];
+                    var fields = ['Label', 'KpiId', 'Color', 'ValueAxis'];
                     for (var i in fields) {
                         var field = fields[i];
                         seriesTemplate.find('#AreaChart_Series_0__' + field).attr('name', 'AreaChart.Series[' + seriesCount + '].' + field);
                     }
                 }
+                seriesTemplate.addClass($('#bar-value-axis').val());
+                seriesTemplate.addClass($('#graphic-type').val());
                 $('#series-holder').append(seriesTemplate);
                 seriesCount++;
             });

@@ -35,6 +35,13 @@
                         @Html.ValidationMessageFor(model => model.AreaChart.Series[i].KpiId)
                     </div>
                 </div>
+                <div class="col-sm-6">
+                        <div class="form-group value-axis form-list">
+                            @Html.LabelFor(model => Model.AreaChart.Series[i].ValueAxis)
+                            @Html.DropDownListFor(model => model.AreaChart.Series[i].ValueAxis, Model.AreaChart.ValueAxes, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.AreaChart.Series[i].ValueAxis)
+                        </div>
+                    </div>
             </div>
             <input type="button" value="Remove" class="remove" />
         </div>

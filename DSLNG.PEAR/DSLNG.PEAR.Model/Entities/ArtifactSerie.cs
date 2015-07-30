@@ -20,6 +20,7 @@ namespace DSLNG.PEAR.Data.Entities
 
         //public string Aggregation { get; set; }
         public string Color { get; set; }
+        public string PreviousColor { get; set; }
         public Kpi Kpi { get; set; }
         public ValueAxis ValueAxis { get; set; }
 
