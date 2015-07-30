@@ -17,6 +17,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
         public int KpiId { get; set; }
         public string KpiName { get; set; }
         public IList<ScoreIndicator> ScoreIndicators { get; set; }
+        public int PmsConfigId { get; set; }
 
         /*public class Pillar
         {

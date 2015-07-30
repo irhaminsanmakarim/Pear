@@ -61,6 +61,8 @@ namespace DSLNG.PEAR.Web.Controllers
                     viewModel.ScoreIndicators = scoreIndicator;
                 }
                 viewModel.ScoringTypes = _dropdownService.GetScoringTypes().MapTo<SelectListItem>();
+                //viewModel.Kpis = _dropdownService.GetKpis().MapTo<SelectListItem>();
+                viewModel.Kpis = _dropdownService.GetKpisForPmsConfigDetails(viewModel.PmsConfigId).MapTo<SelectListItem>();
                 return PartialView("_Update", viewModel);
             }
 
@@ -70,6 +72,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Update(UpdatePmsConfigDetailsViewModel viewModel)
         {
+            
             var request = viewModel.MapTo<UpdatePmsConfigDetailsRequest>();
             var response = _pmsSummaryService.UpdatePmsConfigDetails(request);
             TempData["IsSuccess"] = response.IsSuccess;

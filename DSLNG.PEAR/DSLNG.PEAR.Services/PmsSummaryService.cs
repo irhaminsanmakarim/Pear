@@ -592,6 +592,7 @@ namespace DSLNG.PEAR.Services
                 var pmsConfigDetails =
                     DataContext.PmsConfigDetails
                     .Include(x => x.ScoreIndicators)
+                    .Include(x => x.PmsConfig)
                     .Include(x => x.Kpi.Pillar)
                     .First(x => x.Id == id);
                 response = pmsConfigDetails.MapTo<GetPmsConfigDetailsResponse>();
@@ -648,13 +649,41 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var updatedPmsConfigDetails = request.MapTo<PmsConfigDetails>();
+                updatedPmsConfigDetails.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
                 var existedPmsConfigDetails = DataContext.PmsConfigDetails
                     .Where(x => x.Id == request.Id)
                     .Include(x => x.PmsConfig.PmsSummary)
                     .Include(x => x.ScoreIndicators)
+                    .Include(x => x.Kpi)
                     .Single();
                 var existedPmsConfigDetailsEntry = DataContext.Entry(existedPmsConfigDetails);
                 existedPmsConfigDetailsEntry.CurrentValues.SetValues(updatedPmsConfigDetails);
+                //existedPmsConfigDetailsEntry.CurrentValues.SetValues(updatedPmsConfigDetails.Kpi);
+                if (existedPmsConfigDetails.Kpi != null)
+                {
+                    if (updatedPmsConfigDetails.Kpi != null)
+                    {
+                        if (existedPmsConfigDetails.Kpi.Id == updatedPmsConfigDetails.Kpi.Id)
+                        {
+                            DataContext.Entry(existedPmsConfigDetails.Kpi).CurrentValues.SetValues(updatedPmsConfigDetails.Kpi);
+                        }
+                        else
+                        {
+                            DataContext.Kpis.Attach(updatedPmsConfigDetails.Kpi);
+                            existedPmsConfigDetails.Kpi = updatedPmsConfigDetails.Kpi;
+                        }
+                    }
+                    else
+                    {
+                        existedPmsConfigDetails.Kpi = null;
+                    }
+                }
+                else {
+                    if (updatedPmsConfigDetails.Kpi != null) {
+                        DataContext.Kpis.Attach(updatedPmsConfigDetails.Kpi);
+                        existedPmsConfigDetails.Kpi = updatedPmsConfigDetails.Kpi;
+                    }
+                }
 
                 foreach (var scoreIndicator in updatedPmsConfigDetails.ScoreIndicators)
                 {
