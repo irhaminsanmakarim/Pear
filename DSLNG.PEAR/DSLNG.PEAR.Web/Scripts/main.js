@@ -1246,8 +1246,8 @@ Number.prototype.format = function (n, x) {
 
             // the value axis
             yAxis: {
-                min: 0,
-                max: 200,
+                min: data.SpeedometerChart.PlotBands[0].from,
+                max: data.SpeedometerChart.PlotBands[data.SpeedometerChart.PlotBands.length -1].to,
 
                 minorTickInterval: 'auto',
                 minorTickWidth: 1,
