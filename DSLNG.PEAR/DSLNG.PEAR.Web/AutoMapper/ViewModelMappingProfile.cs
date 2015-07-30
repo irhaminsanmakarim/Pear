@@ -392,7 +392,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetPmsDetailsResponse.KpiRelation, PmsReportDetailsViewModel.KpiRelation>();
             Mapper.CreateMap<CreatePmsConfigViewModel, CreatePmsConfigRequest>()
                 .ForMember(x => x.ScoreIndicators, o => o.MapFrom(s => s.ScoreIndicators.Where(x => x.Id > 0 && !string.IsNullOrEmpty(x.Color) && !string.IsNullOrEmpty(x.Expression))));
-
+            Mapper.CreateMap<GetPmsDetailsResponse.Group, PmsReportDetailsViewModel.Group>();
             ConfigurePmsConfig();
             ConfigurePmsConfigDetails();
         }

@@ -2,7 +2,6 @@
 using AutoMapper;
 using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Enums;
-using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Services.Requests.PmsSummary;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
@@ -38,6 +37,9 @@ using DSLNG.PEAR.Services.Responses.KpiTarget;
 using DSLNG.PEAR.Services.Requests.Template;
 using DSLNG.PEAR.Services.Responses.Template;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
+using System.Linq;
+using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
+
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -274,6 +276,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof(ScoringType), z.ScoringType)));
 
             Mapper.CreateMap<CreatePmsSummaryRequest, PmsSummary>();
+            
             ConfigurePmsConfig();
         }
         

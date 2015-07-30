@@ -25,6 +25,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
         public IList<ScoreIndicator> ScoreIndicators { get; set; }
         public double Weight { get; set; }
         public string ScoringType { get; set; }
+        public IList<Group> Groups { get; set; }
 
         public class KpiAchievment
         {
@@ -38,6 +39,16 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
             public string Name { get; set; }
             public string Unit { get; set; }
             public string Method { get; set; }
+            public double? ActualYearly { get; set; }
+            public double? ActualMonthly { get; set; }
+        }
+
+        public class Group
+        {
+            public string Name { get; set; }
+            public string PerformanceIndicator { get; set; }
+            public string Unit { get; set; }
+            public string Periode { get; set; }
             public double? ActualYearly { get; set; }
             public double? ActualMonthly { get; set; }
         }
