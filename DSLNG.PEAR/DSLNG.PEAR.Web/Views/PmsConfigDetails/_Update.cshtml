@@ -13,10 +13,15 @@
             <label>Pillar : </label> @Model.PillarName
         </div>
 
-        <div class="form-group form-list">
+        @*<div class="form-group form-list">
             <label>KPI Name : </label> @Model.KpiName
-        </div>
+        </div>*@
 
+        <div class="form-group form-list">
+            <label>KPI</label>
+            @Html.DropDownListFor(x => x.KpiId, Model.Kpis, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.KpiId)
+        </div>
         <div class="form-group form-list">
             <label>Scoring Type</label>
             @Html.DropDownListFor(x => x.ScoringType, Model.ScoringTypes, new { @class = "form-control" })
