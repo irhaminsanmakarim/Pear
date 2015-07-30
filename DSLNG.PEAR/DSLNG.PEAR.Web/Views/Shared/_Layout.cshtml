@@ -171,12 +171,24 @@
                             marginLeft: -230
                         }, function () {
                             $leftContent.addClass('pear-hidden');
+                            $('.artifact-holder').each(function (i, val) {
+                                if($(val).highcharts()){
+                                    $(val).highcharts().reflow();
+                                }
+
+                            });
+                            //$('#container').highcharts().reflow();
                         })
                 } else {
                     $('.main-content').animate({
                             marginLeft: 0
                         }, function () {
                             $leftContent.removeClass('pear-hidden');
+                            $('.artifact-holder').each(function (i, val) {
+                                if ($(val).highcharts()) {
+                                    $(val).highcharts().reflow();
+                                }
+                            });
                         })
                 }
             });
