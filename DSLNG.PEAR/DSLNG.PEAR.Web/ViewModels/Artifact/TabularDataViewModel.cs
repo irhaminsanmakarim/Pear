@@ -21,8 +21,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             public string KpiName { get; set; }
             public string PeriodeType { get; set; }
             public string Periode { get; set; }
-            public double Actual { get; set; }
-            public double Target { get; set; }
+            public double? Actual { get; set; }
+            public double? Target { get; set; }
             public string Remark { get; set; }
             public string Measurement { get; set; }
         }

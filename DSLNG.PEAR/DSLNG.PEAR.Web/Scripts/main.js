@@ -9,6 +9,17 @@ String.prototype.isNullOrEmpty = function () {
     return this == false || this === '';
 };
 
+/**
+ * Number.prototype.format(n, x)
+ * 
+ * @param integer n: length of decimal
+ * @param integer x: length of sections
+ */
+Number.prototype.format = function (n, x) {
+    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+    return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+};
+
 (function (window, $, undifined) {
     var Pear = {};
     Pear.Artifact = {};
@@ -670,13 +681,20 @@ String.prototype.isNullOrEmpty = function () {
                 }
             },
             tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} ' + data.BarChart.ValueAxisTitle + '</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
+                formatter: function () {
+                    return '<b>' + this.x + '</b><br/>' +
+                        this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
+                        'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
+                }
             },
+            //tooltip: {
+            //    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            //    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            //        '<td style="padding:0"><b>{point.y:.1f} ' + data.BarChart.ValueAxisTitle + '</b></td></tr>',
+            //    footerFormat: '</table>',
+            //    shared: true,
+            //    useHTML: true
+            //},
             plotOptions: {
                 column: {
                     pointPadding: 0.2,
@@ -728,8 +746,8 @@ String.prototype.isNullOrEmpty = function () {
             tooltip: {
                 formatter: function () {
                     return '<b>' + this.x + '</b><br/>' +
-                        this.series.name + ': ' + this.y + '<br/>' +
-                        'Total: ' + this.point.stackTotal;
+                        this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle  + '<br/>' +
+                        'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
             },
             plotOptions: {
@@ -772,8 +790,8 @@ String.prototype.isNullOrEmpty = function () {
             tooltip: {
                 formatter: function() {
                     return '<b>' + this.x + '</b><br/>' +
-                        this.series.name + ': ' + this.y + '<br/>' +
-                        'Total: ' + this.point.stackTotal;
+                        this.series.name + ': ' + this.y.format(2) + ' ' +data.BarChart.ValueAxisTitle + '<br/>' +
+                        'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
             },
 
@@ -871,8 +889,13 @@ String.prototype.isNullOrEmpty = function () {
                     color: '#808080'
                 }]
             },
+
             tooltip: {
-                valueSuffix: data.LineChart.ValueAxisTitle
+                formatter: function () {
+                    return '<b>' + this.x + '</b><br/>' +
+                        this.series.name + ': ' + this.y.format(2) + ' ' + data.LineChart.ValueAxisTitle;
+                }
+                //valueSuffix: data.LineChart.ValueAxisTitle
             },
             //legend: {
             //    layout: 'vertical',
@@ -964,7 +987,11 @@ String.prototype.isNullOrEmpty = function () {
                 }
             },
             tooltip: {
-                pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+                formatter: function () {
+                    return '<b>' + this.x + '</b><br/>' +
+                        this.series.name + ': ' + this.y.format(2) + ' ' + data.LineChart.ValueAxisTitle;
+                }
+                //valueSuffix: data.LineChart.ValueAxisTitle
             },
             plotOptions: {
                 
@@ -1403,10 +1430,10 @@ String.prototype.isNullOrEmpty = function () {
             //row.append($('<td>').html(dataRow.PeriodeType));
             row.append($('<td>').html(dataRow.Periode));
             if (data.Tabular.Actual) {
-                row.append($('<td>').html(dataRow.Actual));
+                row.append($('<td>').html(dataRow.Actual == null ? '-' : dataRow.Actual.format(2)));
             }
             if (data.Tabular.Target) {
-                row.append($('<td>').html(dataRow.Target));
+                row.append($('<td>').html(dataRow.Target == null ? '-' : dataRow.Target.format(2)));
             }
             if (data.Tabular.Remark) {
                 row.append($('<td>').html(dataRow.Remark));
@@ -1501,17 +1528,17 @@ String.prototype.isNullOrEmpty = function () {
         $zeroMeter.html('- 0 ' + volumeUnit);
 
         var $minCapacity = $('<p>', { 'class': 'tank-min-capacity' });
-        $minCapacity.html('- ' + data.Tank.MinCapacity + ' ' + volumeUnit + ' (Min)');
+        $minCapacity.html('- ' + data.Tank.MinCapacity.format(2) + ' ' + volumeUnit + ' (Min)');
         var minCapacityPos = data.Tank.MinCapacity / data.Tank.MaxCapacity * tankHeight;
         $minCapacity.css('bottom', minCapacityPos + 'px');
 
         var $maxCapacity = $('<p>', { 'class': 'tank-max-capacity' });
-        $maxCapacity.html('- ' + data.Tank.MaxCapacity + ' ' + volumeUnit + ' (Max)');
+        $maxCapacity.html('- ' + data.Tank.MaxCapacity.format(2) + ' ' + volumeUnit + ' (Max)');
 
         var $currentVol = $('<p>', { 'class': 'tank-current-volume' });
         var currentVolPercent = Math.round(data.Tank.VolumeInventory / data.Tank.MaxCapacity * 100).toFixed(2);
         $currentVol.css('bottom', (volumeHeight - 6) + 'px');
-        $currentVol.html('- ' + data.Tank.VolumeInventory + ' ' + volumeUnit + ' (' + currentVolPercent + '%)');
+        $currentVol.html('- ' + data.Tank.VolumeInventory.format(2) + ' ' + volumeUnit + ' (' + currentVolPercent + '%)');
 
         $tank.append($volume);
         $tank.append($tankToTop);

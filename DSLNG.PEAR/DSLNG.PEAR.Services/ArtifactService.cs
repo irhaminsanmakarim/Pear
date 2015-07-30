@@ -174,10 +174,14 @@ namespace DSLNG.PEAR.Services
                         var kpiActual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
                       x.Periode <= end && x.Kpi.Id == row.KpiId && (x.Value != null && x.Value.Value != 0))
                       .OrderByDescending(x => x.Periode).FirstOrDefault();
-                        if (kpiActual != null)
+                        if (kpiActual != null && kpiActual.Value.HasValue)
                         {
                             latestActual = kpiActual;
                             rowResponse.Actual = kpiActual.Value.Value;
+                        }
+                        else {
+                            latestActual = kpiActual;
+                            rowResponse.Actual = null;
                         }
                     }
                 }
@@ -189,11 +193,14 @@ namespace DSLNG.PEAR.Services
                            (row.PeriodeType == PeriodeType.Yearly && row.RangeFilter == RangeFilter.CurrentYear))
                     {
                         var kpiTarget = DataContext.KpiTargets.Where(x => x.PeriodeType == row.PeriodeType &&
-                      x.Periode == latestActual.Periode && x.Kpi.Id == row.KpiId && (x.Value != null && x.Value.Value != 0))
+                      x.Periode == latestActual.Periode && x.Kpi.Id == row.KpiId)
                       .OrderByDescending(x => x.Periode).FirstOrDefault();
-                        if (kpiTarget != null)
+                        if (kpiTarget != null && kpiTarget.Value.HasValue)
                         {
                             rowResponse.Target = kpiTarget.Value.Value;
+                        }
+                        else {
+                            rowResponse.Target = null;
                         }
                     }
                 }

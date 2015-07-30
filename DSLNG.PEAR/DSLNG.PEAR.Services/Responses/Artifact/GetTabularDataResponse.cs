@@ -22,8 +22,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public string Measurement { get; set; }
             public string PeriodeType { get; set; }
             public string Periode { get; set; }
-            public double Actual { get; set; }
-            public double Target { get; set; }
+            public double? Actual { get; set; }
+            public double? Target { get; set; }
             public string Remark { get; set; }
         }
     }
