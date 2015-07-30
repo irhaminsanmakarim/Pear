@@ -66,17 +66,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-toggle="modal" data-target="#ModalFatality">
 
-                                <td>@Model.KpiGroup</td>
-                                <td>@Model.KpiName</td>
-                                <td>@Model.KpiUnit</td>
-                                <td>@Model.KpiPeriod</td>
-                                <td>@Model.KpiActualYearly</td>
-                                <td>@Model.KpiActualMonthly</td>
+                            @foreach (var item in Model.Groups)
+                            {
+                                <tr data-toggle="modal" data-target="#ModalFatality">
+                                    <td>@item.Name</td>
+                                    <td>@item.PerformanceIndicator</td>
+                                    <td>@item.Unit</td>
+                                    <td>@item.Periode</td>
+                                    <td>@(item.ActualYearly.HasValue ? item.ActualYearly.Value.ToString("0.##") : "") </td>
+                                    <td>@(item.ActualMonthly.HasValue ? item.ActualMonthly.Value.ToString("0.##") : "") </td>
+                                </tr>
+                            }
 
 
-                            </tr>
                         </tbody>
                     </table>
 
@@ -107,8 +110,8 @@
                                         <td>@item.Name</td>
                                         <td>@item.Unit</td>
                                         <td>@item.Method</td>
-                                        <td>@item.ActualYearly</td>
-                                        <td>@item.ActualMonthly</td>
+                                        <td>@(item.ActualYearly.HasValue ? item.ActualYearly.Value.ToString("0.##") : "") </td>
+                                        <td>@(item.ActualMonthly.HasValue ? item.ActualMonthly.Value.ToString("0.##") : "") </td>
                                     </tr>
                                 }
                             </tbody>
@@ -120,14 +123,14 @@
                     }
                 </div>
                 <div role="tabpanel" class="tab-pane" id="graphchart">
-                    <div class="layout-column" style="width:100%;">
-                        <div class="whitebox artifact-holder" style="height:300px;" data-artifact-url="@Url.Action("ChartYearly", "PmsSummary", new { id=Model.KpiId, measurementId= Model.MeasurementId, year= Model.Year, month= Model.MonthInt })">
+                    <div class="layout-column" style="width: 100%;">
+                        <div class="whitebox artifact-holder" style="height:300px;" data-artifact-url="@Url.Action("ChartYearly", "PmsSummary", new { id = Model.KpiId, measurementId = Model.MeasurementId, year = Model.Year, month = Model.MonthInt })">
                         </div>
 
-                        <div class="whitebox artifact-holder" style="height:300px;" data-artifact-url="@Url.Action("ChartMonthly", "PmsSummary", new { id=Model.KpiId, measurementId= Model.MeasurementId, year= Model.Year, month= Model.MonthInt })">
+                        <div class="whitebox artifact-holder" style="height:300px;" data-artifact-url="@Url.Action("ChartMonthly", "PmsSummary", new { id = Model.KpiId, measurementId = Model.MeasurementId, year = Model.Year, month = Model.MonthInt })">
                         </div>
 
-                        <div class="whitebox artifact-holder" style="height:300px;" data-artifact-url="@Url.Action("ChartYtd", "PmsSummary", new { id=Model.KpiId, measurementId= Model.MeasurementId, year= Model.Year, month= Model.MonthInt })">
+                        <div class="whitebox artifact-holder" style="height:300px;" data-artifact-url="@Url.Action("ChartYtd", "PmsSummary", new { id = Model.KpiId, measurementId = Model.MeasurementId, year = Model.Year, month = Model.MonthInt })">
                         </div>
                     </div>
                 </div>
