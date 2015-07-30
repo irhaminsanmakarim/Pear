@@ -578,6 +578,7 @@
     <Content Include="Views\Template\Update.cshtml" />
     <Content Include="Views\Template\Preview.cshtml" />
     <Content Include="Views\Tank\_Edit.cshtml" />
+    <Content Include="Views\Tabular\_Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

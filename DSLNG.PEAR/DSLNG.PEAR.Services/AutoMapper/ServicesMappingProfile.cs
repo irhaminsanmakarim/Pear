@@ -168,25 +168,26 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreatePeriodeRequest, Data.Entities.Periode>();
             Mapper.CreateMap<UpdatePeriodeRequest, Data.Entities.Periode>();
 
-            Mapper.CreateMap<CreateArtifactRequest, Data.Entities.Artifact>()
+            Mapper.CreateMap<CreateArtifactRequest, Artifact>()
                 .ForMember(x => x.Series, o => o.Ignore())
                 .ForMember(x => x.Plots, o => o.Ignore())
                 .ForMember(x => x.Rows, o => o.Ignore())
                 .ForMember(x => x.Tank, o => o.Ignore());
-            Mapper.CreateMap<CreateArtifactRequest.SeriesRequest, Data.Entities.ArtifactSerie>()
+            Mapper.CreateMap<CreateArtifactRequest.SeriesRequest, ArtifactSerie>()
                 .ForMember(x => x.Stacks, o => o.Ignore());
-            Mapper.CreateMap<CreateArtifactRequest.PlotRequest, Data.Entities.ArtifactPlot>();
-            Mapper.CreateMap<CreateArtifactRequest.StackRequest, Data.Entities.ArtifactStack>();
-            Mapper.CreateMap<CreateArtifactRequest.RowRequest, Data.Entities.ArtifactRow>();
+            Mapper.CreateMap<CreateArtifactRequest.PlotRequest, ArtifactPlot>();
+            Mapper.CreateMap<CreateArtifactRequest.StackRequest, ArtifactStack>();
+            Mapper.CreateMap<CreateArtifactRequest.RowRequest, ArtifactRow>();
 
-            Mapper.CreateMap<UpdateArtifactRequest, Data.Entities.Artifact>()
+            Mapper.CreateMap<UpdateArtifactRequest, Artifact>()
                .ForMember(x => x.Series, o => o.Ignore())
                .ForMember(x => x.Plots, o => o.Ignore());
-            Mapper.CreateMap<UpdateArtifactRequest.SeriesRequest, Data.Entities.ArtifactSerie>()
+            Mapper.CreateMap<UpdateArtifactRequest.SeriesRequest, ArtifactSerie>()
                 .ForMember(x => x.Stacks, o => o.Ignore());
-            Mapper.CreateMap<UpdateArtifactRequest.PlotRequest, Data.Entities.ArtifactPlot>();
-            Mapper.CreateMap<UpdateArtifactRequest.StackRequest, Data.Entities.ArtifactStack>();
+            Mapper.CreateMap<UpdateArtifactRequest.PlotRequest, ArtifactPlot>();
+            Mapper.CreateMap<UpdateArtifactRequest.StackRequest, ArtifactStack>();
             Mapper.CreateMap<UpdateArtifactRequest.TankRequest, ArtifactTank>();
+            Mapper.CreateMap<UpdateArtifactRequest.RowRequest, ArtifactRow>();
 
             Mapper.CreateMap<Artifact, GetArtifactsResponse.Artifact>();
             Mapper.CreateMap<Artifact, GetArtifactResponse>()
@@ -203,8 +204,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id))
                 .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name));
             Mapper.CreateMap<ArtifactRow, GetArtifactResponse.RowResponse>()
-                .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id))
-                .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name));
+                  .ForMember(x => x.KpiId, o => o.MapFrom(s => s.Kpi.Id))
+                  .ForMember(x => x.KpiName, o => o.MapFrom(s => s.Kpi.Name));
             Mapper.CreateMap<ArtifactTank, GetArtifactResponse.TankResponse>()
                .ForMember(x => x.VolumeInventoryId, o => o.MapFrom(s => s.VolumeInventory.Id))
                .ForMember(x => x.VolumeInventory, o => o.MapFrom(s => s.VolumeInventory.Name))
