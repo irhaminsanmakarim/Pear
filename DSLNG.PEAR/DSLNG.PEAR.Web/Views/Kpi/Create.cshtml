@@ -86,7 +86,7 @@
                         <input type="hidden" name="RelationModels.Index" value="@i" />
                             <div class="col-lg-5">
                                 <select name="RelationModels[@i].KpiId" class="form-control rm-kpi">
-                                    <option value="0">-</option>
+                                    <option value="0">Select KPI</option>
                                     @foreach (var item in Model.KpiList)
                                     {
                                         <option value="@item.Value">@item.Text</option>

@@ -219,6 +219,7 @@ namespace DSLNG.PEAR.Services
                                         .Include(x => x.PmsConfig.ScoreIndicators)
                                         .Include(x => x.PmsConfig.PmsSummary)
                                         .Include(x => x.Kpi)
+                                        .Include(x => x.Kpi.Type)
                                         .Include(x => x.Kpi.Group)
                                         .Include(x => x.Kpi.KpiAchievements)
                                         .Include(x => x.Kpi.Measurement)
@@ -288,6 +289,32 @@ namespace DSLNG.PEAR.Services
                             });
                         }
                     }
+
+                    var groups = DataContext.Kpis
+                            .Include(x => x.Group)
+                            .Include(x => x.KpiAchievements)
+                            .Include(x => x.KpiTargets)
+                            .Include(x => x.Measurement)
+                            .Where(x => x.Type.Id == config.Kpi.Type.Id).ToList();
+
+                    var listGroup = new List<GetPmsDetailsResponse.Group>();
+                    foreach (var @group in groups)
+                    {
+                        var achievementMonthly = @group.KpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Monthly && x.Periode.Month == request.Month && x.Periode.Year == request.Year);
+                        var achievementYearly = @group.KpiAchievements.FirstOrDefault(x => x.PeriodeType == PeriodeType.Yearly && x.Periode.Year == request.Year);
+                        
+                            listGroup.Add(new GetPmsDetailsResponse.Group
+                                {
+                                    ActualMonthly = achievementMonthly != null ? achievementMonthly.Value : null,
+                                    ActualYearly = achievementYearly != null ? achievementYearly.Value : null,
+                                    Name = @group.Group != null ? @group.Group.Name : string.Empty,
+                                    Unit = @group.Measurement != null ? @group.Measurement.Name : string.Empty,
+                                    PerformanceIndicator = @group.Name,
+                                    Periode = @group.Period.ToString()
+                                });
+                    }
+
+                    response.Groups = listGroup;
                 }
 
                 response.IsSuccess = true;

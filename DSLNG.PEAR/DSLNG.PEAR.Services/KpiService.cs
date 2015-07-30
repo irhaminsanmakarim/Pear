@@ -72,15 +72,20 @@ namespace DSLNG.PEAR.Services
                     .Include(x => x.RelationModels)
                     .Include("RelationModels.Kpi").First(x => x.Id == request.Id);
 
-                var relationModels = DataContext.KpiRelationModels.Include(x => x.Kpi).Include(x=>x.KpiParent).Where(x => x.Kpi.Id == kpi.Id);
+                var relationModels = DataContext.KpiRelationModels.Include(x => x.Kpi).Include(x => x.KpiParent).Where(x => x.Kpi.Id == kpi.Id);
                 foreach (var item in relationModels)
                 {
-                    kpi.RelationModels.Add(new Data.Entities.KpiRelationModel { 
-                        Id = item.Id,
-                        Kpi = item.KpiParent,
-                        KpiParent = item.Kpi,
-                        Method = item.Method
-                    });
+                    if (kpi.RelationModels.FirstOrDefault(x => x.Kpi.Id.Equals(item.KpiParent.Id)) == null)
+                    {
+                        kpi.RelationModels.Add(new Data.Entities.KpiRelationModel
+                        {
+                            Id = item.Id,
+                            Kpi = item.KpiParent,
+                            KpiParent = item.Kpi,
+                            Method = item.Method
+                        });    
+                    }
+                    
                 }
                 var response = kpi.MapTo<GetKpiResponse>();
 
@@ -146,13 +151,13 @@ namespace DSLNG.PEAR.Services
                 kpi.Method = DataContext.Methods.FirstOrDefault(x => x.Id == request.MethodId);
                 if (request.RelationModels.Count > 0)
                 {
-                    var relation = new List<DSLNG.PEAR.Data.Entities.KpiRelationModel>();
+                    var relation = new List<KpiRelationModel>();
                     foreach (var item in request.RelationModels)
                     {
                         if (item.KpiId != 0)
                         {
                             var kpiRelation = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
-                            relation.Add(new DSLNG.PEAR.Data.Entities.KpiRelationModel
+                            relation.Add(new KpiRelationModel
                             {
                                 Kpi = kpiRelation,
                                 Method = item.Method
@@ -181,18 +186,6 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var updateKpi = request.MapTo<Kpi>();
-                var relation = new List<DSLNG.PEAR.Data.Entities.KpiRelationModel>();
-                foreach (var kpiRelation in request.RelationModels)
-                {
-                    relation.Add(new Data.Entities.KpiRelationModel
-                    {
-                        Id = kpiRelation.Id,
-                        Kpi = DataContext.Kpis.SingleOrDefault(x => x.Id == kpiRelation.KpiId),
-                        KpiParent = DataContext.Kpis.SingleOrDefault(x => x.Id == request.Id),
-                        Method = kpiRelation.Method
-                    });
-                }
-                updateKpi.RelationModels = relation;
                 if (request.PillarId.HasValue)
                 {
                     updateKpi.Pillar = DataContext.Pillars.FirstOrDefault(x => x.Id == request.PillarId);
@@ -213,7 +206,8 @@ namespace DSLNG.PEAR.Services
 
                 var existedkpi = DataContext.Kpis
                     .Where(x => x.Id == request.Id)
-                    .Include(x => x.RelationModels)
+                    .Include(x => x.RelationModels.Select(y => y.Kpi))
+                    .Include(x => x.RelationModels.Select(y => y.KpiParent))
                     .Include(x => x.Pillar)
                     .Include(x => x.Level)
                     .Include(x => x.RoleGroup)
@@ -253,49 +247,40 @@ namespace DSLNG.PEAR.Services
 
                 DataContext.Methods.Attach(updateKpi.Method);
                 existedkpi.Method = updateKpi.Method;
-                List<KpiRelationModel> allRelationModel = updateKpi.RelationModels.ToList();
 
-                foreach (var relationModel in updateKpi.RelationModels)
+                var joinedRelationModels = existedkpi.RelationModels.ToList();
+                var additionalRelationModels = DataContext.KpiRelationModels
+                    .Include(x => x.Kpi)
+                    .Include(x => x.KpiParent)
+                    .Where(x => x.Kpi.Id == request.Id).ToList();
+
+
+                foreach (var item in additionalRelationModels)
                 {
-                    var existedrelationModel = existedkpi.RelationModels.SingleOrDefault(x => x.Id == relationModel.Id && x.Id != 0 && x.Kpi != null);
-                    var existedrelationModelFromContext = DataContext.KpiRelationModels.SingleOrDefault(x => x.Id == relationModel.Id && x.Id != 0 && x.Kpi != null);
-                    if (existedrelationModel != null)
-                    {
-                        var relationModelEntry = DataContext.Entry(existedrelationModel);
-                        relationModelEntry.CurrentValues.SetValues(relationModel);
-                        DataContext.Kpis.Attach(relationModel.Kpi);
-                        existedrelationModel.Kpi = relationModel.Kpi;
-                    }
-                    else
-                    {
-                        if (existedrelationModelFromContext != null)
-                        {
-                            var relationModelParent = new DSLNG.PEAR.Data.Entities.KpiRelationModel();
-                            relationModel.Id = existedrelationModelFromContext.Id;
-                            relationModel.Kpi = existedrelationModelFromContext.Kpi;
-                            relationModel.KpiParent = existedrelationModelFromContext.KpiParent;
-                            relationModel.Method = relationModel.Method;
-                            var relationModelEntry = DataContext.Entry(existedrelationModelFromContext);
-                            relationModelEntry.CurrentValues.SetValues(relationModel);
-                            allRelationModel.Remove(relationModel);
-                        }
-                        else
-                        {
-                            relationModel.Id = 0;
-                            if (relationModel.Kpi != null) {
-                                existedkpi.RelationModels.Add(relationModel);
-                            }
-                            
-                        }
-                    }
+                    joinedRelationModels.Add(item);
                 }
 
-                foreach (var item in existedkpi.RelationModels.Where(x => x.Id != 0).ToList())
+                foreach (var joinedRelationModel in joinedRelationModels)
                 {
-                    if (allRelationModel.Count > 0 && allRelationModel.All(x => x.Id != item.Id))
+                    DataContext.KpiRelationModels.Remove(joinedRelationModel);
+                }
+
+                if (request.RelationModels.Count > 0)
+                {
+                    var relation = new List<KpiRelationModel>();
+                    foreach (var item in request.RelationModels)
                     {
-                        DataContext.KpiRelationModels.Remove(item);
+                        if (item.KpiId != 0)
+                        {
+                            var kpiRelation = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
+                            relation.Add(new KpiRelationModel
+                            {
+                                Kpi = kpiRelation,
+                                Method = item.Method
+                            });
+                        }
                     }
+                    existedkpi.RelationModels = relation;
                 }
 
                 DataContext.SaveChanges();

@@ -68,6 +68,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Kpi
         public string YtdFormulaValue { get; set; }
         public IEnumerable<SelectListItem> YtdFormulaList { get; set; }
 
+        [Required]
         [Display(Name="Measurement")]
         public int? MeasurementId { get; set; }
         public IEnumerable<SelectListItem> MeasurementList { get; set; }
