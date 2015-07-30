@@ -54,7 +54,7 @@ namespace DSLNG.PEAR.Web.Controllers
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<UpdatePmsConfigDetailsViewModel>();
-                if (response.ScoreIndicators.Count() == 0)
+                if (!response.ScoreIndicators.Any())
                 {
                     var scoreIndicator = new List<ScoreIndicatorViewModel>();
                     scoreIndicator.Add(new ScoreIndicatorViewModel { Id = 0 });
@@ -62,7 +62,8 @@ namespace DSLNG.PEAR.Web.Controllers
                 }
                 viewModel.ScoringTypes = _dropdownService.GetScoringTypes().MapTo<SelectListItem>();
                 //viewModel.Kpis = _dropdownService.GetKpis().MapTo<SelectListItem>();
-                viewModel.Kpis = _dropdownService.GetKpisForPmsConfigDetails(viewModel.PmsConfigId).MapTo<SelectListItem>();
+                viewModel.Kpis = _dropdownService.GetKpisForPmsConfigDetailsUpdate(viewModel.PmsConfigId, response.KpiId).MapTo<SelectListItem>();
+                viewModel.KpiId = response.KpiId;
                 return PartialView("_Update", viewModel);
             }
 
