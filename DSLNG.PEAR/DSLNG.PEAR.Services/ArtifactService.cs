@@ -72,6 +72,37 @@ namespace DSLNG.PEAR.Services
                     }
                     break;
             }
+            KpiAchievement latestVolInventory = null;
+            if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                       (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                       (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                       (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+            {
+                var actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+              x.Periode <= end && x.Kpi.Id == volumeInventory.Id && (x.Value != null && x.Value.Value != 0))
+              .OrderByDescending(x => x.Periode).FirstOrDefault();
+                if (actual != null)
+                {
+                    latestVolInventory = actual;
+                    response.VolumeInventory = actual.Value.Value;
+                }
+            }
+            if (latestVolInventory != null)
+            {
+                if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                         (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                         (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                         (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                {
+                    var actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                  x.Periode == latestVolInventory.Periode && x.Kpi.Id == daysToTankTop.Id && (x.Value != null && x.Value.Value != 0))
+                  .OrderByDescending(x => x.Periode).FirstOrDefault();
+                    if (actual != null)
+                    {
+                        response.DaysToTankTop = actual.Value.Value;
+                    }
+                }
+            }
             return response;
         }
 
@@ -93,7 +124,9 @@ namespace DSLNG.PEAR.Services
                 rowResponse.Periode = timeInformation;//start.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                 if (request.Remark)
                 {
-                    rowResponse.Remark = kpi.Remark;
+                    var actual =  DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId).FirstOrDefault();
+                    rowResponse.Remark = actual != null ? actual.Remark : "";
                 }
                 switch (kpi.YtdFormula)
                 {
@@ -129,6 +162,40 @@ namespace DSLNG.PEAR.Services
                                     .Select(x => x.Average(y => y.Value).Value).FirstOrDefault();
                         }
                         break;
+                }
+                KpiAchievement latestActual = null;
+                if (request.Actual)
+                {
+                    if ((row.PeriodeType == PeriodeType.Hourly && row.RangeFilter == RangeFilter.CurrentHour) ||
+                           (row.PeriodeType == PeriodeType.Daily && row.RangeFilter == RangeFilter.CurrentDay) ||
+                           (row.PeriodeType == PeriodeType.Monthly && row.RangeFilter == RangeFilter.CurrentMonth) ||
+                           (row.PeriodeType == PeriodeType.Yearly && row.RangeFilter == RangeFilter.CurrentYear))
+                    {
+                        var kpiActual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
+                      x.Periode <= end && x.Kpi.Id == row.KpiId && (x.Value != null && x.Value.Value != 0))
+                      .OrderByDescending(x => x.Periode).FirstOrDefault();
+                        if (kpiActual != null)
+                        {
+                            latestActual = kpiActual;
+                            rowResponse.Actual = kpiActual.Value.Value;
+                        }
+                    }
+                }
+                if (request.Target && latestActual != null)
+                {
+                    if ((row.PeriodeType == PeriodeType.Hourly && row.RangeFilter == RangeFilter.CurrentHour) ||
+                           (row.PeriodeType == PeriodeType.Daily && row.RangeFilter == RangeFilter.CurrentDay) ||
+                           (row.PeriodeType == PeriodeType.Monthly && row.RangeFilter == RangeFilter.CurrentMonth) ||
+                           (row.PeriodeType == PeriodeType.Yearly && row.RangeFilter == RangeFilter.CurrentYear))
+                    {
+                        var kpiTarget = DataContext.KpiTargets.Where(x => x.PeriodeType == row.PeriodeType &&
+                      x.Periode == latestActual.Periode && x.Kpi.Id == row.KpiId && (x.Value != null && x.Value.Value != 0))
+                      .OrderByDescending(x => x.Periode).FirstOrDefault();
+                        if (kpiTarget != null)
+                        {
+                            rowResponse.Target = kpiTarget.Value.Value;
+                        }
+                    }
                 }
                 response.Rows.Add(rowResponse);
             }
@@ -198,6 +265,45 @@ namespace DSLNG.PEAR.Services
                             break;
                     }
                     break;
+            }
+            if (request.ValueAxis == ValueAxis.KpiActual) {
+                if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                      (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                      (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                {
+                    var actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                  x.Periode <= end && x.Kpi.Id == request.Series.KpiId && (x.Value != null && x.Value.Value != 0))
+                  .OrderByDescending(x => x.Periode).FirstOrDefault();
+                    if (actual != null)
+                    {
+                        response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
+                        {
+                            name = request.Series.Label,
+                            data = actual.Value.Value
+                        };
+                    }
+                }
+            }
+            else if (request.ValueAxis == ValueAxis.KpiTarget)
+            {
+                if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                      (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                      (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                {
+                    var target = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType &&
+                  x.Periode <= end && x.Kpi.Id == request.Series.KpiId && (x.Value != null && x.Value.Value != 0))
+                  .OrderByDescending(x => x.Periode).FirstOrDefault();
+                    if (target != null)
+                    {
+                        response.Series = new GetSpeedometerChartDataResponse.SeriesResponse
+                        {
+                            name = request.Series.Label,
+                            data = target.Value.Value
+                        };
+                    }
+                }
             }
             foreach (var plot in request.PlotBands)
             {
@@ -330,7 +436,7 @@ namespace DSLNG.PEAR.Services
                     var series1 = this._getKpiTargetSeries(targetSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, true);
                     var series2 = this._getKpiActualSeries(actualSeries, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, true);
                     seriesResponse = series1.Concat(series2).ToList();
-                    break;  
+                    break;
 
             }
             response.SeriesType = seriesType;
@@ -368,7 +474,7 @@ namespace DSLNG.PEAR.Services
                                     periodes.Add(startHour.ToString(hourlyFormat));
                                     dateTimePeriodes.Add(startHour);
                                 }
-                                timeInformation = startHour.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation = startHour.AddHours(-1).ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.DTD:
@@ -419,7 +525,7 @@ namespace DSLNG.PEAR.Services
                                     dateTimePeriodes.Add(startDay);
                                     startDay = startDay.AddDays(1);
                                 }
-                                timeInformation = startDay.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation = startDay.AddDays(-1).ToString("MMM/yyyy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.MTD:
@@ -539,6 +645,20 @@ namespace DSLNG.PEAR.Services
                       x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId)
                       .OrderBy(x => x.Periode).ToList();
 
+                    if ((periodeType == PeriodeType.Hourly && rangeFilter == RangeFilter.CurrentHour) ||
+                        (periodeType == PeriodeType.Daily && rangeFilter == RangeFilter.CurrentDay) ||
+                        (periodeType == PeriodeType.Monthly && rangeFilter == RangeFilter.CurrentMonth) ||
+                        (periodeType == PeriodeType.Yearly && rangeFilter == RangeFilter.CurrentYear))
+                    {
+                        var kpiTarget = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
+                      x.Periode <= end && x.Kpi.Id == series.KpiId && (x.Value != null && x.Value.Value != 0))
+                      .OrderByDescending(x => x.Periode).FirstOrDefault();
+                        if (kpiTarget != null)
+                        {
+                            kpiTargets = new List<KpiTarget> { kpiTarget };
+                        }
+                    }
+
                     if (seriesType == "multi-stacks-grouped")
                     {
                         var aSeries = new GetCartesianChartDataResponse.SeriesResponse
@@ -580,13 +700,13 @@ namespace DSLNG.PEAR.Services
                             }
                         }
 
-                        seriesResponse.Add(aSeries);
+
                         if (graphicType == "baraccumulative")
                         {
                             var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                Name = "Previous " + series.Label,
-                                Color = string.IsNullOrEmpty(series.PreviousColor) ?  "#004071" : series.PreviousColor,
+                                Name = "Previous Accumulation",
+                                Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                                 Stack = series.Label
                             };
                             for (var i = 0; i < aSeries.Data.Count; i++)
@@ -600,6 +720,7 @@ namespace DSLNG.PEAR.Services
                             }
                             seriesResponse.Add(previousSeries);
                         }
+                        seriesResponse.Add(aSeries);
                     }
                     else
                     {
@@ -644,12 +765,12 @@ namespace DSLNG.PEAR.Services
                                 }
                             }
                         }
-                        seriesResponse.Add(aSeries);
+
                         if (graphicType == "baraccumulative")
                         {
                             var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                Name = "Previous " + series.Label,
+                                Name = "Previous Accumulation",
                                 Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                             };
                             if (comparison)
@@ -667,6 +788,7 @@ namespace DSLNG.PEAR.Services
                             }
                             seriesResponse.Add(previousSeries);
                         }
+                        seriesResponse.Add(aSeries);
                     }
 
                 }
@@ -677,6 +799,21 @@ namespace DSLNG.PEAR.Services
                         var kpiTargets = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
                         x.Periode >= start && x.Periode <= end && x.Kpi.Id == stack.KpiId)
                         .OrderBy(x => x.Periode).ToList();
+
+                        if ((periodeType == PeriodeType.Hourly && rangeFilter == RangeFilter.CurrentHour) ||
+                        (periodeType == PeriodeType.Daily && rangeFilter == RangeFilter.CurrentDay) ||
+                        (periodeType == PeriodeType.Monthly && rangeFilter == RangeFilter.CurrentMonth) ||
+                        (periodeType == PeriodeType.Yearly && rangeFilter == RangeFilter.CurrentYear))
+                        {
+                            var kpiTarget = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
+                          x.Periode <= end && x.Kpi.Id == stack.KpiId && (x.Value != null && x.Value.Value != 0))
+                          .OrderByDescending(x => x.Periode).FirstOrDefault();
+                            if (kpiTarget != null)
+                            {
+                                kpiTargets = new List<KpiTarget> { kpiTarget };
+                            }
+                        }
+
                         if (seriesType == "multi-stacks-grouped")
                         {
                             var aSeries = new GetCartesianChartDataResponse.SeriesResponse
@@ -784,6 +921,21 @@ namespace DSLNG.PEAR.Services
                     var kpiActuals = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
                       x.Periode >= start && x.Periode <= end && x.Kpi.Id == series.KpiId)
                       .OrderBy(x => x.Periode).ToList();
+
+                    if ((periodeType == PeriodeType.Hourly && rangeFilter == RangeFilter.CurrentHour) ||
+                       (periodeType == PeriodeType.Daily && rangeFilter == RangeFilter.CurrentDay) ||
+                       (periodeType == PeriodeType.Monthly && rangeFilter == RangeFilter.CurrentMonth) ||
+                       (periodeType == PeriodeType.Yearly && rangeFilter == RangeFilter.CurrentYear))
+                    {
+                        var kpiActual = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
+                      x.Periode <= end && x.Kpi.Id == series.KpiId && (x.Value != null && x.Value.Value != 0))
+                      .OrderByDescending(x => x.Periode).FirstOrDefault();
+                        if (kpiActual != null)
+                        {
+                            kpiActuals = new List<KpiAchievement> { kpiActual };
+                        }
+                    }
+
                     if (seriesType == "multi-stacks-grouped" && graphicType == "baraccumulative")
                     {
                         var aSeries = new GetCartesianChartDataResponse.SeriesResponse
@@ -824,11 +976,11 @@ namespace DSLNG.PEAR.Services
                                 }
                             }
                         }
-                        seriesResponse.Add(aSeries);
+
 
                         var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
-                            Name = "Previous " + series.Label,
+                            Name = "Previous Accumulation",
                             Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                             Stack = series.Label
                         };
@@ -842,6 +994,7 @@ namespace DSLNG.PEAR.Services
                             previousSeries.Data.Add(data);
                         }
                         seriesResponse.Add(previousSeries);
+                        seriesResponse.Add(aSeries);
                     }
                     else if (seriesType == "multi-stacks" && graphicType == "baraccumulative")
                     {
@@ -886,10 +1039,10 @@ namespace DSLNG.PEAR.Services
                                 }
                             }
                         }
-                        seriesResponse.Add(aSeries);
+
                         var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
-                            Name = "Previous " + series.Label,
+                            Name = "Previous Accumulation",
                             Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                         };
                         if (comparison)
@@ -906,6 +1059,7 @@ namespace DSLNG.PEAR.Services
                             previousSeries.Data.Add(data);
                         }
                         seriesResponse.Add(previousSeries);
+                        seriesResponse.Add(aSeries);
                     }
                     else if ((seriesType == "multi-stacks" || seriesType == "multi-stacks-grouped") && graphicType == "barachievement")
                     {
@@ -935,7 +1089,8 @@ namespace DSLNG.PEAR.Services
                             Name = "Exceed",
                             Color = "green"
                         };
-                        if (seriesType == "multi-stacks-grouped") {
+                        if (seriesType == "multi-stacks-grouped")
+                        {
                             aSeries.Stack = series.Label;
                             remainSeries.Stack = series.Label;
                             exceedSeries.Stack = series.Label;
@@ -1096,12 +1251,12 @@ namespace DSLNG.PEAR.Services
                                 }
                             }
                         }
-                        seriesResponse.Add(aSeries);
+
                         if (graphicType == "baraccumulative")
                         {
                             var previousSeries = new GetCartesianChartDataResponse.SeriesResponse
                             {
-                                Name = "Previous " + series.Label,
+                                Name = "Previous Accumulation",
                                 Color = string.IsNullOrEmpty(series.PreviousColor) ? "#004071" : series.PreviousColor,
                             };
                             if (comparison)
@@ -1119,15 +1274,31 @@ namespace DSLNG.PEAR.Services
                             }
                             seriesResponse.Add(previousSeries);
                         }
+                        seriesResponse.Add(aSeries);
                     }
                 }
                 else
                 {
                     foreach (var stack in series.Stacks)
                     {
-                        var kpiTargets = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
+                        var kpiActuals = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
                         x.Periode >= start && x.Periode <= end && x.Kpi.Id == stack.KpiId)
                         .OrderBy(x => x.Periode).ToList();
+
+                        if ((periodeType == PeriodeType.Hourly && rangeFilter == RangeFilter.CurrentHour) ||
+                     (periodeType == PeriodeType.Daily && rangeFilter == RangeFilter.CurrentDay) ||
+                     (periodeType == PeriodeType.Monthly && rangeFilter == RangeFilter.CurrentMonth) ||
+                     (periodeType == PeriodeType.Yearly && rangeFilter == RangeFilter.CurrentYear))
+                        {
+                            var kpiActual = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
+                          x.Periode <= end && x.Kpi.Id == stack.KpiId && (x.Value != null && x.Value.Value != 0))
+                          .OrderByDescending(x => x.Periode).FirstOrDefault();
+                            if (kpiActual != null)
+                            {
+                                kpiActuals = new List<KpiAchievement> { kpiActual };
+                            }
+                        }
+
                         if (seriesType == "multi-stacks-grouped")
                         {
                             var aSeries = new GetCartesianChartDataResponse.SeriesResponse
@@ -1145,7 +1316,7 @@ namespace DSLNG.PEAR.Services
 
                                 foreach (var periode in dateTimePeriodes)
                                 {
-                                    var targetValue = kpiTargets.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                    var targetValue = kpiActuals.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
                                         .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
                                     if (targetValue == null || !targetValue.HasValue)
                                     {
@@ -1161,7 +1332,7 @@ namespace DSLNG.PEAR.Services
                             {
                                 foreach (var periode in dateTimePeriodes)
                                 {
-                                    var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
+                                    var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
                                     if (target == null || !target.Value.HasValue)
                                     {
                                         aSeries.Data.Add(null);
@@ -1191,7 +1362,7 @@ namespace DSLNG.PEAR.Services
 
                                 foreach (var periode in dateTimePeriodes)
                                 {
-                                    var targetValue = kpiTargets.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
+                                    var targetValue = kpiActuals.Where(x => x.Periode <= periode).GroupBy(x => x.Kpi)
                                         .Select(x => x.Sum(y => y.Value)).FirstOrDefault();
                                     if (targetValue == null || !targetValue.HasValue)
                                     {
@@ -1207,7 +1378,7 @@ namespace DSLNG.PEAR.Services
                             {
                                 foreach (var periode in dateTimePeriodes)
                                 {
-                                    var target = kpiTargets.Where(x => x.Periode == periode).FirstOrDefault();
+                                    var target = kpiActuals.Where(x => x.Periode == periode).FirstOrDefault();
                                     if (target == null || !target.Value.HasValue)
                                     {
                                         aSeries.Data.Add(null);
