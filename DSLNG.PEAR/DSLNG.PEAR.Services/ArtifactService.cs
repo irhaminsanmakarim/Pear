@@ -22,7 +22,8 @@ namespace DSLNG.PEAR.Services
         {
         }
 
-        public GetTankDataResponse GetTankData(GetTankDataRequest request) {
+        public GetTankDataResponse GetTankData(GetTankDataRequest request)
+        {
             var response = request.Tank.MapTo<GetTankDataResponse>();
             var volumeInventory = DataContext.Kpis.Include(x => x.Measurement).Where(x => x.Id == request.Tank.VolumeInventoryId).First();
             response.VolumeInventoryUnit = volumeInventory.Measurement.Name;
@@ -74,9 +75,11 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public GetTabularDataResponse GetTabularData(GetTabularDataRequest request) {
+        public GetTabularDataResponse GetTabularData(GetTabularDataRequest request)
+        {
             var response = request.MapTo<GetTabularDataResponse>();
-            foreach (var row in request.Rows) {
+            foreach (var row in request.Rows)
+            {
                 var kpi = DataContext.Kpis.Include(x => x.Measurement).Where(x => x.Id == row.KpiId).First();
                 IList<DateTime> dateTimePeriodes = new List<DateTime>();
                 string timeInformation;
@@ -88,19 +91,22 @@ namespace DSLNG.PEAR.Services
                 rowResponse.Measurement = kpi.Measurement.Name;
                 rowResponse.PeriodeType = row.PeriodeType.ToString();
                 rowResponse.Periode = timeInformation;//start.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
-                if (request.Remark) {
+                if (request.Remark)
+                {
                     rowResponse.Remark = kpi.Remark;
                 }
                 switch (kpi.YtdFormula)
                 {
                     case YtdFormula.Sum:
-                        if (request.Target) {
+                        if (request.Target)
+                        {
                             rowResponse.Target = DataContext.KpiTargets.Where(x => x.PeriodeType == row.PeriodeType &&
                                 x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
                                 .GroupBy(x => x.Kpi.Id)
                                 .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault();
                         }
-                        if (request.Actual) {
+                        if (request.Actual)
+                        {
                             rowResponse.Actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
                                     x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
                                     .GroupBy(x => x.Kpi.Id)
@@ -108,13 +114,15 @@ namespace DSLNG.PEAR.Services
                         }
                         break;
                     case YtdFormula.Average:
-                        if (request.Target) {
+                        if (request.Target)
+                        {
                             rowResponse.Target = DataContext.KpiTargets.Where(x => x.PeriodeType == row.PeriodeType &&
                                     x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
                                     .GroupBy(x => x.Kpi.Id)
                                     .Select(x => x.Average(y => y.Value).Value).FirstOrDefault();
                         }
-                        if (request.Actual) {
+                        if (request.Actual)
+                        {
                             rowResponse.Actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
                                     x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
                                     .GroupBy(x => x.Kpi.Id)
@@ -320,7 +328,7 @@ namespace DSLNG.PEAR.Services
                     var series2 = this._getKpiActualSeries(request.Series, request.PeriodeType, dateTimePeriodes, seriesType, request.RangeFilter, request.GraphicType, true);
                     seriesResponse = series1.Concat(series2).ToList();
                     seriesType = "multi-stacks-grouped";
-                    break;  
+                    break;
             }
             response.SeriesType = seriesType;
             response.Series = seriesResponse;
@@ -583,7 +591,7 @@ namespace DSLNG.PEAR.Services
                                 double data = 0;
                                 for (var j = 0; j < i; j++)
                                 {
-                                    data += aSeries.Data[j].HasValue? aSeries.Data[j].Value : 0;
+                                    data += aSeries.Data[j].HasValue ? aSeries.Data[j].Value : 0;
                                 }
                                 previousSeries.Data.Add(data);
                             }
@@ -597,7 +605,8 @@ namespace DSLNG.PEAR.Services
                             Name = series.Label,
                             Color = series.Color
                         };
-                        if(comparison){
+                        if (comparison)
+                        {
                             aSeries.Stack = "KpiTarget";
                         }
                         if (rangeFilter == RangeFilter.YTD || rangeFilter == RangeFilter.DTD || rangeFilter == RangeFilter.MTD)
@@ -649,7 +658,7 @@ namespace DSLNG.PEAR.Services
                                 double data = 0;
                                 for (var j = 0; j < i; j++)
                                 {
-                                    data += aSeries.Data[j].HasValue ? aSeries.Data[j].Value : 0 ;
+                                    data += aSeries.Data[j].HasValue ? aSeries.Data[j].Value : 0;
                                 }
                                 previousSeries.Data.Add(data);
                             }
@@ -963,7 +972,7 @@ namespace DSLNG.PEAR.Services
                                     }
                                     else
                                     {
-                                        
+
                                         var remain = target.Value - actual.Value;
                                         if (remain > 0)
                                         {
@@ -1009,7 +1018,7 @@ namespace DSLNG.PEAR.Services
                                     }
                                     else
                                     {
-                                        
+
                                         var remain = target.Value.Value - actual.Value.Value;
                                         if (remain > 0)
                                         {
@@ -1260,7 +1269,7 @@ namespace DSLNG.PEAR.Services
             }
             foreach (var rowReq in request.Rows)
             {
-                var row  = rowReq.MapTo<ArtifactRow>();
+                var row = rowReq.MapTo<ArtifactRow>();
                 if (rowReq.KpiId != 0)
                 {
                     var kpiInRow = new Kpi { Id = rowReq.KpiId };
@@ -1276,7 +1285,8 @@ namespace DSLNG.PEAR.Services
                 }
                 artifact.Rows.Add(row);
             }
-            if (request.Tank != null) {
+            if (request.Tank != null)
+            {
                 var tank = new ArtifactTank();
                 var volumeInventory = new Kpi { Id = request.Tank.VolumeInventoryId };
                 if (DataContext.Kpis.Local.Where(x => x.Id == volumeInventory.Id).FirstOrDefault() == null)
@@ -1316,21 +1326,27 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Series.Select(y => y.Stacks))
                 .Include(x => x.Series.Select(y => y.Stacks.Select(z => z.Kpi)))
                 .Include(x => x.Plots)
-                .FirstOrDefault(x => x.Id == request.Id);
+                .Include(x => x.Rows)
+                .Single(x => x.Id == request.Id);
 
-            if (artifact.Measurement.Id != request.MeasurementId) {
+            if (artifact.Measurement.Id != request.MeasurementId)
+            {
                 var measurement = new Measurement { Id = request.MeasurementId };
                 DataContext.Measurements.Attach(measurement);
                 artifact.Measurement = measurement;
-            
             }
-            foreach (var series in artifact.Series.ToList()) {
-                foreach (var stack in series.Stacks.ToList()) {
+
+            foreach (var series in artifact.Series.ToList())
+            {
+                foreach (var stack in series.Stacks.ToList())
+                {
                     DataContext.ArtifactStacks.Remove(stack);
                 }
                 DataContext.ArtifactSeries.Remove(series);
             }
-            foreach (var plot in artifact.Plots.ToList()) {
+
+            foreach (var plot in artifact.Plots.ToList())
+            {
                 DataContext.ArtifactPlots.Remove(plot);
             }
 
@@ -1340,13 +1356,13 @@ namespace DSLNG.PEAR.Services
                 if (seriesReq.KpiId != 0)
                 {
                     var kpi = new Kpi { Id = seriesReq.KpiId };
-                    if (DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault() == null)
+                    if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == seriesReq.KpiId) == null)
                     {
                         DataContext.Kpis.Attach(kpi);
                     }
                     else
                     {
-                        kpi = DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault();
+                        kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == seriesReq.KpiId);
                     }
                     series.Kpi = kpi;
                 }
@@ -1356,13 +1372,13 @@ namespace DSLNG.PEAR.Services
                     if (stackReq.KpiId != 0)
                     {
                         var kpiInStack = new Kpi { Id = stackReq.KpiId };
-                        if (DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault() == null)
+                        if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == stackReq.KpiId) == null)
                         {
                             DataContext.Kpis.Attach(kpiInStack);
                         }
                         else
                         {
-                            kpiInStack = DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault();
+                            kpiInStack = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == stackReq.KpiId);
                         }
                         stack.Kpi = kpiInStack;
                     }
@@ -1370,10 +1386,35 @@ namespace DSLNG.PEAR.Services
                 }
                 artifact.Series.Add(series);
             }
+
             foreach (var plotReq in request.Plots)
             {
                 var plot = plotReq.MapTo<ArtifactPlot>();
                 artifact.Plots.Add(plot);
+            }
+
+            foreach (var row in artifact.Rows.ToList())
+            {
+                DataContext.ArtifactRows.Remove(row);
+            }
+
+            foreach (var rowReq in request.Rows)
+            {
+                var row = rowReq.MapTo<ArtifactRow>();
+                if (rowReq.KpiId != 0)
+                {
+                    var kpiInRow = new Kpi { Id = rowReq.KpiId };
+                    if (DataContext.Kpis.Local.FirstOrDefault(x => x.Id == rowReq.KpiId) == null)
+                    {
+                        DataContext.Kpis.Attach(kpiInRow);
+                    }
+                    else
+                    {
+                        kpiInRow = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == rowReq.KpiId);
+                    }
+                    row.Kpi = kpiInRow;
+                }
+                artifact.Rows.Add(row);
             }
 
             if (request.Tank != null)
@@ -1402,8 +1443,6 @@ namespace DSLNG.PEAR.Services
                 tank.DaysToTankTopTitle = request.Tank.DaysToTankTopTitle;
                 tank.MinCapacity = request.Tank.MinCapacity;
                 tank.MaxCapacity = request.Tank.MaxCapacity;
-                //artifact.Tank = tank;
-                //artifact.Tank.MinCapacity = request.Tank.MinCapacity;
             }
 
             artifact.GraphicName = request.GraphicName;
