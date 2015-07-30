@@ -1382,7 +1382,7 @@ String.prototype.isNullOrEmpty = function () {
         $table.addClass('tabular');
         $table.addClass('table-bordered');
         var rowHeader = $('<tr>');
-        rowHeader.append($('<th>').html('Kpi Name'));
+        rowHeader.append($('<th>').html('KPI Name'));
         //rowHeader.append($('<th>').html('Periode Type'));
         rowHeader.append($('<th>').html('Periode'));
         if (data.Tabular.Actual) {
