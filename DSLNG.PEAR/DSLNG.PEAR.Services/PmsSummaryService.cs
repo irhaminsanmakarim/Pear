@@ -295,7 +295,7 @@ namespace DSLNG.PEAR.Services
                             .Include(x => x.KpiAchievements)
                             .Include(x => x.KpiTargets)
                             .Include(x => x.Measurement)
-                            .Where(x => x.Type.Id == config.Kpi.Type.Id).ToList();
+                            .Where(x => x.Group.Id == config.Kpi.Group.Id).ToList();
 
                     var listGroup = new List<GetPmsDetailsResponse.Group>();
                     foreach (var @group in groups)
@@ -886,9 +886,15 @@ namespace DSLNG.PEAR.Services
             var response = new DeletePmsResponse();
             try
             {
-                var pmsConfig = new PmsConfig { Id = id };
-                DataContext.PmsConfigs.Attach(pmsConfig);
-                DataContext.Entry(pmsConfig).State = EntityState.Deleted;
+                var pmsConfig = DataContext.PmsConfigs
+                    .Include(x => x.ScoreIndicators)
+                    .Single(x => x.Id == id);
+                foreach (var scoreIndicator in pmsConfig.ScoreIndicators.ToList())
+                {
+                    DataContext.ScoreIndicators.Remove(scoreIndicator);
+                }
+
+                DataContext.PmsConfigs.Remove(pmsConfig);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "Pms Config item has been deleted successfully";
@@ -927,9 +933,14 @@ namespace DSLNG.PEAR.Services
             var response = new DeletePmsResponse();
             try
             {
-                var pmsConfigDetails = new PmsConfigDetails { Id = id };
-                DataContext.PmsConfigDetails.Attach(pmsConfigDetails);
-                DataContext.Entry(pmsConfigDetails).State = EntityState.Deleted;
+                var pmsConfigDetails = DataContext.PmsConfigDetails
+                    .Include(x => x.ScoreIndicators)
+                    .Single(x => x.Id == id);
+                foreach (var scoreIndicator in pmsConfigDetails.ScoreIndicators.ToList())
+                {
+                    DataContext.ScoreIndicators.Remove(scoreIndicator);
+                }
+                DataContext.PmsConfigDetails.Remove(pmsConfigDetails);
                 DataContext.SaveChanges();
                 response.IsSuccess = true;
                 response.Message = "Pms Config Detail item has been deleted successfully";
