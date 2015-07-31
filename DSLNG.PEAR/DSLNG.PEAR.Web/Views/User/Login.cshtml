@@ -8,7 +8,7 @@
         <img src="/Content/img/logo_login.png" alt="">
     </div>
     @Html.Partial("_MessageResponse")
-    <form action="@Url.Action("Login")" method="POST">
+    <form action="@Url.Action("Login")" method="POST" id="formLogin">
         <ul>
             <li>
                 @Html.TextBoxFor(model => model.Username, new { @placeholder = "Username" })
@@ -29,3 +29,4 @@
         </div>
     </form>
 </div>
+
