@@ -204,5 +204,21 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = PeriodeType.Yearly.ToString(), Value = PeriodeType.Yearly.ToString()}
                 };
         }
+
+        public IEnumerable<Dropdown> GetKpisForPmsConfigDetailsUpdate(int pmsConfigId, int id)
+        {
+             var pmsConfig = DataContext.PmsConfigs.Include(x => x.Pillar)
+                                       .Include(x => x.PmsConfigDetailsList.Select(y => y.Kpi))
+                                       .Single(x => x.Id == pmsConfigId);
+            var kpiIds = pmsConfig.PmsConfigDetailsList.Where(x => x.Kpi.Id != id).Select(x => x.Kpi.Id);
+
+            return DataContext.Kpis.Where(x => x.Type.Code.ToLower() == Constants.Type.Corporate && x.Pillar.Id == pmsConfig.Pillar.Id 
+                && !kpiIds.Contains(x.Id))
+                .Select(x => new Dropdown
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
+        }
     }
 }
