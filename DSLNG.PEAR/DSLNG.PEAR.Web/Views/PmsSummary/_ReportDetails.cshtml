@@ -1,4 +1,5 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsReportDetailsViewModel
+﻿@using DSLNG.PEAR.Common.Contants
+@model DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsReportDetailsViewModel
 
 @if (Model.KpiId > 0)
 {
@@ -74,8 +75,8 @@
                                     <td>@item.PerformanceIndicator</td>
                                     <td>@item.Unit</td>
                                     <td>@item.Periode</td>
-                                    <td>@(item.ActualYearly.HasValue ? item.ActualYearly.Value.ToString("0.##") : "") </td>
-                                    <td>@(item.ActualMonthly.HasValue ? item.ActualMonthly.Value.ToString("0.##") : "") </td>
+                                    <td>@(item.ActualYearly.HasValue ? item.ActualYearly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
+                                    <td>@(item.ActualMonthly.HasValue ? item.ActualMonthly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
                                 </tr>
                             }
 
@@ -110,8 +111,8 @@
                                         <td>@item.Name</td>
                                         <td>@item.Unit</td>
                                         <td>@item.Method</td>
-                                        <td>@(item.ActualYearly.HasValue ? item.ActualYearly.Value.ToString("0.##") : "") </td>
-                                        <td>@(item.ActualMonthly.HasValue ? item.ActualMonthly.Value.ToString("0.##") : "") </td>
+                                        <td>@(item.ActualYearly.HasValue ? item.ActualYearly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
+                                        <td>@(item.ActualMonthly.HasValue ? item.ActualMonthly.Value.ToString(FormatNumber.DecimalFormat) : "") </td>
                                     </tr>
                                 }
                             </tbody>
