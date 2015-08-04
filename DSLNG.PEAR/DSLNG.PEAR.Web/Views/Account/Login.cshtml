@@ -1,4 +1,4 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.User.UserLoginViewModel
+@model DSLNG.PEAR.Web.ViewModels.User.UserLoginViewModel
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
@@ -14,15 +14,15 @@
     @Html.ValidationSummary(true, "Login Failed, Please check your credentials", new { @class = "alert alert-danger" })
 
 
-    <form action="@Url.Action("Login")" method="POST" autocomplete="off">
+    <form action="@Url.Action("Login")" method="POST" autocomplete="off" id="formLogin" onsubmit="return validateForm();">
 
         <li>
-            <input type="text" name="Username" id="Username" class="text" value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Username';}">
+            <input type="text" name="Username" id="Username" class="text" placeholder="Username">
             <span class=" icon user"></span>
             @Html.ValidationMessageFor(u => u.Username)
         </li>
         <li>
-            <input type="password" value="Password" id="Password" name="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+            <input type="password" id="Password" name="Password" placeholder="Password">
             <span class=" icon lock"></span>
             @Html.ValidationMessageFor(u => u.Password)
         </li>
@@ -32,5 +32,24 @@
         </div>
     </form>
 </div>
+
+
+<script type="text/javascript">
+
+    function validateForm() {
+        var form = document.forms['formLogin'];
+        var username = form["Username"].value;
+        var password = form["Password"].value;
+        if (username == null || username == "") {
+            alert("Username must be filled out");
+            return false;
+        }
+
+        if (password == null || password == "") {
+            alert("Password must be filled out");
+            return false;
+        }
+    }
+</script>
 
 
