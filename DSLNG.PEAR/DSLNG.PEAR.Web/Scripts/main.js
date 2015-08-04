@@ -1426,14 +1426,14 @@ Number.prototype.format = function (n, x) {
         for (var i in data.Tabular.Rows) {
             var dataRow = data.Tabular.Rows[i];
             var row = $('<tr>');
-            row.append($('<td>').html(dataRow.KpiName + ' (' + dataRow.Measurement + ')'));
+            row.append($('<td class="tabular-kpi-name">').html(dataRow.KpiName + ' (' + dataRow.Measurement + ')'));
             //row.append($('<td>').html(dataRow.PeriodeType));
             row.append($('<td>').html(dataRow.Periode));
             if (data.Tabular.Actual) {
-                row.append($('<td>').html(dataRow.Actual == null ? '-' : dataRow.Actual.format(2)));
+                row.append($('<td class="tabular-actual">').html(dataRow.Actual == null ? '-' : dataRow.Actual.format(2)));
             }
             if (data.Tabular.Target) {
-                row.append($('<td>').html(dataRow.Target == null ? '-' : dataRow.Target.format(2)));
+                row.append($('<td class="tabular-target">').html(dataRow.Target == null ? '-' : dataRow.Target.format(2)));
             }
             if (data.Tabular.Remark) {
                 row.append($('<td>').html(dataRow.Remark));

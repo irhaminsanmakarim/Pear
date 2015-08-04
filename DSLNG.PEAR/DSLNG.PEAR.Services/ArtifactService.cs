@@ -1813,7 +1813,7 @@ namespace DSLNG.PEAR.Services
             {
                 return new GetArtifactsResponse
                 {
-                    Artifacts = DataContext.Artifacts.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take)
+                    Artifacts = DataContext.Artifacts.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take)
                                     .ToList().MapTo<GetArtifactsResponse.Artifact>()
                 };
             }
