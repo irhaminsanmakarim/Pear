@@ -129,7 +129,8 @@ namespace DSLNG.PEAR.Services
 
             try
             {
-                var user = DataContext.Users.Where(x => x.Username == request.Username).Include(x => x.Role).First();
+                //var user = DataContext.Users.Where(x => x.Username == request.Username).Include(x => x.Role).First();
+                var user = DataContext.Users.Where(x => x.Email == request.Username).Include(x => x.Role).First();
                 if (user != null && user.Password == crypto.Compute(request.Password, user.PasswordSalt))
                 {
                     //Include(x => x.Role).

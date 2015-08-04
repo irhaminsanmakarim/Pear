@@ -28,7 +28,7 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 if (isValid(user.Username, user.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(user.Username, false);
+                    //FormsAuthentication.SetAuthCookie(user.Username, false);
                     return RedirectToAction("Index","Home");
                 }
                 else {
@@ -51,6 +51,7 @@ namespace DSLNG.PEAR.Web.Controllers
                  */
                 //this._createRole(user.RoleName);
                 //this._userAddToRole(user.Username, user.RoleName);
+                FormsAuthentication.SetAuthCookie(user.Username, false);
                 return user.IsSuccess;
             }
             return false;

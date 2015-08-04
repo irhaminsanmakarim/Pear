@@ -15,8 +15,8 @@ namespace DSLNG.PEAR.Web.Attributes
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var controller = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Controller"].ToString().ToLower();
-            var action = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Action"].ToString().ToLower();
+            var controller = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Controller"].ToString();
+            var action = filterContext.HttpContext.Request.RequestContext.RouteData.Values["Action"].ToString();
             var url = filterContext.HttpContext.Request.RawUrl;
             var _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
             var rootMenuActive = _menuService.GetSiteMenuActive(new GetSiteMenuActiveRequest() { Action = action, Controller = controller, Url = url });
