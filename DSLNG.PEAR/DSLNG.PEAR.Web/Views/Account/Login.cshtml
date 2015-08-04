@@ -56,8 +56,9 @@
     function moveFieldTo(event, fieldId) {
         if (event.keyCode == 13) {
             document.getElementById(fieldId).focus();
+
+            event.preventDefault();
+            return false;
         }
-        event.preventDefault();
-        return false;
     }
 </script>
