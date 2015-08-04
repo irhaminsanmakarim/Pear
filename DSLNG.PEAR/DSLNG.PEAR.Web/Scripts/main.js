@@ -1432,7 +1432,7 @@ Number.prototype.format = function (n, x) {
             var row = $('<tr>');
             row.append($('<td class="tabular-kpi-name">').html(dataRow.KpiName + ' (' + dataRow.Measurement + ')'));
             //row.append($('<td>').html(dataRow.PeriodeType));
-            row.append($('<td>').html(dataRow.Periode));
+            row.append($('<td class="tabular-actual">').html(dataRow.Periode));
             if (data.Tabular.Actual) {
                 row.append($('<td class="tabular-actual">').html(dataRow.Actual == null ? '-' : dataRow.Actual.format(2)));
             }
@@ -1819,17 +1819,17 @@ Number.prototype.format = function (n, x) {
     };
 
     $(document).ready(function () {
-        /*if ($('.artifact-designer').length) {
+        if ($('.artifact-designer').length) {
             Pear.Artifact.Designer.GraphicSettingSetup();
             Pear.Artifact.Designer.Preview();
         }
         if ($('.artifact-edit').length) {
             Pear.Artifact.Designer.EditSetup();
-        }*/
+        }
         if ($('.artifact-list').length) {
             Pear.Artifact.Designer.ListSetup();
         }
-        /*if ($('.template-editor').length) {
+        if ($('.template-editor').length) {
             Pear.Template.Editor.LayoutSetup();
         }
         if ($('.template-view').length) {
@@ -1837,7 +1837,7 @@ Number.prototype.format = function (n, x) {
         }
         if ($('.template-edit').length) {
             Pear.Template.Editor.EditSetup();
-        }*/
+        }
     });
     window.Pear = Pear;
 }(window, jQuery, undefined));
