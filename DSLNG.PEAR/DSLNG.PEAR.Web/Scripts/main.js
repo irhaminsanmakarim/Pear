@@ -40,7 +40,7 @@ Number.prototype.format = function (n, x) {
     };
     artifactDesigner._kpiAutoComplete = function (context, useMeasurement) {
         var measurement = typeof useMeasurement == 'undefined' ? true : useMeasurement;
-        console.log(measurement);
+        //console.log(measurement);
         context.find('.kpi-list').select2({
             ajax: {
                 url: $('#hidden-fields-holder').data('kpi-url'),
@@ -94,14 +94,16 @@ Number.prototype.format = function (n, x) {
                         callback[data.GraphicType](data, $('#container'));
                     }
                     $('#graphic-preview').modal('show');
+                    
                 }
             });
             $('#graphic-preview').on('show.bs.modal', function () {
                 $('#container').css('visibility', 'hidden');
             });
             $('#graphic-preview').on('shown.bs.modal', function () {
-                $('#container').css('visibility', 'initial');
-                $('#container').highcharts().reflow();
+                $('#container').css('visibility', 'visible');
+                if ($('#container').highcharts() !== undefined)
+                    $('#container').highcharts().reflow();
             });
         });
     };
@@ -136,7 +138,7 @@ Number.prototype.format = function (n, x) {
                 format: "MM/DD/YYYY hh:00 A"
             });
             $('.datepicker').change(function (e) {
-                console.log(this);
+                //console.log(this);
             });
             $('#PeriodeType').change(function (e) {
                 e.preventDefault();
@@ -265,8 +267,9 @@ Number.prototype.format = function (n, x) {
             $('#container').css('visibility', 'hidden');
         });
         $('#graphic-preview').on('shown.bs.modal', function() {
-            $('#container').css('visibility', 'initial');
-            $('#container').highcharts().reflow();
+            $('#container').css('visibility', 'visible');
+            if ($('#container').highcharts() !== undefined)
+                $('#container').highcharts().reflow();
         });
 
         var rangeDatePicker = function() {
@@ -274,7 +277,7 @@ Number.prototype.format = function (n, x) {
                 format: "MM/DD/YYYY hh:00 A"
             });
             $('.datepicker').change(function(e) {
-                console.log(this);
+                //console.log(this);
             });
             $('#PeriodeType').change(function(e) {
                 e.preventDefault();
@@ -570,8 +573,9 @@ Number.prototype.format = function (n, x) {
             $('#container').css('visibility', 'hidden');
         });
         $('#graphic-preview').on('shown.bs.modal', function () {
-            $('#container').css('visibility', 'initial');
-            $('#container').highcharts().reflow();
+            $('#container').css('visibility', 'visible');
+            if ($('#container').highcharts() !== undefined)
+                $('#container').highcharts().reflow();
         });
     };
     artifactDesigner._previewCallbacks = {};
@@ -831,7 +835,7 @@ Number.prototype.format = function (n, x) {
             //console.log('add-series');
             var seriesCount = $('#series-holder').find('.series-template').length + 1;
             $('#add-series').click(function(e) {
-                console.log('series-click');
+                //console.log('series-click');
                 e.preventDefault();
                 var seriesTemplate = $('.series-template.original').clone(true);
 
@@ -917,10 +921,10 @@ Number.prototype.format = function (n, x) {
             });
         }
         var addSeries = function() {
-            console.log('add-series');
+            //console.log('add-series');
             var seriesCount = $('#series-holder').find('.series-template').length + 1;
             $('#add-series').click(function(e) {
-                console.log('series-click');
+                //console.log('series-click');
                 e.preventDefault();
                 var seriesTemplate = $('.series-template.original').clone(true);
 
@@ -1116,7 +1120,7 @@ Number.prototype.format = function (n, x) {
                 format: "MM/DD/YYYY hh:00 A"
             });
             $('.datepicker').change(function (e) {
-                console.log(this);
+                //console.log(this);
             });
             $('#SpeedometerChart_PeriodeType').change(function (e) {
                 e.preventDefault();
@@ -1323,7 +1327,7 @@ Number.prototype.format = function (n, x) {
                 format: "MM/DD/YYYY hh:00 A"
             });
             context.find('.datepicker').change(function (e) {
-                console.log(this);
+                //console.log(this);
             });
             context.find('.periode-type').change(function (e) {
                 e.preventDefault();
@@ -1386,7 +1390,7 @@ Number.prototype.format = function (n, x) {
                 context.find('.range-filter').replaceWith(originalClone);
             };
 
-            console.log(context.find('.periode-type').val());
+            //console.log(context.find('.periode-type').val());
             rangeFilterSetup(context.find('.periode-type').val().toLowerCase().trim());
             context.find('.periode-type').change(function (e) {
                 e.preventDefault();
@@ -1609,7 +1613,7 @@ Number.prototype.format = function (n, x) {
             $('.add-column').click(function () {
                 var $this = $(this);
                 var $row = $(this).parent().find('.layout-row');
-                console.log($row);
+                //console.log($row);
                 var currentCols = $row.children('.layout-column').length;
                 var newWidth = 100 / (currentCols + 1);
                 $row.children('.layout-column').each(function (i, val) {
@@ -1694,7 +1698,7 @@ Number.prototype.format = function (n, x) {
             $('#container').css('visibility', 'hidden');
         });
         $('#graphic-preview').on('shown.bs.modal', function () {
-            $('#container').css('visibility', 'initial');
+            $('#container').css('visibility', 'visible');
         });
         
         addRow();
@@ -1806,7 +1810,7 @@ Number.prototype.format = function (n, x) {
             $('#container').css('visibility', 'hidden');
         });
         $('#graphic-preview').on('shown.bs.modal', function () {
-            $('#container').css('visibility', 'initial');
+            $('#container').css('visibility', 'visible');
         });
         
         addRow();
@@ -1815,17 +1819,17 @@ Number.prototype.format = function (n, x) {
     };
 
     $(document).ready(function () {
-        if ($('.artifact-designer').length) {
+        /*if ($('.artifact-designer').length) {
             Pear.Artifact.Designer.GraphicSettingSetup();
             Pear.Artifact.Designer.Preview();
         }
         if ($('.artifact-edit').length) {
             Pear.Artifact.Designer.EditSetup();
-        }
+        }*/
         if ($('.artifact-list').length) {
             Pear.Artifact.Designer.ListSetup();
         }
-        if ($('.template-editor').length) {
+        /*if ($('.template-editor').length) {
             Pear.Template.Editor.LayoutSetup();
         }
         if ($('.template-view').length) {
@@ -1833,7 +1837,7 @@ Number.prototype.format = function (n, x) {
         }
         if ($('.template-edit').length) {
             Pear.Template.Editor.EditSetup();
-        }
+        }*/
     });
     window.Pear = Pear;
 }(window, jQuery, undefined));
