@@ -21,4 +21,8 @@ namespace DSLNG.PEAR.Services.Requests.Menu
         public string Url { get; set; }
         public int RoleId { get; set; }
     }
+
+    public class GetParentMenuRequest {
+        public int ParentId { get; set; }
+    }
 }
