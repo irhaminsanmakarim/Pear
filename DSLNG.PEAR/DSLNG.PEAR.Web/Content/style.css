@@ -1179,3 +1179,13 @@ td .btn_small_lightblue a:hover {
 .colpick_full {
     z-index:2;
 }
+.tabular-actual, .tabular-target {
+    text-align: right;
+    padding-right: 8px;
+}
+.tabular-kpi-name {
+    text-align: left;
+    padding-left: 8px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
