@@ -154,9 +154,19 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $('.sub-nav > li').hover(function () {
-                var $this = $(this);
-                $this.find('ul').stop().slideToggle();
+            //if ($('.sub-nav > li > a:has(> ul)')) {
+            //    var abc = $(this).find('.sub-nav > li > a:has(> ul)');
+            //    abc.each(function () {
+            //        var curr = $(this).append('<span class="fa fa-angle-down"></span>');
+            //    });
+            //    //$('.sub-nav > li > a').append('<span class="fa fa-angle-down"></span>');
+            //}
+            $(".sub-nav > li:has(ul) > a").append('<span class="fa fa-angle-down"></span>');
+            $('.sub-nav > li').click(function () {
+                //var $this = $(this);
+                //$this.find('ul').stop().slideToggle();
+                $('.sub-nav > li.active').removeClass('active');
+                $(this).addClass('active');
             })
             $('.main-nav > li').click(function () {
                 $('.main-nav > li.active').removeClass('active');
