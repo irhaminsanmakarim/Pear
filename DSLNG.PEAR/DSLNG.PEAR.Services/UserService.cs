@@ -130,7 +130,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 //var user = DataContext.Users.Where(x => x.Username == request.Username).Include(x => x.Role).First();
-                var user = DataContext.Users.Where(x => x.Email == request.Username).Include(x => x.Role).First();
+                var user = DataContext.Users.Where(x => x.Email == request.Email).Include(x => x.Role).First();
                 if (user != null && user.Password == crypto.Compute(request.Password, user.PasswordSalt))
                 {
                     //Include(x => x.Role).
@@ -140,14 +140,14 @@ namespace DSLNG.PEAR.Services
                 else
                 {
                     response.IsSuccess = false;
-                    response.Message = string.Format("Failed login using username <{0}> and password <{1}>", request.Username, request.Password);
+                    response.Message = string.Format("Failed login using email <{0}> and password <{1}>", request.Email, request.Password);
                 }
             }
             catch (System.InvalidOperationException x)
             {
 
                 response.IsSuccess = false;
-                response.Message = string.Format("Failed login using username <{0}> and password <{1}> {2}", request.Username, request.Password, x.Message);
+                response.Message = string.Format("Failed login using email <{0}> and password <{1}> {2}", request.Email, request.Password, x.Message);
             }
 
             return response;

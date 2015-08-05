@@ -59,6 +59,7 @@ namespace DSLNG.PEAR.Services
                             kpiData.PillarWeight = pmsConfig.Weight;
                             kpiData.ScoringType = pmsConfigDetails.ScoringType;
                             kpiData.YtdFormula = pmsConfigDetails.Kpi.YtdFormula;
+                            kpiData.ScoreIndicators = ParseScoreIndicator(pmsConfigDetails.ScoreIndicators);
 
                             #region KPI Achievement
 
@@ -208,6 +209,17 @@ namespace DSLNG.PEAR.Services
             }
 
             return response;
+        }
+
+        private string ParseScoreIndicator(ICollection<ScoreIndicator> scoreIndicators)
+        {
+            string result = string.Empty;
+            foreach (var item in scoreIndicators)
+            {
+                result += string.Format("({0}) = {1} <br/>", item.Expression, item.Color);
+            }
+
+            return result;
         }
 
         public GetPmsDetailsResponse GetPmsDetails(GetPmsDetailsRequest request)

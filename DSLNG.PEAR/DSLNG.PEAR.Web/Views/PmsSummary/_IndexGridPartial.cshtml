@@ -20,8 +20,10 @@
             pillarColumn.SortOrder = ColumnSortOrder.Ascending;
             settings.Columns.Add(pillarColumn);
             settings.Columns.Add("KpiNameWithColor", "Performance Indicator").PropertiesEdit.EncodeHtml = false;
+        
             //settings.Columns.Add("Unit");
             settings.Columns.Add("Weight").CellStyle.HorizontalAlign = HorizontalAlign.Center;
+            settings.Columns.Add("ScoreIndicators").Visible = false;
             settings.Columns.Add("PillarWeight").Visible = false;
             var kpiOrderColumn = new MVCxGridViewColumn("KpiOrder");
             kpiOrderColumn.SortAscending();
@@ -31,7 +33,13 @@
             settings.HtmlDataCellPrepared = (sender, e) =>
                 {
                     e.Cell.Attributes.Add("onclick", string.Format(
-                        "OnCellClick('{0}', '{1}');", e.VisibleIndex, e.GetValue("Id")));                    
+                        "OnCellClick('{0}', '{1}');", e.VisibleIndex, e.GetValue("Id")));
+                    /*if (e.DataColumn.FieldName == "KpiNameWithColor")
+                    {
+                        if (e.CellValue != null)
+                            e.Cell.ToolTip = e.GetValue("ScoreIndicators").ToString();
+                    }*/
+                        
                 };
 
             settings.Columns.AddBand(targetActualBand =>
@@ -167,5 +175,6 @@
                         gridView.ExpandAll();
                 };
         }).Bind(Model.PmsSummaries).GetHtml()
+
 
 
