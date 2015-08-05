@@ -272,14 +272,15 @@ Number.prototype.format = function (n, x) {
                 $('#container').highcharts().reflow();
         });
 
-        var rangeDatePicker = function() {
+        var rangeDatePicker = function () {
+            var format = $('#datetime-attr').attr('data-datepickerformat');
             $('.datepicker').datetimepicker({
-                format: "MM/DD/YYYY hh:00 A"
+                format: format,
             });
             $('.datepicker').change(function(e) {
                 //console.log(this);
             });
-            $('#PeriodeType').change(function(e) {
+            $('#PeriodeType').change(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 var clearValue = $('.datepicker').each(function(i, val) {
@@ -287,33 +288,33 @@ Number.prototype.format = function (n, x) {
                     $(val).data("DateTimePicker").destroy();
                 });
                 switch ($this.val().toLowerCase().trim()) {
-                case 'hourly':
-                    $('.datepicker').datetimepicker({
-                        format: "MM/DD/YYYY hh:00 A"
-                    });
-                    break;
-                case 'daily':
-                    $('.datepicker').datetimepicker({
-                        format: "MM/DD/YYYY"
-                    });
-                    break;
-                case 'weekly':
-                    $('.datepicker').datetimepicker({
-                        format: "MM/DD/YYYY",
-                        daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
-                    });
-                    break;
-                case 'monthly':
-                    $('.datepicker').datetimepicker({
-                        format: "MM/YYYY"
-                    });
-                    break;
-                case 'yearly':
-                    $('.datepicker').datetimepicker({
-                        format: "YYYY"
-                    });
-                    break;
-                default:
+                    case 'hourly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY hh:00 A"
+                        });
+                        break;
+                    case 'daily':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY"
+                        });
+                        break;
+                    case 'weekly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/DD/YYYY",
+                            daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                        });
+                        break;
+                    case 'monthly':
+                        $('.datepicker').datetimepicker({
+                            format: "MM/YYYY"
+                        });
+                        break;
+                    case 'yearly':
+                        $('.datepicker').datetimepicker({
+                            format: "YYYY"
+                        });
+                        break;
+                    default:
                 }
             });
         };
@@ -358,197 +359,200 @@ Number.prototype.format = function (n, x) {
         rangeControl();
         rangeDatePicker();
         switch ($('#graphic-type').val()) {
-        case 'speedometer':
-            var $hiddenFields = $('#hidden-fields');
-            var plotTemplate = $hiddenFields.find('.plot-band-template.original');
-            var plotTemplateClone = plotTemplate.clone(true);
-            plotTemplateClone.children('input:first-child').remove();
-            $('#hidden-fields-holder').html(plotTemplateClone);
-            plotTemplate.remove();
-            $('#plot-bands-holder').append($hiddenFields.html());
-            $('#plot-bands-holder').find('.plot-band-template').each(function(i, val) {
-                var $this = $(val);
-                Pear.Artifact.Designer._colorPicker($this);
-            });
-            $hiddenFields.remove();
-            Pear.Artifact.Designer._setupCallbacks.speedometer();
-            break;
-        case 'trafficlight':
-            var $hiddenFields = $('#hidden-fields');
-            var plotTemplate = $hiddenFields.find('.plot-band-template.original');
-            var plotTemplateClone = plotTemplate.clone(true);
-            plotTemplateClone.children('input:first-child').remove();
-            $('#hidden-fields-holder').html(plotTemplateClone);
-            plotTemplate.remove();
-            $('#plot-bands-holder').append($hiddenFields.html());
-            $('#plot-bands-holder').find('.plot-band-template').each(function(i, val) {
-                var $this = $(val);
-                Pear.Artifact.Designer._colorPicker($this);
-            });
-            $hiddenFields.remove();
-            Pear.Artifact.Designer._setupCallbacks.trafficlight();
-            break;
-        case 'line':
-            var $hiddenFields = $('#hidden-fields');
-            $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
-                $this = $(val);
-                $this.addClass('singlestack');
-                $this.addClass($('#bar-value-axis').val());
-                $this.addClass($('#graphic-type').val());
-            });
-            var seriesTemplate = $hiddenFields.find('.series-template.original');
-            var seriesTemplateClone = seriesTemplate.clone(true);
-            seriesTemplateClone.children('input:first-child').remove();
-            $('#hidden-fields-holder').html(seriesTemplateClone);
-            seriesTemplate.remove();
-            $('#series-holder').append($hiddenFields.html());
-            $('#series-holder').find('.series-template').each(function(i, val) {
-                var $this = $(val);
-                Pear.Artifact.Designer._kpiAutoComplete($this);
-                Pear.Artifact.Designer._colorPicker($this);
-            });
-            $hiddenFields.remove();
-            Pear.Artifact.Designer._setupCallbacks.line();
-            break;
-        case 'bar':
-            var $hiddenFields = $('#hidden-fields');
-            $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
-                $this = $(val);
-                if ($this.find('.stack-template').length) {
-                    $this.addClass('multistacks');
-                } else {
+            case 'speedometer':
+                var $hiddenFields = $('#hidden-fields');
+                var plotTemplate = $hiddenFields.find('.plot-band-template.original');
+                var plotTemplateClone = plotTemplate.clone(true);
+                plotTemplateClone.children('input:first-child').remove();
+                $('#hidden-fields-holder').html(plotTemplateClone);
+                plotTemplate.remove();
+                $('#plot-bands-holder').append($hiddenFields.html());
+                $('#plot-bands-holder').find('.plot-band-template').each(function(i, val) {
+                    var $this = $(val);
+                    Pear.Artifact.Designer._colorPicker($this);
+                });
+                $hiddenFields.remove();
+                Pear.Artifact.Designer._setupCallbacks.speedometer();
+                break;
+            case 'trafficlight':
+                var $hiddenFields = $('#hidden-fields');
+                var plotTemplate = $hiddenFields.find('.plot-band-template.original');
+                var plotTemplateClone = plotTemplate.clone(true);
+                plotTemplateClone.children('input:first-child').remove();
+                $('#hidden-fields-holder').html(plotTemplateClone);
+                plotTemplate.remove();
+                $('#plot-bands-holder').append($hiddenFields.html());
+                $('#plot-bands-holder').find('.plot-band-template').each(function(i, val) {
+                    var $this = $(val);
+                    Pear.Artifact.Designer._colorPicker($this);
+                });
+                $hiddenFields.remove();
+                Pear.Artifact.Designer._setupCallbacks.trafficlight();
+                break;
+            case 'line':
+                var $hiddenFields = $('#hidden-fields');
+                $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
+                    $this = $(val);
                     $this.addClass('singlestack');
-                }
-                $this.addClass($('#bar-value-axis').val());
-                $this.addClass($('#graphic-type').val());
-            });
-            var seriesTemplate = $hiddenFields.find('.series-template.original');
-            var seriesTemplateClone = seriesTemplate.clone(true);
-            seriesTemplateClone.children('input:first-child').remove();
-            seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
-            $('#hidden-fields-holder').html(seriesTemplateClone);
-            seriesTemplate.remove();
-            $('#series-holder').append($hiddenFields.html());
-            $('#series-holder').find('.series-template').each(function(i, val) {
-                var $this = $(val);
-                Pear.Artifact.Designer._kpiAutoComplete($this);
-                Pear.Artifact.Designer._colorPicker($this);
-            });
-            $hiddenFields.remove();
-            var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
-            var stackTemplateClone = stackTemplate.clone(true);
-            stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
-            stackTemplate.remove();
-            Pear.Artifact.Designer._setupCallbacks.bar();
-            break;
-        case 'baraccumulative':
-            var $hiddenFields = $('#hidden-fields');
-            $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
-                $this = $(val);
-                if ($this.find('.stack-template').length) {
-                    $this.addClass('multistacks');
-                } else {
+                    $this.addClass($('#bar-value-axis').val());
+                    $this.addClass($('#graphic-type').val());
+                });
+                var seriesTemplate = $hiddenFields.find('.series-template.original');
+                var seriesTemplateClone = seriesTemplate.clone(true);
+                seriesTemplateClone.children('input:first-child').remove();
+                $('#hidden-fields-holder').html(seriesTemplateClone);
+                seriesTemplate.remove();
+                $('#series-holder').append($hiddenFields.html());
+                $('#series-holder').find('.series-template').each(function(i, val) {
+                    var $this = $(val);
+                    Pear.Artifact.Designer._kpiAutoComplete($this);
+                    Pear.Artifact.Designer._colorPicker($this);
+                });
+                $hiddenFields.remove();
+                Pear.Artifact.Designer._setupCallbacks.line();
+                break;
+            case 'bar':
+                var $hiddenFields = $('#hidden-fields');
+                $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
+                    $this = $(val);
+                    if ($this.find('.stack-template').length) {
+                        $this.addClass('multistacks');
+                    } else {
+                        $this.addClass('singlestack');
+                    }
+                    $this.addClass($('#bar-value-axis').val());
+                    $this.addClass($('#graphic-type').val());
+                });
+                var seriesTemplate = $hiddenFields.find('.series-template.original');
+                var seriesTemplateClone = seriesTemplate.clone(true);
+                seriesTemplateClone.children('input:first-child').remove();
+                seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
+                $('#hidden-fields-holder').html(seriesTemplateClone);
+                seriesTemplate.remove();
+                $('#series-holder').append($hiddenFields.html());
+                $('#series-holder').find('.series-template').each(function(i, val) {
+                    var $this = $(val);
+                    Pear.Artifact.Designer._kpiAutoComplete($this);
+                    Pear.Artifact.Designer._colorPicker($this);
+                });
+                $hiddenFields.remove();
+                var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
+                var stackTemplateClone = stackTemplate.clone(true);
+                stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
+                stackTemplate.remove();
+                Pear.Artifact.Designer._setupCallbacks.bar();
+                break;
+            case 'baraccumulative':
+                var $hiddenFields = $('#hidden-fields');
+                $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
+                    $this = $(val);
+                    if ($this.find('.stack-template').length) {
+                        $this.addClass('multistacks');
+                    } else {
+                        $this.addClass('singlestack');
+                    }
+                    $this.addClass($('#bar-value-axis').val());
+                    $this.addClass($('#graphic-type').val());
+                });
+                var seriesTemplate = $hiddenFields.find('.series-template.original');
+                var seriesTemplateClone = seriesTemplate.clone(true);
+                seriesTemplateClone.children('input:first-child').remove();
+                seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
+                $('#hidden-fields-holder').html(seriesTemplateClone);
+                seriesTemplate.remove();
+                $('#series-holder').append($hiddenFields.html());
+                $('#series-holder').find('.series-template').each(function(i, val) {
+                    var $this = $(val);
+                    Pear.Artifact.Designer._kpiAutoComplete($this);
+                    Pear.Artifact.Designer._colorPicker($this);
+                });
+                $hiddenFields.remove();
+                var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
+                var stackTemplateClone = stackTemplate.clone(true);
+                stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
+                stackTemplate.remove();
+                Pear.Artifact.Designer._setupCallbacks.baraccumulative();
+                break;
+            case 'barachievement':
+                var $hiddenFields = $('#hidden-fields');
+                $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
+                    $this = $(val);
+                    if ($this.find('.stack-template').length) {
+                        $this.addClass('multistacks');
+                    } else {
+                        $this.addClass('singlestack');
+                    }
+                    $this.addClass($('#bar-value-axis').val());
+                    $this.addClass($('#graphic-type').val());
+                });
+                var seriesTemplate = $hiddenFields.find('.series-template.original');
+                var seriesTemplateClone = seriesTemplate.clone(true);
+                seriesTemplateClone.children('input:first-child').remove();
+                seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
+                $('#hidden-fields-holder').html(seriesTemplateClone);
+                seriesTemplate.remove();
+                $('#series-holder').append($hiddenFields.html());
+                $('#series-holder').find('.series-template').each(function(i, val) {
+                    var $this = $(val);
+                    Pear.Artifact.Designer._kpiAutoComplete($this);
+                    Pear.Artifact.Designer._colorPicker($this);
+                });
+                $hiddenFields.remove();
+                var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
+                var stackTemplateClone = stackTemplate.clone(true);
+                stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
+                stackTemplate.remove();
+                Pear.Artifact.Designer._setupCallbacks.baraccumulative();
+                break;
+            case 'tank':
+                Pear.Artifact.Designer._setupCallbacks.tank();
+            case 'area':
+                var $hiddenFields = $('#hidden-fields');
+                $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                    $this = $(val);
                     $this.addClass('singlestack');
-                }
-                $this.addClass($('#bar-value-axis').val());
-                $this.addClass($('#graphic-type').val());
-            });
-            var seriesTemplate = $hiddenFields.find('.series-template.original');
-            var seriesTemplateClone = seriesTemplate.clone(true);
-            seriesTemplateClone.children('input:first-child').remove();
-            seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
-            $('#hidden-fields-holder').html(seriesTemplateClone);
-            seriesTemplate.remove();
-            $('#series-holder').append($hiddenFields.html());
-            $('#series-holder').find('.series-template').each(function(i, val) {
-                var $this = $(val);
-                Pear.Artifact.Designer._kpiAutoComplete($this);
-                Pear.Artifact.Designer._colorPicker($this);
-            });
-            $hiddenFields.remove();
-            var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
-            var stackTemplateClone = stackTemplate.clone(true);
-            stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
-            stackTemplate.remove();
-            Pear.Artifact.Designer._setupCallbacks.baraccumulative();
-            break;
-        case 'barachievement':
-            var $hiddenFields = $('#hidden-fields');
-            $hiddenFields.find('.series-template:not(.original)').each(function(i, val) {
-                $this = $(val);
-                if ($this.find('.stack-template').length) {
-                    $this.addClass('multistacks');
-                } else {
+                });
+                var seriesTemplate = $hiddenFields.find('.series-template.original');
+                var seriesTemplateClone = seriesTemplate.clone(true);
+                seriesTemplateClone.children('input:first-child').remove();
+                $('#hidden-fields-holder').html(seriesTemplateClone);
+                seriesTemplate.remove();
+                $('#series-holder').append($hiddenFields.html());
+                $('#series-holder').find('.series-template').each(function (i, val) {
+                    var $this = $(val);
+                    Pear.Artifact.Designer._kpiAutoComplete($this);
+                    Pear.Artifact.Designer._colorPicker($this);
+                });
+                $hiddenFields.remove();
+                Pear.Artifact.Designer._setupCallbacks.area();
+                break;
+            case 'tabular':
+                var $hiddenFields = $('#hidden-fields');
+                $hiddenFields.find('.row-template:not(.original)').each(function (i, val) {
+                    $this = $(val);
                     $this.addClass('singlestack');
-                }
-                $this.addClass($('#bar-value-axis').val());
-                $this.addClass($('#graphic-type').val());
-            });
-            var seriesTemplate = $hiddenFields.find('.series-template.original');
-            var seriesTemplateClone = seriesTemplate.clone(true);
-            seriesTemplateClone.children('input:first-child').remove();
-            seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
-            $('#hidden-fields-holder').html(seriesTemplateClone);
-            seriesTemplate.remove();
-            $('#series-holder').append($hiddenFields.html());
-            $('#series-holder').find('.series-template').each(function(i, val) {
-                var $this = $(val);
-                Pear.Artifact.Designer._kpiAutoComplete($this);
-                Pear.Artifact.Designer._colorPicker($this);
-            });
-            $hiddenFields.remove();
-            var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
-            var stackTemplateClone = stackTemplate.clone(true);
-            stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
-            stackTemplate.remove();
-            Pear.Artifact.Designer._setupCallbacks.baraccumulative();
-            break;
-        case 'tank':
-            Pear.Artifact.Designer._setupCallbacks.tank();
-        case 'area':
-            var $hiddenFields = $('#hidden-fields');
-            $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
-                $this = $(val);
-                $this.addClass('singlestack');
-            });
-            var seriesTemplate = $hiddenFields.find('.series-template.original');
-            var seriesTemplateClone = seriesTemplate.clone(true);
-            seriesTemplateClone.children('input:first-child').remove();
-            $('#hidden-fields-holder').html(seriesTemplateClone);
-            seriesTemplate.remove();
-            $('#series-holder').append($hiddenFields.html());
-            $('#series-holder').find('.series-template').each(function (i, val) {
-                var $this = $(val);
-                Pear.Artifact.Designer._kpiAutoComplete($this);
-                Pear.Artifact.Designer._colorPicker($this);
-            });
-            $hiddenFields.remove();
-            Pear.Artifact.Designer._setupCallbacks.area();
-            break;
-        case 'tabular':
-            var $hiddenFields = $('#hidden-fields');
-            $hiddenFields.find('.row-template:not(.original)').each(function (i, val) {
-                $this = $(val);
-                $this.addClass('singlestack');
-            });
-            var rowsTemplate = $hiddenFields.find('.row-template.original');
-            var rowsTemplateClone = rowsTemplate.clone(true);
-            rowsTemplateClone.children('input:first-child').remove();
-            $('#hidden-fields-holder').html(rowsTemplateClone);
-            rowsTemplate.remove();
-            $('#rows-holder').append($hiddenFields.html());
-            $('#rows-holder').find('.row-template').each(function (i, val) {
-                var $this = $(val);
-                Pear.Artifact.Designer._kpiAutoComplete($this, false);
-                Pear.Artifact.Designer._colorPicker($this);
-            });
-            $hiddenFields.remove();
-            $('#general-graphic-settings').css('display', 'none');
-            $('.form-measurement').css('display', 'none');
-            Pear.Artifact.Designer._setupCallbacks.tabular();
+                });
+                var rowsTemplate = $hiddenFields.find('.row-template.original');
+                var rowsTemplateClone = rowsTemplate.clone(true);
+                rowsTemplateClone.children('input:first-child').remove();
+                $('#hidden-fields-holder').html(rowsTemplateClone);
+                rowsTemplate.remove();
+                $('#rows-holder').append($hiddenFields.html());
+                $('#rows-holder').find('.row-template').each(function (i, val) {
+                    var $this = $(val);
+                    Pear.Artifact.Designer._kpiAutoComplete($this, false);
+                    Pear.Artifact.Designer._colorPicker($this);
+                });
+                $hiddenFields.remove();
+                $('#general-graphic-settings').css('display', 'none');
+                $('.form-measurement').css('display', 'none');
+                Pear.Artifact.Designer._setupCallbacks.tabular();
             
-            break;
+                break;
         }
+        
+        //$('#PeriodeType').change();
+        $('#RangeFilter').change();
     };
     artifactDesigner._setupCallbacks = {};
 
