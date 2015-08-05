@@ -1798,6 +1798,17 @@ namespace DSLNG.PEAR.Services
             artifact.HeaderTitle = request.HeaderTitle;
             artifact.PeriodeType = request.PeriodeType;
             artifact.RangeFilter = request.RangeFilter;
+            artifact.Start = request.Start;
+            artifact.End = request.End;
+            artifact.ValueAxis = request.ValueAxis;
+            artifact.Actual = request.Actual;
+            artifact.Target = request.Target;
+            artifact.Economic = request.Economic;
+            artifact.Fullfillment = request.Fullfillment;
+            artifact.Remark = request.Remark;
+
+            artifact.FractionScale = request.FractionScale;
+            
             DataContext.SaveChanges();
             return new UpdateArtifactResponse();
         }
