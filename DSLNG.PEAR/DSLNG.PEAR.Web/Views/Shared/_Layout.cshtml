@@ -154,16 +154,7 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $('.sub-nav > li').click(function () {
-                //var $this = $(this);
-                //$this.find('ul').stop().slideToggle();
-                $('.sub-nav > li.active').removeClass('active');
-                $(this).addClass('active');
-            })
-            $('.main-nav > li').click(function () {
-                $('.main-nav > li.active').removeClass('active');
-                $(this).addClass('active');
-            })
+            
             $('.left-content-toggle').click(function () {
                 $(this).find('i').toggle();
                 var $leftContent = $('.left-content');
