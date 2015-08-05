@@ -111,5 +111,7 @@ namespace DSLNG.PEAR.Web.ViewModels.PmsSummary
         }
 
         public string TotalScoreColor { get; set; }
+
+        public string ScoreIndicators { get; set; }
     }
 }

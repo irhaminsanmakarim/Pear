@@ -7,20 +7,17 @@ namespace DSLNG.PEAR.Web.DependencyResolution
 
     public static class ObjectFactory
     {
-        private static readonly Lazy<Container> _containerBuilder =
-                new Lazy<Container>(defaultContainer, LazyThreadSafetyMode.ExecutionAndPublication);
+        private static readonly Lazy<Container> ContainerBuilder =
+                new Lazy<Container>(DefaultContainer, LazyThreadSafetyMode.ExecutionAndPublication);
 
         public static IContainer Container
         {
-            get { return _containerBuilder.Value; }
+            get { return ContainerBuilder.Value; }
         }
 
-        private static Container defaultContainer()
+        private static Container DefaultContainer()
         {
-            return new Container(x =>
-            {
-                x.AddRegistry<DefaultRegistry>();
-            });
+            return new Container(x => x.AddRegistry<DefaultRegistry>());
         }
     }
 }
