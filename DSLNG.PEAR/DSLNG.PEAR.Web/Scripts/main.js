@@ -20,12 +20,24 @@ Number.prototype.format = function (n, x) {
     return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
 };
 
-(function (window, $, undifined) {
+(function (window, $, undefined) {
     var Pear = {};
     Pear.Artifact = {};
     Pear.Artifact.Designer = {};
     Pear.Template = {};
     Pear.Template.Editor = {};
+    Pear.Loading = {};
+
+    Pear.Loading.Show = function (container) {
+        var loadingImage = $('#dataLayout').attr('data-content-url') + '/img/ajax-loader2.gif';
+        container.css('background-position', 'center center');
+        container.css('background-repeat', 'no-repeat');
+        container.css('background-image', 'url(' + loadingImage + ')');
+    };
+
+    Pear.Loading.Stop = function(container) {
+        container.css('background', 'none');
+    };
 
     var artifactDesigner = Pear.Artifact.Designer;
 
@@ -84,6 +96,8 @@ Number.prototype.format = function (n, x) {
     artifactDesigner.ListSetup = function () {
         $(document).on('click', '.artifact-view', function (e) {
             e.preventDefault();
+            Pear.Loading.Show($('#container'));
+            $('#graphic-preview').modal('show');
             var $this = $(this);
             var callback = Pear.Artifact.Designer._previewCallbacks;
             $.ajax({
@@ -91,19 +105,24 @@ Number.prototype.format = function (n, x) {
                 method: 'GET',
                 success: function (data) {
                     if (callback.hasOwnProperty(data.GraphicType)) {
+                        Pear.Loading.Stop($('#container'));
                         callback[data.GraphicType](data, $('#container'));
                     }
-                    $('#graphic-preview').modal('show');
-                    
                 }
             });
+            
             $('#graphic-preview').on('show.bs.modal', function () {
                 $('#container').css('visibility', 'hidden');
             });
+            
             $('#graphic-preview').on('shown.bs.modal', function () {
-                $('#container').css('visibility', 'visible');
                 if ($('#container').highcharts() !== undefined)
                     $('#container').highcharts().reflow();
+                $('#container').css('visibility', 'visible');
+            });
+            
+            $('#graphic-preview').on('hidden.bs.modal', function () {
+                $('#container').html('');
             });
         });
     };
@@ -246,30 +265,37 @@ Number.prototype.format = function (n, x) {
                 }
             });
         };
-
         $('#graphic-preview-btn').click(function(e) {
             e.preventDefault();
             var $this = $(this);
+            Pear.Loading.Show($('#container'));
+            $('#graphic-preview').modal('show');
             var callback = Pear.Artifact.Designer._previewCallbacks;
             $.ajax({
                 url: $this.data('preview-url'),
                 data: $this.closest('form').serialize(),
                 method: 'POST',
-                success: function(data) {
+                success: function (data) {
                     if (callback.hasOwnProperty(data.GraphicType)) {
+                        Pear.Loading.Stop($('#container'));
                         callback[data.GraphicType](data, $('#container'));
                     }
-                    $('#graphic-preview').modal('show');
                 }
             });
         });
-        $('#graphic-preview').on('show.bs.modal', function() {
-            $('#container').css('visibility', 'hidden');
+        
+        $('#graphic-preview').on('show.bs.modal', function () {
+                $('#container').css('visibility', 'hidden');
         });
+        
         $('#graphic-preview').on('shown.bs.modal', function() {
-            $('#container').css('visibility', 'visible');
             if ($('#container').highcharts() !== undefined)
                 $('#container').highcharts().reflow();
+            $('#container').css('visibility', 'visible');
+        });
+        
+        $('#graphic-preview').on('hidden.bs.modal', function () {
+            $('#container').html('');
         });
 
         var rangeDatePicker = function () {
@@ -559,6 +585,8 @@ Number.prototype.format = function (n, x) {
     artifactDesigner.Preview = function () {
         $('#graphic-preview-btn').click(function (e) {
             e.preventDefault();
+            Pear.Loading.Show($('#container'));
+            $('#graphic-preview').modal('show');
             var $this = $(this);
             var callback = Pear.Artifact.Designer._previewCallbacks;
             $.ajax({
@@ -569,17 +597,22 @@ Number.prototype.format = function (n, x) {
                     if (callback.hasOwnProperty(data.GraphicType)) {
                         callback[data.GraphicType](data, $('#container'));
                     }
-                    $('#graphic-preview').modal('show');
                 }
             });
         });
+        
         $('#graphic-preview').on('show.bs.modal', function () {
             $('#container').css('visibility', 'hidden');
         });
+        
         $('#graphic-preview').on('shown.bs.modal', function () {
             $('#container').css('visibility', 'visible');
             if ($('#container').highcharts() !== undefined)
                 $('#container').highcharts().reflow();
+        });
+        
+        $('#graphic-preview').on('hidden.bs.modal', function () {
+            $('#container').html('');
         });
     };
     artifactDesigner._previewCallbacks = {};
@@ -1710,6 +1743,7 @@ Number.prototype.format = function (n, x) {
     };
     templateEditor.ViewSetup = function () {
         $('.artifact-holder').each(function (i, val) {
+            Pear.Loading.Show($(val));
             var $holder = $(val);
             var url = $holder.data('artifact-url');
             var callback = Pear.Artifact.Designer._previewCallbacks;
@@ -1718,6 +1752,7 @@ Number.prototype.format = function (n, x) {
                 method: 'GET',
                 success: function (data) {
                     if (callback.hasOwnProperty(data.GraphicType)) {
+                        Pear.Loading.Stop($(val));
                         callback[data.GraphicType](data, $holder);
                     }
                 }

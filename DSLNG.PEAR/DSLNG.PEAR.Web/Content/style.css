@@ -910,7 +910,7 @@ table.text-center th {
 }
 
 .ajax-loading-dialog {
-    position: absolute;
+    //position: absolute;
     margin: auto;
     top: 0px;
     left: 0px;
