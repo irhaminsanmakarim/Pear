@@ -24,6 +24,7 @@ Number.prototype.format = function (n, x) {
     var Pear = {};
     Pear.Artifact = {};
     Pear.Artifact.Designer = {};
+    Pear.Artifact.Designer.Multiaxis = {};
     Pear.Template = {};
     Pear.Template.Editor = {};
 
@@ -38,9 +39,10 @@ Number.prototype.format = function (n, x) {
     artifactDesigner._formatKpiSelection = function (kpi) {
         return kpi.Name || kpi.text;
     };
-    artifactDesigner._kpiAutoComplete = function (context, useMeasurement) {
+    artifactDesigner._kpiAutoComplete = function (context, useMeasurement, uniqueMeasurement) {
         var measurement = typeof useMeasurement == 'undefined' ? true : useMeasurement;
-        console.log(measurement);
+        var measurementContext = typeof uniqueMeasurement == 'undefined' ? $(document) : uniqueMeasurement;
+     
         context.find('.kpi-list').select2({
             ajax: {
                 url: $('#hidden-fields-holder').data('kpi-url'),
@@ -50,7 +52,7 @@ Number.prototype.format = function (n, x) {
                     if (measurement) {
                         return {
                             term: params.term, // search term
-                            measurementId: $('#MeasurementId').val()
+                            measurementId: measurementContext.find('.measurement').val()
                         };
                     } else {
                         return {
@@ -1442,6 +1444,8 @@ Number.prototype.format = function (n, x) {
             $table.append(row);
         }
         wrapper.append($table);
+        container.css('height', 'auto');
+        container.css('min-height', '350px');
         container.html(wrapper);
     };
 
@@ -1560,6 +1564,245 @@ Number.prototype.format = function (n, x) {
         //    $maxCapacity.css('width', $('.tank-max-capacity')[0].clientWidth + 'px');
         //}, 100);
 
+    };
+
+    //mutliaxis
+    artifactDesigner.Multiaxis._setupCallbacks = {};
+    artifactDesigner.Multiaxis._setupCallbacks.bar = function (context) {
+        var removeSeriesOrStack = function () {
+            context.find('.series-template > .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.series-template').remove();
+            });
+            context.find('.stack-template > .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.stack-template').remove();
+            });
+        }
+        var addSeries = function () {
+            var seriesCount = context.find('.series-holder').find('.series-template').length + 1;
+            var chartPost = context.data('chart-pos');
+            context.find('#add-series').click(function (e) {
+                e.preventDefault();
+                var seriesTemplate = context.find('.series-template.original').clone(true);
+
+               
+                Pear.Artifact.Designer._colorPicker(seriesTemplate);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'MultiaxisChart.Charts['+chartPost+'].BarChart.Series.Index',
+                    value: seriesCount
+                }).appendTo(seriesTemplate);
+                seriesTemplate.removeClass('original');
+                seriesTemplate.attr('data-series-pos', seriesCount);
+                if (seriesCount !== 0) {
+                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color', 'PreviousColor'];
+                    for (var i in fields) {
+                        var field = fields[i];
+                        seriesTemplate.find('#MultiaxisChart_Charts_0__BarChart_Series_0__' + field).attr('name', 'MultiaxisChart.Charts['+chartPost+'].BarChart.Series[' + seriesCount + '].' + field);
+                    }
+                }
+                seriesTemplate.addClass(context.find('.series-type').val().toLowerCase());
+                seriesTemplate.addClass(context.find('.value-axis-opt').val());
+                seriesTemplate.addClass(context.find('.multiaxis-graphic-type').val());
+                context.find('.series-holder').append(seriesTemplate);
+                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate, true, seriesTemplate.closest('.chart-template'));
+                seriesCount++;
+            });
+        };
+        var addStack = function () {
+            var stackCount = context.find('.series-holder').find('.stack-template').length + 1;
+            var chartPost = context.data('chart-pos');
+            context.find('.add-stack').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var stackTemplate = context.find('.stack-template.original').clone(true);
+                Pear.Artifact.Designer._kpiAutoComplete(stackTemplate);
+                Pear.Artifact.Designer._colorPicker(stackTemplate);
+                stackTemplate.removeClass('original');
+                var seriesPos = $this.closest('.series-template').data('series-pos');
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'MultiaxisChart.Charts[' + chartPost + ']BarChart.Series[' + seriesPos + '].Stacks.Index',
+                    value: stackCount
+                }).appendTo(stackTemplate);
+                var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
+                for (var i in fields) {
+                    var field = fields[i];
+                    stackTemplate.find('#MultiaxisChart_Charts_0__BarChart_Series_0__Stacks_0__' + field).attr('name', 'MultiaxisChart.Charts[' + chartPost + '].BarChart.Series[' + seriesPos + '].Stacks[' + stackCount + '].' + field);
+                }
+                $this.closest('.stacks-holder').append(stackTemplate);
+                stackCount++;
+            });
+        };
+
+        removeSeriesOrStack();
+        addSeries();
+        addStack();
+    };
+    artifactDesigner.Multiaxis._setupCallbacks.baraccumulative = function (context) {
+        Pear.Artifact.Designer.Multiaxis._setupCallbacks.bar(context);
+    };
+    artifactDesigner.Multiaxis._setupCallbacks.barachievement = function (context) {
+        context.find('.value-axis-opt').val('KpiActual');
+        context.find('.value-axis-holder').css('display', 'none');
+        Pear.Artifact.Designer.Multiaxis._setupCallbacks.bar(context);
+    };
+    artifactDesigner.Multiaxis._setupCallbacks.line = function (context) {
+        var removeSeriesOrStack = function () {
+            context.find('.series-template .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.series-template').remove();
+            });
+        }
+        var addSeries = function () {
+            var seriesCount = context.find('.series-holder').find('.series-template').length + 1;
+            var chartPost = context.data('chart-pos');
+            context.find('#add-series').click(function (e) {
+                e.preventDefault();
+                var seriesTemplate = context.find('.series-template.original').clone(true);
+
+                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate, true, seriesTemplate.closest('.chart-template'));
+                Pear.Artifact.Designer._colorPicker(seriesTemplate);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'MultiaxisChart.Charts[' + chartPost + '].LineChart.Series.Index',
+                    value: seriesCount
+                }).appendTo(seriesTemplate);
+                seriesTemplate.removeClass('original');
+                seriesTemplate.attr('data-series-pos', seriesCount);
+                if (seriesCount !== 0) {
+                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
+                    for (var i in fields) {
+                        var field = fields[i];
+                        seriesTemplate.find('#MultiaxisChart_Charts_0__LineChart_Series_0__' + field).attr('name', 'MultiaxisChart.Charts[' + chartPost + '].LineChart.Series[' + seriesCount + '].' + field);
+                    }
+                }
+                seriesTemplate.addClass(context.find('.value-axis-opt').val());
+                seriesTemplate.addClass(context.find('.multiaxis-graphic-type').val());
+                context.find('.series-holder').append(seriesTemplate);
+                seriesCount++;
+            });
+        };
+        removeSeriesOrStack();
+        addSeries();
+    };
+    artifactDesigner.Multiaxis._setupCallbacks.area = function (context) {
+        var removeSeriesOrStack = function () {
+            context.find('.series-template .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.series-template').remove();
+            });
+        }
+        var addSeries = function () {
+            var seriesCount = context.find('.series-holder').find('.series-template').length + 1;
+            var chartPost = context.data('chart-pos');
+            context.find('#add-series').click(function (e) {
+                e.preventDefault();
+                var seriesTemplate = context.find('.series-template.original').clone(true);
+
+                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate, true, seriesTemplate.closest('.chart-template'));
+                Pear.Artifact.Designer._colorPicker(seriesTemplate);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'MultiaxisChart.Charts[' + chartPost + '].AreaChart.Series.Index',
+                    value: seriesCount
+                }).appendTo(seriesTemplate);
+                seriesTemplate.removeClass('original');
+                seriesTemplate.attr('data-series-pos', seriesCount);
+                if (seriesCount !== 0) {
+                    var fields = ['Label', 'KpiId', 'Color', 'ValueAxis'];
+                    for (var i in fields) {
+                        var field = fields[i];
+                        seriesTemplate.find('#MultiaxisChart_Charts_0__AreaChart_Series_0__' + field).attr('name', 'MultiaxisChart.Charts[' + chartPost + '].AreaChart.Series[' + seriesCount + '].' + field);
+                    }
+                }
+                seriesTemplate.addClass(context.find('.value-axis-opt').val());
+                seriesTemplate.addClass(context.find('.multiaxis-graphic-type').val());
+                context.find('.series-holder').append(seriesTemplate);
+                seriesCount++;
+            });
+        };
+        removeSeriesOrStack();
+        addSeries();
+    };
+    artifactDesigner._setupCallbacks.multiaxis = function () {
+        $('.main-value-axis').css('display', 'none');
+        $('.form-measurement').css('display', 'none');
+        var callback = Pear.Artifact.Designer.Multiaxis._setupCallbacks;
+        var removeChart = function () {
+            $('.chart-template .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.chart-template').remove();
+            });
+        };
+        var addChart = function () {
+            var chartCount = $('#charts-holder').find('.chart-template').length + 1;
+            $('#add-chart').click(function (e) {
+                e.preventDefault();
+                var chartTemplate = $('.chart-template.original').clone(true);
+                //Pear.Artifact.Designer._kpiAutoComplete(rowTemplate, false);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'MultiaxisChart.Charts.Index',
+                    value: chartCount
+                }).appendTo(chartTemplate);
+                chartTemplate.removeClass('original');
+                chartTemplate.attr('data-chart-pos', chartCount);
+                var fields = ['ValueAxis', 'GraphicType', 'MeasurementId'];
+                for (var i in fields) {
+                    var field = fields[i];
+                    chartTemplate.find('#MultiaxisChart_Charts_0__' + field).attr('name', 'MultiaxisChart.Charts[' + chartCount + '].' + field);
+                }
+                //chartTemplate.find('.multiaxis-chart-type').change(
+                $('#charts-holder').append(chartTemplate);
+                chartTemplate.find('.multiaxis-graphic-type').change(function (e) {
+                    e.preventDefault();
+                    var $this = $(this);
+                    loadGraph($this.data('graph-url'), $this.val(), chartTemplate);
+                });
+                var initialGraphicType = chartTemplate.find('.multiaxis-graphic-type');
+                loadGraph(initialGraphicType.data('graph-url'), initialGraphicType.val(), chartTemplate);
+                chartCount++;
+            });
+        };
+        var loadGraph = function (url, type, context) {
+            $.ajax({
+                url: url,
+                data: 'type=' + type,
+                cache: true,
+                method: 'GET',
+                success: function (data) {
+                    context.find('.chart-settings').html(data);
+                    var $hiddenFields = context.find('.hidden-fields');
+                    context.find('.hidden-fields-holder').html($hiddenFields.html());
+                    $hiddenFields.remove();
+                    context.find('.graphic-properties').each(function (i, val) {
+                        $(val).html('');
+                    });
+                    //$('#graphic-settings').prev('.form-group').css('display', 'block');
+                    //$('#general-graphic-settings').css('display', 'block');
+                    //$('.form-measurement').css('display', 'block');
+                    //$('.main-value-axis').css('display', 'block');
+                    context.find('.value-axis-holder').css('display', 'block');
+                    if (callback.hasOwnProperty(type)) {
+                        callback[type](context);
+                    }
+                }
+            });
+        };
+        addChart();
+        removeChart();
     };
 
     var templateEditor = Pear.Template.Editor;
