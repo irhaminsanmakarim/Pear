@@ -595,6 +595,7 @@ Number.prototype.format = function (n, x) {
                 method: 'POST',
                 success: function (data) {
                     if (callback.hasOwnProperty(data.GraphicType)) {
+                        Pear.Loading.Stop($('#container'));
                         callback[data.GraphicType](data, $('#container'));
                     }
                 }
@@ -1250,7 +1251,9 @@ Number.prototype.format = function (n, x) {
             title: {
                 text: data.SpeedometerChart.Title
             },
-
+            subtitle: {
+                text: data.SpeedometerChart.Subtitle,
+            },
             pane: {
                 startAngle: -150,
                 endAngle: 150,
@@ -1592,6 +1595,7 @@ Number.prototype.format = function (n, x) {
         }
         var $wrapper = $('<div>', { 'class': 'tank-wrapper' });
         $wrapper.html('<h3>' + data.Tank.Title + '</h3>');
+        $wrapper.append('<h4>' + data.Tank.Subtitle + '</h4>');
         $wrapper.append($tank);
         container.html($wrapper);
         //console.log($('.tank-zero-meter'));

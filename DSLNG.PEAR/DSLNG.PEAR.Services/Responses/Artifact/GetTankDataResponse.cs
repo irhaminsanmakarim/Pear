@@ -5,6 +5,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
     public class GetTankDataResponse : BaseResponse
     {
         public string Title { get; set; }
+        public string Subtitle { get; set; }
         public string DaysToTankTopTitle { get; set; }
         public double VolumeInventory { get; set; }
         public string VolumeInventoryUnit { get; set; }
