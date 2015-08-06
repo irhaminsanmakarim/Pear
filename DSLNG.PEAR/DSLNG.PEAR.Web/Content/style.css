@@ -916,6 +916,7 @@ table.text-center th {
     left: 0px;
     right: 0px;
     bottom: 0px;
+    background-position: center center;
 }
 
 .popover-title {

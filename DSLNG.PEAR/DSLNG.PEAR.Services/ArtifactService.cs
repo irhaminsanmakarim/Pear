@@ -503,25 +503,29 @@ namespace DSLNG.PEAR.Services
                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
             {
                 response.Subtitle = newTimeInformation;
-                switch (request.PeriodeType)
+                if (newDateTimePeriodes.Count > 0)
                 {
-                    case PeriodeType.Hourly:
-                        response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("hh tt", CultureInfo.InvariantCulture) }.ToArray();
-                        //timeInformation = kpiActual.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
-                        break;
-                    case PeriodeType.Daily:
-                        response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("dd", CultureInfo.InvariantCulture) }.ToArray();
-                        //timeInformation = kpiActual.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
-                        break;
-                    case PeriodeType.Monthly:
-                        response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("MMMM", CultureInfo.InvariantCulture) }.ToArray();
-                        //timeInformation = kpiActual.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
-                        break;
-                    case PeriodeType.Yearly:
-                        response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("yyyy", CultureInfo.InvariantCulture) }.ToArray();
-                        //timeInformation = kpiActual.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
-                        break;
+                    switch (request.PeriodeType)
+                    {
+                        case PeriodeType.Hourly:
+                            response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("hh tt", CultureInfo.InvariantCulture) }.ToArray();
+                            //timeInformation = kpiActual.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Daily:
+                            response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("dd", CultureInfo.InvariantCulture) }.ToArray();
+                            //timeInformation = kpiActual.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Monthly:
+                            response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("MMMM", CultureInfo.InvariantCulture) }.ToArray();
+                            //timeInformation = kpiActual.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Yearly:
+                            response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("yyyy", CultureInfo.InvariantCulture) }.ToArray();
+                            //timeInformation = kpiActual.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
+                            break;
+                    }
                 }
+                
             }
             
             response.SeriesType = seriesType;
@@ -1214,10 +1218,14 @@ namespace DSLNG.PEAR.Services
                       (periodeType == PeriodeType.Monthly && rangeFilter == RangeFilter.CurrentMonth) ||
                       (periodeType == PeriodeType.Yearly && rangeFilter == RangeFilter.CurrentYear))
                         {
-                            var periode = kpiActuals.First().Periode;
-                            kpiTargets = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
-                          x.Periode == periode && x.Kpi.Id == series.KpiId)
-                          .OrderBy(x => x.Periode).ToList();
+                            if (kpiActuals.Count > 0)
+                            {
+                                var periode = kpiActuals.First().Periode;
+                                kpiTargets = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
+                              x.Periode == periode && x.Kpi.Id == series.KpiId)
+                              .OrderBy(x => x.Periode).ToList();    
+                            }
+                            
                         }
                         var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
