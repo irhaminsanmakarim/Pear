@@ -21,6 +21,7 @@
         }
         
         this.append('<span style="font-size:16px;display: table;margin: 0 auto;">' + options.Title + '</span>');
+        this.append('<span style="font-size:13px;display: table;margin: 0 auto;">' + options.Subtitle + '</span>');
         this.append(wrapper);
         return this;
     };

@@ -1028,16 +1028,11 @@ table.text-center th {
 }
 
 .trafficlight-label {
-    /*position: absolute;
-    right: -150px;
-    top: 32%;
-    font-weight: bold;
-    font-size: 30px;*/
     position: absolute;
-    right: -120px;
+    right: -65px;
     top: 25%;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 table.tabular {
@@ -1175,7 +1170,7 @@ td .btn_small_lightblue a:hover {
 .tank-current-volume {
     position: absolute;
     display: block;
-    width: 150px;
+    width: 300px;
     left: 267px;
     margin: 0;
     line-height: 1;
@@ -1184,6 +1179,15 @@ td .btn_small_lightblue a:hover {
 .tank-wrapper h3 {
     color: #333333;
     font-size: 18px;
+    fill: #333333;
+    width: 736px;
+    float: none;
+    width: 100%;
+}
+
+.tank-wrapper h4 {
+    color: #333333;
+    font-size: 15px;
     fill: #333333;
     width: 736px;
     float: none;

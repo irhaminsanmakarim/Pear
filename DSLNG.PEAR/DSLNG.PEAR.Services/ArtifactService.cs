@@ -118,6 +118,7 @@ namespace DSLNG.PEAR.Services
                     }
                 }
             }
+            response.Subtitle = timeInformation;
             return response;
         }
 
@@ -326,7 +327,7 @@ namespace DSLNG.PEAR.Services
                     }
                 }
             }
-            else if (request.ValueAxis == ValueAxis.KpiTarget && latestActual != null)
+            if (request.ValueAxis == ValueAxis.KpiTarget && latestActual != null)
             {
                 if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
                       (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
@@ -370,6 +371,7 @@ namespace DSLNG.PEAR.Services
                     color = plot.Color
                 });
             }
+            response.Subtitle = timeInformation;
             return response;
         }
 
@@ -377,7 +379,7 @@ namespace DSLNG.PEAR.Services
         {
             var response = new GetTrafficLightChartDataResponse();
 
-            var kpi = DataContext.Kpis.Where(x => x.Id == request.Series.KpiId).First();
+            var kpi = DataContext.Kpis.First(x => x.Id == request.Series.KpiId);
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
             string timeInformation;
             this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
@@ -437,6 +439,63 @@ namespace DSLNG.PEAR.Services
                     }
                     break;
             }
+            KpiAchievement latestActual = null;
+            if (request.ValueAxis == ValueAxis.KpiActual)
+            {
+                if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                      (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                      (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                {
+                    var actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                  x.Periode <= end && x.Kpi.Id == request.Series.KpiId && (x.Value != null && x.Value.Value != 0))
+                  .OrderByDescending(x => x.Periode).FirstOrDefault();
+                    if (actual != null)
+                    {
+                        response.Series = new GetTrafficLightChartDataResponse.SeriesResponse
+                        {
+                            name = request.Series.Label,
+                            data = actual.Value.Value
+                        };
+                        latestActual = actual;
+                    }
+                }
+            }
+            if (request.ValueAxis == ValueAxis.KpiTarget && latestActual != null)
+            {
+                if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                      (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                      (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                      (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                {
+                    var target = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType &&
+                  x.Periode == latestActual.Periode && x.Kpi.Id == request.Series.KpiId)
+                  .OrderByDescending(x => x.Periode).FirstOrDefault();
+                    if (target != null)
+                    {
+                        response.Series = new GetTrafficLightChartDataResponse.SeriesResponse
+                        {
+                            name = request.Series.Label,
+                            data = target.Value.Value
+                        };
+                    }
+                    switch (request.PeriodeType)
+                    {
+                        case PeriodeType.Hourly:
+                            timeInformation = latestActual.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Daily:
+                            timeInformation = latestActual.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Monthly:
+                            timeInformation = latestActual.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Yearly:
+                            timeInformation = latestActual.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
+                            break;
+                    }
+                }
+            }
             foreach (var plot in request.PlotBands)
             {
                 response.PlotBands.Add(new GetTrafficLightChartDataResponse.PlotBandResponse
@@ -447,6 +506,7 @@ namespace DSLNG.PEAR.Services
                     label = plot.Label
                 });
             }
+            response.Subtitle = timeInformation;
             return response;
         }
 
