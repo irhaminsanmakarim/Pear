@@ -332,6 +332,7 @@
     <Content Include="Content\select2\dist\js\select2.full.min.js" />
     <Content Include="Content\select2\dist\js\select2.js" />
     <Content Include="Content\select2\dist\js\select2.min.js" />
+    <Content Include="Content\style-regawa.css" />
     <Content Include="Content\style.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
