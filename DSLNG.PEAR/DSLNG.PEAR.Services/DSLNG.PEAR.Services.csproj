@@ -94,6 +94,7 @@
     <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
     <Compile Include="Requests\Group\CreateGroupRequest.cs" />
     <Compile Include="Requests\Group\UpdateGroupRequest.cs" />
+    <Compile Include="Requests\KpiAchievement\GetKpiAchievementRequestByValue.cs" />
     <Compile Include="Requests\KpiAchievement\GetKpiAchievementsConfigurationRequest.cs" />
     <Compile Include="Requests\KpiAchievement\GetKpiAchievementsRequest.cs" />
     <Compile Include="Requests\KpiAchievement\UpdateKpiAchievementItemRequest.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
     <Compile Include="Responses\KpiAchievement\AllKpiAchievementsResponse.cs" />
+    <Compile Include="Responses\KpiAchievement\GetKpiAchievementResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementsConfigurationResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementsResponse.cs" />
     <Compile Include="Responses\KpiAchievement\UpdateKpiAchievementItemResponse.cs" />

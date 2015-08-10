@@ -14,6 +14,8 @@ namespace DSLNG.PEAR.Web.Controllers
     [Authorize]
     public class BaseController : Controller
     {
+        public const string UploadDirectory = "~/Content/UploadedFiles/";
+        public const string TemplateDirectory = "~/Content/TemplateFiles/";
         public ContentResult ErrorPage(string message)
         {
             return Content(message);
