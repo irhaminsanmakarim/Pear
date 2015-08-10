@@ -57,6 +57,7 @@
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevExpress.Docs.v14.2, Version=14.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DotNetOpenAuth.AspNet, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetOpenAuth.AspNet.4.1.4.12333\lib\net45-full\DotNetOpenAuth.AspNet.dll</HintPath>
       <Private>True</Private>
@@ -580,6 +581,7 @@
     <Content Include="Views\Template\Preview.cshtml" />
     <Content Include="Views\Tank\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Edit.cshtml" />
+    <Content Include="Views\KpiAchievement\UploadControlPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -761,6 +763,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\TemplateFiles\" />
+    <Folder Include="Content\UploadedFiles\" />
     <Folder Include="ViewModels\CorporatePortofolio\" />
     <Folder Include="Views\CorporatePortofolio\" />
     <Folder Include="Views\Test\" />
