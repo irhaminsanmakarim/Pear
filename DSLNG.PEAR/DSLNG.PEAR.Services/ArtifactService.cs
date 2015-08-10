@@ -152,14 +152,14 @@ namespace DSLNG.PEAR.Services
                             rowResponse.Target = DataContext.KpiTargets.Where(x => x.PeriodeType == row.PeriodeType &&
                                 x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
                                 .GroupBy(x => x.Kpi.Id)
-                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault();
+                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
                         }
                         if (request.Actual)
                         {
                             rowResponse.Actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
-                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
-                                    .GroupBy(x => x.Kpi.Id)
-                                    .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault();
+                                   x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
+                                   .GroupBy(x=>x.Kpi.Id)
+                                   .Select(x=> x.Sum(y=> (double?)y.Value ?? 0 )).FirstOrDefault();
                         }
                         break;
                     case YtdFormula.Average:
@@ -168,14 +168,14 @@ namespace DSLNG.PEAR.Services
                             rowResponse.Target = DataContext.KpiTargets.Where(x => x.PeriodeType == row.PeriodeType &&
                                     x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
                                     .GroupBy(x => x.Kpi.Id)
-                                    .Select(x => x.Average(y => y.Value).Value).FirstOrDefault();
+                                    .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
                         }
                         if (request.Actual)
                         {
                             rowResponse.Actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
                                     x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
                                     .GroupBy(x => x.Kpi.Id)
-                                    .Select(x => x.Average(y => y.Value).Value).FirstOrDefault();
+                                    .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
                         }
                         break;
                 }
