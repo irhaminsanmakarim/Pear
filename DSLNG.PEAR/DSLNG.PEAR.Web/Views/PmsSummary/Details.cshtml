@@ -76,14 +76,36 @@
     var confirmDelete = function (id, pmsSummaryId, controller) {
         if (confirm('Are you sure want to delete this item?')) {
             var url = '@Url.Action("Delete", "PmsConfigDetails")';
-                if (controller == 'PmsConfig') {
-                    url = '@Url.Action("Delete", "PmsConfig")';
-                }
-                $('<form action="' + url + '" method="POST">' +
-                    '<input type="hidden" name="id" value="' + id + '">' +
-                    '<input type="hidden" name="pmsSummaryId" value="' + pmsSummaryId + '">' +
-                    '</form>').submit();
+            if (controller == 'PmsConfig') {
+                url = '@Url.Action("Delete", "PmsConfig")';
             }
-        };
+
+
+            var form = document.createElement("form");
+            form.setAttribute("method", 'POST');
+            form.setAttribute("action", url);
+
+            var fId = document.createElement("input");
+            fId.setAttribute('type', 'hidden');
+            fId.setAttribute('name', 'id');
+            fId.setAttribute('value', id);
+            form.appendChild(fId);
+
+            var fPmsSummaryId = document.createElement("input");
+            fPmsSummaryId.setAttribute('type', 'hidden');
+            fPmsSummaryId.setAttribute('name', 'pmsSummaryId');
+            fPmsSummaryId.setAttribute('value', pmsSummaryId);
+            form.appendChild(fPmsSummaryId);
+
+            document.body.appendChild(form);
+            form.submit();
+                
+                //$('<form action="' + url + '" method="POST">' +
+                //    '<input type="hidden" name="id" value="' + id + '">' +
+                //    '<input type="hidden" name="pmsSummaryId" value="' + pmsSummaryId + '">' +
+                //    '</form>').submit();
+        }
+    };
+
     </script>
 }
