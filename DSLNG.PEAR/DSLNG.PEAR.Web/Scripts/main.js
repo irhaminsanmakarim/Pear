@@ -717,7 +717,7 @@ Number.prototype.format = function (n, x) {
                 crosshair: true
             },
             yAxis: {
-                min: 0,
+                //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
                 }
@@ -762,7 +762,7 @@ Number.prototype.format = function (n, x) {
                 crosshair: true
             },
             yAxis: {
-                min: 0,
+                //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
                 },
@@ -823,7 +823,7 @@ Number.prototype.format = function (n, x) {
                 crosshair: true
             },
             yAxis: {
-                min: 0,
+                //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
                 }
