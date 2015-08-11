@@ -1814,12 +1814,24 @@ Number.prototype.format = function (n, x) {
             $('.add-column').click(function() {
                 var $this = $(this);
                 var $row = $(this).parent().find('.layout-row');
-                var currentCols = $row.children('.layout-column').length;
-                var newWidth = 100 / (currentCols + 1);
-                $row.children('.layout-column').each(function(i, val) {
-                    $(val).css('width', newWidth + '%');
+
+                //alert error if total colum width execeed (> 100%)
+                var currentWidth = 0;
+                $row.find('.column-width').each(function () {
+                    currentWidth += $(this).val() ? parseFloat($(this).val()) : 0;
                 });
+                if (currentWidth >= 100) {
+                    alert('Total column width exceeded. Can not create more column.');
+                    return;
+                }
+
+                //var currentCols = $row.children('.layout-column').length;
+                //var newWidth = 100 / (currentCols + 1);
+                //$row.children('.layout-column').each(function(i, val) {
+                //    $(val).css('width', newWidth + '%');
+                //});
                 var newColumn = $('.layout-column.original').clone(true);
+                var newWidth = 100 - currentWidth;
                 newColumn.removeClass('original');
                 newColumn.css('width', newWidth + '%');
                 Pear.Template.Editor._artifactSelectField(newColumn);
@@ -1829,7 +1841,7 @@ Number.prototype.format = function (n, x) {
                     name: 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns.Index',
                     value: columnCount
                 }).prependTo(newColumn);
-                newColumn.find('.column-width').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].Width');
+                newColumn.find('.column-width').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].Width').val(newWidth);
                 newColumn.find('.artifact-list').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ArtifactId');
                 $row.append(newColumn);
                 columnCount++;
@@ -1843,12 +1855,12 @@ Number.prototype.format = function (n, x) {
             var $this = $(this);
             var $column = $(this).closest('.layout-column');
             var $row = $(this).closest('.layout-row');
-            var currentCols = $row.children('.layout-column').length;
-            var newWidth = 100 / (currentCols - 1);
+            //var currentCols = $row.children('.layout-column').length;
+            //var newWidth = 100 / (currentCols - 1);
             $column.remove();
-            $row.children('.layout-column').each(function (i, val) {
-                $(val).css('width', newWidth + '%');
-            });
+            //$row.children('.layout-column').each(function (i, val) {
+            //    $(val).css('width', newWidth + '%');
+            //});
         });
         
         $('#graphic-preview-btn').click(function (e) {
@@ -1871,6 +1883,24 @@ Number.prototype.format = function (n, x) {
         });
         $('#graphic-preview').on('shown.bs.modal', function () {
             $('#container').css('visibility', 'visible');
+        });
+        var currentColWidth = 0;
+        $('.column-width').click(function () {
+            currentColWidth = $(this).val();
+        });
+        $('.column-width').change(function () {
+            //alert($(this).val());
+            var totalWidth = 0;
+            $(this).parents('.layout-row-wrapper').find('.column-width').each(function () {
+                totalWidth += $(this).val() ? parseFloat($(this).val()) : 0;
+            });
+            if (totalWidth > 100) {
+                alert('Total column width max is 100');
+                $(this).val(currentColWidth);
+
+                return false;
+            }
+            $(this).parents('.layout-column').css('width', $(this).val() + '%');
         });
         
         addRow();
