@@ -329,6 +329,10 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
             }
             string fileName = new StringBuilder(workSheetName).Append(".xls").ToString();
+            var path = System.Web.HttpContext.Current.Request.MapPath(TemplateDirectory);
+            if (!Directory.Exists(path)) {
+                Directory.CreateDirectory(path);
+            }
             string resultFilePath = System.Web.HttpContext.Current.Request.MapPath(TemplateDirectory + fileName);
             Workbook workbook = new Workbook();
             Worksheet worksheet = workbook.Worksheets[0];
@@ -406,12 +410,17 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult UploadControlCallbackAction()
         {
-            UploadControlExtension.GetUploadedFiles("uc", UploadControlHelper.ValidationSettings, UploadControlHelper.FileUploadComplete);
+            UploadControlHelper.GetUploadedFiles("uc", UploadControlHelper.ValidationSettings, UploadControlHelper.FileUploadComplete);
             return null;
         }
 
         public class UploadControlHelper
         {
+            private Path path { get; set; }
+            public UploadControlHelper(Path Path)
+            {
+                this.path = Path;
+            }
             public static readonly UploadControlValidationSettings ValidationSettings = new UploadControlValidationSettings
             {
                 AllowedFileExtensions = new string[] { ".xls", ".xlsx", ".csv", },
@@ -422,6 +431,11 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 if (e.UploadedFile.IsValid)
                 {
+                    var path = System.Web.HttpContext.Current.Request.MapPath(UploadDirectory + "KpiAchievement");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
                     string resultFilePath = System.Web.HttpContext.Current.Request.MapPath(UploadDirectory + e.UploadedFile.FileName);
                     e.UploadedFile.SaveAs(resultFilePath, true);//Code Central Mode - Uncomment This Line
                     IUrlResolutionService urlResolver = sender as IUrlResolutionService;
