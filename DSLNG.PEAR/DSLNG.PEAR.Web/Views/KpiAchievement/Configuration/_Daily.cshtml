@@ -2,115 +2,26 @@
 @{
     int length = DateTime.DaysInMonth(Model.Year, Model.Month);
 }
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#div-proceed').hide();
-        $('#btn-proceed').click(function () {
-            //window.location = '@Url.Action("ProceedFile", "KpiAchievement")' + '?filename=' + encodeURIComponent(link);
-            var formData = {
-                'filename': encodeURIComponent(link)
-            };
-            @*$.ajax({
-                type: "POST",
-                url: '@Url.Action("ProceedFile", "KpiAchievement")',
-                data: formData,
-                before: function (data) {
-                    $('.notification').empty();
-                    var alertType = data.isSuccess === true ? 'alert-success' : 'alert-danger';
-                    var message = '<div class="alert ' + alertType + '" role="alert">' + data.Message + '</div>';
-                    $('.notification').append(message).fadeIn().delay(1000).fadeOut();
-                },
-            });*@
-            $.ajax({
-                url: '@Url.Action("ProceedFile", "KpiAchievement")',
-                type: 'POST',
-                data: formData,
-                beforeSend: function () {
-                    $('.ajax-loader2').show();
-                    $('.notification').empty();
-                    $('.notification').hide();
-                }
-            }).done(function (result) {
-                    $('.ajax-loader2').hide();
-                    var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
-                    if (result.isSuccess === true || result.message === null) {
-                        $('.notification').html('<div class="alert ' + alertType + '" role="alert">File Successfully Parsed : ' + link + ' </div>').fadeIn().delay(10000).fadeOut();
-                        $(".nav-tabs .active").find('a').click();
-                    } else {
-                        $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
-                    }
-
-                    $('.notification').show();
-                });
-        });
-    });
-    var link = null;
-    function OnClick(s, e) {
-        uc.Upload();
-    }
-    function OnUploadTextChanged(s, e) {
-        uc.Upload();
-    }
-    function OnFileUploadComplete(s, e) {
-        if (e.callbackData !== "") {
-            link = e.callbackData;
-            var callback = 'FileUploadComplete: ' + e.callbackData;
-            $('.notification').empty();
-            var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
-            $('.notification').append(message).fadeIn().delay(10000).fadeOut();
-            //alert('FileUploadComplete: ' + e.callbackData);
-            $('#div-proceed').show();
-            //proceed(e.callbackData);
-        }
-        else {
-            $('.notification').empty();
-            var callback = 'The selected file was not uploaded.'
-            var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
-            $('.notification').append(message).fadeIn().delay(10000).fadeOut();
-        }
-    }
-    function proceed(s) {
-        alert(s);
-        //$('#proceed').html('<a href="' + s + '">Process</a>');
-        //$('#proceed').show();
-
-
-    }
-
-</script>
-<div class="notification"></div>
 <div style="overflow: auto">
-    <form class="form-inline" style="float: left">
-        <div class="form-group" style="padding-right: 30px; border-right: solid 1px #3f454f;">
-            <label class="labletop">Year :</label>
-            @Html.DropDownListFor(x => x.Year, Model.Years, new { @class = "form-control, ddl-year" })
-        </div>
-        <div class="form-group" style="padding-right: 30px; border-right: solid 1px #3f454f;">
-            <label class="labletop">Month :</label>
-            @Html.DropDownListFor(x => x.Month, Model.Months, new { @class = "form-control, ddl-month" })
+    <form class="form-inline form-kpi-daily">
+        <div class="form-group">
+            <label class="labletop">Year : </label>
+            @Html.DropDownListFor(x => x.Year, Model.Years, new { @class = "form-control ddl-year" })
         </div>
         <div class="form-group">
-            @Html.ActionLink("Download Template", "DownloadTemplate", new { filename = @Model.FileName }, new { @class = "btn btn-primary" })
-        </div>
-        <div class="form-group" id="div-proceed">
-            <input id="btn-proceed" class="btn btn-primary" value="Proceed" />
+            <label class="labletop">Month : </label>
+            @Html.DropDownListFor(x => x.Month, Model.Months, new { @class = "form-control ddl-month" })
         </div>
     </form>
 
-    @using (Html.BeginForm("UploadControlCallbackAction", "KpiAchievement", FormMethod.Post, new { @class = "form-inline" }))
-    {
-        Html.RenderPartial("UploadControlPartial");
-
-    }
-    @*<div id="proceed">Process</div>*@
-    <table class="table table-hover table-striped table-bordered">
+    <table class="table-regawa table-regawa-kpi">
         <thead>
             <tr>
-                <th style="width: 40%;">KPI Name</th>
-                @*<th style="width: 10%;">Measurement</th>*@
+                <th style="width: 30%;">KPI Name</th>
+                <th style="width: 10%;">Measurement</th>
                 @for (int i = 1; i <= length; i++)
                 {
-                    <th style="width: 25px;">@i</th>
+                    <th style="width: 25px;">@i</th>    
                 }
             </tr>
         </thead>
@@ -120,8 +31,8 @@
             @foreach (var kpi in Model.Kpis)
             {
                 <tr>
-                    <td>@kpi.Name (@kpi.Measurement)</td>
-                    @*<td>@kpi.Measurement</td>*@
+                    <td>@kpi.Name</td>
+                    <td>@kpi.Measurement</td>
                     @{ var b = 0;}
                     @foreach (var kpiAchievement in kpi.KpiAchievements)
                     {
@@ -143,7 +54,7 @@
                         b++;
                     }
                 </tr>
-                    a++;
+                a++;
             }
 
         </tbody>

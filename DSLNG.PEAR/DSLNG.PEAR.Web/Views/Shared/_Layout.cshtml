@@ -11,40 +11,42 @@
     //new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
     //new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
     //new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
     //new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
     //new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
     //new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
     //new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
     //new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.Spreadsheet }
+    //new StyleSheet { ExtensionSuite = ExtensionSuite.Spreadsheet },
     //new StyleSheet { ExtensionSuite = ExtensionSuite.SpellChecker }
 )
     @Html.DevExpress().GetScripts(
     //new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
     //new Script { ExtensionSuite = ExtensionSuite.HtmlEditor },
-    new Script { ExtensionSuite = ExtensionSuite.GridView },
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
     //new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
     //new Script { ExtensionSuite = ExtensionSuite.Editors },
     //new Script { ExtensionSuite = ExtensionSuite.Chart },
     //new Script { ExtensionSuite = ExtensionSuite.Report },
     //new Script { ExtensionSuite = ExtensionSuite.Scheduler },
     //new Script { ExtensionSuite = ExtensionSuite.TreeList },
-    new Script { ExtensionSuite = ExtensionSuite.Spreadsheet }
+    //new Script { ExtensionSuite = ExtensionSuite.Spreadsheet },
     //new Script { ExtensionSuite = ExtensionSuite.SpellChecker }
 )
 </head>
 
 <body>
-    <div class="main-content">
+
         <aside class="left-content">
+
             <div class="logo">
                 <div class="pear">
                     <img src="@Url.Content("~/Content/img/logopear.png")" />
-                </div><!--
-                          --><div class="donggi">
-                                 <img src="@Url.Content("~/Content/img/logo_blue.png")" />
-                             </div>
+                </div>
+
+                <div class="donggi">
+                    <img src="@Url.Content("~/Content/img/logo_blue.png")" />
+                </div>
             </div>
 
             @*<ul class="main-nav">
@@ -139,16 +141,16 @@
             @Html.Action("SiteMap", "Menu")
 
             <div class="left-content-toggle">
-                <i class="fa fa-caret-left"></i>
-                <i style="display: none" class="fa fa-caret-right"></i>
+                <i class="fa fa-chevron-circle-left"></i>
+                <i style="display: none" class="fa fa-chevron-circle-right"></i>
             </div>
         </aside>
-        <aside class="right-content">
-            <div class="clearfix"></div>
+
+        <main class="right-content">
             @RenderBody()
-        </aside>
+        </main>
         
-    </div>
+
     <span id="dataLayout" data-content-url="@Url.Content("/Content")"></span>
     @Scripts.Render("~/bundles/js")
     <script src="@Url.Content("~/Scripts/highcharts-more.js")" type="text/javascript"></script>
@@ -162,6 +164,9 @@
             //    });
             //    //$('.sub-nav > li > a').append('<span class="fa fa-angle-down"></span>');
             //}
+            $('.left-content-toggle').click(function () {
+                $('html').toggleClass('close-form');
+            });
             $(".sub-nav > li:has(ul) > a").append('<span class="fa fa-angle-down"></span>');
             $('.sub-nav > li').click(function () {
                 //var $this = $(this);

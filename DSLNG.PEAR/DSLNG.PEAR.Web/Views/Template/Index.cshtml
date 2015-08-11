@@ -3,9 +3,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="template-list">
-    <h2>List</h2>
+
+    <hgroup class="page-hgroup-header">
+        <h3 class="page-title">Template List</h3>
+        <div class="breadcrumbs-regawa">
+            <ul>
+                <li>Dashboard</li>
+                <li>Configuration Setting</li>
+                <li>Template List</li>
+            </ul>
+        </div>
+    </hgroup>
+
     @Html.Partial("_MessageResponse")
-    @Html.ActionLink("New", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Create New", "Create", null, new { @class = "button button-action" })
     @Html.Action("IndexPartial")
 
     @section Scripts{

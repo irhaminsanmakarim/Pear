@@ -4,29 +4,39 @@
 }
 
 <div class="notification"></div>
+
 <section>
-    <div class="row">
-        <div class="title_page" style="border: none!important;">
-            <div class="title" style="margin-right: 25px;">KPI Target</div>
-            <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none;width: 30px;height: 30px;"></img>
-            <div class="description_year"></div>
+
+    <hgroup class="page-hgroup-header">
+        <h3 class="page-title text-inline">KPI Target</h3>
+        <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none;width: 30px;height: 30px;"></img>
+        <div class="description-year"></div>
+        <div class="breadcrumbs-regawa">
+            <ul>
+                <li>Plan</li>
+                <li>Performance Setting</li>
+                <li>KPI Target</li>
+                <li>Manage</li>
+            </ul>
         </div>
+    </hgroup>
+
 
     </div>
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-pills">
         <li role="presentation" @(Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Yearly.ToString() ? Html.Raw("class=active") : Html.Raw("")) >
             <a href="#yearly" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="Yearly">
-                <div>Yearly</div>
+                Yearly
             </a>
         </li>
         <li role="presentation" @(Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Monthly.ToString() ? Html.Raw("class=active") : Html.Raw(""))>
             <a href="#monthly" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="Monthly">
-                <div>Monthly</div>
+                Monthly
             </a>
         </li>
         <li role="presentation" @(Model.PeriodeType == DSLNG.PEAR.Data.Enums.PeriodeType.Daily.ToString() ? Html.Raw("class=active") : Html.Raw(""))>
             <a href="#daily" aria-controls="home" role="tab" data-toggle="tab" data-periodetype="Daily">
-                <div>Daily</div>
+                Daily
             </a>
         </li>
     </ul>
@@ -37,18 +47,24 @@
         </div>
     </div>
 </section>
+
 <div class="popover-content" style="display: none">
-    <label class="control-label">Value</label>
-    <input type="text" name="Value" class="form-control" />
-    <label class="control-label">Remark</label>
-    <textarea name="Remark" class="form-control"></textarea>
+    <div class="form-group">
+        <label class="">Value</label>
+        <input type="text" name="Value" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="">Remark</label>
+        <textarea name="Remark" class="form-control"></textarea>
+    </div>
     <input type="hidden" name="Id" />
     <input type="hidden" name="KpiId" />
     <input type="hidden" name="Periode" />
     <input type="hidden" name="PeriodeType" />
-    <button type="button" class="btn btn-primary submit-popover">Ok</button>
-    <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
+    <button type="button" class="button button-action button-tny submit-popover">Ok</button>
+    <button type="button" class="button button-tny cancel-popover">Cancel</button>
 </div>
+
 @section Scripts
 {
     <script type="text/javascript">

@@ -3,48 +3,65 @@
 @{
     ViewBag.Title = "Dashboard Template - New";
 }
-<div class="row template-editor">
+<hgroup class="template-editor">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        <div class="col-md-12">
-            <div class="title">Dashboard Template</div>
-            <div class="description_year">New</div>
+        <hgroup class="page-hgroup-header">
+            <h3 class="page-title">Dashboard Template</h3>
+            <h5 class="">New</h5>
             <div>@Html.ValidationSummary(true)</div>
-        </div>
+        </hgroup>
 
-        <div class="col-md-12">
-            <div class="whitebox form-inline">
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.Name)
-                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Name)
-                </div>
-
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.RefershTime)
-                    @Html.TextBoxFor(model => model.RefershTime, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.RefershTime)
-                </div>
-
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.Remark)
-                    @Html.TextAreaFor(model => model.Remark, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Remark)
-                </div>
-
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.IsActive)
-                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
+        
+<div class="container-fluid container-box form-horizontal">
+  <div class="row">
+    <div class="col-sm-4">                    
+      <div class="form-group form-list">
+          @Html.LabelFor(model => model.Name, new { @class = "col-sm-4 control-label" })
+          <div class="col-sm-8">
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Name)
+          </div>
+      </div>
+      <div class="form-group form-list">
+          @Html.LabelFor(model => model.RefershTime, new { @class = "col-sm-4 control-label" })
+          <div class="col-sm-8">
+            @Html.TextBoxFor(model => model.RefershTime, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.RefershTime)
+          </div>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="form-group form-list">
+          @Html.LabelFor(model => model.Remark, new { @class = "col-sm-4 control-label" })
+          <div class="col-sm-8">
+            @Html.TextAreaFor(model => model.Remark, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Remark)
+          </div>
+      </div>
+      <div class="form-group form-list">
+          <div class="col-sm-8">
+            <div class="checkbox-form">
+                <div class="checkbox-form-item">
+                <label for="IsActive">
+                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "" })
+                    <span class="checkbox-form-image"></span>
+                    <p>Paid</p>
                     @Html.ValidationMessageFor(model => model.IsActive)
-                </div>
-                <div class="form-group form-list">
-                    <label>&nbsp;</label>
-                    <input type="button" value="Add Row" class="add-row" />
+                </label>
                 </div>
             </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-sm-3">                    
+      <input type="button" value="Add Row" class="add-row button button-action" />
+    </div>
+  </div>
+</div>
 
-        </div>
+        
         <div id="rows-holder">
            @* <div class="col-md-12 layout-row-wrapper">
                 <div class="whitebox">
@@ -75,10 +92,10 @@
             </div>*@
         </div>
         <div class="col-md-12 artifact-designer-btns">
-            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
-            <button data-preview-url="@Url.Action("Preview", "Template")"  id="graphic-preview-btn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-eye"></span>View</button>
-            <button type="button" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</button>
-            <button type="button" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</button>
+            <button type="submit" class="button button-action"><span class="fa fa-floppy-o"></span>Save</button>
+            <button data-preview-url="@Url.Action("Preview", "Template")"  id="graphic-preview-btn" type="button" class="button"><span class="fa fa-eye"></span>View</button>
+            <button type="button" class="button"><span class="fa fa-repeat"></span>Clear</button>
+            <button type="button" class="button"><span class="fa fa-times"></span>Cancel</button>
         </div>
     }
 </div>
@@ -97,15 +114,17 @@
                 </select>
             </div>
             <div class="form-group">
-                <input type="button" value="Remove Column" class="remove-column" />
+                <input type="button" value="Remove Column" class="remove-column button button-danger button-tny" />
             </div>
         </div>
     </div>*@
-    <div class="col-md-12 layout-row-wrapper original">
-        <div class="whitebox">
-            <input type="button" value="Add Column" class="add-column" />
-            <input type="button" value="Remove Row" class="remove-row" />
-            <div class="layout-row row">
+    <div class="layout-row-wrapper original">
+        <div class="container-box">
+            
+                <input type="button" value="Add Column" class="add-column button button-tny" />
+                <input type="button" value="Remove Row" class="remove-row button button-tny button-danger pull-right" />
+            
+            <div class="layout-row">
                 <div class="layout-column original" style="width: 100%">
                     <div class="column-properties">
                         <div class="form-group">
@@ -120,7 +139,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="button" value="Remove Column" class="remove-column" />
+                            <input type="button" value="Remove Column" class="remove-column button button-danger button-tny" />
                         </div>
                     </div>
                 </div>

@@ -1,13 +1,13 @@
 ﻿@using System.Linq;
 @model DSLNG.PEAR.Web.ViewModels.PmsConfigDetails.UpdatePmsConfigDetailsViewModel
+
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    <h5>Update Pms Config Detail</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">Update PMS Config Detail</h4>
 </div>
-<div class="modal-body">
-    <form class="form-group" action="@Url.Action("Update")" method="POST">
+
+<form action="@Url.Action("Update")" method="POST">
+    <div class="modal-body">
         @Html.HiddenFor(x => x.Id)
         <div class="form-group form-list">
             <label>Pillar : </label> @Model.PillarName
@@ -35,12 +35,10 @@
         </div>
 
         @Html.Partial("_ScoringIndicator", Model.ScoreIndicators)
-        <div class="centering margin">
-            <hr style="margin-bottom:60px;">
-            <a href="#" onclick="$(this).closest('form').submit()" class="btn-darkblue btn-large"><span class="fa fa-floppy-o"></span>Save</a>
-            @*<a href="#" class="btn-darkblue btn-large"><span class="fa fa-repeat"></span>Clear</a>*@
-            <a href="javascript:;" data-dismiss="modal" aria-label="Close" class="btn-darkblue btn-large"><span class="fa fa-times"></span>Cancel</a>
-        </div>
+    </div>
 
-    </form>
-</div>
+    <div class="modal-footer">
+        <button href="#" onclick="$(this).closest('form').submit()" class="button button-action"><span class="fa fa-floppy-o"></span>Save</button>
+        <button href="javascript:;" data-dismiss="modal" aria-label="Close" class="button"><span class="fa fa-times"></span>Cancel</button>
+    </div>
+</form>

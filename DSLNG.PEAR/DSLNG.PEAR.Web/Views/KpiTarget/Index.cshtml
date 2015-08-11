@@ -2,57 +2,55 @@
 @{
     
 }
-
-<section>
-    <div class="title_page" style="border: none!important;">
-        <div class="row">
-            <div class="title">KPI Target</div>
-        </div>
+<hgroup class="page-hgroup-header">
+    <h3 class="page-title">KPI Target</h3>
+    <div class="breadcrumbs-regawa">
+        <ul>
+            <li>Plan</li>
+            <li>Performance Setting</li>
+            <li>KPI Target</li>
+        </ul>
     </div>
+</hgroup>
 
-    <div class="col-md-12">
-        <table class="table-regawa">
-            <thead>
+
+<table class="table-regawa">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>KPI Name</th>
+            <th>Measurement</th>
+            <th>Type</th>
+            <th style="width: 13%;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int number = 0;}
+        @foreach (var roleGroup in Model.RoleGroups)
+        {
+            <tr>
+                <td colspan="4"><h5 class="table-regawa-kpi-heading">@roleGroup.Name</h5></td>
+                <td>
+                    <a class="text-button" href="@Url.Action("Configuration", "KpiTarget", new {id = roleGroup.Id})"><span class="fa fa-pencil-square-o"></span>Manage</a>
+                </td>
+            </tr>
+
+            foreach (var kpi in roleGroup.Kpis)
+            {
                 <tr>
-                    <th>No</th>
-                    <th>KPI Name</th>
-                    <th>Measurement</th>
-                    <th>Type</th>
-                    <th style="width: 13%;">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{ int number = 0;}
-                @foreach (var roleGroup in Model.RoleGroups)
-                {
-                    <tr>
-                        <td colspan="4" style="text-align: left;" class="grey_text">@roleGroup.Name
-                        </td>
-                        <td class="text-button" style="margin: auto;">
-                            <a href="@Url.Action("Configuration", "KpiTarget", new {id = roleGroup.Id})"><span class="fa fa-pencil-square-o"></span>Manage</a>
-                        </td>
-                    </tr>
 
-                    foreach (var kpi in roleGroup.Kpis)
-                    {
-                        <tr>
+                    <td>@(++number)</td>
+                    <td>@kpi.Name</td>
+                    <td>@kpi.Measurement</td>
 
-                            <td>@(++number)</td>
-                            <td>@kpi.Name</td>
-                            <td>@kpi.Measurement</td>
+                    <td>@kpi.Type</td>
+                    <td class="text-button" style="margin: auto;"></td>
 
-                            <td>@kpi.Type</td>
-                            <td class="text-button" style="margin: auto;"></td>
-
-                        </tr>        
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-
-</section>
-
+                </tr>        
+            }
+        }
+    </tbody>
+</table>
 
 @*@{
     ViewBag.Title = "KPI Target List";

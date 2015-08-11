@@ -5,22 +5,25 @@
 
 @Html.Partial("_MessageResponse")
 
-<div class="title_page" style="border:none!important;">
-    <div class="row">
 
-        <div class="title">PMS Summary Configuration</div>
-
+<hgroup class="page-hgroup-header">
+    <h3 class="page-title">PMS Summary Configuration</h3>
+    <div class="breadcrumbs-regawa">
+        <ul>
+            <li>Plan</li>
+            <li>Performance Setting</li>
+            <li>Corporate Portfolio</li>
+        </ul>
     </div>
-    <div class="row">
+</hgroup>
 
-        <a href="@Url.Action("Create")" class="text-button" data-toggle="modal" data-target="#modalDialog">
-            <span class="fa fa-plus-circle"></span>
-            Add PMS Summary
-        </a>
-    </div>
-</div>
+<button href="@Url.Action("Create")" class="button button-action" data-toggle="modal" data-target="#modalDialog">
+    <span class="fa fa-plus"></span>
+    Add PMS Summary
+</button>
 
-<table class="table table-striped table-bordered table-responsive table-hover">
+
+<table class="table-regawa">
     <thead>
         <tr>
             <th rowspan="2">No</th>
@@ -45,22 +48,22 @@
                 <td>@i</td>
                 <td>@item.Year</td>
                 <td>@item.Title</td>
-                <td class="text-button">
-                    <a href="@Url.Action("Details", "PmsSummary", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
+                <td>
+                    <a class="text-button" href="@Url.Action("Details", "PmsSummary", new { id = item.Id }, null)">Details<span class="fa icon-right fa-external-link"></span></a>
                 </td>
-                <td class="text-button">
-                    <a href="@Url.Action("Update", "KpiTarget", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
+                <td>
+                    <a class="text-button" href="@Url.Action("Update", "KpiTarget", new { id = item.Id }, null)">Details<span class="fa icon-right fa-external-link"></span></a>
                 </td>
-                <td class="text-button">
-                    <a href="@Url.Action("Update", "KpiAchievement", new { id = item.Id }, null)"><span class="fa fa-table"></span>Details</a>
+                <td>
+                    <a class="text-button" href="@Url.Action("Update", "KpiAchievement", new { id = item.Id }, null)">Details<span class="fa icon-right fa-external-link"></span></a>
                 </td>
-                <td class="text-button">
-                    <a href="@Url.Action("ScoreIndicatorDetails", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-table"></span>Details</a>
+                <td>
+                    <a class="text-button" href="@Url.Action("ScoreIndicatorDetails", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog">Details</a>
                 </td>
                 <td>@item.IsActive</td>
-                <td class="text-button">
-                    <a href="@Url.Action("Update", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-pencil-square-o"></span>Edit</a>
-                    <a href='javascript:;' onclick='confirmDelete(@item.Id)'><span class="fa fa-trash-o"></span>Delete</a>
+                <td>
+                    <a class="text-button" href="@Url.Action("Update", "PmsSummary", new { id = item.Id }, null)" data-toggle="modal" data-target="#modalDialog"><span class="fa fa-pencil-square-o"></span>Edit</a>
+                    <a class="text-button" href='javascript:;' onclick='confirmDelete(@item.Id)'><span class="fa fa-trash-o"></span>Delete</a>
                 </td>
             </tr>
         }
