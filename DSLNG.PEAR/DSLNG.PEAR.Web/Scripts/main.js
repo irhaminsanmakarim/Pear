@@ -1445,10 +1445,19 @@ Number.prototype.format = function (n, x) {
         $('#general-graphic-settings').css('display', 'none');
         $('.form-measurement').css('display', 'none');
     };
-    artifactDesigner._previewCallbacks.tabular = function(data, container) {
+    artifactDesigner._previewCallbacks.tabular = function (data, container) {
+        console.log('writing table');
         var wrapper = $('<div>');
         wrapper.addClass('tabular-wrapper');
         wrapper.append($('<h3>').html(data.Tabular.Title));
+
+        //container for scrolling table
+        var tableScrollContainer = $('<div>');
+        tableScrollContainer.addClass('table-scrolling-container');
+        tableScrollContainer.css('width', '100%');
+        tableScrollContainer.css('height', '270px');
+        tableScrollContainer.css('overflow-y', 'scroll');
+
         var $table = $('<table>');
         $table.addClass('tabular');
         $table.addClass('table-bordered');
@@ -1485,7 +1494,10 @@ Number.prototype.format = function (n, x) {
             //row.append($('<td>').html(dataRow.Measurement));
             $table.append(row);
         }
-        wrapper.append($table);
+        tableScrollContainer.append($table);
+        wrapper.append(tableScrollContainer);
+
+        //wrapper.append($table);
         container.html(wrapper);
     };
 
@@ -1678,8 +1690,10 @@ Number.prototype.format = function (n, x) {
         };
 
         var addRow = function () {
+            
             var rowCount = 1;
             $('.add-row').click(function () {
+                
                 var row = $('.layout-row-wrapper.original').clone(true);
                 row.removeClass('original');
                 row.find('.layout-column.original').removeClass('original');
@@ -1747,6 +1761,7 @@ Number.prototype.format = function (n, x) {
     };
     templateEditor.ViewSetup = function () {
         $('.artifact-holder').each(function (i, val) {
+            
             Pear.Loading.Show($(val));
             var $holder = $(val);
             var url = $holder.data('artifact-url');
@@ -1786,14 +1801,15 @@ Number.prototype.format = function (n, x) {
                     value: 1
                 }).prependTo(row.find('.layout-column'));
 
-                row.find('.column-width').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].Width');
+                row.find('.column-width').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].Width').val(100);
                 row.find('.artifact-list').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ArtifactId');
                 $('#rows-holder').append(row);
                 rowCount++;
             });
         };
 
-        var addColumn = function() {
+        var addColumn = function () {
+            var columMinWidth = 10;
             var columnCount = 2;
             $('.add-column').click(function() {
                 var $this = $(this);
@@ -1808,7 +1824,7 @@ Number.prototype.format = function (n, x) {
                 newColumn.css('width', newWidth + '%');
                 Pear.Template.Editor._artifactSelectField(newColumn);
                 $('<input>').attr({
-                    type: 'text',
+                    type: 'hidden',
                     id: 'foo',
                     name: 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns.Index',
                     value: columnCount
@@ -1843,6 +1859,7 @@ Number.prototype.format = function (n, x) {
                 data: $this.closest('form').serialize(),
                 method: 'POST',
                 success: function (data) {
+                    //console.log(data);
                     $('#container').html(data);
                     templateEditor.ViewSetup();
                     $('#graphic-preview').modal('show');
