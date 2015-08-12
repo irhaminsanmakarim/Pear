@@ -136,7 +136,7 @@ aside.left-content > * {
 .sub-nav ul li.active {
     font-weight: bold;
     font-style: italic;
-    text-decoration: underline;
+    //text-decoration: underline;
     background: #9bd4f4;
 }
 
@@ -629,9 +629,10 @@ a:hover.btn-lightblue {
 }
 
 .whitebox {
-    background-color: #f8f8f8;
+    background-color: #f8f8f8 !important;
     margin: 0 0 0;
     padding: 20px;
+    border-radius:5px;
 }
 
 .whitebox-full {
@@ -1220,5 +1221,3 @@ td .btn_small_lightblue a:hover {
     padding-bottom: 6px;
 }
 
-.test {
-}
