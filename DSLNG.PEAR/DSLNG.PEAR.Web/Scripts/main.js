@@ -1456,7 +1456,7 @@ Number.prototype.format = function (n, x) {
         tableScrollContainer.addClass('table-scrolling-container');
         tableScrollContainer.css('width', '100%');
         tableScrollContainer.css('height', '270px');
-        tableScrollContainer.css('overflow-y', 'scroll');
+        tableScrollContainer.css('overflow-y', 'auto');
 
         var $table = $('<table>');
         $table.addClass('tabular');
