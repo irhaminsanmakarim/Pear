@@ -188,7 +188,7 @@ namespace DSLNG.PEAR.Services
                            (row.PeriodeType == PeriodeType.Yearly && row.RangeFilter == RangeFilter.CurrentYear))
                     {
                         var kpiActual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
-                      x.Periode <= end && x.Kpi.Id == row.KpiId && (x.Value != null && x.Value.Value != 0))
+                      x.Periode <= end && x.Kpi.Id == row.KpiId && (x.Value != null))
                       .OrderByDescending(x => x.Periode).FirstOrDefault();
                         if (kpiActual != null && kpiActual.Value.HasValue)
                         {

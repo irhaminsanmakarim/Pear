@@ -36,7 +36,7 @@ namespace DSLNG.PEAR.Web.Controllers
             if (response.IsSuccess)
             {
                 var viewModel = response.MapTo<IndexKpiAchievementViewModel>();
-                return View(viewModel);    
+                return View(viewModel);
             }
 
             return base.ErrorPage(response.Message);
@@ -89,13 +89,13 @@ namespace DSLNG.PEAR.Web.Controllers
 
             return Content(response.Message);
         }
-        
+
         public ActionResult Configuration(ConfigurationParamViewModel paramViewModel)
         {
             int roleGroupId = paramViewModel.Id;
             PeriodeType pType = string.IsNullOrEmpty(paramViewModel.PeriodeType)
                                     ? PeriodeType.Yearly
-                                    : (PeriodeType) Enum.Parse(typeof (PeriodeType), paramViewModel.PeriodeType);
+                                    : (PeriodeType)Enum.Parse(typeof(PeriodeType), paramViewModel.PeriodeType);
 
             var request = new GetKpiAchievementsConfigurationRequest();
             request.PeriodeType = pType.ToString();
@@ -112,7 +112,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
                 viewModel.PeriodeType = pType.ToString();
                 viewModel.FileName = this._ExportToExcel(viewModel);
-                return View(viewModel);    
+                return View(viewModel);
             }
 
             return base.ErrorPage(response.Message);
@@ -188,7 +188,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 {
                     string[] name = worksheet.Name.Split('_');
                     //if (name.Count() > 0 && name[0] != "Sheet1" && (name[0] == PeriodeType.Daily.ToString() || name[0] == PeriodeType.Hourly.ToString() || name[0] == PeriodeType.Monthly.ToString() || name[0] == PeriodeType.Weekly.ToString() || name[0] == PeriodeType.Yearly.ToString()))
-                    if(name[0] == "Daily" || name[0] == "Monthly" || name[0]== "Yearly")
+                    if (name[0] == "Daily" || name[0] == "Monthly" || name[0] == "Yearly")
                     {
 
                         string periodType = name[0];
@@ -329,6 +329,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
             }
             string fileName = new StringBuilder(workSheetName).Append(".xls").ToString();
+            var path = System.Web.HttpContext.Current.Request.MapPath(TemplateDirectory);
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
             string resultFilePath = System.Web.HttpContext.Current.Request.MapPath(TemplateDirectory + fileName);
             Workbook workbook = new Workbook();
             Worksheet worksheet = workbook.Worksheets[0];
@@ -422,6 +427,11 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 if (e.UploadedFile.IsValid)
                 {
+                    var path = System.Web.HttpContext.Current.Request.MapPath(TemplateDirectory);
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
                     string resultFilePath = System.Web.HttpContext.Current.Request.MapPath(UploadDirectory + e.UploadedFile.FileName);
                     e.UploadedFile.SaveAs(resultFilePath, true);//Code Central Mode - Uncomment This Line
                     IUrlResolutionService urlResolver = sender as IUrlResolutionService;
