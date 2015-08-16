@@ -3,15 +3,15 @@
 @{
     ViewBag.Title = "Dashboard Template - New";
 }
-<div class="row template-edit" data-row-count="@Model.LayoutRows.Count">
+<div class="template-edit" data-row-count="@Model.LayoutRows.Count">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        <div class="col-md-12">
-            <div class="title">Dashboard Template</div>
-            <div class="description_year">New</div>
+       <hgroup class="page-hgroup-header">
+            <h4 class="page-title text-inline">Dashboard Template</h4>
+            <h5 class="text-inline">New</h5>
             <div>@Html.ValidationSummary(true)</div>
-        </div>
+        </hgroup>
 
         <div class="col-md-12">
             <div class="whitebox form-inline">
@@ -43,8 +43,8 @@
                     <input type="button" value="Add Row" class="add-row button button-action" />
                 </div>
             </div>
-
         </div>
+
         <div id="rows-holder">
         </div>
         

@@ -3,63 +3,68 @@
 @{
     ViewBag.Title = "Dashboard Template - New";
 }
-<hgroup class="template-editor">
+<div class="template-editor">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
         <hgroup class="page-hgroup-header">
-            <h3 class="page-title">Dashboard Template</h3>
-            <h5 class="">New</h5>
+            <h4 class="page-title text-inline">Dashboard Template</h4>
+            <h5 class="text-inline">New</h5>
             <div>@Html.ValidationSummary(true)</div>
         </hgroup>
 
-        
-<div class="container-fluid container-box form-horizontal">
-  <div class="row">
-    <div class="col-sm-4">                    
-      <div class="form-group form-list">
-          @Html.LabelFor(model => model.Name, new { @class = "col-sm-4 control-label" })
-          <div class="col-sm-8">
-            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Name)
+<div class="container-box">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3">                    
+          <div class="form-group form-list">
+              @Html.LabelFor(model => model.Name, new { @class = "" })
+
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name)
+
           </div>
-      </div>
-      <div class="form-group form-list">
-          @Html.LabelFor(model => model.RefershTime, new { @class = "col-sm-4 control-label" })
-          <div class="col-sm-8">
-            @Html.TextBoxFor(model => model.RefershTime, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.RefershTime)
+        </div>
+        <div class="col-sm-3">    
+          <div class="form-group form-list">
+              @Html.LabelFor(model => model.RefershTime, new { @class = "" })
+
+                @Html.TextBoxFor(model => model.RefershTime, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RefershTime)
+
           </div>
-      </div>
-    </div>
-    <div class="col-sm-5">
-      <div class="form-group form-list">
-          @Html.LabelFor(model => model.Remark, new { @class = "col-sm-4 control-label" })
-          <div class="col-sm-8">
-            @Html.TextAreaFor(model => model.Remark, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Remark)
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group form-list">
+              @Html.LabelFor(model => model.Remark, new { @class = "" })
+
+                @Html.TextAreaFor(model => model.Remark, new { @class = "form-control", rows=1 })
+                @Html.ValidationMessageFor(model => model.Remark)
+
           </div>
-      </div>
-      <div class="form-group form-list">
-          <div class="col-sm-8">
-            <div class="checkbox-form">
-                <div class="checkbox-form-item">
-                <label for="IsActive">
-                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "" })
-                    <span class="checkbox-form-image"></span>
-                    <p>Paid</p>
-                    @Html.ValidationMessageFor(model => model.IsActive)
-                </label>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group form-list">
+                <div class="checkbox-form">
+                    <div class="checkbox-form-item">
+                    <label for="IsActive">
+                        <p>IsActive</p>
+                        @Html.CheckBoxFor(model => model.IsActive, new { @checked = "checked" })                  
+                        <span class="checkbox-form-image"></span>
+                        @Html.ValidationMessageFor(model => model.IsActive)
+                    </label>
+                    </div>
                 </div>
             </div>
-          </div>
+        </div>
       </div>
+
+      <input type="button" value="Add Row" class="add-row button button-action pull-right margin-0" />
+
+
+
     </div>
-    <div class="col-sm-3">                    
-      <input type="button" value="Add Row" class="add-row button button-action" />
-    </div>
-  </div>
-</div>
+</div>     
 
         
         <div id="rows-holder">
@@ -91,7 +96,7 @@
                 </div>
             </div>*@
         </div>
-        <div class="col-md-12 artifact-designer-btns">
+        <div class="artifact-designer-btns">
             <button type="submit" class="button button-action"><span class="fa fa-floppy-o"></span>Save</button>
             <button data-preview-url="@Url.Action("Preview", "Template")"  id="graphic-preview-btn" type="button" class="button"><span class="fa fa-eye"></span>View</button>
             <button type="button" class="button"><span class="fa fa-repeat"></span>Clear</button>
@@ -99,6 +104,7 @@
         </div>
     }
 </div>
+
 <div id="hidden-fields-holder" data-artifact-url="@Url.Action("ArtifactList","Template")">
     @*<div class="layout-column original" style="width: 100%">
         <div class="column-properties">
@@ -119,7 +125,7 @@
         </div>
     </div>*@
     <div class="layout-row-wrapper original">
-        <div class="container-box">
+        <div class="container-box clearfix">
             
                 <input type="button" value="Add Column" class="add-column button button-tny" />
                 <input type="button" value="Remove Row" class="remove-row button button-tny button-danger pull-right" />

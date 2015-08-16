@@ -3,9 +3,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Menu List</h2>
+<hgroup class="page-hgroup-header">
+    <h3 class="page-title">Menu List</h3>
+</hgroup>
 @Html.Partial("_MessageResponse")
-@Html.ActionLink("Create New", "Create", null, new { @class = "btn_small_lightblue" })
+@Html.ActionLink("Create New Menu", "Create", null, new { @class = "button button-action" })
 @Html.Action("IndexPartial")
 
 

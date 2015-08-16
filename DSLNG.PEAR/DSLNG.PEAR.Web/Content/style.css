@@ -35,12 +35,12 @@ h6, ajax- .h1,
     margin-right: 20px;
 }*/
 
-h6 {
+/*h6 {
     color: #3f454f;
     font-size: 16px;
     line-height: 30px;
     float: left;
-}
+}*/
 
 /*.main-content > aside {
     float:left;
@@ -250,13 +250,13 @@ img {
     margin: 25px 0 0 204px;
 }
 
-    .series-template .remove,
+    /*.series-template .remove,
     .stack-template .remove,
     .plot-band-template .remove {
         position: absolute;
         top: 0;
         right: 0;
-    }
+    }*/
 
 
 

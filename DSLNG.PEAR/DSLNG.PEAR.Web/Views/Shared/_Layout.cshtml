@@ -166,6 +166,15 @@
             //}
             $('.left-content-toggle').click(function () {
                 $('html').toggleClass('close-form');
+                //alert('asas');
+                setTimeout(function () {
+                    $('.artifact-holder').each(function (i, val) {
+                        if ($(val).highcharts()) {
+                            $(val).highcharts().reflow();
+                        }
+                    });
+                }, 300);
+               
             });
             $(".sub-nav > li:has(ul) > a").append('<span class="fa fa-angle-down"></span>');
             $('.sub-nav > li').click(function () {
@@ -178,36 +187,36 @@
                 $('.main-nav > li.active').removeClass('active');
                 $(this).addClass('active');
             })
-            $('.left-content-toggle').click(function () {
-                $(this).find('i').toggle();
-                var $leftContent = $('.left-content');
-                if (!$leftContent.hasClass('pear-hidden')) {
+            //$('.left-content-toggle').click(function () {
+            //    $(this).find('i').toggle();
+            //    var $leftContent = $('.left-content');
+            //    if (!$leftContent.hasClass('pear-hidden')) {
 
-                    $('.main-content').animate({
-                            marginLeft: -230
-                        }, function () {
-                            $leftContent.addClass('pear-hidden');
-                            $('.artifact-holder').each(function (i, val) {
-                                if($(val).highcharts()){
-                                    $(val).highcharts().reflow();
-                                }
+            //        $('.main-content').animate({
+            //                marginLeft: -230
+            //            }, function () {
+            //                $leftContent.addClass('pear-hidden');
+            //                $('.artifact-holder').each(function (i, val) {
+            //                    if($(val).highcharts()){
+            //                        $(val).highcharts().reflow();
+            //                    }
 
-                            });
-                            //$('#container').highcharts().reflow();
-                        })
-                } else {
-                    $('.main-content').animate({
-                            marginLeft: 0
-                        }, function () {
-                            $leftContent.removeClass('pear-hidden');
-                            $('.artifact-holder').each(function (i, val) {
-                                if ($(val).highcharts()) {
-                                    $(val).highcharts().reflow();
-                                }
-                            });
-                        })
-                }
-            });
+            //                });
+            //                //$('#container').highcharts().reflow();
+            //            })
+            //    } else {
+            //        $('.main-content').animate({
+            //                marginLeft: 0
+            //            }, function () {
+            //                $leftContent.removeClass('pear-hidden');
+            //                $('.artifact-holder').each(function (i, val) {
+            //                    if ($(val).highcharts()) {
+            //                        $(val).highcharts().reflow();
+            //                    }
+            //                });
+            //            })
+            //    }
+            //});
         })
     </script>
     @RenderSection("Scripts", required: false)

@@ -30,13 +30,13 @@
         <div class="container-box">
             <h5 class="pull-left" style="text-transform:capitalize">@Model.PmsConfigs[i1].PillarName.ToLower()</h5>
             <div class="pull-right">
-                <button href="@Url.Action("Create", "PmsConfigDetails", new { id = Model.PmsConfigs[i1].Id })" class="button" data-toggle="modal" data-target="#modalDialog">
+                <button href="@Url.Action("Create", "PmsConfigDetails", new { id = Model.PmsConfigs[i1].Id })" class="button button-tny" data-toggle="modal" data-target="#modalDialog">
                     <span class="fa fa-plus"></span>Add PMS Config Detail
                 </button>
-                <button href="@Url.Action("Update", "PmsConfig", new { id = Model.PmsConfigs[i].Id })" data-toggle="modal" data-target="#modalDialog" class="button">
+                <button href="@Url.Action("Update", "PmsConfig", new { id = Model.PmsConfigs[i].Id })" data-toggle="modal" data-target="#modalDialog" class="button button-tny">
                     <span class="fa fa-pencil-square-o"></span>Edit Pilar
                 </button>
-                <button href='javascript:;' onclick='confirmDelete(@Model.PmsConfigs[i1].Id, @Model.PmsSummaryId, "PmsConfig")' class="button"><span class="fa fa-trash-o"></span>Delete</button>
+                <button href='javascript:;' onclick='confirmDelete(@Model.PmsConfigs[i1].Id, @Model.PmsSummaryId, "PmsConfig")' class="button button-tny"><span class="fa fa-trash-o"></span>Delete</button>
             </div>            
             <table class="table-regawa">
                 <thead>
