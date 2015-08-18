@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Entities\Activity.cs" />
     <Compile Include="Entities\Artifact.cs" />
+    <Compile Include="Entities\ArtifactChart.cs" />
     <Compile Include="Entities\ArtifactPlot.cs" />
     <Compile Include="Entities\ArtifactRow.cs" />
     <Compile Include="Entities\ArtifactSerie.cs" />

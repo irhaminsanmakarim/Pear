@@ -163,7 +163,15 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
                 .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)))
                 .ForMember(x => x.Start, y => y.MapFrom(z => z.StartAfterParsed))
-                .ForMember(x => x.End, y => y.MapFrom(z => z.EndAfterParsed)); ;
+                .ForMember(x => x.End, y => y.MapFrom(z => z.EndAfterParsed));
+
+            //cartesian preview
+            Mapper.CreateMap<ArtifactDesignerViewModel, GetMultiaxisChartDataRequest>()
+                .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
+                .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
+                //.ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)))
+                .ForMember(x => x.Start, y => y.MapFrom(z => z.StartAfterParsed))
+                .ForMember(x => x.End, y => y.MapFrom(z => z.EndAfterParsed));
 
             //bar chart mapping
             Mapper.CreateMap<BarChartViewModel, GetCartesianChartDataRequest>();
@@ -246,9 +254,52 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<TankViewModel, UpdateArtifactRequest.TankRequest>();
             Mapper.CreateMap<TabularViewModel, UpdateArtifactRequest>();
             Mapper.CreateMap<TabularViewModel.RowViewModel, UpdateArtifactRequest.RowRequest>();
-            
-            
-       
+
+            //multiaxis mapping
+            Mapper.CreateMap<MultiaxisChartViewModel, GetMultiaxisChartDataRequest>();
+            Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, GetMultiaxisChartDataRequest.ChartRequest>()
+                .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesValueResolver>());
+            Mapper.CreateMap<GetMultiaxisChartDataResponse, MultiaxisChartDataViewModel>();
+            Mapper.CreateMap<GetMultiaxisChartDataResponse.ChartResponse, MultiaxisChartDataViewModel.ChartViewModel>();
+            Mapper.CreateMap<GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel, MultiaxisChartDataViewModel.ChartViewModel.SeriesViewModel>();
+            Mapper.CreateMap<MultiaxisChartViewModel, CreateArtifactRequest>();
+            Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, CreateArtifactRequest.ChartRequest>()
+                .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesCreateResolver>());
+            //.ForMember(x => x.Series, o =>
+                //{
+                //    o.Condition(rc =>
+                //    {
+                //        var chartViewModel = (MultiaxisChartViewModel.ChartViewModel)rc.DestinationValue;
+                //        return chartViewModel.GraphicType == "line";
+                //    });
+                //    o.MapFrom(s => s.LineChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>());
+                //})
+                // .ForMember(x => x.Series, o =>
+                //{
+                //    o.Condition(rc =>
+                //    {
+                //        var chartViewModel = (MultiaxisChartViewModel.ChartViewModel)rc.DestinationValue;
+                //        return chartViewModel.GraphicType == "area";
+                //    });
+                //    o.MapFrom(s => s.AreaChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>());
+                //})
+                // .ForMember(x => x.Series, o =>
+                //{
+                //    o.Condition(rc =>
+                //    {
+                //        var chartViewModel = (MultiaxisChartViewModel.ChartViewModel)rc.DestinationValue;
+                //        return chartViewModel.GraphicType != "line" && chartViewModel.GraphicType != "area";
+                //    });
+                //    o.MapFrom(s => s.BarChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>());
+                //});
+
+            Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+            Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+            Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+            Mapper.CreateMap<BarChartViewModel.StackViewModel, GetMultiaxisChartDataRequest.ChartRequest.StackRequest>();
+
+           
+
             //Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetSeriesRequest.Series>()
             //    .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetSeriesRequest.Stack>()));
             //Mapper.CreateMap<BarChartViewModel.StackViewModel, GetSeriesRequest.Stack>();
@@ -498,6 +549,38 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<UpdateKpiAchievementsViewModel.KpiAchievementItem, UpdateKpiAchievementItemRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(x => (DSLNG.PEAR.Data.Enums.PeriodeType)x.PeriodeType));
 
+        }
+    }
+
+    public class MultiaxisSeriesValueResolver : ValueResolver<MultiaxisChartViewModel.ChartViewModel, IList<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>>
+    {
+        protected override IList<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest> ResolveCore(MultiaxisChartViewModel.ChartViewModel source)
+        {
+            switch (source.GraphicType) { 
+                case "line":
+                    return source.LineChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+                case "area":
+                    return source.AreaChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+                default:
+                    return source.BarChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+
+            }
+        }
+    }
+    public class MultiaxisSeriesCreateResolver : ValueResolver<MultiaxisChartViewModel.ChartViewModel, IList<CreateArtifactRequest.SeriesRequest>>
+    {
+        protected override IList<CreateArtifactRequest.SeriesRequest> ResolveCore(MultiaxisChartViewModel.ChartViewModel source)
+        {
+            switch (source.GraphicType)
+            {
+                case "line":
+                    return source.LineChart.Series.MapTo<CreateArtifactRequest.SeriesRequest>();
+                case "area":
+                    return source.AreaChart.Series.MapTo<CreateArtifactRequest.SeriesRequest>();
+                default:
+                    return source.BarChart.Series.MapTo<CreateArtifactRequest.SeriesRequest>();
+
+            }
         }
     }
 }

@@ -1,46 +1,46 @@
-﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.MultiaxisChartViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
 
 <div class="form-group form-list">
-    @Html.LabelFor(model => model.Charts[0].BarChart.Series)
-    @Html.DropDownList("seriesType", Model.Charts[0].BarChart.SeriesTypes, new { id = "seriesType", @class = "form-control" })
+    @Html.LabelFor(model => model.MultiaxisChart.Charts[0].BarChart.Series)
+    @Html.DropDownList("seriesType", Model.MultiaxisChart.Charts[0].BarChart.SeriesTypes, new { id = "seriesType", @class = "form-control series-type" })
     <input type="button" value="Add Series" class="btn btn-lightblue" id="add-series" />
 </div>
 
 
-<div id="hidden-fields">
+<div class="hidden-fields">
         <div class="series-template original whitebox">
             <h2>Series</h2>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group form-list">
-                        @Html.LabelFor(model => model.Charts[0].BarChart.Series[0].Label)
-                        @Html.TextBoxFor(model => model.Charts[0].BarChart.Series[0].Label, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Charts[0].BarChart.Series[0].Label)
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Label)
+                        @Html.TextBoxFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Label, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Label)
                     </div>
                 </div>
                 <div class="series-details-holder">
                     <div class="col-sm-6">
                         <div class="form-group form-list">
-                            @Html.LabelFor(model => model.Charts[0].BarChart.Series[0].Color)
+                            @Html.LabelFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Color)
                             <div class="input-group colorpicker">
-                                @Html.TextBoxFor(model => model.Charts[0].BarChart.Series[0].Color, new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Color, new { @class = "form-control" })
                                 <span class="input-group-addon"><i></i></span>
                             </div>
-                            @Html.ValidationMessageFor(model => model.Charts[0].BarChart.Series[0].Color)
+                            @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Color)
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-list">
-                            @Html.LabelFor(model => model.Charts[0].BarChart.Series[0].KpiId)
-                            @Html.DropDownListFor(model => model.Charts[0].BarChart.Series[0].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                            @Html.ValidationMessageFor(model => model.Charts[0].BarChart.Series[0].KpiId)
+                            @Html.LabelFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].KpiId)
+                            @Html.DropDownListFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                            @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].KpiId)
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group value-axis form-list">
-                            @Html.LabelFor(model => Model.Charts[0].BarChart.Series[0].ValueAxis)
-                            @Html.DropDownListFor(model => model.Charts[0].BarChart.Series[0].ValueAxis, Model.Charts[0].BarChart.ValueAxes, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Charts[0].BarChart.Series[0].ValueAxis)
+                            @Html.LabelFor(model => Model.MultiaxisChart.Charts[0].BarChart.Series[0].ValueAxis)
+                            @Html.DropDownListFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].ValueAxis, Model.MultiaxisChart.Charts[0].BarChart.ValueAxes, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].ValueAxis)
                         </div>
                     </div>
                 </div>
@@ -59,23 +59,23 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group form-list">
-                        @Html.LabelFor(model => model.Charts[0].BarChart.Series[0].Stacks[0].Label)
-                        @Html.TextBoxFor(model => model.Charts[0].BarChart.Series[0].Stacks[0].Label, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Charts[0].BarChart.Series[0].Stacks[0].Label)
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Stacks[0].Label)
+                        @Html.TextBoxFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Stacks[0].Label, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Stacks[0].Label)
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Charts[0].BarChart.Series[0].Stacks[0].KpiId)
-                        @Html.DropDownListFor(model => model.Charts[0].BarChart.Series[0].Stacks[0].KpiId, new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px" })
-                        @Html.ValidationMessageFor(model => model.Charts[0].BarChart.Series[0].Stacks[0].KpiId)
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Stacks[0].KpiId)
+                        @Html.DropDownListFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Stacks[0].KpiId, new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px" })
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Stacks[0].KpiId)
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    @Html.LabelFor(model => model.Charts[0].BarChart.Series[0].Stacks[0].Color)
+                    @Html.LabelFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Stacks[0].Color)
                     <div class="input-group colorpicker">
-                        @Html.TextBoxFor(model => model.Charts[0].BarChart.Series[0].Stacks[0].Color, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Stacks[0].Color, new { @class = "form-control" })
                         <span class="input-group-addon"><i></i></span>
                     </div>
-                    @Html.ValidationMessageFor(model => model.Charts[0].BarChart.Series[0].Stacks[0].Color)
+                    @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[0].BarChart.Series[0].Stacks[0].Color)
                 </div>
             </div>
             <input type="button" value="Remove" class="remove" />
