@@ -21,6 +21,7 @@ namespace DSLNG.PEAR.Web.ViewModels.KpiAchievement
         public int Year { get; set; }
         public int Month { get; set; }
         public string PeriodeType { get; set; }
+        public string FileName { get; set; }
 
         public class Kpi
         {

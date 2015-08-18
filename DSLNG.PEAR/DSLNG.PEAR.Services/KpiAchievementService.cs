@@ -9,7 +9,6 @@ using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
-using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Services
 {
@@ -237,8 +236,19 @@ namespace DSLNG.PEAR.Services
 
                 var kpis = DataContext.Kpis
                                       .Include(x => x.RoleGroup)
-                                      .Include(x => x.Measurement)
-                                      .Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
+                                      .Include(x => x.Measurement).ToList();
+
+                if (request.RoleGroupId > 0) {
+                    kpis = kpis.Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
+                    var roleGroup = DataContext.RoleGroups.Single(x => x.Id == request.RoleGroupId);
+                    response.RoleGroupName = roleGroup.Name;
+                    response.RoleGroupId = roleGroup.Id;
+                    response.IsSuccess = true;
+                }
+                //var kpis = DataContext.Kpis
+                //                      .Include(x => x.RoleGroup)
+                //                      .Include(x => x.Measurement)
+                //                      .Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
 
                 
 
@@ -332,10 +342,7 @@ namespace DSLNG.PEAR.Services
                         break;
                 }
 
-                var roleGroup = DataContext.RoleGroups.Single(x => x.Id == request.RoleGroupId);
-                response.RoleGroupName = roleGroup.Name;
-                response.RoleGroupId = roleGroup.Id;
-                response.IsSuccess = true;
+                
             }
             catch (InvalidOperationException invalidOperationException)
             {
@@ -361,6 +368,11 @@ namespace DSLNG.PEAR.Services
 
                 if (request.Id != 0)
                 {
+                    var attachedEntity = DataContext.KpiAchievements.Find(request.Id);
+                    if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
+                    {
+                        DataContext.Entry(attachedEntity).State = EntityState.Detached;
+                    }
                     DataContext.KpiAchievements.Attach(kpiAchievement);
                     DataContext.Entry(kpiAchievement).State = EntityState.Modified;
                     DataContext.SaveChanges();
@@ -385,6 +397,30 @@ namespace DSLNG.PEAR.Services
                 response.Message = argumentNullException.Message;
             }
 
+            return response;
+        }
+
+        public GetKpiAchievementResponse GetKpiAchievementByValue(GetKpiAchievementRequestByValue request)
+        {
+            PeriodeType periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), request.PeriodeType);
+            var response = new GetKpiAchievementResponse();
+            response.PeriodeType = periodeType;
+            try
+            {
+                var kpiAchievement = DataContext.KpiAchievements.Include(x => x.Kpi).Single(x => x.Kpi.Id == request.Kpi_Id && x.PeriodeType == periodeType && x.Periode == request.periode);
+                response = kpiAchievement.MapTo<GetKpiAchievementResponse>();
+                response.IsSuccess = true;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.IsSuccess = false;
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.IsSuccess = false;
+                response.Message = argumentNullException.Message;
+            }
             return response;
         }
     }

@@ -136,7 +136,7 @@ aside.left-content > * {
 .sub-nav ul li.active {
     font-weight: bold;
     font-style: italic;
-    text-decoration: underline;
+    //text-decoration: underline;
     background: #9bd4f4;
 }
 
@@ -629,9 +629,10 @@ a:hover.btn-lightblue {
 }
 
 .whitebox {
-    background-color: #f8f8f8;
+    background-color: #f8f8f8 !important;
     margin: 0 0 0;
     padding: 20px;
+    border-radius:5px;
 }
 
 .whitebox-full {
@@ -910,12 +911,13 @@ table.text-center th {
 }
 
 .ajax-loading-dialog {
-    position: absolute;
+    //position: absolute;
     margin: auto;
     top: 0px;
     left: 0px;
     right: 0px;
     bottom: 0px;
+    background-position: center center;
 }
 
 .popover-title {
@@ -1027,16 +1029,11 @@ table.text-center th {
 }
 
 .trafficlight-label {
-    /*position: absolute;
-    right: -150px;
-    top: 32%;
-    font-weight: bold;
-    font-size: 30px;*/
     position: absolute;
-    right: -120px;
+    right: -65px;
     top: 25%;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 table.tabular {
@@ -1174,7 +1171,7 @@ td .btn_small_lightblue a:hover {
 .tank-current-volume {
     position: absolute;
     display: block;
-    width: 150px;
+    width: 300px;
     left: 267px;
     margin: 0;
     line-height: 1;
@@ -1183,6 +1180,15 @@ td .btn_small_lightblue a:hover {
 .tank-wrapper h3 {
     color: #333333;
     font-size: 18px;
+    fill: #333333;
+    width: 736px;
+    float: none;
+    width: 100%;
+}
+
+.tank-wrapper h4 {
+    color: #333333;
+    font-size: 15px;
     fill: #333333;
     width: 736px;
     float: none;
@@ -1214,3 +1220,4 @@ td .btn_small_lightblue a:hover {
     padding-top: 6px;
     padding-bottom: 6px;
 }
+

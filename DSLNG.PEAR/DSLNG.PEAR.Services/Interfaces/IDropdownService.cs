@@ -28,6 +28,8 @@ namespace DSLNG.PEAR.Services.Interfaces
         IEnumerable<Dropdown> GetKpis();
         IEnumerable<Dropdown> GetPeriodeTypesForKpiTargetAndAchievement();
         IEnumerable<Dropdown> GetKpisForPmsConfigDetailsUpdate(int pmsConfigId, int id);
+
+        IEnumerable<Dropdown> GetConfigTypes();
     }
 
     public class Dropdown

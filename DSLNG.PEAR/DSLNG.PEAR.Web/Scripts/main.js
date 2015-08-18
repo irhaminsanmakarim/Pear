@@ -20,13 +20,25 @@ Number.prototype.format = function (n, x) {
     return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
 };
 
-(function (window, $, undifined) {
+(function (window, $, undefined) {
     var Pear = {};
     Pear.Artifact = {};
     Pear.Artifact.Designer = {};
     Pear.Artifact.Designer.Multiaxis = {};
     Pear.Template = {};
     Pear.Template.Editor = {};
+    Pear.Loading = {};
+
+    Pear.Loading.Show = function (container) {
+        var loadingImage = $('#dataLayout').attr('data-content-url') + '/img/ajax-loader2.gif';
+        container.css('background-position', 'center center');
+        container.css('background-repeat', 'no-repeat');
+        container.css('background-image', 'url(' + loadingImage + ')');
+    };
+
+    Pear.Loading.Stop = function(container) {
+        container.css('background', 'none');
+    };
 
     var artifactDesigner = Pear.Artifact.Designer;
 
@@ -85,6 +97,8 @@ Number.prototype.format = function (n, x) {
     artifactDesigner.ListSetup = function () {
         $(document).on('click', '.artifact-view', function (e) {
             e.preventDefault();
+            Pear.Loading.Show($('#container'));
+            $('#graphic-preview').modal('show');
             var $this = $(this);
             var callback = Pear.Artifact.Designer._previewCallbacks;
             $.ajax({
@@ -92,19 +106,24 @@ Number.prototype.format = function (n, x) {
                 method: 'GET',
                 success: function (data) {
                     if (callback.hasOwnProperty(data.GraphicType)) {
+                        Pear.Loading.Stop($('#container'));
                         callback[data.GraphicType](data, $('#container'));
                     }
-                    $('#graphic-preview').modal('show');
-                    
                 }
             });
+            
             $('#graphic-preview').on('show.bs.modal', function () {
                 $('#container').css('visibility', 'hidden');
             });
+            
             $('#graphic-preview').on('shown.bs.modal', function () {
-                $('#container').css('visibility', 'visible');
                 if ($('#container').highcharts() !== undefined)
                     $('#container').highcharts().reflow();
+                $('#container').css('visibility', 'visible');
+            });
+            
+            $('#graphic-preview').on('hidden.bs.modal', function () {
+                $('#container').html('');
             });
         });
     };
@@ -247,30 +266,37 @@ Number.prototype.format = function (n, x) {
                 }
             });
         };
-
         $('#graphic-preview-btn').click(function(e) {
             e.preventDefault();
             var $this = $(this);
+            Pear.Loading.Show($('#container'));
+            $('#graphic-preview').modal('show');
             var callback = Pear.Artifact.Designer._previewCallbacks;
             $.ajax({
                 url: $this.data('preview-url'),
                 data: $this.closest('form').serialize(),
                 method: 'POST',
-                success: function(data) {
+                success: function (data) {
                     if (callback.hasOwnProperty(data.GraphicType)) {
+                        Pear.Loading.Stop($('#container'));
                         callback[data.GraphicType](data, $('#container'));
                     }
-                    $('#graphic-preview').modal('show');
                 }
             });
         });
-        $('#graphic-preview').on('show.bs.modal', function() {
-            $('#container').css('visibility', 'hidden');
+        
+        $('#graphic-preview').on('show.bs.modal', function () {
+                $('#container').css('visibility', 'hidden');
         });
+        
         $('#graphic-preview').on('shown.bs.modal', function() {
-            $('#container').css('visibility', 'visible');
             if ($('#container').highcharts() !== undefined)
                 $('#container').highcharts().reflow();
+            $('#container').css('visibility', 'visible');
+        });
+        
+        $('#graphic-preview').on('hidden.bs.modal', function () {
+            $('#container').html('');
         });
 
         var rangeDatePicker = function () {
@@ -560,6 +586,8 @@ Number.prototype.format = function (n, x) {
     artifactDesigner.Preview = function () {
         $('#graphic-preview-btn').click(function (e) {
             e.preventDefault();
+            Pear.Loading.Show($('#container'));
+            $('#graphic-preview').modal('show');
             var $this = $(this);
             var callback = Pear.Artifact.Designer._previewCallbacks;
             $.ajax({
@@ -568,19 +596,25 @@ Number.prototype.format = function (n, x) {
                 method: 'POST',
                 success: function (data) {
                     if (callback.hasOwnProperty(data.GraphicType)) {
+                        Pear.Loading.Stop($('#container'));
                         callback[data.GraphicType](data, $('#container'));
                     }
-                    $('#graphic-preview').modal('show');
                 }
             });
         });
+        
         $('#graphic-preview').on('show.bs.modal', function () {
             $('#container').css('visibility', 'hidden');
         });
+        
         $('#graphic-preview').on('shown.bs.modal', function () {
             $('#container').css('visibility', 'visible');
             if ($('#container').highcharts() !== undefined)
                 $('#container').highcharts().reflow();
+        });
+        
+        $('#graphic-preview').on('hidden.bs.modal', function () {
+            $('#container').html('');
         });
     };
     artifactDesigner._previewCallbacks = {};
@@ -684,7 +718,7 @@ Number.prototype.format = function (n, x) {
                 crosshair: true
             },
             yAxis: {
-                min: 0,
+                //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
                 }
@@ -729,7 +763,7 @@ Number.prototype.format = function (n, x) {
                 crosshair: true
             },
             yAxis: {
-                min: 0,
+                //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
                 },
@@ -790,7 +824,7 @@ Number.prototype.format = function (n, x) {
                 crosshair: true
             },
             yAxis: {
-                min: 0,
+                //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
                 }
@@ -1218,7 +1252,9 @@ Number.prototype.format = function (n, x) {
             title: {
                 text: data.SpeedometerChart.Title
             },
-
+            subtitle: {
+                text: data.SpeedometerChart.Subtitle,
+            },
             pane: {
                 startAngle: -150,
                 endAngle: 150,
@@ -1410,10 +1446,19 @@ Number.prototype.format = function (n, x) {
         $('#general-graphic-settings').css('display', 'none');
         $('.form-measurement').css('display', 'none');
     };
-    artifactDesigner._previewCallbacks.tabular = function(data, container) {
+    artifactDesigner._previewCallbacks.tabular = function (data, container) {
+        console.log('writing table');
         var wrapper = $('<div>');
         wrapper.addClass('tabular-wrapper');
         wrapper.append($('<h3>').html(data.Tabular.Title));
+
+        //container for scrolling table
+        var tableScrollContainer = $('<div>');
+        tableScrollContainer.addClass('table-scrolling-container');
+        tableScrollContainer.css('width', '100%');
+        tableScrollContainer.css('height', '270px');
+        tableScrollContainer.css('overflow-y', 'auto');
+
         var $table = $('<table>');
         $table.addClass('tabular');
         $table.addClass('table-bordered');
@@ -1450,9 +1495,15 @@ Number.prototype.format = function (n, x) {
             //row.append($('<td>').html(dataRow.Measurement));
             $table.append(row);
         }
-        wrapper.append($table);
-        container.css('height', 'auto');
-        container.css('min-height', '350px');
+        //wrapper.append($table);
+        //container.css('height', 'auto');
+        //container.css('min-height', '350px');
+
+        //change from pak Marwan
+        tableScrollContainer.append($table);
+        wrapper.append(tableScrollContainer);
+
+        //wrapper.append($table);
         container.html(wrapper);
     };
 
@@ -1562,6 +1613,7 @@ Number.prototype.format = function (n, x) {
         }
         var $wrapper = $('<div>', { 'class': 'tank-wrapper' });
         $wrapper.html('<h3>' + data.Tank.Title + '</h3>');
+        $wrapper.append('<h4>' + data.Tank.Subtitle + '</h4>');
         $wrapper.append($tank);
         container.html($wrapper);
         //console.log($('.tank-zero-meter'));
@@ -1817,7 +1869,7 @@ Number.prototype.format = function (n, x) {
         var seriesNames = [];
         var chartTypeMap = {
             bar: 'column',
-            line: 'line',
+            line: 'spline',
             area: 'area',
             barachievement: 'column',
             baraccumulative : 'column'
@@ -1957,8 +2009,10 @@ Number.prototype.format = function (n, x) {
         };
 
         var addRow = function () {
+            
             var rowCount = 1;
             $('.add-row').click(function () {
+                
                 var row = $('.layout-row-wrapper.original').clone(true);
                 row.removeClass('original');
                 row.find('.layout-column.original').removeClass('original');
@@ -2026,6 +2080,8 @@ Number.prototype.format = function (n, x) {
     };
     templateEditor.ViewSetup = function () {
         $('.artifact-holder').each(function (i, val) {
+            
+            Pear.Loading.Show($(val));
             var $holder = $(val);
             var url = $holder.data('artifact-url');
             var callback = Pear.Artifact.Designer._previewCallbacks;
@@ -2034,6 +2090,7 @@ Number.prototype.format = function (n, x) {
                 method: 'GET',
                 success: function (data) {
                     if (callback.hasOwnProperty(data.GraphicType)) {
+                        Pear.Loading.Stop($(val));
                         callback[data.GraphicType](data, $holder);
                     }
                 }
@@ -2063,34 +2120,47 @@ Number.prototype.format = function (n, x) {
                     value: 1
                 }).prependTo(row.find('.layout-column'));
 
-                row.find('.column-width').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].Width');
+                row.find('.column-width').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].Width').val(100);
                 row.find('.artifact-list').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ArtifactId');
                 $('#rows-holder').append(row);
                 rowCount++;
             });
         };
 
-        var addColumn = function() {
+        var addColumn = function () {
+            var columMinWidth = 10;
             var columnCount = 2;
             $('.add-column').click(function() {
                 var $this = $(this);
                 var $row = $(this).parent().find('.layout-row');
-                var currentCols = $row.children('.layout-column').length;
-                var newWidth = 100 / (currentCols + 1);
-                $row.children('.layout-column').each(function(i, val) {
-                    $(val).css('width', newWidth + '%');
+
+                //alert error if total colum width execeed (> 100%)
+                var currentWidth = 0;
+                $row.find('.column-width').each(function () {
+                    currentWidth += $(this).val() ? parseFloat($(this).val()) : 0;
                 });
+                if (currentWidth >= 100) {
+                    alert('Total column width exceeded. Can not create more column.');
+                    return;
+                }
+
+                //var currentCols = $row.children('.layout-column').length;
+                //var newWidth = 100 / (currentCols + 1);
+                //$row.children('.layout-column').each(function(i, val) {
+                //    $(val).css('width', newWidth + '%');
+                //});
                 var newColumn = $('.layout-column.original').clone(true);
+                var newWidth = 100 - currentWidth;
                 newColumn.removeClass('original');
                 newColumn.css('width', newWidth + '%');
                 Pear.Template.Editor._artifactSelectField(newColumn);
                 $('<input>').attr({
-                    type: 'text',
+                    type: 'hidden',
                     id: 'foo',
                     name: 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns.Index',
                     value: columnCount
                 }).prependTo(newColumn);
-                newColumn.find('.column-width').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].Width');
+                newColumn.find('.column-width').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].Width').val(newWidth);
                 newColumn.find('.artifact-list').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ArtifactId');
                 $row.append(newColumn);
                 columnCount++;
@@ -2104,12 +2174,12 @@ Number.prototype.format = function (n, x) {
             var $this = $(this);
             var $column = $(this).closest('.layout-column');
             var $row = $(this).closest('.layout-row');
-            var currentCols = $row.children('.layout-column').length;
-            var newWidth = 100 / (currentCols - 1);
+            //var currentCols = $row.children('.layout-column').length;
+            //var newWidth = 100 / (currentCols - 1);
             $column.remove();
-            $row.children('.layout-column').each(function (i, val) {
-                $(val).css('width', newWidth + '%');
-            });
+            //$row.children('.layout-column').each(function (i, val) {
+            //    $(val).css('width', newWidth + '%');
+            //});
         });
         
         $('#graphic-preview-btn').click(function (e) {
@@ -2120,6 +2190,7 @@ Number.prototype.format = function (n, x) {
                 data: $this.closest('form').serialize(),
                 method: 'POST',
                 success: function (data) {
+                    //console.log(data);
                     $('#container').html(data);
                     templateEditor.ViewSetup();
                     $('#graphic-preview').modal('show');
@@ -2131,6 +2202,24 @@ Number.prototype.format = function (n, x) {
         });
         $('#graphic-preview').on('shown.bs.modal', function () {
             $('#container').css('visibility', 'visible');
+        });
+        var currentColWidth = 0;
+        $('.column-width').click(function () {
+            currentColWidth = $(this).val();
+        });
+        $('.column-width').change(function () {
+            //alert($(this).val());
+            var totalWidth = 0;
+            $(this).parents('.layout-row-wrapper').find('.column-width').each(function () {
+                totalWidth += $(this).val() ? parseFloat($(this).val()) : 0;
+            });
+            if (totalWidth > 100) {
+                alert('Total column width max is 100');
+                $(this).val(currentColWidth);
+
+                return false;
+            }
+            $(this).parents('.layout-column').css('width', $(this).val() + '%');
         });
         
         addRow();

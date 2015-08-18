@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Threading;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
@@ -480,12 +481,25 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.AreaChart.Periodes = chartData.Periodes;
                     }
                     break;
+                case "multiaxis":
+                    {
+                        var chartData = _artifactServie.GetMultiaxisChartData(artifactResp.MapTo<GetMultiaxisChartDataRequest>());
+                       // var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.MultiaxisChart = chartData.MapTo<MultiaxisChartDataViewModel>();
+                        previewViewModel.MultiaxisChart.Title = artifactResp.HeaderTitle;
+                        //previewViewModel.MultiaxisChart.Subtitle = chartData.Subtitle;
+                        //previewViewModel.MultiaxisChart.Series = chartData.Series.MapTo<AreaChartDataViewModel.SeriesViewModel>();
+                        //previewViewModel.AreaChart.Periodes = chartData.Periodes;
+                    }
+                    break;
                 case "speedometer":
                     {
                         var chartData = _artifactServie.GetSpeedometerChartData(artifactResp.MapTo<GetSpeedometerChartDataRequest>());
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.SpeedometerChart = new SpeedometerChartDataViewModel();
                         previewViewModel.SpeedometerChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.SpeedometerChart.Subtitle = chartData.Subtitle;
                         previewViewModel.SpeedometerChart.ValueAxisTitle = artifactResp.Measurement;
                         previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
                         previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
@@ -497,6 +511,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.TrafficLightChart = new TrafficLightChartDataViewModel();
                         previewViewModel.TrafficLightChart.Title = artifactResp.HeaderTitle;
+                        previewViewModel.TrafficLightChart.Subtitle = chartData.Subtitle;
                         previewViewModel.TrafficLightChart.ValueAxisTitle = artifactResp.Measurement;
                         previewViewModel.TrafficLightChart.Series = chartData.Series.MapTo<TrafficLightChartDataViewModel.SeriesViewModel>();
                         previewViewModel.TrafficLightChart.PlotBands = chartData.PlotBands.MapTo<TrafficLightChartDataViewModel.PlotBandViewModel>();
@@ -520,6 +535,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.Tank = new TankDataViewModel();
                         chartData.MapPropertiesToInstance<TankDataViewModel>(previewViewModel.Tank);
                         previewViewModel.Tank.Title = artifactResp.HeaderTitle;
+                        previewViewModel.Tank.Subtitle = chartData.Subtitle;
                         //previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
                         //previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
                     }
@@ -583,6 +599,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.SpeedometerChart = new SpeedometerChartDataViewModel();
                         previewViewModel.SpeedometerChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.SpeedometerChart.Subtitle = chartData.Subtitle;
                         previewViewModel.SpeedometerChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
                         previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
                         previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
@@ -596,6 +613,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.TrafficLightChart = new TrafficLightChartDataViewModel();
                         previewViewModel.TrafficLightChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.TrafficLightChart.Subtitle = chartData.Subtitle;
                         previewViewModel.TrafficLightChart.ValueAxisTitle =
                             _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId })
                                                .Name;
@@ -625,6 +643,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.Tank = new TankDataViewModel();
                         chartData.MapPropertiesToInstance<TankDataViewModel>(previewViewModel.Tank);
                         previewViewModel.Tank.Title = viewModel.HeaderTitle;
+                        previewViewModel.Tank.Subtitle = chartData.Subtitle;
                     }
                     break;
                 case "multiaxis":
@@ -675,6 +694,13 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
                         viewModel.AreaChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
+                        _artifactServie.Create(request);
+                    }
+                    break;
+                case "multiaxis":
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        viewModel.MultiaxisChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
                     }
                     break;

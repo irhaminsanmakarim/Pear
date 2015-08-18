@@ -31,7 +31,8 @@ namespace DSLNG.PEAR.Web.App_Start
                   "~/Content/bootstrap-datetimepicker.css",
                   "~/Content/select2/dist/css/select2.css",
                   "~/Content/colpick/css/colpick.css",
-                "~/Content/style.css"));
+                "~/Content/style.css",
+            "~/Content/style-regawa.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js_login").Include(
                          "~/Scripts/moment.js",

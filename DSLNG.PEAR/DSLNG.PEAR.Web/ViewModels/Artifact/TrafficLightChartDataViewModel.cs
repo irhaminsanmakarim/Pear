@@ -10,6 +10,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             PlotBands = new List<PlotBandViewModel>();
         }
         public string Title { get; set; }
+        public string Subtitle { get; set; }
         public string ValueAxisTitle { get; set; }
         public SeriesViewModel Series { get; set; }
         public IList<PlotBandViewModel> PlotBands { get; set; }

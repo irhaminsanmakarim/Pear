@@ -12,6 +12,7 @@ namespace DSLNG.PEAR.Data.Entities
             Series = new List<ArtifactSerie>();
             Plots = new List<ArtifactPlot>();
             Rows = new List<ArtifactRow>();
+            Charts = new List<ArtifactChart>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

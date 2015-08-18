@@ -39,6 +39,7 @@ using DSLNG.PEAR.Services.Responses.Template;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using System.Linq;
 using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
+using DSLNG.PEAR.Services.Responses.Config;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -52,9 +53,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureKpiTarget();
             ConfigurePmsConfigDetails();
             ConfigureKpiAchievements();
-            
+
             Mapper.CreateMap<User, GetUsersResponse.User>();
-                //.ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
+            //.ForMember(x => x.RoleName, o => o.MapFrom(m => m.Role.Name));
             Mapper.CreateMap<CreateUserRequest, User>();
             Mapper.CreateMap<UpdateUserRequest, User>();
             Mapper.CreateMap<GetUserRequest, User>();
@@ -119,7 +120,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.RoleGroup, GetKpisResponse.RoleGroup>();
             Mapper.CreateMap<Data.Entities.Type, GetKpisResponse.Type>();
             Mapper.CreateMap<Data.Entities.Pillar, GetKpisResponse.Pillar>();
-           
+
             Mapper.CreateMap<DSLNG.PEAR.Data.Entities.KpiRelationModel, DSLNG.PEAR.Services.Responses.Kpi.KpiRelationModel>()
                 .ForMember(k => k.KpiId, o => o.MapFrom(k => k.Kpi.Id));
 
@@ -129,7 +130,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Conversion, GetConversionResponse>();
 
             Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupsResponse.RoleGroup>()
-                .ForMember(x => x.LevelName, o => o.MapFrom(k=>k.Level.Name));
+                .ForMember(x => x.LevelName, o => o.MapFrom(k => k.Level.Name));
             Mapper.CreateMap<Data.Entities.Level, Responses.RoleGroup.Level>();
             //Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupsResponse>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupResponse>();
@@ -150,7 +151,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse.Pillar>();
-            
+
             Mapper.CreateMap<CreatePillarRequest, Data.Entities.Pillar>();
             Mapper.CreateMap<UpdatePillarRequest, Data.Entities.Pillar>();
 
@@ -158,10 +159,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreateMethodRequest, Data.Entities.Method>();
             Mapper.CreateMap<Data.Entities.Method, GetMethodsResponse.Method>();
             Mapper.CreateMap<UpdateMethodRequest, Data.Entities.Method>();
-            
+
             Mapper.CreateMap<Data.Entities.Method, GetMethodsResponse.Method>();
             Mapper.CreateMap<Data.Entities.Group, GetGroupResponse>();
-            
+
             Mapper.CreateMap<Data.Entities.Method, Responses.Kpi.Method>();
             Mapper.CreateMap<Data.Entities.Method, GetMethodResponse>();
             Mapper.CreateMap<Data.Entities.Level, Data.Entities.Kpi>();
@@ -174,12 +175,15 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Series, o => o.Ignore())
                 .ForMember(x => x.Plots, o => o.Ignore())
                 .ForMember(x => x.Rows, o => o.Ignore())
-                .ForMember(x => x.Tank, o => o.Ignore());
+                .ForMember(x => x.Tank, o => o.Ignore())
+                .ForMember(x => x.Charts, o => o.Ignore());
             Mapper.CreateMap<CreateArtifactRequest.SeriesRequest, ArtifactSerie>()
                 .ForMember(x => x.Stacks, o => o.Ignore());
             Mapper.CreateMap<CreateArtifactRequest.PlotRequest, ArtifactPlot>();
             Mapper.CreateMap<CreateArtifactRequest.StackRequest, ArtifactStack>();
             Mapper.CreateMap<CreateArtifactRequest.RowRequest, ArtifactRow>();
+            Mapper.CreateMap<CreateArtifactRequest.ChartRequest, ArtifactChart>()
+                .ForMember(x => x.Series, o => o.Ignore());
 
             Mapper.CreateMap<UpdateArtifactRequest, Artifact>()
                .ForMember(x => x.Series, o => o.Ignore())
@@ -213,6 +217,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                .ForMember(x => x.VolumeInventory, o => o.MapFrom(s => s.VolumeInventory.Name))
                .ForMember(x => x.DaysToTankTopId, o => o.MapFrom(s => s.DaysToTankTop.Id))
                .ForMember(x => x.DaysToTankTop, o => o.MapFrom(s => s.DaysToTankTop.Name));
+            Mapper.CreateMap<ArtifactChart, GetArtifactResponse.ChartResponse>()
+                .ForMember(x => x.MeasurementId, o => o.MapFrom(s => s.Measurement.Id));
             Mapper.CreateMap<CreateConversionRequest, Data.Entities.Conversion>();
             Mapper.CreateMap<Data.Entities.Conversion, GetConversionsResponse.Conversion>()
                 .ForMember(f => f.FromName, o => o.MapFrom(k => k.From.Name))
@@ -241,14 +247,21 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<LayoutColumn, GetTemplateResponse.ColumnResponse>()
                 .ForMember(d => d.ArtifactId, o => o.MapFrom(s => s.Artifact.Id))
                 .ForMember(d => d.ArtifactName, o => o.MapFrom(s => s.Artifact.GraphicName));
-
             Mapper.CreateMap<GetMultiaxisChartDataRequest, GetCartesianChartDataRequest>();
             Mapper.CreateMap<GetMultiaxisChartDataRequest.ChartRequest, GetCartesianChartDataRequest>();
             Mapper.CreateMap<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest, GetCartesianChartDataRequest.SeriesRequest>();
             Mapper.CreateMap<GetMultiaxisChartDataRequest.ChartRequest.StackRequest, GetCartesianChartDataRequest.StackRequest>();
             Mapper.CreateMap<GetCartesianChartDataResponse, GetMultiaxisChartDataResponse.ChartResponse>();
             Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel>();
+            Mapper.CreateMap<GetArtifactResponse, GetMultiaxisChartDataRequest>();
+            Mapper.CreateMap<GetArtifactResponse.ChartResponse, GetMultiaxisChartDataRequest.ChartRequest>();
+            Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+            Mapper.CreateMap<GetArtifactResponse.StackResponse, GetMultiaxisChartDataRequest.ChartRequest.StackRequest>();
             
+            Mapper.CreateMap<Kpi, GetConfigurationResponse.Kpi>();
+            Mapper.CreateMap<KpiAchievement, GetConfigurationResponse.KpiAchievement>();
+            Mapper.CreateMap<KpiTarget, GetConfigurationResponse.KpiTarget>();
+            Mapper.CreateMap<Economic, GetConfigurationResponse.Economic>();
             base.Configure();
         }
 
@@ -282,10 +295,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof(ScoringType), z.ScoringType)));
 
             Mapper.CreateMap<CreatePmsSummaryRequest, PmsSummary>();
-            
+
             ConfigurePmsConfig();
         }
-        
+
         private void ConfigureKpi()
         {
             Mapper.CreateMap<Data.Entities.Group, GetKpisResponse.Group>();
@@ -338,7 +351,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
         private void ConfigurePmsConfigDetails()
         {
             Mapper.CreateMap<CreatePmsConfigDetailsRequest, PmsConfigDetails>()
-                  .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof (ScoringType), z.ScoringType)));
+                  .ForMember(x => x.ScoringType, y => y.MapFrom(z => Enum.Parse(typeof(ScoringType), z.ScoringType)));
 
             Mapper.CreateMap<PmsConfigDetails, GetPmsConfigDetailsResponse>()
                   .ForMember(x => x.KpiId, y => y.MapFrom(z => z.Kpi.Id))

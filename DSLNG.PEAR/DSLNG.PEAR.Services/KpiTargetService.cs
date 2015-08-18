@@ -105,9 +105,7 @@ namespace DSLNG.PEAR.Services
 
                 foreach (var item in pillarsAndKpis)
                 {
-                    var pillar = new GetKpiTargetResponse.Pillar();
-                    pillar.Id = item.Key.Id;
-                    pillar.Name = item.Key.Name;
+                    var pillar = new GetKpiTargetResponse.Pillar() { Id = item.Key.Id, Name = item.Key.Name };
 
                     foreach (var val in item.Value)
                     {
@@ -299,10 +297,15 @@ namespace DSLNG.PEAR.Services
 
                 var kpis = DataContext.Kpis
                                       .Include(x => x.RoleGroup)
-                                      .Include(x => x.Measurement)
-                                      .Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
-
-
+                                      .Include(x => x.Measurement).ToList();
+                if(request.RoleGroupId>0){
+                    kpis = kpis.Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
+                    var roleGroup = DataContext.RoleGroups.Single(x => x.Id == request.RoleGroupId);
+                    response.RoleGroupName = roleGroup.Name;
+                    response.RoleGroupId = roleGroup.Id;
+                    response.IsSuccess = true;
+                }
+                                      
 
                 switch (periodeType)
                 {
@@ -394,10 +397,7 @@ namespace DSLNG.PEAR.Services
                         break;
                 }
 
-                var roleGroup = DataContext.RoleGroups.Single(x => x.Id == request.RoleGroupId);
-                response.RoleGroupName = roleGroup.Name;
-                response.RoleGroupId = roleGroup.Id;
-                response.IsSuccess = true;
+                
             }
             catch (InvalidOperationException invalidOperationException)
             {
@@ -453,6 +453,66 @@ namespace DSLNG.PEAR.Services
                 response.Message = invalidOperationException.Message;
             }
 
+            return response;
+        }
+
+
+        public GetKpiTargetResponse GetKpiTargetByValue(GetKpiTargetRequestByValue request)
+        {
+            var response = new GetKpiTargetResponse();
+            PeriodeType periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), request.PeriodeType);
+            response.PeriodeType = periodeType;
+            try
+            {
+                var kpiTarget = DataContext.KpiTargets.Include(x => x.Kpi).Single(x => x.Kpi.Id == request.Kpi_Id && x.PeriodeType == periodeType && x.Periode == request.periode);
+                response = kpiTarget.MapTo<GetKpiTargetResponse>();
+                response.IsSuccess = true;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.IsSuccess = false;
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.IsSuccess = false;
+                response.Message = argumentNullException.Message;
+            }
+            return response;
+        }
+
+        public UpdateKpiTargetItemResponse SaveKpiTargetItem(SaveKpiTargetRequest request)
+        {
+            var response = new UpdateKpiTargetItemResponse();
+            try
+            {
+                var kpiTarget = request.MapTo<KpiTarget>();
+                
+                if (request.Id != 0)
+                {
+                    var attachedEntity = DataContext.KpiTargets.Find(request.Id);
+                    if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
+                    {
+                        DataContext.Entry(attachedEntity).State = EntityState.Detached;
+                    }
+                    DataContext.KpiTargets.Attach(kpiTarget);
+                    DataContext.Entry(kpiTarget).State = EntityState.Modified;
+                    DataContext.SaveChanges();
+                }
+                else
+                {
+                    kpiTarget.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
+                    DataContext.KpiTargets.Add(kpiTarget);
+                    DataContext.SaveChanges();
+                }
+                response.Id = kpiTarget.Id;
+                response.IsSuccess = true;
+                response.Message = "KPI Target item has been updated successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
             return response;
         }
     }

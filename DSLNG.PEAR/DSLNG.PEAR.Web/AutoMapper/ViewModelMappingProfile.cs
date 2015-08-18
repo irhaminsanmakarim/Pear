@@ -64,6 +64,8 @@ using DSLNG.PEAR.Web.ViewModels.Template;
 using DSLNG.PEAR.Services.Requests.Template;
 using Kpi = DSLNG.PEAR.Web.ViewModels.KpiTarget.Kpi;
 using DSLNG.PEAR.Services.Responses.Template;
+using DSLNG.PEAR.Services.Responses.Config;
+using DSLNG.PEAR.Web.ViewModels.Config;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -260,7 +262,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetMultiaxisChartDataResponse, MultiaxisChartDataViewModel>();
             Mapper.CreateMap<GetMultiaxisChartDataResponse.ChartResponse, MultiaxisChartDataViewModel.ChartViewModel>();
             Mapper.CreateMap<GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel, MultiaxisChartDataViewModel.ChartViewModel.SeriesViewModel>();
-                //.ForMember(x => x.Series, o =>
+            Mapper.CreateMap<MultiaxisChartViewModel, CreateArtifactRequest>();
+            Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, CreateArtifactRequest.ChartRequest>()
+                .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesCreateResolver>());
+            //.ForMember(x => x.Series, o =>
                 //{
                 //    o.Condition(rc =>
                 //    {
@@ -495,6 +500,14 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiTargetsConfigurationResponse, ConfigurationKpiTargetsViewModel>();
             Mapper.CreateMap<GetKpiTargetsConfigurationResponse.Kpi, ConfigurationKpiTargetsViewModel.Kpi>();
             Mapper.CreateMap<GetKpiTargetsConfigurationResponse.KpiTarget, ConfigurationKpiTargetsViewModel.KpiTarget>();
+            Mapper.CreateMap<GetKpiTargetsConfigurationResponse, ConfigurationViewModel>();
+            Mapper.CreateMap<GetKpiTargetsConfigurationResponse.Kpi, ConfigurationViewModel.Kpi>();
+            Mapper.CreateMap<GetKpiTargetsConfigurationResponse.KpiTarget, ConfigurationViewModel.KpiTarget>();
+            Mapper.CreateMap<ConfigurationViewModel.KpiTarget, ConfigurationViewModel.Item>();
+            Mapper.CreateMap<ConfigurationViewModel.KpiAchievement, ConfigurationViewModel.Item>();
+            Mapper.CreateMap<ConfigurationViewModel.Economic, ConfigurationViewModel.Item>();
+
+            Mapper.CreateMap<UpdateKpiTargetViewModel.KpiTargetItem, ConfigurationViewModel.Item>();
 
             Mapper.CreateMap<KpiTargetItem, CreateKpiTargetRequest>();
             Mapper.CreateMap<KpiTargetItem, UpdateKpiTargetItemRequest>()
@@ -521,6 +534,18 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetKpiAchievementsConfigurationResponse.Kpi, ConfigurationKpiAchievementsViewModel.Kpi>();
             Mapper.CreateMap<GetKpiAchievementsConfigurationResponse.KpiAchievement, ConfigurationKpiAchievementsViewModel.KpiAchievement>();
 
+            Mapper.CreateMap<GetKpiAchievementsConfigurationResponse, ConfigurationViewModel>();
+            Mapper.CreateMap<GetKpiAchievementsConfigurationResponse.Kpi, ConfigurationViewModel.Kpi>();
+            Mapper.CreateMap<GetKpiAchievementsConfigurationResponse.KpiAchievement, ConfigurationViewModel.KpiAchievement>();
+
+            Mapper.CreateMap<GetConfigurationResponse, ConfigurationViewModel>();
+            Mapper.CreateMap<GetConfigurationResponse.Kpi, ConfigurationViewModel.Kpi>();
+            Mapper.CreateMap<GetConfigurationResponse.KpiAchievement, ConfigurationViewModel.KpiAchievement>();
+            Mapper.CreateMap<GetConfigurationResponse.KpiTarget, ConfigurationViewModel.KpiTarget>();
+            Mapper.CreateMap<GetConfigurationResponse.Economic, ConfigurationViewModel.Economic>();
+
+            Mapper.CreateMap<UpdateKpiAchievementsViewModel.KpiAchievementItem, ConfigurationViewModel.Item>();
+
             Mapper.CreateMap<UpdateKpiAchievementsViewModel.KpiAchievementItem, UpdateKpiAchievementItemRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(x => (DSLNG.PEAR.Data.Enums.PeriodeType)x.PeriodeType));
 
@@ -538,6 +563,22 @@ namespace DSLNG.PEAR.Web.AutoMapper
                     return source.AreaChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
                 default:
                     return source.BarChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+
+            }
+        }
+    }
+    public class MultiaxisSeriesCreateResolver : ValueResolver<MultiaxisChartViewModel.ChartViewModel, IList<CreateArtifactRequest.SeriesRequest>>
+    {
+        protected override IList<CreateArtifactRequest.SeriesRequest> ResolveCore(MultiaxisChartViewModel.ChartViewModel source)
+        {
+            switch (source.GraphicType)
+            {
+                case "line":
+                    return source.LineChart.Series.MapTo<CreateArtifactRequest.SeriesRequest>();
+                case "area":
+                    return source.AreaChart.Series.MapTo<CreateArtifactRequest.SeriesRequest>();
+                default:
+                    return source.BarChart.Series.MapTo<CreateArtifactRequest.SeriesRequest>();
 
             }
         }

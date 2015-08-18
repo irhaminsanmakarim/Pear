@@ -8,6 +8,10 @@ namespace DSLNG.PEAR.Data.Entities
 {
     public class ArtifactChart
     {
+        public ArtifactChart() {
+            Series = new List<ArtifactSerie>();
+            Plots = new List<ArtifactPlot>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -16,5 +20,8 @@ namespace DSLNG.PEAR.Data.Entities
         public ICollection<ArtifactPlot> Plots { get; set; }
         public ValueAxis ValueAxis { get; set; }
         public Measurement Measurement { get; set; }
+        public string ValueAxisTitle { get; set; }
+        public string ValueAxisColor { get; set; }
+        public bool IsOpposite { get; set; }
     }
 }
