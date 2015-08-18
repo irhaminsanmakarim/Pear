@@ -90,6 +90,7 @@
     <Compile Include="Requests\Artifact\GetTankDataRequest.cs" />
     <Compile Include="Requests\Artifact\GetTrafficLightChartDataRequest.cs" />
     <Compile Include="Requests\Artifact\UpdateArtifactRequest.cs" />
+    <Compile Include="Requests\Config\GetConfigurationRequest.cs" />
     <Compile Include="Requests\Conversion\CreateConversionRequest.cs" />
     <Compile Include="Requests\Conversion\UpdateConversionRequest.cs" />
     <Compile Include="Requests\Group\CreateGroupRequest.cs" />
@@ -101,10 +102,12 @@
     <Compile Include="Requests\KpiAchievement\UpdateKpiAchievementsRequest.cs" />
     <Compile Include="Requests\KpiTarget\CreateKpiTargetRequest.cs" />
     <Compile Include="Requests\KpiTarget\CreateKpiTargetsRequest.cs" />
+    <Compile Include="Requests\KpiTarget\GetKpiTargetRequestByValue.cs" />
     <Compile Include="Requests\KpiTarget\GetKpiTargetsConfigurationRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetKpiTargetsRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetPmsConfigsRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetKpiTargetRequest.cs" />
+    <Compile Include="Requests\KpiTarget\SaveKpiTargetRequest.cs" />
     <Compile Include="Requests\KpiTarget\UpdateKpiTargetItemRequest.cs" />
     <Compile Include="Requests\KpiTarget\UpdateKpiTargetRequest.cs" />
     <Compile Include="Requests\Kpi\KpiRequest\Periode.cs" />
@@ -134,6 +137,7 @@
     <Compile Include="Responses\Artifact\GetTankDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetTrafficLightChartDataResponse.cs" />
     <Compile Include="Responses\Artifact\UpdateArtifactResponse.cs" />
+    <Compile Include="Responses\Config\GetConfigurationResponse.cs" />
     <Compile Include="Responses\Conversion\CreateConversionResponse.cs" />
     <Compile Include="Responses\Conversion\DeleteConversionResponse.cs" />
     <Compile Include="Responses\Conversion\Measurement.cs" />

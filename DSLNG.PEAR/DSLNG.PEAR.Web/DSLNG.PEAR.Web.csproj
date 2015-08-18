@@ -263,6 +263,8 @@
     <Content Include="Content\datepicker\js\bootstrap-datepicker.js" />
     <Content Include="Content\font-awesome\css\font-awesome.css" />
     <Content Include="Content\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\active.png" />
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\ajax-loader1.gif" />
@@ -359,6 +361,14 @@
     <Content Include="Content\colpick\colpick.jquery.json" />
     <Content Include="Content\colpick\LICENSE" />
     <Content Include="Content\colpick\README.md" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.0.js" />
     <Content Include="Scripts\jquery-1.9.0.min.js" />
@@ -582,6 +592,9 @@
     <Content Include="Views\Tank\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Edit.cshtml" />
     <Content Include="Views\KpiAchievement\UploadControlPartial.cshtml" />
+    <Content Include="Views\Shared\UploadControlPartial.cshtml" />
+    <Content Include="Views\Shared\_Download.cshtml" />
+    <Content Include="Views\Shared\_Upload.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -636,6 +649,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ConversionController.cs" />
     <Compile Include="Controllers\CorporatePortofolioController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -665,6 +679,7 @@
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
     <Compile Include="DevExpressDataProvider\ArtifactDesignerDataProvider.cs" />
+    <Compile Include="Extensions\ExcelUploadHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -685,6 +700,7 @@
     <Compile Include="ViewModels\Artifact\TankViewModel.cs" />
     <Compile Include="ViewModels\Artifact\TrafficLightChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\TrafficLightChartViewModel.cs" />
+    <Compile Include="ViewModels\Config\ConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Conversion\CreateConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\IndexConversionViewModel.cs" />
     <Compile Include="ViewModels\Conversion\Measurement.cs" />

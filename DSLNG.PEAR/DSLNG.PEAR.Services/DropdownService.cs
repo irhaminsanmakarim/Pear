@@ -220,5 +220,12 @@ namespace DSLNG.PEAR.Services
                     Value = x.Id.ToString()
                 }).ToList();
         }
+
+
+        public IEnumerable<Dropdown> GetConfigTypes()
+        {
+            var config = Enum.GetValues(typeof(DSLNG.PEAR.Data.Enums.ConfigType)).Cast<DSLNG.PEAR.Data.Enums.ConfigType>();
+            return config.Select(x => new Dropdown { Text = x.ToString(), Value = x.ToString() }).ToList();
+        }
     }
 }

@@ -39,6 +39,7 @@ using DSLNG.PEAR.Services.Responses.Template;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using System.Linq;
 using PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType;
+using DSLNG.PEAR.Services.Responses.Config;
 
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -242,6 +243,10 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(d => d.ArtifactId, o => o.MapFrom(s => s.Artifact.Id))
                 .ForMember(d => d.ArtifactName, o => o.MapFrom(s => s.Artifact.GraphicName));
 
+            Mapper.CreateMap<Kpi, GetConfigurationResponse.Kpi>();
+            Mapper.CreateMap<KpiAchievement, GetConfigurationResponse.KpiAchievement>();
+            Mapper.CreateMap<KpiTarget, GetConfigurationResponse.KpiTarget>();
+            Mapper.CreateMap<Economic, GetConfigurationResponse.Economic>();
 
             base.Configure();
         }

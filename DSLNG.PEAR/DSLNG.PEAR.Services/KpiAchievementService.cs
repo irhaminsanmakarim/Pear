@@ -9,7 +9,6 @@ using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
-using DSLNG.PEAR.Common.Extensions;
 
 namespace DSLNG.PEAR.Services
 {
@@ -237,8 +236,19 @@ namespace DSLNG.PEAR.Services
 
                 var kpis = DataContext.Kpis
                                       .Include(x => x.RoleGroup)
-                                      .Include(x => x.Measurement)
-                                      .Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
+                                      .Include(x => x.Measurement).ToList();
+
+                if (request.RoleGroupId > 0) {
+                    kpis = kpis.Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
+                    var roleGroup = DataContext.RoleGroups.Single(x => x.Id == request.RoleGroupId);
+                    response.RoleGroupName = roleGroup.Name;
+                    response.RoleGroupId = roleGroup.Id;
+                    response.IsSuccess = true;
+                }
+                //var kpis = DataContext.Kpis
+                //                      .Include(x => x.RoleGroup)
+                //                      .Include(x => x.Measurement)
+                //                      .Where(x => x.RoleGroup.Id == request.RoleGroupId).ToList();
 
                 
 
@@ -332,10 +342,7 @@ namespace DSLNG.PEAR.Services
                         break;
                 }
 
-                var roleGroup = DataContext.RoleGroups.Single(x => x.Id == request.RoleGroupId);
-                response.RoleGroupName = roleGroup.Name;
-                response.RoleGroupId = roleGroup.Id;
-                response.IsSuccess = true;
+                
             }
             catch (InvalidOperationException invalidOperationException)
             {

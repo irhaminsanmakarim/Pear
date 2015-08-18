@@ -10,8 +10,11 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetPmsConfigsResponse GetPmsConfigs(GetPmsConfigsRequest request);
         GetKpiTargetsResponse GetKpiTargets(GetKpiTargetsRequest request);
         GetKpiTargetResponse GetKpiTarget(GetKpiTargetRequest request);
+        GetKpiTargetResponse GetKpiTargetByValue(GetKpiTargetRequestByValue request);
         UpdateKpiTargetResponse UpdateKpiTarget(UpdateKpiTargetRequest request);
         UpdateKpiTargetItemResponse UpdateKpiTargetItem(UpdateKpiTargetItemRequest request);
+
+        UpdateKpiTargetItemResponse SaveKpiTargetItem(SaveKpiTargetRequest request);
         GetKpiTargetsConfigurationResponse GetKpiTargetsConfiguration(GetKpiTargetsConfigurationRequest request);
         AllKpiTargetsResponse GetAllKpiTargets();
     }
