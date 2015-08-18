@@ -10,17 +10,7 @@
             var formData = {
                 'filename': encodeURIComponent(link)
             };
-            @*$.ajax({
-                type: "POST",
-                url: '@Url.Action("ProceedFile", "KpiAchievement")',
-                data: formData,
-                before: function (data) {
-                    $('.notification').empty();
-                    var alertType = data.isSuccess === true ? 'alert-success' : 'alert-danger';
-                    var message = '<div class="alert ' + alertType + '" role="alert">' + data.Message + '</div>';
-                    $('.notification').append(message).fadeIn().delay(1000).fadeOut();
-                },
-            });*@
+            
             $.ajax({
                 url: '@Url.Action("ProceedFile", "KpiAchievement")',
                 type: 'POST',

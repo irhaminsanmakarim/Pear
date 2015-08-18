@@ -75,6 +75,7 @@
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Conversion.cs" />
     <Compile Include="Entities\DashboardTemplate.cs" />
+    <Compile Include="Entities\Economic.cs" />
     <Compile Include="Entities\FormatInput.cs" />
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Entities\Kpi.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Entities\Menu.cs" />
     <Compile Include="Entities\Method.cs" />
     <Compile Include="Entities\Periode.cs" />
+    <Compile Include="Enums\ConfigType.cs" />
     <Compile Include="Enums\MonthPeriode.cs" />
     <Compile Include="Entities\PmsSummaryScoringIndicator.cs" />
     <Compile Include="Enums\PeriodeType.cs" />
