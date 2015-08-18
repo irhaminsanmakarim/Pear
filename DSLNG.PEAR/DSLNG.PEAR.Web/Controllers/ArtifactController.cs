@@ -1,4 +1,5 @@
-﻿using DSLNG.PEAR.Data.Enums;
+﻿using System.Globalization;
+using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.Measurement;
 using DSLNG.PEAR.Web.ViewModels.Artifact;
@@ -221,6 +222,9 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                     break;
             }
+
+            viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, artifact.Start);
+            viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, artifact.End);
             return View(viewModel);
         }
 
@@ -623,6 +627,18 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.Tank.Title = viewModel.HeaderTitle;
                     }
                     break;
+                case "multiaxis":
+                    {
+                        var request = viewModel.MapTo<GetMultiaxisChartDataRequest>();
+                        viewModel.MultiaxisChart.MapPropertiesToInstance<GetMultiaxisChartDataRequest>(request);
+                        var chartData = _artifactServie.GetMultiaxisChartData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.MultiaxisChart = new MultiaxisChartDataViewModel();
+                        chartData.MapPropertiesToInstance<MultiaxisChartDataViewModel>(previewViewModel.MultiaxisChart);
+                        previewViewModel.MultiaxisChart.Title = viewModel.HeaderTitle;
+                     
+                    }
+                    break;
                 default:
                     {
                         var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
@@ -760,6 +776,25 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
             }
             return RedirectToAction("Index");
+        }
+
+        private string ParseDateToString(PeriodeType periodeType, DateTime? date)
+        {
+            switch (periodeType)
+            {
+                case PeriodeType.Yearly:
+                    return date.HasValue ? date.Value.ToString("yyyy", CultureInfo.InvariantCulture) : string.Empty;
+                case PeriodeType.Monthly:
+                    return date.HasValue ? date.Value.ToString("MM/yyyy", CultureInfo.InvariantCulture) : string.Empty;
+                case PeriodeType.Weekly:
+                    return date.HasValue ? date.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : string.Empty;
+                case PeriodeType.Daily:
+                    return date.HasValue ? date.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : string.Empty;
+                case PeriodeType.Hourly:
+                    return date.HasValue ? date.Value.ToString("MM/dd/yyyy  h:mm", CultureInfo.InvariantCulture) : string.Empty;
+                default:
+                    return string.Empty;
+            }
         }
     }
 }

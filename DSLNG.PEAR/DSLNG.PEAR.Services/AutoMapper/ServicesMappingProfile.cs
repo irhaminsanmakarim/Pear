@@ -242,7 +242,13 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(d => d.ArtifactId, o => o.MapFrom(s => s.Artifact.Id))
                 .ForMember(d => d.ArtifactName, o => o.MapFrom(s => s.Artifact.GraphicName));
 
-
+            Mapper.CreateMap<GetMultiaxisChartDataRequest, GetCartesianChartDataRequest>();
+            Mapper.CreateMap<GetMultiaxisChartDataRequest.ChartRequest, GetCartesianChartDataRequest>();
+            Mapper.CreateMap<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest, GetCartesianChartDataRequest.SeriesRequest>();
+            Mapper.CreateMap<GetMultiaxisChartDataRequest.ChartRequest.StackRequest, GetCartesianChartDataRequest.StackRequest>();
+            Mapper.CreateMap<GetCartesianChartDataResponse, GetMultiaxisChartDataResponse.ChartResponse>();
+            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel>();
+            
             base.Configure();
         }
 

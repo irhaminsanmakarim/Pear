@@ -1,4 +1,5 @@
-﻿@using DevExpress.Data
+﻿@using DSLNG.PEAR.Common.Contants
+@using DevExpress.Data
 @using DevExpress.XtraGrid
 @model DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryIndexViewModel
 
@@ -19,8 +20,10 @@
             pillarColumn.SortOrder = ColumnSortOrder.Ascending;
             settings.Columns.Add(pillarColumn);
             settings.Columns.Add("KpiNameWithColor", "Performance Indicator").PropertiesEdit.EncodeHtml = false;
+        
             //settings.Columns.Add("Unit");
             settings.Columns.Add("Weight").CellStyle.HorizontalAlign = HorizontalAlign.Center;
+            settings.Columns.Add("ScoreIndicators").Visible = false;
             settings.Columns.Add("PillarWeight").Visible = false;
             var kpiOrderColumn = new MVCxGridViewColumn("KpiOrder");
             kpiOrderColumn.SortAscending();
@@ -30,7 +33,13 @@
             settings.HtmlDataCellPrepared = (sender, e) =>
                 {
                     e.Cell.Attributes.Add("onclick", string.Format(
-                        "OnCellClick('{0}', '{1}');", e.VisibleIndex, e.GetValue("Id")));                    
+                        "OnCellClick('{0}', '{1}');", e.VisibleIndex, e.GetValue("Id")));
+                    /*if (e.DataColumn.FieldName == "KpiNameWithColor")
+                    {
+                        if (e.CellValue != null)
+                            e.Cell.ToolTip = e.GetValue("ScoreIndicators").ToString();
+                    }*/
+                        
                 };
 
             settings.Columns.AddBand(targetActualBand =>
@@ -54,7 +63,7 @@
             settings.Columns.Add(column =>
                 {
                     column.FieldName = "Score";
-                    column.PropertiesEdit.DisplayFormatString = "0.##";
+                    column.PropertiesEdit.DisplayFormatString = FormatNumber.DecimalFormat;
                     column.Visible = false;
                 });
 
@@ -62,7 +71,7 @@
             {
                 column.FieldName = "ScoreStr";
                 column.Caption = "Score";
-                column.PropertiesEdit.DisplayFormatString = "0.##";
+                column.PropertiesEdit.DisplayFormatString = FormatNumber.DecimalFormat;
             });
 
             decimal totalScore = 0;
@@ -113,14 +122,14 @@
             kpiScore.ShowInGroupFooterColumn = "KpiNameWithColor";
             kpiScore.SummaryType = SummaryItemType.Sum;
             kpiScore.FieldName = "Score";
-            kpiScore.DisplayFormat = "Score KPI in this pillar (0.##)";
+            kpiScore.DisplayFormat = "Score KPI in this pillar (" + FormatNumber.DecimalFormat+ ")";
             settings.GroupSummary.Add(kpiScore);
 
             ASPxSummaryItem percentageScore = new ASPxSummaryItem();
             percentageScore.ShowInGroupFooterColumn = "Score";
             percentageScore.Tag = "Score_1";
             percentageScore.FieldName = "Score";
-            percentageScore.DisplayFormat = "0.##";
+            percentageScore.DisplayFormat = FormatNumber.DecimalFormat;
             percentageScore.SummaryType = SummaryItemType.Custom;
             settings.GroupSummary.Add(percentageScore);
 
@@ -166,5 +175,6 @@
                         gridView.ExpandAll();
                 };
         }).Bind(Model.PmsSummaries).GetHtml()
+
 
 

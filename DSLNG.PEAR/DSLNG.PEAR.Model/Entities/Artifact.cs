@@ -27,6 +27,7 @@ namespace DSLNG.PEAR.Data.Entities
         public ICollection<ArtifactSerie> Series { get; set; }
         public ICollection<ArtifactPlot> Plots { get; set; }
         public ICollection<ArtifactRow> Rows { get; set; }
+        public ICollection<ArtifactChart> Charts { get; set; }
         public ArtifactTank Tank { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }

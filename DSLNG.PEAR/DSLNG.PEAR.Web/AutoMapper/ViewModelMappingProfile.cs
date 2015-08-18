@@ -159,7 +159,17 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<ArtifactDesignerViewModel, GetCartesianChartDataRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
                 .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
-                .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)));
+                .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)))
+                .ForMember(x => x.Start, y => y.MapFrom(z => z.StartAfterParsed))
+                .ForMember(x => x.End, y => y.MapFrom(z => z.EndAfterParsed));
+
+            //cartesian preview
+            Mapper.CreateMap<ArtifactDesignerViewModel, GetMultiaxisChartDataRequest>()
+                .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
+                .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
+                //.ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)))
+                .ForMember(x => x.Start, y => y.MapFrom(z => z.StartAfterParsed))
+                .ForMember(x => x.End, y => y.MapFrom(z => z.EndAfterParsed));
 
             //bar chart mapping
             Mapper.CreateMap<BarChartViewModel, GetCartesianChartDataRequest>();
@@ -198,7 +208,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, UpdateArtifactRequest.SeriesRequest>();
 
             //speedometer chart mapping
-            Mapper.CreateMap<ArtifactDesignerViewModel, GetSpeedometerChartDataRequest>();
+            Mapper.CreateMap<ArtifactDesignerViewModel, GetSpeedometerChartDataRequest>()
+                .ForMember(x => x.Start, y => y.MapFrom(z => z.StartAfterParsed))
+                .ForMember(x => x.End, y => y.MapFrom(z => z.EndAfterParsed));
             Mapper.CreateMap<SpeedometerChartViewModel, GetSpeedometerChartDataRequest>();
             Mapper.CreateMap<SpeedometerChartViewModel.SeriesViewModel, GetSpeedometerChartDataRequest.SeriesRequest>();
             Mapper.CreateMap<SpeedometerChartViewModel.PlotBand, GetSpeedometerChartDataRequest.PlotBandRequest>();
@@ -231,16 +243,58 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             //tank mapping
             Mapper.CreateMap<TankViewModel, CreateArtifactRequest.TankRequest>();
-            Mapper.CreateMap<ArtifactDesignerViewModel, GetTankDataRequest>();
+            Mapper.CreateMap<ArtifactDesignerViewModel, GetTankDataRequest>()
+                .ForMember(x => x.Start, y => y.MapFrom(z => z.StartAfterParsed))
+                .ForMember(x => x.End, y => y.MapFrom(z => z.EndAfterParsed)); ;
             Mapper.CreateMap<TankViewModel, GetTankDataRequest.TankRequest>();
             Mapper.CreateMap<GetTankDataResponse, TankDataViewModel>();
             Mapper.CreateMap<TankViewModel, UpdateArtifactRequest>();
             Mapper.CreateMap<TankViewModel, UpdateArtifactRequest.TankRequest>();
             Mapper.CreateMap<TabularViewModel, UpdateArtifactRequest>();
             Mapper.CreateMap<TabularViewModel.RowViewModel, UpdateArtifactRequest.RowRequest>();
-            
-            
-       
+
+            //multiaxis mapping
+            Mapper.CreateMap<MultiaxisChartViewModel, GetMultiaxisChartDataRequest>();
+            Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, GetMultiaxisChartDataRequest.ChartRequest>()
+                .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesValueResolver>());
+            Mapper.CreateMap<GetMultiaxisChartDataResponse, MultiaxisChartDataViewModel>();
+            Mapper.CreateMap<GetMultiaxisChartDataResponse.ChartResponse, MultiaxisChartDataViewModel.ChartViewModel>();
+            Mapper.CreateMap<GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel, MultiaxisChartDataViewModel.ChartViewModel.SeriesViewModel>();
+                //.ForMember(x => x.Series, o =>
+                //{
+                //    o.Condition(rc =>
+                //    {
+                //        var chartViewModel = (MultiaxisChartViewModel.ChartViewModel)rc.DestinationValue;
+                //        return chartViewModel.GraphicType == "line";
+                //    });
+                //    o.MapFrom(s => s.LineChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>());
+                //})
+                // .ForMember(x => x.Series, o =>
+                //{
+                //    o.Condition(rc =>
+                //    {
+                //        var chartViewModel = (MultiaxisChartViewModel.ChartViewModel)rc.DestinationValue;
+                //        return chartViewModel.GraphicType == "area";
+                //    });
+                //    o.MapFrom(s => s.AreaChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>());
+                //})
+                // .ForMember(x => x.Series, o =>
+                //{
+                //    o.Condition(rc =>
+                //    {
+                //        var chartViewModel = (MultiaxisChartViewModel.ChartViewModel)rc.DestinationValue;
+                //        return chartViewModel.GraphicType != "line" && chartViewModel.GraphicType != "area";
+                //    });
+                //    o.MapFrom(s => s.BarChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>());
+                //});
+
+            Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+            Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+            Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+            Mapper.CreateMap<BarChartViewModel.StackViewModel, GetMultiaxisChartDataRequest.ChartRequest.StackRequest>();
+
+           
+
             //Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetSeriesRequest.Series>()
             //    .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<GetSeriesRequest.Stack>()));
             //Mapper.CreateMap<BarChartViewModel.StackViewModel, GetSeriesRequest.Stack>();
@@ -264,12 +318,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<ArtifactDesignerViewModel, CreateArtifactRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
                 .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
-                .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)));
+                .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)))
+                .ForMember(x => x.Start, y => y.MapFrom(z => z.StartAfterParsed))
+                .ForMember(x => x.End, y => y.MapFrom(z => z.EndAfterParsed));
 
             Mapper.CreateMap<ArtifactDesignerViewModel, UpdateArtifactRequest>()
               .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
               .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
-              .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)));
+              .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)))
+              .ForMember(x => x.Start, y => y.MapFrom(z => z.StartAfterParsed))
+            .ForMember(x => x.End, y => y.MapFrom(z => z.EndAfterParsed));
 
             Mapper.CreateMap<GetArtifactResponse, GetCartesianChartDataRequest>()
                 .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<GetCartesianChartDataRequest.SeriesRequest>()));
@@ -314,7 +372,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
         private void ConfigureTrafficLight()
         {
-            Mapper.CreateMap<ArtifactDesignerViewModel, GetTrafficLightChartDataRequest>();
+            Mapper.CreateMap<ArtifactDesignerViewModel, GetTrafficLightChartDataRequest>()
+                .ForMember(x => x.Start, y => y.MapFrom(z => z.StartAfterParsed))
+                .ForMember(x => x.End, y => y.MapFrom(z => z.EndAfterParsed));
 
             Mapper.CreateMap<TrafficLightChartViewModel, GetTrafficLightChartDataRequest>();
             Mapper.CreateMap<TrafficLightChartViewModel.SeriesViewModel, GetTrafficLightChartDataRequest.SeriesRequest>();
@@ -464,6 +524,22 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<UpdateKpiAchievementsViewModel.KpiAchievementItem, UpdateKpiAchievementItemRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(x => (DSLNG.PEAR.Data.Enums.PeriodeType)x.PeriodeType));
 
+        }
+    }
+
+    public class MultiaxisSeriesValueResolver : ValueResolver<MultiaxisChartViewModel.ChartViewModel, IList<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>>
+    {
+        protected override IList<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest> ResolveCore(MultiaxisChartViewModel.ChartViewModel source)
+        {
+            switch (source.GraphicType) { 
+                case "line":
+                    return source.LineChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+                case "area":
+                    return source.AreaChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+                default:
+                    return source.BarChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
+
+            }
         }
     }
 }

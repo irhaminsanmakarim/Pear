@@ -128,7 +128,7 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
 
             public string TotalScoreColor { get; set; }
 
-            
+            public string ScoreIndicators { get; set; }
 
             //public string Color { get; set; }
 

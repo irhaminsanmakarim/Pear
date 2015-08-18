@@ -116,10 +116,10 @@ aside.left-content > * {
     position: relative;
 }
 
-    .sub-nav > li > a span {
+.sub-nav > li > a span {
         position: absolute;
         top: 2px;
-        right: -13px;
+        right: -23px;
     }
 
 .sub-nav ul {
@@ -127,6 +127,17 @@ aside.left-content > * {
     padding-left: 10px;
     display: none;
     overflow: hidden;
+}
+
+.sub-nav li.active ul {
+    display: block;
+}
+
+.sub-nav ul li.active {
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: underline;
+    background: #9bd4f4;
 }
 
 .sub-nav > li {
@@ -727,7 +738,7 @@ hr {
 }
 
 .labletop {
-    width: auto!important;
+    width: auto !important;
 }
 
 .blue-box {
@@ -1047,8 +1058,8 @@ table.tabular {
         font-size: 18px;
         fill: #333333;
         width: 736px;
-        float:none;
-        width:100%;
+        float: none;
+        width: 100%;
     }
 
 /*Tambahan dari inez*/
@@ -1069,7 +1080,7 @@ table.tabular {
 }
 
 a:hover.btn_small_darkblue {
-    color: white!important;
+    color: white !important;
     background-color: #00aeef;
 }
 
@@ -1083,7 +1094,7 @@ a:hover.btn_small_darkblue {
 }
 
 td .btn_small_lightblue a:hover {
-    color: white!important;
+    color: white !important;
 }
 
 .btn_small_lightblue {
@@ -1101,81 +1112,105 @@ td .btn_small_lightblue a:hover {
 
 .main-nav > li > a:hover, .main-nav > li.active, .main-nav:hover > li.active:hover > a, .main-nav:hover > li.active:hover {
     color: #004071;
-    background: #00aeef!important;
+    background: #00aeef !important;
     width: 60px;
     background-image: url("img/active.png");
     background-position: right;
     background-repeat: no-repeat;
     text-decoration: none;
 }
+
 .tank-chart {
-    border:1px solid #ccc;
-    position:relative;
+    border: 1px solid #ccc;
+    position: relative;
 }
+
 .tank-volume {
-    position:absolute;
-    bottom:0;
+    position: absolute;
+    bottom: 0;
 }
+
 .tank-to-top {
-    position:absolute;
-    border:1px solid #ccc;
-    left:-1px;
-    border-bottom:none;
-    text-align:center;
-    padding-top:18px;
+    position: absolute;
+    border: 1px solid #ccc;
+    left: -1px;
+    border-bottom: none;
+    text-align: center;
+    padding-top: 18px;
 }
+
     .tank-to-top p {
-        margin-bottom:0;
+        margin-bottom: 0;
     }
+
 .tank-volume-meter {
-    position:absolute;
-    border-right:1px solid #ccc;
-    right:-20px;
-    width:10px;
+    position: absolute;
+    border-right: 1px solid #ccc;
+    right: -20px;
+    width: 10px;
 }
+
 .tank-zero-meter {
-    position:absolute;
-    bottom:-7px;
-    display:block;
-    width:150px;
-    left:267px;
-    margin:0;
-    line-height:1;
+    position: absolute;
+    bottom: -7px;
+    display: block;
+    width: 150px;
+    left: 267px;
+    margin: 0;
+    line-height: 1;
 }
+
 .tank-max-capacity {
-    position:absolute;
-    top:-8px;
-    display:block;
-    width:150px;
-    left:267px;
-    margin:0;
-    line-height:1;
+    position: absolute;
+    top: -8px;
+    display: block;
+    width: 150px;
+    left: 267px;
+    margin: 0;
+    line-height: 1;
 }
+
 .tank-min-capacity,
 .tank-current-volume {
-    position:absolute;
-    display:block;
-    width:150px;
-    left:267px;
-    margin:0;
-    line-height:1;
+    position: absolute;
+    display: block;
+    width: 150px;
+    left: 267px;
+    margin: 0;
+    line-height: 1;
 }
+
 .tank-wrapper h3 {
-        color: #333333;
-        font-size: 18px;
-        fill: #333333;
-        width: 736px;
-        float:none;
-        width:100%;
-    }
+    color: #333333;
+    font-size: 18px;
+    fill: #333333;
+    width: 736px;
+    float: none;
+    width: 100%;
+}
+
 .tank-wrapper {
-    width:100%;
-    text-align:center;
+    width: 100%;
+    text-align: center;
 }
+
 .tank-chart {
-    text-align:left;
-    display:inline-block;
+    text-align: left;
+    display: inline-block;
 }
+
 .colpick_full {
-    z-index:2;
+    z-index: 2;
+}
+
+.tabular-actual, .tabular-target {
+    text-align: right;
+    padding-right: 8px;
+}
+
+.tabular-kpi-name {
+    text-align: left;
+    padding-left: 8px;
+    padding-top: 6px;
+    padding-bottom: 6px;
 }

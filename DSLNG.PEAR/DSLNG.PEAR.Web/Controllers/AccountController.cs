@@ -14,43 +14,55 @@ namespace DSLNG.PEAR.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly IUserService _userService;
+
+        public AccountController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult Login(string message) {
+        public ActionResult Login(string message)
+        {
             ViewBag.message = message;
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Login(UserLoginViewModel user) {
+        public ActionResult Login(UserLoginViewModel user)
+        {
             if (ModelState.IsValid)
             {
-                if (isValid(user.Username, user.Password))
+                if (IsValid(user.Email, user.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(user.Username, false);
-                    return RedirectToAction("Index","Home");
+                    //FormsAuthentication.SetAuthCookie(user.Username, false);
+                    return RedirectToAction("Index", "Home");
                 }
-                else {
+                else
+                {
                     ModelState.AddModelError("", "Incorrect Login Data");
                 }
-                
+
             }
-            else {
+            else
+            {
                 ModelState.AddModelError("", "Incorrect Login Credential");
             }
             return View(user);
         }
 
-        private bool isValid(string username, string password)
+        private bool IsValid(string email, string password)
         {
-            var userService = ObjectFactory.Container.GetInstance<IUserService>();
-            var user = userService.Login(new LoginUserRequest { Username = username, Password = password });
-            if (user != null) {
+            var user = _userService.Login(new LoginUserRequest { Email = email, Password = password });
+            if (user != null)
+            {
                 /* Try Get Current User Role
                  */
                 //this._createRole(user.RoleName);
                 //this._userAddToRole(user.Username, user.RoleName);
+                FormsAuthentication.SetAuthCookie(user.Username, false);
                 return user.IsSuccess;
             }
             return false;
@@ -71,15 +83,17 @@ namespace DSLNG.PEAR.Web.Controllers
                 Roles.CreateRole(rolename);
             }
         }
-        public ActionResult Register() {
+        public ActionResult Register()
+        {
             return View();
         }
 
         [AllowAnonymous]
-        public ActionResult LogOff() {
+        public ActionResult LogOff()
+        {
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Account");
         }
-        
-	}
+
+    }
 }

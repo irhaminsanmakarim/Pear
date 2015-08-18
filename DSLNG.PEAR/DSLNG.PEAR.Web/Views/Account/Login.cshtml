@@ -17,9 +17,9 @@
     <form action="@Url.Action("Login")" method="POST" autocomplete="off" id="formLogin" onsubmit="return validateForm();">
 
         <li>
-            <input type="text" name="Username" id="Username" class="text" placeholder="Username">
+            <input type="text" name="Email" id="Email" class="text" placeholder="Email">
             <span class=" icon user"></span>
-            @Html.ValidationMessageFor(u => u.Username)
+            @Html.ValidationMessageFor(u => u.Email)
         </li>
         <li>
             <input type="password" id="Password" name="Password" placeholder="Password">

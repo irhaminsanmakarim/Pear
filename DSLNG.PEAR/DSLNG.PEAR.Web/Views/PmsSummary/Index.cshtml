@@ -20,6 +20,8 @@
             var url = '@Html.Raw( Url.Action("Index", "PmsSummary", new {year = "_year_", month = "_month_"}) )'.replace('_year_', year).replace('_month_', month);
             window.location = url;
         });
+        $('.dxgvDataRow_DSLNG td[title]').attr('data-html', true);
+        $('.dxgvDataRow_DSLNG td[title]').tooltip();
     });
     
     function OnCellClick(visibleIndex, fieldName) {

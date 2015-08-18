@@ -450,6 +450,25 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public GetMultiaxisChartDataResponse GetMultiaxisChartData(GetMultiaxisChartDataRequest request) {
+            var response = new GetMultiaxisChartDataResponse();
+            foreach (var chart in request.Charts) {
+                var chartReq = request.MapTo<GetCartesianChartDataRequest>();
+                chart.MapPropertiesToInstance<GetCartesianChartDataRequest>(chartReq);
+                var cartesianChartRes = GetChartData(chartReq);
+                if (response.Subtitle == null) response.Subtitle = cartesianChartRes.Subtitle;
+                if (response.Periodes == null) response.Periodes = cartesianChartRes.Periodes;
+                var multiaxisChart = cartesianChartRes.MapTo<GetMultiaxisChartDataResponse.ChartResponse>();
+                multiaxisChart.GraphicType = chartReq.GraphicType;
+                multiaxisChart.Measurement = DataContext.Measurements.First(x => x.Id == chartReq.MeasurementId).Name;
+                multiaxisChart.ValueAxisTitle = chart.ValueAxisTitle;
+                multiaxisChart.ValueAxisColor = chart.ValueAxisColor;
+                multiaxisChart.IsOpposite = chart.IsOpposite;
+                response.Charts.Add(multiaxisChart);
+            }
+            return response;
+        }
+
         public GetCartesianChartDataResponse GetChartData(GetCartesianChartDataRequest request)
         {
             var response = new GetCartesianChartDataResponse();
@@ -1798,6 +1817,17 @@ namespace DSLNG.PEAR.Services
             artifact.HeaderTitle = request.HeaderTitle;
             artifact.PeriodeType = request.PeriodeType;
             artifact.RangeFilter = request.RangeFilter;
+            artifact.Start = request.Start;
+            artifact.End = request.End;
+            artifact.ValueAxis = request.ValueAxis;
+            artifact.Actual = request.Actual;
+            artifact.Target = request.Target;
+            artifact.Economic = request.Economic;
+            artifact.Fullfillment = request.Fullfillment;
+            artifact.Remark = request.Remark;
+
+            artifact.FractionScale = request.FractionScale;
+            
             DataContext.SaveChanges();
             return new UpdateArtifactResponse();
         }
@@ -1813,7 +1843,7 @@ namespace DSLNG.PEAR.Services
             {
                 return new GetArtifactsResponse
                 {
-                    Artifacts = DataContext.Artifacts.OrderBy(x => x.Id).Skip(request.Skip).Take(request.Take)
+                    Artifacts = DataContext.Artifacts.OrderByDescending(x => x.Id).Skip(request.Skip).Take(request.Take)
                                     .ToList().MapTo<GetArtifactsResponse.Artifact>()
                 };
             }

@@ -12,6 +12,20 @@
         <div class="chart-template original whitebox">
             <h2>Charts</h2>
             <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].GraphicType)
+                        @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].GraphicType, Model.MultiaxisChart.GraphicTypes, new { @class = "form-control multiaxis-graphic-type", data_graph_url = Url.Action("MultiaxisSettings", "Artifact") })
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].GraphicType)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].MeasurementId)
+                        @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].MeasurementId, Model.MultiaxisChart.Measurements, new { @class = "form-control measurement" })
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].MeasurementId)
+                    </div>
+                </div>
                 <div class="col-sm-6  value-axis-holder">
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
@@ -21,16 +35,26 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group form-list">
-                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].GraphicType)
-                        @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.GraphicTypes, new { @class = "form-control multiaxis-graphic-type", data_graph_url = Url.Action("MultiaxisSettings", "Artifact") })
-                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].GraphicType)
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxisTitle)
+                        @Html.TextBoxFor(model => model.MultiaxisChart.Charts[i].ValueAxisTitle, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxisTitle)
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group form-list">
-                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].MeasurementId)
-                        @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].MeasurementId, Model.MultiaxisChart.Measurements, new { @class = "form-control measurement" })
-                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].MeasurementId)
+                    @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxisColor)
+                    <div class="input-group colorpicker">
+                        @Html.TextBoxFor(model => model.MultiaxisChart.Charts[i].ValueAxisColor, new { @class = "form-control" })
+                        <span class="input-group-addon"><i></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxisColor)
+                        </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].IsOpposite)
+                        @Html.CheckBoxFor(model => model.MultiaxisChart.Charts[i].IsOpposite, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].IsOpposite)
                     </div>
                 </div>
                 <div class="col-sm-6 chart-settings">

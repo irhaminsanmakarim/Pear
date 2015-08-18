@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             Plots = new List<PlotRequest>();
             Rows = new List<RowRequest>();
         }
+
         public int Id { get; set; }
         public string GraphicName { get; set; }
         public string GraphicType { get; set; }
@@ -21,6 +22,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public IList<SeriesRequest> Series { get; set; }
         public IList<PlotRequest> Plots { get; set; }
         public IList<RowRequest> Rows { get; set; }
+        public TankRequest Tank { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public PeriodeType PeriodeType { get; set; }
@@ -29,11 +31,17 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public int MeasurementId { get; set; }
         public double FractionScale { get; set; }
         public double MaxValue { get; set; }
-        public TankRequest Tank { get; set; }
+        //tabular
+        public bool Actual { get; set; }
+        public bool Target { get; set; }
+        public bool Economic { get; set; }
+        public bool Fullfillment { get; set; }
+        public bool Remark { get; set; }
 
         public class SeriesRequest
         {
-            public SeriesRequest() {
+            public SeriesRequest()
+            {
                 Stacks = new List<StackRequest>();
             }
             public string Label { get; set; }
@@ -42,6 +50,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public int KpiId { get; set; }
             public ValueAxis ValueAxis { get; set; }
         }
+
         public class PlotRequest
         {
             public double From { get; set; }
@@ -49,6 +58,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public string Color { get; set; }
             public string Label { get; set; }
         }
+
         public class StackRequest
         {
             public string Label { get; set; }
@@ -57,6 +67,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public string Color { get; set; }
 
         }
+
         public class TankRequest
         {
             public int Id { get; set; }
