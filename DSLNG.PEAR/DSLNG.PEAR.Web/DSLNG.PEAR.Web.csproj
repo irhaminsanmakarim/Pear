@@ -261,10 +261,10 @@
     <Content Include="Content\colpick\js\colpick.js" />
     <Content Include="Content\datepicker\css\datepicker.css" />
     <Content Include="Content\datepicker\js\bootstrap-datepicker.js" />
-    <Content Include="Content\font-awesome\css\font-awesome.css" />
+    <!--<Content Include="Content\font-awesome\css\font-awesome.css" />
     <Content Include="Content\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.svg" />-->
     <Content Include="Content\img\active.png" />
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\ajax-loader1.gif" />
