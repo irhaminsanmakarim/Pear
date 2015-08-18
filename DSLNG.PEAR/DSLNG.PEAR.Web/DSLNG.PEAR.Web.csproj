@@ -369,7 +369,6 @@
     <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\font-awesome\fonts\glyphicons-halflings-regular.woff" />
-    <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.0.js" />
     <Content Include="Scripts\jquery-1.9.0.min.js" />
