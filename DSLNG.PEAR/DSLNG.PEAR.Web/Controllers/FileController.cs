@@ -101,7 +101,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
                 case ConfigType.KpiAchievement:
                     //todo get KpiAchievement Data
-                    var request = new GetKpiAchievementsConfigurationRequest();
+                    var request = new GetKpiAchievementsConfigurationRequest() { PeriodeType = periodeType, Year = year, Month = month };
                     var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);
                     viewModel = achievement.MapTo<ConfigurationViewModel>();
                     break;
