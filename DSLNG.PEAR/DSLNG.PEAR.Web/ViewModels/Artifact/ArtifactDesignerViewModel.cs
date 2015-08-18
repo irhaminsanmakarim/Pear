@@ -154,5 +154,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public TrafficLightChartViewModel TrafficLightChart { get; set; }
         public TabularViewModel Tabular { get; set; }
         public TankViewModel Tank { get; set; }
+        public PieViewModel Pie { get; set; }
     }
 }

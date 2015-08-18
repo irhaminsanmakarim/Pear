@@ -104,6 +104,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "trafficlight", Text = "Traffic Light" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tabular", Text = "Tabular" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tank", Text = "Tank" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "pie", Text = "Pie" });
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
@@ -341,6 +342,13 @@ namespace DSLNG.PEAR.Web.Controllers
                         var artifactViewModel = new ArtifactDesignerViewModel();
                         artifactViewModel.Tank = viewModel;
                         return PartialView("~/Views/Tank/_Create.cshtml", artifactViewModel);
+                    }
+                case "Pie":
+                    {
+                        var viewModel = new PieViewModel();
+                        var artifactViewModel = new ArtifactDesignerViewModel();
+                        artifactViewModel.Pie = viewModel;
+                        return PartialView("~/Views/Pie/_Create.cshtml", artifactViewModel);
                     }
                 default:
                     return PartialView("NotImplementedChart.cshtml");

@@ -692,6 +692,7 @@
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\ChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\MultiaxisChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\PieViewModel.cs" />
     <Compile Include="ViewModels\Artifact\SearchKpiViewModel.cs" />
     <Compile Include="ViewModels\Artifact\SpiderwebChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\TabularDataViewModel.cs" />
