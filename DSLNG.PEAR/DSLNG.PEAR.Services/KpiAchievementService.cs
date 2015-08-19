@@ -423,5 +423,35 @@ namespace DSLNG.PEAR.Services
             }
             return response;
         }
+
+
+        public GetAchievementsResponse GetAchievements(GetKpiAchievementsConfigurationRequest request)
+        {
+            PeriodeType periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), request.PeriodeType);
+            var response = new GetAchievementsResponse();
+            try
+            {
+                var kpiAchievement = DataContext.KpiAchievements.Include(x => x.Kpi).Where(x => x.PeriodeType == periodeType && x.Periode.Year == request.Year && x.Periode.Month == request.Month).ToList();
+                if (kpiAchievement.Count > 0)
+                {
+                    foreach (var item in kpiAchievement)
+                    {
+                        response.KpiAchievements.Add(item.MapTo<GetKpiAchievementResponse>());
+                    }
+                }
+                response.IsSuccess = true;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.IsSuccess = false;
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.IsSuccess = false;
+                response.Message = argumentNullException.Message;
+            }
+            return response;
+        }
     }
 }

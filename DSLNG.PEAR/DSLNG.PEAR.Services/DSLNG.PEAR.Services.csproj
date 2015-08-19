@@ -148,6 +148,7 @@
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
     <Compile Include="Responses\KpiAchievement\AllKpiAchievementsResponse.cs" />
+    <Compile Include="Responses\KpiAchievement\GetAchievementsResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementsConfigurationResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementsResponse.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Responses\KpiTarget\AllKpiTargetsResponse.cs" />
     <Compile Include="Responses\KpiTarget\CreateKpiTargetResponse.cs" />
     <Compile Include="Responses\KpiTarget\CreateKpiTargetsResponse.cs" />
+    <Compile Include="Responses\KpiTarget\GetKpiTargetItemResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetKpiTargetsConfigurationResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetKpiTargetsResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetPmsConfigsResponse.cs" />

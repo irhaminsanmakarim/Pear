@@ -508,10 +508,15 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<ConfigurationViewModel.Economic, ConfigurationViewModel.Item>();
 
             Mapper.CreateMap<UpdateKpiTargetViewModel.KpiTargetItem, ConfigurationViewModel.Item>();
+            Mapper.CreateMap<GetKpiTargetItemResponse.Kpi, ConfigurationViewModel.Kpi>();
+            Mapper.CreateMap<GetKpiTargetItemResponse, ConfigurationViewModel.KpiTarget>();
+            Mapper.CreateMap<GetKpiTargetItemResponse, ConfigurationViewModel.Item>();
 
             Mapper.CreateMap<KpiTargetItem, CreateKpiTargetRequest>();
             Mapper.CreateMap<KpiTargetItem, UpdateKpiTargetItemRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(x => (DSLNG.PEAR.Data.Enums.PeriodeType)x.PeriodeType));
+            Mapper.CreateMap<KpiTargetItem, SaveKpiTargetRequest>();
+            Mapper.CreateMap<UpdateKpiTargetViewModel.KpiTargetItem, SaveKpiTargetRequest>();
         }
 
         private void ConfigureKpiAchievement()
@@ -545,6 +550,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetConfigurationResponse.Economic, ConfigurationViewModel.Economic>();
 
             Mapper.CreateMap<UpdateKpiAchievementsViewModel.KpiAchievementItem, ConfigurationViewModel.Item>();
+            Mapper.CreateMap<GetKpiAchievementsResponse.KpiAchievement, ConfigurationViewModel.Item>();
 
             Mapper.CreateMap<UpdateKpiAchievementsViewModel.KpiAchievementItem, UpdateKpiAchievementItemRequest>()
                 .ForMember(x => x.PeriodeType, o => o.MapFrom(x => (DSLNG.PEAR.Data.Enums.PeriodeType)x.PeriodeType));
