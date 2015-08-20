@@ -8,10 +8,10 @@ namespace DSLNG.PEAR.Web.Extensions
     {
         private static string templatePath;
         private static string targetPath;
-        private static string[] extensions;
-        private static long maxSize;
+        private static string[] extensions = new string[] { ".xls", ".xlsx", ".csv", };
+        private static long maxSize = 20971520;
 
-        public static readonly UploadControlValidationSettings ValidationSettings = new UploadControlValidationSettings
+        public static UploadControlValidationSettings ValidationSettings = new UploadControlValidationSettings
         {
             AllowedFileExtensions = extensions,
             MaxFileSize = maxSize,

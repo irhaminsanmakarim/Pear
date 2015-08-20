@@ -48,32 +48,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                     ? ConfigType.KpiAchievement
                                     : (ConfigType)Enum.Parse(typeof(ConfigType), configType);
 
-            var model = new ConfigurationViewModel();
-            //switch (config)
-            //{
-            //    case ConfigType.KpiAchievement:
-            //        var request = new GetKpiAchievementsConfigurationRequest();
-            //        var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);
-            //        model = achievement.MapTo<ConfigurationViewModel>();
-            //        break;
-            //    case ConfigType.KpiTarget:
-            //        var targetRequest = new GetKpiTargetsConfigurationRequest();
-            //        var target = _kpiTargetService.GetKpiTargetsConfiguration(targetRequest);
-            //        model = target.MapTo<ConfigurationViewModel>();
-            //        break;
-            //    case ConfigType.Economic:
-            //        //var request = new GetKpiAchievementsConfigurationRequest();
-            //        //var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);
-            //        //model = achievement.MapTo<ConfigurationViewModel>();
-            //        break;
-            //}
-            model.PeriodeType = "Yearly";
-            model.Year = DateTime.Now.Year;
-            model.Month = DateTime.Now.Month;
-            model.ConfigType = config.ToString();
-            model.Years = _dropdownService.GetYears().MapTo<SelectListItem>();
-            model.Months = _dropdownService.GetMonths().MapTo<SelectListItem>();
-            model.PeriodeTypes = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>();
+            var model = new ConfigurationViewModel() { /*switch (config)*/ /*{*/ /*    case ConfigType.KpiAchievement:*/ /*        var request = new GetKpiAchievementsConfigurationRequest();*/ /*        var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);*/ /*        model = achievement.MapTo<ConfigurationViewModel>();*/ /*        break;*/ /*    case ConfigType.KpiTarget:*/ /*        var targetRequest = new GetKpiTargetsConfigurationRequest();*/ /*        var target = _kpiTargetService.GetKpiTargetsConfiguration(targetRequest);*/ /*        model = target.MapTo<ConfigurationViewModel>();*/ /*        break;*/ /*    case ConfigType.Economic:*/ /*        //var request = new GetKpiAchievementsConfigurationRequest();*/ /*        //var achievement = _kpiAchievementService.GetKpiAchievementsConfiguration(request);*/ /*        //model = achievement.MapTo<ConfigurationViewModel>();*/ /*        break;*/ /*}*/PeriodeType = "Yearly", Year = DateTime.Now.Year, Month = DateTime.Now.Month, ConfigType = config.ToString(), Years = _dropdownService.GetYears().MapTo<SelectListItem>(), Months = _dropdownService.GetMonths().MapTo<SelectListItem>(), PeriodeTypes = _dropdownService.GetPeriodeTypes().MapTo<SelectListItem>() };
             return PartialView("_Download", model);
 
             //return base.ErrorPage(response.Message);
@@ -264,12 +239,12 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult UploadControlCallbackAction(string configType)
         {
+
             string[] extension = { ".xls", ".xlsx", ".csv", };
             var sourcePath = string.Format("{0}{1}/", TemplateDirectory, configType);
             var targetPath = string.Format("{0}{1}/", UploadDirectory, configType);
             ExcelUploadHelper.setPath(sourcePath, targetPath);
             ExcelUploadHelper.setValidationSettings(extension, 20971520);
-
             UploadControlExtension.GetUploadedFiles("uc", ExcelUploadHelper.ValidationSettings, ExcelUploadHelper.FileUploadComplete);
             return null;
         }
@@ -445,35 +420,44 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = new BaseResponse();
             if (datas != null)
             {
-                var pType = string.IsNullOrEmpty(periodeType)
-                            ? PeriodeType.Yearly
-                            : (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
-                //get old list value
-                var viewModel = new List<ConfigurationViewModel.Item>();
-                var deleted = new List<ConfigurationViewModel.Item>();
-                var inserted = new List<ConfigurationViewModel.Item>();
-                var old_request = new GetKpiAchievementsConfigurationRequest() { PeriodeType = periodeType, Year = year, Month = month };
-                var achievement = _kpiAchievementService.GetAchievements(old_request);
-                foreach (var item in achievement.KpiAchievements)
-                {
-                    viewModel.Add(new ConfigurationViewModel.Item() { Id = item.Id, KpiId = item.kpi.Id, Periode = item.Periode, PeriodeType = item.PeriodeType, Value = item.Value, Remark = item.Remark });
-                    //viewModel.Add(item.MapTo<ConfigurationViewModel.Item>());
-                }
+                //var pType = string.IsNullOrEmpty(periodeType)
+                //            ? PeriodeType.Yearly
+                //            : (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
+                ////get old list value
+                //var viewModel = new List<ConfigurationViewModel.Item>();
+                //var deleted = new List<ConfigurationViewModel.Item>();
+                //var inserted = new List<ConfigurationViewModel.Item>();
+                //var old_request = new GetKpiAchievementsConfigurationRequest() { PeriodeType = periodeType, Year = year, Month = month };
+                //var achievement = _kpiAchievementService.GetAchievements(old_request);
+                //foreach (var item in achievement.KpiAchievements)
+                //{
+                //    viewModel.Add(new ConfigurationViewModel.Item() { Id = item.Id, KpiId = item.kpi.Id, Periode = item.Periode, PeriodeType = item.PeriodeType, Value = item.Value, Remark = item.Remark });
+                //    //viewModel.Add(item.MapTo<ConfigurationViewModel.Item>());
+                //}
                 //viewModel = ;
                 //viewModel = achievement.MapTo<ConfigurationViewModel.Item>();
-                var test = this.CompareData(datas, viewModel, out deleted, out inserted);
-                foreach (var data in deleted)
+                //this.CompareData(datas, viewModel, out deleted, out inserted);
+                var achreq = new BatchUpdateKpiAchievementRequest();
+                foreach (var data in datas)
                 {
-                    var prepareDataContainer = new UpdateKpiAchievementsViewModel.KpiAchievementItem() { Value = data.Value, KpiId = data.KpiId, Periode = data.Periode, PeriodeType = data.PeriodeType, Remark = data.Remark };
-                    //var oldKpiAchievement = _kpiAchievementService.GetKpiAchievementByValue(new GetKpiAchievementRequestByValue { Kpi_Id = prepareDataContainer.KpiId, periode = prepareDataContainer.Periode, PeriodeType = prepareDataContainer.PeriodeType.ToString() });
-                    //if (oldKpiAchievement.IsSuccess)
-                    //{
-                    //    prepareDataContainer.Id = oldKpiAchievement.Id;
-                    //}
-
-                    var request = prepareDataContainer.MapTo<UpdateKpiAchievementItemRequest>();
-                    response = _kpiAchievementService.UpdateKpiAchievementItem(request).MapTo<BaseResponse>();
+                    var prepare = new UpdateKpiAchievementItemRequest() { Id = data.Id, KpiId = data.KpiId, Periode = data.Periode, Value = data.Value, PeriodeType = data.PeriodeType, Remark = data.Remark};// data.MapTo<UpdateKpiAchievementItemRequest>();
+                    achreq.BatchUpdateKpiAchievementItemRequest.Add(prepare);
                 }
+                response = _kpiAchievementService.BatchUpdateKpiAchievements(achreq);                
+                //var request = deleted.MapTo<BatchUpdateKpiAchievementRequest>();
+                //response = _kpiAchievementService.BatchUpdateKpiAchievements(request);
+                //foreach (var data in deleted)
+                //{
+                //    var prepareDataContainer = new UpdateKpiAchievementsViewModel.KpiAchievementItem() { Value = data.Value, KpiId = data.KpiId, Periode = data.Periode, PeriodeType = data.PeriodeType, Remark = data.Remark };
+                //    //var oldKpiAchievement = _kpiAchievementService.GetKpiAchievementByValue(new GetKpiAchievementRequestByValue { Kpi_Id = prepareDataContainer.KpiId, periode = prepareDataContainer.Periode, PeriodeType = prepareDataContainer.PeriodeType.ToString() });
+                //    //if (oldKpiAchievement.IsSuccess)
+                //    //{
+                //    //    prepareDataContainer.Id = oldKpiAchievement.Id;
+                //    //}
+
+                //    var request = prepareDataContainer.MapTo<UpdateKpiAchievementItemRequest>();
+                //    response = _kpiAchievementService.UpdateKpiAchievementItem(request).MapTo<BaseResponse>();
+                //}
 
             }
             return response;

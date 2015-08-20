@@ -157,6 +157,9 @@ namespace DSLNG.PEAR.Services
                                             return response;
                                         }
                                         kpiData.Score = pmsConfigDetails.Weight / indexYtd;
+                                        if (kpiData.Score < 0.8) {
+                                            kpiData.Score = 0.8;
+                                        }
                                         break;
                                     case ScoringType.Boolean:
                                         bool isMoreThanZero = false;
