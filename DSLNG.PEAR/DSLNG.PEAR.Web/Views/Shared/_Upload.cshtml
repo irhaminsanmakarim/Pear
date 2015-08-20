@@ -19,8 +19,9 @@
         }).done(function (result) {
             $('.ajax-loader2').hide();
             var alertType = result.isSuccess === true ? 'alert-success' : 'alert-danger';
-            if (result.isSuccess === true || result.message === null) {
-                $('.notification').html('<div class="alert ' + alertType + '" role="alert">File Successfully Parsed : ' + link + ' </div>').fadeIn().delay(10000).fadeOut();
+            if (result.isSuccess === true) {
+                //console.log(result.Message);
+                $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + ' </div>').fadeIn().delay(10000).fadeOut();
                 $(".nav-tabs .active").find('a').click();
             } else {
                 $('.notification').html('<div class="alert ' + alertType + '" role="alert">' + result.Message + '</div>').fadeIn().delay(10000).fadeOut();
@@ -39,27 +40,21 @@
             <input type="text" hidden="hidden" value="" id="filename-text" />
         </div>
     </form>
-        
-        @using (Html.BeginForm("Upload", "File", new { configType = Model.ConfigType }, FormMethod.Post, new { @class = "form-inline" }))
-        {
 
-            @Html.DevExpress().UploadControl(settings =>
+    @using (Html.BeginForm("Upload", "File", new { configType = Model.ConfigType }, FormMethod.Post, new { @class = "form-inline" }))
     {
-        settings.Name = "uc";
-        settings.CallbackRouteValues = new { configType = Model.ConfigType, Controller = "File", Action = "UploadControlCallbackAction" };
-        settings.ClientSideEvents.FileUploadComplete = "OnFileUploadComplete";
-        settings.ClientSideEvents.TextChanged = "function(s,e){uc.Upload();}";
-        settings.ShowProgressPanel = true;
-        settings.ValidationSettings.Assign(DSLNG.PEAR.Web.Controllers.KpiAchievementController.UploadControlHelper.ValidationSettings);
-    }).GetHtml()
-            @*<a href="javascript:$('form').submit();">Upload</a>*@
-            @*@Html.DevExpress().Button(settings =>
-                {
-                    settings.Name = "btnUpload";
-                    settings.Text = "Upload";
-                    settings.ClientSideEvents.Click = "function(s,e){uc.Upload();}";
-                    settings.UseSubmitBehavior = true;
-                }).GetHtml()*@
 
-        }
+        @Html.DevExpress().UploadControl(settings =>
+        {
+            settings.Name = "uc";
+            settings.CallbackRouteValues = new { configType = Model.ConfigType, Controller = "File", Action = "UploadControlCallbackAction" };
+            settings.ClientSideEvents.FileUploadComplete = "OnFileUploadComplete";
+            settings.ClientSideEvents.TextChanged = "function(s,e){uc.Upload();}";
+            settings.ShowProgressPanel = true;
+            settings.ValidationSettings.Assign(DSLNG.PEAR.Web.Extensions.ExcelUploadHelper.ValidationSettings);
+        }).GetHtml()
+    }
+    <div>
+        <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none;width: 30px;height: 30px;" />
+    </div>
 </div>

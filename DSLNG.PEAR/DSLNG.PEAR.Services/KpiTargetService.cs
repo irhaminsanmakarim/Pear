@@ -457,15 +457,15 @@ namespace DSLNG.PEAR.Services
         }
 
 
-        public GetKpiTargetResponse GetKpiTargetByValue(GetKpiTargetRequestByValue request)
+        public GetKpiTargetItemResponse GetKpiTargetByValue(GetKpiTargetRequestByValue request)
         {
-            var response = new GetKpiTargetResponse();
+            var response = new GetKpiTargetItemResponse();
             PeriodeType periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), request.PeriodeType);
             response.PeriodeType = periodeType;
             try
             {
                 var kpiTarget = DataContext.KpiTargets.Include(x => x.Kpi).Single(x => x.Kpi.Id == request.Kpi_Id && x.PeriodeType == periodeType && x.Periode == request.periode);
-                response = kpiTarget.MapTo<GetKpiTargetResponse>();
+                response = kpiTarget.MapTo<GetKpiTargetItemResponse>();
                 response.IsSuccess = true;
             }
             catch (InvalidOperationException invalidOperationException)
