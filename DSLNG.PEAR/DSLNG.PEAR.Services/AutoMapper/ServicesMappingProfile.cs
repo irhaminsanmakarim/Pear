@@ -187,13 +187,16 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<UpdateArtifactRequest, Artifact>()
                .ForMember(x => x.Series, o => o.Ignore())
-               .ForMember(x => x.Plots, o => o.Ignore());
+               .ForMember(x => x.Plots, o => o.Ignore())
+               .ForMember(x => x.Charts, o => o.Ignore());
             Mapper.CreateMap<UpdateArtifactRequest.SeriesRequest, ArtifactSerie>()
                 .ForMember(x => x.Stacks, o => o.Ignore());
             Mapper.CreateMap<UpdateArtifactRequest.PlotRequest, ArtifactPlot>();
             Mapper.CreateMap<UpdateArtifactRequest.StackRequest, ArtifactStack>();
             Mapper.CreateMap<UpdateArtifactRequest.TankRequest, ArtifactTank>();
             Mapper.CreateMap<UpdateArtifactRequest.RowRequest, ArtifactRow>();
+            Mapper.CreateMap<UpdateArtifactRequest.ChartRequest, ArtifactChart>()
+                .ForMember(x => x.Series, o => o.Ignore());
 
             Mapper.CreateMap<Artifact, GetArtifactsResponse.Artifact>();
             Mapper.CreateMap<Artifact, GetArtifactResponse>()

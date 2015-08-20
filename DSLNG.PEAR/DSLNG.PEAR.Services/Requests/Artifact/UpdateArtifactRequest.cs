@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             Series = new List<SeriesRequest>();
             Plots = new List<PlotRequest>();
             Rows = new List<RowRequest>();
+            Charts = new List<ChartRequest>();
         }
 
         public int Id { get; set; }
@@ -22,6 +23,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public IList<SeriesRequest> Series { get; set; }
         public IList<PlotRequest> Plots { get; set; }
         public IList<RowRequest> Rows { get; set; }
+        public IList<ChartRequest> Charts { get; set; }
         public TankRequest Tank { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
@@ -86,6 +88,17 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public string RangeFilter { get; set; }
             public DateTime? Start { get; set; }
             public DateTime? End { get; set; }
+        }
+
+        public class ChartRequest
+        {
+            public int MeasurementId { get; set; }
+            public ValueAxis ValueAxis { get; set; }
+            public string GraphicType { get; set; }
+            public IList<SeriesRequest> Series { get; set; }
+            public string ValueAxisTitle { get; set; }
+            public string ValueAxisColor { get; set; }
+            public bool IsOpposite { get; set; }
         }
     }
 }

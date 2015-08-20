@@ -166,6 +166,58 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.AreaChart.Series.Insert(0, series);
                     }
                     break;
+                case "multiaxis":
+                    {
+                        var multiaxisChart = new MultiaxisChartViewModel();
+                        viewModel.MultiaxisChart = artifact.MapPropertiesToInstance<MultiaxisChartViewModel>(multiaxisChart);
+                        this.SetValueAxes(viewModel.MultiaxisChart.ValueAxes);
+                        multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "bar", Text = "Bar" });
+                        multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "baraccumulative", Text = "Bar Accumulative" });
+                        multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "barachievement", Text = "Bar Achievement" });
+                        multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
+                        multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
+                        multiaxisChart.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+              .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                        foreach (var chartRes in artifact.Charts)
+                        {
+                            var chartViewModel = chartRes.MapTo<MultiaxisChartViewModel.ChartViewModel>();
+                            switch (chartViewModel.GraphicType)
+                            {
+                                case "line":
+                                    {
+                                        chartViewModel.LineChart = chartRes.MapTo<LineChartViewModel>();
+                                        this.SetValueAxes(chartViewModel.LineChart.ValueAxes);
+                                        var series = new LineChartViewModel.SeriesViewModel();
+                                        chartViewModel.LineChart.Series.Insert(0, series);
+                                    }
+                                    break;
+                                case "area":
+                                    {
+                                        chartViewModel.AreaChart = chartRes.MapTo<AreaChartViewModel>();
+                                        this.SetValueAxes(viewModel.AreaChart.ValueAxes);
+                                        var series = new AreaChartViewModel.SeriesViewModel();
+                                        chartViewModel.AreaChart.Series.Insert(0, series);
+                                    }
+                                    break;
+                                default:
+                                    {
+                                        chartViewModel.BarChart = chartRes.MapTo<BarChartViewModel>();
+                                        chartViewModel.BarChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                                        chartViewModel.BarChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+                                        this.SetValueAxes(chartViewModel.BarChart.ValueAxes, false);
+
+                                        var series = new BarChartViewModel.SeriesViewModel();
+                                        series.Stacks.Add(new BarChartViewModel.StackViewModel());
+                                        chartViewModel.BarChart.Series.Insert(0, series);
+                                    }
+                                    break;
+                            }
+                            multiaxisChart.Charts.Add(chartViewModel);
+                        }
+                        var chart = new MultiaxisChartViewModel.ChartViewModel();
+                        viewModel.MultiaxisChart.Charts.Insert(0, chart);
+                    }
+                    break;
                 case "barachievement":
                     {
                         var barChart = new BarChartViewModel();
@@ -484,7 +536,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "multiaxis":
                     {
                         var chartData = _artifactServie.GetMultiaxisChartData(artifactResp.MapTo<GetMultiaxisChartDataRequest>());
-                       // var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
+                        // var chartData = _artifactServie.GetChartData(artifactResp.MapTo<GetCartesianChartDataRequest>());
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.MultiaxisChart = chartData.MapTo<MultiaxisChartDataViewModel>();
                         previewViewModel.MultiaxisChart.Title = artifactResp.HeaderTitle;
@@ -655,7 +707,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.MultiaxisChart = new MultiaxisChartDataViewModel();
                         chartData.MapPropertiesToInstance<MultiaxisChartDataViewModel>(previewViewModel.MultiaxisChart);
                         previewViewModel.MultiaxisChart.Title = viewModel.HeaderTitle;
-                     
+
                     }
                     break;
                 default:
@@ -761,6 +813,13 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
                         viewModel.AreaChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
+                        _artifactServie.Update(request);
+                    }
+                    break;
+                case "multiaxis":
+                    {
+                        var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        viewModel.MultiaxisChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
                     break;

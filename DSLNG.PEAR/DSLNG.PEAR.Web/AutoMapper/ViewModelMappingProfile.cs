@@ -156,6 +156,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.FirstOrDefault()));
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, SpeedometerChartViewModel.SeriesViewModel>();
             Mapper.CreateMap<GetArtifactResponse.PlotResponse, SpeedometerChartViewModel.PlotBand>();
+            Mapper.CreateMap<GetArtifactResponse, MultiaxisChartViewModel>()
+                .ForMember(x => x.Charts, o => o.Ignore());
+            Mapper.CreateMap<GetArtifactResponse.ChartResponse, MultiaxisChartViewModel.ChartViewModel>();
+            Mapper.CreateMap<GetArtifactResponse.ChartResponse, LineChartViewModel>();
+            Mapper.CreateMap<GetArtifactResponse.ChartResponse, BarChartViewModel>();
+            Mapper.CreateMap<GetArtifactResponse.ChartResponse, AreaChartViewModel>();
 
             //cartesian preview
             Mapper.CreateMap<ArtifactDesignerViewModel, GetCartesianChartDataRequest>()
@@ -188,6 +194,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<BarChartViewModel.SeriesViewModel, UpdateArtifactRequest.SeriesRequest>()
                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<UpdateArtifactRequest.StackRequest>()));
             Mapper.CreateMap<BarChartViewModel.StackViewModel, UpdateArtifactRequest.StackRequest>();
+
 
             //line chart mapping
             Mapper.CreateMap<LineChartViewModel, GetCartesianChartDataRequest>();
@@ -265,6 +272,9 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<MultiaxisChartViewModel, CreateArtifactRequest>();
             Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, CreateArtifactRequest.ChartRequest>()
                 .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesCreateResolver>());
+            Mapper.CreateMap<MultiaxisChartViewModel, UpdateArtifactRequest>();
+            Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, UpdateArtifactRequest.ChartRequest>()
+                .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesUpdateResolver>());
             //.ForMember(x => x.Series, o =>
                 //{
                 //    o.Condition(rc =>
@@ -579,6 +589,24 @@ namespace DSLNG.PEAR.Web.AutoMapper
                     return source.AreaChart.Series.MapTo<CreateArtifactRequest.SeriesRequest>();
                 default:
                     return source.BarChart.Series.MapTo<CreateArtifactRequest.SeriesRequest>();
+
+            }
+        }
+    }
+
+
+    public class MultiaxisSeriesUpdateResolver : ValueResolver<MultiaxisChartViewModel.ChartViewModel, IList<UpdateArtifactRequest.SeriesRequest>>
+    {
+        protected override IList<UpdateArtifactRequest.SeriesRequest> ResolveCore(MultiaxisChartViewModel.ChartViewModel source)
+        {
+            switch (source.GraphicType)
+            {
+                case "line":
+                    return source.LineChart.Series.MapTo<UpdateArtifactRequest.SeriesRequest>();
+                case "area":
+                    return source.AreaChart.Series.MapTo<UpdateArtifactRequest.SeriesRequest>();
+                default:
+                    return source.BarChart.Series.MapTo<UpdateArtifactRequest.SeriesRequest>();
 
             }
         }

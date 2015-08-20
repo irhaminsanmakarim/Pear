@@ -597,6 +597,10 @@
     <Content Include="Views\Shared\UploadControlPartial.cshtml" />
     <Content Include="Views\Shared\_Download.cshtml" />
     <Content Include="Views\Shared\_Upload.cshtml" />
+    <Content Include="Views\MultiaxisChart\_Edit.cshtml" />
+    <Content Include="Views\MultiaxisChart\_BarChartEdit.cshtml" />
+    <Content Include="Views\MultiaxisChart\_LineChartEdit.cshtml" />
+    <Content Include="Views\MultiaxisChart\_AreaChartEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

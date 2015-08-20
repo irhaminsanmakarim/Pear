@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
             public string GraphicType { get; set; }
             public string ValueAxisColor { get; set; }
             public bool IsOpposite { get; set; }
+            public string SeriesType { get; set; }
             public IList<SeriesViewModel> Series { get; set; }
 
             public class SeriesViewModel

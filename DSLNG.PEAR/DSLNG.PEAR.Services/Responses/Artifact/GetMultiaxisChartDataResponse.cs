@@ -22,6 +22,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public bool IsOpposite { get; set; }
             public string Measurement { get; set; }
             public string GraphicType { get; set; }
+            public string SeriesType { get; set; }
             public IList<SeriesViewModel> Series { get; set; }
 
             public class SeriesViewModel

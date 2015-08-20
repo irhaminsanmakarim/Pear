@@ -530,6 +530,7 @@ namespace DSLNG.PEAR.Services
                 multiaxisChart.ValueAxisTitle = chart.ValueAxisTitle;
                 multiaxisChart.ValueAxisColor = chart.ValueAxisColor;
                 multiaxisChart.IsOpposite = chart.IsOpposite;
+                multiaxisChart.SeriesType = cartesianChartRes.SeriesType;
                 response.Charts.Add(multiaxisChart);
             }
             return response;
@@ -1335,15 +1336,15 @@ namespace DSLNG.PEAR.Services
                             Name = "Exceed",
                             Color = "green"
                         };
+                        if (comparison)
+                        {
+                            exceedSeries.Stack = "KpiActual";
+                        }
                         if (seriesType == "multi-stacks-grouped")
                         {
                             aSeries.Stack = series.Label;
                             remainSeries.Stack = series.Label;
                             exceedSeries.Stack = series.Label;
-                        }
-                        if (comparison)
-                        {
-                            exceedSeries.Stack = "KpiActual";
                         }
                         foreach (var periode in dateTimePeriodes)
                         {
@@ -1820,6 +1821,9 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Series.Select(y => y.Stacks.Select(z => z.Kpi)))
                 .Include(x => x.Plots)
                 .Include(x => x.Rows)
+                .Include(x => x.Charts)
+                .Include(x => x.Charts.Select(y => y.Series))
+                .Include(x => x.Charts.Select(y => y.Series.Select(z => z.Stacks)))
                 .Single(x => x.Id == request.Id);
 
             if (artifact.Measurement.Id != request.MeasurementId)
@@ -1909,6 +1913,72 @@ namespace DSLNG.PEAR.Services
                 }
                 artifact.Rows.Add(row);
             }
+
+            foreach (var chart in artifact.Charts.ToList()) {
+               
+                foreach (var series in chart.Series.ToList())
+                {
+                    foreach (var stack in series.Stacks.ToList())
+                    {
+                        DataContext.ArtifactStacks.Remove(stack);
+                    }
+                    DataContext.ArtifactSeries.Remove(series);
+                }
+                DataContext.ArtifactCharts.Remove(chart);
+            }
+
+            foreach (var chartReq in request.Charts)
+            {
+                var chart = chartReq.MapTo<ArtifactChart>();
+                var localMeasurement = new Measurement { Id = chartReq.MeasurementId };
+                if (DataContext.Measurements.Local.Where(x => x.Id == localMeasurement.Id).FirstOrDefault() == null)
+                {
+                    DataContext.Measurements.Attach(localMeasurement);
+                }
+                else
+                {
+                    localMeasurement = DataContext.Measurements.Local.Where(x => x.Id == localMeasurement.Id).FirstOrDefault();
+                }
+                chart.Measurement = localMeasurement;
+                foreach (var seriesReq in chartReq.Series)
+                {
+                    var series = seriesReq.MapTo<ArtifactSerie>();
+                    if (seriesReq.KpiId != 0)
+                    {
+                        var kpi = new Kpi { Id = seriesReq.KpiId };
+                        if (DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault() == null)
+                        {
+                            DataContext.Kpis.Attach(kpi);
+                        }
+                        else
+                        {
+                            kpi = DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault();
+                        }
+                        series.Kpi = kpi;
+                    }
+                    foreach (var stackReq in seriesReq.Stacks)
+                    {
+                        var stack = stackReq.MapTo<ArtifactStack>();
+                        if (stackReq.KpiId != 0)
+                        {
+                            var kpiInStack = new Kpi { Id = stackReq.KpiId };
+                            if (DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault() == null)
+                            {
+                                DataContext.Kpis.Attach(kpiInStack);
+                            }
+                            else
+                            {
+                                kpiInStack = DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault();
+                            }
+                            stack.Kpi = kpiInStack;
+                        }
+                        series.Stacks.Add(stack);
+                    }
+                    chart.Series.Add(series);
+                }
+                artifact.Charts.Add(chart);
+            }
+
 
             if (request.Tank != null)
             {
