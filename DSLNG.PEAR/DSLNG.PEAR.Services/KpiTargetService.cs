@@ -10,6 +10,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
+using DSLNG.PEAR.Services.Responses;
 
 namespace DSLNG.PEAR.Services
 {
@@ -512,6 +513,72 @@ namespace DSLNG.PEAR.Services
             catch (DbUpdateException dbUpdateException)
             {
                 response.Message = dbUpdateException.Message;
+            }
+            return response;
+        }
+
+
+        public BaseResponse BatchUpdateKpiTargetss(BatchUpdateTargetRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                int i = 0;
+                foreach (var item in request.BatchUpdateKpiTargetItemRequest)
+                {
+                    var kpiTarget = item.MapTo<KpiTarget>();
+                    var exist = DataContext.KpiTargets.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode && x.Value == item.Value && x.Remark == item.Remark);
+                    //skip no change value
+                    if (exist != null)
+                    {
+                        continue;
+                    }
+                    var attachedEntity = DataContext.KpiTargets.FirstOrDefault(x => x.Kpi.Id == item.KpiId && x.PeriodeType == item.PeriodeType && x.Periode == item.Periode);
+                    if (attachedEntity != null)
+                    {
+                        kpiTarget.Id = attachedEntity.Id;
+                    }
+                    //jika tidak ada perubahan di skip aja
+                    //if (existing.Value.Equals(item.Value) && existing.Periode.Equals(item.Periode) && existing.Kpi.Id.Equals(item.KpiId) && existing.PeriodeType.Equals(item.PeriodeType)) {
+                    //    break;
+                    //}
+                    if (kpiTarget.Id != 0)
+                    {
+                        //var attachedEntity = DataContext.KpiAchievements.Find(item.Id);
+                        if (attachedEntity != null && DataContext.Entry(attachedEntity).State != EntityState.Detached)
+                        {
+                            DataContext.Entry(attachedEntity).State = EntityState.Detached;
+                        }
+                        DataContext.KpiTargets.Attach(kpiTarget);
+                        DataContext.Entry(kpiTarget).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        kpiTarget.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == item.KpiId);
+                        DataContext.KpiTargets.Add(kpiTarget);
+                    }
+                    i++;
+                }
+                DataContext.SaveChanges();
+                response.IsSuccess = true;
+                if (i > 0)
+                {
+                    response.Message = string.Format("{0}  KPI Target items has been updated successfully", i.ToString());
+                }
+                else
+                {
+                    response.Message = "File Successfully Parsed, but no data changed!";
+                }
+                
+
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.Message = argumentNullException.Message;
             }
             return response;
         }

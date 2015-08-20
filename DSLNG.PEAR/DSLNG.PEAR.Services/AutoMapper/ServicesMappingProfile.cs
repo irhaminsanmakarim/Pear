@@ -340,6 +340,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiTarget, GetKpiTargetsConfigurationResponse.KpiTarget>();
             Mapper.CreateMap<KpiTarget, GetKpiTargetItemResponse>();
             Mapper.CreateMap<Kpi, GetKpiTargetItemResponse.Kpi>();
+            Mapper.CreateMap<SaveKpiTargetRequest, KpiTarget>();
         }
 
         private void ConfigurePmsConfig()
