@@ -2071,6 +2071,8 @@ namespace DSLNG.PEAR.Services
             artifact.Economic = request.Economic;
             artifact.Fullfillment = request.Fullfillment;
             artifact.Remark = request.Remark;
+            artifact.ShowLegend = request.ShowLegend;
+            artifact.Is3D = request.Is3D;
 
             artifact.FractionScale = request.FractionScale;
 
