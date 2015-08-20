@@ -10,27 +10,22 @@
 <div id="hidden-fields">
     @for (var i = 0; i < Model.MultiaxisChart.Charts.Count; i++)
     {
-        <div class="chart-template original whitebox">
-            <h2>Charts</h2>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group form-list">
-                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
-                        @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.ValueAxes, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group form-list">
-                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].GraphicType)
-                        @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.GraphicTypes, new { @class = "form-control multiaxis-chart-type" })
-                        @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].GraphicType)
-                    </div>
-                </div>
-                <div id="chart-settings">
-                </div>
+        <div class="chart-template original container-box">
+            <h4 class="page-title text-inline">Charts</h4>
+            <input type="button" value="Remove" class="remove button button-tny button-danger pull-right" />
+            <hr class="just-margin-bottom"/>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
+                @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.ValueAxes, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
             </div>
-            <input type="button" value="Remove" class="remove" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.MultiaxisChart.Charts[i].GraphicType)
+                @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.GraphicTypes, new { @class = "form-control multiaxis-chart-type" })
+                @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].GraphicType)
+            </div>
+            <div id="chart-settings"></div>
         </div>
     }
 </div>

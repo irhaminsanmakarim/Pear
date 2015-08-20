@@ -1307,6 +1307,16 @@ textarea {
   vertical-align: middle;
 }
 
+.form-inline .form-group {
+  margin-left: 2rem;
+}
+.form-inline .form-group:second-child {
+  margin-left: 0;
+}
+.form-inline .form-group label {
+  margin-right: .5rem;
+}
+
 .select2-container--default .select2-selection--single,
 .select2-dropdown,
 .select2-container--default .select2-search--dropdown .select2-search__field {

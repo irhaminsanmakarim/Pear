@@ -27,42 +27,39 @@
 <div id="hidden-fields">
     @for (var i = 0; i < Model.TrafficLightChart.PlotBands.Count; i++)
     {
-        <div class="plot-band-template original whitebox">
-            <h2>Plot Bands</h2>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group form-list">
-                        @Html.LabelFor(model => model.TrafficLightChart.PlotBands[i].From)
-                        @Html.TextBoxFor(model => model.TrafficLightChart.PlotBands[i].From, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.TrafficLightChart.PlotBands[i].From)
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group form-list">
-                        @Html.LabelFor(model => model.TrafficLightChart.PlotBands[i].To)
-                        @Html.TextBoxFor(model => model.TrafficLightChart.PlotBands[i].To,new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.TrafficLightChart.PlotBands[i].To)
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group form-list">
-                        @Html.LabelFor(model => model.TrafficLightChart.PlotBands[i].Color)
-                        <div class="input-group colorpicker">
-                            @Html.TextBoxFor(model => model.TrafficLightChart.PlotBands[i].Color, new { @class = "form-control" })
-                            <span class="input-group-addon"><i></i></span>
-                        </div>
-                        @Html.ValidationMessageFor(model => model.TrafficLightChart.PlotBands[i].Color)
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group form-list">
-                        @Html.LabelFor(model => model.TrafficLightChart.PlotBands[i].Label)
-                        @Html.TextBoxFor(model => model.TrafficLightChart.PlotBands[i].Label,new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.TrafficLightChart.PlotBands[i].Label)
-                    </div>
-                </div>
+        <div class="plot-band-template original container-box">
+            <h4 class="page-title text-inline">Plot Bands</h4>
+            <input type="button" value="Remove" class="remove button button-tny button-danger pull-right" />
+            <hr class="just-margin-bottom"/>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TrafficLightChart.PlotBands[i].From)
+                @Html.TextBoxFor(model => model.TrafficLightChart.PlotBands[i].From, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TrafficLightChart.PlotBands[i].From)
             </div>
-            <input type="button" value="Remove" class="remove" />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TrafficLightChart.PlotBands[i].To)
+                @Html.TextBoxFor(model => model.TrafficLightChart.PlotBands[i].To,new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TrafficLightChart.PlotBands[i].To)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TrafficLightChart.PlotBands[i].Color)
+                <div class="input-group colorpicker">
+                    @Html.TextBoxFor(model => model.TrafficLightChart.PlotBands[i].Color, new { @class = "form-control" })
+                    <span class="input-group-addon"><i></i></span>
+                </div>
+                @Html.ValidationMessageFor(model => model.TrafficLightChart.PlotBands[i].Color)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TrafficLightChart.PlotBands[i].Label)
+                @Html.TextBoxFor(model => model.TrafficLightChart.PlotBands[i].Label,new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TrafficLightChart.PlotBands[i].Label)
+            </div>
+
         </div>
     }
 </div>

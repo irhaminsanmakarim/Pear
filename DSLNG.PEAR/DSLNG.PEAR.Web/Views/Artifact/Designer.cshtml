@@ -111,18 +111,20 @@
             </div>
         </div>
 
-        <div id="series-holder" class="form-inline graphic-properties">
+        <div id="series-holder" class="graphic-properties">
         </div>
-        <div id="plot-bands-holder" class="form-inline graphic-properties">
+        <div id="plot-bands-holder" class="graphic-properties">
         </div>
-        <div id="charts-holder" class="form-inline graphic-properties">
+        <div id="charts-holder" class="graphic-properties">
         </div>
-        <div id="rows-holder" class="form-inline graphic-properties">
+        <div id="rows-holder" class="graphic-properties">
         </div>
 
         <div class="artifact-designer-btns">
             <button type="submit" class="button button-action"><span class="fa fa-floppy-o"></span>Save</button>
-            <button data-preview-url="@Url.Action("Preview", "Artifact")"  id="graphic-preview-btn" type="button" class="button"><span class="fa fa-eye"></span>View</button>
+            <button data-preview-url="@Url.Action("Preview", "Artifact")"  id="graphic-preview-btn" type="button" class="button">
+                <span class="fa fa-eye"></span>View
+            </button>
             <a onclick="location.reload();" class="button"><span class="fa fa-repeat"></span>Clear</a>
             <a href="@Url.Action("Index", "Artifact")" class="button"><span class="fa fa-times"></span>Cancel</a>
         </div>
