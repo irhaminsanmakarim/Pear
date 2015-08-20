@@ -101,6 +101,7 @@
     <Compile Include="Requests\KpiAchievement\GetKpiAchievementsRequest.cs" />
     <Compile Include="Requests\KpiAchievement\UpdateKpiAchievementItemRequest.cs" />
     <Compile Include="Requests\KpiAchievement\UpdateKpiAchievementsRequest.cs" />
+    <Compile Include="Requests\KpiTarget\BatchUpdateTargetRequest.cs" />
     <Compile Include="Requests\KpiTarget\CreateKpiTargetRequest.cs" />
     <Compile Include="Requests\KpiTarget\CreateKpiTargetsRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetKpiTargetRequestByValue.cs" />
