@@ -420,45 +420,13 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = new BaseResponse();
             if (datas != null)
             {
-                //var pType = string.IsNullOrEmpty(periodeType)
-                //            ? PeriodeType.Yearly
-                //            : (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
-                ////get old list value
-                //var viewModel = new List<ConfigurationViewModel.Item>();
-                //var deleted = new List<ConfigurationViewModel.Item>();
-                //var inserted = new List<ConfigurationViewModel.Item>();
-                //var old_request = new GetKpiAchievementsConfigurationRequest() { PeriodeType = periodeType, Year = year, Month = month };
-                //var achievement = _kpiAchievementService.GetAchievements(old_request);
-                //foreach (var item in achievement.KpiAchievements)
-                //{
-                //    viewModel.Add(new ConfigurationViewModel.Item() { Id = item.Id, KpiId = item.kpi.Id, Periode = item.Periode, PeriodeType = item.PeriodeType, Value = item.Value, Remark = item.Remark });
-                //    //viewModel.Add(item.MapTo<ConfigurationViewModel.Item>());
-                //}
-                //viewModel = ;
-                //viewModel = achievement.MapTo<ConfigurationViewModel.Item>();
-                //this.CompareData(datas, viewModel, out deleted, out inserted);
-                var achreq = new BatchUpdateKpiAchievementRequest();
+                var batch = new BatchUpdateKpiAchievementRequest();
                 foreach (var data in datas)
                 {
                     var prepare = new UpdateKpiAchievementItemRequest() { Id = data.Id, KpiId = data.KpiId, Periode = data.Periode, Value = data.Value, PeriodeType = data.PeriodeType, Remark = data.Remark};// data.MapTo<UpdateKpiAchievementItemRequest>();
-                    achreq.BatchUpdateKpiAchievementItemRequest.Add(prepare);
+                    batch.BatchUpdateKpiAchievementItemRequest.Add(prepare);
                 }
-                response = _kpiAchievementService.BatchUpdateKpiAchievements(achreq);                
-                //var request = deleted.MapTo<BatchUpdateKpiAchievementRequest>();
-                //response = _kpiAchievementService.BatchUpdateKpiAchievements(request);
-                //foreach (var data in deleted)
-                //{
-                //    var prepareDataContainer = new UpdateKpiAchievementsViewModel.KpiAchievementItem() { Value = data.Value, KpiId = data.KpiId, Periode = data.Periode, PeriodeType = data.PeriodeType, Remark = data.Remark };
-                //    //var oldKpiAchievement = _kpiAchievementService.GetKpiAchievementByValue(new GetKpiAchievementRequestByValue { Kpi_Id = prepareDataContainer.KpiId, periode = prepareDataContainer.Periode, PeriodeType = prepareDataContainer.PeriodeType.ToString() });
-                //    //if (oldKpiAchievement.IsSuccess)
-                //    //{
-                //    //    prepareDataContainer.Id = oldKpiAchievement.Id;
-                //    //}
-
-                //    var request = prepareDataContainer.MapTo<UpdateKpiAchievementItemRequest>();
-                //    response = _kpiAchievementService.UpdateKpiAchievementItem(request).MapTo<BaseResponse>();
-                //}
-
+                response = _kpiAchievementService.BatchUpdateKpiAchievements(batch);                
             }
             return response;
         }
@@ -468,18 +436,13 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = new BaseResponse();
             if (datas != null)
             {
+                var batch = new BatchUpdateTargetRequest();
                 foreach (var data in datas)
                 {
-                    var prepareDataContainer = new UpdateKpiTargetViewModel.KpiTargetItem() { Value = data.Value, KpiId = data.KpiId, Periode = data.Periode, PeriodeType = data.PeriodeType, Remark = data.Remark };
-
-                    var oldKpiTarget = _kpiTargetService.GetKpiTargetByValue(new GetKpiTargetRequestByValue { Kpi_Id = prepareDataContainer.KpiId, periode = prepareDataContainer.Periode, PeriodeType = prepareDataContainer.PeriodeType.ToString() });
-                    if (oldKpiTarget.IsSuccess)
-                    {
-                        prepareDataContainer.Id = oldKpiTarget.Id;
-                    }
-                    var request = prepareDataContainer.MapTo<SaveKpiTargetRequest>();
-                    response = _kpiTargetService.SaveKpiTargetItem(request).MapTo<BaseResponse>();
+                    var prepare = new SaveKpiTargetRequest() { Value = data.Value, KpiId = data.KpiId, Periode = data.Periode, PeriodeType = data.PeriodeType, Remark = data.Remark };
+                    batch.BatchUpdateKpiTargetItemRequest.Add(prepare);
                 }
+                response = _kpiTargetService.BatchUpdateKpiTargetss(batch);
 
             }
             return response;

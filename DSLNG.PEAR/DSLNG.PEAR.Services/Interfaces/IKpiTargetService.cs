@@ -1,4 +1,5 @@
 ﻿using DSLNG.PEAR.Services.Requests.KpiTarget;
+using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.KpiTarget;
 
 namespace DSLNG.PEAR.Services.Interfaces
@@ -17,5 +18,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         UpdateKpiTargetItemResponse SaveKpiTargetItem(SaveKpiTargetRequest request);
         GetKpiTargetsConfigurationResponse GetKpiTargetsConfiguration(GetKpiTargetsConfigurationRequest request);
         AllKpiTargetsResponse GetAllKpiTargets();
+
+        BaseResponse BatchUpdateKpiTargetss(BatchUpdateTargetRequest request);
     }
 }
