@@ -17,17 +17,17 @@
     <form action="@Url.Action("Login")" method="POST" autocomplete="off" id="formLogin" onsubmit="return validateForm();">
 
         <li>
-            <input type="text" name="Email" id="Email" class="text" placeholder="Email">
+            <input type="text" name="Email" id="Email" class="text" placeholder="Email" onkeypress="moveFieldTo(event, 'Password');">
             <span class=" icon user"></span>
             @Html.ValidationMessageFor(u => u.Email)
         </li>
         <li>
-            <input type="password" id="Password" name="Password" placeholder="Password">
+            <input type="password" id="Password" name="Password" placeholder="Password" onkeypress="moveFieldTo(event, 'btnSubmitLogin');">
             <span class=" icon lock"></span>
             @Html.ValidationMessageFor(u => u.Password)
         </li>
         <div class="p-container">
-            <input type="submit" value="Sign In">
+            <input type="submit" value="Sign In" id="btnSubmitLogin">
             <div class="clear"></div>
         </div>
     </form>
@@ -42,14 +42,25 @@
         var password = form["Password"].value;
         if (username == null || username == "") {
             alert("Username must be filled out");
+            document.getElementById('Email').focus();
             return false;
         }
 
         if (password == null || password == "") {
             alert("Password must be filled out");
+            document.getElementById('Password').focus();
             return false;
         }
     }
+    function moveFieldTo(event, fieldId) {
+        if (event.keyCode == 13) {
+            document.getElementById(fieldId).focus();
+
+            event.preventDefault();
+            return false;
+        }
+    }
+
 </script>
 
 
