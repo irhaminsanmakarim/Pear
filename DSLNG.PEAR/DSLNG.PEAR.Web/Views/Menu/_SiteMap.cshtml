@@ -151,3 +151,21 @@
             </ul>
         </li>*@
 </ul>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.sub-nav > li').click(function () {
+            var $this = $(this);
+            $this.find('ul').stop().slideToggle();
+            $this.find('.fa').toggleClass('fa-angle-down fa-angle-up');
+            $(this).parent().find('sub-nav > li.active').toggle();
+            $(this).toggleClass('active');
+        });
+        
+        $('.main-nav > li').click(function () {
+            $('.main-nav > li.active').removeClass('active');
+            $(this).addClass('active');
+        });
+    })
+</script>
