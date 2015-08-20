@@ -346,6 +346,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bs_leftnavi.js" />
+    <Content Include="Scripts\tank.js" />
     <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\globalize.cultures.js" />
     <Content Include="Scripts\globalize.js" />
@@ -452,6 +453,7 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\snap.svg.js" />
     <Content Include="Scripts\trafficlight.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />

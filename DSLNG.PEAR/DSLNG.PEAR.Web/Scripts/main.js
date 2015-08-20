@@ -1580,8 +1580,10 @@ Number.prototype.format = function (n, x) {
         $('.form-measurement').css('display', 'none');
         Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'), false);
     };
-    artifactDesigner._previewCallbacks.tank = function(data, container) {
-        var containerHeight = container.height() - 50;
+    artifactDesigner._previewCallbacks.tank = function (data, container) {
+        //console.log(data.Tank);
+        container.tank(data.Tank);
+        /*var containerHeight = container.height() - 50;
         var tankToTopHeight = 75;
         var tankHeight = containerHeight - tankToTopHeight;
         var volumeColor = '#00aeef';
@@ -1635,14 +1637,7 @@ Number.prototype.format = function (n, x) {
         $wrapper.html('<h3>' + data.Tank.Title + '</h3>');
         $wrapper.append('<h4>' + data.Tank.Subtitle + '</h4>');
         $wrapper.append($tank);
-        container.html($wrapper);
-        //console.log($('.tank-zero-meter'));
-        //setTimeout(function () {
-        //    $zeroMeter.css('width', $('.tank-zero-meter')[0].clientWidth + 'px');
-        //    $minCapacity.css('width', $('.tank-min-capacity')[0].clientWidth + 'px');
-        //    $maxCapacity.css('width', $('.tank-max-capacity')[0].clientWidth + 'px');
-        //}, 100);
-
+        container.html($wrapper);*/
     };
 
     //mutliaxis
