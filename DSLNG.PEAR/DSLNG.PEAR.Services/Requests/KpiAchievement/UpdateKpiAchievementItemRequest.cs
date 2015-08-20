@@ -16,4 +16,12 @@ namespace DSLNG.PEAR.Services.Requests.KpiAchievement
         public string Remark { get; set; }
         public PeriodeType PeriodeType { get; set; }
     }
+
+    public class BatchUpdateKpiAchievementRequest {
+        public BatchUpdateKpiAchievementRequest()
+        {
+            BatchUpdateKpiAchievementItemRequest = new List<UpdateKpiAchievementItemRequest>(); 
+        }
+        public List<UpdateKpiAchievementItemRequest> BatchUpdateKpiAchievementItemRequest { get; set; }
+    }
 }
