@@ -143,7 +143,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         [Required]
         public string ValueAxis { get; set; }
         public IList<SelectListItem> ValueAxes { get; set; }
-
+        public bool Is3D { get; set; }
+        public bool ShowLegend { get; set; }
         //chart
         public BarChartViewModel BarChart { get; set; }
         public AreaChartViewModel AreaChart { get; set; }   

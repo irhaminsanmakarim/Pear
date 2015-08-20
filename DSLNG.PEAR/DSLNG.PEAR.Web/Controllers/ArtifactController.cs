@@ -130,6 +130,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tabular", Text = "Tabular" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tank", Text = "Tank" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "trafficlight", Text = "Traffic Light" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "pie", Text = "Pie" });
 
 
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
@@ -208,6 +209,16 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.Tabular.Rows.Insert(0, new TabularViewModel.RowViewModel());
                         this.SetPeriodeTypes(viewModel.Tabular.PeriodeTypes);
                         this.SetRangeFilters(viewModel.Tabular.RangeFilters);
+                    }
+                    break;
+                case "pie":
+                    {
+                        viewModel.Pie = artifact.MapPropertiesToInstance(new PieViewModel());
+                        this.SetValueAxes(viewModel.Pie.ValueAxes);
+                        var series = new PieViewModel.SeriesViewModel();
+                        /*viewModel.Is3D = artifact.Is3D;
+                        viewModel.ShowLegend = artifact.ShowLegend;*/
+                        viewModel.Pie.Series.Insert(0, series);
                     }
                     break;
                 default:
@@ -345,9 +356,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         artifactViewModel.Tank = viewModel;
                         return PartialView("~/Views/Tank/_Create.cshtml", artifactViewModel);
                     }
-                case "Pie":
+                case "pie":
                     {
                         var viewModel = new PieViewModel();
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new PieViewModel.SeriesViewModel();
+                        viewModel.Series.Add(series);
                         var artifactViewModel = new ArtifactDesignerViewModel();
                         artifactViewModel.Pie = viewModel;
                         return PartialView("~/Views/Pie/_Create.cshtml", artifactViewModel);
@@ -457,6 +471,9 @@ namespace DSLNG.PEAR.Web.Controllers
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.MTD.ToString(), Text = "MONTH TO DATE" });
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.YTD.ToString(), Text = "YEAR TO DATE" });
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.Interval.ToString(), Text = "INTERVAL" });
+            /*rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificDay.ToString(), Text = "SPECIFIC DAY" });
+            rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificMonth.ToString(), Text = "SPECIFIC MONTH" });
+            rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificYear.ToString(), Text = "SPECIFIC YEAR" });*/
         }
 
         public ActionResult View(int id)
@@ -540,12 +557,23 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var chartData = _artifactServie.GetTankData(artifactResp.MapTo<GetTankDataRequest>());
                         previewViewModel.GraphicType = artifactResp.GraphicType;
-                        previewViewModel.Tank = new TankDataViewModel();
+                        previewViewModel.Pie = new PieDataViewModel();
                         chartData.MapPropertiesToInstance<TankDataViewModel>(previewViewModel.Tank);
                         previewViewModel.Tank.Title = artifactResp.HeaderTitle;
                         previewViewModel.Tank.Subtitle = chartData.Subtitle;
                         //previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
                         //previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
+                case "pie":
+                    {
+                        var chartData = _artifactServie.GetPieData(artifactResp.MapTo<GetPieDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.Pie = chartData.MapTo<PieDataViewModel>();
+                        previewViewModel.Pie.Title = artifactResp.GraphicName;
+                        previewViewModel.Pie.Subtitle = artifactResp.HeaderTitle;
+                        previewViewModel.Pie.Is3D = artifactResp.Is3D;
+                        previewViewModel.Pie.ShowLegend = artifactResp.ShowLegend;
                     }
                     break;
                 default:
@@ -666,6 +694,18 @@ namespace DSLNG.PEAR.Web.Controllers
                      
                     }
                     break;
+                case "pie" :
+                    {
+                        var request = viewModel.MapTo<GetPieDataRequest>();
+                        viewModel.Pie.MapPropertiesToInstance<GetPieDataRequest>(request);
+                        var pieData = _artifactServie.GetPieData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.Pie = pieData.MapTo<PieDataViewModel>();
+                        previewViewModel.Pie.Is3D = request.Is3D;
+                        previewViewModel.Pie.ShowLegend = request.ShowLegend;
+                    }
+                    break;
+
                 default:
                     {
                         var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
@@ -741,6 +781,13 @@ namespace DSLNG.PEAR.Web.Controllers
                         _artifactServie.Create(request);
                     }
                     break;
+                case "pie":
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        request.Series = viewModel.Pie.Series.MapTo<CreateArtifactRequest.SeriesRequest>();
+                        _artifactServie.Create(request);
+                    }
+                    break;
                 default:
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
@@ -798,6 +845,13 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
                         viewModel.Tabular.MapPropertiesToInstance<UpdateArtifactRequest>(request);
+                        _artifactServie.Update(request);
+                    }
+                    break;
+                case "pie":
+                    {
+                        var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        viewModel.Pie.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
                     break;

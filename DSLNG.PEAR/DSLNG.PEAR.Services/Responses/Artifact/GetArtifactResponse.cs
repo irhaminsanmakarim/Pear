@@ -38,6 +38,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public bool Economic { get; set; }
         public bool Fullfillment { get; set; }
         public bool Remark { get; set; }
+        public bool Is3D { get; set; }
+        public bool ShowLegend { get; set; }
 
         public class SeriesResponse {
             public SeriesResponse()

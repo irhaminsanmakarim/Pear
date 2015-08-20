@@ -87,6 +87,7 @@
     <Compile Include="Requests\Artifact\GetArtifactsRequest.cs" />
     <Compile Include="Requests\Artifact\GetArtifactsToSelectRequest.cs" />
     <Compile Include="Requests\Artifact\GetMultiaxisChartDataRequest.cs" />
+    <Compile Include="Requests\Artifact\GetPieDataRequest.cs" />
     <Compile Include="Requests\Artifact\GetTabularDataRequest.cs" />
     <Compile Include="Requests\Artifact\GetTankDataRequest.cs" />
     <Compile Include="Requests\Artifact\GetTrafficLightChartDataRequest.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Responses\Artifact\GetArtifactsResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactsToSelectResponse.cs" />
     <Compile Include="Responses\Artifact\GetMultiaxisChartDataResponse.cs" />
+    <Compile Include="Responses\Artifact\GetPieDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetTabularDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetTankDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetTrafficLightChartDataResponse.cs" />

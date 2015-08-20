@@ -46,8 +46,9 @@ namespace DSLNG.PEAR.Data.Entities
         public bool Target { get; set; }
         public bool Economic { get; set; }
         public bool Fullfillment { get; set; }
+        public bool Is3D { get; set; }
+        public bool ShowLegend { get; set; }
         public bool Remark { get; set; }
-
         public bool IsActive { get; set; }
         public User CreatedBy { get; set; }
         public User UpdatedBy { get; set; }
