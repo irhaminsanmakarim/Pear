@@ -103,6 +103,9 @@
                                 case "tabular":
                                     Html.RenderPartial("~/Views/Tabular/_Edit.cshtml", Model);
                                     break;
+                                case "pie":
+                                    Html.RenderPartial("~/Views/Pie/_Edit.cshtml", Model);
+                                    break;
                                 default:
                                     Html.RenderPartial("~/Views/BarChart/_Edit.cshtml", Model);
                                     break;

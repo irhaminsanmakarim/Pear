@@ -144,6 +144,7 @@ namespace DSLNG.PEAR.Services
                                     x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId).FirstOrDefault();
                     rowResponse.Remark = actual != null ? actual.Remark : "";
                 }
+                #region switch
                 switch (kpi.YtdFormula)
                 {
                     case YtdFormula.Sum:
@@ -179,6 +180,9 @@ namespace DSLNG.PEAR.Services
                         }
                         break;
                 }
+                #endregion
+
+                #region if
                 KpiAchievement latestActual = null;
                 if (request.Actual)
                 {
@@ -240,8 +244,125 @@ namespace DSLNG.PEAR.Services
                             break;
                     }
                 }
+                #endregion
                 response.Rows.Add(rowResponse);
             }
+            return response;
+        }
+        
+        public GetPieDataResponse GetPieData(GetPieDataRequest request)
+        {
+            var response = new GetPieDataResponse();
+            IList<DateTime> dateTimePeriodes = new List<DateTime>();
+            string timeInformation;
+            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes,
+                              out timeInformation);
+            foreach (var series in request.Series)
+            {
+                var kpi = DataContext.Kpis.Include(x => x.Measurement).First(x => x.Id == series.KpiId);
+                var seriesResponse = new GetPieDataResponse.SeriesResponse();
+                seriesResponse.color = series.Color;
+                seriesResponse.name = kpi.Name;
+                seriesResponse.measurement = kpi.Measurement.Name;
+                var start = dateTimePeriodes[0];
+                var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
+                #region switch
+                switch (kpi.YtdFormula)
+                {
+                    case YtdFormula.Sum:
+                        if (request.ValueAxis == ValueAxis.KpiTarget)
+                        {
+                            seriesResponse.y = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                        } else if (request.ValueAxis == ValueAxis.KpiActual)
+                        {
+                            seriesResponse.y = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                        }
+                    break;
+
+                    case YtdFormula.Average:
+                    if (request.ValueAxis == ValueAxis.KpiTarget)
+                    {
+                        seriesResponse.y = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType
+                            && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
+                            .GroupBy(x => x.Kpi.Id)
+                            .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                    }
+                    else if (request.ValueAxis == ValueAxis.KpiActual)
+                    {
+                        seriesResponse.y = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType
+                            && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
+                            .GroupBy(x => x.Kpi.Id)
+                            .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                    }
+                    break;
+                }
+                #endregion
+
+                KpiAchievement latestActual = null;
+                if (request.ValueAxis == ValueAxis.KpiActual)
+                {
+                    if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                        (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                        (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                        (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                    {
+                        var kpiActual = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                                                                               x.Periode <= end &&
+                                                                               x.Kpi.Id == kpi.Id && (x.Value != null))
+                                                   .OrderByDescending(x => x.Periode).FirstOrDefault();
+                        if (kpiActual != null && kpiActual.Value.HasValue)
+                        {
+                            latestActual = kpiActual;
+                            seriesResponse.y = kpiActual.Value.Value;
+                        }
+                    }
+                }
+
+                if (request.ValueAxis == ValueAxis.KpiTarget && latestActual != null) 
+                {
+                    if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                        (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                        (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                        (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                    {
+                        var kpiTarget = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType &&
+                                                                          x.Periode == latestActual.Periode &&
+                                                                          x.Kpi.Id == kpi.Id)
+                                                   .OrderByDescending(x => x.Periode).FirstOrDefault();
+                        if (kpiTarget != null && kpiTarget.Value.HasValue)
+                        {
+                            seriesResponse.y = kpiTarget.Value.Value;
+                        }
+
+                        switch (request.PeriodeType)
+                        {
+                            case PeriodeType.Hourly:
+                                timeInformation = latestActual.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                                break;
+                            case PeriodeType.Daily:
+                                timeInformation = latestActual.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                break;
+                            case PeriodeType.Monthly:
+                                timeInformation = latestActual.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                                break;
+                            case PeriodeType.Yearly:
+                                timeInformation = latestActual.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
+                                break;
+                        }
+                    }
+                }
+
+                response.SeriesResponses.Add(seriesResponse);
+            }
+
+            response.Subtitle = timeInformation;
+            response.Title = request.HeaderTitle;
             return response;
         }
 
@@ -1950,6 +2071,8 @@ namespace DSLNG.PEAR.Services
             artifact.Economic = request.Economic;
             artifact.Fullfillment = request.Fullfillment;
             artifact.Remark = request.Remark;
+            artifact.ShowLegend = request.ShowLegend;
+            artifact.Is3D = request.Is3D;
 
             artifact.FractionScale = request.FractionScale;
 

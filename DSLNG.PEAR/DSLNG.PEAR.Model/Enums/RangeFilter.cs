@@ -12,6 +12,9 @@ namespace DSLNG.PEAR.Data.Enums
         DTD,
         MTD,
         YTD,
-        Interval
+        Interval,
+        SpecificDay,
+        SpecificMonth,
+        SpecificYear
     }
 }

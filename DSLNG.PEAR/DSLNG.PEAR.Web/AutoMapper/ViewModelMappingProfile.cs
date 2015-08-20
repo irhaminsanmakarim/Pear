@@ -180,6 +180,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, BarChartDataViewModel.SeriesViewModel>();
             Mapper.CreateMap<BarChartViewModel, CreateArtifactRequest>()
               .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<CreateArtifactRequest.SeriesRequest>()));
+            
             Mapper.CreateMap<BarChartViewModel.SeriesViewModel, CreateArtifactRequest.SeriesRequest>()
                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<CreateArtifactRequest.StackRequest>()));
             Mapper.CreateMap<BarChartViewModel.StackViewModel, CreateArtifactRequest.StackRequest>();
@@ -293,6 +294,29 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 //    o.MapFrom(s => s.BarChart.Series.MapTo<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>());
                 //});
 
+            //pie mapping
+            Mapper.CreateMap<ArtifactDesignerViewModel, GetPieDataRequest>()
+                .ForMember(x => x.PeriodeType, o => o.MapFrom(s => Enum.Parse(typeof(EPeriodeType), s.PeriodeType)))
+                .ForMember(x => x.RangeFilter, o => o.MapFrom(s => Enum.Parse(typeof(RangeFilter), s.RangeFilter)))
+                .ForMember(x => x.ValueAxis, o => o.MapFrom(s => Enum.Parse(typeof(ValueAxis), s.ValueAxis)))
+                .ForMember(x => x.Start, y => y.MapFrom(z => z.StartAfterParsed))
+                .ForMember(x => x.End, y => y.MapFrom(z => z.EndAfterParsed));
+            Mapper.CreateMap<PieViewModel, GetPieDataRequest>();
+            Mapper.CreateMap<PieViewModel.SeriesViewModel, GetPieDataRequest.SeriesRequest>();
+            Mapper.CreateMap<GetPieDataResponse, PieDataViewModel>();
+            Mapper.CreateMap<GetPieDataResponse.SeriesResponse, PieDataViewModel.SeriesResponse>();
+            Mapper.CreateMap<PieViewModel, CreateArtifactRequest>()
+              .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<CreateArtifactRequest.SeriesRequest>()));
+            Mapper.CreateMap<PieViewModel.SeriesViewModel, CreateArtifactRequest.SeriesRequest>();
+            Mapper.CreateMap<GetArtifactResponse, GetPieDataRequest>();
+            Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetPieDataRequest.SeriesRequest>();
+            Mapper.CreateMap<GetArtifactResponse, PieViewModel>();
+            Mapper.CreateMap<GetArtifactResponse.SeriesResponse, PieViewModel.SeriesViewModel>();
+            Mapper.CreateMap<PieViewModel, UpdateArtifactRequest>();
+            Mapper.CreateMap<PieViewModel.SeriesViewModel, UpdateArtifactRequest.SeriesRequest>();
+                
+                
+            
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();

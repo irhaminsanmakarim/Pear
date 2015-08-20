@@ -349,6 +349,7 @@
     <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\globalize.cultures.js" />
     <Content Include="Scripts\globalize.js" />
+    <Content Include="Scripts\highcharts-3d.src.js" />
     <Content Include="Scripts\highcharts-more.js" />
     <Content Include="Scripts\highcharts.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -597,6 +598,8 @@
     <Content Include="Views\Shared\UploadControlPartial.cshtml" />
     <Content Include="Views\Shared\_Download.cshtml" />
     <Content Include="Views\Shared\_Upload.cshtml" />
+    <Content Include="Views\Pie\_Create.cshtml" />
+    <Content Include="Views\Pie\_Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -695,6 +698,8 @@
     <Compile Include="ViewModels\Artifact\ChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\MultiaxisChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\MultiaxisChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\PieDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\PieViewModel.cs" />
     <Compile Include="ViewModels\Artifact\SearchKpiViewModel.cs" />
     <Compile Include="ViewModels\Artifact\SpiderwebChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\TabularDataViewModel.cs" />
