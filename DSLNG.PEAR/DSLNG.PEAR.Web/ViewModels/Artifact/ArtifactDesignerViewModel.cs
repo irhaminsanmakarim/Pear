@@ -143,7 +143,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         [Required]
         public string ValueAxis { get; set; }
         public IList<SelectListItem> ValueAxes { get; set; }
-
+        [Display(Name = "Is 3D")]
+        public bool Is3D { get; set; }
+        [Display(Name = "Show Legend")]
+        public bool ShowLegend { get; set; }
         //chart
         public BarChartViewModel BarChart { get; set; }
         public AreaChartViewModel AreaChart { get; set; }   
@@ -154,5 +157,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public TrafficLightChartViewModel TrafficLightChart { get; set; }
         public TabularViewModel Tabular { get; set; }
         public TankViewModel Tank { get; set; }
+        public PieViewModel Pie { get; set; }
     }
 }

@@ -87,6 +87,7 @@
     <Compile Include="Requests\Artifact\GetArtifactsRequest.cs" />
     <Compile Include="Requests\Artifact\GetArtifactsToSelectRequest.cs" />
     <Compile Include="Requests\Artifact\GetMultiaxisChartDataRequest.cs" />
+    <Compile Include="Requests\Artifact\GetPieDataRequest.cs" />
     <Compile Include="Requests\Artifact\GetTabularDataRequest.cs" />
     <Compile Include="Requests\Artifact\GetTankDataRequest.cs" />
     <Compile Include="Requests\Artifact\GetTrafficLightChartDataRequest.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Requests\KpiAchievement\GetKpiAchievementsRequest.cs" />
     <Compile Include="Requests\KpiAchievement\UpdateKpiAchievementItemRequest.cs" />
     <Compile Include="Requests\KpiAchievement\UpdateKpiAchievementsRequest.cs" />
+    <Compile Include="Requests\KpiTarget\BatchUpdateTargetRequest.cs" />
     <Compile Include="Requests\KpiTarget\CreateKpiTargetRequest.cs" />
     <Compile Include="Requests\KpiTarget\CreateKpiTargetsRequest.cs" />
     <Compile Include="Requests\KpiTarget\GetKpiTargetRequestByValue.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="Responses\Artifact\GetArtifactsResponse.cs" />
     <Compile Include="Responses\Artifact\GetArtifactsToSelectResponse.cs" />
     <Compile Include="Responses\Artifact\GetMultiaxisChartDataResponse.cs" />
+    <Compile Include="Responses\Artifact\GetPieDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetTabularDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetTankDataResponse.cs" />
     <Compile Include="Responses\Artifact\GetTrafficLightChartDataResponse.cs" />
@@ -148,6 +151,7 @@
     <Compile Include="Responses\Group\DeleteGroupResponse.cs" />
     <Compile Include="Responses\Group\UpdateGroupResponse.cs" />
     <Compile Include="Responses\KpiAchievement\AllKpiAchievementsResponse.cs" />
+    <Compile Include="Responses\KpiAchievement\GetAchievementsResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementsConfigurationResponse.cs" />
     <Compile Include="Responses\KpiAchievement\GetKpiAchievementsResponse.cs" />
@@ -156,6 +160,7 @@
     <Compile Include="Responses\KpiTarget\AllKpiTargetsResponse.cs" />
     <Compile Include="Responses\KpiTarget\CreateKpiTargetResponse.cs" />
     <Compile Include="Responses\KpiTarget\CreateKpiTargetsResponse.cs" />
+    <Compile Include="Responses\KpiTarget\GetKpiTargetItemResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetKpiTargetsConfigurationResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetKpiTargetsResponse.cs" />
     <Compile Include="Responses\KpiTarget\GetPmsConfigsResponse.cs" />

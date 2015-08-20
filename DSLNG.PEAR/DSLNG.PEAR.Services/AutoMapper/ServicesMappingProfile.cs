@@ -341,6 +341,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Measurement, y => y.MapFrom(z => z.Measurement.Name));
 
             Mapper.CreateMap<KpiTarget, GetKpiTargetsConfigurationResponse.KpiTarget>();
+            Mapper.CreateMap<KpiTarget, GetKpiTargetItemResponse>();
+            Mapper.CreateMap<Kpi, GetKpiTargetItemResponse.Kpi>();
+            Mapper.CreateMap<SaveKpiTargetRequest, KpiTarget>();
         }
 
         private void ConfigurePmsConfig()
@@ -377,6 +380,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.Measurement, y => y.MapFrom(z => z.Measurement.Name));
 
             Mapper.CreateMap<KpiAchievement, GetKpiAchievementsConfigurationResponse.KpiAchievement>();
+            Mapper.CreateMap<KpiAchievement, GetKpiAchievementResponse>();
+            Mapper.CreateMap<Kpi, GetKpiAchievementResponse.Kpi>();
+
+            Mapper.CreateMap<KpiAchievement, GetAchievementsResponse>();
+            Mapper.CreateMap<Kpi, GetAchievementsResponse>();
         }
     }
 }

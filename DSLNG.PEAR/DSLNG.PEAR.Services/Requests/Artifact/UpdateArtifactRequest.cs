@@ -39,6 +39,8 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public bool Economic { get; set; }
         public bool Fullfillment { get; set; }
         public bool Remark { get; set; }
+        public bool Is3D { get; set; }
+        public bool ShowLegend { get; set; }
 
         public class SeriesRequest
         {

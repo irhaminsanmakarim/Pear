@@ -1,4 +1,5 @@
 ﻿using DSLNG.PEAR.Services.Requests.KpiTarget;
+using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Responses.KpiTarget;
 
 namespace DSLNG.PEAR.Services.Interfaces
@@ -10,12 +11,14 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetPmsConfigsResponse GetPmsConfigs(GetPmsConfigsRequest request);
         GetKpiTargetsResponse GetKpiTargets(GetKpiTargetsRequest request);
         GetKpiTargetResponse GetKpiTarget(GetKpiTargetRequest request);
-        GetKpiTargetResponse GetKpiTargetByValue(GetKpiTargetRequestByValue request);
+        GetKpiTargetItemResponse GetKpiTargetByValue(GetKpiTargetRequestByValue request);
         UpdateKpiTargetResponse UpdateKpiTarget(UpdateKpiTargetRequest request);
         UpdateKpiTargetItemResponse UpdateKpiTargetItem(UpdateKpiTargetItemRequest request);
 
         UpdateKpiTargetItemResponse SaveKpiTargetItem(SaveKpiTargetRequest request);
         GetKpiTargetsConfigurationResponse GetKpiTargetsConfiguration(GetKpiTargetsConfigurationRequest request);
         AllKpiTargetsResponse GetAllKpiTargets();
+
+        BaseResponse BatchUpdateKpiTargetss(BatchUpdateTargetRequest request);
     }
 }

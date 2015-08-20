@@ -19,5 +19,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetTabularDataResponse GetTabularData(GetTabularDataRequest request);
         GetTankDataResponse GetTankData(GetTankDataRequest request);
         GetMultiaxisChartDataResponse GetMultiaxisChartData(GetMultiaxisChartDataRequest request);
+        GetPieDataResponse GetPieData(GetPieDataRequest request);
     }
 }

@@ -738,6 +738,26 @@ Number.prototype.format = function (n, x) {
                 Pear.Artifact.Designer._setupCallbacks.tabular();
 
                 break;
+            case 'pie':
+                var $hiddenFields = $('#hidden-fields');
+                $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                    $this = $(val);
+                    $this.addClass($('#graphic-type').val());
+                });
+                var seriesTemplate = $hiddenFields.find('.series-template.original');
+                var seriesTemplateClone = seriesTemplate.clone(true);
+                seriesTemplateClone.children('input:first-child').remove();
+                $('#hidden-fields-holder').html(seriesTemplateClone);
+                seriesTemplate.remove();
+                $('#series-holder').append($hiddenFields.html());
+                $('#series-holder').find('.series-template').each(function (i, val) {
+                    var $this = $(val);
+                    Pear.Artifact.Designer._kpiAutoComplete($this);
+                    Pear.Artifact.Designer._colorPicker($this);
+                });
+                $hiddenFields.remove();
+                Pear.Artifact.Designer._setupCallbacks.pie();
+                break;
         }
 
         //$('#PeriodeType').change();
@@ -2050,6 +2070,112 @@ Number.prototype.format = function (n, x) {
             series: series
         });
     };
+    
+    //pie chart
+    artifactDesigner._setupCallbacks.pie = function () {
+        var removeSeriesOrStack = function() {
+            $('.series-template .remove').click(function(e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.series-template').remove();
+            });
+        };
+        var addSeries = function () {
+            //console.log('add-series');
+            var seriesCount = $('#series-holder').find('.series-template').length + 1;
+            $('#add-series').click(function (e) {
+                //console.log('series-click');
+                e.preventDefault();
+                var seriesTemplate = $('.series-template.original').clone(true);
+
+                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate);
+                Pear.Artifact.Designer._colorPicker(seriesTemplate);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'Pie.Series.Index',
+                    value: seriesCount
+                }).appendTo(seriesTemplate);
+                seriesTemplate.removeClass('original');
+                seriesTemplate.attr('data-series-pos', seriesCount);
+                if (seriesCount !== 0) {
+                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
+                    for (var i in fields) {
+                        var field = fields[i];
+                        seriesTemplate.find('#Pie_Series_0__' + field).attr('name', 'Pie.Series[' + seriesCount + '].' + field);
+                    }
+                }
+                seriesTemplate.addClass($('#bar-value-axis').val());
+                seriesTemplate.addClass($('#graphic-type').val());
+                $('#series-holder').append(seriesTemplate);
+                seriesCount++;
+            });
+        };
+        removeSeriesOrStack();
+        addSeries();
+    };
+
+    artifactDesigner._previewCallbacks.pie = function (data, container) {
+        container.highcharts({
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: data.Pie.Is3D,
+                    alpha: 60,
+                    beta: 0
+                },
+                margin: [0, 0, 0, 0],
+                spacingTop: 0,
+                spacingBottom: 0,
+                spacingLeft: 0,
+                spacingRight: 0
+            },
+            title: {
+                text: data.Pie.Title,
+                x: -20 //center
+            },
+            subtitle: {
+                text: data.Pie.Subtitle,
+                x: -20
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    /*dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                            return '<b>' + this.point.name + '</b>: ' + this.percentage.toFixed(2) + ' %';
+                        }
+                    }*/
+                    dataLabels: {
+                        enabled: true,
+                        distance: 2,
+                        color: '#333333',
+                        formatter: function () {
+                            return '<b>' + this.point.name + '</b>: <br/> ' + this.percentage.toFixed(2) + ' %';
+                        }
+                    },
+                    showInLegend: data.Pie.ShowLegend,
+                    //innerSize: '40%',
+                    size: '75%',
+                    shadow: false,
+                    depth: 45,
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.point.name + '</b>: ' + this.y.format(2) + ' ' + this.point.measurement;
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Current selection',
+                data: data.Pie.SeriesResponses
+            }]
+        });
+    };
+    
     var templateEditor = Pear.Template.Editor;
 
     templateEditor._artifactSelectField = function (context) {
