@@ -1073,6 +1073,11 @@ Number.prototype.format = function (n, x) {
                         'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
             },
+            exporting: {
+                url: 'Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
             credits: {
                 enabled: false
             },
@@ -1139,6 +1144,11 @@ Number.prototype.format = function (n, x) {
                         'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
             },
+            exporting: {
+                url: 'Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
             credits: {
                 enabled: false
             },
@@ -1185,6 +1195,11 @@ Number.prototype.format = function (n, x) {
                         this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
                         'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
+            },
+            exporting: {
+                url: 'Chart/Export',
+                filename: 'MyChart',
+                width: 1200
             },
             credits: {
                 enabled: false
@@ -1282,6 +1297,11 @@ Number.prototype.format = function (n, x) {
                     width: 1,
                     color: '#808080'
                 }]
+            },
+            exporting: {
+                url: 'Chart/Export',
+                filename: 'MyChart',
+                width: 1200
             },
             credits: {
                 enabled: false
@@ -1388,6 +1408,11 @@ Number.prototype.format = function (n, x) {
                         this.series.name + ': ' + this.y.format(2) + ' ' + data.LineChart.ValueAxisTitle;
                 }
                 //valueSuffix: data.LineChart.ValueAxisTitle
+            },
+            exporting: {
+                url: 'Chart/Export',
+                filename: 'MyChart',
+                width: 1200
             },
             credits: {
                 enabled: false
@@ -1584,6 +1609,11 @@ Number.prototype.format = function (n, x) {
                     outerRadius: '105%',
                     innerRadius: '103%'
                 }]
+            },
+            exporting: {
+                url: 'Chart/Export',
+                filename: 'MyChart',
+                width: 1200
             },
             credits: {
                 enabled: false
@@ -2227,6 +2257,11 @@ Number.prototype.format = function (n, x) {
             subtitle: {
                 text: data.MultiaxisChart.Subtitle
             },
+            exporting: {
+                url: 'Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
             credits: {
                 enabled: false
             },
@@ -2380,6 +2415,11 @@ Number.prototype.format = function (n, x) {
                     text: data.ComboChart.Measurement
                 }
             },
+            exporting: {
+                url: 'Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
             credits: {
                 enabled: false
             },
@@ -2472,6 +2512,11 @@ Number.prototype.format = function (n, x) {
             subtitle: {
                 text: data.Pie.Subtitle,
                 x: -20
+            },
+            exporting: {
+                url: 'Chart/Export',
+                filename: 'MyChart',
+                width: 1200
             },
             credits: {
                 enabled: false
