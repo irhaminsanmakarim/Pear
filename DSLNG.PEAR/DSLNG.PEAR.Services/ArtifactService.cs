@@ -657,6 +657,23 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public GetComboChartDataResponse GetComboChartData(GetComboChartDataRequest request) {
+            var response = new GetComboChartDataResponse();
+            foreach (var chart in request.Charts) {
+                var chartReq = request.MapTo<GetCartesianChartDataRequest>();
+                chart.MapPropertiesToInstance<GetCartesianChartDataRequest>(chartReq);
+                var cartesianChartRes = GetChartData(chartReq);
+                if (response.Subtitle == null) response.Subtitle = cartesianChartRes.Subtitle;
+                if (response.Periodes == null) response.Periodes = cartesianChartRes.Periodes;
+                var comboChart = cartesianChartRes.MapTo<GetComboChartDataResponse.ChartResponse>();
+                comboChart.GraphicType = chartReq.GraphicType;
+                comboChart.SeriesType = cartesianChartRes.SeriesType;
+                response.Charts.Add(comboChart);
+                response.Measurement = DataContext.Measurements.First(x => x.Id == chartReq.MeasurementId).Name;
+            }
+            return response;
+        }
+
         public GetCartesianChartDataResponse GetChartData(GetCartesianChartDataRequest request)
         {
             var response = new GetCartesianChartDataResponse();
@@ -1543,7 +1560,7 @@ namespace DSLNG.PEAR.Services
                                 {
                                     if (target == null || !target.Value.HasValue)
                                     {
-                                        aSeries.Data.Add(target.Value.Value);
+                                        aSeries.Data.Add(0);
                                         remainSeries.Data.Add(0);
                                         exceedSeries.Data.Add(actual.Value.Value);
                                     }
@@ -1838,7 +1855,10 @@ namespace DSLNG.PEAR.Services
                 {
                     localMeasurement = DataContext.Measurements.Local.Where(x => x.Id == localMeasurement.Id).FirstOrDefault();
                 }
-                chart.Measurement = localMeasurement;
+                if (localMeasurement.Id != 0)
+                {
+                    chart.Measurement = localMeasurement;
+                }
                 foreach (var seriesReq in chartReq.Series)
                 {
                     var series = seriesReq.MapTo<ArtifactSerie>();
@@ -2060,7 +2080,10 @@ namespace DSLNG.PEAR.Services
                 {
                     localMeasurement = DataContext.Measurements.Local.Where(x => x.Id == localMeasurement.Id).FirstOrDefault();
                 }
-                chart.Measurement = localMeasurement;
+                if (localMeasurement.Id != 0)
+                {
+                    chart.Measurement = localMeasurement;
+                }
                 foreach (var seriesReq in chartReq.Series)
                 {
                     var series = seriesReq.MapTo<ArtifactSerie>();

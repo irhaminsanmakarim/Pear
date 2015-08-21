@@ -1,0 +1,75 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+
+<div class="form-group form-list">
+    <label>&nbsp;</label>
+    <input type="button" value="Add Charts" class="btn btn-lightblue" id="add-chart" />
+</div>
+
+<div id="hidden-fields">
+    @for (var i = 0; i < Model.ComboChart.Charts.Count; i++)
+    {
+        var original = i == 0 ? "original" : "";
+        var dataChartPos = original == "" ? "data-chart-pos=" + i : "";
+        <div class="chart-template @original whitebox" @dataChartPos>
+            <input type="hidden" name="ComboChart.Charts.Index" value="@i" />
+            <h2>Charts</h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @{
+        if (i != 0)
+        {
+            Model.ComboChart.GraphicTypes.Where(x => x.Value == Model.ComboChart.Charts[i].GraphicType).First().Selected = true;
+        }
+                            @Html.LabelFor(model => model.ComboChart.Charts[i].GraphicType)
+                            @Html.DropDownListFor(model => model.ComboChart.Charts[i].GraphicType, Model.ComboChart.GraphicTypes, new { @class = "form-control multiaxis-graphic-type", data_graph_url = Url.Action("ComboSettings", "Artifact") })
+                            @Html.ValidationMessageFor(model => model.ComboChart.Charts[i].GraphicType)
+                        }
+                    </div>
+                </div>
+                
+                <div class="col-sm-6  value-axis-holder">
+                    @{
+        if (i != 0)
+        {
+            Model.ComboChart.ValueAxes.Where(x => x.Value == Model.ComboChart.Charts[i].ValueAxis).First().Selected = true;
+        }
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.ComboChart.Charts[i].ValueAxis)
+                            @Html.DropDownListFor(model => model.ComboChart.Charts[i].ValueAxis, Model.ComboChart.ValueAxes, new { @class = "form-control value-axis-opt" })
+                            @Html.ValidationMessageFor(model => model.ComboChart.Charts[i].ValueAxis)
+                        </div>
+                    }
+                </div>
+                <div class="col-sm-6 chart-settings">
+                    @{
+        if (i != 0)
+        {
+            switch (Model.ComboChart.Charts[i].GraphicType)
+            {
+                case "line":
+                    Html.RenderPartial("~/Views/ComboChart/_LineChartEdit.cshtml", Model.ComboChart.Charts[i].LineChart, new ViewDataDictionary { { "ChartIndex", i } });
+                    break;
+                case "area":
+                    Html.RenderPartial("~/Views/ComboChart/_AreaChartEdit.cshtml", Model.ComboChart.Charts[i].AreaChart, new ViewDataDictionary { { "ChartIndex", i } });
+                    break;
+                default:
+                    Html.RenderPartial("~/Views/ComboChart/_BarChartEdit.cshtml", Model.ComboChart.Charts[i].BarChart, new ViewDataDictionary { { "ChartIndex", i } });
+                    break;
+            }
+        }
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-inline graphic-properties series-holder">
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="Remove" class="remove" />
+            <div class="hidden-fields-holder"></div>
+        </div>
+    }
+</div>
+

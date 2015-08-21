@@ -17,5 +17,6 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public TankDataViewModel Tank { get; set; }
         public MultiaxisChartDataViewModel MultiaxisChart { get; set; }
         public PieDataViewModel Pie { get; set; }
+        public ComboChartDataViewModel ComboChart { get; set; }
     }
 }

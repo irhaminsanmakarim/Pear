@@ -260,6 +260,17 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, GetMultiaxisChartDataRequest.ChartRequest>();
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<GetArtifactResponse.StackResponse, GetMultiaxisChartDataRequest.ChartRequest.StackRequest>();
+
+            Mapper.CreateMap<GetComboChartDataRequest, GetCartesianChartDataRequest>();
+            Mapper.CreateMap<GetComboChartDataRequest.ChartRequest, GetCartesianChartDataRequest>();
+            Mapper.CreateMap<GetComboChartDataRequest.ChartRequest.SeriesRequest, GetCartesianChartDataRequest.SeriesRequest>();
+            Mapper.CreateMap<GetComboChartDataRequest.ChartRequest.StackRequest, GetCartesianChartDataRequest.StackRequest>();
+            Mapper.CreateMap<GetCartesianChartDataResponse, GetComboChartDataResponse.ChartResponse>();
+            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, GetComboChartDataResponse.ChartResponse.SeriesViewModel>();
+            Mapper.CreateMap<GetArtifactResponse, GetComboChartDataRequest>();
+            Mapper.CreateMap<GetArtifactResponse.ChartResponse, GetComboChartDataRequest.ChartRequest>();
+            Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetComboChartDataRequest.ChartRequest.SeriesRequest>();
+            Mapper.CreateMap<GetArtifactResponse.StackResponse, GetComboChartDataRequest.ChartRequest.StackRequest>();
             
             Mapper.CreateMap<Kpi, GetConfigurationResponse.Kpi>();
             Mapper.CreateMap<KpiAchievement, GetConfigurationResponse.KpiAchievement>();

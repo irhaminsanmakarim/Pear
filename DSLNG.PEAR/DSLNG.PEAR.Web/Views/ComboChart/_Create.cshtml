@@ -1,0 +1,42 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+
+<div class="form-group form-list">
+    <label>&nbsp;</label>
+    @*@Html.DropDownListFor(model => model.GraphicType, Model.ComboChart.GraphicTypes, new { id = "multiaxis-graphic-type", @class = "form-control" })*@
+    <input type="button" value="Add Charts" class="btn btn-lightblue" id="add-chart" />
+</div>
+
+<div id="hidden-fields">
+    @for (var i = 0; i < Model.ComboChart.Charts.Count; i++)
+    {
+        <div class="chart-template original whitebox">
+            <h2>Charts</h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ComboChart.Charts[i].GraphicType)
+                        @Html.DropDownListFor(model => model.ComboChart.Charts[i].GraphicType, Model.ComboChart.GraphicTypes, new { @class = "form-control multiaxis-graphic-type", data_graph_url = Url.Action("ComboSettings", "Artifact") })
+                        @Html.ValidationMessageFor(model => model.ComboChart.Charts[i].GraphicType)
+                    </div>
+                </div>
+                <div class="col-sm-6  value-axis-holder">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ComboChart.Charts[i].ValueAxis)
+                        @Html.DropDownListFor(model => model.ComboChart.Charts[i].ValueAxis, Model.ComboChart.ValueAxes, new { @class = "form-control value-axis-opt" })
+                        @Html.ValidationMessageFor(model => model.ComboChart.Charts[i].ValueAxis)
+                    </div>
+                </div>
+                <div class="col-sm-6 chart-settings">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-inline graphic-properties series-holder">
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="Remove" class="remove" />
+            <div class="hidden-fields-holder"></div>
+        </div>
+    }
+</div>

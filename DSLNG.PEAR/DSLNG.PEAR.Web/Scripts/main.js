@@ -548,6 +548,165 @@ Number.prototype.format = function (n, x) {
                 $hiddenFields.remove();
                 Pear.Artifact.Designer._setupCallbacks.multiaxis();
                 break;
+            case 'combo':
+                var $hiddenFields = $('#hidden-fields');
+                var chartTemplate = $hiddenFields.find('.chart-template.original');
+                var chartTemplateClone = chartTemplate.clone(true);
+                chartTemplateClone.children('input:first-child').remove();
+                $('#hidden-fields-holder').html(chartTemplateClone);
+                chartTemplate.remove();
+                $('#charts-holder').append($hiddenFields.html());
+                $('#charts-holder').find('.chart-template').each(function (i, val) {
+                    var $thisTemplate = $(val);
+                    Pear.Artifact.Designer._colorPicker($thisTemplate.find('.value-axis-color'));
+                    $thisTemplate.find('.multiaxis-graphic-type').change(function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        artifactDesigner.Combo._loadGraph($this.data('graph-url'), $this.val(), $thisTemplate);
+                    });
+                    switch ($thisTemplate.find('.multiaxis-graphic-type').val()) {
+                        case 'line':
+                            var $hiddenFields = $thisTemplate.find('.hidden-fields');
+                            $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                                $this = $(val);
+                                $this.addClass('singlestack');
+                                $this.addClass($thisTemplate.find('.value-axis-opt').val());
+                                $this.addClass($thisTemplate.find('.multiaxis-graphic-type').val());
+                            });
+                            var seriesTemplate = $hiddenFields.find('.series-template.original');
+                            var seriesTemplateClone = seriesTemplate.clone(true);
+                            seriesTemplateClone.children('input:first-child').remove();
+                            $thisTemplate.find('.hidden-fields-holder').html(seriesTemplateClone);
+                            seriesTemplate.remove();
+                            $thisTemplate.find('.series-holder').append($hiddenFields.html());
+                            $thisTemplate.find('.series-holder').find('.series-template').each(function (i, val) {
+                                var $this = $(val);
+                                Pear.Artifact.Designer._kpiAutoComplete($this);
+                                Pear.Artifact.Designer._colorPicker($this);
+                            });
+                            $hiddenFields.remove();
+                            Pear.Artifact.Designer.Combo._setupCallbacks.line($thisTemplate);
+                            break;
+                        case 'bar':
+                            var $hiddenFields = $thisTemplate.find('.hidden-fields');
+                            $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                                $this = $(val);
+                                if ($this.find('.stack-template').length) {
+                                    $this.addClass('multistacks');
+                                } else {
+                                    $this.addClass('singlestack');
+                                }
+                                $this.addClass($thisTemplate.find('.value-axis-opt').val());
+                                $this.addClass($thisTemplate.find('.multiaxis-graphic-type').val());
+                            });
+                            var seriesTemplate = $hiddenFields.find('.series-template.original');
+                            var seriesTemplateClone = seriesTemplate.clone(true);
+                            seriesTemplateClone.children('input:first-child').remove();
+                            seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
+                            $thisTemplate.find('.hidden-fields-holder').html(seriesTemplateClone);
+                            seriesTemplate.remove();
+                            $thisTemplate.find('.series-holder').append($hiddenFields.html());
+                            $thisTemplate.find('.series-holder').find('.series-template').each(function (i, val) {
+                                var $this = $(val);
+                                Pear.Artifact.Designer._kpiAutoComplete($this);
+                                Pear.Artifact.Designer._colorPicker($this);
+                            });
+                            $hiddenFields.remove();
+                            var stackTemplate = $thisTemplate.find('.hidden-fields-holder').find('.stack-template.original');
+                            var stackTemplateClone = stackTemplate.clone(true);
+                            stackTemplate.closest('.hidden-fields-holder').append(stackTemplateClone);
+                            stackTemplate.remove();
+                            Pear.Artifact.Designer.Combo._setupCallbacks.bar($thisTemplate);
+                            break;
+                        case 'baraccumulative':
+                            var $hiddenFields = $thisTemplate.find('.hidden-fields');
+                            $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                                $this = $(val);
+                                if ($this.find('.stack-template').length) {
+                                    $this.addClass('multistacks');
+                                } else {
+                                    $this.addClass('singlestack');
+                                }
+                                $this.addClass($thisTemplate.find('.value-axis-opt').val());
+                                $this.addClass($thisTemplate.find('.multiaxis-graphic-type').val());
+                            });
+
+                            var seriesTemplate = $hiddenFields.find('.series-template.original');
+                            var seriesTemplateClone = seriesTemplate.clone(true);
+                            seriesTemplateClone.children('input:first-child').remove();
+                            seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
+                            $thisTemplate.find('.hidden-fields-holder').html(seriesTemplateClone);
+                            seriesTemplate.remove();
+                            $thisTemplate.find('.series-holder').append($hiddenFields.html());
+                            $thisTemplate.find('.series-holder').find('.series-template').each(function (i, val) {
+                                var $this = $(val);
+                                Pear.Artifact.Designer._kpiAutoComplete($this);
+                                Pear.Artifact.Designer._colorPicker($this);
+                            });
+                            $hiddenFields.remove();
+                            var stackTemplate = $thisTemplate.find('.hidden-fields-holder').find('.stack-template.original');
+                            var stackTemplateClone = stackTemplate.clone(true);
+                            stackTemplate.closest('.hidden-fields-holder').append(stackTemplateClone);
+                            stackTemplate.remove();
+                            Pear.Artifact.Designer.Combo._setupCallbacks.baraccumulative($thisTemplate);
+                            break;
+                        case 'barachievement':
+                            var $hiddenFields = $thisTemplate.find('.hidden-fields');
+                            $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                                $this = $(val);
+                                if ($this.find('.stack-template').length) {
+                                    $this.addClass('multistacks');
+                                } else {
+                                    $this.addClass('singlestack');
+                                }
+                                $this.addClass($thisTemplate.find('.value-axis-opt').val());
+                                $this.addClass($thisTemplate.find('.multiaxis-graphic-type').val());
+                            });
+
+                            var seriesTemplate = $hiddenFields.find('.series-template.original');
+                            var seriesTemplateClone = seriesTemplate.clone(true);
+                            seriesTemplateClone.children('input:first-child').remove();
+                            seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
+                            $thisTemplate.find('.hidden-fields-holder').html(seriesTemplateClone);
+                            seriesTemplate.remove();
+                            $thisTemplate.find('.series-holder').append($hiddenFields.html());
+                            $thisTemplate.find('.series-holder').find('.series-template').each(function (i, val) {
+                                var $this = $(val);
+                                Pear.Artifact.Designer._kpiAutoComplete($this);
+                                Pear.Artifact.Designer._colorPicker($this);
+                            });
+                            $hiddenFields.remove();
+                            var stackTemplate = $thisTemplate.find('.hidden-fields-holder').find('.stack-template.original');
+                            var stackTemplateClone = stackTemplate.clone(true);
+                            stackTemplate.closest('.hidden-fields-holder').append(stackTemplateClone);
+                            stackTemplate.remove();
+                            Pear.Artifact.Designer.Combo._setupCallbacks.baraccumulative($thisTemplate);
+                            break;
+                        case 'area':
+                            var $hiddenFields = $thisTemplate.find('.hidden-fields');
+                            $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                                $this = $(val);
+                                $this.addClass('singlestack');
+                            });
+                            var seriesTemplate = $hiddenFields.find('.series-template.original');
+                            var seriesTemplateClone = seriesTemplate.clone(true);
+                            seriesTemplateClone.children('input:first-child').remove();
+                            $thisTemplate.find('.hidden-fields-holder').html(seriesTemplateClone);
+                            seriesTemplate.remove();
+                            $thisTemplate.find('.series-holder').append($hiddenFields.html());
+                            $thisTemplate.find('.series-holder').find('.series-template').each(function (i, val) {
+                                var $this = $(val);
+                                Pear.Artifact.Designer._kpiAutoComplete($this);
+                                Pear.Artifact.Designer._colorPicker($this);
+                            });
+                            $hiddenFields.remove();
+                            Pear.Artifact.Designer.Combo._setupCallbacks.area($thisTemplate);
+                            break;
+                    }
+                });
+                $hiddenFields.remove();
+                Pear.Artifact.Designer._setupCallbacks.combo();
+                break;
             case 'speedometer':
                 var $hiddenFields = $('#hidden-fields');
                 var plotTemplate = $hiddenFields.find('.plot-band-template.original');
@@ -1750,7 +1909,8 @@ Number.prototype.format = function (n, x) {
 
     //mutliaxis
     artifactDesigner.Multiaxis._setupCallbacks = {};
-    artifactDesigner.Multiaxis._setupCallbacks.bar = function (context) {
+    artifactDesigner.Multiaxis._setupCallbacks.bar = function (context, prefix) {
+        var prefix = prefix || 'MultiaxisChart';
         var removeSeriesOrStack = function () {
             context.find('.series-template > .remove').click(function (e) {
                 e.preventDefault();
@@ -1775,7 +1935,7 @@ Number.prototype.format = function (n, x) {
                 $('<input>').attr({
                     type: 'hidden',
                     id: 'foo',
-                    name: 'MultiaxisChart.Charts[' + chartPost + '].BarChart.Series.Index',
+                    name: prefix + '.Charts[' + chartPost + '].BarChart.Series.Index',
                     value: seriesCount
                 }).appendTo(seriesTemplate);
                 seriesTemplate.removeClass('original');
@@ -1784,14 +1944,18 @@ Number.prototype.format = function (n, x) {
                     var fields = ['Label', 'KpiId', 'ValueAxis', 'Color', 'PreviousColor'];
                     for (var i in fields) {
                         var field = fields[i];
-                        seriesTemplate.find('[id$=BarChart_Series_0__' + field + ']').attr('name', 'MultiaxisChart.Charts[' + chartPost + '].BarChart.Series[' + seriesCount + '].' + field);
+                        seriesTemplate.find('[id$=BarChart_Series_0__' + field + ']').attr('name', prefix + '.Charts[' + chartPost + '].BarChart.Series[' + seriesCount + '].' + field);
                     }
                 }
                 seriesTemplate.addClass(context.find('.series-type').val().toLowerCase());
                 seriesTemplate.addClass(context.find('.value-axis-opt').val());
                 seriesTemplate.addClass(context.find('.multiaxis-graphic-type').val());
                 context.find('.series-holder').append(seriesTemplate);
-                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate, true, seriesTemplate.closest('.chart-template'));
+                if (prefix == 'MultiaxisChart') {
+                    Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate, true, seriesTemplate.closest('.chart-template'));
+                } else {
+                    Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate);
+                }
                 seriesCount++;
             });
         };
@@ -1810,16 +1974,20 @@ Number.prototype.format = function (n, x) {
                 $('<input>').attr({
                     type: 'hidden',
                     id: 'foo',
-                    name: 'MultiaxisChart.Charts[' + chartPost + '].BarChart.Series[' + seriesPos + '].Stacks.Index',
+                    name: prefix + '.Charts[' + chartPost + '].BarChart.Series[' + seriesPos + '].Stacks.Index',
                     value: stackCount
                 }).appendTo(stackTemplate);
                 var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
                 for (var i in fields) {
                     var field = fields[i];
-                    stackTemplate.find('#MultiaxisChart_Charts_0__BarChart_Series_0__Stacks_0__' + field).attr('name', 'MultiaxisChart.Charts[' + chartPost + '].BarChart.Series[' + seriesPos + '].Stacks[' + stackCount + '].' + field);
+                    stackTemplate.find('[id$=BarChart_Series_0__Stacks_0__' + field + ']').attr('name', prefix + '.Charts[' + chartPost + '].BarChart.Series[' + seriesPos + '].Stacks[' + stackCount + '].' + field);
                 }
                 $this.closest('.stacks-holder').append(stackTemplate);
-                Pear.Artifact.Designer._kpiAutoComplete(stackTemplate, true, stackTemplate.closest('.chart-template'));
+                if (prefix == 'MultiaxisChart') {
+                    Pear.Artifact.Designer._kpiAutoComplete(stackTemplate, true, stackTemplate.closest('.chart-template'));
+                } else {
+                    Pear.Artifact.Designer._kpiAutoComplete(stackTemplate);
+                }
                 stackCount++;
             });
         };
@@ -1836,7 +2004,8 @@ Number.prototype.format = function (n, x) {
         context.find('.value-axis-holder').css('display', 'none');
         Pear.Artifact.Designer.Multiaxis._setupCallbacks.bar(context);
     };
-    artifactDesigner.Multiaxis._setupCallbacks.line = function (context) {
+    artifactDesigner.Multiaxis._setupCallbacks.line = function (context, prefix) {
+        var prefix = prefix || "MultiaxisChart";
         var removeSeriesOrStack = function () {
             context.find('.series-template .remove').click(function (e) {
                 e.preventDefault();
@@ -1854,7 +2023,7 @@ Number.prototype.format = function (n, x) {
                 $('<input>').attr({
                     type: 'hidden',
                     id: 'foo',
-                    name: 'MultiaxisChart.Charts[' + chartPost + '].LineChart.Series.Index',
+                    name: prefix + '.Charts[' + chartPost + '].LineChart.Series.Index',
                     value: seriesCount
                 }).appendTo(seriesTemplate);
                 seriesTemplate.removeClass('original');
@@ -1863,20 +2032,25 @@ Number.prototype.format = function (n, x) {
                     var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
                     for (var i in fields) {
                         var field = fields[i];
-                        seriesTemplate.find('[id$=LineChart_Series_0__' + field+']').attr('name', 'MultiaxisChart.Charts[' + chartPost + '].LineChart.Series[' + seriesCount + '].' + field);
+                        seriesTemplate.find('[id$=LineChart_Series_0__' + field+']').attr('name', prefix + '.Charts[' + chartPost + '].LineChart.Series[' + seriesCount + '].' + field);
                     }
                 }
                 seriesTemplate.addClass(context.find('.value-axis-opt').val());
                 seriesTemplate.addClass(context.find('.multiaxis-graphic-type').val());
                 context.find('.series-holder').append(seriesTemplate);
-                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate, true, seriesTemplate.closest('.chart-template'));
+                if (prefix == "MultiaxisChart") {
+                    Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate, true, seriesTemplate.closest('.chart-template'));
+                } else {
+                    Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate);
+                }
                 seriesCount++;
             });
         };
         removeSeriesOrStack();
         addSeries();
     };
-    artifactDesigner.Multiaxis._setupCallbacks.area = function (context) {
+    artifactDesigner.Multiaxis._setupCallbacks.area = function (context, prefix) {
+        var prefix = prefix || "MultiaxisChart";
         var removeSeriesOrStack = function () {
             context.find('.series-template .remove').click(function (e) {
                 e.preventDefault();
@@ -1894,7 +2068,7 @@ Number.prototype.format = function (n, x) {
                 $('<input>').attr({
                     type: 'hidden',
                     id: 'foo',
-                    name: 'MultiaxisChart.Charts[' + chartPost + '].AreaChart.Series.Index',
+                    name: prefix + '.Charts[' + chartPost + '].AreaChart.Series.Index',
                     value: seriesCount
                 }).appendTo(seriesTemplate);
                 seriesTemplate.removeClass('original');
@@ -1903,21 +2077,28 @@ Number.prototype.format = function (n, x) {
                     var fields = ['Label', 'KpiId', 'Color', 'ValueAxis'];
                     for (var i in fields) {
                         var field = fields[i];
-                        seriesTemplate.find('[id$=AreaChart_Series_0__' + field + ']').attr('name', 'MultiaxisChart.Charts[' + chartPost + '].AreaChart.Series[' + seriesCount + '].' + field);
+                        seriesTemplate.find('[id$=AreaChart_Series_0__' + field + ']').attr('name', prefix + '.Charts[' + chartPost + '].AreaChart.Series[' + seriesCount + '].' + field);
                     }
                 }
                 seriesTemplate.addClass(context.find('.value-axis-opt').val());
                 seriesTemplate.addClass(context.find('.multiaxis-graphic-type').val());
                 context.find('.series-holder').append(seriesTemplate);
-                Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate, true, seriesTemplate.closest('.chart-template'));
+                if (prefix == "MultiaxisChart") {
+                    Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate, true, seriesTemplate.closest('.chart-template'));
+                } else {
+                    Pear.Artifact.Designer._kpiAutoComplete(seriesTemplate);
+                }
                 seriesCount++;
             });
         };
         removeSeriesOrStack();
         addSeries();
     };
-    artifactDesigner.Multiaxis._loadGraph = function (url, type, context) {
+    artifactDesigner.Multiaxis._loadGraph = function (url, type, context, customCallback) {
         var callback = Pear.Artifact.Designer.Multiaxis._setupCallbacks;
+        if (typeof customCallback !== 'undefined') {
+            callback = customCallback;
+        }
         $.ajax({
             url: url,
             data: 'type=' + type,
@@ -1931,10 +2112,6 @@ Number.prototype.format = function (n, x) {
                 context.find('.graphic-properties').each(function (i, val) {
                     $(val).html('');
                 });
-                //$('#graphic-settings').prev('.form-group').css('display', 'block');
-                //$('#general-graphic-settings').css('display', 'block');
-                //$('.form-measurement').css('display', 'block');
-                //$('.main-value-axis').css('display', 'block');
                 context.find('.value-axis-holder').css('display', 'block');
                 if (callback.hasOwnProperty(type)) {
                     callback[type](context);
@@ -2071,6 +2248,146 @@ Number.prototype.format = function (n, x) {
         });
     };
     
+
+    //combination chart
+    artifactDesigner.Combo = {};
+    artifactDesigner.Combo._setupCallbacks = {};
+    artifactDesigner.Combo._setupCallbacks.bar = function (context) {
+        Pear.Artifact.Designer.Multiaxis._setupCallbacks.bar(context, "ComboChart");
+    };
+    artifactDesigner.Combo._setupCallbacks.baraccumulative = function (context) {
+        Pear.Artifact.Designer.Combo._setupCallbacks.bar(context);
+    };
+    artifactDesigner.Combo._setupCallbacks.barachievement = function (context) {
+        context.find('.value-axis-opt').val('KpiActual');
+        context.find('.value-axis-holder').css('display', 'none');
+        Pear.Artifact.Designer.Combo._setupCallbacks.bar(context);
+    };
+    artifactDesigner.Combo._setupCallbacks.line = function (context) {
+        Pear.Artifact.Designer.Multiaxis._setupCallbacks.line(context, "ComboChart");
+    };
+    artifactDesigner.Combo._setupCallbacks.area = function (context) {
+        Pear.Artifact.Designer.Multiaxis._setupCallbacks.area(context, "ComboChart");
+    };
+    artifactDesigner.Combo._loadGraph = function (url, type, context) {
+        var callback = Pear.Artifact.Designer.Combo._setupCallbacks;
+        Pear.Artifact.Designer.Multiaxis._loadGraph(url, type, context, callback);
+    };
+    artifactDesigner._setupCallbacks.combo = function () {
+        $('.main-value-axis').css('display', 'none');
+        var removeChart = function () {
+            $('.chart-template .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.chart-template').remove();
+            });
+        };
+        var addChart = function () {
+            var chartCount = $('#charts-holder').find('.chart-template').length + 1;
+            $('#add-chart').click(function (e) {
+                e.preventDefault();
+                var chartTemplate = $('.chart-template.original').clone(true);
+                Pear.Artifact.Designer._colorPicker(chartTemplate);
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'ComboChart.Charts.Index',
+                    value: chartCount
+                }).appendTo(chartTemplate);
+                chartTemplate.removeClass('original');
+                chartTemplate.attr('data-chart-pos', chartCount);
+                var fields = ['ValueAxis', 'GraphicType'];
+                for (var i in fields) {
+                    var field = fields[i];
+                    chartTemplate.find('#ComboChart_Charts_0__' + field).attr('name', 'ComboChart.Charts[' + chartCount + '].' + field);
+                }
+                $('#charts-holder').append(chartTemplate);
+                chartTemplate.find('.multiaxis-graphic-type').change(function (e) {
+                    e.preventDefault();
+                    var $this = $(this);
+                    artifactDesigner.Combo._loadGraph($this.data('graph-url'), $this.val(), chartTemplate);
+                });
+                var initialGraphicType = chartTemplate.find('.multiaxis-graphic-type');
+                artifactDesigner.Combo._loadGraph(initialGraphicType.data('graph-url'), initialGraphicType.val(), chartTemplate);
+                chartCount++;
+            });
+        };
+        addChart();
+        removeChart();
+    };
+    artifactDesigner._previewCallbacks.combo = function (data, container) {
+        var yAxes = [];
+        var seriesNames = [];
+        var chartTypeMap = {
+            bar: 'column',
+            line: 'spline',
+            area: 'area',
+            barachievement: 'column',
+            baraccumulative: 'column'
+        };
+        var plotOptions = {};
+        var series = [];
+        for (var i in data.ComboChart.Charts) {
+            plotOptions[chartTypeMap[data.ComboChart.Charts[i].GraphicType]] = { stacking: 'normal' };
+            for (var j in data.ComboChart.Charts[i].Series) {
+                if (seriesNames.indexOf(data.ComboChart.Charts[i].Series[j].name) < 0) {
+                    seriesNames.push(data.ComboChart.Charts[i].Series[j].name);
+                } else {
+                    data.ComboChart.Charts[i].Series[j].showInLegend = false;
+                }
+                data.ComboChart.Charts[i].Series[j].type = chartTypeMap[data.ComboChart.Charts[i].GraphicType];
+                if (data.ComboChart.Charts[i].Series[j].type != 'spline' && data.ComboChart.Charts[i].SeriesType == 'single-stack') {
+                    data.ComboChart.Charts[i].Series[j].stack = data.ComboChart.Charts[i].Series[j].name;
+                }
+                data.ComboChart.Charts[i].Series[j].tooltip = {
+                    valueSuffix: ' ' + data.ComboChart.Measurement
+                }
+                series.push(data.ComboChart.Charts[i].Series[j]);
+            }
+        }
+        container.highcharts({
+            chart: {
+                zoomType: 'xy'
+            },
+            title: {
+                text: data.ComboChart.Title
+            },
+            subtitle: {
+                text: data.ComboChart.Subtitle
+            },
+            plotOptions: plotOptions,
+            xAxis: [{
+                categories: data.ComboChart.Periodes,
+                crosshair: true
+            }],
+            yAxis: {
+                title: {
+                    text: data.ComboChart.Measurement
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    var tooltip = '<b>' + this.x + '</b><br/>';
+                    for (var i in this.points) {
+                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br/>';
+
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                            (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                            tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br>';
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
+            },
+            series: series
+        });
+    };
+
     //pie chart
     artifactDesigner._setupCallbacks.pie = function () {
         var removeSeriesOrStack = function() {

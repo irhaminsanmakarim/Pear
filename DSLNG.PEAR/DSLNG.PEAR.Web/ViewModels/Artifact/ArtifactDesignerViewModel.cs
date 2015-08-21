@@ -154,6 +154,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public SpeedometerChartViewModel SpeedometerChart { get; set; }
         public SpiderwebChartViewModel SpiderwebChart { get; set; }
         public MultiaxisChartViewModel MultiaxisChart { get; set; }
+        public ComboChartViewModel ComboChart { get; set; }
         public TrafficLightChartViewModel TrafficLightChart { get; set; }
         public TabularViewModel Tabular { get; set; }
         public TankViewModel Tank { get; set; }
