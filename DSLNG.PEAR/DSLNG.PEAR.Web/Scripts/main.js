@@ -1073,6 +1073,9 @@ Number.prototype.format = function (n, x) {
                         'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
             },
+            credits: {
+                enabled: false
+            },
             //tooltip: {
             //    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             //    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
@@ -1136,6 +1139,9 @@ Number.prototype.format = function (n, x) {
                         'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
             },
+            credits: {
+                enabled: false
+            },
             plotOptions: {
                 column: {
                     stacking: 'normal',
@@ -1180,7 +1186,9 @@ Number.prototype.format = function (n, x) {
                         'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
             },
-
+            credits: {
+                enabled: false
+            },
             plotOptions: {
                 column: {
                     stacking: 'normal'
@@ -1275,7 +1283,9 @@ Number.prototype.format = function (n, x) {
                     color: '#808080'
                 }]
             },
-
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 formatter: function () {
                     return '<b>' + this.x + '</b><br/>' +
@@ -1378,6 +1388,9 @@ Number.prototype.format = function (n, x) {
                         this.series.name + ': ' + this.y.format(2) + ' ' + data.LineChart.ValueAxisTitle;
                 }
                 //valueSuffix: data.LineChart.ValueAxisTitle
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
 
@@ -1572,7 +1585,9 @@ Number.prototype.format = function (n, x) {
                     innerRadius: '103%'
                 }]
             },
-
+            credits: {
+                enabled: false
+            },
             // the value axis
             yAxis: {
                 min: data.SpeedometerChart.PlotBands[0].from,
@@ -2212,6 +2227,9 @@ Number.prototype.format = function (n, x) {
             subtitle: {
                 text: data.MultiaxisChart.Subtitle
             },
+            credits: {
+                enabled: false
+            },
             plotOptions : plotOptions,
             xAxis: [{
                 categories: data.MultiaxisChart.Periodes,
@@ -2362,6 +2380,9 @@ Number.prototype.format = function (n, x) {
                     text: data.ComboChart.Measurement
                 }
             },
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + this.x + '</b><br/>';
@@ -2451,6 +2472,9 @@ Number.prototype.format = function (n, x) {
             subtitle: {
                 text: data.Pie.Subtitle,
                 x: -20
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 pie: {
