@@ -108,10 +108,10 @@ namespace DSLNG.PEAR.Services
                             timeInformation = latestVolInventory.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Daily:
-                            timeInformation = latestVolInventory.Periode.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                            timeInformation = latestVolInventory.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Monthly:
-                            timeInformation = latestVolInventory.Periode.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                            timeInformation = latestVolInventory.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Yearly:
                             timeInformation = latestVolInventory.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
@@ -235,10 +235,10 @@ namespace DSLNG.PEAR.Services
                             rowResponse.Periode = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Daily:
-                            rowResponse.Periode = latestActual.Periode.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                            rowResponse.Periode = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Monthly:
-                            rowResponse.Periode = latestActual.Periode.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                            rowResponse.Periode = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Yearly:
                             rowResponse.Periode = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
@@ -347,10 +347,10 @@ namespace DSLNG.PEAR.Services
                                 timeInformation = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                                 break;
                             case PeriodeType.Daily:
-                                timeInformation = latestActual.Periode.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                                timeInformation = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                                 break;
                             case PeriodeType.Monthly:
-                                timeInformation = latestActual.Periode.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                                timeInformation = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                                 break;
                             case PeriodeType.Yearly:
                                 timeInformation = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
@@ -477,10 +477,10 @@ namespace DSLNG.PEAR.Services
                             timeInformation = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Daily:
-                            timeInformation = latestActual.Periode.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                            timeInformation = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Monthly:
-                            timeInformation = latestActual.Periode.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                            timeInformation = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Yearly:
                             timeInformation = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
@@ -611,10 +611,10 @@ namespace DSLNG.PEAR.Services
                             timeInformation = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Daily:
-                            timeInformation = latestActual.Periode.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                            timeInformation = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Monthly:
-                            timeInformation = latestActual.Periode.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                            timeInformation = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Yearly:
                             timeInformation = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
@@ -738,11 +738,11 @@ namespace DSLNG.PEAR.Services
                             break;
                         case PeriodeType.Daily:
                             response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("dd", CultureInfo.InvariantCulture) }.ToArray();
-                            //timeInformation = kpiActual.Periode.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                            //timeInformation = kpiActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Monthly:
                             response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("MMMM", CultureInfo.InvariantCulture) }.ToArray();
-                            //timeInformation = kpiActual.Periode.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                            //timeInformation = kpiActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Yearly:
                             response.Periodes = new List<string> { newDateTimePeriodes.First().ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) }.ToArray();
@@ -774,7 +774,7 @@ namespace DSLNG.PEAR.Services
                                 var currentHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
                                 dateTimePeriodes.Add(currentHour);
                                 periodes.Add(currentHour.ToString(hourlyFormat));
-                                timeInformation = currentHour.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                                timeInformation = currentHour.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.CurrentDay:
@@ -788,7 +788,7 @@ namespace DSLNG.PEAR.Services
                                     periodes.Add(startHour.ToString(hourlyFormat));
                                     dateTimePeriodes.Add(startHour);
                                 }
-                                timeInformation = startHour.AddHours(-1).ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                                timeInformation = startHour.AddHours(-1).ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.DTD:
@@ -807,7 +807,7 @@ namespace DSLNG.PEAR.Services
                             }
                             break;
                         default:
-                            timeInformation = Start.Value.ToString(DateFormat.Daily, CultureInfo.InvariantCulture) + " - " + End.Value.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                            timeInformation = Start.Value.ToString("dd MMM yy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             while (Start.Value <= End.Value)
                             {
                                 periodes.Add(Start.Value.ToString(hourlyFormat));
@@ -818,7 +818,7 @@ namespace DSLNG.PEAR.Services
                     }
                     break;
                 case PeriodeType.Daily:
-                    var dailyFormat = "dd";
+                    var dailyFormat = "dd MMM";
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentDay:
@@ -826,7 +826,7 @@ namespace DSLNG.PEAR.Services
                                 var currentDay = DateTime.Now.Date;
                                 periodes.Add(currentDay.ToString(dailyFormat));
                                 dateTimePeriodes.Add(currentDay);
-                                timeInformation = currentDay.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                                timeInformation = currentDay.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.CurrentMonth:
@@ -839,7 +839,7 @@ namespace DSLNG.PEAR.Services
                                     dateTimePeriodes.Add(startDay);
                                     startDay = startDay.AddDays(1);
                                 }
-                                timeInformation = startDay.AddDays(-1).ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                                timeInformation = startDay.AddDays(-1).ToString("MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.MTD:
@@ -847,18 +847,18 @@ namespace DSLNG.PEAR.Services
                                 var currentMonth = DateTime.Now.Month;
                                 var startDay = new DateTime(DateTime.Now.Year, currentMonth, 1);
                                 var currentDay = DateTime.Now.Day;
-                                timeInformation = startDay.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                                timeInformation = startDay.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                                 while (startDay.Day <= currentDay)
                                 {
                                     periodes.Add(startDay.ToString(dailyFormat));
                                     dateTimePeriodes.Add(startDay);
                                     startDay = startDay.AddDays(1);
                                 }
-                                timeInformation += " - " + startDay.AddDays(-1).ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                                timeInformation += " - " + startDay.AddDays(-1).ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         default:
-                            timeInformation = Start.Value.ToString(DateFormat.Daily, CultureInfo.InvariantCulture) + " - " + End.Value.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                            timeInformation = Start.Value.ToString("dd MMM yy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             while (Start.Value <= End.Value)
                             {
                                 periodes.Add(Start.Value.ToString(dailyFormat));
@@ -878,7 +878,7 @@ namespace DSLNG.PEAR.Services
                                 var currentMonth = DateTime.Now.Date;
                                 dateTimePeriodes.Add(currentMonth);
                                 periodes.Add(currentMonth.ToString(monthlyFormat, CultureInfo.InvariantCulture));
-                                timeInformation = currentMonth.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                                timeInformation = currentMonth.ToString("MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.CurrentYear:
@@ -899,18 +899,18 @@ namespace DSLNG.PEAR.Services
                                 var currentYear = DateTime.Now.Year;
                                 var startMonth = new DateTime(DateTime.Now.Year, 1, 1);
                                 var currentMont = DateTime.Now.Month;
-                                timeInformation = startMonth.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                                timeInformation = startMonth.ToString("MMM yy", CultureInfo.InvariantCulture);
                                 while (startMonth.Month <= currentMont)
                                 {
                                     periodes.Add(startMonth.ToString(monthlyFormat));
                                     dateTimePeriodes.Add(startMonth);
                                     startMonth = startMonth.AddMonths(1);
                                 }
-                                timeInformation += " - " + startMonth.AddMonths(-1).ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                                timeInformation += " - " + startMonth.AddMonths(-1).ToString("MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         default:
-                            timeInformation = Start.Value.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture) + " - " + End.Value.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                            timeInformation = Start.Value.ToString("MMM yy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("MMM yy", CultureInfo.InvariantCulture);
                             while (Start.Value <= End.Value)
                             {
                                 dateTimePeriodes.Add(Start.Value);
@@ -978,10 +978,10 @@ namespace DSLNG.PEAR.Services
                                     newTimeInformation = kpiTarget.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                                     break;
                                 case PeriodeType.Daily:
-                                    newTimeInformation = kpiTarget.Periode.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                                    newTimeInformation = kpiTarget.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                                     break;
                                 case PeriodeType.Monthly:
-                                    newTimeInformation = kpiTarget.Periode.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                                    newTimeInformation = kpiTarget.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                                     break;
                                 case PeriodeType.Yearly:
                                     newTimeInformation = kpiTarget.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
@@ -1151,10 +1151,10 @@ namespace DSLNG.PEAR.Services
                                         newTimeInformation = kpiTarget.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                                         break;
                                     case PeriodeType.Daily:
-                                        newTimeInformation = kpiTarget.Periode.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                                        newTimeInformation = kpiTarget.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                                         break;
                                     case PeriodeType.Monthly:
-                                        newTimeInformation = kpiTarget.Periode.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                                        newTimeInformation = kpiTarget.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                                         break;
                                     case PeriodeType.Yearly:
                                         newTimeInformation = kpiTarget.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
@@ -1293,10 +1293,10 @@ namespace DSLNG.PEAR.Services
                                     newTimeInformation = kpiActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                                     break;
                                 case PeriodeType.Daily:
-                                    newTimeInformation = kpiActual.Periode.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                                    newTimeInformation = kpiActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                                     break;
                                 case PeriodeType.Monthly:
-                                    newTimeInformation = kpiActual.Periode.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                                    newTimeInformation = kpiActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                                     break;
                                 case PeriodeType.Yearly:
                                     newTimeInformation = kpiActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
@@ -1688,10 +1688,10 @@ namespace DSLNG.PEAR.Services
                                         newTimeInformation = kpiActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                                         break;
                                     case PeriodeType.Daily:
-                                        newTimeInformation = kpiActual.Periode.ToString(DateFormat.Daily, CultureInfo.InvariantCulture);
+                                        newTimeInformation = kpiActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                                         break;
                                     case PeriodeType.Monthly:
-                                        newTimeInformation = kpiActual.Periode.ToString(DateFormat.Monthly, CultureInfo.InvariantCulture);
+                                        newTimeInformation = kpiActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                                         break;
                                     case PeriodeType.Yearly:
                                         newTimeInformation = kpiActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
