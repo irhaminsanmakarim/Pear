@@ -1074,7 +1074,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             exporting: {
-                url: 'Chart/Export',
+                url: '/Chart/Export',
                 filename: 'MyChart',
                 width: 1200
             },
@@ -1145,7 +1145,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             exporting: {
-                url: 'Chart/Export',
+                url: '/Chart/Export',
                 filename: 'MyChart',
                 width: 1200
             },
@@ -1197,7 +1197,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             exporting: {
-                url: 'Chart/Export',
+                url: '/Chart/Export',
                 filename: 'MyChart',
                 width: 1200
             },
@@ -1299,7 +1299,7 @@ Number.prototype.format = function (n, x) {
                 }]
             },
             exporting: {
-                url: 'Chart/Export',
+                url: '/Chart/Export',
                 filename: 'MyChart',
                 width: 1200
             },
@@ -1410,7 +1410,7 @@ Number.prototype.format = function (n, x) {
                 //valueSuffix: data.LineChart.ValueAxisTitle
             },
             exporting: {
-                url: 'Chart/Export',
+                url: '/Chart/Export',
                 filename: 'MyChart',
                 width: 1200
             },
@@ -1611,7 +1611,7 @@ Number.prototype.format = function (n, x) {
                 }]
             },
             exporting: {
-                url: 'Chart/Export',
+                url: '/Chart/Export',
                 filename: 'MyChart',
                 width: 1200
             },
@@ -2258,7 +2258,7 @@ Number.prototype.format = function (n, x) {
                 text: data.MultiaxisChart.Subtitle
             },
             exporting: {
-                url: 'Chart/Export',
+                url: '/Chart/Export',
                 filename: 'MyChart',
                 width: 1200
             },
@@ -2416,7 +2416,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             exporting: {
-                url: 'Chart/Export',
+                url: '/Chart/Export',
                 filename: 'MyChart',
                 width: 1200
             },
@@ -2514,7 +2514,7 @@ Number.prototype.format = function (n, x) {
                 x: -20
             },
             exporting: {
-                url: 'Chart/Export',
+                url: '/Chart/Export',
                 filename: 'MyChart',
                 width: 1200
             },
