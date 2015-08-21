@@ -532,6 +532,8 @@ Number.prototype.format = function (n, x) {
                 Pear.Artifact.Designer._setupCallbacks.baraccumulative();
                 break;
             case 'tank':
+                $('.main-value-axis').css('display', 'none');
+                $('.form-measurement').css('display', 'none');
                 Pear.Artifact.Designer._setupCallbacks.tank();
             case 'area':
                 var $hiddenFields = $('#hidden-fields');

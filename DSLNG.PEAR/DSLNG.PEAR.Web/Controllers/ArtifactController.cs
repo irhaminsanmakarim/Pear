@@ -456,7 +456,10 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             foreach (var name in Enum.GetNames(typeof(PeriodeType)))
             {
-                periodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                if (!name.Equals("Hourly") && !name.Equals("Weekly"))
+                {
+                    periodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                }   
             }
         }
 

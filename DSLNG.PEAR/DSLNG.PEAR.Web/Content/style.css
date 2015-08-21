@@ -1221,16 +1221,25 @@ td .btn_small_lightblue a:hover {
     padding-bottom: 6px;
 }
 
-/*.center
+.center
 {
     width: 690px;
     margin: 10px auto;
-}*/
+}
 
-.svg
+/*.svg
 {
     height: 400px;
     width: 100%;
     border: 1px solid #d4d4d4;
     border-radius: 4px;
+}*/
+
+.container-tank {
+    width: 550px;
+	margin: 100px auto;
+	border: 1px solid #d4d4d4;
+	border-radius: 4px;
+	background-color: #fff;
+	padding: 28px;
 }

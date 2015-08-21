@@ -1,10 +1,14 @@
 ﻿(function ($) {
     $.fn.tank = function (options) {
         console.log(options);
-        var id = "tank_" + options.Id;
-        this.html('<div class="center"><svg class="svg" id="' + id + '"></svg></div>');
+        var id = "tank_" + options.Id + Date.now();
+        
+        this.html('<svg class="svg" id="' + id + '" style="margin:auto;display:block"></svg>');
 
-        var s = Snap('#' + id);
+        var s = Snap('#' + id).attr({
+            width: 498,
+            height: 290
+        });;
 
         // variable Donggi
         var title = options.Title;
@@ -24,28 +28,23 @@
 
         // variable Tank Chart
 
-        var svgWidth = 690;
-        var svgHeight = 400;
+        var svgWidth = 498;
+        var svgHeight = 290;
 
         var percentFill = Math.round((volumeInventory / maxCapacity) * 100);
+        var percentMin = Math.round((minCapacity / maxCapacity) * 100);
 
-        var marginSide = 230;
-        var marginTop = 110;
-        var tankHeight = 260;
-        var tankWidth = 230;
-        var tankFullHeight = 200;
-        var ellipseRy = 20;
-        var ellipseRx = tankWidth / 2;
+        var tankHeight = 170;
+        var tankWidth = 140;
+
+        // var marginSide = 166;
+        var marginSide = (svgWidth - tankWidth) / 2;
+        var marginTop = 90;
+
+        var ellipseRY = 14;
+        var ellipseRX = tankWidth / 2;
+        var tankFullHeight = tankHeight - (ellipseRY * 3);
         var roundMaxY = tankHeight - tankFullHeight;
-
-
-        // function Tank Chart
-
-        var roundBottomY = marginTop + tankHeight;
-
-        var fillHeight = (tankFullHeight / 100 * percentFill);
-
-        var roundFillY = marginTop + roundMaxY + (tankFullHeight - fillHeight);
 
         var softBlue = '#3949AB';
         var darkBlue = '#283593';
@@ -57,6 +56,18 @@
         var lineMaxColor = greyBorder;
         var lineMinColor = green;
 
+        // function Tank Chart
+
+        var roundBottomY = marginTop + tankHeight;
+
+        var fillHeight = (tankFullHeight / 100 * percentFill);
+        var minHeight = (tankFullHeight / 100 * percentMin);
+
+        var roundFillY = marginTop + roundMaxY + (tankFullHeight - fillHeight);
+        var lineMinY = marginTop + roundMaxY + (tankFullHeight - minHeight);
+        var lineMaxY = marginTop + roundMaxY;
+
+
         function calEllipseX(a, b) {
             var x;
             x = (a / 2) + b;
@@ -65,8 +76,6 @@
 
         var ellipseX = calEllipseX(tankWidth, marginSide);
 
-        var lineMaxY = marginTop + roundMaxY;
-        var lineMinY = roundBottomY + -20;
 
         // Shape
 
@@ -77,12 +86,12 @@
         });
 
 
-        var roundTop = s.ellipse(ellipseX, marginTop, ellipseRx, ellipseRy).attr({
+        var roundTop = s.ellipse(ellipseX, marginTop, ellipseRX, ellipseRY).attr({
             fill: '#fff',
             stroke: greyBorder,
             strokeWidth: 2
         });
-        var roundBottom = s.ellipse(ellipseX, roundBottomY, ellipseRx, ellipseRy).attr({
+        var roundBottom = s.ellipse(ellipseX, roundBottomY, ellipseRX, ellipseRY).attr({
             fill: '#fff',
             stroke: greyBorder,
             strokeWidth: 2
@@ -93,27 +102,27 @@
             stroke: softBlue,
             strokeWidth: 2
         });
-        var roundFillMin = s.ellipse(ellipseX, roundBottomY, ellipseRx, ellipseRy).attr({
+        var roundFillMin = s.ellipse(ellipseX, roundBottomY, ellipseRX, ellipseRY).attr({
             fill: darkBlue,
             stroke: softBlue,
             strokeWidth: 2,
             // strokeDasharray: 2
         });
 
-        var roundFill = s.ellipse(ellipseX, roundFillY, ellipseRx, ellipseRy).attr({
+        var roundFill = s.ellipse(ellipseX, roundFillY, ellipseRX, ellipseRY).attr({
             fill: softBlue,
             stroke: softBlue,
             strokeWidth: 2
         });
 
-        var roundMax = s.ellipse(ellipseX, marginTop + roundMaxY, ellipseRx, ellipseRy).attr({
+        var roundMax = s.ellipse(ellipseX, marginTop + roundMaxY, ellipseRX, ellipseRY).attr({
             fill: 'transparent',
             stroke: greyBorder,
             strokeWidth: 2,
             strokeDasharray: 2
         });
 
-        var roundMin = s.ellipse(ellipseX, lineMinY, ellipseRx, ellipseRy).attr({
+        var roundMin = s.ellipse(ellipseX, lineMinY, ellipseRX, ellipseRY).attr({
             fill: 'transparent',
             stroke: green,
             strokeWidth: 2,
@@ -122,9 +131,9 @@
 
         // Meteran
 
-        var rightLineX = marginSide + tankWidth + 20;
+        var rightLineX = marginSide + tankWidth + 16;
 
-        var leftLineX = marginSide - 20;
+        var leftLineX = marginSide - 16;
 
         var leftLine = s.line(leftLineX, marginTop + roundMaxY, leftLineX, roundBottomY).attr({
             fill: 'none',
@@ -141,7 +150,7 @@
             strokeLinecap: "round",
             strokeLinejoin: "round"
         });
-        var tMax = s.text(leftLineX - 16, marginTop + roundMaxY + 4, [maxCapacity.format(2), " ", volumeInventoryUnit, " (Max)"]).attr({
+        var tMax = s.text(leftLineX - 14, marginTop + roundMaxY + 4, [maxCapacity.format(2), " ", volumeInventoryUnit, " (Max)"]).attr({
             font: "14px Open Sans, sans-serif",
             fill: "#444",
             textAnchor: "end",
@@ -155,7 +164,7 @@
             strokeLinecap: "round",
             strokeLinejoin: "round"
         });
-        var tMin = s.text(leftLineX - 16, lineMinY + 4, [minCapacity.format(2), " ", volumeInventoryUnit, " (Min)"]).attr({
+        var tMin = s.text(leftLineX - 14, lineMinY + 4, [minCapacity.format(2), " ", volumeInventoryUnit, " (Min)"]).attr({
             font: "14px Open Sans, sans-serif",
             fill: "#444",
             textAnchor: "end",
@@ -208,7 +217,7 @@
             strokeLinecap: "round",
             strokeLinejoin: "round"
         });
-        var tFill = s.text(rightLineX + 16, roundFillY + 4, [volumeInventory.format(2), " ", volumeInventoryUnit, " (", percentFill, "%)"]).attr({
+        var tFill = s.text(rightLineX + 14, roundFillY + 4, [volumeInventory.format(2), " ", volumeInventoryUnit, " (", percentFill, "%)"]).attr({
             font: "14px Open Sans, sans-serif",
             fill: "#444"
         });
@@ -221,23 +230,22 @@
             fontWeight: "bold",
             fontStyle: "italic"
         });
-        var tDayKeterangan = s.text(rightLineX, marginTop + 24, daysToTankTopTitle).attr({
+        var tDayKeterangan = s.text(rightLineX, marginTop + 20, daysToTankTopTitle).attr({
             font: "14px Open Sans, sans-serif",
             fill: "#444",
             fontStyle: "italic"
         });
 
-        var tTitle = s.text(svgWidth / 2, 26, title).attr({
-            font: "18px Open Sans, sans-serif",
+        var tTitle = s.text(svgWidth / 2, 18, title).attr({
+            font: "16px Open Sans, sans-serif",
             fill: "#444",
             fontWeight: "bold",
             textAnchor: "middle",
         });
 
-        var tSubtitle = s.text(svgWidth / 2, 54, subtitle).attr({
+        var tSubtitle = s.text(svgWidth / 2, 44, subtitle).attr({
             font: "14px Open Sans, sans-serif",
             fill: "#666",
-            fontWeight: "bold",
             textAnchor: "middle",
         });
         
