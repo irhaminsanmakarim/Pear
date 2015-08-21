@@ -1,0 +1,57 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.AreaChartViewModel
+
+<div class="form-group form-list">
+    <label>Series</label>
+    <input type="button" value="Add Series" class="btn btn-lightblue" id="add-series" />
+</div>
+
+<div class="hidden-fields">
+     @for (var i = 0; i < Model.Series.Count; i++)
+    { 
+        var original = i == 0 ? "original" : "";
+        var dataSeriesPos = original == "" ? "data-series-pos=" + i : "";
+        <div class="rows-template @original whitebox" @dataSeriesPos>
+            <input type="hidden" name="ComboChart.Charts[@ViewData["ChartIndex"]].AreaChart.Series.Index" value="@i" />        
+            <h2>Series</h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Series[i].Label)
+                        @Html.TextBoxFor(model => model.Series[i].Label, new { @class = "form-control",
+                       @Name="ComboChart.Charts["+@ViewData["ChartIndex"]+"].AreaChart.Series["+i+"].Label",
+                   id="ComboChart_Charts_"+@ViewData["ChartIndex"]+"__AreaChart_Series_"+i+"__Label"})
+                        @Html.ValidationMessageFor(model => model.Series[i].Label)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Series[i].Color)
+                        <div class="input-group colorpicker">
+                            @Html.TextBoxFor(model => model.Series[i].Color, new { @class = "form-control",
+                           @Name="ComboChart.Charts["+@ViewData["ChartIndex"]+"].AreaChart.Series["+i+"].Color",
+                       id="ComboChart_Charts_"+@ViewData["ChartIndex"]+"__AreaChart_Series_"+i+"__Color"})
+                            <span class="input-group-addon"><i style="background-color:@Model.Series[i].Color"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Series[i].Color)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Series[i].KpiId)
+                        @Html.DropDownListFor(model => model.Series[i].KpiId, new List<SelectListItem> { new SelectListItem{ Value=Model.Series[i].KpiId.ToString(), Text = Model.Series[i].KpiName} }, new { @class = "kpi-list form-control", style = "width:180px",
+                       @Name="ComboChart.Charts["+@ViewData["ChartIndex"]+"].AreaChart.Series["+i+"].KpiId",
+                   id="ComboChart_Charts_"+@ViewData["ChartIndex"]+"__AreaChart_Series_"+i+"__KpiId"})
+                        @Html.ValidationMessageFor(model => model.Series[i].KpiId)
+                    </div>
+                </div>
+            </div>
+            <input type="button" value="Remove" class="remove" />
+        </div>
+    }
+
+</div>
+
+
+
+
+

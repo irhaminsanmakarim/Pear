@@ -39,7 +39,7 @@
 
                         <div class="form-group form-list form-measurement">
                             @Html.LabelFor(model => model.MeasurementId)
-                            @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements, new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements, new { @class = "form-control measurement" })
                             @Html.ValidationMessageFor(model => model.MeasurementId)
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group form-list main-value-axis">
+                            <div class="form-group form-list  main-value-axis">
                                 @Html.LabelFor(model => model.ValueAxis)
                                 @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ValueAxis)
@@ -96,6 +96,12 @@
                                     break;
                                 case "area":
                                     Html.RenderPartial("~/Views/AreaChart/_Edit.cshtml", Model);
+                                    break;
+                                case "multiaxis":
+                                    Html.RenderPartial("~/Views/MultiaxisChart/_Edit.cshtml", Model);
+                                    break;
+                                case "combo":
+                                    Html.RenderPartial("~/Views/ComboChart/_Edit.cshtml", Model);
                                     break;
                                 case "tank":
                                     Html.RenderPartial("~/Views/Tank/_Edit.cshtml", Model);

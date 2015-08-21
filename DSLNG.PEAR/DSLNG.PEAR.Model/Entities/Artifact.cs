@@ -1,6 +1,7 @@
 ﻿using DSLNG.PEAR.Data.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -46,7 +47,9 @@ namespace DSLNG.PEAR.Data.Entities
         public bool Target { get; set; }
         public bool Economic { get; set; }
         public bool Fullfillment { get; set; }
+        [DefaultValue("false")]
         public bool Is3D { get; set; }
+        [DefaultValue("true")]
         public bool ShowLegend { get; set; }
         public bool Remark { get; set; }
         public bool IsActive { get; set; }

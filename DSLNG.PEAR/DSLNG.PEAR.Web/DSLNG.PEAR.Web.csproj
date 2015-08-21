@@ -584,6 +584,14 @@
     <Content Include="Views\KpiTarget\Configuration\_Yearly.cshtml" />
     <Content Include="Views\KpiTarget\Configuration.cshtml" />
     <Content Include="Views\AreaChart\_Edit.cshtml" />
+    <Content Include="Views\ComboChart\_AreaChartCreate.cshtml" />
+    <Content Include="Views\ComboChart\_AreaChartEdit.cshtml" />
+    <Content Include="Views\ComboChart\_BarChartCreate.cshtml" />
+    <Content Include="Views\ComboChart\_BarChartEdit.cshtml" />
+    <Content Include="Views\ComboChart\_Create.cshtml" />
+    <Content Include="Views\ComboChart\_Edit.cshtml" />
+    <Content Include="Views\ComboChart\_LineChartCreate.cshtml" />
+    <Content Include="Views\ComboChart\_LineChartEdit.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -600,6 +608,10 @@
     <Content Include="Views\Shared\UploadControlPartial.cshtml" />
     <Content Include="Views\Shared\_Download.cshtml" />
     <Content Include="Views\Shared\_Upload.cshtml" />
+    <Content Include="Views\MultiaxisChart\_Edit.cshtml" />
+    <Content Include="Views\MultiaxisChart\_BarChartEdit.cshtml" />
+    <Content Include="Views\MultiaxisChart\_LineChartEdit.cshtml" />
+    <Content Include="Views\MultiaxisChart\_AreaChartEdit.cshtml" />
     <Content Include="Views\Pie\_Create.cshtml" />
     <Content Include="Views\Pie\_Edit.cshtml" />
     <None Include="Web.Debug.config">
@@ -698,6 +710,8 @@
     <Compile Include="ViewModels\Artifact\BarChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\BarChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\ChartViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\ComboChartDataViewModel.cs" />
+    <Compile Include="ViewModels\Artifact\ComboChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\MultiaxisChartDataViewModel.cs" />
     <Compile Include="ViewModels\Artifact\MultiaxisChartViewModel.cs" />
     <Compile Include="ViewModels\Artifact\PieDataViewModel.cs" />
