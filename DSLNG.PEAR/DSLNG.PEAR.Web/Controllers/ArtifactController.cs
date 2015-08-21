@@ -640,7 +640,10 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             foreach (var name in Enum.GetNames(typeof(PeriodeType)))
             {
-                periodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                if (!name.Equals("Hourly") && !name.Equals("Weekly"))
+                {
+                    periodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                }   
             }
         }
 
@@ -745,10 +748,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var chartData = _artifactServie.GetTankData(artifactResp.MapTo<GetTankDataRequest>());
                         previewViewModel.GraphicType = artifactResp.GraphicType;
-                        previewViewModel.Pie = new PieDataViewModel();
+                        previewViewModel.Tank = new TankDataViewModel();
                         chartData.MapPropertiesToInstance<TankDataViewModel>(previewViewModel.Tank);
                         previewViewModel.Tank.Title = artifactResp.HeaderTitle;
                         previewViewModel.Tank.Subtitle = chartData.Subtitle;
+                        previewViewModel.Tank.Id = artifactResp.Tank.Id;
                         //previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
                         //previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
                     }

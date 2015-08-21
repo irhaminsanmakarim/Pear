@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contants\DateFormat.cs" />
     <Compile Include="Contants\FormatNumber.cs" />
     <Compile Include="Extensions\AutoMapperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
