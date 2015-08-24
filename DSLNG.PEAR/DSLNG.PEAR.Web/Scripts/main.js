@@ -1048,7 +1048,8 @@ Number.prototype.format = function (n, x) {
     artifactDesigner._displayBasicBarChart = function (data, container) {
         container.highcharts({
             chart: {
-                type: 'column'
+                type: 'column',
+                zoomType: 'xy'
             },
             title: {
                 text: data.BarChart.Title
@@ -1101,7 +1102,8 @@ Number.prototype.format = function (n, x) {
     artifactDesigner._displayMultistacksBarChart = function (data, container) {
         container.highcharts({
             chart: {
-                type: 'column'
+                type: 'column',
+                zoomType: 'xy'
             },
             title: {
                 text: data.BarChart.Title
@@ -1170,7 +1172,8 @@ Number.prototype.format = function (n, x) {
     artifactDesigner._displayMultistacksGroupedBarChart = function (data, container) {
         container.highcharts({
             chart: {
-                type: 'column'
+                type: 'column',
+                zoomType: 'xy'
             },
             title: {
                 text: data.BarChart.Title
@@ -1273,6 +1276,9 @@ Number.prototype.format = function (n, x) {
 
     artifactDesigner._previewCallbacks.line = function (data, container) {
         container.highcharts({
+            chart:{
+                zoomType: 'xy'
+            },
             title: {
                 text: data.LineChart.Title,
                 x: -20 //center
@@ -1280,6 +1286,22 @@ Number.prototype.format = function (n, x) {
             subtitle: {
                 text: data.LineChart.Subtitle,
                 x: -20
+            },
+            plotOptions: {
+                line: {
+                    marker: {
+                        enabled: false,
+                        //radius:2,
+                        states: {
+                            hover: {
+                                radius: 4
+                            },
+                            select: {
+                                radius: 4
+                            }
+                        }
+                    }
+                }
             },
             //events: {
 
@@ -1322,7 +1344,7 @@ Number.prototype.format = function (n, x) {
             //        return false;
             //    }
             //},
-        //},
+            //},
             xAxis: {
                 categories: data.LineChart.Periodes
             },
@@ -1408,7 +1430,8 @@ Number.prototype.format = function (n, x) {
     artifactDesigner._previewCallbacks.area = function (data, container) {
         container.highcharts({
             chart: {
-                type: 'area'
+                type: 'area',
+                zoomType: 'xy'
             },
             title: {
                 text: data.AreaChart.Title
@@ -2047,7 +2070,7 @@ Number.prototype.format = function (n, x) {
                 var $this = $(this);
                 var stackTemplate = context.find('.stack-template.original').clone(true);
                 console.log(stackTemplate.closest('.chart-template'));
-                
+
                 Pear.Artifact.Designer._colorPicker(stackTemplate);
                 stackTemplate.removeClass('original');
                 var seriesPos = $this.closest('.series-template').data('series-pos');
@@ -2112,7 +2135,7 @@ Number.prototype.format = function (n, x) {
                     var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
                     for (var i in fields) {
                         var field = fields[i];
-                        seriesTemplate.find('[id$=LineChart_Series_0__' + field+']').attr('name', prefix + '.Charts[' + chartPost + '].LineChart.Series[' + seriesCount + '].' + field);
+                        seriesTemplate.find('[id$=LineChart_Series_0__' + field + ']').attr('name', prefix + '.Charts[' + chartPost + '].LineChart.Series[' + seriesCount + '].' + field);
                     }
                 }
                 seriesTemplate.addClass(context.find('.value-axis-opt').val());
@@ -2247,7 +2270,7 @@ Number.prototype.format = function (n, x) {
         var seriesNames = [];
         var chartTypeMap = {
             bar: 'column',
-            line: 'spline',
+            line: 'line',
             area: 'area',
             barachievement: 'column',
             baraccumulative: 'column'
@@ -2270,7 +2293,23 @@ Number.prototype.format = function (n, x) {
                 },
                 opposite: data.MultiaxisChart.Charts[i].IsOpposite
             });
-            plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = { stacking: 'normal' };
+            if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'line') {
+                plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
+                    marker: {
+                        enabled: false,
+                        states: {
+                            hover: {
+                                radius: 4
+                            },
+                            select: {
+                                radius: 4
+                            }
+                        }
+                    }
+                };
+            } else {
+                plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = { stacking: 'normal' };
+            }
             for (var j in data.MultiaxisChart.Charts[i].Series) {
                 if (seriesNames.indexOf(data.MultiaxisChart.Charts[i].Series[j].name) < 0) {
                     seriesNames.push(data.MultiaxisChart.Charts[i].Series[j].name);
@@ -2306,7 +2345,7 @@ Number.prototype.format = function (n, x) {
             credits: {
                 enabled: false
             },
-            plotOptions : plotOptions,
+            plotOptions: plotOptions,
             xAxis: [{
                 categories: data.MultiaxisChart.Periodes,
                 crosshair: true
@@ -2317,7 +2356,7 @@ Number.prototype.format = function (n, x) {
                     var tooltip = '<b>' + this.x + '</b><br/>';
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br/>';
-                        
+
                         var prev = (parseInt(i) - 1);
                         var next = (parseInt(i) + 1);
                         console.log(prev);
@@ -2338,7 +2377,7 @@ Number.prototype.format = function (n, x) {
             series: series
         });
     };
-    
+
 
     //combination chart
     artifactDesigner.Combo = {};
@@ -2411,7 +2450,7 @@ Number.prototype.format = function (n, x) {
         var seriesNames = [];
         var chartTypeMap = {
             bar: 'column',
-            line: 'spline',
+            line: 'line',
             area: 'area',
             barachievement: 'column',
             baraccumulative: 'column'
@@ -2419,7 +2458,23 @@ Number.prototype.format = function (n, x) {
         var plotOptions = {};
         var series = [];
         for (var i in data.ComboChart.Charts) {
-            plotOptions[chartTypeMap[data.ComboChart.Charts[i].GraphicType]] = { stacking: 'normal' };
+            if (chartTypeMap[data.ComboChart.Charts[i].GraphicType] == 'line') {
+                plotOptions[chartTypeMap[data.ComboChart.Charts[i].GraphicType]] = {
+                    marker: {
+                        enabled: false,
+                        states: {
+                            hover: {
+                                radius: 4
+                            },
+                            select: {
+                                radius: 4
+                            }
+                        }
+                    }
+                };
+            } else {
+                plotOptions[chartTypeMap[data.ComboChart.Charts[i].GraphicType]] = { stacking: 'normal' };
+            }
             for (var j in data.ComboChart.Charts[i].Series) {
                 if (seriesNames.indexOf(data.ComboChart.Charts[i].Series[j].name) < 0) {
                     seriesNames.push(data.ComboChart.Charts[i].Series[j].name);
@@ -2489,8 +2544,8 @@ Number.prototype.format = function (n, x) {
 
     //pie chart
     artifactDesigner._setupCallbacks.pie = function () {
-        var removeSeriesOrStack = function() {
-            $('.series-template .remove').click(function(e) {
+        var removeSeriesOrStack = function () {
+            $('.series-template .remove').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 $this.closest('.series-template').remove();
@@ -2600,7 +2655,7 @@ Number.prototype.format = function (n, x) {
             }]
         });
     };
-    
+
     var templateEditor = Pear.Template.Editor;
 
     templateEditor._artifactSelectField = function (context) {
