@@ -2645,7 +2645,7 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     return '<b>' + this.point.name + '</b>: ' + this.y.format(2) + ' ' + this.point.measurement + '<br/>' +
-                        '<b>Total</b>: ' + this.total.format(2);
+                        '<b>Total</b>: ' + this.total.format(2) + ' ' + this.point.measurement;
                 }
             },
             series: [{
