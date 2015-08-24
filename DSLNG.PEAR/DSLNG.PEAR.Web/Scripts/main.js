@@ -1256,10 +1256,48 @@ Number.prototype.format = function (n, x) {
                 text: data.LineChart.Subtitle,
                 x: -20
             },
-            //subtitle: {
-            //    text: 'Source: WorldClimate.com',
-            //    x: -20
+            //events: {
+
+            //    // listen to the selection event on the master chart to update the
+            //    // extremes of the detail chart
+            //    selection: function (event) {
+            //        var extremesObject = event.xAxis[0],
+            //            min = extremesObject.min,
+            //            max = extremesObject.max,
+            //            detailData = [],
+            //            detailScatter = [],
+            //            xAxis = this.xAxis[0];
+
+            //        // reverse engineer the last part of the data
+            //        jQuery.each(data, function (i, interval) {
+            //            if (i > min && i < max) {
+            //                detailData.push([i, interval[0], interval[1]]);
+            //                detailScatter.push({
+            //                    marker: {
+            //                        radius: 10 / (max - min)
+            //                    },
+            //                    x: i,
+            //                    y: scatter[i]
+            //                });
+            //            }
+            //        });
+
+            //        // move the plot bands to reflect the new detail span
+            //        xAxis.removePlotBand('selection');
+            //        xAxis.addPlotBand({
+            //            id: 'selection',
+            //            from: min,
+            //            to: max,
+            //            color: 'rgba(0, 0, 0, 0.2)'
+            //        });
+
+            //        detailChart.series[0].setData(detailData);
+            //        detailChart.series[1].setData(detailScatter);
+
+            //        return false;
+            //    }
             //},
+        //},
             xAxis: {
                 categories: data.LineChart.Periodes
             },
@@ -2177,13 +2215,16 @@ Number.prototype.format = function (n, x) {
         for (var i in data.MultiaxisChart.Charts) {
             yAxes.push({
                 labels: {
-                    format: '{value} ' + data.MultiaxisChart.Charts[i].Measurement,
+                    //format: '{value} ' + data.MultiaxisChart.Charts[i].Measurement,
                     style: {
                         color: data.MultiaxisChart.Charts[i].ValueAxisColor
                     }
                 },
                 title: {
-                    text: data.MultiaxisChart.Charts[i].ValueAxisTitle
+                    text: data.MultiaxisChart.Charts[i].ValueAxisTitle + ' (' + data.MultiaxisChart.Charts[i].Measurement + ')',
+                    style: {
+                        color: data.MultiaxisChart.Charts[i].ValueAxisColor
+                    }
                 },
                 opposite: data.MultiaxisChart.Charts[i].IsOpposite
             });
@@ -2482,7 +2523,8 @@ Number.prototype.format = function (n, x) {
             },
             tooltip: {
                 formatter: function () {
-                    return '<b>' + this.point.name + '</b>: ' + this.y.format(2) + ' ' + this.point.measurement;
+                    return '<b>' + this.point.name + '</b>: ' + this.y.format(2) + ' ' + this.point.measurement + '<br/>' +
+                        '<b>Total</b>: ' + this.total.format(2);
                 }
             },
             series: [{

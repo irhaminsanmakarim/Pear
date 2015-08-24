@@ -758,8 +758,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         var chartData = _artifactServie.GetPieData(artifactResp.MapTo<GetPieDataRequest>());
                         previewViewModel.GraphicType = artifactResp.GraphicType;
                         previewViewModel.Pie = chartData.MapTo<PieDataViewModel>();
-                        previewViewModel.Pie.Title = artifactResp.GraphicName;
-                        previewViewModel.Pie.Subtitle = artifactResp.HeaderTitle;
+                        previewViewModel.Pie.Title = artifactResp.HeaderTitle;
+                        previewViewModel.Pie.Subtitle = chartData.Subtitle;
                         previewViewModel.Pie.Is3D = artifactResp.Is3D;
                         previewViewModel.Pie.ShowLegend = artifactResp.ShowLegend;
                     }
