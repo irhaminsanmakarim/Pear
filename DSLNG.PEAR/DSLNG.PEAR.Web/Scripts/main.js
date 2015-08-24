@@ -853,6 +853,8 @@ Number.prototype.format = function (n, x) {
                 Pear.Artifact.Designer._setupCallbacks.baraccumulative();
                 break;
             case 'tank':
+                $('.main-value-axis').css('display', 'none');
+                $('.form-measurement').css('display', 'none');
                 Pear.Artifact.Designer._setupCallbacks.tank();
             case 'area':
                 var $hiddenFields = $('#hidden-fields');
@@ -1071,6 +1073,14 @@ Number.prototype.format = function (n, x) {
                         'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
             },
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
             //tooltip: {
             //    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             //    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
@@ -1134,6 +1144,14 @@ Number.prototype.format = function (n, x) {
                         'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
             },
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
             plotOptions: {
                 column: {
                     stacking: 'normal',
@@ -1178,7 +1196,14 @@ Number.prototype.format = function (n, x) {
                         'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
             },
-
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
             plotOptions: {
                 column: {
                     stacking: 'normal'
@@ -1311,7 +1336,14 @@ Number.prototype.format = function (n, x) {
                     color: '#808080'
                 }]
             },
-
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 formatter: function () {
                     return '<b>' + this.x + '</b><br/>' +
@@ -1414,6 +1446,14 @@ Number.prototype.format = function (n, x) {
                         this.series.name + ': ' + this.y.format(2) + ' ' + data.LineChart.ValueAxisTitle;
                 }
                 //valueSuffix: data.LineChart.ValueAxisTitle
+            },
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
 
@@ -1608,7 +1648,14 @@ Number.prototype.format = function (n, x) {
                     innerRadius: '103%'
                 }]
             },
-
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
             // the value axis
             yAxis: {
                 min: data.SpeedometerChart.PlotBands[0].from,
@@ -1881,7 +1928,9 @@ Number.prototype.format = function (n, x) {
         Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'), false);
     };
     artifactDesigner._previewCallbacks.tank = function (data, container) {
-        var containerHeight = container.height() - 50;
+
+        container.tank(data.Tank);
+        /*var containerHeight = container.height() - 50;
         var tankToTopHeight = 75;
         var tankHeight = containerHeight - tankToTopHeight;
         var volumeColor = '#00aeef';
@@ -1935,14 +1984,7 @@ Number.prototype.format = function (n, x) {
         $wrapper.html('<h3>' + data.Tank.Title + '</h3>');
         $wrapper.append('<h4>' + data.Tank.Subtitle + '</h4>');
         $wrapper.append($tank);
-        container.html($wrapper);
-        //console.log($('.tank-zero-meter'));
-        //setTimeout(function () {
-        //    $zeroMeter.css('width', $('.tank-zero-meter')[0].clientWidth + 'px');
-        //    $minCapacity.css('width', $('.tank-min-capacity')[0].clientWidth + 'px');
-        //    $maxCapacity.css('width', $('.tank-max-capacity')[0].clientWidth + 'px');
-        //}, 100);
-
+        container.html($wrapper);*/
     };
 
     //mutliaxis
@@ -2256,6 +2298,14 @@ Number.prototype.format = function (n, x) {
             subtitle: {
                 text: data.MultiaxisChart.Subtitle
             },
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
             plotOptions : plotOptions,
             xAxis: [{
                 categories: data.MultiaxisChart.Periodes,
@@ -2406,6 +2456,14 @@ Number.prototype.format = function (n, x) {
                     text: data.ComboChart.Measurement
                 }
             },
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + this.x + '</b><br/>';
@@ -2495,6 +2553,14 @@ Number.prototype.format = function (n, x) {
             subtitle: {
                 text: data.Pie.Subtitle,
                 x: -20
+            },
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 pie: {

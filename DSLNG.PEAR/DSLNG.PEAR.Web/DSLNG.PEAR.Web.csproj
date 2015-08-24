@@ -98,6 +98,10 @@
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.6\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -129,6 +133,10 @@
     <Reference Include="StructureMap.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.web.3.1.0.133\lib\net40\StructureMap.Web.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Svg, Version=0.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Third Party\Svg.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -346,6 +354,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bs_leftnavi.js" />
+    <Content Include="Scripts\tank.js" />
     <Content Include="Scripts\exporting.js" />
     <Content Include="Scripts\globalize.cultures.js" />
     <Content Include="Scripts\globalize.js" />
@@ -452,7 +461,11 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\snap.svg.js" />
     <Content Include="Scripts\trafficlight.js" />
+    <Content Include="Third Party\Svg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
@@ -664,6 +677,7 @@
     <Compile Include="Controllers\Api\ApiUserController.cs" />
     <Compile Include="Controllers\ArtifactController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\ConversionController.cs" />
     <Compile Include="Controllers\CorporatePortofolioController.cs" />
     <Compile Include="Controllers\FileController.cs" />
@@ -697,6 +711,7 @@
     <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
     <Compile Include="DevExpressDataProvider\ArtifactDesignerDataProvider.cs" />
     <Compile Include="Extensions\ExcelUploadHelper.cs" />
+    <Compile Include="Extensions\Exporter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -804,6 +819,7 @@
     <Folder Include="Content\TemplateFiles\" />
     <Folder Include="Content\UploadedFiles\" />
     <Folder Include="ViewModels\CorporatePortofolio\" />
+    <Folder Include="Views\Chart\" />
     <Folder Include="Views\CorporatePortofolio\" />
     <Folder Include="Views\Test\" />
     <Folder Include="Views\UnAuthorize\" />
