@@ -2595,11 +2595,11 @@ Number.prototype.format = function (n, x) {
                     alpha: 60,
                     beta: 0
                 },
-                margin: [0, 0, 0, 0],
-                spacingTop: 0,
-                spacingBottom: 0,
-                spacingLeft: 0,
-                spacingRight: 0
+                //margin: [0, 0, 0, 0],
+                //spacingTop: 0,
+                //spacingBottom: 0,
+                //spacingLeft: 0,
+                //spacingRight: 0
             },
             title: {
                 text: data.Pie.Title,
@@ -2645,7 +2645,7 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     return '<b>' + this.point.name + '</b>: ' + this.y.format(2) + ' ' + this.point.measurement + '<br/>' +
-                        '<b>Total</b>: ' + this.total.format(2);
+                        '<b>Total</b>: ' + this.total.format(2) + ' ' + this.point.measurement + '<br/>';
                 }
             },
             series: [{
