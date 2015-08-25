@@ -340,22 +340,25 @@ namespace DSLNG.PEAR.Services
                         {
                             seriesResponse.y = kpiTarget.Value.Value;
                         }
+                    }
+                }
 
-                        switch (request.PeriodeType)
-                        {
-                            case PeriodeType.Hourly:
-                                timeInformation = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
-                                break;
-                            case PeriodeType.Daily:
-                                timeInformation = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
-                                break;
-                            case PeriodeType.Monthly:
-                                timeInformation = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
-                                break;
-                            case PeriodeType.Yearly:
-                                timeInformation = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
-                                break;
-                        }
+                if (latestActual != null)
+                {
+                    switch (request.PeriodeType)
+                    {
+                        case PeriodeType.Hourly:
+                            timeInformation = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Daily:
+                            timeInformation = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Monthly:
+                            timeInformation = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Yearly:
+                            timeInformation = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                            break;
                     }
                 }
 
@@ -471,23 +474,28 @@ namespace DSLNG.PEAR.Services
                             data = target.Value.Value
                         };
                     }
-                    switch (request.PeriodeType)
-                    {
-                        case PeriodeType.Hourly:
-                            timeInformation = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
-                            break;
-                        case PeriodeType.Daily:
-                            timeInformation = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
-                            break;
-                        case PeriodeType.Monthly:
-                            timeInformation = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
-                            break;
-                        case PeriodeType.Yearly:
-                            timeInformation = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
-                            break;
-                    }
                 }
             }
+
+            if (latestActual != null)
+            {
+                switch (request.PeriodeType)
+                {
+                    case PeriodeType.Hourly:
+                        timeInformation = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                        break;
+                    case PeriodeType.Daily:
+                        timeInformation = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                        break;
+                    case PeriodeType.Monthly:
+                        timeInformation = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
+                        break;
+                    case PeriodeType.Yearly:
+                        timeInformation = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                        break;
+                }
+            }
+
             foreach (var plot in request.PlotBands)
             {
                 response.PlotBands.Add(new GetSpeedometerChartDataResponse.PlotBandResponse
