@@ -1070,8 +1070,8 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     return '<b>' + this.x + '</b><br/>' +
-                        this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
-                        'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
+                        this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle;// + '<br/>' +
+                        //'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
             },
             exporting: {
