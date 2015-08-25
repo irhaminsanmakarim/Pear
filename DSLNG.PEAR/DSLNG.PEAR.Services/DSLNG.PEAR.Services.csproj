@@ -70,6 +70,7 @@
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="Common\PmsSummary\ScoreIndicator.cs" />
+    <Compile Include="Constants\PmsSummaryConstant.cs" />
     <Compile Include="Constants\Type.cs" />
     <Compile Include="ConversionService.cs" />
     <Compile Include="DropdownService.cs" />
