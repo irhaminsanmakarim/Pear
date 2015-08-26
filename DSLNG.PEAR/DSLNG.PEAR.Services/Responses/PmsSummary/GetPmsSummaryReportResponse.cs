@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Services.Constants;
 
 namespace DSLNG.PEAR.Services.Responses.PmsSummary
 {
@@ -99,15 +100,14 @@ namespace DSLNG.PEAR.Services.Responses.PmsSummary
                         {
                             return ActualYtd.Value > 0 ? 0 : 1;
                         }
-                        else
-                        {
-                            if (ActualYtd.Value.Equals(TargetYtd.Value))
-                            {
-                                return 1;
-                            }
 
-                            return ActualYtd / TargetYtd;
+                        if (ScoringType == ScoringType.Negative)
+                        {
+                            double? indexYtd = ActualYtd.Value.Equals(TargetYtd.Value) ? 1 : ActualYtd/TargetYtd;
+                            return indexYtd < PmsSummaryConstant.NegativeValue ? PmsSummaryConstant.NegativeValue : indexYtd;
                         }
+
+                        return ActualYtd.Value.Equals(TargetYtd.Value) ? 1 : ActualYtd/TargetYtd;
                     }
 
                     return null;
