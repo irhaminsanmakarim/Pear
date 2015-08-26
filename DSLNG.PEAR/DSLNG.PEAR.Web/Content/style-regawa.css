@@ -975,6 +975,13 @@ body {
   padding: 0;
 }
 
+.stack-template {
+  margin: 2rem 0 0 0 !important;
+  padding: 2rem;
+  border: 1px solid #d4d4d4;
+  background-color: #e4e4e4;
+}
+
 .button + .button {
   margin-left: 1rem !important;
 }
@@ -1050,6 +1057,11 @@ body {
 }
 .button-danger:hover, .button-danger:focus {
   color: #FFFFFF;
+}
+
+.button-super-tny {
+  padding: 0.57143rem 1.14286rem 0.64286rem 1.14286rem;
+  font-size: .84rem;
 }
 
 .button-tny {
@@ -1310,11 +1322,15 @@ textarea {
 .form-inline .form-group {
   margin-left: 2rem;
 }
-.form-inline .form-group:second-child {
+.form-inline .form-group:first-child {
   margin-left: 0;
 }
 .form-inline .form-group label {
   margin-right: .5rem;
+}
+
+.form-horizontal.form-artifact .control-label {
+  text-align: left;
 }
 
 .select2-container--default .select2-selection--single,

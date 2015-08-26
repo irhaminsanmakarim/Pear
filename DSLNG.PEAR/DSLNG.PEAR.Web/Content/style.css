@@ -270,6 +270,7 @@ img {
 #range-holder.interval,
 .baraccumulative .previous-color {
     display: block !important;
+    /*display: inline-block !important;*/
 }
 
 .title_page {
