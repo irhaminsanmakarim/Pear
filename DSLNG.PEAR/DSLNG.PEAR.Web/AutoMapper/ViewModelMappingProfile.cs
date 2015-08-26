@@ -307,6 +307,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.Series, o => o.ResolveUsing<ComboSeriesUpdateResolver>());
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetComboChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, GetComboChartDataRequest.ChartRequest.SeriesRequest>();
+            Mapper.CreateMap<AreaChartViewModel.StackViewModel, GetComboChartDataRequest.ChartRequest.StackRequest>();
             Mapper.CreateMap<BarChartViewModel.SeriesViewModel, GetComboChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<BarChartViewModel.StackViewModel, GetComboChartDataRequest.ChartRequest.StackRequest>();
 

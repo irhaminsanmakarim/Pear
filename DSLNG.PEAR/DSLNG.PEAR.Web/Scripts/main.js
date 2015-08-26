@@ -697,11 +697,18 @@ Number.prototype.format = function (n, x) {
                             var $hiddenFields = $thisTemplate.find('.hidden-fields');
                             $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
                                 $this = $(val);
-                                $this.addClass('singlestack');
+                                if ($this.find('.stack-template').length) {
+                                    $this.addClass('multistacks');
+                                } else {
+                                    $this.addClass('singlestack');
+                                }
+                                $this.addClass($thisTemplate.find('.value-axis-opt').val());
+                                $this.addClass($thisTemplate.find('.multiaxis-graphic-type').val());
                             });
                             var seriesTemplate = $hiddenFields.find('.series-template.original');
                             var seriesTemplateClone = seriesTemplate.clone(true);
                             seriesTemplateClone.children('input:first-child').remove();
+                            seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
                             $thisTemplate.find('.hidden-fields-holder').html(seriesTemplateClone);
                             seriesTemplate.remove();
                             $thisTemplate.find('.series-holder').append($hiddenFields.html());
@@ -710,6 +717,10 @@ Number.prototype.format = function (n, x) {
                                 Pear.Artifact.Designer._kpiAutoComplete($this);
                                 Pear.Artifact.Designer._colorPicker($this);
                             });
+                            var stackTemplate = $thisTemplate.find('.hidden-fields-holder').find('.stack-template.original');
+                            var stackTemplateClone = stackTemplate.clone(true);
+                            stackTemplate.closest('.hidden-fields-holder').append(stackTemplateClone);
+                            stackTemplate.remove();
                             $hiddenFields.remove();
                             Pear.Artifact.Designer.Combo._setupCallbacks.area($thisTemplate);
                             break;
@@ -2618,6 +2629,26 @@ Number.prototype.format = function (n, x) {
             if (chartTypeMap[data.ComboChart.Charts[i].GraphicType] == 'line') {
                 plotOptions[chartTypeMap[data.ComboChart.Charts[i].GraphicType]] = {
                     marker: {
+                        enabled: false,
+                        states: {
+                            hover: {
+                                radius: 4
+                            },
+                            select: {
+                                radius: 4
+                            }
+                        }
+                    }
+                };
+            } else if (chartTypeMap[data.ComboChart.Charts[i].GraphicType] == 'area' && data.ComboChart.Charts[i].SeriesType == 'multi-stack') {
+
+                plotOptions[chartTypeMap[data.ComboChart.Charts[i].GraphicType]] = {
+                    stacking: 'normal',
+                    lineColor: '#666666',
+                    lineWidth: 1,
+                    marker: {
+                        lineWidth: 1,
+                        lineColor: '#666666',
                         enabled: false,
                         states: {
                             hover: {
