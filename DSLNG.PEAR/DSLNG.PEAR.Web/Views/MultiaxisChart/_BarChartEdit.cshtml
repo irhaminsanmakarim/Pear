@@ -72,7 +72,7 @@
                 @for (var j = 0; j < Model.Series[i].Stacks.Count; j++)
                 { 
                     <fieldset class="stack-template  @original form-inline">
-                        <input type="hidden" name="MultiaxisChart.Charts[@ViewData["ChartIndex"]]BarChart.Series[@i].Stacks.Index" value="@j" />
+                        <input type="hidden" name="MultiaxisChart.Charts[@ViewData["ChartIndex"]].BarChart.Series[@i].Stacks.Index" value="@j" />
                         <legend>Stack</legend>
                         <div class="row">
                             <div class="col-sm-6">

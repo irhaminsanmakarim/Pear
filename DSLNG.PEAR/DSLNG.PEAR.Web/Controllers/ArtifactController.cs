@@ -203,8 +203,12 @@ namespace DSLNG.PEAR.Web.Controllers
                                 case "area":
                                     {
                                         chartViewModel.AreaChart = chartRes.MapTo<AreaChartViewModel>();
-                                        this.SetValueAxes(viewModel.AreaChart.ValueAxes);
+                                        chartViewModel.AreaChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                                        chartViewModel.AreaChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+
+                                        this.SetValueAxes(chartViewModel.AreaChart.ValueAxes);
                                         var series = new AreaChartViewModel.SeriesViewModel();
+                                        series.Stacks.Add(new AreaChartViewModel.StackViewModel());
                                         chartViewModel.AreaChart.Series.Insert(0, series);
                                     }
                                     break;
@@ -621,8 +625,11 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "area":
                     {
                         var viewModel = new AreaChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
                         this.SetValueAxes(viewModel.ValueAxes, false);
                         var series = new AreaChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new AreaChartViewModel.StackViewModel());
                         viewModel.Series.Add(series);
                         artifactViewModel.MultiaxisChart.Charts[0].AreaChart = viewModel;
                         //arti.BarChart = viewModel;

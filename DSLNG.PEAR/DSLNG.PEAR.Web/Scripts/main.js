@@ -527,11 +527,18 @@ Number.prototype.format = function (n, x) {
                             var $hiddenFields = $thisTemplate.find('.hidden-fields');
                             $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
                                 $this = $(val);
-                                $this.addClass('singlestack');
+                                if ($this.find('.stack-template').length) {
+                                    $this.addClass('multistacks');
+                                } else {
+                                    $this.addClass('singlestack');
+                                }
+                                $this.addClass($thisTemplate.find('.value-axis-opt').val());
+                                $this.addClass($thisTemplate.find('.multiaxis-graphic-type').val());
                             });
                             var seriesTemplate = $hiddenFields.find('.series-template.original');
                             var seriesTemplateClone = seriesTemplate.clone(true);
                             seriesTemplateClone.children('input:first-child').remove();
+                            seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
                             $thisTemplate.find('.hidden-fields-holder').html(seriesTemplateClone);
                             seriesTemplate.remove();
                             $thisTemplate.find('.series-holder').append($hiddenFields.html());
@@ -541,6 +548,10 @@ Number.prototype.format = function (n, x) {
                                 Pear.Artifact.Designer._colorPicker($this);
                             });
                             $hiddenFields.remove();
+                            var stackTemplate = $thisTemplate.find('.hidden-fields-holder').find('.stack-template.original');
+                            var stackTemplateClone = stackTemplate.clone(true);
+                            stackTemplate.closest('.hidden-fields-holder').append(stackTemplateClone);
+                            stackTemplate.remove();
                             Pear.Artifact.Designer.Multiaxis._setupCallbacks.area($thisTemplate);
                             break;
                     }
@@ -1082,7 +1093,7 @@ Number.prototype.format = function (n, x) {
                 formatter: function () {
                     return '<b>' + this.x + '</b><br/>' +
                         this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle;// + '<br/>' +
-                        //'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
+                    //'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
                 }
             },
             exporting: {
@@ -1287,7 +1298,7 @@ Number.prototype.format = function (n, x) {
 
     artifactDesigner._previewCallbacks.line = function (data, container) {
         container.highcharts({
-            chart:{
+            chart: {
                 zoomType: 'xy'
             },
             title: {
@@ -2123,8 +2134,6 @@ Number.prototype.format = function (n, x) {
             context.find('#add-series').click(function (e) {
                 e.preventDefault();
                 var seriesTemplate = context.find('.series-template.original').clone(true);
-
-
                 Pear.Artifact.Designer._colorPicker(seriesTemplate);
                 $('<input>').attr({
                     type: 'hidden',
@@ -2246,10 +2255,15 @@ Number.prototype.format = function (n, x) {
     artifactDesigner.Multiaxis._setupCallbacks.area = function (context, prefix) {
         var prefix = prefix || "MultiaxisChart";
         var removeSeriesOrStack = function () {
-            context.find('.series-template .remove').click(function (e) {
+            context.find('.series-template > .remove').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 $this.closest('.series-template').remove();
+            });
+            context.find('.stack-template > .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.stack-template').remove();
             });
         }
         var addSeries = function () {
@@ -2274,6 +2288,7 @@ Number.prototype.format = function (n, x) {
                         seriesTemplate.find('[id$=AreaChart_Series_0__' + field + ']').attr('name', prefix + '.Charts[' + chartPost + '].AreaChart.Series[' + seriesCount + '].' + field);
                     }
                 }
+                seriesTemplate.addClass(context.find('.series-type').val().toLowerCase());
                 seriesTemplate.addClass(context.find('.value-axis-opt').val());
                 seriesTemplate.addClass(context.find('.multiaxis-graphic-type').val());
                 context.find('.series-holder').append(seriesTemplate);
@@ -2285,8 +2300,42 @@ Number.prototype.format = function (n, x) {
                 seriesCount++;
             });
         };
+        var addStack = function () {
+            var stackCount = context.find('.series-holder').find('.stack-template').length + 1;
+            var chartPost = context.data('chart-pos');
+            context.find('.add-stack').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var stackTemplate = context.find('.stack-template.original').clone(true);
+                console.log(stackTemplate.closest('.chart-template'));
+
+                Pear.Artifact.Designer._colorPicker(stackTemplate);
+                stackTemplate.removeClass('original');
+                var seriesPos = $this.closest('.series-template').data('series-pos');
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: prefix + '.Charts[' + chartPost + '].AreaChart.Series[' + seriesPos + '].Stacks.Index',
+                    value: stackCount
+                }).appendTo(stackTemplate);
+                var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
+                for (var i in fields) {
+                    var field = fields[i];
+                    stackTemplate.find('[id$=AreaChart_Series_0__Stacks_0__' + field + ']').attr('name', prefix + '.Charts[' + chartPost + '].AreaChart.Series[' + seriesPos + '].Stacks[' + stackCount + '].' + field);
+                }
+                $this.closest('.stacks-holder').append(stackTemplate);
+                if (prefix == 'MultiaxisChart') {
+                    Pear.Artifact.Designer._kpiAutoComplete(stackTemplate, true, stackTemplate.closest('.chart-template'));
+                } else {
+                    Pear.Artifact.Designer._kpiAutoComplete(stackTemplate);
+                }
+                stackCount++;
+            });
+        };
+
         removeSeriesOrStack();
         addSeries();
+        addStack();
     };
     artifactDesigner.Multiaxis._loadGraph = function (url, type, context, customCallback) {
         var callback = Pear.Artifact.Designer.Multiaxis._setupCallbacks;
@@ -2369,6 +2418,7 @@ Number.prototype.format = function (n, x) {
         var plotOptions = {};
         var series = [];
         for (var i in data.MultiaxisChart.Charts) {
+            console.log(data.MultiaxisChart.Charts[i].SeriesType);
             yAxes.push({
                 labels: {
                     //format: '{value} ' + data.MultiaxisChart.Charts[i].Measurement,
@@ -2387,6 +2437,26 @@ Number.prototype.format = function (n, x) {
             if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'line') {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
                     marker: {
+                        enabled: false,
+                        states: {
+                            hover: {
+                                radius: 4
+                            },
+                            select: {
+                                radius: 4
+                            }
+                        }
+                    }
+                };
+            } else if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] == 'area' && data.MultiaxisChart.Charts[i].SeriesType == 'multi-stack') {
+                
+                plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
+                    stacking: 'normal',
+                    lineColor: '#666666',
+                    lineWidth: 1,
+                    marker: {
+                        lineWidth: 1,
+                        lineColor: '#666666',
                         enabled: false,
                         states: {
                             hover: {
