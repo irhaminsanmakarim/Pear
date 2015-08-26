@@ -3,9 +3,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="artifact-list">
-    <h2>List</h2>
+
+    <hgroup class="page-hgroup-header">
+        <h3 class="page-title">Artifacts List</h3>
+        <div class="breadcrumbs-regawa">
+            <ul>
+                <li>Dashboard</li>
+                <li>Configuration Setting</li>
+                <li>Artifacts List</li>
+            </ul>
+        </div>
+    </hgroup>
+
     @Html.Partial("_MessageResponse")
-    @Html.ActionLink("Create New", "Designer")
+    @Html.ActionLink("Create New", "Designer", null, new { @class = "button button-action" })
     @Html.Action("IndexPartial")
 
     @section Scripts{

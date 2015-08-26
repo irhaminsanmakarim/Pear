@@ -1,9 +1,11 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
 
-<div class="form-group form-list">
-    @Html.LabelFor(model => model.BarChart.Series)
-    @Html.DropDownList("seriesType", Model.BarChart.SeriesTypes, new { id = "seriesType", @class = "form-control" })
-    <input type="button" value="Add Series" class="btn btn-lightblue" id="add-series" />
+<div class="form-group">
+    @Html.LabelFor(model => model.BarChart.Series, new { @class = "col-sm-4 control-label"})
+    <div class="col-sm-8">
+        @Html.DropDownList("seriesType", Model.BarChart.SeriesTypes, new { id = "seriesType", @class = "form-control" })
+        <input type="button" value="Add Series" class="button button-action button-tny margin-top-1rem" id="add-series" />
+    </div>    
 </div>
 
 

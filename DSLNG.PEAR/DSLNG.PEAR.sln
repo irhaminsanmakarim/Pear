@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Data", "DSLNG.PEAR.Model\DSLNG.PEAR.Data.csproj", "{0620FDEA-1C13-4823-92A5-452D930EFA10}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Web", "DSLNG.PEAR.Web\DSLNG.PEAR.Web.csproj", "{F950EB93-74B8-41B9-B2E0-65CC8C398EFC}"
@@ -10,6 +8,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Services", "DSLNG.PEAR.Services\DSLNG.PEAR.Services.csproj", "{ADBF8F9E-62E8-4A19-869E-519150E87DD5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSLNG.PEAR.Common", "DSLNG.PEAR.Common\DSLNG.PEAR.Common.csproj", "{5D8F0913-0C56-45AE-A229-4FDCB7E05979}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{705B45A6-85F2-4643-897E-FC1966CFD274}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

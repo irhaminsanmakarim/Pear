@@ -4,10 +4,21 @@
     int i = 0;
 }
 
-<h2>@ViewBag.Title</h2>
+<hgroup class="page-hgroup-header">
+    <h3 class="page-title">@ViewBag.Title</h3>
+    <div class="breadcrumbs-regawa">
+        <ul>
+            <li>Plan</li>
+            <li>KPI Configuration</li>
+            <li>KPI</li>
+            <li>@ViewBag.Title</li>
+        </ul>
+    </div>
+</hgroup>
+
 @Html.Partial("_MessageResponse")
-<div class="row">
-    <div class="col-md-4">
+
+<div class="container-box small-wide container-box-form">
         <form action="@Url.Action("Update")" method="POST">
             @Html.HiddenFor(model => model.Id)
             <div class="form-group">
@@ -40,21 +51,24 @@
                 @Html.DropDownListFor(model => model.GroupId, Model.GroupList, "Select Group", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.GroupId)
             </div>
-            @Html.LabelFor(model => model.Code, new { @class = "control-label" })
-            <div class="form-group">
-                <div class="col-lg-3">
-                    @Html.TextBoxFor(model => model.CodeFromPillar, new { @class = "form-control", @readonly = "readonly" })
+            
+            <div class="form-horizontal">
+                @Html.LabelFor(model => model.Code, new { @class = "" })
+                <div class="form-group">                 
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.CodeFromPillar, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.CodeFromLevel, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.CodeFromRoleGroup, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Code)
                 </div>
-                <div class="col-lg-3">
-                    @Html.TextBoxFor(model => model.CodeFromLevel, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-                <div class="col-lg-3">
-                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
-                </div>
-                <div class="col-lg-3">
-                    @Html.TextBoxFor(model => model.CodeFromRoleGroup, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-                @Html.ValidationMessageFor(model => model.Code)
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.YtdFormulaValue, new { @class = "control-label" })
@@ -77,16 +91,16 @@
                 @Html.ValidationMessageFor(model => model.MethodId)
             </div>
             <div class="form-group form-list">
-                <label>Relation Model</label>
+                <label class="text-inline">Relation Model</label>
                 <button type="button" class="btn btn-default form-inline add-relation-model"><i class="glyphicon glyphicon-plus"></i></button>
             </div>
-            <div class="relation-model-wrapper">
+            <div class="relation-model-wrapper form-horizontal">
                 @foreach (var rm in Model.RelationModels)
                 {
                     <div class="form-group relation-model-list">
                         <input type="hidden" name="RelationModels.Index" value="@i" />
                         <input type="hidden" name="RelationModels[@i].Id" value="@rm.Id" class="rm-id"/>
-                        <div class="col-lg-5">
+                        <div class="col-sm-5">
                             <select name="RelationModels[@i].KpiId" class="form-control rm-kpi">
                                 <option value="0">Select KPI</option>
                                 @foreach (var item in Model.KpiList)
@@ -96,7 +110,7 @@
                                 }
                             </select>
                         </div>
-                        <div class="col-lg-5">
+                        <div class="col-sm-4">
                             <select name="RelationModels[@i].Method" class="form-control rm-method">
                                 <option value="0">Select Method</option>
                                 @foreach (var method in rm.Methods)
@@ -106,9 +120,8 @@
                                 }
                             </select>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-sm-3">
                             <button type="button" class="btn btn-default form-control remove-relation-model" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
-
                         </div>
                     </div>
                                 i++;
@@ -136,11 +149,10 @@
                 @Html.ValidationMessageFor(model => model.IsActive)
             </div>
 
-            <button type="submit" class="btn btn-default">Submit</button>
-            <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+            <button type="submit" class="button button-action">Submit</button>
+            <a href="@Url.Action("Index")" class="button">Cancel</a>
 
         </form>
-    </div>
 </div>
 
 <script>

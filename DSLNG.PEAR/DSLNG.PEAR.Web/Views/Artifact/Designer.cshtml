@@ -3,107 +3,136 @@
 @{
     ViewBag.Title = "Artifact - Designer";
 }
-<div class="row artifact-designer">
+<div class="artifact-designer">
     @using (Html.BeginForm("Create", "Artifact"))
     {
         @Html.AntiForgeryToken()
-        <div class="col-md-12">
-            <div class="title">Artifact Designer</div>
-            <div class="description_year">New</div>
+        <hgroup class="page-hgroup-header">
+            <h3 class="page-title text-inline">Artifact Designer</h3>
+            <h5 class="text-inline">New</h5>
             <div>@Html.ValidationSummary(true)</div>
-        </div>
-        <div class="col-md-12">
+        </hgroup>
+        
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="form-inline whitebox">
-                        <h2>Graphic Type</h2>
-                        <div class="form-group form-list">
-                            @Html.LabelFor(model => model.GraphicType)
-                            @Html.DropDownListFor(model => model.GraphicType, Model.GraphicTypes, new { @class = "form-control", id = "graphic-type", data_graph_url = Url.Action("GraphSettings", "Artifact") })
-                            @Html.ValidationMessageFor(model => model.GraphicType)
+                <div class="col-sm-6">
+                    <div class="container-box form-horizontal">
+                        <h4 class="container-box-title center">Graphic Type</h4>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.GraphicType, new { @class = "col-sm-4 control-label"})
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.GraphicType, Model.GraphicTypes, new { @class = "form-control", id = "graphic-type", data_graph_url = Url.Action("GraphSettings", "Artifact") })
+                                @Html.ValidationMessageFor(model => model.GraphicType)
+                            </div>
                         </div>
 
-                        <div class="form-group form-list">
-                            @Html.LabelFor(model => model.GraphicName)
-                            @Html.TextBoxFor(model => model.GraphicName, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.GraphicName)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.GraphicName, new { @class = "col-sm-4 control-label"})
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.GraphicName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.GraphicName)
+                            </div>
                         </div>
 
-                        <div class="form-group form-list">
-                            @Html.LabelFor(model => model.HeaderTitle)
-                            @Html.TextBoxFor(model => model.HeaderTitle, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.HeaderTitle)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.HeaderTitle, new { @class = "col-sm-4 control-label"})
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.HeaderTitle, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.HeaderTitle)
+                            </div>                            
                         </div>
 
-                        <div class="form-group form-list form-measurement">
-                            @Html.LabelFor(model => model.MeasurementId)
-                            @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements, new { @class = "form-control" })
+                        <div class="form-group form-measurement">
+                            @Html.LabelFor(model => model.MeasurementId, new { @class = "col-sm-4 control-label"})
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.MeasurementId, Model.Measurements, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.MeasurementId)
+                            </div>
                             @Html.ValidationMessageFor(model => model.MeasurementId)
                         </div>
+
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-inline whitebox">
-                        <h2>Graphic Settings</h2>
+
+                <div class="col-sm-6">
+                    <div class="container-box form-horizontal">
+                        <h4 class="container-box-title center">Graphic Settings</h4>
                         <div id="general-graphic-settings">
-                            <div class="form-group form-list">
-                                @Html.LabelFor(model => model.PeriodeType)
-                                @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.PeriodeType)
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.PeriodeType, new { @class = "col-sm-4 control-label"})
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PeriodeType)
+                                </div>                                
                             </div>
 
                             <div id="range-filter-holder">
-                                <div class="form-group form-list">
-                                    @Html.LabelFor(model => model.RangeFilter)
-                                    @Html.DropDownListFor(model => model.RangeFilter, Model.RangeFilters, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.RangeFilter)
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.RangeFilter, new { @class = "col-sm-4 control-label"})
+                                    <div class="col-sm-8">
+                                        @Html.DropDownListFor(model => model.RangeFilter, Model.RangeFilters, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.RangeFilter)
+                                    </div>                                    
                                 </div>
                             </div>
 
                             <div id="range-holder">
-                                <div class="form-group form-list">
-                                    @Html.LabelFor(model => model.StartInDisplay)
-                                    @Html.TextBoxFor(model => model.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
-                                    @Html.ValidationMessageFor(model => model.StartInDisplay)
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StartInDisplay, new { @class = "col-sm-4 control-label"})
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                                        @Html.ValidationMessageFor(model => model.StartInDisplay)
+                                    </div>                                    
                                 </div>
 
-                                <div class="form-group form-list">
-                                    @Html.LabelFor(model => model.EndInDisplay)
-                                    @Html.TextBoxFor(model => model.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
-                                    @Html.ValidationMessageFor(model => model.EndInDisplay)
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.EndInDisplay, new { @class = "col-sm-4 control-label"})
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                                        @Html.ValidationMessageFor(model => model.EndInDisplay)
+                                    </div>                                    
                                 </div>
                             </div>
 
-                            <div class="form-group form-list main-value-axis">
-                                @Html.LabelFor(model => model.ValueAxis)
-                                @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.ValueAxis)
+                            <div class="form-group main-value-axis">
+                                @Html.LabelFor(model => model.ValueAxis, new { @class = "col-sm-4 control-label"})
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ValueAxis)
+                                </div>                                
                             </div>
+
                         </div>
                         <div id="graphic-settings"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div id="series-holder" class="form-inline graphic-properties">
-            </div>
-            <div id="plot-bands-holder" class="form-inline graphic-properties">
-            </div>
-            <div id="charts-holder" class="form-inline graphic-properties">
-            </div>
-            <div id="rows-holder" class="form-inline graphic-properties">
-            </div>
+
+        <div id="series-holder" class="graphic-properties">
         </div>
-        <div class="col-md-12 artifact-designer-btns">
-            <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
-            <button data-preview-url="@Url.Action("Preview", "Artifact")"  id="graphic-preview-btn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-eye"></span>View</button>
-            <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>
-            <a href="@Url.Action("Index", "Artifact")" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        <div id="plot-bands-holder" class="graphic-properties">
+        </div>
+        <div id="charts-holder" class="graphic-properties">
+        </div>
+        <div id="rows-holder" class="graphic-properties">
+        </div>
+
+        <div class="artifact-designer-btns">
+            <button type="submit" class="button button-action"><span class="fa fa-floppy-o"></span>Save</button>
+            <button data-preview-url="@Url.Action("Preview", "Artifact")"  id="graphic-preview-btn" type="button" class="button">
+                <span class="fa fa-eye"></span>View
+            </button>
+            <a onclick="location.reload();" class="button"><span class="fa fa-repeat"></span>Clear</a>
+            <a href="@Url.Action("Index", "Artifact")" class="button"><span class="fa fa-times"></span>Cancel</a>
         </div>
     }
 </div>
+
 <div id="hidden-fields-holder" data-kpi-url="@Url.Action("KpiList", "Artifact")"></div>
+
 <!-- Modal -->
 <div class="modal fade" id="graphic-preview" tabindex="-1" role="dialog" aria-labelledby="graphicPreview" aria-hidden="true">
     <div class="modal-dialog modal-lg">

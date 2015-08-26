@@ -3,14 +3,17 @@
     ViewBag.Title = "Create New Menu";
 }
 
-<h2>@ViewBag.Title</h2>
-@Html.Partial("_MessageResponse")
-<div class="row">
-    <div class="col-md-12">
-        <form action="@Url.Action("Create")" method="POST">
-            <div class="row">
-                <div class="col-md-7">
+<hgroup class="page-hgroup-header">
+    <h3 class="page-title">@ViewBag.Title</h3>
+</hgroup>
 
+@Html.Partial("_MessageResponse")
+
+<div class="container-box large-wide container-box-form">
+    <form action="@Url.Action("Create")" method="POST">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
                     <div class="form-group">
                         @Html.LabelFor(model => model.ParentId, new { @class = "control-label" })
                         @Html.DropDownListFor(model => model.ParentId, Model.MenuOptions, "Select Parent Menu", new { @class = "form-control" })
@@ -42,7 +45,8 @@
                         @Html.ValidationMessageFor(model => model.IsActive)
                     </div>
                 </div>
-                <div class="col-md-5">
+
+                <div class="col-sm-6">
                     <div class="form-group">
                         @Html.LabelFor(model => model.RoleGroupIds, new { @class = "control-label" })
                         @Html.DropDownListFor(model => model.RoleGroupIds, Model.RoleGroupOptions, new { @class = "form-control", @multiple = "multiple", @size = "7" })
@@ -64,13 +68,11 @@
                         @Html.ValidationMessageFor(model => model.Url)
                     </div>
                 </div>
-                
             </div>
-            <button type="submit" class="btn btn-default btn-group-lg">Submit</button>
-            <a href="@Url.Action("Index")" class="btn btn-default btn-group-lg">Cancel</a>
-
-        </form>
-    </div>
+            <button type="submit" class="button button-action">Submit</button>
+            <a href="@Url.Action("Index")" class="button">Cancel</a>
+        </div>
+    </form>
 </div>
 
 <script type="text/javascript">

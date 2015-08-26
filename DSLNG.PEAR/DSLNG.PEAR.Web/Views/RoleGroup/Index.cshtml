@@ -3,9 +3,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>RoleGroup</h2>
+<hgroup class="page-hgroup-header">
+    <h3 class="page-title">Role Group</h3>
+</hgroup>
 @Html.Partial("_MessageResponse")
-@Html.ActionLink("New", "Create", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("New", "Create", null, new { @class = "button button-action" })
 @Html.Action("IndexPartial")
 
 

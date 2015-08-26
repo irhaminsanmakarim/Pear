@@ -33,7 +33,7 @@
     <li class="@mainclass" menuid="@menu.Id" selectedmenuid="@Model.SelectedMenu.Id" selectedmenuparentid="@Model.SelectedMenu.ParentId">
         <a href="@menu.Url" class="">
             @if (menu.Icon != null){
-                <i class="fa @menu.Icon"></i><span>@menu.Name</span>
+                <i class="@menu.Icon"></i><span>@menu.Name</span>
             }
             else
             {

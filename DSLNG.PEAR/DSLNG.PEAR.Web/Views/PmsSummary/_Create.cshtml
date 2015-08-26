@@ -1,11 +1,12 @@
 ﻿@using DSLNG.PEAR.Web.ViewModels.PmsSummary
 @model CreatePmsSummaryViewModel
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span
-        aria-hidden="true">&times;</span></button>
-<div class="whitebox">
-    <h5>Create Pms Summary</h5><br/>
-    <form class="form-group" action="@Url.Action("Create")" method="POST">
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">Create Pms Summary</h4>
+</div>
+
+<form action="@Url.Action("Create")" method="POST">
+    <div class="modal-body">    
         <div class="form-group form-list">
             @Html.LabelFor(x => x.Year)
             <input class="datepicker form-control" data-provide="datepicker" name="year" type="text" value="">
@@ -24,15 +25,23 @@
             @Html.ValidationMessageFor(x => x.IsActive)
         </div>
         @Html.Partial("_ScoringIndicator", Model.ScoreIndicators)
-        
-        <div class="centering margin">
-            <hr style="margin-bottom:60px;">
-            <a href="#" onclick="$(this).closest('form').submit()" class="btn-darkblue btn-large"><span class="fa fa-floppy-o"></span>Save</a>
-            <a href="javascript:;" data-dismiss="modal" aria-label="Close" class="btn-darkblue btn-large"><span class="fa fa-times"></span>Cancel</a>
-        </div>
+    </div>
+    <div class="modal-footer">
+        <button href="#" onclick="$(this).closest('form').submit()" class="button button-action"><span class="fa fa-floppy-o"></span>Save</button>
+        <button href="javascript:;" data-dismiss="modal" aria-label="Close" class="button"><span class="fa fa-times"></span>Cancel</button>
+    </div>
+</form>
 
-    </form>
-</div>
+
+    
+        
+        
+        @*<div class="centering margin">
+            <hr style="margin-bottom:60px;">
+        </div>*@
+
+    
+
 
 <script type="text/javascript">
     $(document).ready(function () {

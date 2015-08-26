@@ -3,9 +3,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>KPI List</h2>
+<hgroup class="page-hgroup-header">
+    <h3 class="page-title">KPI List</h3>
+    <div class="breadcrumbs-regawa">
+        <ul>
+            <li>Plan</li>
+            <li>KPI Configuration</li>
+            <li>KPI</li>
+        </ul>
+    </div>
+</hgroup>
 @Html.Partial("_MessageResponse")
-@Html.ActionLink("New", "Create", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("New", "Create", null, new { @class = "button button-action" })
 @Html.Action("IndexPartial")
 
 

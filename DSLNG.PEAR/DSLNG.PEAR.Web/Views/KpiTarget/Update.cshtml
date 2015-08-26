@@ -5,24 +5,33 @@
 }
 @Html.Partial("_MessageResponse")
 <section>
-    <div class="row">
-        <div class="title_page" style="border: none!important;">
-            <div class="title">@ViewBag.Title</div>
-        </div>
-    </div>
-    <div class="row">
-        <form class="form-inline">
-            <div class="form-group"
-                style="margin: 5px 40px 0px 25px; padding-right: 30px;">
-                <label>Period :</label>
-                @Html.DropDownListFor(x => x.PeriodeType, Model.PeriodeTypes, new { @class = "form-control", id = "periodeType" })
-                <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none"></img>
-            </div>
-        </form>
 
-    </div>
+    <hgroup class="page-hgroup-header">
+        <h3 class="page-title">@ViewBag.Title</h3>
+        <div class="breadcrumbs-regawa">
+            <ul>
+                <li>Plan</li>
+                <li>Performance Setting</li>
+                <li>Corporate Portofolio</li>
+                <li>Value Target</li>
+            </ul>
+        </div>
+    </hgroup>
+
+
+
+    <form class="form-inline">
+        <div class="form-group">
+            <label>Period :</label>
+            @Html.DropDownListFor(x => x.PeriodeType, Model.PeriodeTypes, new { @class = "form-control", id = "periodeType" })
+            <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none"></img>
+        </div>
+    </form>
+
 
 </section>
+
+<hr class="just-margin-bottom"/>
 
 
 <div class="content-wrapper">
