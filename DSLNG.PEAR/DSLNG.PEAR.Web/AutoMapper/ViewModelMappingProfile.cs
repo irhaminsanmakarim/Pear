@@ -222,11 +222,15 @@ namespace DSLNG.PEAR.Web.AutoMapper
             //area chart mapping
             Mapper.CreateMap<AreaChartViewModel, GetCartesianChartDataRequest>();
             Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, GetCartesianChartDataRequest.SeriesRequest>();
+            Mapper.CreateMap<AreaChartViewModel.StackViewModel, GetCartesianChartDataRequest.StackRequest>();
             Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, AreaChartDataViewModel.SeriesViewModel>();
             Mapper.CreateMap<AreaChartViewModel, CreateArtifactRequest>();
             Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, CreateArtifactRequest.SeriesRequest>();
+            Mapper.CreateMap<AreaChartViewModel.StackViewModel, CreateArtifactRequest.StackRequest>();
             Mapper.CreateMap<AreaChartViewModel, UpdateArtifactRequest>();
             Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, UpdateArtifactRequest.SeriesRequest>();
+            Mapper.CreateMap<AreaChartViewModel.StackViewModel, UpdateArtifactRequest.StackRequest>();
+            Mapper.CreateMap<GetArtifactResponse.StackResponse, AreaChartViewModel.StackViewModel>();
 
             //speedometer chart mapping
             Mapper.CreateMap<ArtifactDesignerViewModel, GetSpeedometerChartDataRequest>()

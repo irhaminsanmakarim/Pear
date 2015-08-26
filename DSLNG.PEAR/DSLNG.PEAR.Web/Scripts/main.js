@@ -860,11 +860,18 @@ Number.prototype.format = function (n, x) {
                 var $hiddenFields = $('#hidden-fields');
                 $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
                     $this = $(val);
-                    $this.addClass('singlestack');
+                    if ($this.find('.stack-template').length) {
+                        $this.addClass('multistacks');
+                    } else {
+                        $this.addClass('singlestack');
+                    }
+                    $this.addClass($('#bar-value-axis').val());
+                    $this.addClass($('#graphic-type').val());
                 });
                 var seriesTemplate = $hiddenFields.find('.series-template.original');
                 var seriesTemplateClone = seriesTemplate.clone(true);
                 seriesTemplateClone.children('input:first-child').remove();
+                seriesTemplateClone.find('.stack-template').children('input:first-child').remove();
                 $('#hidden-fields-holder').html(seriesTemplateClone);
                 seriesTemplate.remove();
                 $('#series-holder').append($hiddenFields.html());
@@ -874,6 +881,10 @@ Number.prototype.format = function (n, x) {
                     Pear.Artifact.Designer._colorPicker($this);
                 });
                 $hiddenFields.remove();
+                var stackTemplate = $('#hidden-fields-holder').find('.stack-template.original');
+                var stackTemplateClone = stackTemplate.clone(true);
+                stackTemplate.closest('#hidden-fields-holder').append(stackTemplateClone);
+                stackTemplate.remove();
                 Pear.Artifact.Designer._setupCallbacks.area();
                 break;
             case 'tabular':
@@ -1386,10 +1397,15 @@ Number.prototype.format = function (n, x) {
     //area chart
     artifactDesigner._setupCallbacks.area = function () {
         var removeSeriesOrStack = function () {
-            $('.series-template .remove').click(function (e) {
+            $('.series-template > .remove').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 $this.closest('.series-template').remove();
+            });
+            $('.stack-template > .remove').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                $this.closest('.stack-template').remove();
             });
         }
         var addSeries = function () {
@@ -1417,17 +1433,52 @@ Number.prototype.format = function (n, x) {
                         seriesTemplate.find('#AreaChart_Series_0__' + field).attr('name', 'AreaChart.Series[' + seriesCount + '].' + field);
                     }
                 }
+                seriesTemplate.addClass($('#seriesType').val().toLowerCase());
                 seriesTemplate.addClass($('#bar-value-axis').val());
                 seriesTemplate.addClass($('#graphic-type').val());
                 $('#series-holder').append(seriesTemplate);
                 seriesCount++;
             });
         };
+        var addStack = function () {
+            var stackCount = $('#series-holder').find('.stack-template').length + 1;
+            $('.add-stack').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var stackTemplate = $('.stack-template.original').clone(true);
+                Pear.Artifact.Designer._kpiAutoComplete(stackTemplate);
+                Pear.Artifact.Designer._colorPicker(stackTemplate);
+                stackTemplate.removeClass('original');
+                var seriesPos = $this.closest('.series-template').data('series-pos');
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'foo',
+                    name: 'AreaChart.Series[' + seriesPos + '].Stacks.Index',
+                    value: stackCount
+                }).appendTo(stackTemplate);
+                var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
+                for (var i in fields) {
+                    var field = fields[i];
+                    stackTemplate.find('#AreaChart_Series_0__Stacks_0__' + field).attr('name', 'AreaChart.Series[' + seriesPos + '].Stacks[' + stackCount + '].' + field);
+                }
+                $this.closest('.stacks-holder').append(stackTemplate);
+                stackCount++;
+            });
+        };
         removeSeriesOrStack();
         addSeries();
+        addStack();
     };
 
     artifactDesigner._previewCallbacks.area = function (data, container) {
+        if (data.AreaChart.SeriesType == "single-stack") {
+            Pear.Artifact.Designer._displayBasicAreaChart(data, container);
+        } else {
+            Pear.Artifact.Designer._displayMultistacksAreaChart(data, container);
+        }
+    };
+
+    artifactDesigner._displayBasicAreaChart = function (data, container) {
         container.highcharts({
             chart: {
                 type: 'area',
@@ -1438,14 +1489,10 @@ Number.prototype.format = function (n, x) {
             },
             subtitle: {
                 text: data.AreaChart.Subtitle,
-                x: -20
+                //x: -20
             },
-            //subtitle: {
-            //    text: 'Source: <a href="http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf">' +
-            //        'thebulletin.metapress.com</a>'
-            //},
             xAxis: {
-                allowDecimals: false,
+                //allowDecimals: false,
                 labels: {
                     formatter: function () {
                         return this.value; // clean, unformatted number for year
@@ -1468,7 +1515,6 @@ Number.prototype.format = function (n, x) {
                     return '<b>' + this.x + '</b><br/>' +
                         this.series.name + ': ' + this.y.format(2) + ' ' + data.LineChart.ValueAxisTitle;
                 }
-                //valueSuffix: data.LineChart.ValueAxisTitle
             },
             exporting: {
                 url: '/Chart/Export',
@@ -1479,20 +1525,65 @@ Number.prototype.format = function (n, x) {
                 enabled: false
             },
             plotOptions: {
-
-                //area: {
-                //    pointStart: data.AreaChart.Periodes[0],
-                //    marker: {
-                //        enabled: false,
-                //        symbol: 'circle',
-                //        radius: 2,
-                //        states: {
-                //            hover: {
-                //                enabled: true
-                //            }
-                //        }
-                //    }
-                //}
+            },
+            series: data.AreaChart.Series
+        });
+    };
+    artifactDesigner._displayMultistacksAreaChart = function (data, container) {
+        data.AreaChart.Series = data.AreaChart.Series.reverse();
+        container.highcharts({
+            chart: {
+                type: 'area',
+                zoomType: 'xy'
+            },
+            title: {
+                text: data.AreaChart.Title
+            },
+            subtitle: {
+                text: data.AreaChart.Subtitle
+            },
+            xAxis: {
+                labels: {
+                    formatter: function () {
+                        return this.value; // clean, unformatted number for year
+                    }
+                },
+                categories: data.AreaChart.Periodes
+            },
+            yAxis: {
+                title: {
+                    text: data.AreaChart.ValueAxisTitle
+                }
+            },
+            //tooltip: {
+            //    shared: true,
+            //    valueSuffix: ' ' + data.AreaChart.ValueAxisTitle
+            //},
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.x + '</b><br/>' +
+                        this.series.name + ': ' + this.y.format(2) + ' ' + data.AreaChart.ValueAxisTitle + '<br/>' +
+                        'Total: ' + this.point.stackTotal.format(2) + ' ' + data.AreaChart.ValueAxisTitle;
+                }
+            },
+            plotOptions: {
+                area: {
+                    stacking: 'normal',
+                    lineColor: '#666666',
+                    lineWidth: 1,
+                    marker: {
+                        lineWidth: 1,
+                        lineColor: '#666666'
+                    }
+                }
+            },
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
             },
             series: data.AreaChart.Series
         });
@@ -2359,10 +2450,6 @@ Number.prototype.format = function (n, x) {
 
                         var prev = (parseInt(i) - 1);
                         var next = (parseInt(i) + 1);
-                        console.log(prev);
-                        console.log(next);
-                        console.log(this.points.indexOf(prev));
-                        console.log(this.points.indexOf(next));
                         var nextExist = typeof this.points[next] !== 'undefined';
                         var prevExist = typeof this.points[prev] !== 'undefined';
                         if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||

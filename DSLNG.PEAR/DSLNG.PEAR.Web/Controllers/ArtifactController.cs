@@ -163,10 +163,15 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
                 case "area":
                     {
+
+
                         var areaChart = new AreaChartViewModel();
+                        areaChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        areaChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
                         viewModel.AreaChart = artifact.MapPropertiesToInstance<AreaChartViewModel>(areaChart);
                         this.SetValueAxes(viewModel.AreaChart.ValueAxes);
                         var series = new AreaChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new AreaChartViewModel.StackViewModel());
                         viewModel.AreaChart.Series.Insert(0, series);
                     }
                     break;
@@ -399,8 +404,11 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "area":
                     {
                         var viewModel = new AreaChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
                         this.SetValueAxes(viewModel.ValueAxes, false);
                         var series = new AreaChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new AreaChartViewModel.StackViewModel());
                         viewModel.Series.Add(series);
                         var artifactViewModel = new ArtifactDesignerViewModel();
                         artifactViewModel.AreaChart = viewModel;
@@ -817,6 +825,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.AreaChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
                         previewViewModel.AreaChart.Series = chartData.Series.MapTo<AreaChartDataViewModel.SeriesViewModel>();
                         previewViewModel.AreaChart.Periodes = chartData.Periodes;
+                        previewViewModel.AreaChart.SeriesType = chartData.SeriesType;
                     }
                     break;
                 case "speedometer":
