@@ -1149,29 +1149,10 @@ Number.prototype.format = function (n, x) {
                 crosshair: true
             },
             yAxis: {
-                //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle
-                },
-                stackLabels: {
-                    enabled: true,
-                    style: {
-                        fontWeight: 'bold',
-                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
-                    }
                 }
             },
-            //legend: {
-            //    align: 'right',
-            //    x: -30,
-            //    verticalAlign: 'top',
-            //    y: 25,
-            //    floating: true,
-            //    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
-            //    borderColor: '#CCC',
-            //    borderWidth: 1,
-            //    shadow: false
-            //},
             tooltip: {
                 formatter: function () {
                     return '<b>' + this.x + '</b><br/>' +
@@ -1189,14 +1170,7 @@ Number.prototype.format = function (n, x) {
             },
             plotOptions: {
                 column: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: true,
-                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
-                        style: {
-                            textShadow: '0 0 3px black'
-                        }
-                    }
+                    stacking: 'normal'
                 }
             },
             series: data.BarChart.Series
@@ -2438,7 +2412,7 @@ Number.prototype.format = function (n, x) {
                     }
                 },
                 title: {
-                    text: data.MultiaxisChart.Charts[i].ValueAxisTitle + ' (' + data.MultiaxisChart.Charts[i].Measurement + ')',
+                    text: data.MultiaxisChart.Charts[i].Measurement, //data.MultiaxisChart.Charts[i].ValueAxisTitle + ' (' + data.MultiaxisChart.Charts[i].Measurement + ')',
                     style: {
                         color: data.MultiaxisChart.Charts[i].ValueAxisColor
                     }
