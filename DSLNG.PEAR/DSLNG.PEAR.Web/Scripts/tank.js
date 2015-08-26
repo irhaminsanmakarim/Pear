@@ -52,6 +52,7 @@
         var red = '#e43834';
         var yellow = '#fcd734';
         var green = '#429f46';
+        var red = "#FF0000";
 
         var lineMaxColor = greyBorder;
         var lineMinColor = green;
@@ -173,7 +174,7 @@
         //////////
 
         var lineZero = s.line(leftLineX - 4, roundBottomY, leftLineX + 4, roundBottomY).attr({
-            stroke: greyBorder,
+            stroke: red,
             strokeWidth: 3,
             strokeLinecap: "round",
             strokeLinejoin: "round"
@@ -205,7 +206,7 @@
             strokeLinejoin: "round"
         });
         var lineZero = s.line(rightLineX - 4, roundBottomY, rightLineX + 4, roundBottomY).attr({
-            stroke: greyBorder,
+            stroke: red,
             strokeWidth: 3,
             strokeLinecap: "round",
             strokeLinejoin: "round"
