@@ -13,19 +13,20 @@
         <div class="chart-template original container-box">
             <h4 class="page-title text-inline">Charts</h4>
             <input type="button" value="Remove" class="remove button button-tny button-danger pull-right" />
-            <hr class="just-margin-bottom"/>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
-                @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.ValueAxes, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
+            <div class="form-inline row-of-inline-form">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
+                    @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.ValueAxes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MultiaxisChart.Charts[i].GraphicType)
+                    @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.GraphicTypes, new { @class = "form-control multiaxis-chart-type" })
+                    @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].GraphicType)
+                </div>
+                <div id="chart-settings"></div>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.MultiaxisChart.Charts[i].GraphicType)
-                @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.GraphicTypes, new { @class = "form-control multiaxis-chart-type" })
-                @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].GraphicType)
-            </div>
-            <div id="chart-settings"></div>
         </div>
     }
 </div>

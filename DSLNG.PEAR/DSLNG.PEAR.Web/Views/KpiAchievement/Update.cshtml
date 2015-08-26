@@ -49,16 +49,20 @@
 </div>
 
 <div class="popover-content" style="display:none">
-    <label class="control-label">Value</label>
-    <input type="text" name="Value" class="form-control" />
-    <label class="control-label">Remark</label>
-    <textarea name="Remark" class="form-control"></textarea>
+    <div class="form-group">
+        <label class="">Value</label>
+        <input type="text" name="Value" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="">Remark</label>
+        <textarea name="Remark" class="form-control"></textarea>
+    </div>
     <input type="hidden" name="Id" />
     <input type="hidden" name="KpiId" />
     <input type="hidden" name="Periode" />
     <input type="hidden" name="PeriodeType" />
-    <button type="button" class="btn btn-primary submit-popover">Ok</button>
-    <button type="button" class="btn btn-primary cancel-popover">Cancel</button>
+    <button type="button" class="button button-action button-tny submit-popover">Ok</button>
+    <button type="button" class="button button-tny cancel-popover">Cancel</button>
 </div>
 
 <script type="text/javascript">

@@ -38,12 +38,12 @@
             
 
             <div class="form-inline row-of-inline-form">
-                <div class="form-group form-list">
+                <div class="form-group">
                     @Html.LabelFor(model => model.Tabular.Rows[i].KpiId)
                     @Html.DropDownListFor(model => model.Tabular.Rows[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
                     @Html.ValidationMessageFor(model => model.Tabular.Rows[i].KpiId)
                 </div>
-                <div class="form-group form-list">
+                <div class="form-group">
                     @Html.LabelFor(model => model.Tabular.Rows[i].PeriodeType)
                     @Html.DropDownListFor(model => model.Tabular.Rows[i].PeriodeType, Model.Tabular.PeriodeTypes, new { @class = "form-control periode-type" })
                     @Html.ValidationMessageFor(model => model.Tabular.Rows[i].PeriodeType)
@@ -57,17 +57,17 @@
 
             <div class="form-inline row-of-inline-form">
                 <div id="range-holder">
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.Tabular.Rows[i].StartInDisplay)
-                    @Html.TextBoxFor(model => model.Tabular.Rows[i].StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
-                    @Html.ValidationMessageFor(model => model.Tabular.Rows[i].StartInDisplay)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Tabular.Rows[i].StartInDisplay)
+                        @Html.TextBoxFor(model => model.Tabular.Rows[i].StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                        @Html.ValidationMessageFor(model => model.Tabular.Rows[i].StartInDisplay)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Tabular.Rows[i].EndInDisplay)
+                        @Html.TextBoxFor(model => model.Tabular.Rows[i].EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                        @Html.ValidationMessageFor(model => model.Tabular.Rows[i].EndInDisplay)
+                    </div>
                 </div>
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.Tabular.Rows[i].EndInDisplay)
-                    @Html.TextBoxFor(model => model.Tabular.Rows[i].EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
-                    @Html.ValidationMessageFor(model => model.Tabular.Rows[i].EndInDisplay)
-                </div>
-            </div>
             </div>
         </div>
     }

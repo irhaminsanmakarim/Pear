@@ -13,30 +13,31 @@
         <div class="series-template original container-box">
             <h4 class="page-title text-inline">Series</h4>
             <input type="button" value="Remove" class="remove button button-tny button-danger pull-right" />
-            <hr class="just-margin-bottom"/>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.LineChart.Series[i].Label)
-                @Html.TextBoxFor(model => model.LineChart.Series[i].Label, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.LineChart.Series[i].Label)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.LineChart.Series[i].Color)
-                <div class="input-group colorpicker">
-                    @Html.TextBoxFor(model => model.LineChart.Series[i].Color, new { @class = "form-control" })
-                    <span class="input-group-addon"><i></i></span>
+            <div class="form-inline row-of-inline-form">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LineChart.Series[i].Label)
+                    @Html.TextBoxFor(model => model.LineChart.Series[i].Label, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LineChart.Series[i].Label)
                 </div>
-                @Html.ValidationMessageFor(model => model.LineChart.Series[i].Color)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.LineChart.Series[i].KpiId)
-                @Html.DropDownListFor(model => model.LineChart.Series[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                @Html.ValidationMessageFor(model => model.LineChart.Series[i].KpiId)
-            </div>
-            <div class="form-group value-axis">
-                @Html.LabelFor(model => Model.LineChart.Series[i].ValueAxis)
-                @Html.DropDownListFor(model => model.LineChart.Series[i].ValueAxis, Model.LineChart.ValueAxes, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.LineChart.Series[i].ValueAxis)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LineChart.Series[i].Color)
+                    <div class="input-group colorpicker">
+                        @Html.TextBoxFor(model => model.LineChart.Series[i].Color, new { @class = "form-control" })
+                        <span class="input-group-addon"><i></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.LineChart.Series[i].Color)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LineChart.Series[i].KpiId)
+                    @Html.DropDownListFor(model => model.LineChart.Series[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                    @Html.ValidationMessageFor(model => model.LineChart.Series[i].KpiId)
+                </div>
+                <div class="form-group value-axis">
+                    @Html.LabelFor(model => Model.LineChart.Series[i].ValueAxis)
+                    @Html.DropDownListFor(model => model.LineChart.Series[i].ValueAxis, Model.LineChart.ValueAxes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LineChart.Series[i].ValueAxis)
+                </div>
             </div>
         </div>
     }
