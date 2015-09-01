@@ -1,4 +1,4 @@
-﻿.clearfix:before, .clearfix:after {
+.clearfix:before, .clearfix:after {
   content: "";
   display: table;
 }
@@ -932,6 +932,7 @@ body {
   width: 100%;
   margin-bottom: 2rem;
   border-radius: 0.3em;
+  border: 1px solid #e4e4e4;
 }
 .container-box:before, .container-box:after {
   content: " ";
@@ -975,11 +976,17 @@ body {
   padding: 0;
 }
 
-.stack-template {
+.second-child-artifact-box, .third-child-artifact-box {
   margin: 2rem 0 0 0 !important;
   padding: 2rem;
   border: 1px solid #d4d4d4;
   background-color: #e4e4e4;
+  border-radius: 0.3em;
+}
+
+.third-child-artifact-box {
+  border: 1px solid #c4c4c4;
+  background-color: #d4d4d4;
 }
 
 .button + .button {
@@ -1215,37 +1222,15 @@ body {
   margin: 0;
 }
 
-.checkbox-form label {
+.checkbox-input {
+  line-height: 0;
+  width: 1.5rem;
+  height: 1.5rem;
   cursor: pointer;
 }
-.checkbox-form input {
-  display: none;
-}
-.checkbox-form .checkbox-form-image {
-  display: inline-block;
-  height: 30px;
-  width: 30px;
-  margin-left: .5em;
-  vertical-align: middle;
-  background-image: url(../images/check-box-outline.svg);
-  background-image: url("img/check-box-outline.svg");
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-.checkbox-form input[type=checkbox]:checked + .checkbox-form-image {
-  background-image: url(../images/check-box-active.svg);
-  background-image: url("img/check-box-active.svg");
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-.checkbox-form p {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0;
-  color: #555;
-  font-weight: bold;
+
+.form-horizontal .checkbox-input {
+  margin: 8px 0 0 !important;
 }
 
 .modal-content {
@@ -1276,6 +1261,7 @@ textarea {
 .form-group label {
   font-size: 1rem;
   color: #555;
+  cursor: pointer;
 }
 
 .form-control {
@@ -1306,7 +1292,6 @@ textarea {
   margin-bottom: 2rem;
 }
 .form-kpi-daily .form-group:first-child {
-  margin-right: 2rem;
   padding-right: 2rem;
   border-right: 1px solid #bbb;
 }

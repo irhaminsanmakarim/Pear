@@ -10,7 +10,7 @@
         var url_href = "";
         if (url!=null)
         {
-            if (url.Length > 0)
+            if (url.Length > 1)
             {
                 if (url.Length >= 3){
                     url_href = Url.Action(url[1], url[0], new { id = url[2] });
@@ -151,3 +151,21 @@
             </ul>
         </li>*@
 </ul>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.sub-nav > li').click(function () {
+            var $this = $(this);
+            $this.find('ul').stop().slideToggle();
+            $this.find('.fa').toggleClass('fa-angle-down fa-angle-up');
+            $(this).parent().find('sub-nav > li.active').toggle();
+            $(this).toggleClass('active');
+        });
+        
+        $('.main-nav > li').click(function () {
+            $('.main-nav > li.active').removeClass('active');
+            $(this).addClass('active');
+        });
+    })
+</script>

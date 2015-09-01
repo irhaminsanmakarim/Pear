@@ -2,52 +2,61 @@
 <div class="form-group">
     @Html.LabelFor(model => model.SpeedometerChart.Series.Label, new { @class = "col-sm-4 control-label"})
     <div class="col-sm-8">
-      @Html.TextBoxFor(model => model.SpeedometerChart.Series.Label,new { @class = "form-control" })
-      @Html.ValidationMessageFor(model => model.SpeedometerChart.Series.Label)
+        @Html.TextBoxFor(model => model.SpeedometerChart.Series.Label,new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.SpeedometerChart.Series.Label)
     </div>
 </div>
 
 <div class="form-group">
     @Html.LabelFor(model => model.SpeedometerChart.Series.KpiId, new { @class = "col-sm-4 control-label"})
     <div class="col-sm-8">
-      @Html.DropDownListFor(model => model.SpeedometerChart.Series.KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-      @Html.ValidationMessageFor(model => model.SpeedometerChart.Series.KpiId)
+        @Html.DropDownListFor(model => model.SpeedometerChart.Series.KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:100%" })
+        @Html.ValidationMessageFor(model => model.SpeedometerChart.Series.KpiId)
+        <input type="button" value="Add Plot Bands" class="button button-action button-tny margin-top-1rem" id="add-plot" />
     </div>
 </div>
 
-<div class="form-group">
-    <label class="col-sm-4 control-label">&nbsp;</label>
-    <div class="col-sm-8">
-      <input type="button" value="Add Plot Bands" class="button button-action button-tny" id="add-plot" />
-    </div>
-</div>
+
 @*<div id="plot-bands-holder">
 </div>*@
 <div id="hidden-fields">
     @for (var i = 0; i < Model.SpeedometerChart.PlotBands.Count; i++)
     {
-        <div class="plot-band-template original container-box">
+        <div class="plot-band-template original container-box form-horizontal form-artifact">
             <h4 class="page-title text-inline">Plot Bands</h4>
             <input type="button" value="Remove" class="remove button button-tny button-danger pull-right" />
+            <hr class="just-margin-bottom"/>
 
-            <div class="form-inline row-of-inline-form">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SpeedometerChart.PlotBands[i].From)
-                    @Html.TextBoxFor(model => model.SpeedometerChart.PlotBands[i].From, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.SpeedometerChart.PlotBands[i].From)
+            <div class="clearfix">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                      @Html.LabelFor(model => model.SpeedometerChart.PlotBands[i].From, new { @class = "col-sm-4 control-label"})
+                      <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.SpeedometerChart.PlotBands[i].From, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SpeedometerChart.PlotBands[i].From)
+                      </div>
+                  </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SpeedometerChart.PlotBands[i].To)
-                    @Html.TextBoxFor(model => model.SpeedometerChart.PlotBands[i].To,new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.SpeedometerChart.PlotBands[i].To)
+                <div class="col-sm-6">
+                  <div class="form-group">
+                      @Html.LabelFor(model => model.SpeedometerChart.PlotBands[i].To, new { @class = "col-sm-4 control-label"})
+                      <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.SpeedometerChart.PlotBands[i].To,new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SpeedometerChart.PlotBands[i].To)
+                      </div>
+                  </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SpeedometerChart.PlotBands[i].Color)
-                    <div class="input-group colorpicker">
-                        @Html.TextBoxFor(model => model.SpeedometerChart.PlotBands[i].Color, new { @class = "form-control" })
-                        <span class="input-group-addon"><i></i></span>
-                    </div>
-                    @Html.ValidationMessageFor(model => model.SpeedometerChart.PlotBands[i].Color)
+                <div class="col-sm-6">
+                  <div class="form-group">
+                      @Html.LabelFor(model => model.SpeedometerChart.PlotBands[i].Color, new { @class = "col-sm-4 control-label"})
+                      <div class="col-sm-8">
+                        <div class="input-group colorpicker">
+                            @Html.TextBoxFor(model => model.SpeedometerChart.PlotBands[i].Color, new { @class = "form-control" })
+                            <span class="input-group-addon"><i></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.SpeedometerChart.PlotBands[i].Color)
+                      </div>
+                  </div>
                 </div>
             </div>
         </div>

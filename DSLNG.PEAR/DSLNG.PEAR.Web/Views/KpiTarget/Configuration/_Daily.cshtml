@@ -3,6 +3,7 @@
     int length = DateTime.DaysInMonth(Model.Year, Model.Month);
 }
 
+
     <form class="form-inline form-kpi-daily">
         <div class="form-group">
             <label class="labletop">Year : </label>
@@ -10,6 +11,7 @@
         </div>
         <div class="form-group">
             <label class="labletop">Month : </label>
+
             @Html.DropDownListFor(x => x.Month, Model.Months, new { @class = "form-control ddl-month" })
         </div>
     </form>

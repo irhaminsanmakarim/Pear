@@ -3,30 +3,88 @@
 <div class="form-group">
     <label class="col-sm-4 control-label">&nbsp;</label>
     <div class="col-sm-8">
-      <input type="button" value="Add Charts" class="button button-action button-tny" id="add-chart" />
+        <input type="button" value="Add Charts" class="button button-action button-tny" id="add-chart" />
     </div>
 </div>
 
 <div id="hidden-fields">
     @for (var i = 0; i < Model.MultiaxisChart.Charts.Count; i++)
     {
-        <div class="chart-template original container-box">
+        <div class="chart-template original container-box form-horizontal form-artifact">
             <h4 class="page-title text-inline">Charts</h4>
             <input type="button" value="Remove" class="remove button button-tny button-danger pull-right" />
+            <hr class="just-margin-bottom"/>
 
-            <div class="form-inline row-of-inline-form">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
-                    @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.ValueAxes, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
+            <div class="clearfix">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].GraphicType, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].GraphicType, Model.MultiaxisChart.GraphicTypes, new { @class = "form-control multiaxis-graphic-type", data_graph_url = Url.Action("MultiaxisSettings", "Artifact") })
+                            @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].GraphicType)
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.MultiaxisChart.Charts[i].GraphicType)
-                    @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.GraphicTypes, new { @class = "form-control multiaxis-chart-type" })
-                    @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].GraphicType)
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].MeasurementId, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].MeasurementId, Model.MultiaxisChart.Measurements, new { @class = "form-control measurement" })
+                            @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].MeasurementId)
+                        </div>
+                    </div>
                 </div>
-                <div id="chart-settings"></div>
+                <div class="col-sm-6 value-axis-holder">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxis, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, Model.MultiaxisChart.ValueAxes, new { @class = "form-control value-axis-opt" })
+                            @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxisTitle, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.MultiaxisChart.Charts[i].ValueAxisTitle, new {@class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxisTitle)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxisColor, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            <div class="input-group colorpicker">
+                                @Html.TextBoxFor(model => model.MultiaxisChart.Charts[i].ValueAxisColor, new { @class = "form-control" })
+                                <span class="input-group-addon"><i></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].ValueAxisColor)
+                        </div>                        
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MultiaxisChart.Charts[i].IsOpposite, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            @Html.CheckBoxFor(model => model.MultiaxisChart.Charts[i].IsOpposite, new {@class = "checkbox-input"})
+                            @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].IsOpposite)
+                        </div>
+                    </div>
+                </div>                
             </div>
+
+            <div class="clearfix">
+                <div class="col-sm-6 chart-settings" style="border-top:1px dotted #d0d0d0;padding-top:2rem;margin-top:1rem;"></div>
+            </div>
+
+            <div class="clearfix">
+                <div class="graphic-properties series-holder"></div>
+            </div>
+
+            <div class="hidden-fields-holder"></div>
+
         </div>
     }
 </div>

@@ -1,0 +1,98 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.ComboChart.Charts[0].AreaChart.Series, new { @class = "col-sm-4 control-label"})
+    <div class="col-sm-8">
+        @Html.DropDownList("seriesType", Model.ComboChart.Charts[0].AreaChart.SeriesTypes, new { id = "seriesType", @class = "form-control series-type" })
+        <input type="button" value="Add Series" class="button button-action button-super-tny margin-top-1rem" id="add-series" />
+    </div>
+</div>
+
+<div class="hidden-fields">
+    <div class="series-template original second-child-artifact-box form-horizontal">
+        <h5 class="page-title text-inline">Series</h5>
+        <input type="button" value="Remove" class="remove button button-super-tny button-danger pull-right" />
+        <hr class="just-margin-bottom"/>
+
+        <div class="clearfix">
+            <div class="col-sm-6">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Label, new { @class = "col-sm-4 control-label"})
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Label, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Label)
+                    </div>
+                </div>
+            </div>
+            <div class="series-details-holder">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Color, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            <div class="input-group colorpicker">
+                                @Html.TextBoxFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Color, new { @class = "form-control" })
+                                <span class="input-group-addon"><i></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Color)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].KpiId, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:100%" })
+                            @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].KpiId)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group value-axis form-list">
+                        @Html.LabelFor(model => Model.ComboChart.Charts[0].AreaChart.Series[0].ValueAxis, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].ValueAxis, Model.ComboChart.Charts[0].AreaChart.ValueAxes, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].ValueAxis)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stacks-holder">
+            <label>&nbsp;</label>
+            <input type="button" value="Add Stack" class="button button-action button-super-tny add-stack" />
+        </div>
+
+    </div>
+
+    <fieldset class="stack-template original third-child-artifact-box form-inline">
+        <h5 class="page-title text-inline">Stack</h5>
+        <input type="button" value="Remove" class="remove button button-super-tny button-danger pull-right" />
+        <hr class="just-margin-bottom"/>
+        <div class="clearfix">
+            <div class="form-group form-list">
+                @Html.LabelFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Stacks[0].Label)
+                @Html.TextBoxFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Stacks[0].Label, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Stacks[0].Label)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Stacks[0].KpiId)
+                @Html.DropDownListFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Stacks[0].KpiId, new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px" })
+                @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Stacks[0].KpiId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Stacks[0].Color)
+                <div class="input-group colorpicker">
+                    @Html.TextBoxFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Stacks[0].Color, new { @class = "form-control" })
+                    <span class="input-group-addon"><i></i></span>
+                </div>
+                @Html.ValidationMessageFor(model => model.ComboChart.Charts[0].AreaChart.Series[0].Stacks[0].Color)
+            </div>
+        </div>
+    </fieldset>
+
+</div>
+
+
+
+

@@ -1,77 +1,185 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.KpiTarget.IndexKpiTargetViewModel
 @{
-    
+
 }
-<hgroup class="page-hgroup-header">
-    <h3 class="page-title">KPI Target</h3>
-    <div class="breadcrumbs-regawa">
-        <ul>
-            <li>Plan</li>
-            <li>Performance Setting</li>
-            <li>KPI Target</li>
-        </ul>
-    </div>
-</hgroup>
-
-
-<table class="table-regawa">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>KPI Name</th>
-            <th>Measurement</th>
-            <th>Type</th>
-            <th style="width: 13%;">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{ int number = 0;}
-        @foreach (var roleGroup in Model.RoleGroups)
-        {
-            <tr>
-                <td colspan="4"><h5 class="table-regawa-kpi-heading">@roleGroup.Name</h5></td>
-                <td>
-                    <a class="text-button" href="@Url.Action("Configuration", "KpiTarget", new {id = roleGroup.Id})"><span class="fa fa-pencil-square-o"></span>Manage</a>
-                </td>
-            </tr>
-
-            foreach (var kpi in roleGroup.Kpis)
-            {
-                <tr>
-
-                    <td>@(++number)</td>
-                    <td>@kpi.Name</td>
-                    <td>@kpi.Measurement</td>
-
-                    <td>@kpi.Type</td>
-                    <td class="text-button" style="margin: auto;"></td>
-
-                </tr>        
-            }
-        }
-    </tbody>
-</table>
-
-@*@{
-    ViewBag.Title = "KPI Target List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h2>KPI List</h2>
-@Html.Partial("_MessageResponse")
-@Html.ActionLink("Create New", "Create")
-@Html.Action("IndexPartial")
-
 
 @section Scripts{
     <script type="text/javascript">
-        var confirmDelete = function(id) {
-            if (confirm('Are you sure want to delete this item?')) {
-                var url = '@Url.Action("Delete", "KpiTarget")';
-                $('<form action="' + url + '" method="POST">' +
-                    '<input type="hidden" name="id" value="' + id + '">' +
-                    '</form>').submit();
+        var data = {};
+        data.configType = 'KpiTarget';
+        var link = null;
+        $(document).ready(function () {
+            
+            $('#div-proceed').hide();
+            $('.config-content').hide();
+            $('[data-toggle=tab]').click(function () {
+                var that = $(this);
+                
+                var tabType = that.attr('data-tabtype');
+                if (tabType == 'download') {
+                    //console.log(data);
+                    $.ajax({
+                        url: '@Url.Action("Download", "File")',
+                        type: 'GET',
+                        data: data,
+                        beforeSend: function () {
+                            $('.ajax-loader2').show();
+                            $('.config-content').hide();
+                        }
+
+                    })
+                        .done(function (result) {
+                            $('.ajax-loader2').hide();
+                            $('.config-content').html(result);
+                            $('.config-content').show();
+                    });
+                } else {
+                    $.ajax({
+                        url: '@Url.Action("Upload", "File")',
+                        type: 'GET',
+                        data: data,
+                        beforeSend: function () {
+                            $('.ajax-loader2').show();
+                            $('.config-content').hide();
+                        }
+
+                    })
+                        .done(function (result) {
+                            $('.ajax-loader2').hide();
+                            $('.config-content').html(result);
+                            $('.config-content').show();
+                        });
+                }
+            });
+        });
+        
+
+        function OnFileUploadComplete(s, e) {
+            if (e.callbackData !== "") {
+                link = e.callbackData;
+                //console.log(link);
+                var callback = 'FileUploadComplete: ' + e.callbackData;
+                $('.notification').empty();
+                var message = '<div class="alert alert-success" role="alert">' + callback + '</div>';
+                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+                //alert('FileUploadComplete: ' + e.callbackData);
+                var btnpro = document.getElementById('btn-proceed');
+                btnpro.removeAttribute('disabled');
+                var link_text = document.getElementById('filename-text');
+                link_text.setAttribute('value', link);
+                //console.log(link_text);
+                //$('#div-proceed').show();
+                //proceed(e.callbackData);
             }
-        };
+            else {
+                var btnpro = document.getElementById('btn-proceed');
+                btnpro.setAttribute('disabled', 'disabled');
+                $('.notification').empty();
+                var callback = 'The selected file was not uploaded.'
+                var message = '<div class="alert alert-danger" role="alert">' + callback + '</div>';
+                $('.notification').append(message).fadeIn().delay(10000).fadeOut();
+            }
+        }
+        function OnUploadTextChanged(s, e) {
+            uc.Upload();
+        }
+
+        
     </script>
-}*@
+}
+<section>
+
+    <hgroup class="page-hgroup-header">
+        <h3 class="page-title">KPI Target</h3>
+        <div class="breadcrumbs-regawa">
+            <ul>
+                <li>Plan</li>
+                <li>Performance Setting</li>
+                <li>KPI Target</li>
+            </ul>
+        </div>
+    </hgroup>
+    <div class="notification"></div>
+
+    <ul class="nav nav-pills">
+        <li role="presentation">
+            <a href="#download" aria-controls="home" role="tab" data-toggle="tab" data-tabtype="download">
+                <div>Download</div>
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#upload" aria-controls="home" role="tab" data-toggle="tab" data-tabtype="upload">
+                <div>Upload</div>
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active config-content">
+            
+        </div>
+    </div>
+
+
+
+
+    <table class="table-regawa">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>KPI Name</th>
+                <th>Measurement</th>
+                <th>Type</th>
+                <th style="width: 13%;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int number = 0;}
+            @foreach (var roleGroup in Model.RoleGroups)
+            {
+                <tr>
+                    <td colspan="4"><h5 class="table-regawa-kpi-heading">@roleGroup.Name</h5></td>
+                    <td>
+                        <a class="text-button" href="@Url.Action("Configuration", "KpiTarget", new {id = roleGroup.Id})"><span class="fa fa-pencil-square-o"></span>Manage</a>
+                    </td>
+                </tr>
+
+                foreach (var kpi in roleGroup.Kpis)
+                {
+                    <tr>
+
+
+                        <td>@(++number)</td>
+                        <td>@kpi.Name</td>
+                        <td>@kpi.Measurement</td>
+                        <td>@kpi.Type</td>
+                        <td class="text-button" style="margin: auto;"></td>
+
+                    </tr>        
+                }
+            }
+        </tbody>
+    </table>
+
+@*@{
+        ViewBag.Title = "KPI Target List";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>KPI List</h2>
+    @Html.Partial("_MessageResponse")
+    @Html.ActionLink("Create New", "Create")
+    @Html.Action("IndexPartial")
+
+
+    @section Scripts{
+        <script type="text/javascript">
+            var confirmDelete = function(id) {
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("Delete", "KpiTarget")';
+                    $('<form action="' + url + '" method="POST">' +
+                        '<input type="hidden" name="id" value="' + id + '">' +
+                        '</form>').submit();
+                }
+            };
+        </script>
+    }*@

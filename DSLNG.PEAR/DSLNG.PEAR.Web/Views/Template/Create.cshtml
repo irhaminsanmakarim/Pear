@@ -14,47 +14,33 @@
         </hgroup>
 
         <div class="container-box">
-
               <div class="clearfix">
                 <div class="col-sm-3">                    
-                  <div class="form-group form-list">
-                      @Html.LabelFor(model => model.Name, new { @class = "" })
-
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Name, new { @class = "" })
                         @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Name)
-
-                  </div>
+                    </div>
                 </div>
                 <div class="col-sm-3">    
-                  <div class="form-group form-list">
-                      @Html.LabelFor(model => model.RefershTime, new { @class = "" })
-
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.RefershTime, new { @class = "" })
                         @Html.TextBoxFor(model => model.RefershTime, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.RefershTime)
-
-                  </div>
-                </div>
-                <div class="col-sm-3">
-                  <div class="form-group form-list">
-                      @Html.LabelFor(model => model.Remark, new { @class = "" })
-
-                        @Html.TextAreaFor(model => model.Remark, new { @class = "form-control", rows=1 })
-                        @Html.ValidationMessageFor(model => model.Remark)
-
-                  </div>
+                    </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group form-list">
-                        <div class="checkbox-form">
-                            <div class="checkbox-form-item">
-                            <label for="IsActive">
-                                <p>IsActive</p>
-                                @Html.CheckBoxFor(model => model.IsActive, new { @checked = "checked" })                  
-                                <span class="checkbox-form-image"></span>
-                                @Html.ValidationMessageFor(model => model.IsActive)
-                            </label>
-                            </div>
-                        </div>
+                        @Html.LabelFor(model => model.Remark, new { @class = "" })
+                        @Html.TextAreaFor(model => model.Remark, new { @class = "form-control", rows=1 })
+                        @Html.ValidationMessageFor(model => model.Remark)
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.IsActive)
+                        @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control checkbox-input" })
+                        @Html.ValidationMessageFor(model => model.IsActive)
                     </div>
                 </div>
               </div>
@@ -77,13 +63,10 @@
 <div id="hidden-fields-holder" data-artifact-url="@Url.Action("ArtifactList","Template")">
 
     <div class="layout-row-wrapper original" style="position:relative;">
-        <div class="container-box">
-            
+        <div class="container-box">            
             <input type="button" value="Add Column" class="add-column button button-tny" />
-            <input type="button" value="Remove Row" class="remove-row button button-tny button-danger pull-right margin-0" />
-            
+            <input type="button" value="Remove Row" class="remove-row button button-tny button-danger pull-right margin-0" />            
             <div class="layout-row">
-
                 <div class="layout-column original" style="width: 100%">
                     <div class="column-properties">
                         <div class="form-group">
@@ -102,9 +85,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 

@@ -1,10 +1,11 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
 
 <div class="form-group">
-    <label class="col-sm-4 control-label">Series</label>
-    <div class="col-sm-7">
-      <input type="button" value="Add Series" class="button button-action button-tny" id="add-series" />
-    </div>    
+    @Html.LabelFor(model => model.AreaChart.Series, new { @class = "col-sm-4 control-label"})
+    <div class="col-sm-8">
+        @Html.DropDownList("seriesType", Model.AreaChart.SeriesTypes, new { id = "seriesType", @class = "form-control" })
+        <input type="button" value="Add Series" class="button button-action button-tny margin-top-1rem" id="add-series" />
+    </div>
 </div>
 
 <div id="hidden-fields">
@@ -18,45 +19,82 @@
             <div class="clearfix">
                 <div class="col-sm-6">
                     <div class="form-group form-list">
-                        @Html.LabelFor(model => model.AreaChart.Series[i].Label, new { @class = "col-sm-3 control-label"})
-                        <div class="col-sm-7">
+                        @Html.LabelFor(model => model.AreaChart.Series[i].Label, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
                             @Html.TextBoxFor(model => model.AreaChart.Series[i].Label, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.AreaChart.Series[i].Label)
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-group form-list">
-                        @Html.LabelFor(model => model.AreaChart.Series[i].Color, new { @class = "col-sm-3 control-label"})
-                        <div class="input-group colorpicker col-sm-7">
-                            @Html.TextBoxFor(model => model.AreaChart.Series[i].Color, new { @class = "form-control" })
-                            <span class="input-group-addon"><i></i></span>
-                            @Html.ValidationMessageFor(model => model.AreaChart.Series[i].Color)
-                        </div>                        
+                <div class="series-details-holder">
+                    <div class="col-sm-6">
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.AreaChart.Series[i].Color, new { @class = "col-sm-4 control-label"})
+                            <div class="col-sm-8">
+                                <div class="input-group colorpicker">
+                                    @Html.TextBoxFor(model => model.AreaChart.Series[i].Color, new { @class = "form-control" })
+                                    <span class="input-group-addon"><i></i></span>                                
+                                </div>
+                                @Html.ValidationMessageFor(model => model.AreaChart.Series[i].Color)  
+                            </div>                             
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group form-list">
-                        @Html.LabelFor(model => model.AreaChart.Series[i].KpiId, new { @class = "col-sm-3 control-label"})
-                        <div class="col-sm-7">
-                            @Html.DropDownListFor(model => model.AreaChart.Series[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
-                            @Html.ValidationMessageFor(model => model.AreaChart.Series[i].KpiId)
-                        </div>                        
+                    <div class="col-sm-6">
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.AreaChart.Series[i].KpiId, new { @class = "col-sm-4 control-label"})
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.AreaChart.Series[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:100%" })
+                                @Html.ValidationMessageFor(model => model.AreaChart.Series[i].KpiId)
+                            </div>                        
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group value-axis form-list">
-                        @Html.LabelFor(model => Model.AreaChart.Series[i].ValueAxis, new { @class = "col-sm-3 control-label"})
-                        <div class="col-sm-7">
-                            @Html.DropDownListFor(model => model.AreaChart.Series[i].ValueAxis, Model.AreaChart.ValueAxes, new { @class = "form-control" })
-                             @Html.ValidationMessageFor(model => model.AreaChart.Series[i].ValueAxis)
-                        </div>                        
+                    <div class="col-sm-6">
+                        <div class="form-group value-axis form-list">
+                            @Html.LabelFor(model => Model.AreaChart.Series[i].ValueAxis, new { @class = "col-sm-4 control-label"})
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.AreaChart.Series[i].ValueAxis, Model.AreaChart.ValueAxes, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AreaChart.Series[i].ValueAxis)
+                            </div>                        
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <div class="stacks-holder tingkat2">
+                <input type="button" value="Add Stack" class="button button-super-tny button-action margin-0 add-stack" />
+            </div>
 
         </div>
+        
+        for (var j = 0; j < Model.AreaChart.Series[i].Stacks.Count; j++)
+        { 
+        <fieldset class="stack-template original second-child-artifact-box form-inline">
+            <h5 class="page-title text-inline">Stack</h5>
+            <input type="button" value="Remove" class="remove button button-super-tny button-danger pull-right" />
+            <hr class="just-margin-bottom"/>
+
+            <div class="clearfix">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.AreaChart.Series[i].Stacks[j].Label)
+                    @Html.TextBoxFor(model => model.AreaChart.Series[i].Stacks[j].Label, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AreaChart.Series[i].Stacks[j].Label)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AreaChart.Series[i].Stacks[j].KpiId)
+                    @Html.DropDownListFor(model => model.AreaChart.Series[i].Stacks[j].KpiId, new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px" })
+                    @Html.ValidationMessageFor(model => model.AreaChart.Series[i].Stacks[j].KpiId)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AreaChart.Series[i].Stacks[j].Color)
+                    <div class="input-group colorpicker">
+                        @Html.TextBoxFor(model => model.AreaChart.Series[i].Stacks[j].Color, new { @class = "form-control" })
+                        <span class="input-group-addon"><i></i></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.AreaChart.Series[i].Stacks[j].Color)
+                </div>
+            </div>
+        </fieldset>
+        }
     }
 
 </div>

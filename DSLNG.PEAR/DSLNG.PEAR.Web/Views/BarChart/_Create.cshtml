@@ -8,7 +8,6 @@
     </div>    
 </div>
 
-
 <div id="hidden-fields">
     @for (var i = 0; i < Model.BarChart.Series.Count; i++)
     { 
@@ -20,8 +19,8 @@
             <div class="clearfix">
                 <div class="col-sm-6">
                     <div class="form-group form-list">
-                        @Html.LabelFor(model => model.BarChart.Series[i].Label, new { @class = "col-sm-3 control-label"})
-                        <div class="col-sm-7">
+                        @Html.LabelFor(model => model.BarChart.Series[i].Label, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
                             @Html.TextBoxFor(model => model.BarChart.Series[i].Label, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.BarChart.Series[i].Label)
                         </div>
@@ -30,37 +29,41 @@
                 <div class="series-details-holder">
                     <div class="col-sm-6">
                         <div class="form-group form-list">
-                            @Html.LabelFor(model => model.BarChart.Series[i].Color, new { @class = "col-sm-3 control-label"})
-                            <div class="input-group colorpicker col-sm-7">
-                                @Html.TextBoxFor(model => model.BarChart.Series[i].Color, new { @class = "form-control" })
-                                <span class="input-group-addon"><i></i></span>
-                            </div>
-                            @Html.ValidationMessageFor(model => model.BarChart.Series[i].Color)
+                            @Html.LabelFor(model => model.BarChart.Series[i].Color, new { @class = "col-sm-4 control-label"})
+                            <div class="col-sm-8">
+                                <div class="input-group colorpicker">
+                                    @Html.TextBoxFor(model => model.BarChart.Series[i].Color, new { @class = "form-control" })
+                                    <span class="input-group-addon"><i></i></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.BarChart.Series[i].Color)
+                            </div>                            
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-list">
-                            @Html.LabelFor(model => model.BarChart.Series[i].KpiId, new { @class = "col-sm-3 control-label"})
-                            <div class="col-sm-7">
-                                @Html.DropDownListFor(model => model.BarChart.Series[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                            @Html.LabelFor(model => model.BarChart.Series[i].KpiId, new { @class = "col-sm-4 control-label"})
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.BarChart.Series[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:100%" })
                                 @Html.ValidationMessageFor(model => model.BarChart.Series[i].KpiId)
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 previous-color">
                         <div class="form-group form-list">
-                            @Html.LabelFor(model => model.BarChart.Series[i].PreviousColor, new { @class = "col-sm-3 control-label"})
-                            <div class="input-group colorpicker col-sm-7">
-                                @Html.TextBoxFor(model => model.BarChart.Series[i].PreviousColor, new { @class = "form-control" })
-                                <span class="input-group-addon"><i></i></span>
-                            </div>
-                            @Html.ValidationMessageFor(model => model.BarChart.Series[i].PreviousColor)
+                            @Html.LabelFor(model => model.BarChart.Series[i].PreviousColor, new { @class = "col-sm-4 control-label"})
+                            <div class="col-sm-8">
+                                <div class="input-group colorpicker">
+                                    @Html.TextBoxFor(model => model.BarChart.Series[i].PreviousColor, new { @class = "form-control" })
+                                    <span class="input-group-addon"><i></i></span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.BarChart.Series[i].PreviousColor)
+                            </div>                            
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group value-axis form-list">
-                            @Html.LabelFor(model => Model.BarChart.Series[i].ValueAxis, new { @class = "col-sm-3 control-label"})
-                            <div class="col-sm-7">
+                            @Html.LabelFor(model => Model.BarChart.Series[i].ValueAxis, new { @class = "col-sm-4 control-label"})
+                            <div class="col-sm-8">
                                 @Html.DropDownListFor(model => model.BarChart.Series[i].ValueAxis, Model.BarChart.ValueAxes, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.BarChart.Series[i].ValueAxis)
                             </div>
@@ -77,29 +80,30 @@
         
         for (var j = 0; j < Model.BarChart.Series[i].Stacks.Count; j++)
         { 
-        <fieldset class="stack-template original form-inline">
+        <fieldset class="stack-template original second-child-artifact-box form-inline">
             <h5 class="page-title text-inline">Stack</h5>
             <input type="button" value="Remove" class="remove button button-super-tny button-danger pull-right" />
             <hr class="just-margin-bottom"/>
+
             <div class="clearfix">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.BarChart.Series[i].Stacks[j].Label)
-                        @Html.TextBoxFor(model => model.BarChart.Series[i].Stacks[j].Label, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.BarChart.Series[i].Stacks[j].Label)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BarChart.Series[i].Stacks[j].Label)
+                    @Html.TextBoxFor(model => model.BarChart.Series[i].Stacks[j].Label, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.BarChart.Series[i].Stacks[j].Label)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BarChart.Series[i].Stacks[j].KpiId)
+                    @Html.DropDownListFor(model => model.BarChart.Series[i].Stacks[j].KpiId, new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px" })
+                    @Html.ValidationMessageFor(model => model.BarChart.Series[i].Stacks[j].KpiId)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BarChart.Series[i].Stacks[j].Color)
+                    <div class="input-group colorpicker">
+                        @Html.TextBoxFor(model => model.BarChart.Series[i].Stacks[j].Color, new { @class = "form-control" })
+                        <span class="input-group-addon"><i></i></span>
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.BarChart.Series[i].Stacks[j].KpiId)
-                        @Html.DropDownListFor(model => model.BarChart.Series[i].Stacks[j].KpiId, new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px" })
-                        @Html.ValidationMessageFor(model => model.BarChart.Series[i].Stacks[j].KpiId)
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.BarChart.Series[i].Stacks[j].Color)
-                        <div class="input-group colorpicker">
-                            @Html.TextBoxFor(model => model.BarChart.Series[i].Stacks[j].Color, new { @class = "form-control" })
-                            <span class="input-group-addon"><i></i></span>
-                        </div>
-                        @Html.ValidationMessageFor(model => model.BarChart.Series[i].Stacks[j].Color)
-                    </div>
+                    @Html.ValidationMessageFor(model => model.BarChart.Series[i].Stacks[j].Color)
+                </div>
             </div>            
         </fieldset>
         }

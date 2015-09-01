@@ -14,7 +14,7 @@
                 <tr>
                     <th style="width: 250px;"></th>
                     <th style="width: 100px;"></th>
-                    <th style="width: 200px;"></th>
+                    @*<th style="width: 200px;"></th>*@
                     <th>Jan</th>
                     <th>Feb</th>
                     <th>Mar</th>
@@ -37,8 +37,7 @@
                     <tr>
                         <td>@kpi.Name</td>
                         <td>@kpi.Measurement</td>
-                        <td>
-                            @*<input type="text" class="form-control" placeholder="Remark">*@</td>
+                        @*<td><input type="text" class="form-control" placeholder="Remark"></td>*@
                         @{ int c = 0;}
                         @foreach (var kpiTarget in kpi.KpiAchievements)
                         {

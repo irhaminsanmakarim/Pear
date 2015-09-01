@@ -3,34 +3,34 @@
     @Html.LabelFor(model => model.Tank.MinCapacity, new { @class = "col-sm-4 control-label"})
     <div class="col-sm-8">
         @Html.TextBoxFor(model => model.Tank.MinCapacity, new { @class = "form-control" })
-    </div>
-    @Html.ValidationMessageFor(model => model.Tank.MinCapacity)
+        @Html.ValidationMessageFor(model => model.Tank.MinCapacity)
+    </div>    
 </div>
 <div class="form-group">
     @Html.LabelFor(model => model.Tank.MaxCapacity, new { @class = "col-sm-4 control-label"})
     <div class="col-sm-8">
         @Html.TextBoxFor(model => model.Tank.MaxCapacity, new { @class = "form-control" })
-    </div>
-    @Html.ValidationMessageFor(model => model.Tank.MaxCapacity)
+        @Html.ValidationMessageFor(model => model.Tank.MaxCapacity)
+    </div>    
 </div>
 <div class="form-group">
     @Html.LabelFor(model => model.Tank.DaysToTankTopTitle, new { @class = "col-sm-4 control-label"})
     <div class="col-sm-8">
         @Html.TextBoxFor(model => model.Tank.DaysToTankTopTitle, new { @class = "form-control" })
-    </div>
-    @Html.ValidationMessageFor(model => model.Tank.DaysToTankTopTitle)
+        @Html.ValidationMessageFor(model => model.Tank.DaysToTankTopTitle)
+    </div>    
 </div>
 <div class="form-group">
     @Html.LabelFor(model => model.Tank.DaysToTankTopId, new { @class = "col-sm-4 control-label"})
     <div class="col-sm-8">
-        @Html.DropDownListFor(model => model.Tank.DaysToTankTopId, new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:180px" })
-    </div>
-    @Html.ValidationMessageFor(model => model.Tank.DaysToTankTopId)
+        @Html.DropDownListFor(model => model.Tank.DaysToTankTopId, new List<SelectListItem>(), new { @class = "kpi-list  form-control", style = "width:100%" })
+        @Html.ValidationMessageFor(model => model.Tank.DaysToTankTopId)
+    </div>    
 </div>
 <div class="form-group">
     @Html.LabelFor(model => model.Tank.VolumeInventoryId, new { @class = "col-sm-4 control-label"})
     <div class="col-sm-8">
-        @Html.DropDownListFor(model => model.Tank.VolumeInventoryId, new List<SelectListItem>(),  new { @class = "kpi-list  form-control", style = "width:180px" })
-    </div>
-    @Html.ValidationMessageFor(model => model.Tank.VolumeInventoryId)
+        @Html.DropDownListFor(model => model.Tank.VolumeInventoryId, new List<SelectListItem>(),  new { @class = "kpi-list  form-control", style = "width:100%" })
+        @Html.ValidationMessageFor(model => model.Tank.VolumeInventoryId)
+    </div>    
 </div>

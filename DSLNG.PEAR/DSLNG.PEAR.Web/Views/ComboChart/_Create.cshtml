@@ -1,0 +1,50 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+
+<div class="form-group">
+    <label class="col-sm-4 control-label">&nbsp;</label>
+    <div class="col-sm-8">
+        <input type="button" value="Add Charts" class="button button-action button-tny" id="add-chart" />
+    </div>
+</div>
+
+<div id="hidden-fields">
+    @for (var i = 0; i < Model.ComboChart.Charts.Count; i++)
+    {
+        <div class="chart-template original container-box form-horizontal form-artifact">
+            <h4 class="page-title text-inline">Charts</h4>
+            <input type="button" value="Remove" class="remove button button-tny button-danger pull-right" />
+            <hr class="just-margin-bottom"/>
+
+            <div class="clearfix">
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ComboChart.Charts[i].GraphicType, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.ComboChart.Charts[i].GraphicType, Model.ComboChart.GraphicTypes, new { @class = "form-control multiaxis-graphic-type", data_graph_url = Url.Action("ComboSettings", "Artifact") })
+                            @Html.ValidationMessageFor(model => model.ComboChart.Charts[i].GraphicType)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6  value-axis-holder">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ComboChart.Charts[i].ValueAxis, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.ComboChart.Charts[i].ValueAxis, Model.ComboChart.ValueAxes, new { @class = "form-control value-axis-opt" })
+                            @Html.ValidationMessageFor(model => model.ComboChart.Charts[i].ValueAxis)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix">
+                <div class="col-sm-6 chart-settings" style="border-top:1px dotted #d0d0d0;padding-top:2rem;margin-top:1rem;"></div>
+            </div>
+
+            <div class="clearfix">
+                <div class="graphic-properties series-holder"></div>
+            </div>
+
+            <div class="hidden-fields-holder"></div>
+        </div>
+    }
+</div>

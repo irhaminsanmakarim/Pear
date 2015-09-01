@@ -1,0 +1,77 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.Is3D, new { @class = "col-sm-4 control-label"})
+    <div class="col-sm-8">
+        @Html.CheckBoxFor(model => model.Is3D, new { @class = "checkbox-input" })
+        @Html.ValidationMessageFor(model => model.Is3D)
+    </div>
+</div>
+
+<div class="form-group form-list">
+    @Html.LabelFor(model => model.ShowLegend, new { @class = "col-sm-4 control-label"})
+    <div class="col-sm-8">
+        @Html.CheckBoxFor(model => model.ShowLegend, new { @class = "checkbox-input" })
+        @Html.ValidationMessageFor(model => model.ShowLegend)
+    </div>
+</div>
+
+<div class="form-group form-list">
+    <label class="col-sm-4 control-label">Series</label>
+    <div class="col-sm-4">
+        <input type="button" value="Add Series" class="button button-action button-tny" id="add-series" />
+    </div>
+</div>
+
+<div id="hidden-fields">
+    @for (var i = 0; i < Model.Pie.Series.Count; i++)
+    { 
+        <div class="series-template original container-box form-horizontal form-artifact">
+            <h4 class="page-title text-inline">Series</h4>
+            <input type="button" value="Remove" class="remove button button-tny button-danger pull-right" />
+            <hr class="just-margin-bottom"/>
+
+            <div class="clearfix">
+                @*<div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Pie.Series[i].Label)
+                        @Html.TextBoxFor(model => model.Pie.Series[i].Label, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Pie.Series[i].Label)
+                    </div>
+                </div>*@
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Pie.Series[i].KpiId, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.Pie.Series[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:100%" })
+                            @Html.ValidationMessageFor(model => model.Pie.Series[i].KpiId)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Pie.Series[i].Color, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            <div class="input-group colorpicker">
+                                @Html.TextBoxFor(model => model.Pie.Series[i].Color, new { @class = "form-control" })
+                                <span class="input-group-addon"><i></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Pie.Series[i].Color)
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-sm-6">
+                        <div class="form-group value-axis form-list">
+                            @Html.LabelFor(model => Model.Pie.Series[i].ValueAxis)
+                            @Html.DropDownListFor(model => model.Pie.Series[i].ValueAxis, Model.Pie.ValueAxes, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Pie.Series[i].ValueAxis)
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+    }
+
+</div>
+
+
+

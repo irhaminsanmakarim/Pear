@@ -1,32 +1,45 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
+
 <div class="form-group form-list">
-    @Html.LabelFor(model => model.Tabular.Actual)
-    @Html.CheckBoxFor(model => model.Tabular.Actual, new { @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.Tabular.Actual)
+    @Html.LabelFor(model => model.Tabular.Actual, new { @class = "col-sm-4 control-label"})
+    <div class="col-sm-8">
+        @Html.CheckBoxFor(model => model.Tabular.Actual, new { @class = "checkbox-input" })
+        @Html.ValidationMessageFor(model => model.Tabular.Actual)
+    </div>
 </div>
 <div class="form-group form-list">
-    @Html.LabelFor(model => model.Tabular.Target)
-    @Html.CheckBoxFor(model => model.Tabular.Target, new { @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.Tabular.Target)
+    @Html.LabelFor(model => model.Tabular.Target, new { @class = "col-sm-4 control-label"})
+    <div class="col-sm-8">
+        @Html.CheckBoxFor(model => model.Tabular.Target, new { @class = "checkbox-input" })
+        @Html.ValidationMessageFor(model => model.Tabular.Target)
+    </div>
 </div>
 <div class="form-group form-list">
-    @Html.LabelFor(model => model.Tabular.Economic)
-    @Html.CheckBoxFor(model => model.Tabular.Economic, new { @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.Tabular.Economic)
+    @Html.LabelFor(model => model.Tabular.Economic, new { @class = "col-sm-4 control-label"})
+    <div class="col-sm-8">
+        @Html.CheckBoxFor(model => model.Tabular.Economic, new { @class = "checkbox-input" })
+        @Html.ValidationMessageFor(model => model.Tabular.Economic)
+    </div>
 </div>
 <div class="form-group form-list">
-    @Html.LabelFor(model => model.Tabular.Fullfillment)
-    @Html.CheckBoxFor(model => model.Tabular.Fullfillment, new { @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.Tabular.Fullfillment)
+    @Html.LabelFor(model => model.Tabular.Fullfillment, new { @class = "col-sm-4 control-label"})
+    <div class="col-sm-8">
+        @Html.CheckBoxFor(model => model.Tabular.Fullfillment, new { @class = "checkbox-input" })
+        @Html.ValidationMessageFor(model => model.Tabular.Fullfillment)
+    </div>
 </div>
 <div class="form-group form-list">
-    @Html.LabelFor(model => model.Tabular.Remark)
-    @Html.CheckBoxFor(model => model.Tabular.Remark, new { @class = "form-control" })
-    @Html.ValidationMessageFor(model => model.Tabular.Remark)
+    @Html.LabelFor(model => model.Tabular.Remark, new { @class = "col-sm-4 control-label"})
+    <div class="col-sm-8">
+        @Html.CheckBoxFor(model => model.Tabular.Remark, new { @class = "checkbox-input" })
+        @Html.ValidationMessageFor(model => model.Tabular.Remark)
+    </div>
 </div>
-<div class="form-group form-list">
-    <label>Row</label>
-    <input type="button" value="Add Row" class="btn btn-lightblue" id="add-row" />
+<div class="form-group">
+    <label class="col-sm-4 control-label">Row</label>
+    <div class="col-sm-8">
+        <input type="button" value="Add Row" class="button button-action button-tny" id="add-row" />
+    </div>
 </div>
 
 <div id="hidden-fields">
@@ -37,46 +50,61 @@
         var original = i == 0 ? "original" : "";
         var dataSeriesPos = original == "" ? "data-rows-pos=" + i : "";
         <input type="hidden" name="Tabular.Rows.Index" value="@i" />        
-        <div class="row-template @original whitebox">
-            <h2>Rows</h2>
-            <div class="row">
+        <div class="row-template @original container-box form-horizontal form-artifact">
+            <h4 class="page-title text-inline">Rows</h4>
+            <input type="button" value="Remove" class="remove button button-tny button-danger pull-right" />
+            <hr class="just-margin-bottom"/>
+
+            <div class="clearfix">
                 <div class="col-sm-6">
                     <div class="form-group form-list">
-                        @Html.LabelFor(model => model.Tabular.Rows[i].KpiId)
-                        @Html.DropDownListFor(model => model.Tabular.Rows[i].KpiId, new List<SelectListItem> { new SelectListItem{ Value=Model.Tabular.Rows[i].KpiId.ToString(), Text = Model.Tabular.Rows[i].KpiName} }, new { @class = "kpi-list form-control", style = "width:180px" })
-                        @Html.ValidationMessageFor(model => model.Tabular.Rows[i].KpiId)
+                        @Html.LabelFor(model => model.Tabular.Rows[i].KpiId, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.Tabular.Rows[i].KpiId, new List<SelectListItem> { new SelectListItem{ Value=Model.Tabular.Rows[i].KpiId.ToString(), Text = Model.Tabular.Rows[i].KpiName} }, new { @class = "kpi-list form-control", style = "width:100%" })
+                            @Html.ValidationMessageFor(model => model.Tabular.Rows[i].KpiId)
+                        </div>
                     </div>
+                </div>
+                <div class="col-sm-6">
                     <div class="form-group form-list">
-                        @Html.LabelFor(model => model.Tabular.Rows[i].PeriodeType)
-                        @Html.DropDownListFor(model => Model.Tabular.Rows[i].PeriodeType, selectListForPeriodeType, new { @class = "form-control periode-type" })
-                        @Html.ValidationMessageFor(model => model.Tabular.Rows[i].PeriodeType)
+                        @Html.LabelFor(model => model.Tabular.Rows[i].PeriodeType, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => Model.Tabular.Rows[i].PeriodeType, selectListForPeriodeType, new { @class = "form-control periode-type" })
+                            @Html.ValidationMessageFor(model => model.Tabular.Rows[i].PeriodeType)
+                        </div>
                     </div>
-
-                    <div id="range-filter-holder">
-                        <div class="form-group form-list">
-                            @Html.LabelFor(model => model.Tabular.Rows[i].RangeFilter)
+                </div>
+                <div class="col-sm-6">
+                    <div id="range-filter-holder" class="form-group">
+                        @Html.LabelFor(model => model.Tabular.Rows[i].RangeFilter, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
                             @Html.DropDownListFor(model => Model.Tabular.Rows[i].RangeFilter, selectListForRangeFilter, new { @class = "form-control range-filter" })
                             @Html.ValidationMessageFor(model => model.Tabular.Rows[i].RangeFilter)
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div id="range-holder" class="clearfix" style="border-top:1px dotted #d4d4d4;padding-top:1rem;">
                 <div class="col-sm-6">
-                    <div id="range-holder">
-                        <div class="form-group form-list">
-                            @Html.LabelFor(model => model.Tabular.Rows[i].StartInDisplay)
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Tabular.Rows[i].StartInDisplay, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
                             @Html.TextBoxFor(model => model.Tabular.Rows[i].StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
                             @Html.ValidationMessageFor(model => model.Tabular.Rows[i].StartInDisplay)
                         </div>
-
-                        <div class="form-group form-list">
-                            @Html.LabelFor(model => model.Tabular.Rows[i].EndInDisplay)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Tabular.Rows[i].EndInDisplay, new { @class = "col-sm-4 control-label"})
+                        <div class="col-sm-8">
                             @Html.TextBoxFor(model => model.Tabular.Rows[i].EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
                             @Html.ValidationMessageFor(model => model.Tabular.Rows[i].EndInDisplay)
                         </div>
                     </div>
                 </div>
             </div>
-            <input type="button" value="Remove" class="remove" />
         </div>
     }
 </div>
