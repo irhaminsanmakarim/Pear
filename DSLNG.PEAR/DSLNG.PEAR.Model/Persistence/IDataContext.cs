@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Data.Persistence
         IDbSet<ArtifactStack> ArtifactStacks { get; set; }
         IDbSet<ArtifactPlot> ArtifactPlots { get; set; }
         IDbSet<ArtifactRow> ArtifactRows { get; set; }
+        IDbSet<ArtifactChart> ArtifactCharts { get; set; }
         IDbSet<Conversion> Conversions { get; set; }
         IDbSet<DashboardTemplate> DashboardTemplates { get; set; }
         IDbSet<Group> Groups { get; set; }

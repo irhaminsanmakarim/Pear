@@ -31,17 +31,8 @@
         });
     });
 </script>
-<div style="overflow: auto">
-    <form class="form-inline" style="float: left">
-        <div class="form-group" id="div-proceed">
-            <input id="btn-proceed" class="btn btn-primary" value="Proceed" type="button" />
-        </div>
-        <div class="form-group">
-            <input type="text" hidden="hidden" value="" id="filename-text" />
-        </div>
-    </form>
-
-    @using (Html.BeginForm("Upload", "File", new { configType = Model.ConfigType }, FormMethod.Post, new { @class = "form-inline" }))
+<div>
+    @using (Html.BeginForm("Upload", "File", new { configType = Model.ConfigType }, FormMethod.Post, new { @class = "inline-block vert-middle" }))
     {
 
         @Html.DevExpress().UploadControl(settings =>
@@ -54,7 +45,17 @@
             settings.ValidationSettings.Assign(DSLNG.PEAR.Web.Extensions.ExcelUploadHelper.ValidationSettings);
         }).GetHtml()
     }
-    <div>
+
+    <form class="inline-block" style="margin-left:2rem;">
+        <div class="" id="div-proceed">
+            <input id="btn-proceed" class="button button-action button-tny margin-0" value="Proceed" type="button" />
+        </div>
+        <div class="">
+            <input type="text" hidden="hidden" value="" id="filename-text" />
+        </div>
+    </form>
+
+    <div class="inline-block">
         <img class="ajax-loader2" src="@Url.Content("~/content/img/ajax-loader1.gif")" style="display: none;width: 30px;height: 30px;" />
     </div>
 </div>

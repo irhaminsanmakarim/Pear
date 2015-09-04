@@ -44,7 +44,7 @@
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.LineChart.Series[i].KpiId, new { @class = "col-sm-4 control-label"})
                         <div class="col-sm-8">
-                            @Html.DropDownListFor(model => model.LineChart.Series[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.LineChart.Series[i].KpiId.ToString(), Text = Model.LineChart.Series[i].KpiName } }, new { @class = "kpi-list form-control", style = "width:180px" })
+                            @Html.DropDownListFor(model => model.LineChart.Series[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.LineChart.Series[i].KpiId.ToString(), Text = Model.LineChart.Series[i].KpiName } }, new { @class = "kpi-list form-control", style = "width:100%" })
                             @Html.ValidationMessageFor(model => model.LineChart.Series[i].KpiId)
                         </div>
                     </div>

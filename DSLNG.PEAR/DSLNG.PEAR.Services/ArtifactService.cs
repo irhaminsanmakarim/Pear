@@ -12,6 +12,7 @@ using System.Linq;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.Entity;
 using System.Globalization;
+using DSLNG.PEAR.Common.Contants;
 
 namespace DSLNG.PEAR.Services
 {
@@ -104,16 +105,16 @@ namespace DSLNG.PEAR.Services
                     switch (request.PeriodeType)
                     {
                         case PeriodeType.Hourly:
-                            timeInformation = latestVolInventory.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                            timeInformation = latestVolInventory.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Daily:
-                            timeInformation = latestVolInventory.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                            timeInformation = latestVolInventory.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Monthly:
-                            timeInformation = latestVolInventory.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                            timeInformation = latestVolInventory.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Yearly:
-                            timeInformation = latestVolInventory.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
+                            timeInformation = latestVolInventory.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
                             break;
                     }
                 }
@@ -140,10 +141,11 @@ namespace DSLNG.PEAR.Services
                 rowResponse.Periode = timeInformation;//start.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                 if (request.Remark)
                 {
-                    var actual =  DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
+                    var actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
                                     x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId).FirstOrDefault();
                     rowResponse.Remark = actual != null ? actual.Remark : "";
                 }
+                #region switch
                 switch (kpi.YtdFormula)
                 {
                     case YtdFormula.Sum:
@@ -158,8 +160,8 @@ namespace DSLNG.PEAR.Services
                         {
                             rowResponse.Actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == row.KpiId)
-                                   .GroupBy(x=>x.Kpi.Id)
-                                   .Select(x=> x.Sum(y=> (double?)y.Value ?? 0 )).FirstOrDefault();
+                                   .GroupBy(x => x.Kpi.Id)
+                                   .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
                         }
                         break;
                     case YtdFormula.Average:
@@ -179,6 +181,9 @@ namespace DSLNG.PEAR.Services
                         }
                         break;
                 }
+                #endregion
+
+                #region if
                 KpiAchievement latestActual = null;
                 if (request.Actual)
                 {
@@ -188,14 +193,15 @@ namespace DSLNG.PEAR.Services
                            (row.PeriodeType == PeriodeType.Yearly && row.RangeFilter == RangeFilter.CurrentYear))
                     {
                         var kpiActual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&
-                      x.Periode <= end && x.Kpi.Id == row.KpiId && (x.Value != null && x.Value.Value != 0))
+                      x.Periode <= end && x.Kpi.Id == row.KpiId && (x.Value != null))
                       .OrderByDescending(x => x.Periode).FirstOrDefault();
                         if (kpiActual != null && kpiActual.Value.HasValue)
                         {
                             latestActual = kpiActual;
                             rowResponse.Actual = kpiActual.Value.Value;
                         }
-                        else {
+                        else
+                        {
                             latestActual = kpiActual;
                             rowResponse.Actual = null;
                         }
@@ -215,30 +221,152 @@ namespace DSLNG.PEAR.Services
                         {
                             rowResponse.Target = kpiTarget.Value.Value;
                         }
-                        else {
+                        else
+                        {
                             rowResponse.Target = null;
                         }
                     }
                 }
-                if (latestActual != null) {
+                if (latestActual != null)
+                {
                     switch (row.PeriodeType)
                     {
                         case PeriodeType.Hourly:
-                            rowResponse.Periode = latestActual.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                            rowResponse.Periode = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Daily:
-                            rowResponse.Periode = latestActual.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                            rowResponse.Periode = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Monthly:
-                            rowResponse.Periode = latestActual.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                            rowResponse.Periode = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Yearly:
-                            rowResponse.Periode = latestActual.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
+                            rowResponse.Periode = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
                             break;
                     }
                 }
+                #endregion
                 response.Rows.Add(rowResponse);
             }
+            return response;
+        }
+        
+        public GetPieDataResponse GetPieData(GetPieDataRequest request)
+        {
+            var response = new GetPieDataResponse();
+            IList<DateTime> dateTimePeriodes = new List<DateTime>();
+            string timeInformation;
+            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes,
+                              out timeInformation);
+            foreach (var series in request.Series)
+            {
+                var kpi = DataContext.Kpis.Include(x => x.Measurement).First(x => x.Id == series.KpiId);
+                var seriesResponse = new GetPieDataResponse.SeriesResponse();
+                seriesResponse.color = series.Color;
+                seriesResponse.name = kpi.Name;
+                seriesResponse.measurement = kpi.Measurement.Name;
+                var start = dateTimePeriodes[0];
+                var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
+                #region switch
+                switch (kpi.YtdFormula)
+                {
+                    case YtdFormula.Sum:
+                        if (request.ValueAxis == ValueAxis.KpiTarget)
+                        {
+                            seriesResponse.y = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                        } else if (request.ValueAxis == ValueAxis.KpiActual)
+                        {
+                            seriesResponse.y = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType
+                                && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                        }
+                    break;
+
+                    case YtdFormula.Average:
+                    if (request.ValueAxis == ValueAxis.KpiTarget)
+                    {
+                        seriesResponse.y = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType
+                            && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
+                            .GroupBy(x => x.Kpi.Id)
+                            .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                    }
+                    else if (request.ValueAxis == ValueAxis.KpiActual)
+                    {
+                        seriesResponse.y = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType
+                            && x.Periode >= start && x.Periode <= end && x.Kpi.Id == kpi.Id)
+                            .GroupBy(x => x.Kpi.Id)
+                            .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                    }
+                    break;
+                }
+                #endregion
+
+                KpiAchievement latestActual = null;
+                if (request.ValueAxis == ValueAxis.KpiActual)
+                {
+                    if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                        (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                        (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                        (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                    {
+                        var kpiActual = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
+                                                                               x.Periode <= end &&
+                                                                               x.Kpi.Id == kpi.Id && (x.Value != null))
+                                                   .OrderByDescending(x => x.Periode).FirstOrDefault();
+                        if (kpiActual != null && kpiActual.Value.HasValue)
+                        {
+                            latestActual = kpiActual;
+                            seriesResponse.y = kpiActual.Value.Value;
+                        }
+                    }
+                }
+
+                if (request.ValueAxis == ValueAxis.KpiTarget && latestActual != null) 
+                {
+                    if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
+                        (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
+                        (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
+                        (request.PeriodeType == PeriodeType.Yearly && request.RangeFilter == RangeFilter.CurrentYear))
+                    {
+                        var kpiTarget = DataContext.KpiTargets.Where(x => x.PeriodeType == request.PeriodeType &&
+                                                                          x.Periode == latestActual.Periode &&
+                                                                          x.Kpi.Id == kpi.Id)
+                                                   .OrderByDescending(x => x.Periode).FirstOrDefault();
+                        if (kpiTarget != null && kpiTarget.Value.HasValue)
+                        {
+                            seriesResponse.y = kpiTarget.Value.Value;
+                        }
+                    }
+                }
+
+                if (latestActual != null)
+                {
+                    switch (request.PeriodeType)
+                    {
+                        case PeriodeType.Hourly:
+                            timeInformation = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Daily:
+                            timeInformation = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Monthly:
+                            timeInformation = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Yearly:
+                            timeInformation = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                            break;
+                    }
+                }
+
+                response.SeriesResponses.Add(seriesResponse);
+            }
+
+            response.Subtitle = timeInformation;
+            response.Title = request.HeaderTitle;
             return response;
         }
 
@@ -307,7 +435,8 @@ namespace DSLNG.PEAR.Services
                     break;
             }
             KpiAchievement latestActual = null;
-            if (request.ValueAxis == ValueAxis.KpiActual) {
+            if (request.ValueAxis == ValueAxis.KpiActual)
+            {
                 if ((request.PeriodeType == PeriodeType.Hourly && request.RangeFilter == RangeFilter.CurrentHour) ||
                       (request.PeriodeType == PeriodeType.Daily && request.RangeFilter == RangeFilter.CurrentDay) ||
                       (request.PeriodeType == PeriodeType.Monthly && request.RangeFilter == RangeFilter.CurrentMonth) ||
@@ -345,23 +474,28 @@ namespace DSLNG.PEAR.Services
                             data = target.Value.Value
                         };
                     }
-                    switch (request.PeriodeType)
-                    {
-                        case PeriodeType.Hourly:
-                            timeInformation = latestActual.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
-                            break;
-                        case PeriodeType.Daily:
-                            timeInformation = latestActual.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
-                            break;
-                        case PeriodeType.Monthly:
-                            timeInformation = latestActual.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
-                            break;
-                        case PeriodeType.Yearly:
-                            timeInformation = latestActual.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
-                            break;
-                    }
                 }
             }
+
+            if (latestActual != null)
+            {
+                switch (request.PeriodeType)
+                {
+                    case PeriodeType.Hourly:
+                        timeInformation = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                        break;
+                    case PeriodeType.Daily:
+                        timeInformation = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                        break;
+                    case PeriodeType.Monthly:
+                        timeInformation = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
+                        break;
+                    case PeriodeType.Yearly:
+                        timeInformation = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                        break;
+                }
+            }
+
             foreach (var plot in request.PlotBands)
             {
                 response.PlotBands.Add(new GetSpeedometerChartDataResponse.PlotBandResponse
@@ -482,16 +616,16 @@ namespace DSLNG.PEAR.Services
                     switch (request.PeriodeType)
                     {
                         case PeriodeType.Hourly:
-                            timeInformation = latestActual.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                            timeInformation = latestActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Daily:
-                            timeInformation = latestActual.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                            timeInformation = latestActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Monthly:
-                            timeInformation = latestActual.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                            timeInformation = latestActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Yearly:
-                            timeInformation = latestActual.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
+                            timeInformation = latestActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
                             break;
                     }
                 }
@@ -507,6 +641,45 @@ namespace DSLNG.PEAR.Services
                 });
             }
             response.Subtitle = timeInformation;
+            return response;
+        }
+
+        public GetMultiaxisChartDataResponse GetMultiaxisChartData(GetMultiaxisChartDataRequest request)
+        {
+            var response = new GetMultiaxisChartDataResponse();
+            foreach (var chart in request.Charts)
+            {
+                var chartReq = request.MapTo<GetCartesianChartDataRequest>();
+                chart.MapPropertiesToInstance<GetCartesianChartDataRequest>(chartReq);
+                var cartesianChartRes = GetChartData(chartReq);
+                if (response.Subtitle == null) response.Subtitle = cartesianChartRes.Subtitle;
+                if (response.Periodes == null) response.Periodes = cartesianChartRes.Periodes;
+                var multiaxisChart = cartesianChartRes.MapTo<GetMultiaxisChartDataResponse.ChartResponse>();
+                multiaxisChart.GraphicType = chartReq.GraphicType;
+                multiaxisChart.Measurement = DataContext.Measurements.First(x => x.Id == chartReq.MeasurementId).Name;
+                multiaxisChart.ValueAxisTitle = chart.ValueAxisTitle;
+                multiaxisChart.ValueAxisColor = chart.ValueAxisColor;
+                multiaxisChart.IsOpposite = chart.IsOpposite;
+                multiaxisChart.SeriesType = cartesianChartRes.SeriesType;
+                response.Charts.Add(multiaxisChart);
+            }
+            return response;
+        }
+
+        public GetComboChartDataResponse GetComboChartData(GetComboChartDataRequest request) {
+            var response = new GetComboChartDataResponse();
+            foreach (var chart in request.Charts) {
+                var chartReq = request.MapTo<GetCartesianChartDataRequest>();
+                chart.MapPropertiesToInstance<GetCartesianChartDataRequest>(chartReq);
+                var cartesianChartRes = GetChartData(chartReq);
+                if (response.Subtitle == null) response.Subtitle = cartesianChartRes.Subtitle;
+                if (response.Periodes == null) response.Periodes = cartesianChartRes.Periodes;
+                var comboChart = cartesianChartRes.MapTo<GetComboChartDataResponse.ChartResponse>();
+                comboChart.GraphicType = chartReq.GraphicType;
+                comboChart.SeriesType = cartesianChartRes.SeriesType;
+                response.Charts.Add(comboChart);
+                response.Measurement = DataContext.Measurements.First(x => x.Id == chartReq.MeasurementId).Name;
+            }
             return response;
         }
 
@@ -569,25 +742,25 @@ namespace DSLNG.PEAR.Services
                     {
                         case PeriodeType.Hourly:
                             response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("hh tt", CultureInfo.InvariantCulture) }.ToArray();
-                            //timeInformation = kpiActual.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                            //timeInformation = kpiActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Daily:
                             response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("dd", CultureInfo.InvariantCulture) }.ToArray();
-                            //timeInformation = kpiActual.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                            //timeInformation = kpiActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Monthly:
                             response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("MMMM", CultureInfo.InvariantCulture) }.ToArray();
-                            //timeInformation = kpiActual.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                            //timeInformation = kpiActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                             break;
                         case PeriodeType.Yearly:
-                            response.Periodes = new List<string> { newDateTimePeriodes.First().ToString("yyyy", CultureInfo.InvariantCulture) }.ToArray();
-                            //timeInformation = kpiActual.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
+                            response.Periodes = new List<string> { newDateTimePeriodes.First().ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) }.ToArray();
+                            //timeInformation = kpiActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
                             break;
                     }
                 }
-                
+
             }
-            
+
             response.SeriesType = seriesType;
             response.Series = seriesResponse;
             return response;
@@ -609,7 +782,7 @@ namespace DSLNG.PEAR.Services
                                 var currentHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
                                 dateTimePeriodes.Add(currentHour);
                                 periodes.Add(currentHour.ToString(hourlyFormat));
-                                timeInformation = currentHour.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation = currentHour.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.CurrentDay:
@@ -623,7 +796,7 @@ namespace DSLNG.PEAR.Services
                                     periodes.Add(startHour.ToString(hourlyFormat));
                                     dateTimePeriodes.Add(startHour);
                                 }
-                                timeInformation = startHour.AddHours(-1).ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation = startHour.AddHours(-1).ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.DTD:
@@ -631,18 +804,18 @@ namespace DSLNG.PEAR.Services
                                 //var currentDay = DateTime.Now.Day;
                                 var startHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                                 var currentHour = DateTime.Now.Hour;
-                                timeInformation = startHour.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                                timeInformation = startHour.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                                 while (startHour.Hour <= currentHour)
                                 {
                                     periodes.Add(startHour.ToString(hourlyFormat));
                                     dateTimePeriodes.Add(startHour);
                                     startHour = startHour.AddHours(1);
                                 }
-                                timeInformation += " - " + startHour.AddHours(-1).ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                                timeInformation += " - " + startHour.AddHours(-1).ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                             }
                             break;
                         default:
-                            timeInformation = Start.Value.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                            timeInformation = Start.Value.ToString("dd MMM yy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             while (Start.Value <= End.Value)
                             {
                                 periodes.Add(Start.Value.ToString(hourlyFormat));
@@ -653,7 +826,7 @@ namespace DSLNG.PEAR.Services
                     }
                     break;
                 case PeriodeType.Daily:
-                    var dailyFormat = "dd";
+                    var dailyFormat = "dd MMM";
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentDay:
@@ -661,7 +834,7 @@ namespace DSLNG.PEAR.Services
                                 var currentDay = DateTime.Now.Date;
                                 periodes.Add(currentDay.ToString(dailyFormat));
                                 dateTimePeriodes.Add(currentDay);
-                                timeInformation = currentDay.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation = currentDay.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.CurrentMonth:
@@ -674,7 +847,7 @@ namespace DSLNG.PEAR.Services
                                     dateTimePeriodes.Add(startDay);
                                     startDay = startDay.AddDays(1);
                                 }
-                                timeInformation = startDay.AddDays(-1).ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation = startDay.AddDays(-1).ToString("MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.MTD:
@@ -682,18 +855,18 @@ namespace DSLNG.PEAR.Services
                                 var currentMonth = DateTime.Now.Month;
                                 var startDay = new DateTime(DateTime.Now.Year, currentMonth, 1);
                                 var currentDay = DateTime.Now.Day;
-                                timeInformation = startDay.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation = startDay.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                                 while (startDay.Day <= currentDay)
                                 {
                                     periodes.Add(startDay.ToString(dailyFormat));
                                     dateTimePeriodes.Add(startDay);
                                     startDay = startDay.AddDays(1);
                                 }
-                                timeInformation += " - " + startDay.AddDays(-1).ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation += " - " + startDay.AddDays(-1).ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         default:
-                            timeInformation = Start.Value.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                            timeInformation = Start.Value.ToString("dd MMM yy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             while (Start.Value <= End.Value)
                             {
                                 periodes.Add(Start.Value.ToString(dailyFormat));
@@ -713,7 +886,7 @@ namespace DSLNG.PEAR.Services
                                 var currentMonth = DateTime.Now.Date;
                                 dateTimePeriodes.Add(currentMonth);
                                 periodes.Add(currentMonth.ToString(monthlyFormat, CultureInfo.InvariantCulture));
-                                timeInformation = currentMonth.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation = currentMonth.ToString("MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         case RangeFilter.CurrentYear:
@@ -734,18 +907,18 @@ namespace DSLNG.PEAR.Services
                                 var currentYear = DateTime.Now.Year;
                                 var startMonth = new DateTime(DateTime.Now.Year, 1, 1);
                                 var currentMont = DateTime.Now.Month;
-                                timeInformation = startMonth.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation = startMonth.ToString("MMM yy", CultureInfo.InvariantCulture);
                                 while (startMonth.Month <= currentMont)
                                 {
                                     periodes.Add(startMonth.ToString(monthlyFormat));
                                     dateTimePeriodes.Add(startMonth);
                                     startMonth = startMonth.AddMonths(1);
                                 }
-                                timeInformation += " - " + startMonth.AddMonths(-1).ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                                timeInformation += " - " + startMonth.AddMonths(-1).ToString("MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
                         default:
-                            timeInformation = Start.Value.ToString("MMM/yyyy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                            timeInformation = Start.Value.ToString("MMM yy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("MMM yy", CultureInfo.InvariantCulture);
                             while (Start.Value <= End.Value)
                             {
                                 dateTimePeriodes.Add(Start.Value);
@@ -756,7 +929,7 @@ namespace DSLNG.PEAR.Services
                     }
                     break;
                 default:
-                    var yearlyFormat = "yyyy";
+                    var yearlyFormat = DateFormat.Yearly;
                     switch (rangeFilter)
                     {
                         case RangeFilter.CurrentYear:
@@ -765,7 +938,7 @@ namespace DSLNG.PEAR.Services
                             timeInformation = DateTime.Now.Year.ToString();
                             break;
                         default:
-                            timeInformation = Start.Value.ToString("yyyy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("yyyy", CultureInfo.InvariantCulture);
+                            timeInformation = Start.Value.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) + " - " + End.Value.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
                             while (Start.Value <= End.Value)
                             {
                                 periodes.Add(Start.Value.ToString(yearlyFormat));
@@ -780,7 +953,7 @@ namespace DSLNG.PEAR.Services
             return periodes.ToArray();
         }
 
-        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType,out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false)
+        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiTargetSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false)
         {
             var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
             var start = dateTimePeriodes[0];
@@ -810,22 +983,22 @@ namespace DSLNG.PEAR.Services
                             switch (periodeType)
                             {
                                 case PeriodeType.Hourly:
-                                    newTimeInformation = kpiTarget.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                                    newTimeInformation = kpiTarget.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                                     break;
                                 case PeriodeType.Daily:
-                                    newTimeInformation = kpiTarget.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                    newTimeInformation = kpiTarget.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                                     break;
                                 case PeriodeType.Monthly:
-                                    newTimeInformation = kpiTarget.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                                    newTimeInformation = kpiTarget.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                                     break;
                                 case PeriodeType.Yearly:
-                                    newTimeInformation = kpiTarget.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
+                                    newTimeInformation = kpiTarget.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
                                     break;
                             }
                             dateTimePeriodes = new List<DateTime> { kpiTarget.Periode };
                             newDatetimePeriodes = dateTimePeriodes;
                         }
-                        
+
                     }
 
                     if (seriesType == "multi-stacks-grouped")
@@ -983,22 +1156,22 @@ namespace DSLNG.PEAR.Services
                                 switch (periodeType)
                                 {
                                     case PeriodeType.Hourly:
-                                        newTimeInformation = kpiTarget.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                                        newTimeInformation = kpiTarget.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                                         break;
                                     case PeriodeType.Daily:
-                                        newTimeInformation = kpiTarget.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                        newTimeInformation = kpiTarget.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                                         break;
                                     case PeriodeType.Monthly:
-                                        newTimeInformation = kpiTarget.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                                        newTimeInformation = kpiTarget.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                                         break;
                                     case PeriodeType.Yearly:
-                                        newTimeInformation = kpiTarget.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
+                                        newTimeInformation = kpiTarget.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
                                         break;
                                 }
                                 dateTimePeriodes = new List<DateTime> { kpiTarget.Periode };
                                 newDatetimePeriodes = dateTimePeriodes;
                             }
-                           
+
                         }
 
                         if (seriesType == "multi-stacks-grouped")
@@ -1095,7 +1268,7 @@ namespace DSLNG.PEAR.Services
             return seriesResponse;
         }
 
-        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiActualSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType,out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false)
+        private IList<GetCartesianChartDataResponse.SeriesResponse> _getKpiActualSeries(IList<GetCartesianChartDataRequest.SeriesRequest> configSeries, PeriodeType periodeType, IList<DateTime> dateTimePeriodes, string seriesType, RangeFilter rangeFilter, string graphicType, out string newTimeInformation, out IList<DateTime> newDatetimePeriodes, bool comparison = false)
         {
             var seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
             var start = dateTimePeriodes[0];
@@ -1125,21 +1298,21 @@ namespace DSLNG.PEAR.Services
                             switch (periodeType)
                             {
                                 case PeriodeType.Hourly:
-                                    newTimeInformation = kpiActual.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                                    newTimeInformation = kpiActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                                     break;
                                 case PeriodeType.Daily:
-                                    newTimeInformation = kpiActual.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                    newTimeInformation = kpiActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                                     break;
                                 case PeriodeType.Monthly:
-                                    newTimeInformation = kpiActual.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                                    newTimeInformation = kpiActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                                     break;
                                 case PeriodeType.Yearly:
-                                    newTimeInformation = kpiActual.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
+                                    newTimeInformation = kpiActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
                                     break;
                             }
                             dateTimePeriodes = new List<DateTime> { kpiActual.Periode };
                             newDatetimePeriodes = dateTimePeriodes;
-                           
+
                         }
                     }
 
@@ -1283,9 +1456,9 @@ namespace DSLNG.PEAR.Services
                                 var periode = kpiActuals.First().Periode;
                                 kpiTargets = DataContext.KpiTargets.Where(x => x.PeriodeType == periodeType &&
                               x.Periode == periode && x.Kpi.Id == series.KpiId)
-                              .OrderBy(x => x.Periode).ToList();    
+                              .OrderBy(x => x.Periode).ToList();
                             }
-                            
+
                         }
                         var aSeries = new GetCartesianChartDataResponse.SeriesResponse
                         {
@@ -1310,15 +1483,15 @@ namespace DSLNG.PEAR.Services
                             Name = "Exceed",
                             Color = "green"
                         };
+                        if (comparison)
+                        {
+                            exceedSeries.Stack = "KpiActual";
+                        }
                         if (seriesType == "multi-stacks-grouped")
                         {
                             aSeries.Stack = series.Label;
                             remainSeries.Stack = series.Label;
                             exceedSeries.Stack = series.Label;
-                        }
-                        if (comparison)
-                        {
-                            exceedSeries.Stack = "KpiActual";
                         }
                         foreach (var periode in dateTimePeriodes)
                         {
@@ -1396,7 +1569,7 @@ namespace DSLNG.PEAR.Services
                                 {
                                     if (target == null || !target.Value.HasValue)
                                     {
-                                        aSeries.Data.Add(target.Value.Value);
+                                        aSeries.Data.Add(0);
                                         remainSeries.Data.Add(0);
                                         exceedSeries.Data.Add(actual.Value.Value);
                                     }
@@ -1520,16 +1693,16 @@ namespace DSLNG.PEAR.Services
                                 switch (periodeType)
                                 {
                                     case PeriodeType.Hourly:
-                                        newTimeInformation = kpiActual.Periode.ToString("dd/MMM/yyyy hh tt", CultureInfo.InvariantCulture);
+                                        newTimeInformation = kpiActual.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
                                         break;
                                     case PeriodeType.Daily:
-                                        newTimeInformation = kpiActual.Periode.ToString("dd/MMM/yyyy", CultureInfo.InvariantCulture);
+                                        newTimeInformation = kpiActual.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                                         break;
                                     case PeriodeType.Monthly:
-                                        newTimeInformation = kpiActual.Periode.ToString("MMM/yyyy", CultureInfo.InvariantCulture);
+                                        newTimeInformation = kpiActual.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
                                         break;
                                     case PeriodeType.Yearly:
-                                        newTimeInformation = kpiActual.Periode.ToString("yyyy", CultureInfo.InvariantCulture);
+                                        newTimeInformation = kpiActual.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
                                         break;
                                 }
                                 dateTimePeriodes = new List<DateTime> { kpiActual.Periode };
@@ -1679,6 +1852,60 @@ namespace DSLNG.PEAR.Services
                 }
                 artifact.Series.Add(series);
             }
+            foreach (var chartReq in request.Charts)
+            {
+                var chart = chartReq.MapTo<ArtifactChart>();
+                var localMeasurement = new Measurement { Id = chartReq.MeasurementId };
+                if (DataContext.Measurements.Local.Where(x => x.Id == localMeasurement.Id).FirstOrDefault() == null)
+                {
+                    DataContext.Measurements.Attach(localMeasurement);
+                }
+                else
+                {
+                    localMeasurement = DataContext.Measurements.Local.Where(x => x.Id == localMeasurement.Id).FirstOrDefault();
+                }
+                if (localMeasurement.Id != 0)
+                {
+                    chart.Measurement = localMeasurement;
+                }
+                foreach (var seriesReq in chartReq.Series)
+                {
+                    var series = seriesReq.MapTo<ArtifactSerie>();
+                    if (seriesReq.KpiId != 0)
+                    {
+                        var kpi = new Kpi { Id = seriesReq.KpiId };
+                        if (DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault() == null)
+                        {
+                            DataContext.Kpis.Attach(kpi);
+                        }
+                        else
+                        {
+                            kpi = DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault();
+                        }
+                        series.Kpi = kpi;
+                    }
+                    foreach (var stackReq in seriesReq.Stacks)
+                    {
+                        var stack = stackReq.MapTo<ArtifactStack>();
+                        if (stackReq.KpiId != 0)
+                        {
+                            var kpiInStack = new Kpi { Id = stackReq.KpiId };
+                            if (DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault() == null)
+                            {
+                                DataContext.Kpis.Attach(kpiInStack);
+                            }
+                            else
+                            {
+                                kpiInStack = DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault();
+                            }
+                            stack.Kpi = kpiInStack;
+                        }
+                        series.Stacks.Add(stack);
+                    }
+                    chart.Series.Add(series);
+                }
+                artifact.Charts.Add(chart);
+            }
             foreach (var plotReq in request.Plots)
             {
                 var plot = plotReq.MapTo<ArtifactPlot>();
@@ -1744,6 +1971,9 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Series.Select(y => y.Stacks.Select(z => z.Kpi)))
                 .Include(x => x.Plots)
                 .Include(x => x.Rows)
+                .Include(x => x.Charts)
+                .Include(x => x.Charts.Select(y => y.Series))
+                .Include(x => x.Charts.Select(y => y.Series.Select(z => z.Stacks)))
                 .Single(x => x.Id == request.Id);
 
             if (artifact.Measurement.Id != request.MeasurementId)
@@ -1834,6 +2064,75 @@ namespace DSLNG.PEAR.Services
                 artifact.Rows.Add(row);
             }
 
+            foreach (var chart in artifact.Charts.ToList()) {
+               
+                foreach (var series in chart.Series.ToList())
+                {
+                    foreach (var stack in series.Stacks.ToList())
+                    {
+                        DataContext.ArtifactStacks.Remove(stack);
+                    }
+                    DataContext.ArtifactSeries.Remove(series);
+                }
+                DataContext.ArtifactCharts.Remove(chart);
+            }
+
+            foreach (var chartReq in request.Charts)
+            {
+                var chart = chartReq.MapTo<ArtifactChart>();
+                var localMeasurement = new Measurement { Id = chartReq.MeasurementId };
+                if (DataContext.Measurements.Local.Where(x => x.Id == localMeasurement.Id).FirstOrDefault() == null)
+                {
+                    DataContext.Measurements.Attach(localMeasurement);
+                }
+                else
+                {
+                    localMeasurement = DataContext.Measurements.Local.Where(x => x.Id == localMeasurement.Id).FirstOrDefault();
+                }
+                if (localMeasurement.Id != 0)
+                {
+                    chart.Measurement = localMeasurement;
+                }
+                foreach (var seriesReq in chartReq.Series)
+                {
+                    var series = seriesReq.MapTo<ArtifactSerie>();
+                    if (seriesReq.KpiId != 0)
+                    {
+                        var kpi = new Kpi { Id = seriesReq.KpiId };
+                        if (DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault() == null)
+                        {
+                            DataContext.Kpis.Attach(kpi);
+                        }
+                        else
+                        {
+                            kpi = DataContext.Kpis.Local.Where(x => x.Id == seriesReq.KpiId).FirstOrDefault();
+                        }
+                        series.Kpi = kpi;
+                    }
+                    foreach (var stackReq in seriesReq.Stacks)
+                    {
+                        var stack = stackReq.MapTo<ArtifactStack>();
+                        if (stackReq.KpiId != 0)
+                        {
+                            var kpiInStack = new Kpi { Id = stackReq.KpiId };
+                            if (DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault() == null)
+                            {
+                                DataContext.Kpis.Attach(kpiInStack);
+                            }
+                            else
+                            {
+                                kpiInStack = DataContext.Kpis.Local.Where(x => x.Id == stackReq.KpiId).FirstOrDefault();
+                            }
+                            stack.Kpi = kpiInStack;
+                        }
+                        series.Stacks.Add(stack);
+                    }
+                    chart.Series.Add(series);
+                }
+                artifact.Charts.Add(chart);
+            }
+
+
             if (request.Tank != null)
             {
                 var tank = DataContext.ArtifactTanks.Single(x => x.Id == request.Tank.Id);
@@ -1874,9 +2173,11 @@ namespace DSLNG.PEAR.Services
             artifact.Economic = request.Economic;
             artifact.Fullfillment = request.Fullfillment;
             artifact.Remark = request.Remark;
+            artifact.ShowLegend = request.ShowLegend;
+            artifact.Is3D = request.Is3D;
 
             artifact.FractionScale = request.FractionScale;
-            
+
             DataContext.SaveChanges();
             return new UpdateArtifactResponse();
         }
@@ -1908,6 +2209,12 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.Plots)
                 .Include(x => x.Rows)
                 .Include(x => x.Rows.Select(y => y.Kpi))
+                .Include(x => x.Charts)
+                .Include(x => x.Charts.Select(y => y.Measurement))
+                .Include(x => x.Charts.Select(y => y.Series))
+                .Include(x => x.Charts.Select(y => y.Series.Select(z => z.Kpi)))
+                .Include(x => x.Charts.Select(y => y.Series.Select(z => z.Stacks)))
+                .Include(x => x.Charts.Select(y => y.Series.Select(z => z.Stacks.Select(a => a.Kpi))))
                 .Include(x => x.Tank)
                 .Include(x => x.Tank.DaysToTankTop)
                 .Include(x => x.Tank.VolumeInventory)

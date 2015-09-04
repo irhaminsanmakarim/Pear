@@ -11,6 +11,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public GetArtifactResponse() {
             Series = new List<SeriesResponse>();
             PlotBands = new List<PlotResponse>();
+            Charts = new List<ChartResponse>();
         }
         public int Id { get; set; }
         public string GraphicType { get; set; }
@@ -20,6 +21,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public IList<SeriesResponse> Series { get; set; }
         public IList<PlotResponse> PlotBands { get; set; }
         public IList<RowResponse> Rows { get; set; }
+        public IList<ChartResponse> Charts { get; set; }
         public TankResponse Tank { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
@@ -36,6 +38,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public bool Economic { get; set; }
         public bool Fullfillment { get; set; }
         public bool Remark { get; set; }
+        public bool Is3D { get; set; }
+        public bool ShowLegend { get; set; }
 
         public class SeriesResponse {
             public SeriesResponse()
@@ -82,6 +86,18 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public string DaysToTankTopTitle { get; set; }
             public double MinCapacity { get; set; }
             public double MaxCapacity { get; set; }
+        }
+
+
+        public class ChartResponse
+        {
+            public int MeasurementId { get; set; }
+            public ValueAxis ValueAxis { get; set; }
+            public string GraphicType { get; set; }
+            public IList<SeriesResponse> Series { get; set; }
+            public string ValueAxisTitle { get; set; }
+            public string ValueAxisColor { get; set; }
+            public bool IsOpposite { get; set; }
         }
 
     }

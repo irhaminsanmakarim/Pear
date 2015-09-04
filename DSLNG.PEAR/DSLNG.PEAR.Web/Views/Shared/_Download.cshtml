@@ -21,19 +21,19 @@
                     $('#div-month, #div-year').show();
                     data.year = '@DateTime.Now.Year';
                     data.month = '@DateTime.Now.Month';
-                    $('#div-year').attr("style", "padding-right: 30px; border-right: solid 1px #3f454f;");
+                    $('#div-year').attr("style", "padding-right: 30px; border-right: solid 1px #bbb;");
                     break;
                 case 'Weekly':
                     data.year = '@DateTime.Now.Year';
                     data.month = '@DateTime.Now.Month';
                     $('#div-month, #div-year').show();
-                    $('#div-year').attr("style", "padding-right: 30px; border-right: solid 1px #3f454f;");
+                    $('#div-year').attr("style", "padding-right: 30px; border-right: solid 1px #bbb;");
                     break;
                 case 'Hourly':
                     data.year = '@DateTime.Now.Year';
                     data.month = '@DateTime.Now.Month';
                     $('#div-month, #div-year').show();
-                    $('#div-year').attr("style", "padding-right: 30px; border-right: solid 1px #3f454f;");
+                    $('#div-year').attr("style", "padding-right: 30px; border-right: solid 1px #bbb;");
                     break;
                 default:
                     data.year = '@DateTime.Now.Year';
@@ -69,7 +69,7 @@
 <div class="notification"></div>
 <!---->
 <div>
-    @using (Html.BeginForm("DownloadTemplate", "File", FormMethod.Post, new { @class = "form-inline", @style = "float: left" }))
+    @using (Html.BeginForm("DownloadTemplate", "File", FormMethod.Post, new { @class = "form-inline", @style = "" }))
     {
         <div class="form-group">
             <label class="labletop">Periode Type :</label>
@@ -84,8 +84,8 @@
             @Html.DropDownListFor(x => x.Month, Model.Months, new { @class = "form-control ddl-month", id = "month" })
         </div>
         <div class="form-group">
-            <input type="submit" value="Download Template" class="btn btn-primary" />
-            @Html.TextBoxFor(x => x.ConfigType, new { @style = "visibility:hidden;" })
+            <input type="submit" value="Download Template" class="button button-action button-tny margin-0" />
+            @Html.TextBoxFor(x => x.ConfigType, new { @style = "visibility:hidden;display:none;" })
         </div>
     }
 

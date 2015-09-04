@@ -18,5 +18,8 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetArtifactsToSelectResponse GetArtifactsToSelect(GetArtifactsToSelectRequest request);
         GetTabularDataResponse GetTabularData(GetTabularDataRequest request);
         GetTankDataResponse GetTankData(GetTankDataRequest request);
+        GetMultiaxisChartDataResponse GetMultiaxisChartData(GetMultiaxisChartDataRequest request);
+        GetPieDataResponse GetPieData(GetPieDataRequest request);
+        GetComboChartDataResponse GetComboChartData(GetComboChartDataRequest request);
     }
 }

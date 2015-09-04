@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DevExpress.Web.Mvc;
+using DSLNG.PEAR.Web.Extensions;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -260,37 +261,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     }
                 }
-                //foreach (var item in viewModel.PillarKpiTarget)
-                //{
-                //    if (item.KpiTargetList.Count > 0)
-                //    {
-                //        foreach (var kpiTargetList in item.KpiTargetList)
-                //        {
-                //            if (kpiTargetList.ValueList.Count > 0)
-                //            {
-                //                for (int i = 0; i < kpiTargetList.ValueList.Count; i++)
-                //                {
-                //                    if (i == 0)
-                //                    {
-                //                        kpiTargetList.PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType.Yearly;
-                //                        kpiTargetList.Value = kpiTargetList.ValueList[0];
-                //                        var kpiTarget = kpiTargetList.MapTo<CreateKpiTargetRequest.KpiTarget>();
-                //                        request.KpiTargets.Add(kpiTarget);
-                //                    }
-                //                    else
-                //                    {
-                //                        kpiTargetList.PeriodeType = DSLNG.PEAR.Data.Enums.PeriodeType.Monthly;
-                //                        kpiTargetList.Periode = new DateTime(kpiTargetList.Periode.Year, i, 1);
-                //                        kpiTargetList.Value = kpiTargetList.ValueList[i];
-                //                        var kpiTarget = kpiTargetList.MapTo<CreateKpiTargetRequest.KpiTarget>();
-                //                        request.KpiTargets.Add(kpiTarget);
-                //                    }
-
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
+                
                 var response = _kpiTargetService.Creates(request);
                 TempData["IsSuccess"] = response.IsSuccess;
                 TempData["Message"] = response.Message;
@@ -303,57 +274,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
-        public List<PillarTarget> FakeListConfigDetail()
-        {
-            var data = new List<PillarTarget>();
-            var pillars = new List<Pillar>();
-            pillars.Add(new Pillar { Id = 1, Name = "Safety" });
-            pillars.Add(new Pillar { Id = 2, Name = "Pillar 2" });
-            if (pillars.Count > 0)
-            {
-                foreach (var pillar in pillars)
-                {
-                    //get list pillar from pmsConfig
-                    var pillarSelectListItem = new List<SelectListItem>();
-                    pillarSelectListItem.Add(new SelectListItem { Text = pillar.Name, Value = pillar.Id.ToString() });
-
-                    //get list kpi by pillarId
-                    var kpiList = new List<Kpi>();
-                    kpiList.Add(new Kpi
-                    {
-                        Pillar = pillar,
-                        Name = "Safety Incident",
-                        Id = 1,
-                        Unit = "Case"
-                    });
-                    kpiList.Add(new Kpi
-                    {
-                        Pillar = pillar,
-                        Name = "Fatality",
-                        Id = 1,
-                        Unit = "Case"
-                    });
-                    var kpiTargetList = new List<KpiTarget>();
-                    if (kpiList.Count > 0)
-                    {
-                        foreach (var kpi in kpiList)
-                        {
-                            var kpiSelectListItem = new List<SelectListItem>();
-                            kpiSelectListItem.Add(new SelectListItem { Text = kpi.Name, Value = kpi.Id.ToString() });
-                            kpiTargetList.Add(new KpiTarget { Kpi = kpi, KpiList = kpiSelectListItem });
-                        }
-                    }
-
-                    data.Add(new PillarTarget
-                    {
-                        PillarList = pillarSelectListItem,
-                        KpiTargetList = kpiTargetList
-                    });
-                }
-            }
-            return data;
-        }
-
+        
         [HttpPost]
         public JsonResult KpiTargetItem(KpiTargetItem kpiTarget)
         {
@@ -369,6 +290,18 @@ namespace DSLNG.PEAR.Web.Controllers
                 var response = _kpiTargetService.Create(request);
                 return Json(new { Id = response.Id, Message = response.Message, isSuccess = response.IsSuccess });
             }
+        }
+
+        public ActionResult UploadControlCallbackAction()
+        {
+            string[] extension = { ".xls", ".xlsx", ".csv", };
+
+            ExcelUploadHelper.setPath(TemplateDirectory+"Target/", UploadDirectory+"Target/");
+            ExcelUploadHelper.setValidationSettings(extension, 20971520);
+
+            UploadControlExtension.GetUploadedFiles("uc", ExcelUploadHelper.ValidationSettings, ExcelUploadHelper.FileUploadComplete);
+            //UploadControlExtension.GetUploadedFiles("uc", UploadControlHelper.ValidationSettings, UploadControlHelper.FileUploadComplete);
+            return null;
         }
     }
 }

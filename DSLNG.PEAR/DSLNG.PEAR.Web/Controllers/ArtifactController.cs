@@ -100,10 +100,12 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "multiaxis", Text = "Multi Axis" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "combo", Text = "Combination" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "trafficlight", Text = "Traffic Light" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tabular", Text = "Tabular" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tank", Text = "Tank" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "pie", Text = "Pie" });
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
@@ -125,11 +127,13 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "multiaxis", Text = "Multi Axis" });
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "combo", Text = "Combination" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "speedometer", Text = "Speedometer" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tabular", Text = "Tabular" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "tank", Text = "Tank" });
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "trafficlight", Text = "Traffic Light" });
-            
+            viewModel.GraphicTypes.Add(new SelectListItem { Value = "pie", Text = "Pie" });
+
 
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
@@ -159,11 +163,126 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
                 case "area":
                     {
+
+
                         var areaChart = new AreaChartViewModel();
+                        areaChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        areaChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
                         viewModel.AreaChart = artifact.MapPropertiesToInstance<AreaChartViewModel>(areaChart);
                         this.SetValueAxes(viewModel.AreaChart.ValueAxes);
                         var series = new AreaChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new AreaChartViewModel.StackViewModel());
                         viewModel.AreaChart.Series.Insert(0, series);
+                    }
+                    break;
+                case "multiaxis":
+                    {
+                        var multiaxisChart = new MultiaxisChartViewModel();
+                        viewModel.MultiaxisChart = artifact.MapPropertiesToInstance<MultiaxisChartViewModel>(multiaxisChart);
+                        this.SetValueAxes(viewModel.MultiaxisChart.ValueAxes);
+                        multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "bar", Text = "Bar" });
+                        multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "baraccumulative", Text = "Bar Accumulative" });
+                        multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "barachievement", Text = "Bar Achievement" });
+                        multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
+                        multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
+                        multiaxisChart.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+              .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
+                        foreach (var chartRes in artifact.Charts)
+                        {
+                            var chartViewModel = chartRes.MapTo<MultiaxisChartViewModel.ChartViewModel>();
+                            switch (chartViewModel.GraphicType)
+                            {
+                                case "line":
+                                    {
+                                        chartViewModel.LineChart = chartRes.MapTo<LineChartViewModel>();
+                                        this.SetValueAxes(chartViewModel.LineChart.ValueAxes);
+                                        var series = new LineChartViewModel.SeriesViewModel();
+                                        chartViewModel.LineChart.Series.Insert(0, series);
+                                    }
+                                    break;
+                                case "area":
+                                    {
+                                        chartViewModel.AreaChart = chartRes.MapTo<AreaChartViewModel>();
+                                        chartViewModel.AreaChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                                        chartViewModel.AreaChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+
+                                        this.SetValueAxes(chartViewModel.AreaChart.ValueAxes);
+                                        var series = new AreaChartViewModel.SeriesViewModel();
+                                        series.Stacks.Add(new AreaChartViewModel.StackViewModel());
+                                        chartViewModel.AreaChart.Series.Insert(0, series);
+                                    }
+                                    break;
+                                default:
+                                    {
+                                        chartViewModel.BarChart = chartRes.MapTo<BarChartViewModel>();
+                                        chartViewModel.BarChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                                        chartViewModel.BarChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+                                        this.SetValueAxes(chartViewModel.BarChart.ValueAxes, false);
+
+                                        var series = new BarChartViewModel.SeriesViewModel();
+                                        series.Stacks.Add(new BarChartViewModel.StackViewModel());
+                                        chartViewModel.BarChart.Series.Insert(0, series);
+                                    }
+                                    break;
+                            }
+                            multiaxisChart.Charts.Add(chartViewModel);
+                        }
+                        var chart = new MultiaxisChartViewModel.ChartViewModel();
+                        viewModel.MultiaxisChart.Charts.Insert(0, chart);
+                    }
+                    break;
+                case "combo":
+                    {
+                        var comboChart = new ComboChartViewModel();
+                        viewModel.ComboChart = artifact.MapPropertiesToInstance<ComboChartViewModel>(comboChart);
+                        this.SetValueAxes(viewModel.ComboChart.ValueAxes);
+                        comboChart.GraphicTypes.Add(new SelectListItem { Value = "bar", Text = "Bar" });
+                        comboChart.GraphicTypes.Add(new SelectListItem { Value = "baraccumulative", Text = "Bar Accumulative" });
+                        comboChart.GraphicTypes.Add(new SelectListItem { Value = "barachievement", Text = "Bar Achievement" });
+                        comboChart.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
+                        comboChart.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
+                        foreach (var chartRes in artifact.Charts)
+                        {
+                            var chartViewModel = chartRes.MapTo<ComboChartViewModel.ChartViewModel>();
+                            switch (chartViewModel.GraphicType)
+                            {
+                                case "line":
+                                    {
+                                        chartViewModel.LineChart = chartRes.MapTo<LineChartViewModel>();
+                                        this.SetValueAxes(chartViewModel.LineChart.ValueAxes);
+                                        var series = new LineChartViewModel.SeriesViewModel();
+                                        chartViewModel.LineChart.Series.Insert(0, series);
+                                    }
+                                    break;
+                                case "area":
+                                    {
+                                        chartViewModel.AreaChart = chartRes.MapTo<AreaChartViewModel>();
+                                        chartViewModel.AreaChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                                        chartViewModel.AreaChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+
+                                        this.SetValueAxes(chartViewModel.AreaChart.ValueAxes);
+                                        var series = new AreaChartViewModel.SeriesViewModel();
+                                        series.Stacks.Add(new AreaChartViewModel.StackViewModel());
+                                        chartViewModel.AreaChart.Series.Insert(0, series);
+                                    }
+                                    break;
+                                default:
+                                    {
+                                        chartViewModel.BarChart = chartRes.MapTo<BarChartViewModel>();
+                                        chartViewModel.BarChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                                        chartViewModel.BarChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+                                        this.SetValueAxes(chartViewModel.BarChart.ValueAxes, false);
+
+                                        var series = new BarChartViewModel.SeriesViewModel();
+                                        series.Stacks.Add(new BarChartViewModel.StackViewModel());
+                                        chartViewModel.BarChart.Series.Insert(0, series);
+                                    }
+                                    break;
+                            }
+                            comboChart.Charts.Add(chartViewModel);
+                        }
+                        var chart = new ComboChartViewModel.ChartViewModel();
+                        viewModel.ComboChart.Charts.Insert(0, chart);
                     }
                     break;
                 case "barachievement":
@@ -207,6 +326,16 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.Tabular.Rows.Insert(0, new TabularViewModel.RowViewModel());
                         this.SetPeriodeTypes(viewModel.Tabular.PeriodeTypes);
                         this.SetRangeFilters(viewModel.Tabular.RangeFilters);
+                    }
+                    break;
+                case "pie":
+                    {
+                        viewModel.Pie = artifact.MapPropertiesToInstance(new PieViewModel());
+                        this.SetValueAxes(viewModel.Pie.ValueAxes);
+                        var series = new PieViewModel.SeriesViewModel();
+                        /*viewModel.Is3D = artifact.Is3D;
+                        viewModel.ShowLegend = artifact.ShowLegend;*/
+                        viewModel.Pie.Series.Insert(0, series);
                     }
                     break;
                 default:
@@ -283,8 +412,11 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "area":
                     {
                         var viewModel = new AreaChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
                         this.SetValueAxes(viewModel.ValueAxes, false);
                         var series = new AreaChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new AreaChartViewModel.StackViewModel());
                         viewModel.Series.Add(series);
                         var artifactViewModel = new ArtifactDesignerViewModel();
                         artifactViewModel.AreaChart = viewModel;
@@ -301,9 +433,26 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
                         viewModel.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
                         viewModel.Charts.Add(chart);
+                        viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest()).Measurements
+              .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
                         var artifactViewModel = new ArtifactDesignerViewModel();
                         artifactViewModel.MultiaxisChart = viewModel;
                         return PartialView("~/Views/MultiaxisChart/_Create.cshtml", artifactViewModel);
+                    }
+                case "combo":
+                    {
+                        var viewModel = new ComboChartViewModel();
+                        var chart = new ComboChartViewModel.ChartViewModel();
+                        this.SetValueAxes(viewModel.ValueAxes);
+                        viewModel.GraphicTypes.Add(new SelectListItem { Value = "bar", Text = "Bar" });
+                        viewModel.GraphicTypes.Add(new SelectListItem { Value = "baraccumulative", Text = "Bar Accumulative" });
+                        viewModel.GraphicTypes.Add(new SelectListItem { Value = "barachievement", Text = "Bar Achievement" });
+                        viewModel.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
+                        viewModel.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
+                        viewModel.Charts.Add(chart);
+                        var artifactViewModel = new ArtifactDesignerViewModel();
+                        artifactViewModel.ComboChart = viewModel;
+                        return PartialView("~/Views/ComboChart/_Create.cshtml", artifactViewModel);
                     }
                 case "speedometer":
                     {
@@ -342,6 +491,157 @@ namespace DSLNG.PEAR.Web.Controllers
                         artifactViewModel.Tank = viewModel;
                         return PartialView("~/Views/Tank/_Create.cshtml", artifactViewModel);
                     }
+                case "pie":
+                    {
+                        var viewModel = new PieViewModel();
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new PieViewModel.SeriesViewModel();
+                        viewModel.Series.Add(series);
+                        var artifactViewModel = new ArtifactDesignerViewModel();
+                        artifactViewModel.Pie = viewModel;
+                        return PartialView("~/Views/Pie/_Create.cshtml", artifactViewModel);
+                    }
+                default:
+                    return PartialView("NotImplementedChart.cshtml");
+            }
+        }
+
+        public ActionResult ComboSettings()
+        {
+            var artifactViewModel = new ArtifactDesignerViewModel();
+            artifactViewModel.ComboChart = new ComboChartViewModel();
+            var chart = new ComboChartViewModel.ChartViewModel();
+            artifactViewModel.ComboChart.Charts.Add(chart);
+            switch (Request.QueryString["type"])
+            {
+                case "bar":
+                    {
+                        var viewModel = new BarChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new BarChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new BarChartViewModel.StackViewModel());
+                        viewModel.Series.Add(series);
+                        artifactViewModel.ComboChart.Charts[0].BarChart = viewModel;
+                        return PartialView("~/Views/ComboChart/_BarChartCreate.cshtml", artifactViewModel);
+                    }
+                case "baraccumulative":
+                    {
+                        var viewModel = new BarChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new BarChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new BarChartViewModel.StackViewModel());
+                        viewModel.Series.Add(series);
+                        artifactViewModel.ComboChart.Charts[0].BarChart = viewModel;
+                        return PartialView("~/Views/ComboChart/_BarChartCreate.cshtml", artifactViewModel);
+                    }
+                case "barachievement":
+                    {
+                        var viewModel = new BarChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new BarChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new BarChartViewModel.StackViewModel());
+                        viewModel.Series.Add(series);
+                        artifactViewModel.ComboChart.Charts[0].BarChart = viewModel;
+                        return PartialView("~/Views/ComboChart/_BarChartCreate.cshtml", artifactViewModel);
+                    }
+                case "line":
+                    {
+                        var viewModel = new LineChartViewModel();
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new LineChartViewModel.SeriesViewModel();
+                        viewModel.Series.Add(series);
+                        artifactViewModel.ComboChart.Charts[0].LineChart = viewModel;
+                        return PartialView("~/Views/ComboChart/_LineChartCreate.cshtml", artifactViewModel);
+                    }
+                case "area":
+                    {
+                        var viewModel = new AreaChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new AreaChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new AreaChartViewModel.StackViewModel());
+                        viewModel.Series.Add(series);
+                        artifactViewModel.ComboChart.Charts[0].AreaChart = viewModel;
+                        return PartialView("~/Views/ComboChart/_AreaChartCreate.cshtml", artifactViewModel);
+                    }
+                default:
+                    return PartialView("NotImplementedChart.cshtml");
+            }
+        }
+
+        public ActionResult MultiaxisSettings()
+        {
+            var artifactViewModel = new ArtifactDesignerViewModel();
+            artifactViewModel.MultiaxisChart = new MultiaxisChartViewModel();
+            var chart = new MultiaxisChartViewModel.ChartViewModel();
+            artifactViewModel.MultiaxisChart.Charts.Add(chart);
+            switch (Request.QueryString["type"])
+            {
+                case "bar":
+                    {
+                        var viewModel = new BarChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new BarChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new BarChartViewModel.StackViewModel());
+                        viewModel.Series.Add(series);
+                        artifactViewModel.MultiaxisChart.Charts[0].BarChart = viewModel;
+                        //arti.BarChart = viewModel;
+                        return PartialView("~/Views/MultiaxisChart/_BarChartCreate.cshtml", artifactViewModel);
+                    }
+                case "baraccumulative":
+                    {
+                        var viewModel = new BarChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new BarChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new BarChartViewModel.StackViewModel());
+                        viewModel.Series.Add(series);
+                        artifactViewModel.MultiaxisChart.Charts[0].BarChart = viewModel;
+                        //arti.BarChart = viewModel;
+                        return PartialView("~/Views/MultiaxisChart/_BarChartCreate.cshtml", artifactViewModel);
+                    }
+                case "barachievement":
+                    {
+                        var viewModel = new BarChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new BarChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new BarChartViewModel.StackViewModel());
+                        viewModel.Series.Add(series);
+                        artifactViewModel.MultiaxisChart.Charts[0].BarChart = viewModel;
+                        //arti.BarChart = viewModel;
+                        return PartialView("~/Views/MultiaxisChart/_BarChartCreate.cshtml", artifactViewModel);
+                    }
+                case "line":
+                    {
+                        var viewModel = new LineChartViewModel();
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new LineChartViewModel.SeriesViewModel();
+                        viewModel.Series.Add(series);
+                        artifactViewModel.MultiaxisChart.Charts[0].LineChart = viewModel;
+                        //arti.BarChart = viewModel;
+                        return PartialView("~/Views/MultiaxisChart/_LineChartCreate.cshtml", artifactViewModel);
+                    }
+                case "area":
+                    {
+                        var viewModel = new AreaChartViewModel();
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
+                        viewModel.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+                        this.SetValueAxes(viewModel.ValueAxes, false);
+                        var series = new AreaChartViewModel.SeriesViewModel();
+                        series.Stacks.Add(new AreaChartViewModel.StackViewModel());
+                        viewModel.Series.Add(series);
+                        artifactViewModel.MultiaxisChart.Charts[0].AreaChart = viewModel;
+                        //arti.BarChart = viewModel;
+                        return PartialView("~/Views/MultiaxisChart/_AreaChartCreate.cshtml", artifactViewModel);
+                    }
                 default:
                     return PartialView("NotImplementedChart.cshtml");
             }
@@ -362,7 +662,10 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             foreach (var name in Enum.GetNames(typeof(PeriodeType)))
             {
-                periodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                //if (!name.Equals("Hourly") && !name.Equals("Weekly"))
+                //{
+                    periodeTypes.Add(new SelectListItem { Text = name, Value = name });
+                //}   
             }
         }
 
@@ -377,6 +680,9 @@ namespace DSLNG.PEAR.Web.Controllers
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.MTD.ToString(), Text = "MONTH TO DATE" });
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.YTD.ToString(), Text = "YEAR TO DATE" });
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.Interval.ToString(), Text = "INTERVAL" });
+            /*rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificDay.ToString(), Text = "SPECIFIC DAY" });
+            rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificMonth.ToString(), Text = "SPECIFIC MONTH" });
+            rangeFilters.Add(new SelectListItem { Value = RangeFilter.SpecificYear.ToString(), Text = "SPECIFIC YEAR" });*/
         }
 
         public ActionResult View(int id)
@@ -407,6 +713,22 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.AreaChart.ValueAxisTitle = artifactResp.Measurement;
                         previewViewModel.AreaChart.Series = chartData.Series.MapTo<AreaChartDataViewModel.SeriesViewModel>();
                         previewViewModel.AreaChart.Periodes = chartData.Periodes;
+                    }
+                    break;
+                case "multiaxis":
+                    {
+                        var chartData = _artifactServie.GetMultiaxisChartData(artifactResp.MapTo<GetMultiaxisChartDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.MultiaxisChart = chartData.MapTo<MultiaxisChartDataViewModel>();
+                        previewViewModel.MultiaxisChart.Title = artifactResp.HeaderTitle;
+                    }
+                    break;
+                case "combo":
+                    {
+                        var chartData = _artifactServie.GetComboChartData(artifactResp.MapTo<GetComboChartDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.ComboChart = chartData.MapTo<ComboChartDataViewModel>();
+                        previewViewModel.ComboChart.Title = artifactResp.HeaderTitle;
                     }
                     break;
                 case "speedometer":
@@ -452,8 +774,20 @@ namespace DSLNG.PEAR.Web.Controllers
                         chartData.MapPropertiesToInstance<TankDataViewModel>(previewViewModel.Tank);
                         previewViewModel.Tank.Title = artifactResp.HeaderTitle;
                         previewViewModel.Tank.Subtitle = chartData.Subtitle;
+                        previewViewModel.Tank.Id = artifactResp.Tank.Id;
                         //previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
                         //previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
+                case "pie":
+                    {
+                        var chartData = _artifactServie.GetPieData(artifactResp.MapTo<GetPieDataRequest>());
+                        previewViewModel.GraphicType = artifactResp.GraphicType;
+                        previewViewModel.Pie = chartData.MapTo<PieDataViewModel>();
+                        previewViewModel.Pie.Title = artifactResp.HeaderTitle;
+                        previewViewModel.Pie.Subtitle = chartData.Subtitle;
+                        previewViewModel.Pie.Is3D = artifactResp.Is3D;
+                        previewViewModel.Pie.ShowLegend = artifactResp.ShowLegend;
                     }
                     break;
                 default:
@@ -505,6 +839,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.AreaChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
                         previewViewModel.AreaChart.Series = chartData.Series.MapTo<AreaChartDataViewModel.SeriesViewModel>();
                         previewViewModel.AreaChart.Periodes = chartData.Periodes;
+                        previewViewModel.AreaChart.SeriesType = chartData.SeriesType;
                     }
                     break;
                 case "speedometer":
@@ -562,6 +897,42 @@ namespace DSLNG.PEAR.Web.Controllers
                         previewViewModel.Tank.Subtitle = chartData.Subtitle;
                     }
                     break;
+                case "multiaxis":
+                    {
+                        var request = viewModel.MapTo<GetMultiaxisChartDataRequest>();
+                        viewModel.MultiaxisChart.MapPropertiesToInstance<GetMultiaxisChartDataRequest>(request);
+                        var chartData = _artifactServie.GetMultiaxisChartData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.MultiaxisChart = new MultiaxisChartDataViewModel();
+                        chartData.MapPropertiesToInstance<MultiaxisChartDataViewModel>(previewViewModel.MultiaxisChart);
+                        previewViewModel.MultiaxisChart.Title = viewModel.HeaderTitle;
+
+                    }
+                    break;
+                case "combo":
+                    {
+                        var request = viewModel.MapTo<GetComboChartDataRequest>();
+                        viewModel.ComboChart.MapPropertiesToInstance<GetComboChartDataRequest>(request);
+                        var chartData = _artifactServie.GetComboChartData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.ComboChart = new ComboChartDataViewModel();
+                        chartData.MapPropertiesToInstance<ComboChartDataViewModel>(previewViewModel.ComboChart);
+                        previewViewModel.ComboChart.Title = viewModel.HeaderTitle;
+
+                    }
+                    break;
+                case "pie":
+                    {
+                        var request = viewModel.MapTo<GetPieDataRequest>();
+                        viewModel.Pie.MapPropertiesToInstance<GetPieDataRequest>(request);
+                        var pieData = _artifactServie.GetPieData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.Pie = pieData.MapTo<PieDataViewModel>();
+                        previewViewModel.Pie.Is3D = request.Is3D;
+                        previewViewModel.Pie.ShowLegend = request.ShowLegend;
+                    }
+                    break;
+
                 default:
                     {
                         var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
@@ -601,6 +972,20 @@ namespace DSLNG.PEAR.Web.Controllers
                         _artifactServie.Create(request);
                     }
                     break;
+                case "multiaxis":
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        viewModel.MultiaxisChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
+                        _artifactServie.Create(request);
+                    }
+                    break;
+                case "combo":
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        viewModel.ComboChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
+                        _artifactServie.Create(request);
+                    }
+                    break;
                 case "speedometer":
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
@@ -627,6 +1012,13 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
                         //viewModel.Tank.MapPropertiesToInstance<CreateArtifactRequest>(request);
+                        _artifactServie.Create(request);
+                    }
+                    break;
+                case "pie":
+                    {
+                        var request = viewModel.MapTo<CreateArtifactRequest>();
+                        request.Series = viewModel.Pie.Series.MapTo<CreateArtifactRequest.SeriesRequest>();
                         _artifactServie.Create(request);
                     }
                     break;
@@ -661,6 +1053,20 @@ namespace DSLNG.PEAR.Web.Controllers
                         _artifactServie.Update(request);
                     }
                     break;
+                case "multiaxis":
+                    {
+                        var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        viewModel.MultiaxisChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
+                        _artifactServie.Update(request);
+                    }
+                    break;
+                case "combo":
+                    {
+                        var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        viewModel.ComboChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
+                        _artifactServie.Update(request);
+                    }
+                    break;
                 case "speedometer":
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
@@ -675,7 +1081,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         _artifactServie.Update(request);
                     }
                     break;
-                case "tank" :
+                case "tank":
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
                         viewModel.Tank.MapPropertiesToInstance<UpdateArtifactRequest>(request);
@@ -687,6 +1093,13 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
                         viewModel.Tabular.MapPropertiesToInstance<UpdateArtifactRequest>(request);
+                        _artifactServie.Update(request);
+                    }
+                    break;
+                case "pie":
+                    {
+                        var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        viewModel.Pie.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
                     break;

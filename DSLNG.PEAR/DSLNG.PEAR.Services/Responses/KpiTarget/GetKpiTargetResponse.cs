@@ -14,6 +14,7 @@ namespace DSLNG.PEAR.Services.Responses.KpiTarget
             Pillars = new List<Pillar>();
         }
 
+        public int Id { get; set; }
         public IList<Pillar> Pillars { get; set; }
 
         public class Pillar
@@ -48,5 +49,6 @@ namespace DSLNG.PEAR.Services.Responses.KpiTarget
             public double? Value { get; set; }
             public string Remark { get; set; }
         }
+        public PeriodeType PeriodeType { get; set; }
     }
 }
